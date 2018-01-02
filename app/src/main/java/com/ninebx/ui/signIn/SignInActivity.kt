@@ -1,39 +1,29 @@
 package com.ninebx.ui.signIn
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import com.ninebx.R
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import android.widget.Toast
 import android.os.AsyncTask
 import android.util.Log
 import io.reactivex.Observable
 import io.realm.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.net.URLEncoder
-import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.security.spec.InvalidKeySpecException
 import java.util.*
-import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
-import android.R.attr.data
 import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.tutorial.activity.WalkThroughActivity
 import com.ninebx.utility.Constants
 import com.ninebx.utility.NineBxPreferences
 import io.reactivex.disposables.CompositeDisposable
-import java.io.UnsupportedEncodingException
-import java.nio.charset.StandardCharsets
-import java.security.SecureRandom
-import javax.inject.Inject
 
-
-class SignInActivity : Activity(), View.OnClickListener {
+class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     val disposables: CompositeDisposable = CompositeDisposable()
 
