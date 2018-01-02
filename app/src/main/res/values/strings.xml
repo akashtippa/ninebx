@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">NineBx</string>
+    <string name="terms_of_use"><u>Terms of Use</u></string>
+    <string name="privacy_policy"><u>Privacy Policy</u></string>
+    <string name="email_address">Email Address</string>
+    <string name="master_password">Master Password</string>
+    <string name="title_activity_test">TestActivity</string>
+
+    <string name="search">Search</string>
+    <string name="calendar">Calendar</string>
+    <string name="lists">Lists</string>
+    <string name="notifications">Notifications</string>
+    <string name="account">Account</string>
+</resources>

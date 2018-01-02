@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ninebx.ui.tutorial.activity.WalkThroughActivity">
+
+    <TextView
+        android:id="@+id/txtGetStarted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/_14sdp"
+        android:text="GET STARTED" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_help_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_help_view_page_indicator"
+        android:layout_below="@+id/txtGetStarted"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:background="@color/colorWhite"
+        android:visibility="visible">
+
+    </android.support.v4.view.ViewPager>
+
+    <com.ninebx.ui.tutorial.view.CirclePageIndicator
+        android:id="@+id/activity_help_view_page_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:minHeight="24dp"
+        app:centered="true"
+        app:fillColor="@color/white"
+        app:pageColor="#14FFFFFF"
+        app:radius="4dp"
+        app:strokeColor="#E0E0E0"
+        app:strokeWidth="0dp" />
+</RelativeLayout>

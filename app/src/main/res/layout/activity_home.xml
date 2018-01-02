@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ninebx.ui.home.HomeActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="nine"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="bx"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_18sdp" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <GridView
+        android:id="@+id/gridMenu"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_230sdp"
+        android:layout_centerInParent="true"
+        android:columnWidth="@dimen/_45sdp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:verticalSpacing="5dp"
+        android:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/frameParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_54sdp"
+        android:text="Tap a box to start organizing"
+        android:textSize="@dimen/_18sdp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menu_bg">
+
+                <RelativeLayout
+                    android:id="@+id/menuHome"
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_72sdp"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:background="@drawable/grid1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:drawableTop="@drawable/ic_home_icon_home_money"
+                        android:gravity="center"
+                        android:text="Home"
+                        android:textColor="@color/colorWhite" />
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/menuTravel"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_travel"
+                    android:gravity="center"
+                    android:text="Travel"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/menuContacts"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid3">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_contacts"
+                    android:gravity="center"
+                    android:text="Contacts"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/menuEducation"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid4">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_education_work"
+                    android:gravity="center"
+                    android:text="Education &amp; Work"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/menuPersonal"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_personal"
+                    android:gravity="center"
+                    android:text="Personal"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/menuInterests"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_interests"
+                    android:gravity="center"
+                    android:text="Interests"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/menuWellness"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_wellness"
+                    android:gravity="center"
+                    android:text="Wellness"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/menuMemories"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid8">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_memories"
+                    android:gravity="center"
+                    android:text="Memories"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/menuShopping"
+                android:layout_width="@dimen/_72sdp"
+                android:layout_height="@dimen/_72sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:background="@drawable/grid9">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTop="@drawable/ic_home_icon_shopping"
+                    android:gravity="center"
+                    android:text="Shopping"
+                    android:textColor="@color/colorWhite" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey_300"
+        app:menu="@menu/menu_bottom"/>
+
+    <LinearLayout
+        android:id="@+id/layoutBottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey_300"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/bottomSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTop="@android:drawable/ic_menu_search"
+            android:gravity="center"
+            android:text="Search"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/bottomCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTop="@android:drawable/ic_menu_my_calendar"
+            android:gravity="center"
+            android:text="Calendar"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/bottomLists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTop="@android:drawable/ic_menu_today"
+            android:gravity="center"
+            android:text="Lists"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/bottomNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTop="@android:drawable/ic_notification_clear_all"
+            android:gravity="center"
+            android:text="Notifications"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/bottomAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTop="@android:drawable/ic_menu_revert"
+            android:gravity="center"
+            android:text="Account"
+            android:textSize="@dimen/_10sdp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomNavigationView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/_13sdp"
+        android:drawableEnd="@drawable/ic_home_icon_contacts"
+        android:drawableRight="@drawable/ic_home_icon_contacts"
+        android:text="Quick Add" />
+
+</RelativeLayout>
