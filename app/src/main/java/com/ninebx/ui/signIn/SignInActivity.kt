@@ -145,7 +145,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     fun encryptPassword(strEncryptedPassword: String) {
         val nePassword = URLEncoder.encode(strPassword, "utf-8")
         val utf8Bytes = strUsername.toByteArray(Charsets.UTF_8)
-        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
+        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
         val keyspec = PBEKeySpec(nePassword.toCharArray(), utf8Bytes, 20000, 64 * 4)
         val key = factory.generateSecret(keyspec)
         strPassword = Arrays.toString(key.encoded)

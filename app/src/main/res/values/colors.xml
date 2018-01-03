@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="toolbarColor">#FFDDDDDD</color>
 
 
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>

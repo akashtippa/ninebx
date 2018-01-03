@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.WindowManager
-import com.hopout.utils.kotlin.supportsLollipop
 
 
 @SuppressLint("InlinedApi")

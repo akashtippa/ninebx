@@ -4,8 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.ninebx.R
+import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.signIn.SignInActivity
 import com.ninebx.ui.tutorial.activity.WalkThroughActivity
 import com.ninebx.utility.NineBxPreferences
 import io.reactivex.Flowable
@@ -53,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
                             finish()
                         }
                         else -> {
-                            val intent = Intent(this@SplashActivity, SignInActivity::class.java)
+                            val intent = Intent(this@SplashActivity, AuthActivity::class.java)
                             startActivity(intent)
                             disposables.clear()
                             finish()

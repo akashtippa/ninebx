@@ -4,5 +4,8 @@
     <dimen name="default_circle_indicator_radius">3dp</dimen>
     <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="toolbar_elevation">8dp</dimen>
+    <dimen name="text_22">22sp</dimen>
+    <dimen name="default_margin">16dp</dimen>
 
 </resources>

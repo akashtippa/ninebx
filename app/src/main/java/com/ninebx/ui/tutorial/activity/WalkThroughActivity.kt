@@ -7,14 +7,11 @@ import com.ninebx.ui.tutorial.MaterialTutorialPresenter
 import com.ninebx.ui.tutorial.WalkThroughContract
 import com.ninebx.ui.tutorial.fragment.MaterialTutorialFragment
 import com.ninebx.utility.NineBxPreferences
-import javax.inject.Inject
 
 class WalkThroughActivity : AppCompatActivity(), WalkThroughContract.View {
 
-    @Inject
     lateinit var materialTutorialPresenter: MaterialTutorialPresenter
 
-    @Inject
     lateinit var preferences: NineBxPreferences
 
 

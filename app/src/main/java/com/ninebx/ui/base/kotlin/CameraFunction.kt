@@ -3,6 +3,7 @@ package com.ninebx.ui.base.kotlin
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
 import android.os.Environment
+import com.ninebx.NineBxApplication
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -30,7 +31,7 @@ fun saveImage(bitmap: Bitmap): String {
         f.createNewFile()
         val fo = FileOutputStream(f)
         fo.write(bytes.toByteArray())
-        val  context = com.hopout.HopOutApplication.instance
+        val  context = NineBxApplication.instance
         MediaScannerConnection.scanFile(context, arrayOf(f.path), arrayOf("image/jpeg"), null);
         fo.close()
         return f.absolutePath
