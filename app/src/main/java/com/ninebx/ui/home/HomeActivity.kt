@@ -103,6 +103,11 @@ class HomeActivity : AppCompatActivity() {
 
         setupPager()
 
+        ivHome.setOnClickListener {
+            vpParent.hide()
+            gridMenu.show()
+            tvTapABox.show()
+        }
 
 
     }
