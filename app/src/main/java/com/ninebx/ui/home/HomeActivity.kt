@@ -107,6 +107,7 @@ class HomeActivity : AppCompatActivity() {
             vpParent.hide()
             gridMenu.show()
             tvTapABox.show()
+            tvQuickAdd.show()
         }
 
 
@@ -116,6 +117,7 @@ class HomeActivity : AppCompatActivity() {
         vpParent.show()
         gridMenu.hide()
         tvTapABox.hide()
+        tvQuickAdd.hide()
         vpParent.currentItem = index
     }
 
@@ -129,9 +131,7 @@ class HomeActivity : AppCompatActivity() {
         fragments.add(AccountFragment())
         vpParent.adapter = HomeViewPagerAdapter(fragments, supportFragmentManager)
         vpParent.setPagingEnabled(false)
-        vpParent.hide()
-        gridMenu.show()
-        tvTapABox.show()
+        ivHome.callOnClick()
 
     }
 
