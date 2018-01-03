@@ -21,9 +21,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ui.signIn.SignInActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".ui.tutorial.activity.WalkThroughActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -38,9 +35,6 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.home.HomeActivity" />
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".ui.signUp.SignUpActivity" />
         <activity
             android:name=".TestActivity"
             android:label="@string/title_activity_test"

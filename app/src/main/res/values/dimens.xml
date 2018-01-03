@@ -7,5 +7,8 @@
     <dimen name="toolbar_elevation">8dp</dimen>
     <dimen name="text_22">22sp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_mini_padding">8dp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="default_mini_margin">8dp</dimen>
 
 </resources>

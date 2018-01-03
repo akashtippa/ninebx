@@ -25,6 +25,15 @@ import android.transition.Fade
 import android.view.MenuItem
 import com.ninebx.R.id.bottomNavigationView
 import com.ninebx.R.id.message
+import com.ninebx.ui.auth.SignInFragment
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.adapter.HomeViewPagerAdapter
+import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.home.lists.ListsFragment
+import com.ninebx.ui.home.notifications.NotificationsFragment
+import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.Constants
 import io.realm.RealmAsyncTask
 import io.realm.kotlin.createObject
@@ -73,41 +82,53 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.item_search -> {
-                    //                                pushFragment(FragmentSearch())
+                    loadFragment(0)
                 }
                 R.id.item_calendar -> {
-                    //                                pushFragment(FragmentCalendar())
+                    loadFragment(1)
                 }
                 R.id.item_lists -> {
-                    //                                pushFragment(FragmentLists())
+                    loadFragment(2)
                 }
                 R.id.item_notifications -> {
-                    //                                pushFragment(FragmentNotifications())
+                    loadFragment(3)
                 }
                 R.id.item_account -> {
-                    //                                pushFragment(FragmentAccount())
+                    loadFragment(4)
                 }
 
             }
             true
         }
 
+        setupPager()
+
+
+
     }
 
-/*
-    protected fun pushFragment(fragment: Fragment?) {
-        if (fragment == null)
-            return
+    private fun loadFragment(index: Int) {
+        vpParent.show()
+        gridMenu.hide()
+        tvTapABox.hide()
+        vpParent.currentItem = index
+    }
 
-        val fragmentManager = fragmentManager
-        if (fragmentManager != null) {
-            val ft = fragmentManager.beginTransaction()
-            if (ft != null) {
-                ft.replace(R.id.frameParent, fragment)
-                ft.commit()
-            }
-        }
-    }*/
+    private fun setupPager() {
+
+        val fragments = ArrayList<Fragment>()
+        fragments.add(SearchFragment())
+        fragments.add(CalendarFragment())
+        fragments.add(ListsFragment())
+        fragments.add(NotificationsFragment())
+        fragments.add(AccountFragment())
+        vpParent.adapter = HomeViewPagerAdapter(fragments, supportFragmentManager)
+        vpParent.setPagingEnabled(false)
+        vpParent.hide()
+        gridMenu.show()
+        tvTapABox.show()
+
+    }
 
     @SuppressLint("StaticFieldLeak")
     inner class SyncTheDb : AsyncTask<String, String, String>() {

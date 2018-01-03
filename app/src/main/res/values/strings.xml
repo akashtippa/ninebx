@@ -87,4 +87,8 @@
     <string name="last_name">Last Name</string>
     <string name="sign_up">Sign Up</string>
     <string name="required">Required</string>
+    <string name="quick_add">Quick Add</string>
+    <string name="tap_a_box">Tap a box to start organizing</string>
+    <string name="nine">nine</string>
+    <string name="bx">bx</string>
 </resources>
