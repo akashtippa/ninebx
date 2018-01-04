@@ -5,6 +5,8 @@ import android.util.Base64
 import com.ninebx.R
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
+import com.ninebx.utility.NineBxPreferences
+import com.ninebx.utility.Preferences
 import io.realm.SyncCredentials
 import io.realm.SyncUser
 import java.math.BigInteger
@@ -24,6 +26,8 @@ class LoginTask(private var userName: String, private var password: String, priv
 
     val TAG: String = LoginTask::class.java.simpleName
     var strUsername: String = "test.box24@yopmail.com"
+    val prefrences = NineBxPreferences()
+
     var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
 
     override fun onPostExecute(result: SyncUser?) {
@@ -31,6 +35,9 @@ class LoginTask(private var userName: String, private var password: String, priv
         authView.hideProgress()
         if (result == null) {
             authView.onError(R.string.error_login)
+
+            // Later we will put below CODE on getting Success Result.
+            prefrences.isLogin = true
         } else {
             AppLogger.d(TAG, result.toJson())
         }

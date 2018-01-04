@@ -311,6 +311,16 @@
     <color name="advanced">#1DE9B6</color>
     <color name="colorGrey">#F5F5F5</color>
     <color name="black">#000000</color>
+
+    <color name="grid_1">#2769A5</color>
+    <color name="grid_2">#1A9B85</color>
+    <color name="grid_3">#7FBE3B</color>
+    <color name="grid_4">#F4AE3F</color>
+    <color name="grid_5">#E8831B</color>
+    <color name="grid_6">#DF542B</color>
+    <color name="grid_7">#4E4189</color>
+    <color name="grid_8">#913A88</color>
+    <color name="grid_9">#D91E3B</color>
     <!-- BLUE GREY -->
 
 
@@ -320,4 +330,8 @@
     <color name="hints_text">#666666</color>
     <color name="driver_name_color">#333333</color>
     <color name="hints_pickup_add">#8994a0</color>
+
+    <color name="account_bg">#F3F3F3</color>
+    <color name="account_bg_screen">#EFEEF6</color>
+
 </resources>

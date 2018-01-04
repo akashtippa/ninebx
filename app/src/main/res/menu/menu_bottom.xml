@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_icon_search_normal"
         android:title="@string/search" />
     <item
         android:id="@+id/item_calendar"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/ic_icon_calender_selected"
         android:title="@string/calendar" />
     <item
         android:id="@+id/item_lists"
-        android:icon="@android:drawable/ic_menu_today"
+        android:icon="@drawable/ic_icon_lists"
         android:title="@string/lists" />
     <item
         android:id="@+id/item_notifications"
-        android:icon="@android:drawable/ic_notification_clear_all"
+        android:icon="@drawable/ic_icon_notifications_normal"
         android:title="@string/notifications" />
     <item
         android:id="@+id/item_account"
-        android:icon="@android:drawable/ic_menu_revert"
+        android:icon="@drawable/ic_icon_account_normal"
         android:title="@string/account" />
 </menu>

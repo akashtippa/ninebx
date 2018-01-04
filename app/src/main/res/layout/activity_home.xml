@@ -7,9 +7,9 @@
     tools:context="com.ninebx.ui.home.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toolbarLayout"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -22,151 +22,150 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
+                    android:id="@+id/ivHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginRight="@dimen/default_mini_margin"
-                    android:id="@+id/ivHome"
-                    android:src="@mipmap/ic_launcher"
                     android:layout_alignParentRight="true"
-                    android:layout_marginEnd="@dimen/default_mini_margin" />
+                    android:layout_marginEnd="@dimen/default_mini_margin"
+                    android:layout_marginRight="@dimen/default_mini_margin"
+                    android:src="@mipmap/ic_launcher" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/toolbarTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/nine"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/bx"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/_18sdp" />
                 </LinearLayout>
 
 
             </RelativeLayout>
 
-
-
-
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-
-    <GridView
-        android:id="@+id/gridMenu"
-        android:layout_width="@dimen/_230sdp"
-        android:layout_height="@dimen/_230sdp"
-        android:layout_centerInParent="true"
-        android:columnWidth="@dimen/_45sdp"
-        android:horizontalSpacing="5dp"
-        android:numColumns="3"
-        android:verticalSpacing="5dp"
-        android:visibility="visible" />
-
     <com.ninebx.ui.home.customView.CustomViewPager
         android:id="@+id/vpParent"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_above="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigationView"
+        android:layout_below="@+id/toolbarLayout" />
 
     <TextView
+        android:id="@+id/tvTapABox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:id="@+id/tvTapABox"
         android:layout_marginTop="@dimen/_54sdp"
         android:text="@string/tap_a_box"
         android:textSize="@dimen/_18sdp" />
 
     <LinearLayout
+        android:id="@+id/layoutMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/menu_bg">
+            <LinearLayout
+                android:id="@+id/layoutHome"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_home"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
 
-                <RelativeLayout
-                    android:id="@+id/menuHome"
-                    android:layout_width="@dimen/_72sdp"
-                    android:layout_height="@dimen/_72sdp"
-                    android:layout_margin="@dimen/_2sdp"
-                    android:background="@drawable/grid1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:drawableTop="@drawable/ic_home_icon_home_money"
-                        android:gravity="center"
-                        android:text="Home"
-                        android:textColor="@color/colorWhite" />
-
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/menuTravel"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid2">
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_home_money" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_travel"
                     android:gravity="center"
-                    android:text="Travel"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/home_amp_money"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/menuContacts"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid3">
+            <LinearLayout
+                android:id="@+id/layoutTravell"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_travell"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_travel" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_contacts"
                     android:gravity="center"
-                    android:text="Contacts"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/travel"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContacts"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_contacts"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_contacts" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/contacts"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -175,65 +174,89 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/menuEducation"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid4">
+            <LinearLayout
+                android:id="@+id/layoutEducation"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_education"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_education_work" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_education_work"
                     android:gravity="center"
-                    android:text="Education &amp; Work"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/education_work"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/menuPersonal"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid5">
+            <LinearLayout
+                android:id="@+id/layoutPersonal"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_personal"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_personal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_personal"
                     android:gravity="center"
-                    android:text="Personal"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/personal"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/menuInterests"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid6">
+            <LinearLayout
+                android:id="@+id/layoutInterests"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_interests"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_interests" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_interests"
                     android:gravity="center"
-                    android:text="Interests"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/interests"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -242,67 +265,92 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/menuWellness"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid1">
+            <LinearLayout
+                android:id="@+id/layoutWellness"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_wellness"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_wellness" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_wellness"
                     android:gravity="center"
-                    android:text="Wellness"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/wellness"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/menuMemories"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid8">
+            <LinearLayout
+                android:id="@+id/layoutMemories"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_memories"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_memories" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_memories"
                     android:gravity="center"
-                    android:text="Memories"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/memories"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/menuShopping"
-                android:layout_width="@dimen/_72sdp"
-                android:layout_height="@dimen/_72sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:background="@drawable/grid9">
+            <LinearLayout
+                android:id="@+id/layoutShopping"
+                android:layout_width="@dimen/_63sdp"
+                android:layout_height="@dimen/_63sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:background="@drawable/bg_shopping"
+                android:orientation="vertical"
+                android:padding="@dimen/_2sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_shopping" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTop="@drawable/ic_home_icon_shopping"
                     android:gravity="center"
-                    android:text="Shopping"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/shopping"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9sdp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
+
 
     </LinearLayout>
 
@@ -312,84 +360,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/grey_300"
-        app:menu="@menu/menu_bottom"/>
-
-    <LinearLayout
-        android:id="@+id/layoutBottomMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/grey_300"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:weightSum="5">
-
-        <TextView
-            android:id="@+id/bottomSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableTop="@android:drawable/ic_menu_search"
-            android:gravity="center"
-            android:text="@string/search"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/bottomCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableTop="@android:drawable/ic_menu_my_calendar"
-            android:gravity="center"
-            android:text="@string/calendar"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/bottomLists"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableTop="@android:drawable/ic_menu_today"
-            android:gravity="center"
-            android:text="@string/lists"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/bottomNotifications"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableTop="@android:drawable/ic_notification_clear_all"
-            android:gravity="center"
-            android:text="@string/notifications"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/bottomAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableTop="@android:drawable/ic_menu_revert"
-            android:gravity="center"
-            android:text="@string/account"
-            android:textSize="@dimen/_10sdp" />
-
-    </LinearLayout>
+        app:menu="@menu/menu_bottom" />
 
     <TextView
+        android:id="@+id/tvQuickAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvQuickAdd"
         android:layout_above="@+id/bottomNavigationView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

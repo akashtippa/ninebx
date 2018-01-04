@@ -8,4 +8,5 @@ import io.realm.RealmConfiguration;
 
 public class Test {
 //    RealmConfiguration config = RealmConfiguration.Builder(this).build();
+
 }
