@@ -42,7 +42,15 @@ class PassCodeFragment : BaseAuthFragment() {
         etPassCode.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
 
-                when( editable.toString().trim().length ) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                when( p0.toString().trim().length ) {
 
                     0 -> {
                         ivOtp1.isSelected = false
@@ -108,14 +116,6 @@ class PassCodeFragment : BaseAuthFragment() {
                         }
                     }
                 }
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
         })
