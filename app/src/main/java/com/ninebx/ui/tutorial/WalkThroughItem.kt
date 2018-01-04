@@ -10,11 +10,17 @@ import android.support.annotation.StringRes
  * Created by TechnoBlogger on 18/12/17.
  */
 class WalkThroughItem : Parcelable {
-    var titleTextOne: String? = null
+
+    var titleText: String? = null
         private set
-    var titleTextTwo: String? = null
+    var subTitleText: String? = null
         private set
-    var textDescription: String? = null
+
+    var titleTextOne = -1
+        private set
+    var titleTextTwo = -1
+        private set
+    var textDescription = -1
         private set
     var textColor: Int = 0
         private set
@@ -35,7 +41,7 @@ class WalkThroughItem : Parcelable {
         private set
 
 
-    constructor(titleTextOne: String, titleTextTwo: String, textDescription: String, @ColorRes backgroundTextColor: Int, @ColorRes backgroundColorRelative: Int, @DrawableRes backgroundImageRes: Int, @DrawableRes foreroundImageRes: Int) {
+    constructor(@StringRes titleTextOne: Int, @StringRes  titleTextTwo: Int, @StringRes textDescription: Int, @ColorRes backgroundTextColor: Int, @ColorRes backgroundColorRelative: Int, @DrawableRes backgroundImageRes: Int, @DrawableRes foreroundImageRes: Int) {
         this.titleTextOne = titleTextOne
         this.titleTextTwo = titleTextTwo
         this.textDescription = textDescription
@@ -44,6 +50,8 @@ class WalkThroughItem : Parcelable {
         this.backgroundImageRes = backgroundImageRes
         this.foregroundImageRes = foreroundImageRes
     }
+
+/*
 
     constructor(titleText: String, subTitleText: String?, @ColorRes backgroundColor: Int, @DrawableRes foregroundImageRes: Int, @DrawableRes backgroundImageRes: Int) {
         this.titleTextOne = titleText
@@ -67,6 +75,7 @@ class WalkThroughItem : Parcelable {
         this.foregroundImageRes = foregroundImageRes
         this.isGif = isGif
     }
+*/
 
     constructor(@StringRes titleTextRes: Int, @StringRes subTitleTextRes: Int, @ColorRes backgroundColor: Int, @DrawableRes foregroundImageRes: Int, @DrawableRes backgroundImageRes: Int) {
         this.titleTextRes = titleTextRes
@@ -87,9 +96,10 @@ class WalkThroughItem : Parcelable {
         return 0
     }
 
+
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(this.titleTextOne)
-        dest.writeString(this.titleTextTwo)
+        dest.writeString(this.titleText)
+        dest.writeString(this.subTitleText)
         dest.writeInt(this.backgroundColor)
         dest.writeInt(this.foregroundImageRes)
         dest.writeInt(this.backgroundImageRes)
@@ -99,8 +109,8 @@ class WalkThroughItem : Parcelable {
     }
 
     protected constructor(`in`: Parcel) {
-        this.titleTextOne = `in`.readString()
-        this.titleTextTwo = `in`.readString()
+        this.titleText = `in`.readString()
+        this.subTitleText = `in`.readString()
         this.backgroundColor = `in`.readInt()
         this.foregroundImageRes = `in`.readInt()
         this.backgroundImageRes = `in`.readInt()

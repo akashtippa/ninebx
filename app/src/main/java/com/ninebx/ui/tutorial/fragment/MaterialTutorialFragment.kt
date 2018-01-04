@@ -61,23 +61,23 @@ class MaterialTutorialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val preferences = NineBxPreferences()
-        preferences.firstRun = true
+//        preferences.firstRun = true
 
-        if (!TextUtils.isEmpty(tutorialItem.titleTextOne)) {
-            titleHelpText.text = tutorialItem.titleTextOne
+        if (!TextUtils.isEmpty(tutorialItem.titleText)) {
+            titleHelpText.text = tutorialItem.titleText
         } else if (tutorialItem.titleTextRes != -1) {
             titleHelpText.setText(tutorialItem.titleTextRes)
         }
-        if (!TextUtils.isEmpty(tutorialItem.titleTextTwo)) {
-            titleHelpTextExtended.text = tutorialItem.titleTextTwo
+        if (!TextUtils.isEmpty(tutorialItem.subTitleText)) {
+            titleHelpTextExtended.text = tutorialItem.subTitleText
         } else if (tutorialItem.subTitleTextRes != -1) {
             titleHelpTextExtended.setText(tutorialItem.subTitleTextRes)
         }
-        if (!TextUtils.isEmpty(tutorialItem.textDescription)) {
+       /* if (!TextUtils.isEmpty(tutorialItem.textDescription)) {
             textDescription.text = tutorialItem.textDescription
         } else if (tutorialItem.txtDescription != -1) {
             textDescription.setText(tutorialItem.txtDescription)
-        }
+        }*/
 
         imgDescription.setImageDrawable(activity?.let { ContextCompat.getDrawable(it, tutorialItem.foregroundImageRes) })
     }

@@ -40,18 +40,20 @@ class SplashActivity : AppCompatActivity() {
                 .subscribe {
 
                     when {
+                        !prefrences.firstRun -> {
+                            val intent = Intent(this@SplashActivity, WalkThroughActivity::class.java)
+                            startActivity(intent)
+                            disposables.clear()
+                            finish()
+                        }
+
                         prefrences.isLogin -> {
                             val homeIntent = Intent(this@SplashActivity, HomeActivity::class.java)
                             startActivity(homeIntent)
                             disposables.clear()
                             finish()
                         }
-                        prefrences.firstRun -> {
-                            val intent = Intent(this@SplashActivity, WalkThroughActivity::class.java)
-                            startActivity(intent)
-                            disposables.clear()
-                            finish()
-                        }
+
                         else -> {
                             val intent = Intent(this@SplashActivity, AuthActivity::class.java)
                             startActivity(intent)

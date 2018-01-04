@@ -20,19 +20,18 @@ import java.security.SecureRandom
 /**
  * Created by Alok on 03/01/18.
  */
-class LoginTask( private var userName : String, private var password : String, private val authView: AuthView ) : AsyncTask<Void, Void, SyncUser?>() {
+class LoginTask(private var userName: String, private var password: String, private val authView: AuthView) : AsyncTask<Void, Void, SyncUser?>() {
 
-    val TAG : String = LoginTask::class.java.simpleName
+    val TAG: String = LoginTask::class.java.simpleName
     var strUsername: String = "test.box24@yopmail.com"
     var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
 
     override fun onPostExecute(result: SyncUser?) {
         super.onPostExecute(result)
         authView.hideProgress()
-        if( result == null ) {
+        if (result == null) {
             authView.onError(R.string.error_login)
-        }
-        else {
+        } else {
             AppLogger.d(TAG, result.toJson())
         }
         //TestFlow
@@ -60,8 +59,7 @@ class LoginTask( private var userName : String, private var password : String, p
             if (user != null) {
                 if (user.isValid) {
                     return user
-                }
-                else return null
+                } else return null
             }
 
         } catch (e: Exception) {

@@ -80,7 +80,7 @@
     <string name="permission_write_ext_storage_denied">Please enable WRITE_EXTERNAL_STORAGE_PERMISSION. Go to \nSettings -> Apps -> Permission</string>
     <string name="action_camera">Take a photo</string>
     <string name="date_of_birth">Date of Birth</string>
-    <string name="logging_in">Loging In</string>
+    <string name="logging_in">Logging In</string>
     <string name="error_login">Error logging in</string>
     <string name="submit">SUBMIT</string>
     <string name="first_name">First Name</string>
@@ -91,4 +91,18 @@
     <string name="tap_a_box">Tap a box to start organizing</string>
     <string name="nine">nine</string>
     <string name="bx">bx</string>
+
+    <!--Walkthrough Screens Text-->
+
+    <string name="screen_one_description">Gather your family\'s information in one place.</string>
+    <string name="screen_two_description">Involve everyone in building the complete picture.</string>
+    <string name="screen_three_description">Take better decisions with access to collective information, anywhere, anytime</string>
+    <string name="screen_four_description">Feel comfortable knowing you have full control on a <u>secure platform</u> you can trust.</string>
+    <string name="swipe_to_learn_more">Swipe to learn more</string>
+    <string name="be">be</string>
+    <string name="organized">organized</string>
+    <string name="engaged">engaged</string>
+    <string name="relaxed">relaxed</string>
+    <string name="empowered">empowered</string>
+
 </resources>

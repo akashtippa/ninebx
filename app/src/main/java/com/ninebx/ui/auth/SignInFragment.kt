@@ -18,17 +18,16 @@ class SignInFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnLogin.setOnClickListener{
-            if( validate() ) {
+        btnLogin.setOnClickListener {
+            if (validate()) {
                 mAuthView.getAuthPresenter().signIn()
             }
-
         }
-        btnSignUp.setOnClickListener{
+        btnSignUp.setOnClickListener {
             mAuthView.navigateToSignUp()
         }
-        txtTermsOfUse.setOnClickListener{}
-        txtPrivacyPolicy.setOnClickListener{}
+        txtTermsOfUse.setOnClickListener {}
+        txtPrivacyPolicy.setOnClickListener {}
     }
 
     override fun validate(): Boolean {

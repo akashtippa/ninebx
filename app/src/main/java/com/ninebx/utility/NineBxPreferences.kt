@@ -10,5 +10,4 @@ class NineBxPreferences : Preferences() {
     var firstRun by booleanPref(Constants.FIRST_RUN)
     var isLogin by booleanPref(Constants.IS_LOGIN)
 
-
 }
