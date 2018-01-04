@@ -17,9 +17,14 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private lateinit var mCurrentTag : String
     private lateinit var mAuthPresenter : AuthPresenter
+    private var mEmail: String? = ""
 
     override fun getAuthPresenter(): AuthPresenter {
         return mAuthPresenter
+    }
+
+    override fun setAccountEmail(accountEmail: String) {
+        this.mEmail = accountEmail
     }
 
     override fun onSuccess(syncUser: SyncUser?) {
@@ -44,6 +49,35 @@ class AuthActivity : AppCompatActivity(), AuthView {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.replace(R.id.container, SignInFragment()).commit()
+    }
+
+    override fun navigateToAccountPassword() {
+        mCurrentTag = "AccountPassword"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.container, AccountPasswordFragment()).commit()
+    }
+
+    override fun navigateToOTP() {
+        mCurrentTag = "OTP"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val otpFragment = OTPFragment()
+        val bundle = Bundle()
+        bundle.putString("email", mEmail)
+        otpFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, otpFragment).commit()
+    }
+
+    override fun navigateToCreatePassCode( isCreatePassCode : Boolean ) {
+        mCurrentTag = "PassCode"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val passCodeFragment = PassCodeFragment()
+        val bundle = Bundle()
+        bundle.putBoolean("isCreatePassCode", isCreatePassCode)
+        passCodeFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
     }
 
     override fun showProgress(message: Int) {

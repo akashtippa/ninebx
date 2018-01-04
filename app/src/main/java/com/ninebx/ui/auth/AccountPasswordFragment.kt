@@ -1,23 +1,22 @@
 package com.ninebx.ui.auth
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.fragment_account_password.*
 
 /**
- * Created by Alok on 03/01/18.
+ * Created by Alok on 04/01/18.
  */
-class SignUpFragment : BaseAuthFragment() {
 
+class AccountPasswordFragment : BaseAuthFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.activity_sign_up, container, false)
+        return inflater!!.inflate(R.layout.fragment_account_password, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -26,8 +25,7 @@ class SignUpFragment : BaseAuthFragment() {
         setHasOptionsMenu(true)
         btnSubmit.setOnClickListener {
             if( validate() ) {
-                mAuthView.setAccountEmail( edtEmailAddress.text.toString().trim() )
-                mAuthView.navigateToAccountPassword()
+                mAuthView.navigateToOTP()
             }
         }
     }
@@ -48,8 +46,6 @@ class SignUpFragment : BaseAuthFragment() {
         appCompatActivity.setSupportActionBar(toolbar)
         /*val assets = Typeface.createFromAsset(context.assets,"fonts/Futura-Medium.ttf")
         titleTextView.typeface = assets*/
-        titleTextView.text = getString(R.string.sign_up)
-        toolbar.navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
         appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         appCompatActivity.supportActionBar!!.setHomeButtonEnabled(true)
     }
@@ -57,24 +53,23 @@ class SignUpFragment : BaseAuthFragment() {
     override fun validate(): Boolean {
         var isValid = true
 
-        if( edtFirstName.text.toString().isEmpty() ) {
+        if( etCreatePassword.text.toString().isEmpty() ) {
             isValid = false
-            edtFirstName.requestFocus()
-            edtFirstName.error = getString(R.string.required)
+            etCreatePassword.error = getString(R.string.required)
         }
 
-        if( edtLastName.text.toString().isEmpty() ) {
+        if( etConfirmPassword.text.toString().isEmpty() ) {
             isValid = false
-            edtLastName.requestFocus()
-            edtLastName.error = getString(R.string.required)
+            etConfirmPassword.error = getString(R.string.required)
         }
 
-        if( edtEmailAddress.text.toString().isEmpty() ) {
+        if( isValid && !etConfirmPassword.text.toString().equals(etCreatePassword.text.toString())) {
             isValid = false
-            edtEmailAddress.requestFocus()
-            edtEmailAddress.error = getString(R.string.required)
+            mAuthView.onError(R.string.error_passwords_dont_match)
         }
 
         return isValid
     }
+
+
 }
