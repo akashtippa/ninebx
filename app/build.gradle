@@ -59,4 +59,7 @@ dependencies {
 
     // For every Screen, margins are set from 1 to 600 dp, in every dimens
     compile 'com.intuit.sdp:sdp-android:1.0.5'
+
+    //Spongy Castle Encryption
+    compile 'com.madgag.spongycastle:core:1.54.0.0'
 }

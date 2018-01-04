@@ -91,4 +91,17 @@
     <string name="tap_a_box">Tap a box to start organizing</string>
     <string name="nine">nine</string>
     <string name="bx">bx</string>
+    <string name="create_account_password">Create Account Password</string>
+    <string name="create_master_password">Create Master Password</string>
+    <string name="confirm_master_password">Confirm Master Password</string>
+    <string name="create_account_master_password">Create your account\n Master Password</string>
+    <string name="choose_a_strong_password">\u25CF Choose a strong password, with at least\n\t\u25CB eight characters\n\t\u25CB one uppercase letter\n\t\u25CB one lowercase letter\n\t\u25CB one number\n\t\u25CB one symbol(!, @, #, $, etc)</string>
+    <string name="error_passwords_dont_match">Passwords don\'t match</string>
+    <string name="authenticate_device">Authenticate Device</string>
+    <string name="enter_six_digit_code">Enter 6 digit code sent to</string>
+    <string name="resend_otp">Resend code</string>
+    <string name="create_your_pass_code">Create your 6-digit \nPersonal Passcode</string>
+    <string name="additional_security">Provides additional security - prevents unauthorized access to your account if others use your device</string>
+    <string name="create_personal_passcode">Create personal passcode</string>
+    <string name="confirm_your_passcode">Confirm your 6-digit \nPersonal Passcode</string>
 </resources>
