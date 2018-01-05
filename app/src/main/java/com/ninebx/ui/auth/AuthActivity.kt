@@ -72,8 +72,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private var accountPasswordFragment : AccountPasswordFragment ?= null
     override fun navigateToAccountPassword() {
-        if( NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE )
-            NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
+        if( NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE )
+            NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE
         mCurrentTag = "AccountPassword"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -82,8 +82,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToOTP() {
-        if( NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE )
-            NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
+        if( NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE )
+            NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -96,8 +96,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun navigateToCreatePassCode( isCreatePassCode : Boolean ) {
         if( !isCreatePassCode ) {
-            if( NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE )
-                NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
+            if( NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE )
+                NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         }
         mCurrentTag = "PassCode"
         val fragmentTransaction = supportFragmentManager.beginTransaction()

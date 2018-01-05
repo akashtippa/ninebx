@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
                         }
 
                         else -> {
-                            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                            val intent = Intent(this@SplashActivity, AuthActivity::class.java)
                             startActivity(intent)
                             disposables.clear()
                             finish()
