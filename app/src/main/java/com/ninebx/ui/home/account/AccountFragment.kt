@@ -6,11 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.ui.auth.AuthView
+import com.ninebx.ui.auth.SignUpFragment
+import com.ninebx.ui.base.BaseView
+import kotlinx.android.synthetic.main.fragment_account.*
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AccountFragment : Fragment(), AccountView {
+class AccountFragment : Fragment(), AccountView, View.OnClickListener {
+
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.txtProfile -> {
+                navigateToMyProfile()
+            }
+        }
+    }
+
+
+    fun navigateToMyProfile() {
+
+    }
+
 
     override fun showProgress(message: Int) {
 
@@ -30,6 +49,7 @@ class AccountFragment : Fragment(), AccountView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        txtProfile.setOnClickListener(this)
 
     }
 

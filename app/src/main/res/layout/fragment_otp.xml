@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/collapsingToolbarLayout"
+        style="@style/AppTheme.AppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/AppTheme.AppBarOverlay"
         android:background="@color/colorPrimary"
-        android:id="@+id/collapsingToolbarLayout"
         app:elevation="@dimen/toolbar_elevation">
         <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
             android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/toolbarColor"
-            app:titleTextColor="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/colorPrimary"
             >
 
             <TextView
+                android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/authenticate_device"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:layout_marginRight="@dimen/default_margin"
                 android:gravity="center"
-                android:textSize="@dimen/text_22"
-                android:id="@+id/titleTextView"
-                android:layout_marginEnd="@dimen/default_margin" />
+                android:text="@string/authenticate_device"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_22" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -52,17 +52,17 @@
             android:gravity="center"
             android:paddingLeft="@dimen/default_mini_padding"
             android:paddingRight="@dimen/default_mini_padding"
-            android:textSize="@dimen/text_16"
+            android:text="@string/enter_six_digit_code"
             android:textColor="@color/textColorRed"
-            android:text="@string/enter_six_digit_code"/>
+            android:textSize="@dimen/text_16"/>
 
         <TextView
+            android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvEmail"
             android:gravity="center"
-            android:textSize="@dimen/text_16"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name"
+            android:textSize="@dimen/text_16"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,11 +74,11 @@
                 android:id="@+id/etOtp1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/margin_48"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:maxLength="1"
                 android:inputType="number"
+                android:maxLength="1"
+                android:minWidth="@dimen/margin_48"
                 android:textColor="@color/black"
                 tools:text="4"
                 />
@@ -87,11 +87,11 @@
                 android:id="@+id/etOtp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/margin_48"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:maxLength="1"
                 android:inputType="number"
+                android:maxLength="1"
+                android:minWidth="@dimen/margin_48"
                 android:textColor="@color/black"
                 tools:text="4"
                 />
@@ -100,11 +100,11 @@
                 android:id="@+id/etOtp3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/margin_48"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:maxLength="1"
                 android:inputType="number"
+                android:maxLength="1"
+                android:minWidth="@dimen/margin_48"
                 android:textColor="@color/black"
                 tools:text="4"
                 />
@@ -113,11 +113,11 @@
                 android:id="@+id/etOtp4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/margin_48"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:maxLength="1"
                 android:inputType="number"
+                android:maxLength="1"
+                android:minWidth="@dimen/margin_48"
                 android:textColor="@color/black"
                 tools:text="4"
                 />
@@ -126,11 +126,11 @@
                 android:id="@+id/etOtp5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/margin_48"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:maxLength="1"
                 android:inputType="number"
+                android:maxLength="1"
+                android:minWidth="@dimen/margin_48"
                 android:textColor="@color/black"
                 tools:text="4"
                 />
@@ -139,11 +139,11 @@
                 android:id="@+id/etOtp6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="@dimen/margin_48"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:maxLength="1"
                 android:inputType="number"
+                android:maxLength="1"
+                android:minWidth="@dimen/margin_48"
                 android:textColor="@color/black"
                 tools:text="4"
                 />
@@ -154,22 +154,22 @@
             android:id="@+id/btnSubmit"
             android:layout_width="@dimen/_170sdp"
             android:layout_height="@dimen/_32sdp"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/default_margin"
             android:layout_marginTop="@dimen/_14sdp"
             android:background="@drawable/login_btn"
+            android:gravity="center"
             android:text="@string/submit"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp" />
 
         <TextView
+            android:id="@+id/tvResend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_mini_padding"
             android:layout_gravity="center"
             android:gravity="center"
-            android:id="@+id/tvResend"
+            android:padding="@dimen/default_mini_padding"
             android:text="@string/resend_otp"/>
 
 

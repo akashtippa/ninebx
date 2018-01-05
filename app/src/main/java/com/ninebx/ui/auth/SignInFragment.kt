@@ -25,18 +25,18 @@ class SignInFragment : BaseAuthFragment() {
             if( validate() ) {
                 mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
             }
-
         }
-        btnSignUp.setOnClickListener{
+        btnSignUp.setOnClickListener {
             mAuthView.navigateToSignUp()
         }
-        txtTermsOfUse.setOnClickListener{}
-        txtPrivacyPolicy.setOnClickListener{}
+        txtTermsOfUse.setOnClickListener {}
+        txtPrivacyPolicy.setOnClickListener {}
 
         if( NineBxApplication.autoTestMode ) {
             edtEmailAddress.setText("test.box24@yopmail.com")
             edtPassword.setText("Test.box24")
         }
+
     }
 
     override fun validate(): Boolean {

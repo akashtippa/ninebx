@@ -6,38 +6,43 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
+import com.ninebx.utility.NineBxPreferences
 import io.realm.SyncCredentials
 import io.realm.SyncUser
-import java.math.BigInteger
-import java.util.*
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
-
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import java.security.SecureRandom
-import org.spongycastle.crypto.params.KeyParameter
 import org.spongycastle.crypto.PBEParametersGenerator
 import org.spongycastle.crypto.digests.SHA256Digest
 import org.spongycastle.crypto.generators.PKCS5S2ParametersGenerator
+import org.spongycastle.crypto.params.KeyParameter
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
+import java.util.*
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class LoginTask( private var userName : String, private var password : String, private val authView: AuthView ) : AsyncTask<Void, Void, SyncUser?>() {
+class LoginTask(private var userName: String, private var password: String, private val authView: AuthView) : AsyncTask<Void, Void, SyncUser?>() {
 
-    val TAG : String = LoginTask::class.java.simpleName
+    val TAG: String = LoginTask::class.java.simpleName
     var strUsername: String = "test.box24@yopmail.com"
+    val prefrences = NineBxPreferences()
+
     var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
 
     override fun onPostExecute(result: SyncUser?) {
         super.onPostExecute(result)
         authView.hideProgress()
-        if( result == null ) {
+        if (result == null) {
             authView.onError(R.string.error_login)
-        }
-        else {
+
+
+            // Later we will put below CODE on getting Success Result.
+            prefrences.isLogin = true
+        } else {
             AppLogger.d(TAG, result.toJson())
             authView.onSuccess(result)
         }
@@ -64,8 +69,7 @@ class LoginTask( private var userName : String, private var password : String, p
             if (user != null) {
                 if (user.isValid) {
                     return user
-                }
-                else return null
+                } else return null
             }
 
         } catch (e: Exception) {

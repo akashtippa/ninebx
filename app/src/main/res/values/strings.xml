@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">NineBx</string>
     <string name="terms_of_use"><u>Terms of Use</u></string>
+    <string name="ac_terms_of_use">Terms of Use</string>
     <string name="privacy_policy"><u>Privacy Policy</u></string>
+    <string name="ac_privacy_policy">Privacy Policy</string>
     <string name="email_address">Email Address</string>
     <string name="master_password">Master Password</string>
     <string name="title_activity_test">TestActivity</string>
@@ -80,7 +82,7 @@
     <string name="permission_write_ext_storage_denied">Please enable WRITE_EXTERNAL_STORAGE_PERMISSION. Go to \nSettings -> Apps -> Permission</string>
     <string name="action_camera">Take a photo</string>
     <string name="date_of_birth">Date of Birth</string>
-    <string name="logging_in">Loging In</string>
+    <string name="logging_in">Logging In</string>
     <string name="error_login">Error logging in</string>
     <string name="submit">SUBMIT</string>
     <string name="first_name">First Name</string>
@@ -91,6 +93,43 @@
     <string name="tap_a_box">Tap a box to start organizing</string>
     <string name="nine">nine</string>
     <string name="bx">bx</string>
+
+    <!--Walkthrough Screens Text-->
+
+    <string name="screen_one_description">Gather your family\'s information in one place.</string>
+    <string name="screen_two_description">Involve everyone in building the complete picture.</string>
+    <string name="screen_three_description">Take better decisions with access to collective information, anywhere, anytime</string>
+    <string name="screen_four_description">Feel comfortable knowing you have full control on a <u>secure platform</u> you can trust.</string>
+    <string name="swipe_to_learn_more">Swipe to learn more</string>
+    <string name="be">be</string>
+    <string name="organized">organized</string>
+    <string name="engaged">engaged</string>
+    <string name="relaxed">relaxed</string>
+    <string name="empowered">empowered</string>
+    <string name="shopping">Shopping</string>
+    <string name="memories">Memories</string>
+    <string name="wellness">Wellness</string>
+    <string name="education_work"><![CDATA[Education & Work]]></string>
+    <string name="personal">Personal</string>
+    <string name="interests">Interests</string>
+    <string name="contacts">Contacts</string>
+    <string name="travel">Travel</string>
+    <string name="home_amp_money"><![CDATA[Home & Money]]></string>
+    <string name="my_profile">My Profile</string>
+    <string name="family_users">Family/Users</string>
+    <string name="subscription_plan">Subscription plan</string>
+    <string name="security_overview">Security overview</string>
+    <string name="personal_passcode">Personal passcode</string>
+    <string name="touch_id">Touch ID</string>
+    <string name="auto_lock_device_setting">Auto lock(device setting)</string>
+    <string name="log_out">Log out</string>
+    <string name="lock_now">Lock Now</string>
+    <string name="support">Support</string>
+    <string name="recommend_to_friends">Recommend to friends</string>
+    <string name="give_us_feedback">Give us feedback</string>
+    <string name="about">About</string>
+    <string name="security">Security</string>
+
     <string name="create_account_password">Create Account Password</string>
     <string name="create_master_password">Create Master Password</string>
     <string name="confirm_master_password">Confirm Master Password</string>
@@ -104,5 +143,25 @@
     <string name="additional_security">Provides additional security - prevents unauthorized access to your account if others use your device</string>
     <string name="create_personal_passcode">Create personal passcode</string>
     <string name="confirm_your_passcode">Confirm your 6-digit \nPersonal Passcode</string>
+
     <string name="invalid_email_format">Check your email format</string>
+
+    <!--Security OverView Screen in Walkthrough-->
+    <string name="end_to_end_encryption">End-to-end encryption</string>
+    <string name="end_to_end_encryption_description1">With NineBx, all your data, whether at rest or in transit, is fully encrypted and cannot be read by anyone other than you. Your data is encrypted and decrypted only at the device level, and only on your authorized device, so only you can see it.</string>
+    <string name="end_to_end_encryption_description2">Your data is secured using military-grade AES 256-bit encryption with PBKDF2 key derivation with 10,000 iterations. This makes it effectively impossible for anyone to decrypt your data without knowledge of your Master Password.</string>
+
+    <string name="only_you_have_the_key">Only you have the key to your data</string>
+    <string name="only_you_have_the_key_description1">All encryption and decryption of data requires knowledge of the Master Password which only you as the user know.</string>
+    <string name="only_you_have_the_key_description2">For your security, the Master Password is never stored on our servers and is never transmitted over the internet. Given this added security measure, NineBx is not able to help you access your data if you ever happen to forget your Master Password.</string>
+
+
+    <string name="multi_factor_authentication">Multi-factor authentication</string>
+    <string name="multi_factor_authentication_description1">In addition to confirming your Master Password, NineBx security requires you to authenticate any new device you use with a time-based one-time password (OTP) that is sent to your registered email.</string>
+    <string name="multi_factor_authentication_description2">For added security, the app is locked whenever it is pushed to the background on your device. Unlocking it requires you to enter a 6-digit Personal Passcode for NineBx that you create at Sign Up. For your convenience, you can enable Touch ID so you do not have to key in this passcode every time.</string>
+
+    <string name="secure_and_reliable">Secure and reliable cloud storage</string>
+    <string name="secure_and_reliable_description">NineBx servers are hosted on Amazon Web Services (AWS), widely considered to be one of the most secure and reliable cloud platforms in the industry.</string>
+    <string name="ninebx_best_in_class_security">NineBx Best-in-Class Security</string>
+
 </resources>

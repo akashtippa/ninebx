@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.ui.home.HomeActivity
 
 /**
  * Created by Alok on 03/01/18.
@@ -30,7 +31,6 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
 }
