@@ -2,6 +2,7 @@ package com.ninebx.ui.auth
 
 import android.os.AsyncTask
 import android.util.Base64
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
@@ -51,8 +52,8 @@ class LoginTask( private var userName : String, private var password : String, p
 
     override fun doInBackground(vararg aVoid: Void?): SyncUser? {
 
-        userName = "test.box24@yopmail.com"
-        password = "Test.box24"
+
+
         try {
             //encryptPassword()
             encryptViaSpongyCastle()
@@ -75,7 +76,7 @@ class LoginTask( private var userName : String, private var password : String, p
     }
 
     private fun encryptViaSpongyCastle() {
-        password = "Test.box24"
+
         val generator = PKCS5S2ParametersGenerator(SHA256Digest())
         generator.init(PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
         val key = generator.generateDerivedMacParameters(256) as KeyParameter
