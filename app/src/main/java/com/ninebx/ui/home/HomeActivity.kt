@@ -121,18 +121,26 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             true
         }
 
-//        setupPager()
-
         changeToolbarTitle(titleText)
 
         ivHome.setOnClickListener {
             vpParent.hide()
-//            gridMenu.show()
             layoutMenu.show()
             tvTapABox.show()
             tvQuickAdd.show()
             ivHome.hide()
+            toggleCheck(false)
         }
+        setupPager()
+
+    }
+
+    private fun toggleCheck(isCheckable: Boolean) {
+        bottomNavigationView.menu.getItem(0).isCheckable = isCheckable
+        bottomNavigationView.menu.getItem(1).isCheckable = isCheckable
+        bottomNavigationView.menu.getItem(2).isCheckable = isCheckable
+        bottomNavigationView.menu.getItem(3).isCheckable = isCheckable
+        bottomNavigationView.menu.getItem(4).isCheckable = isCheckable
     }
 
     public fun changeToolbarTitle(title: String) {
@@ -141,7 +149,15 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun loadFragment(index: Int) {
-        setupPager()
+
+        toggleCheck(true)
+
+        bottomNavigationView.menu.getItem(0).isChecked = index == 0
+        bottomNavigationView.menu.getItem(1).isChecked = index == 1
+        bottomNavigationView.menu.getItem(2).isChecked = index == 2
+        bottomNavigationView.menu.getItem(3).isChecked = index == 3
+        bottomNavigationView.menu.getItem(4).isChecked = index == 4
+
         vpParent.show()
         layoutMenu.hide()
         ivHome.show()

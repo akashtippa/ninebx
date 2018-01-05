@@ -38,16 +38,15 @@ class LoginTask(private var userName: String, private var password: String, priv
         authView.hideProgress()
         if (result == null) {
             authView.onError(R.string.error_login)
-
-
             // Later we will put below CODE on getting Success Result.
             prefrences.isLogin = true
         } else {
             AppLogger.d(TAG, result.toJson())
             authView.onSuccess(result)
         }
-        //TestFlow
-        //authView.onSuccess(null)
+
+        if( NineBxApplication.autoTestMode )
+            authView.navigateToHome()
     }
 
     override fun onPreExecute() {
@@ -82,7 +81,7 @@ class LoginTask(private var userName: String, private var password: String, priv
 
     private fun encryptViaSpongyCastle() {
 
-        val generator = PKCS5S2ParametersGenerator(SHA256Digest())
+        val generator = PKCS5S2ParametersGenerator(SHA256Digest()!!)
         generator.init(PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
         val key = generator.generateDerivedMacParameters(256) as KeyParameter
         //val key = generator.generateDerivedParameters(256, 16) as ParametersWithIV
