@@ -19,8 +19,6 @@ class FragmentEngaged : Fragment() {
     }
 
     companion object {
-
-        // newInstance constructor for creating fragment with arguments
         fun newInstance(): FragmentEngaged {
             val fragmentFirst = FragmentEngaged()
             val args = Bundle()

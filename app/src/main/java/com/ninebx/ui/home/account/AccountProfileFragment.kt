@@ -13,12 +13,12 @@ import com.ninebx.R
 class AccountProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater!!.inflate(R.layout.fragment_my_profile, container, false)
-        return view
+        return inflater!!.inflate(R.layout.fragment_my_profile, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
     }
+
 }

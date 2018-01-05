@@ -21,6 +21,7 @@ class SignInFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         btnLogin.setOnClickListener{
             if( validate() ) {
                 mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
@@ -36,7 +37,6 @@ class SignInFragment : BaseAuthFragment() {
             edtEmailAddress.setText("test.box24@yopmail.com")
             edtPassword.setText("Test.box24")
         }
-
     }
 
     override fun validate(): Boolean {

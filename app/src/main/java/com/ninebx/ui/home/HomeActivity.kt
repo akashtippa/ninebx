@@ -80,8 +80,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
+        if (supportActionBar != null) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true);
         }
 
         layoutHome.setOnClickListener(this)

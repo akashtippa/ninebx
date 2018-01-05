@@ -82,7 +82,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtFamily"
@@ -101,7 +101,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtSubscriptionPlan"
@@ -150,7 +150,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtPersonalPassCode"
@@ -170,7 +170,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <RelativeLayout
                 android:id="@+id/layoutTouchID"
@@ -204,7 +204,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtAutoLock"
@@ -253,7 +253,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtPrivacyPolicy"
@@ -273,7 +273,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
 
             <TextView
@@ -294,7 +294,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtRecommend"
@@ -314,7 +314,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
+                android:background="@color/grey_100" />
 
             <TextView
                 android:id="@+id/txtSupport"
