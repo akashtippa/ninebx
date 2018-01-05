@@ -49,6 +49,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
     var mSyncUser : SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
+        mAuthView.navigateToOTP()
     }
 
     private lateinit var appCompatActivity: AppCompatActivity

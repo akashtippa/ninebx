@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import java.util.regex.Pattern
 import android.text.TextUtils
 
 
@@ -19,7 +18,6 @@ import android.text.TextUtils
  * Created by Alok on 03/01/18.
  */
 class SignUpFragment : BaseAuthFragment() {
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.activity_sign_up, container, false)
@@ -95,7 +93,7 @@ class SignUpFragment : BaseAuthFragment() {
         return isValid
     }
 
-    fun isValidEmail(target: CharSequence): Boolean {
+    private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 }

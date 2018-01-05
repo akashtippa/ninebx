@@ -15,6 +15,7 @@ class NineBxApplication : Application() {
 
     companion object {
         lateinit var instance : NineBxApplication
+
         @SuppressLint("StaticFieldLeak")
         var realmDefaultInstance : Realm? = null
         fun getRealmInstance() : Realm {
@@ -22,6 +23,14 @@ class NineBxApplication : Application() {
                 realmDefaultInstance = Realm.getDefaultInstance()
             }
             return realmDefaultInstance!!
+        }
+
+        @SuppressLint("StaticFieldLeak")
+        var nineBxPreferences : NineBxPreferences? = null
+        fun getPreferences() : NineBxPreferences {
+            if( nineBxPreferences == null )
+                nineBxPreferences = NineBxPreferences()
+            return nineBxPreferences!!
         }
         var autoTestMode = true
     }

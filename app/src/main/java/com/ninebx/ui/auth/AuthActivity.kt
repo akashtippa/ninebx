@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.utility.Constants
 import io.realm.SyncUser
 
 /**
@@ -43,6 +45,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToHome() {
+
+        if( NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE )
+            NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
+
         val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
         startActivity(homeIntent)
         finish()
@@ -66,6 +72,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private var accountPasswordFragment : AccountPasswordFragment ?= null
     override fun navigateToAccountPassword() {
+        if( NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE )
+            NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "AccountPassword"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -74,6 +82,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToOTP() {
+        if( NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE )
+            NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         mCurrentTag = "OTP"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -85,6 +95,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToCreatePassCode( isCreatePassCode : Boolean ) {
+        if( !isCreatePassCode ) {
+            if( NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE )
+                NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
+        }
         mCurrentTag = "PassCode"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -110,7 +124,37 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
+        navigateToScreen()
+
+    }
+
+    private fun navigateToScreen() {
         mAuthPresenter = AuthPresenter(this)
+        when( NineBxApplication.getPreferences().currentStep ) {
+            Constants.ALL_COMPLETE -> {
+                navigateToHome()
+            }
+            Constants.ACCOUNT_PASSWORD_COMPLETE -> {
+                navigateToSignUp()
+                navigateToAccountPassword()
+                navigateToOTP()
+            }
+            Constants.OTP_COMPLETE -> {
+                navigateToSignUp()
+                navigateToAccountPassword()
+                navigateToOTP()
+                navigateToCreatePassCode(true)
+            }
+            Constants.PASS_CODE_COMPLETE -> {
+                navigateToHome()
+            }
+            Constants.SIGN_UP_COMPLETE -> {
+                navigateToSignUp()
+                navigateToAccountPassword()
+            }
+        }
+
     }
 
     override fun onBackPressed() {

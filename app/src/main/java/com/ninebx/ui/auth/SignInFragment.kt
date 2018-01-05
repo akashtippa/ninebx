@@ -64,12 +64,13 @@ class SignInFragment : BaseAuthFragment() {
         return isValid
     }
 
-    fun isValidEmail(target: CharSequence): Boolean {
+    private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 
     var mSyncUser : SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
+        mAuthView.navigateToHome()
     }
 }
