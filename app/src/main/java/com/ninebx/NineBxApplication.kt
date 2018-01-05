@@ -23,6 +23,7 @@ class NineBxApplication : Application() {
             }
             return realmDefaultInstance!!
         }
+        var autoTestMode = true
     }
 
     override fun onCreate() {

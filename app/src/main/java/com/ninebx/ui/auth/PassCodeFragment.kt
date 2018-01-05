@@ -39,6 +39,7 @@ class PassCodeFragment : BaseAuthFragment() {
         passCode = arguments.getString("passCode", "")
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
         setupToolbar()
+        setHasOptionsMenu(!isCreatePassCode)
         etPassCode.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
 
@@ -50,7 +51,7 @@ class PassCodeFragment : BaseAuthFragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                when( p0.toString().trim().length ) {
+                when( etPassCode.text.toString().trim().length ) {
 
                     0 -> {
                         ivOtp1.isSelected = false

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/collapsingToolbarLayout"
-        style="@style/AppTheme.AppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/AppTheme.AppBarOverlay"
         android:background="@color/colorPrimary"
+        android:id="@+id/collapsingToolbarLayout"
         app:elevation="@dimen/toolbar_elevation">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
             android:background="@color/toolbarColor"
+            app:titleTextColor="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:titleTextColor="@color/colorPrimary"
+            android:layout_height="?attr/actionBarSize"
             >
 
             <TextView
-                android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_margin"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/create_personal_passcode"
                 android:layout_marginRight="@dimen/default_margin"
                 android:gravity="center"
-                android:text="@string/create_personal_passcode"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_22" />
+                android:textSize="@dimen/text_22"
+                android:id="@+id/titleTextView"
+                android:layout_marginEnd="@dimen/default_margin" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -47,107 +47,107 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_margin"
             android:gravity="center"
+            android:id="@+id/tvTitle"
             android:paddingLeft="@dimen/default_mini_padding"
             android:paddingRight="@dimen/default_mini_padding"
-            android:text="@string/create_your_pass_code"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:textSize="@dimen/text_16"
             android:textColor="@color/textColorBlue"
-            android:textSize="@dimen/text_16"/>
+            android:text="@string/create_your_pass_code"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
             android:padding="@dimen/default_margin"
-            android:visibility="visible">
+            android:gravity="center"
+            android:visibility="visible"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/ivOtp1"
+                android:src="@drawable/pass_code_selector"
+                android:layout_margin="@dimen/default_mini_padding"
                 android:layout_width="@dimen/default_margin"
                 android:layout_height="@dimen/default_margin"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/default_mini_padding"
                 android:gravity="center"
-                android:inputType="number"
                 android:maxLength="1"
-                android:src="@drawable/pass_code_selector"
+                android:inputType="number"
                 android:textColor="@color/white"
                 tools:text="4"
                 />
 
             <ImageView
                 android:id="@+id/ivOtp2"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:src="@drawable/pass_code_selector"
                 android:layout_width="@dimen/default_margin"
                 android:layout_height="@dimen/default_margin"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/default_mini_padding"
                 android:gravity="center"
-                android:inputType="number"
                 android:maxLength="1"
-                android:src="@drawable/pass_code_selector"
+                android:inputType="number"
                 android:textColor="@color/white"
                 tools:text="4"
                 />
 
             <ImageView
                 android:id="@+id/ivOtp3"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:src="@drawable/pass_code_selector"
                 android:layout_width="@dimen/default_margin"
                 android:layout_height="@dimen/default_margin"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/default_mini_padding"
                 android:gravity="center"
-                android:inputType="number"
                 android:maxLength="1"
-                android:src="@drawable/pass_code_selector"
+                android:inputType="number"
                 android:textColor="@color/white"
                 tools:text="4"
                 />
 
             <ImageView
                 android:id="@+id/ivOtp4"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:src="@drawable/pass_code_selector"
                 android:layout_width="@dimen/default_margin"
                 android:layout_height="@dimen/default_margin"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/default_mini_padding"
                 android:gravity="center"
-                android:inputType="number"
                 android:maxLength="1"
-                android:src="@drawable/pass_code_selector"
+                android:inputType="number"
                 android:textColor="@color/white"
                 tools:text="4"
                 />
 
             <ImageView
                 android:id="@+id/ivOtp5"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:src="@drawable/pass_code_selector"
                 android:layout_width="@dimen/default_margin"
                 android:layout_height="@dimen/default_margin"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/default_mini_padding"
                 android:gravity="center"
-                android:inputType="number"
                 android:maxLength="1"
-                android:src="@drawable/pass_code_selector"
+                android:inputType="number"
                 android:textColor="@color/white"
                 tools:text="4"
                 />
 
             <ImageView
                 android:id="@+id/ivOtp6"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:src="@drawable/pass_code_selector"
                 android:layout_width="@dimen/default_margin"
                 android:layout_height="@dimen/default_margin"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/default_mini_padding"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="1"
                 android:minWidth="@dimen/margin_48"
-                android:src="@drawable/pass_code_selector"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:maxLength="1"
+                android:inputType="number"
                 android:textColor="@color/white"
                 tools:text="4"
                 />
@@ -155,22 +155,21 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/etPassCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent_white"
-            android:cursorVisible="false"
             android:gravity="center"
-            android:inputType="number"
             android:maxEms="6"
-            android:text="@string/app_name"
+            android:cursorVisible="false"
+            android:inputType="number"
+            android:visibility="visible"
             android:textColor="@color/transparent_white"
-            android:visibility="visible"/>
+            android:id="@+id/etPassCode"/>
 
         <TextView
-            android:id="@+id/tvSecurity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tvSecurity"
             android:text="@string/additional_security"/>
 
 

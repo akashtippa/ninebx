@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -18,9 +19,9 @@ class SignInFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnLogin.setOnClickListener {
-            if (validate()) {
-                mAuthView.getAuthPresenter().signIn()
+        btnLogin.setOnClickListener{
+            if( validate() ) {
+                mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
             }
         }
         btnSignUp.setOnClickListener {
@@ -28,6 +29,12 @@ class SignInFragment : BaseAuthFragment() {
         }
         txtTermsOfUse.setOnClickListener {}
         txtPrivacyPolicy.setOnClickListener {}
+
+        if( NineBxApplication.autoTestMode ) {
+            edtEmailAddress.setText("test.box24@yopmail.com")
+            edtPassword.setText("Test.box24")
+        }
+
     }
 
     override fun validate(): Boolean {

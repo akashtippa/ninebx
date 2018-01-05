@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.fragment_otp.*
 
@@ -161,6 +162,14 @@ class OTPFragment : BaseAuthFragment() {
 
             }
         })
+        if( NineBxApplication.autoTestMode ) {
+            etOtp1.setText("1")
+            etOtp2.setText("1")
+            etOtp3.setText("1")
+            etOtp4.setText("1")
+            etOtp5.setText("1")
+            etOtp6.setText("1")
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

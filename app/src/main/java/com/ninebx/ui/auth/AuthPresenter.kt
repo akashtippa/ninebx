@@ -16,7 +16,7 @@ class AuthPresenter( private val authView: AuthView ) {
 
     }
 
-    fun signIn() {
-        LoginTask("", "", authView ).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR, null )
+    fun signIn( userName : String, password : String ) {
+        LoginTask(userName, password, authView ).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR, null )
     }
 }

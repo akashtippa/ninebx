@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.fragment_account_password.*
 
@@ -27,6 +28,10 @@ class AccountPasswordFragment : BaseAuthFragment() {
             if( validate() ) {
                 mAuthView.navigateToOTP()
             }
+        }
+        if( NineBxApplication.autoTestMode ) {
+            etCreatePassword.setText("a")
+            etConfirmPassword.setText("a")
         }
     }
 

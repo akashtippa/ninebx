@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -29,6 +30,11 @@ class SignUpFragment : BaseAuthFragment() {
                 mAuthView.setAccountEmail( edtEmailAddress.text.toString().trim() )
                 mAuthView.navigateToAccountPassword()
             }
+        }
+        if( NineBxApplication.autoTestMode ) {
+            edtFirstName.setText("Test")
+            edtLastName.setText("Test")
+            edtEmailAddress.setText("test.box24@yopmail.com")
         }
     }
 
