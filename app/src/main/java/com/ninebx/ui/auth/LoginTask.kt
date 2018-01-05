@@ -6,21 +6,19 @@ import com.ninebx.R
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.NineBxPreferences
-import com.ninebx.utility.Preferences
 import io.realm.SyncCredentials
 import io.realm.SyncUser
-import java.math.BigInteger
-import java.util.*
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
-
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import java.security.SecureRandom
-import org.spongycastle.crypto.params.KeyParameter
 import org.spongycastle.crypto.PBEParametersGenerator
 import org.spongycastle.crypto.digests.SHA256Digest
 import org.spongycastle.crypto.generators.PKCS5S2ParametersGenerator
+import org.spongycastle.crypto.params.KeyParameter
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
+import java.util.*
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
 
 
 /**

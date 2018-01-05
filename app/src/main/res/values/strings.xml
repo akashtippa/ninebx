@@ -143,4 +143,22 @@
     <string name="additional_security">Provides additional security - prevents unauthorized access to your account if others use your device</string>
     <string name="create_personal_passcode">Create personal passcode</string>
     <string name="confirm_your_passcode">Confirm your 6-digit \nPersonal Passcode</string>
+
+    <!--Security OverView Screen in Walkthrough-->
+    <string name="end_to_end_encryption">End-to-end encryption</string>
+    <string name="end_to_end_encryption_description1">With NineBx, all your data, whether at rest or in transit, is fully encrypted and cannot be read by anyone other than you. Your data is encrypted and decrypted only at the device level, and only on your authorized device, so only you can see it.</string>
+    <string name="end_to_end_encryption_description2">Your data is secured using military-grade AES 256-bit encryption with PBKDF2 key derivation with 10,000 iterations. This makes it effectively impossible for anyone to decrypt your data without knowledge of your Master Password.</string>
+
+    <string name="only_you_have_the_key">Only you have the key to your data</string>
+    <string name="only_you_have_the_key_description1">All encryption and decryption of data requires knowledge of the Master Password which only you as the user know.</string>
+    <string name="only_you_have_the_key_description2">For your security, the Master Password is never stored on our servers and is never transmitted over the internet. Given this added security measure, NineBx is not able to help you access your data if you ever happen to forget your Master Password.</string>
+
+
+    <string name="multi_factor_authentication">Multi-factor authentication</string>
+    <string name="multi_factor_authentication_description1">In addition to confirming your Master Password, NineBx security requires you to authenticate any new device you use with a time-based one-time password (OTP) that is sent to your registered email.</string>
+    <string name="multi_factor_authentication_description2">For added security, the app is locked whenever it is pushed to the background on your device. Unlocking it requires you to enter a 6-digit Personal Passcode for NineBx that you create at Sign Up. For your convenience, you can enable Touch ID so you do not have to key in this passcode every time.</string>
+
+    <string name="secure_and_reliable">Secure and reliable cloud storage</string>
+    <string name="secure_and_reliable_description">NineBx servers are hosted on Amazon Web Services (AWS), widely considered to be one of the most secure and reliable cloud platforms in the industry.</string>
+    <string name="ninebx_best_in_class_security">NineBx Best-in-Class Security</string>
 </resources>
