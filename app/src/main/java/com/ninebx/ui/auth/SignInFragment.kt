@@ -1,11 +1,13 @@
 package com.ninebx.ui.auth
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 /**
@@ -38,6 +40,36 @@ class SignInFragment : BaseAuthFragment() {
     }
 
     override fun validate(): Boolean {
-        return true
+        var isValid = true
+
+        if( edtEmailAddress.text.toString().isEmpty() ) {
+            isValid = false
+            edtEmailAddress.requestFocus()
+            edtEmailAddress.error = getString(R.string.required)
+        }
+        else {
+            if( !isValidEmail(edtEmailAddress.text.toString().trim()) ) {
+                isValid = false
+                edtEmailAddress.requestFocus()
+                mAuthView.onError(R.string.invalid_email_format)
+            }
+        }
+
+        if( edtPassword.text.toString().isEmpty() ) {
+            isValid = false
+            edtPassword.requestFocus()
+            edtPassword.error = getString(R.string.required)
+        }
+
+        return isValid
+    }
+
+    fun isValidEmail(target: CharSequence): Boolean {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
+
+    var mSyncUser : SyncUser? = null
+    fun onSuccess(syncUser: SyncUser?) {
+        mSyncUser = syncUser
     }
 }

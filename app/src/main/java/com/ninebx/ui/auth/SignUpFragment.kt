@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.util.regex.Pattern
+import android.text.TextUtils
+
+
 
 /**
  * Created by Alok on 03/01/18.
@@ -80,7 +84,18 @@ class SignUpFragment : BaseAuthFragment() {
             edtEmailAddress.requestFocus()
             edtEmailAddress.error = getString(R.string.required)
         }
+        else {
+            if( !isValidEmail(edtEmailAddress.text.toString().trim()) ) {
+                isValid = false
+                edtEmailAddress.requestFocus()
+                mAuthView.onError(R.string.invalid_email_format)
+            }
+        }
 
         return isValid
+    }
+
+    fun isValidEmail(target: CharSequence): Boolean {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 }

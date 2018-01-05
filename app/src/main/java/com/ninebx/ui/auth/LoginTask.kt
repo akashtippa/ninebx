@@ -39,6 +39,7 @@ class LoginTask( private var userName : String, private var password : String, p
         }
         else {
             AppLogger.d(TAG, result.toJson())
+            authView.onSuccess(result)
         }
         //TestFlow
         //authView.onSuccess(null)
@@ -81,7 +82,7 @@ class LoginTask( private var userName : String, private var password : String, p
         generator.init(PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
         val key = generator.generateDerivedMacParameters(256) as KeyParameter
         //val key = generator.generateDerivedParameters(256, 16) as ParametersWithIV
-        password = Arrays.toString(key.key)
+        password = toHex(key.key)
 
 
         AppLogger.d(TAG, "encryptViaSpongyCastle Password generate " + password)

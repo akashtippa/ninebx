@@ -15,7 +15,6 @@ import io.realm.SyncUser
  */
 class AuthActivity : AppCompatActivity(), AuthView {
 
-
     private lateinit var mCurrentTag : String
     private lateinit var mAuthPresenter : AuthPresenter
     private var mEmail: String? = ""
@@ -24,12 +23,23 @@ class AuthActivity : AppCompatActivity(), AuthView {
         return mAuthPresenter
     }
 
+    override fun getAccountEmail(): String {
+        return mEmail!!
+    }
+
     override fun setAccountEmail(accountEmail: String) {
         this.mEmail = accountEmail
     }
 
     override fun onSuccess(syncUser: SyncUser?) {
-        navigateToHome()
+        when( mCurrentTag ) {
+            "SignIn" -> {
+                signInFragment!!.onSuccess( syncUser )
+            }
+            "AccountPassword" -> {
+                accountPasswordFragment!!.onSuccess( syncUser )
+            }
+        }
     }
 
     override fun navigateToHome() {
@@ -45,18 +55,22 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.replace(R.id.container, SignUpFragment()).commit()
     }
 
+    private var signInFragment : SignInFragment ?= null
     override fun navigateToSignIn() {
         mCurrentTag = "SignIn"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.replace(R.id.container, SignInFragment()).commit()
+        signInFragment = SignInFragment()
+        fragmentTransaction.replace(R.id.container, signInFragment).commit()
     }
 
+    private var accountPasswordFragment : AccountPasswordFragment ?= null
     override fun navigateToAccountPassword() {
         mCurrentTag = "AccountPassword"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.replace(R.id.container, AccountPasswordFragment()).commit()
+        accountPasswordFragment = AccountPasswordFragment()
+        fragmentTransaction.replace(R.id.container, accountPasswordFragment).commit()
     }
 
     override fun navigateToOTP() {

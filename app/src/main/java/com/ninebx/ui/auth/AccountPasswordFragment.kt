@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account_password.*
 
 /**
@@ -26,7 +27,8 @@ class AccountPasswordFragment : BaseAuthFragment() {
         setHasOptionsMenu(true)
         btnSubmit.setOnClickListener {
             if( validate() ) {
-                mAuthView.navigateToOTP()
+                mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())
+
             }
         }
         if( NineBxApplication.autoTestMode ) {
@@ -42,6 +44,11 @@ class AccountPasswordFragment : BaseAuthFragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    var mSyncUser : SyncUser? = null
+    fun onSuccess(syncUser: SyncUser?) {
+        mSyncUser = syncUser
     }
 
     private lateinit var appCompatActivity: AppCompatActivity

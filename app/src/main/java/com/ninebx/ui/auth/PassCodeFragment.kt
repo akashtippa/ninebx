@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_pass_code.*
 
 /**
@@ -123,6 +124,8 @@ class PassCodeFragment : BaseAuthFragment() {
 
         etPassCode.requestFocus()
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when( item!!.itemId ) {

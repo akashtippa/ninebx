@@ -15,6 +15,7 @@ interface AuthView : BaseView {
     fun navigateToCreatePassCode( isCreatePassCode : Boolean  )
     fun getAuthPresenter() : AuthPresenter
     fun onSuccess( syncUser: SyncUser? )
+    fun getAccountEmail() : String
     fun setAccountEmail(accountEmail: String)
 
 }
