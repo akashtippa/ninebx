@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/grey_100">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_icon_arrow_left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/subscription_plan"
+            android:textColor="@color/colorPrimary" />
+
+    </RelativeLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_help_view_page_indicator"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="@dimen/_9sdp"
+        android:background="@color/white" />
+
+
+    <com.ninebx.ui.tutorial.view.CirclePageIndicator
+        android:id="@+id/activity_help_view_page_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:minHeight="24dp"
+        app:centered="true"
+        app:fillColor="@color/colorPrimary"
+        app:pageColor="@color/grey_100"
+        app:radius="4dp"
+        app:strokeColor="#E0E0E0"
+        app:strokeWidth="0dp" />
+
+
+</RelativeLayout>
