@@ -70,4 +70,5 @@ dependencies {
     //Spongy Castle Encryption
     compile 'com.madgag.spongycastle:core:1.54.0.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+
 }

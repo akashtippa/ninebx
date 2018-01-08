@@ -223,4 +223,17 @@
     <string name="secure_and_convenient_touch_id_login">Secure and convenient Touch ID login</string>
     <string name="military_grade_encryption_aes_256_bit">Military grade encryption (AES 256-bit)</string>
     <string name="compare_plans">Compare plans</string>
+    <string name="error_wrong_passcode">Wrong pass code</string>
+    <string name="num_one">1</string>
+    <string name="num_two">2</string>
+    <string name="num_three">3</string>
+    <string name="num_four">4</string>
+    <string name="num_five">5</string>
+    <string name="num_six">6</string>
+    <string name="num_seven">7</string>
+    <string name="num_eight">8</string>
+    <string name="num_nine">9</string>
+    <string name="num_zero">0</string>
+    <string name="enter_your_ninebx_passcode">Enter your NineBx\nPersonal Passcode</string>
+    <string name="cancel">Cancel</string>
 </resources>

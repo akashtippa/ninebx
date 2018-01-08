@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTitle"
+        android:gravity="center"
+        android:text="@string/enter_your_ninebx_passcode"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_margin"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/ivOtp1"
+            android:layout_width="@dimen/default_margin"
+            android:layout_height="@dimen/default_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:src="@drawable/pass_code_selector"
+            android:textColor="@color/white"
+            tools:text="4" />
+
+        <ImageView
+            android:id="@+id/ivOtp2"
+            android:layout_width="@dimen/default_margin"
+            android:layout_height="@dimen/default_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:src="@drawable/pass_code_selector"
+            android:textColor="@color/white"
+            tools:text="4" />
+
+        <ImageView
+            android:id="@+id/ivOtp3"
+            android:layout_width="@dimen/default_margin"
+            android:layout_height="@dimen/default_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:src="@drawable/pass_code_selector"
+            android:textColor="@color/white"
+            tools:text="4" />
+
+        <ImageView
+            android:id="@+id/ivOtp4"
+            android:layout_width="@dimen/default_margin"
+            android:layout_height="@dimen/default_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:src="@drawable/pass_code_selector"
+            android:textColor="@color/white"
+            tools:text="4" />
+
+        <ImageView
+            android:id="@+id/ivOtp5"
+            android:layout_width="@dimen/default_margin"
+            android:layout_height="@dimen/default_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:src="@drawable/pass_code_selector"
+            android:textColor="@color/white"
+            tools:text="4" />
+
+        <ImageView
+            android:id="@+id/ivOtp6"
+            android:layout_width="@dimen/default_margin"
+            android:layout_height="@dimen/default_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:minWidth="@dimen/margin_48"
+            android:src="@drawable/pass_code_selector"
+            android:textColor="@color/white"
+            tools:text="4" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etPassCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_78sdp"
+        android:layout_marginLeft="@dimen/_78sdp"
+        android:cursorVisible="false"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxEms="6"
+        android:textColor="@color/transparent_white"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_one"
+                android:id="@+id/tvNum1"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_two"
+                android:id="@+id/tvNum2"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_three"
+                android:id="@+id/tvNum3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_four"
+                android:id="@+id/tvNum4"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_five"
+                android:id="@+id/tvNum5"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_six"
+                android:id="@+id/tvNum6"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_seven"
+                android:id="@+id/tvNum7"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_eight"
+                android:id="@+id/tvNum8"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_nine"
+                android:id="@+id/tvNum9"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="3"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_zero"
+                android:id="@+id/tvNum0"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_arrow_back"
+                android:textSize="@dimen/text_22"
+                android:gravity="center"
+                android:text="@string/num_nine"
+                android:id="@+id/ivBack"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCancel"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:padding="@dimen/default_margin"
+        android:layout_gravity="right"
+        android:text="@string/cancel"/>
+
+</LinearLayout>

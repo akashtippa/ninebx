@@ -25,8 +25,7 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.Constants
 import android.text.Html
-
-
+import com.ninebx.ui.home.passcode.PassCodeDialog
 
 
 @Suppress("DEPRECATION")
@@ -228,6 +227,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 })
     }
 
+    private var isPasswordRequired: Boolean = false
+
     /**
     // For iOS
     let syncServerURL = URL(string: serverUrl + "Combine")!
@@ -241,4 +242,24 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
      */
 
+    override fun onPause() {
+        super.onPause()
+        isPasswordRequired = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if( isPasswordRequired )
+            PassCodeDialog( this, "111111", object : PassCodeDialog.PassCodeDialogListener {
+                override fun onSuccess() {
+                    isPasswordRequired = false
+                }
+
+                override fun onFailure(error: Int) {
+                    Toast.makeText(this@HomeActivity, error, Toast.LENGTH_LONG).show()
+                    isPasswordRequired = true
+                }
+
+            } )
+    }
 }
