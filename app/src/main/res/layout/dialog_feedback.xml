@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/grey_100">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_icon_arrow_left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/give_us_feedback"
+            android:textColor="@color/colorPrimary" />
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_9sdp"
+                android:padding="@dimen/_2sdp"
+                android:text="@string/thank_you_for_trying_out_ninebx_please_let_us_know_what_you_thought"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/account_bg_screen">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="How was it in terms of visual app"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radioHowWasIt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioSignificant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/significant_room_for_improvement"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+                <RadioButton
+                    android:id="@+id/radioQuiteOrdinary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/quite_ordinary_didn_t_grab_my_attention"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:id="@+id/radioLoveTheLook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/loved_the_look_made_me_want_to_engage"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/account_bg_screen">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="How was it in terms of visual app"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radioHowWasItToNavigate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioSignificantRoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/it_was_a_naze_i_got_lost_a_number_of_times"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+                <RadioButton
+                    android:id="@+id/radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/took_some_getting_used_to"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+                <RadioButton
+                    android:id="@+id/radioThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/very_intutive_i_always_knew_where_i_was"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/account_bg_screen">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/overall_how_useful_did_you_find"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radioOverall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioISeeNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/i_see_no_use_for_it"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+                <RadioButton
+                    android:id="@+id/radioIMightUse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/i_might_use_some_of_the_features"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+                <RadioButton
+                    android:id="@+id/radioCanEasily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_9sdp"
+                    android:text="@string/can_easily_become_one_of_my_top_4_5_apps"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyRadioButton" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/account_bg_screen">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/other_comments_and_suggestions"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/edtComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@null"
+                android:hint="@string/comments_here" />
+
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:background="@drawable/login_btn"
+                android:text="@string/submit"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

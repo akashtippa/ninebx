@@ -15,11 +15,9 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.realm.*
 import kotlinx.android.synthetic.main.activity_home.*
-import android.support.v4.app.Fragment
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.adapter.HomeViewPagerAdapter
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
@@ -30,39 +28,30 @@ import com.ninebx.NineBxApplication
 import com.ninebx.ui.home.passcode.PassCodeDialog
 
 
+
+
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.layoutHome -> {
-
+            R.id.txtSearch -> {
+                callBottomViewFragment(getString(R.string.search))
             }
-            R.id.layoutTravell -> {
-
+            R.id.txtCalendar -> {
+                callBottomViewFragment(getString(R.string.calendar))
             }
-            R.id.layoutContacts -> {
-
+            R.id.txtLists -> {
+                callBottomViewFragment(getString(R.string.lists))
             }
-            R.id.layoutEducation -> {
-
+            R.id.txtNotifications -> {
+                callBottomViewFragment(getString(R.string.notifications))
             }
-            R.id.layoutPersonal -> {
-
-            }
-            R.id.layoutInterests -> {
-
-            }
-            R.id.layoutWellness -> {
-
-            }
-            R.id.layoutMemories -> {
-
-            }
-            R.id.layoutShopping -> {
-
+            R.id.txtAccount -> {
+                callBottomViewFragment(getString(R.string.account))
             }
         }
     }
+
 
     var strUsername: String = "test.box24@yopmail.com"
     var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
@@ -72,7 +61,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     var config: SyncConfiguration? = null
     var realm: Realm? = null
 
-    val titleText = "<font color=#cc0029>Nine</font><font color=#7C4DFF>bx</font>"
+    val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,59 +69,59 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_home)
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true);
         }
-
-        layoutHome.setOnClickListener(this)
-        layoutTravell.setOnClickListener(this)
-        layoutContacts.setOnClickListener(this)
-        layoutEducation.setOnClickListener(this)
-        layoutPersonal.setOnClickListener(this)
-        layoutInterests.setOnClickListener(this)
-        layoutWellness.setOnClickListener(this)
-        layoutMemories.setOnClickListener(this)
-        layoutShopping.setOnClickListener(this)
 
         ivHome.hide()
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         SyncTheDb().execute()
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+      /*  bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.item_search -> {
-                    loadFragment(0)
+                    callBottomViewFragment(getString(R.string.search))
                 }
                 R.id.item_calendar -> {
-                    loadFragment(1)
+                    callBottomViewFragment(getString(R.string.calendar))
                 }
                 R.id.item_lists -> {
-                    loadFragment(2)
+                    callBottomViewFragment(getString(R.string.lists))
                 }
                 R.id.item_notifications -> {
-                    loadFragment(3)
+                    callBottomViewFragment(getString(R.string.notifications))
                 }
                 R.id.item_account -> {
-                    loadFragment(4)
+                    callBottomViewFragment(getString(R.string.account))
                 }
             }
             true
-        }
+        }*/
 
         changeToolbarTitle(titleText)
 
         ivHome.setOnClickListener {
-            vpParent.hide()
-            layoutMenu.show()
-            tvTapABox.show()
-            tvQuickAdd.show()
+            layoutQuickAdd.show()
             ivHome.hide()
             toggleCheck(false)
+            changeToolbarTitle(titleText)
+            callHomeFragment()
         }
-        setupPager()
 
+        callHomeFragment()
+
+        txtSearch.setOnClickListener(this)
+        txtCalendar.setOnClickListener(this)
+        txtLists.setOnClickListener(this)
+        txtNotifications.setOnClickListener(this)
+        txtAccount.setOnClickListener(this)
+    }
+
+    private fun callHomeFragment() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.frameLayout, HomeFragment()).commit()
     }
 
     private fun toggleCheck(isCheckable: Boolean) {
@@ -147,37 +136,39 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         toolbarTitle.text = Html.fromHtml(title)
     }
 
-
-    private fun loadFragment(index: Int) {
-
+    // Calling the BottomView Navigation
+    private fun callBottomViewFragment(option: String) {
         toggleCheck(true)
-
-        bottomNavigationView.menu.getItem(0).isChecked = index == 0
-        bottomNavigationView.menu.getItem(1).isChecked = index == 1
-        bottomNavigationView.menu.getItem(2).isChecked = index == 2
-        bottomNavigationView.menu.getItem(3).isChecked = index == 3
-        bottomNavigationView.menu.getItem(4).isChecked = index == 4
-
-        vpParent.show()
-        layoutMenu.hide()
         ivHome.show()
-        tvTapABox.hide()
-        tvQuickAdd.hide()
-        vpParent.currentItem = index
+        layoutQuickAdd.hide()
+
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        when (option) {
+            getString(R.string.search) -> {
+                toolbarTitle.text = getString(R.string.search)
+                fragmentTransaction.replace(R.id.frameLayout, SearchFragment()).commit()
+            }
+            getString(R.string.calendar) -> {
+                toolbarTitle.text = getString(R.string.calendar)
+                fragmentTransaction.replace(R.id.frameLayout, CalendarFragment()).commit()
+            }
+            getString(R.string.lists) -> {
+                toolbarTitle.text = getString(R.string.lists)
+                fragmentTransaction.replace(R.id.frameLayout, ListsFragment()).commit()
+            }
+            getString(R.string.notifications) -> {
+                toolbarTitle.text = getString(R.string.notifications)
+                fragmentTransaction.replace(R.id.frameLayout, NotificationsFragment()).commit()
+            }
+            getString(R.string.account) -> {
+                toolbarTitle.text = getString(R.string.account)
+                fragmentTransaction.replace(R.id.frameLayout, AccountFragment()).commit()
+            }
+        }
     }
 
-    private fun setupPager() {
-        val fragments = ArrayList<Fragment>()
-        fragments.add(SearchFragment())
-        fragments.add(CalendarFragment())
-        fragments.add(ListsFragment())
-        fragments.add(NotificationsFragment())
-        fragments.add(AccountFragment())
-        vpParent.adapter = HomeViewPagerAdapter(fragments, supportFragmentManager)
-        vpParent.setPagingEnabled(false)
-        ivHome.callOnClick()
-
-    }
 
     @SuppressLint("StaticFieldLeak")
     inner class SyncTheDb : AsyncTask<String, String, String>() {
@@ -228,18 +219,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 })
     }
 
-    /**
-    // For iOS
-    let syncServerURL = URL(string: serverUrl + "Combine")!
-            var configuration = Realm.Configuration()
-            configuration.encryptionKey = Utility().getKey() as Data
-            configuration.syncConfiguration = SyncConfiguration(user: SyncUser.current!, realmURL: syncServerURL)
-
-            Realm.asyncOpen(configuration: configuration, callback: { realm, error in
-                if let realm = realm {}
-    )
-    }
-     */
 
     override fun onPause() {
         super.onPause()
