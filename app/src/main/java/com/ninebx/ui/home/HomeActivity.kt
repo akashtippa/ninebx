@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
@@ -25,6 +26,7 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.Constants
 import android.text.Html
+import com.ninebx.NineBxApplication
 import com.ninebx.ui.home.passcode.PassCodeDialog
 
 
@@ -115,7 +117,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.item_account -> {
                     loadFragment(4)
                 }
-
             }
             true
         }
@@ -227,8 +228,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 })
     }
 
-    private var isPasswordRequired: Boolean = false
-
     /**
     // For iOS
     let syncServerURL = URL(string: serverUrl + "Combine")!
@@ -244,20 +243,26 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        isPasswordRequired = true
+        NineBxApplication.getPreferences().isPasswordRequired = true
     }
 
     override fun onResume() {
         super.onResume()
-        if( isPasswordRequired )
+        Handler().postDelayed( {
+            showPasswordDialog()
+        }, 700)
+    }
+
+    private fun showPasswordDialog() {
+        if( NineBxApplication.getPreferences().isPasswordRequired )
             PassCodeDialog( this, "111111", object : PassCodeDialog.PassCodeDialogListener {
                 override fun onSuccess() {
-                    isPasswordRequired = false
+                    NineBxApplication.getPreferences().isPasswordRequired = false
                 }
 
                 override fun onFailure(error: Int) {
                     Toast.makeText(this@HomeActivity, error, Toast.LENGTH_LONG).show()
-                    isPasswordRequired = true
+                    NineBxApplication.getPreferences().isPasswordRequired = true
                 }
 
             } )

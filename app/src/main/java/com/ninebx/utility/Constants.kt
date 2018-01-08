@@ -7,6 +7,7 @@ package com.ninebx.utility
 object Constants {
     val FIRST_RUN = "is_first_run"
     val IS_LOGIN = "is_login"
+    val IS_PASSWORD_REQUIRED = "is_password_required"
 
     var SERVER_URL = "realm://13.59.129.162:9080/~/"
     var SERVER_ADDRESS = "realm://13.59.129.162:9080/"

@@ -12,5 +12,8 @@
     <dimen name="default_mini_margin">8dp</dimen>
     <dimen name="margin_48">48dp</dimen>
     <dimen name="default_big">24dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="margin_72">72dp</dimen>
+    <dimen name="margin_56">56dp</dimen>
 
 </resources>
