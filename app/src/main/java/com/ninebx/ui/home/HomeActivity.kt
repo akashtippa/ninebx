@@ -244,6 +244,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onPause() {
         super.onPause()
         NineBxApplication.getPreferences().isPasswordRequired = true
+        if( mPassCodeDialog != null ) {
+            mPassCodeDialog!!.dismissDialog()
+        }
     }
 
     override fun onResume() {
@@ -253,9 +256,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }, 700)
     }
 
+    private var mPassCodeDialog: PassCodeDialog ?= null
     private fun showPasswordDialog() {
-        if( NineBxApplication.getPreferences().isPasswordRequired )
-            PassCodeDialog( this, "111111", object : PassCodeDialog.PassCodeDialogListener {
+        if( NineBxApplication.getPreferences().isPasswordRequired ) {
+            mPassCodeDialog = PassCodeDialog( this, "111111", object : PassCodeDialog.PassCodeDialogListener {
                 override fun onSuccess() {
                     NineBxApplication.getPreferences().isPasswordRequired = false
                 }
@@ -266,5 +270,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
             } )
+        }
+
     }
 }

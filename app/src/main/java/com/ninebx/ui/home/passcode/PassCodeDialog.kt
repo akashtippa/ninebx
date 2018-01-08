@@ -14,7 +14,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.ninebx.utility.AppLogger
-import java.nio.file.Files.delete
 
 
 
@@ -174,6 +173,10 @@ class PassCodeDialog( val context : Context, val passCode : String, val passCode
         dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         dialog.show()
 
+    }
+
+    fun dismissDialog() {
+        dialog.dismiss()
     }
 
     interface PassCodeDialogListener {
