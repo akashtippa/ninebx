@@ -148,16 +148,16 @@ class PassCodeDialog( val context : Context, val passCode : String, val passCode
         val tvNum8 = dialog.findViewById<TextView>(R.id.tvNum8)
         val tvNum9 = dialog.findViewById<TextView>(R.id.tvNum9)
 
-        tvNum0.setOnClickListener { etPassCode.append(tvNum0.text.toString().trim()) }
-        tvNum1.setOnClickListener { etPassCode.append(tvNum1.text.toString().trim()) }
-        tvNum2.setOnClickListener { etPassCode.append(tvNum2.text.toString().trim()) }
-        tvNum3.setOnClickListener { etPassCode.append(tvNum3.text.toString().trim()) }
-        tvNum4.setOnClickListener { etPassCode.append(tvNum4.text.toString().trim()) }
-        tvNum5.setOnClickListener { etPassCode.append(tvNum5.text.toString().trim()) }
-        tvNum6.setOnClickListener { etPassCode.append(tvNum6.text.toString().trim()) }
-        tvNum7.setOnClickListener { etPassCode.append(tvNum7.text.toString().trim()) }
-        tvNum8.setOnClickListener { etPassCode.append(tvNum8.text.toString().trim()) }
-        tvNum9.setOnClickListener { etPassCode.append(tvNum9.text.toString().trim()) }
+        tvNum0.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum0.text.toString().trim()) }
+        tvNum1.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum1.text.toString().trim()) }
+        tvNum2.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum2.text.toString().trim()) }
+        tvNum3.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum3.text.toString().trim()) }
+        tvNum4.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum4.text.toString().trim()) }
+        tvNum5.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum5.text.toString().trim()) }
+        tvNum6.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum6.text.toString().trim()) }
+        tvNum7.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum7.text.toString().trim()) }
+        tvNum8.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum8.text.toString().trim()) }
+        tvNum9.setOnClickListener { if( etPassCode.text.toString().trim().length < 6 ) etPassCode.append(tvNum9.text.toString().trim()) }
 
         val ivBack = dialog.findViewById<ImageView>(R.id.ivBack)
 
