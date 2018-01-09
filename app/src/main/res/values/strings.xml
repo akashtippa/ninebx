@@ -236,4 +236,13 @@
     <string name="num_zero">0</string>
     <string name="enter_your_ninebx_passcode">Enter your NineBx\nPersonal Passcode</string>
     <string name="cancel">Cancel</string>
+    <string name="sunday">S</string>
+    <string name="monday">M</string>
+    <string name="tuesday">T</string>
+    <string name="wednesday">W</string>
+    <string name="thrusday">T</string>
+    <string name="friday">F</string>
+    <string name="saturday">S</string>
+    <string name="add_event">Add Event</string>
+    <string name="january">January</string>
 </resources>

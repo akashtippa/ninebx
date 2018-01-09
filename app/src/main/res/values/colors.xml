@@ -18,4 +18,5 @@
     <color name="plan3">#EAAD6E</color>
     <color name="plan4">#E16047</color>
     <color name="pass_code_background">#D9000000</color>
+    <color name="divider_color">#EFEFEF</color>
 </resources>
