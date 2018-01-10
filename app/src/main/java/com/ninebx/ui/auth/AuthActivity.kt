@@ -15,6 +15,7 @@ import io.realm.SyncUser
 /**
  * Created by Alok on 02/01/18.
  */
+
 class AuthActivity : AppCompatActivity(), AuthView {
 
     private lateinit var mCurrentTag : String

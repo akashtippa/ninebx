@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 /**
  * Created by Alok on 03/01/18.
  */
-class HomeViewPagerAdapter( private val fragments : ArrayList<Fragment> ,private val fragmentManager: FragmentManager ) : FragmentStatePagerAdapter( fragmentManager ) {
+class HomeViewPagerAdapter(private val fragments: ArrayList<Fragment>, private val fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
         return fragments[position]
