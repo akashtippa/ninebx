@@ -35,49 +35,49 @@ class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : Rec
         val tvSunday3 = itemView!!.findViewById<TextView>(R.id.tvSunday3)
         val tvSunday4 = itemView!!.findViewById<TextView>(R.id.tvSunday4)
         val tvSunday5 = itemView!!.findViewById<TextView>(R.id.tvSunday5)
-        //val tvSunday6 = itemView!!.findViewById<TextView>(R.id.tvSunday6)
+        val tvSunday6 = itemView!!.findViewById<TextView>(R.id.tvSunday6)
 
         val tvMonday1 = itemView!!.findViewById<TextView>(R.id.tvMonday1)
         val tvMonday2 = itemView!!.findViewById<TextView>(R.id.tvMonday2)
         val tvMonday3 = itemView!!.findViewById<TextView>(R.id.tvMonday3)
         val tvMonday4 = itemView!!.findViewById<TextView>(R.id.tvMonday4)
         val tvMonday5 = itemView!!.findViewById<TextView>(R.id.tvMonday5)
-        //val tvMonday6 = itemView!!.findViewById<TextView>(R.id.tvMonday6)
+        val tvMonday6 = itemView!!.findViewById<TextView>(R.id.tvMonday6)
 
         val tvTuesday1 = itemView!!.findViewById<TextView>(R.id.tvTuesday1)
         val tvTuesday2 = itemView!!.findViewById<TextView>(R.id.tvTuesday2)
         val tvTuesday3 = itemView!!.findViewById<TextView>(R.id.tvTuesday3)
         val tvTuesday4 = itemView!!.findViewById<TextView>(R.id.tvTuesday4)
         val tvTuesday5 = itemView!!.findViewById<TextView>(R.id.tvTuesday5)
-        //val tvTuesday6 = itemView!!.findViewById<TextView>(R.id.tvTuesday6)
+        val tvTuesday6 = itemView!!.findViewById<TextView>(R.id.tvTuesday6)
 
         val tvWednesday1 = itemView!!.findViewById<TextView>(R.id.tvWednesday1)
         val tvWednesday2 = itemView!!.findViewById<TextView>(R.id.tvWednesday2)
         val tvWednesday3 = itemView!!.findViewById<TextView>(R.id.tvWednesday3)
         val tvWednesday4 = itemView!!.findViewById<TextView>(R.id.tvWednesday4)
         val tvWednesday5 = itemView!!.findViewById<TextView>(R.id.tvWednesday5)
-        //val tvWednesday6 = itemView!!.findViewById<TextView>(R.id.tvWednesday6)
+        val tvWednesday6 = itemView!!.findViewById<TextView>(R.id.tvWednesday6)
 
         val tvThursday1 = itemView!!.findViewById<TextView>(R.id.tvThursday1)
         val tvThursday2 = itemView!!.findViewById<TextView>(R.id.tvThursday2)
         val tvThursday3 = itemView!!.findViewById<TextView>(R.id.tvThursday3)
         val tvThursday4 = itemView!!.findViewById<TextView>(R.id.tvThursday4)
         val tvThursday5 = itemView!!.findViewById<TextView>(R.id.tvThursday5)
-        //val tvThursday6 = itemView!!.findViewById<TextView>(R.id.tvThursday6)
+        val tvThursday6 = itemView!!.findViewById<TextView>(R.id.tvThursday6)
 
         val tvFriday1 = itemView!!.findViewById<TextView>(R.id.tvFriday1)
         val tvFriday2 = itemView!!.findViewById<TextView>(R.id.tvFriday2)
         val tvFriday3 = itemView!!.findViewById<TextView>(R.id.tvFriday3)
         val tvFriday4 = itemView!!.findViewById<TextView>(R.id.tvFriday4)
         val tvFriday5 = itemView!!.findViewById<TextView>(R.id.tvFriday5)
-        //val tvFriday6 = itemView!!.findViewById<TextView>(R.id.tvFriday6)
+        val tvFriday6 = itemView!!.findViewById<TextView>(R.id.tvFriday6)
 
         val tvSaturday1 = itemView!!.findViewById<TextView>(R.id.tvSaturday1)
         val tvSaturday2 = itemView!!.findViewById<TextView>(R.id.tvSaturday2)
         val tvSaturday3 = itemView!!.findViewById<TextView>(R.id.tvSaturday3)
         val tvSaturday4 = itemView!!.findViewById<TextView>(R.id.tvSaturday4)
         val tvSaturday5 = itemView!!.findViewById<TextView>(R.id.tvSaturday5)
-        //val tvSaturday6 = itemView!!.findViewById<TextView>(R.id.tvSaturday6)
+        val tvSaturday6 = itemView!!.findViewById<TextView>(R.id.tvSaturday6)
 
         init {
 
@@ -121,13 +121,13 @@ class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : Rec
             viewsList.add(tvFriday5)
             viewsList.add(tvSaturday5)
 
-            /*viewsList.add(tvSunday6)
+            viewsList.add(tvSunday6)
             viewsList.add(tvMonday6)
             viewsList.add(tvTuesday6)
             viewsList.add(tvWednesday6)
             viewsList.add(tvThursday6)
             viewsList.add(tvFriday6)
-            viewsList.add(tvSaturday6)*/
+            viewsList.add(tvSaturday6)
 
             setValues( startDay )
 
@@ -139,12 +139,13 @@ class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : Rec
                 viewsList[skipped].text = ""
             }
 
-            for( skipped in monthDates - 1 until 35 ) {
+            for( skipped in monthDates - 1 until 42 ) {
                 viewsList[skipped].text = ""
             }
 
             for((dayIndex, i) in (1..monthDates).withIndex()) {
-                viewsList[dayIndex + (skip - 1) ].text = i.toString()
+                if( dayIndex + (skip - 1 ) < 42 )
+                    viewsList[dayIndex + (skip - 1) ].text = i.toString()
             }
         }
 

@@ -71,7 +71,6 @@ dependencies {
     //Spongy Castle Encryption
     compile 'com.madgag.spongycastle:core:1.54.0.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    compile 'com.github.vatsaldesai92:MyDynamicCalendarLibrary:1.0.1'
+
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 }

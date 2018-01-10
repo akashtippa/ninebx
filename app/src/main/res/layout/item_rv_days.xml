@@ -180,7 +180,7 @@
             tools:text="07"
             android:id="@+id/tvSaturday5"/>
     </LinearLayout>
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="7"
@@ -213,7 +213,7 @@
             style="@style/dayTextViewStyle"
             tools:text="07"
             android:id="@+id/tvSaturday6"/>
-    </LinearLayout>-->
+    </LinearLayout>
 
 
 
