@@ -32,8 +32,6 @@ import com.ninebx.utility.FragmentBackHelper
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-
-
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity() {
 
@@ -96,6 +94,11 @@ class HomeActivity : AppCompatActivity() {
             toggleCheck(false)
             changeToolbarTitle(titleText)
             callHomeFragment()
+            showBottomView()
+        }
+
+        ivBack.setOnClickListener {
+            onBackPressed()
         }
         callHomeFragment()
     }
@@ -281,4 +284,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    public fun showHomeNhideQuickAdd() {
+        layoutQuickAdd.hide()
+        ivHome.show()
+        ivBack.show()
+    }
+
+    public fun hideHomeNShowQuickAdd() {
+        layoutQuickAdd.show()
+        ivHome.hide()
+        ivBack.hide()
+    }
+
+    public fun hideBottomView() {
+        bottomNavigationView.hide()
+    }
+
+    public fun showBottomView() {
+        bottomNavigationView.show()
+    }
 }

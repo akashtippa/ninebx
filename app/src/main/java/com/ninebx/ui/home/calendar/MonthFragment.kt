@@ -21,7 +21,6 @@ class MonthFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvDays.layoutManager = LinearLayoutManager(context)
-        rvDays.adapter = DaysRecyclerViewAdapter(31, Calendar.MONDAY )
+
     }
 }

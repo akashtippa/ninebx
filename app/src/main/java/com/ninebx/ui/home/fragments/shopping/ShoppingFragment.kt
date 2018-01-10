@@ -26,6 +26,7 @@ class ShoppingFragment : FragmentBackHelper() {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(titleText)
+        NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
     }
 }

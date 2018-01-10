@@ -12,293 +12,198 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
-
-
-    <RelativeLayout
-        android:id="@+id/layoutLicense"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_driver_license"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="DRIVER LICENSE"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+            android:orientation="vertical">
 
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layoutSocial"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
+            <RelativeLayout
+                android:id="@+id/layoutLicense"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/grey_100"
+                android:gravity="center">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_ssn"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="SOCIAL SECURITY CARD"
-            android:textColor="@color/colorPrimary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:drawableLeft="@drawable/ic_icon_driver_license"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/driver_license"
+                    android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layoutTaxID"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="@dimen/_14sdp"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="1" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_tax_id"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="TAX ID"
-            android:textColor="@color/colorPrimary" />
+            </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+            <RelativeLayout
+                android:id="@+id/layoutSocial"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/grey_100"
+                android:gravity="center">
 
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:drawableLeft="@drawable/ic_icon_ssn"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/social_security_card"
+                    android:textColor="@color/colorPrimary" />
 
-    <RelativeLayout
-        android:id="@+id/layoutBirthCertificate"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_birth_certificate"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="BIRTH CERTIFICATE"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="@dimen/_14sdp"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="1" />
 
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/layoutMarriageCertificate"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_marriage_certificate"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="MARRIAGE CERTIFICATE"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+            <RelativeLayout
+                android:id="@+id/layoutTaxID"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/grey_100"
+                android:gravity="center">
 
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:drawableLeft="@drawable/ic_icon_tax_id"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/tax_id"
+                    android:textColor="@color/colorPrimary" />
 
-    <RelativeLayout
-        android:id="@+id/layoutOtherGovt"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_lists_contacts"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="OTHER GOVERNMENT-ISSUED ID"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="@dimen/_14sdp"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="1" />
 
 
-    </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutBirthCertificate"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/grey_100"
+                android:gravity="center">
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:drawableLeft="@drawable/ic_icon_birth_certificate"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/birth_certificate"
+                    android:textColor="@color/colorPrimary" />
 
-    <RelativeLayout
-        android:id="@+id/layoutServices"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_services_accounts"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="SERVICES/OTHER ACCOUNTS"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="@dimen/_14sdp"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="1" />
 
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/layoutOtherAttachments"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_attachments"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="Other Attachments"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+            <RelativeLayout
+                android:id="@+id/layoutMarriageCertificate"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/grey_100"
+                android:gravity="center">
 
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:drawableLeft="@drawable/ic_icon_marriage_certificate"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/marriage_certificate"
+                    android:textColor="@color/colorPrimary" />
 
-    <RelativeLayout
-        android:id="@+id/layoutLists"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_lists"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="LISTS"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="@dimen/_14sdp"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="1" />
 
 
-    </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutOtherGovt"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/grey_100"
+                android:gravity="center">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:drawableLeft="@drawable/ic_icon_lists_contacts"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/other_government_issued_id"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="@dimen/_14sdp"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="1" />
+
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_bottom" />
+
         </LinearLayout>
     </ScrollView>
 

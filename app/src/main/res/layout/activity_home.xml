@@ -19,31 +19,38 @@
             android:background="@color/grey_100"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/ivHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="@dimen/default_mini_margin"
-                    android:layout_marginRight="@dimen/default_mini_margin"
-                    android:src="@mipmap/ic_launcher" />
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_icon_arrow_left" />
 
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_18sdp" />
 
-                <TextView
-                    android:id="@+id/toolbarTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_18sdp" />
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:src="@mipmap/ic_launcher" />
 
-
-            </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -365,79 +372,11 @@
         android:visibility="visible"
         app:menu="@menu/menu_bottom" />
 
-
-    <LinearLayout
-        android:id="@+id/layoutBottom"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:background="@color/grey_300"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-        <TextView
-            android:id="@+id/txtSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_icon_search_normal"
-            android:gravity="center"
-            android:text="@string/search"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/txtCalendar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_icon_calender_selected"
-            android:gravity="center"
-            android:text="@string/calendar"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/txtLists"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_icon_lists"
-            android:gravity="center"
-            android:text="@string/lists"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/txtNotifications"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_icon_notifications_normal"
-            android:gravity="center"
-            android:text="@string/notifications"
-            android:textSize="@dimen/_10sdp" />
-
-        <TextView
-            android:id="@+id/txtAccount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_icon_account_normal"
-            android:gravity="center"
-            android:text="@string/account"
-            android:textSize="@dimen/_10sdp" />
-
-
-    </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/layoutQuickAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/layoutBottom"
+        android:layout_above="@+id/bottomNavigationView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/_5sdp">

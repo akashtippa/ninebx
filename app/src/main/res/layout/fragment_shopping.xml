@@ -33,7 +33,7 @@
                     android:drawableLeft="@drawable/ic_icon_loyalty_program"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="Loyality Programs"
+                    android:text="@string/loyality_programs"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -65,7 +65,7 @@
                     android:drawableLeft="@drawable/ic_icon_recent_purchases"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="Recent Purchases"
+                    android:text="@string/recent_purchases"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -97,7 +97,7 @@
                     android:drawableLeft="@drawable/ic_icon_clothing_sizes"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="Clothing Sizes"
+                    android:text="@string/clothing_sizes"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -119,7 +119,7 @@
                     android:drawableLeft="@drawable/ic_add_circle_outline_blue_300_24dp"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center"
-                    android:hint="Add Person" />
+                    android:hint="@string/add_person" />
 
 
             </RelativeLayout>
@@ -138,100 +138,7 @@
                 android:visibility="gone" />
 
 
-            <RelativeLayout
-                android:id="@+id/layoutServices"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@color/grey_100"
-                android:gravity="center">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/ic_icon_services_accounts"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="SERVICES/OTHER ACCOUNTS"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="@dimen/_14sdp"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="1" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutOtherAttachments"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@color/grey_100"
-                android:gravity="center">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/ic_icon_attachments"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="Other Attachments"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="@dimen/_14sdp"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="1" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutLists"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@color/grey_100"
-                android:gravity="center">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/ic_icon_lists"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="LISTS"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="@dimen/_14sdp"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="1" />
-
-
-            </RelativeLayout>
+            <include layout="@layout/layout_bottom" />
 
 
         </LinearLayout>

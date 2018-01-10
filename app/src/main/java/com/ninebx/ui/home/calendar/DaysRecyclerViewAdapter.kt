@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ninebx.R
+import com.ninebx.ui.base.AdapterClickListener
 import com.ninebx.ui.home.calendar.DaysRecyclerViewAdapter.ViewHolder
 
 /**
  * Created by Alok on 09/01/18.
  */
-class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : RecyclerView.Adapter<ViewHolder>() {
+class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selectedDate: Int, val adapterClickListener: DaysAdapterClickListener ) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return 1
@@ -20,15 +21,74 @@ class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : Rec
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
 
+        holder!!.tvSunday1.isSelected = isSelected(holder.tvSunday1)
+        holder.tvMonday1.isSelected = isSelected(holder.tvMonday1)
+        holder.tvTuesday1.isSelected = isSelected(holder.tvTuesday1)
+        holder.tvWednesday1.isSelected = isSelected(holder.tvWednesday1)
+        holder.tvThursday1.isSelected = isSelected(holder.tvThursday1)
+        holder.tvFriday1.isSelected = isSelected(holder.tvFriday1)
+        holder.tvSaturday1.isSelected = isSelected(holder.tvSaturday1)
+
+        holder.tvSunday2.isSelected = isSelected(holder.tvSunday2)
+        holder.tvMonday2.isSelected = isSelected(holder.tvMonday2)
+        holder.tvTuesday2.isSelected = isSelected(holder.tvTuesday2)
+        holder.tvWednesday2.isSelected = isSelected(holder.tvWednesday2)
+        holder.tvThursday2.isSelected = isSelected(holder.tvThursday2)
+        holder.tvFriday2.isSelected = isSelected(holder.tvFriday2)
+        holder.tvSaturday2.isSelected = isSelected(holder.tvSaturday2)
+
+        holder.tvSunday3.isSelected = isSelected(holder.tvSunday3)
+        holder.tvMonday3.isSelected = isSelected(holder.tvMonday3)
+        holder.tvTuesday3.isSelected = isSelected(holder.tvTuesday3)
+        holder.tvWednesday3.isSelected = isSelected(holder.tvWednesday3)
+        holder.tvThursday3.isSelected = isSelected(holder.tvThursday3)
+        holder.tvFriday3.isSelected = isSelected(holder.tvFriday3)
+        holder.tvSaturday3.isSelected = isSelected(holder.tvSaturday3)
+
+        holder.tvSunday4.isSelected = isSelected(holder.tvSunday4)
+        holder.tvMonday4.isSelected = isSelected(holder.tvMonday4)
+        holder.tvTuesday4.isSelected = isSelected(holder.tvTuesday4)
+        holder.tvWednesday4.isSelected = isSelected(holder.tvWednesday4)
+        holder.tvThursday4.isSelected = isSelected(holder.tvThursday4)
+        holder.tvFriday4.isSelected = isSelected(holder.tvFriday4)
+        holder.tvSaturday4.isSelected = isSelected(holder.tvSaturday4)
+
+        holder.tvSunday5.isSelected = isSelected(holder.tvSunday5)
+        holder.tvMonday5.isSelected = isSelected(holder.tvMonday5)
+        holder.tvTuesday5.isSelected = isSelected(holder.tvTuesday5)
+        holder.tvWednesday5.isSelected = isSelected(holder.tvWednesday5)
+        holder.tvThursday5.isSelected = isSelected(holder.tvThursday5)
+        holder.tvFriday5.isSelected = isSelected(holder.tvFriday5)
+        holder.tvSaturday5.isSelected = isSelected(holder.tvSaturday5)
+
+        holder.tvSunday6.isSelected = isSelected(holder.tvSunday6)
+        holder.tvMonday6.isSelected = isSelected(holder.tvMonday6)
+        holder.tvTuesday6.isSelected = isSelected(holder.tvTuesday6)
+        holder.tvWednesday6.isSelected = isSelected(holder.tvWednesday6)
+        holder.tvThursday6.isSelected = isSelected(holder.tvThursday6)
+        holder.tvFriday6.isSelected = isSelected(holder.tvFriday6)
+        holder.tvSaturday6.isSelected = isSelected(holder.tvSaturday6)
+
+    }
+
+    private fun isSelected(textView : TextView?): Boolean {
+        return textView!!.text.isNotEmpty() && textView.text.toString().toInt() == selectedDate
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.item_rv_days, parent, false))
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        val viewsList = ArrayList<TextView>()
+        override fun onClick(view: View?) {
+            val dayTextView : TextView = view as TextView
+            selectedDate = dayTextView.text.toString().toInt()
+            adapterClickListener.onDayClick( selectedDate )
+            notifyDataSetChanged()
+        }
+
+        private val viewsList = ArrayList<TextView>()
 
         val tvSunday1 = itemView!!.findViewById<TextView>(R.id.tvSunday1)
         val tvSunday2 = itemView!!.findViewById<TextView>(R.id.tvSunday2)
@@ -80,6 +140,55 @@ class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : Rec
         val tvSaturday6 = itemView!!.findViewById<TextView>(R.id.tvSaturday6)
 
         init {
+
+            tvSunday1.setOnClickListener( this )
+            tvMonday1.setOnClickListener( this )
+            tvTuesday1.setOnClickListener( this )
+            tvWednesday1.setOnClickListener( this )
+            tvThursday1.setOnClickListener( this )
+            tvFriday1.setOnClickListener( this )
+            tvSaturday1.setOnClickListener( this )
+
+            tvSunday2.setOnClickListener( this )
+            tvMonday2.setOnClickListener( this )
+            tvTuesday2.setOnClickListener( this )
+            tvWednesday2.setOnClickListener( this )
+            tvThursday2.setOnClickListener( this )
+            tvFriday2.setOnClickListener( this )
+            tvSaturday2.setOnClickListener( this )
+
+            tvSunday3.setOnClickListener( this )
+            tvMonday3.setOnClickListener( this )
+            tvTuesday3.setOnClickListener( this )
+            tvWednesday3.setOnClickListener( this )
+            tvThursday3.setOnClickListener( this )
+            tvFriday3.setOnClickListener( this )
+            tvSaturday3.setOnClickListener( this )
+
+            tvSunday4.setOnClickListener( this )
+            tvMonday4.setOnClickListener( this )
+            tvTuesday4.setOnClickListener( this )
+            tvWednesday4.setOnClickListener( this )
+            tvThursday4.setOnClickListener( this )
+            tvFriday4.setOnClickListener( this )
+            tvSaturday4.setOnClickListener( this )
+
+            tvSunday5.setOnClickListener( this )
+            tvMonday5.setOnClickListener( this )
+            tvTuesday5.setOnClickListener( this )
+            tvWednesday5.setOnClickListener( this )
+            tvThursday5.setOnClickListener( this )
+            tvFriday5.setOnClickListener( this )
+            tvSaturday5.setOnClickListener( this )
+
+            tvSunday6.setOnClickListener( this )
+            tvMonday6.setOnClickListener( this )
+            tvTuesday6.setOnClickListener( this )
+            tvWednesday6.setOnClickListener( this )
+            tvThursday6.setOnClickListener( this )
+            tvFriday6.setOnClickListener( this )
+            tvSaturday6.setOnClickListener( this )
+
 
             viewsList.add(tvSunday1)
             viewsList.add(tvMonday1)
@@ -144,8 +253,12 @@ class DaysRecyclerViewAdapter( val monthDates : Int, val startDay : Int  ) : Rec
             }
 
             for((dayIndex, i) in (1..monthDates).withIndex()) {
-                if( dayIndex + (skip - 1 ) < 42 )
+                if( dayIndex + (skip - 1 ) < 42 ) {
                     viewsList[dayIndex + (skip - 1) ].text = i.toString()
+                    viewsList[dayIndex + (skip - 1)].isSelected = i == selectedDate
+                }
+
+
             }
         }
 

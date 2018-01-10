@@ -32,7 +32,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_financial_accounts"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Financial Accounts"
+                    android:text="@string/financial_accounts"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -54,8 +54,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Banking"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/banking"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,8 +90,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Investments"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/investments"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,8 +126,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Loan/Mortages"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/loan_mortages"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,8 +162,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Other Financial Accounts"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/other_financial_accounts"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -196,7 +196,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_payment_methods"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Payment Methods"
+                    android:text="@string/payment_methods"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -218,8 +218,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Credit/Debit Cards"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/credit_debit_cards"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -254,8 +254,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Other Payment Accounts"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/other_payment_accounts"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -291,7 +291,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_property"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Property"
+                    android:text="@string/property"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -313,8 +313,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Primary Home(owned)"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/primary_home_owned"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -350,8 +350,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Property(Rented for own use)"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/property_rented_for_own_use"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -386,8 +386,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Vacation Home"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/vacation_home"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -422,8 +422,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Investment/Rental Property"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/investment_rental_property"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -456,7 +456,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_travel_document"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Auto"
+                    android:text="@string/auto"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -478,8 +478,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Vehicles"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/vehicles"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -515,8 +515,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Maintenance"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/maintenance"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -554,7 +554,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_other_assets"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Other Assets"
+                    android:text="@string/other_assets"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -576,8 +576,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Jewelry"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/jewelry"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -613,8 +613,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Art and Collectibles"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/art_and_collectibles"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -650,8 +650,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Computers and Electronics"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/computers_and_electronics"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -687,8 +687,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Furniture"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/furniture"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -724,8 +724,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Others"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/others"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -764,7 +764,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_insurance"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Insurance"
+                    android:text="@string/insurance"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -786,8 +786,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Homeowners/Renters Insurance"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/homeowners_renters_insurance"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -823,8 +823,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Auto Insurance"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/auto_insurance"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -859,8 +859,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Life Insurance"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/life_insurance"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -895,8 +895,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Health Insurance"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/health_insurance"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -932,8 +932,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Umbrella Insurance"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/umbrella_insurance"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -966,7 +966,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_icon_tax"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="Taxes"
+                    android:text="@string/taxes"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary" />
 
@@ -989,7 +989,7 @@
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
                     android:text="Past Returns"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -1025,8 +1025,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:gravity="center"
-                    android:text="Returns to be field"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@string/returns_to_be_field"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -1044,100 +1044,8 @@
                 android:layout_height="1dp"
                 android:background="@color/grey_100" />
 
-            <RelativeLayout
-                android:id="@+id/layoutServices"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@color/grey_100"
-                android:gravity="center">
+            <include layout="@layout/layout_bottom" />
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/ic_icon_services_accounts"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="SERVICES/OTHER ACCOUNTS"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="@dimen/_14sdp"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="1" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutOtherAttachments"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@color/grey_100"
-                android:gravity="center">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/ic_icon_attachments"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="Other Attachments"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="@dimen/_14sdp"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="1" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutLists"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@color/grey_100"
-                android:gravity="center">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/ic_icon_lists"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="LISTS"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawablePadding="@dimen/_14sdp"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="1" />
-
-
-            </RelativeLayout>
 
         </LinearLayout>
 

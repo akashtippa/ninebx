@@ -104,37 +104,46 @@ class HomeFragment : Fragment(), View.OnClickListener {
         when (option) {
             getString(R.string.home_amp_money) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 fragmentTransaction.add(R.id.frameLayout, HomeAndMoneyFragment()).commit()
             }
             getString(R.string.travel) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 fragmentTransaction.add(R.id.frameLayout, TravelllFragment()).commit()
             }
             getString(R.string.contacts) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
                 fragmentTransaction.add(R.id.frameLayout, ContactsFragment()).commit()
             }
             getString(R.string.education_work) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
                 fragmentTransaction.add(R.id.frameLayout, EducationFragment()).commit()
             }
             getString(R.string.personal) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
                 fragmentTransaction.add(R.id.frameLayout, PersonalFragment()).commit()
             }
             getString(R.string.interests) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.interests))
                 fragmentTransaction.add(R.id.frameLayout, InterestFragment()).commit()
             }
             getString(R.string.wellness) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
                 fragmentTransaction.add(R.id.frameLayout, WellnessFragment()).commit()
             }
             getString(R.string.memories) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
                 fragmentTransaction.add(R.id.frameLayout, MemoriesFragment()).commit()
             }
             getString(R.string.shopping) -> {
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
                 fragmentTransaction.add(R.id.frameLayout, ShoppingFragment()).commit()
             }
