@@ -13,6 +13,7 @@
     <string name="lists">Lists</string>
     <string name="notifications">Notifications</string>
     <string name="account">Account</string>
+    <string name="custom_font">AvenirNextLTPro-Regular.ttf</string>
 
 
     <!--PERMISSION HANDLING-->

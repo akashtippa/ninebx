@@ -69,5 +69,8 @@
         <attr name="fillImg"/>
     </declare-styleable>
 
+    <!--<declare-styleable name="CustomTextView">-->
+        <!--<attr name="font" format="string" />-->
+    <!--</declare-styleable>-->
 
 </resources>
