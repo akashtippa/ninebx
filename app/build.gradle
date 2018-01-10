@@ -26,7 +26,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "ON_DEBUG_MODE", "true"
         vectorDrawables.useSupportLibrary = true
-
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -38,6 +38,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 
@@ -66,11 +68,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
     // For every Screen, margins are set from 1 to 600 dp, in every dimens
     compile 'com.intuit.sdp:sdp-android:1.0.5'
-
     //Spongy Castle Encryption
     compile 'com.madgag.spongycastle:core:1.54.0.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
-
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-
+    compile 'com.github.vatsaldesai92:MyDynamicCalendarLibrary:1.0.1'
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 }

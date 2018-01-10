@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.ninebx.ui.home.customView.CustomViewPager
@@ -34,18 +34,19 @@
 
             <LinearLayout
                 android:id="@+id/layoutHome"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_home"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_home_money"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_home_money" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -62,18 +63,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutTravell"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_travell"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_travel"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_travel" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,18 +91,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutContacts"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_contacts"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_contacts"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_contacts" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -125,18 +126,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutEducation"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_education"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_education_work"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_education_work" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -153,18 +154,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutPersonal"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_personal"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_personal"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_personal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -181,18 +182,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutInterests"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_interests"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_interests"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_interests" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -216,18 +217,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutWellness"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_wellness"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_wellness"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_wellness" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -244,18 +245,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutMemories"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_memories"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_memories"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_memories" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -272,18 +273,18 @@
 
             <LinearLayout
                 android:id="@+id/layoutShopping"
-                android:layout_width="@dimen/_63sdp"
-                android:layout_height="@dimen/_63sdp"
+                android:layout_width="@dimen/_67sdp"
+                android:layout_height="@dimen/_67sdp"
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/bg_shopping"
                 android:orientation="vertical"
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    app:srcCompat="@drawable/ic_home_icon_shopping"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="@dimen/_32sdp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_home_icon_shopping" />
 
                 <TextView
                     android:layout_width="wrap_content"
