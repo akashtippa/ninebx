@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,112 +7,150 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.astuetz.PagerSlidingTabStrip
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:tabMode="scrollable"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:id="@+id/tabMonths"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tabMonths"
-        android:id="@+id/layoutDays"
-        android:weightSum="7"
-        android:layout_margin="@dimen/default_mini_padding"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/sunday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvSunday"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/monday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvMonday"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/tuesday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvTuesday"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/wednesday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvWednesday"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/thrusday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvThursday"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/friday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvFriday"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/saturday"
-            android:gravity="center"
-            android:textColor="@color/blue_400"
-            android:id="@+id/tvSaturday"/>
-    </LinearLayout>
-
-    <com.ninebx.ui.home.customView.CustomViewPager
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_220sdp"
-        android:layout_below="@+id/layoutDays"
-        android:id="@+id/vpMonths"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_below="@+id/vpMonths"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_above="@+id/tvAddEvent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutEvents"
-        >
-        <View
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@color/divider_color" />
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_event"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:id="@+id/rvDayEvents"/>
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/tabMonths">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivPreviousMonth"
+                    android:padding="@dimen/default_mini_padding"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_left_light_blue_300_24dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tvMonthYear"
+                    android:gravity="center"
+                    android:text="@string/january"
+                    android:layout_toEndOf="@id/ivPreviousMonth"
+                    android:layout_toRightOf="@id/ivPreviousMonth"
+                    android:layout_toStartOf="@id/ivNextMonth"
+                    android:layout_toLeftOf="@id/ivNextMonth"
+                    android:padding="@dimen/default_mini_padding"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivNextMonth"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/default_mini_padding"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right_light_blue_300_24dp"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tabMonths"
+                android:id="@+id/layoutDays"
+                android:weightSum="7"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/sunday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvSunday"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/monday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvMonday"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tuesday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvTuesday"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/wednesday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvWednesday"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/thrusday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvThursday"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/friday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvFriday"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/saturday"
+                    android:gravity="center"
+                    android:textColor="@color/blue_400"
+                    android:id="@+id/tvSaturday"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDays"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_marginRight="@dimen/default_mini_padding"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                tools:listitem="@layout/item_rv_days"
+                android:id="@+id/rvDays"/>
+
+            <View
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_width="match_parent"
+                android:id="@+id/dividerView"
+                android:layout_below="@id/rvDays"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider_color" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_event"
+                android:layout_below="@+id/dividerView"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:id="@+id/rvDayEvents"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 
-    </LinearLayout>
+
+
+
+
+
 
 
     <TextView

@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
 import kotlinx.android.synthetic.main.fragment_calendar.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Alok on 03/01/18.
@@ -30,20 +32,39 @@ class CalendarFragment : Fragment(), CalendarView {
         return inflater!!.inflate(R.layout.fragment_calendar, container, false)
     }
 
+    private lateinit var mMonthFormat: SimpleDateFormat
+    private val mCalendar = Calendar.getInstance()
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vpMonths.setPagingEnabled(true)
-        val fragments = ArrayList<Fragment>()
-        fragments.add(MonthFragment())
-        fragments.add(MonthFragment())
-        fragments.add(MonthFragment())
-        vpMonths.adapter = MonthPagerAdapter( fragments, childFragmentManager )
-        tabMonths.setViewPager(vpMonths)
-        vpMonths.offscreenPageLimit = 3
+        mMonthFormat = SimpleDateFormat("MMMM YYYY", Locale.getDefault())
+
+        ivPreviousMonth.setOnClickListener {
+            mCalendar.add( Calendar.MONTH, -1 )
+            tvMonthYear.text = mMonthFormat.format(mCalendar.time)
+            setDaysAdapter()
+        }
+
+        ivNextMonth.setOnClickListener {
+            mCalendar.add( Calendar.MONTH, 1 )
+            tvMonthYear.text = mMonthFormat.format(mCalendar.time)
+            setDaysAdapter()
+        }
+
+        tvMonthYear.text = mMonthFormat.format(mCalendar.time)
+
+        rvDays.layoutManager = LinearLayoutManager(context)
+        setDaysAdapter()
+
         rvDayEvents.layoutManager = LinearLayoutManager( context )
         rvDayEvents.adapter = DayEventsRecyclerViewAdapter()
 
+    }
+
+    private fun setDaysAdapter() {
+        val monthStartDate = mCalendar
+        monthStartDate.set(Calendar.DAY_OF_MONTH, 1)
+        rvDays.adapter = DaysRecyclerViewAdapter( mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH), monthStartDate.get(Calendar.DAY_OF_WEEK) )
     }
 
 }
