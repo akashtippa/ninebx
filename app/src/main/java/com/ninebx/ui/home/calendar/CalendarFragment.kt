@@ -37,7 +37,7 @@ class CalendarFragment : Fragment(), CalendarView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMonthFormat = SimpleDateFormat("MMMM YYYY", Locale.getDefault())
+        mMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
         ivPreviousMonth.setOnClickListener {
             mCalendar.add( Calendar.MONTH, -1 )
