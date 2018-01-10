@@ -7,8 +7,44 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_200"
+        android:id="@+id/layoutCalendar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:background="@drawable/day_background"
+            android:padding="@dimen/default_mini_padding"
+            android:text="@string/today"
+            android:textColor="@color/white"
+            android:id="@+id/tvToday"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/day_background"
+            android:padding="@dimen/default_mini_padding"
+            android:layout_margin="@dimen/default_mini_padding"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/week"
+            android:textColor="@color/white"
+            android:id="@+id/tvWeekMonth"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_below="@id/tvWeekMonth"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_color" />
+
+    </RelativeLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:layout_below="@id/layoutCalendar"
         android:layout_above="@+id/tvAddEvent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -128,7 +164,6 @@
             <View
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
                 android:layout_width="match_parent"
                 android:id="@+id/dividerView"
                 android:layout_below="@id/rvDays"
@@ -146,14 +181,6 @@
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
-
-
-
-
-
-
 
     <TextView
         android:layout_width="match_parent"

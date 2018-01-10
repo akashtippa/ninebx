@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutWeek1"
         android:weightSum="7"
         android:orientation="horizontal">
         <TextView
@@ -44,6 +45,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutWeek2"
         android:weightSum="7"
         android:orientation="horizontal">
         <TextView
@@ -79,6 +81,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutWeek3"
         android:weightSum="7"
         android:orientation="horizontal">
         <TextView
@@ -114,6 +117,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutWeek4"
         android:weightSum="7"
         android:orientation="horizontal">
         <TextView
@@ -149,6 +153,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutWeek5"
         android:weightSum="7"
         android:orientation="horizontal">
         <TextView
@@ -180,9 +185,11 @@
             tools:text="07"
             android:id="@+id/tvSaturday5"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutWeek6"
         android:weightSum="7"
         android:orientation="horizontal">
         <TextView
