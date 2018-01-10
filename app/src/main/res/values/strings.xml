@@ -238,7 +238,6 @@
     <string name="significant_room_for_improvement">Significant room for improvement</string>
     <string name="thank_you_for_trying_out_ninebx_please_let_us_know_what_you_thought">Thank you for trying out NineBx! Please let us know what you thought...</string>
     <string name="add_family_member_user">Add Family Member/User</string>
-<<<<<<< Updated upstream
     <string name="error_wrong_passcode">Wrong pass code</string>
     <string name="num_one">1</string>
     <string name="num_two">2</string>
@@ -261,6 +260,4 @@
     <string name="saturday">S</string>
     <string name="add_event">Add Event</string>
     <string name="january">January</string>
-=======
->>>>>>> Stashed changes
 </resources>

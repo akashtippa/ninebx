@@ -8,31 +8,23 @@
 
     <RelativeLayout
         android:id="@+id/layoutPersonalHealthRecord"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_32sdp"
         android:layout_gravity="center"
         android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100"
-        android:gravity="center">
+        android:background="@color/grey_100">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:drawableLeft="@drawable/ic_icon_lists_contacts"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
             android:text="PERSONAL HEALTH RECORD"
             android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/_14sdp"
-            android:drawableRight="@drawable/ic_icon_arrow_right"
-            android:text="1" />
 
 
     </RelativeLayout>
@@ -51,17 +43,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_icon_lists_contacts"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_icon_add_list"
             android:drawablePadding="@dimen/_5sdp"
             android:hint="Add Person"
             android:textColor="@color/colorPrimary" />
 
 
-
-
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_100" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvPersonAdded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/layoutServices"

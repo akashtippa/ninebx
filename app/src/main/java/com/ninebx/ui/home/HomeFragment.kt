@@ -14,9 +14,14 @@ import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.adapter.HomeViewPagerAdapter
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.fragments.contacts.ContactsFragment
+import com.ninebx.ui.home.fragments.education.EducationFragment
+import com.ninebx.ui.home.fragments.home_and_money.HomeAndMoneyFragment
 import com.ninebx.ui.home.fragments.interests.InterestFragment
 import com.ninebx.ui.home.fragments.memories.MemoriesFragment
 import com.ninebx.ui.home.fragments.personal.PersonalFragment
+import com.ninebx.ui.home.fragments.shopping.ShoppingFragment
+import com.ninebx.ui.home.fragments.travell.TravelllFragment
+import com.ninebx.ui.home.fragments.wellness.WellnessFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.search.SearchFragment
@@ -98,18 +103,20 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         when (option) {
             getString(R.string.home_amp_money) -> {
-//                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Interests")
-//                fragmentTransaction.replace(R.id.frameLayout, InterestFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
+                fragmentTransaction.add(R.id.frameLayout, HomeAndMoneyFragment()).commit()
             }
             getString(R.string.travel) -> {
-//                fragmentTransaction.replace(R.id.frameLayout, CalendarFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
+                fragmentTransaction.add(R.id.frameLayout, TravelllFragment()).commit()
             }
             getString(R.string.contacts) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
                 fragmentTransaction.add(R.id.frameLayout, ContactsFragment()).commit()
             }
             getString(R.string.education_work) -> {
-//                fragmentTransaction.replace(R.id.frameLayout, NotificationsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
+                fragmentTransaction.add(R.id.frameLayout, EducationFragment()).commit()
             }
             getString(R.string.personal) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
@@ -120,14 +127,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 fragmentTransaction.add(R.id.frameLayout, InterestFragment()).commit()
             }
             getString(R.string.wellness) -> {
-
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
+                fragmentTransaction.add(R.id.frameLayout, WellnessFragment()).commit()
             }
             getString(R.string.memories) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
                 fragmentTransaction.add(R.id.frameLayout, MemoriesFragment()).commit()
             }
             getString(R.string.shopping) -> {
-
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
+                fragmentTransaction.add(R.id.frameLayout, ShoppingFragment()).commit()
             }
         }
     }

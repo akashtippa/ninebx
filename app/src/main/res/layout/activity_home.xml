@@ -52,13 +52,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< Updated upstream
         android:layout_above="@+id/bottomNavigationView"
-        android:layout_below="@+id/toolbarLayout"
-        android:background="@color/white" />
-
-=======
-        android:layout_above="@+id/layoutBottom"
         android:layout_below="@+id/toolbarLayout"
         android:background="@color/white" />
 
@@ -361,7 +355,6 @@
 
 
      </LinearLayout>-->
->>>>>>> Stashed changes
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -369,13 +362,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/grey_300"
-<<<<<<< Updated upstream
         android:visibility="visible"
         app:menu="@menu/menu_bottom" />
 
-=======
-        android:visibility="gone"
-        app:menu="@menu/menu_bottom" />
 
     <LinearLayout
         android:id="@+id/layoutBottom"
@@ -444,7 +433,6 @@
 
     </LinearLayout>
 
->>>>>>> Stashed changes
     <RelativeLayout
         android:id="@+id/layoutQuickAdd"
         android:layout_width="wrap_content"
