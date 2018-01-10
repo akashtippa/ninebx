@@ -18,8 +18,8 @@ import io.realm.SyncUser
 
 class AuthActivity : AppCompatActivity(), AuthView {
 
-    private lateinit var mCurrentTag : String
-    private lateinit var mAuthPresenter : AuthPresenter
+    private lateinit var mCurrentTag: String
+    private lateinit var mAuthPresenter: AuthPresenter
     private var mEmail: String? = ""
 
     override fun getAuthPresenter(): AuthPresenter {
@@ -35,19 +35,19 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onSuccess(syncUser: SyncUser?) {
-        when( mCurrentTag ) {
+        when (mCurrentTag) {
             "SignIn" -> {
-                signInFragment!!.onSuccess( syncUser )
+                signInFragment!!.onSuccess(syncUser)
             }
             "AccountPassword" -> {
-                accountPasswordFragment!!.onSuccess( syncUser )
+                accountPasswordFragment!!.onSuccess(syncUser)
             }
         }
     }
 
     override fun navigateToHome() {
 
-        if( NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE )
+        if (NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
 
         val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
@@ -62,7 +62,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.replace(R.id.container, SignUpFragment()).commit()
     }
 
-    private var signInFragment : SignInFragment ?= null
+    private var signInFragment: SignInFragment? = null
     override fun navigateToSignIn() {
         mCurrentTag = "SignIn"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -71,9 +71,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.replace(R.id.container, signInFragment).commit()
     }
 
-    private var accountPasswordFragment : AccountPasswordFragment ?= null
+    private var accountPasswordFragment: AccountPasswordFragment? = null
     override fun navigateToAccountPassword() {
-        if( NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE )
+        if (NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE
         mCurrentTag = "AccountPassword"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -83,7 +83,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToOTP() {
-        if( NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE )
+        if (NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -95,9 +95,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.replace(R.id.container, otpFragment).commit()
     }
 
-    override fun navigateToCreatePassCode( isCreatePassCode : Boolean ) {
-        if( !isCreatePassCode ) {
-            if( NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE )
+    override fun navigateToCreatePassCode(isCreatePassCode: Boolean) {
+        if (!isCreatePassCode) {
+            if (NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         }
         mCurrentTag = "PassCode"
@@ -132,7 +132,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private fun navigateToScreen() {
         mAuthPresenter = AuthPresenter(this)
-        when( NineBxApplication.getPreferences().currentStep ) {
+        when (NineBxApplication.getPreferences().currentStep) {
             Constants.ALL_COMPLETE -> {
                 navigateToHome()
             }
@@ -159,10 +159,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onBackPressed() {
-        if( supportFragmentManager.backStackEntryCount > 1 ) {
+        if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
-        }
-        else {
+        } else {
             finish()
         }
     }
