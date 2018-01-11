@@ -19,7 +19,7 @@ android {
     buildToolsVersion "27.0.1"
     defaultConfig {
         applicationId "com.ninebx"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         def versionMajor = 0
         def versionMinor = 0

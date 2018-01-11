@@ -54,11 +54,13 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
 
         tvMonthYear.text = mMonthFormat.format(mCalendar.time)
 
+        rvDayEvents.layoutManager = LinearLayoutManager( context )
+        rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
+
         rvDays.layoutManager = LinearLayoutManager(context)
         setDaysAdapter(mCalendar.get(Calendar.DATE))
 
-        rvDayEvents.layoutManager = LinearLayoutManager( context )
-        rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
+
 
         tvToday.setOnClickListener {
             mCalendar = Calendar.getInstance()
