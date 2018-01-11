@@ -17,7 +17,12 @@ import com.ninebx.ui.home.calendar.DaysRecyclerViewAdapter.ViewHolder
 /**
  * Created by Alok on 09/01/18.
  */
-class DaysRecyclerViewAdapter(val monthDates: Int, val startDay: Int, var selectedDate: Int, val isWeekView : Boolean, val weekOfMonth : Int, val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<ViewHolder>() {
+class DaysRecyclerViewAdapter(val monthDates: Int,
+                              val startDay: Int,
+                              var selectedDate: Int,
+                              private var isWeekView : Boolean,
+                              private var weekOfMonth : Int,
+                              val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return 1
@@ -185,9 +190,11 @@ class DaysRecyclerViewAdapter(val monthDates: Int, val startDay: Int, var select
 
         override fun onClick(view: View?) {
             val dayTextView : TextView = view as TextView
-            selectedDate = dayTextView.text.toString().toInt()
-            adapterClickListener.onDayClick( selectedDate )
-            notifyDataSetChanged()
+            if( dayTextView.text.toString().isNotEmpty() ) {
+                selectedDate = dayTextView.text.toString().toInt()
+                adapterClickListener.onDayClick( selectedDate )
+                notifyDataSetChanged()
+            }
         }
 
         private val viewsList = ArrayList<TextView>()
@@ -366,10 +373,15 @@ class DaysRecyclerViewAdapter(val monthDates: Int, val startDay: Int, var select
                     viewsList[dayIndex + (skip - 1) ].text = i.toString()
                     viewsList[dayIndex + (skip - 1)].isSelected = i == selectedDate
                 }
-
-
             }
         }
 
+    }
+
+    fun toggleWeekView(selectedDate: Int, weekOfMonth: Int, weekView: Boolean) {
+        this.selectedDate = selectedDate
+        this.weekOfMonth = weekOfMonth
+        this.isWeekView = weekView
+        notifyDataSetChanged()
     }
 }
