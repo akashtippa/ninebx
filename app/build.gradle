@@ -21,8 +21,15 @@ android {
         applicationId "com.ninebx"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1
+        def versionMajor = 0
+        def versionMinor = 0
+        def versionPatch = 0
+        def versionBuild = 1
+        versionCode 0
         versionName "1.0"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "ON_DEBUG_MODE", "true"
         vectorDrawables.useSupportLibrary = true
@@ -74,6 +81,6 @@ dependencies {
 
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 
-    //Realm recyclerview
-    compile 'com.github.thorbenprimke:realm-recyclerview:0.9.25'
+    //MultiDex
+    implementation 'com.android.support:multidex:1.0.2'
 }

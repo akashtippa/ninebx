@@ -10,9 +10,9 @@ import com.ninebx.ui.home.calendar.DayEventsRecyclerViewAdapter.ViewHolder
 /**
  * Created by Alok on 09/01/18.
  */
-class DayEventsRecyclerViewAdapter : RecyclerView.Adapter<ViewHolder>()  {
+class DayEventsRecyclerViewAdapter(val eventsCount: Int) : RecyclerView.Adapter<ViewHolder>()  {
     override fun getItemCount(): Int {
-        return 3
+        return eventsCount
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {

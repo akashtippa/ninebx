@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,7 +58,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
         setDaysAdapter(mCalendar.get(Calendar.DATE))
 
         rvDayEvents.layoutManager = LinearLayoutManager( context )
-        rvDayEvents.adapter = DayEventsRecyclerViewAdapter()
+        rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
 
         tvToday.setOnClickListener {
             mCalendar = Calendar.getInstance()
@@ -87,7 +86,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
 
     override fun onDayClick(dayOfMonth: Int) {
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
+        rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
     }
 
 }

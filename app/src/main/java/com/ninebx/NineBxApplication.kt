@@ -1,7 +1,8 @@
 package com.ninebx
 
 import android.annotation.SuppressLint
-import android.app.Application
+import android.support.multidex.MultiDex
+import android.support.multidex.MultiDexApplication
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -13,7 +14,7 @@ import java.security.SecureRandom
 /***
  * Created by TechnoBlogger on 18/12/17.
  */
-class NineBxApplication : Application() {
+class NineBxApplication : MultiDexApplication() {
 
     var activityInstance: HomeActivity? = null
         private set
@@ -59,6 +60,7 @@ class NineBxApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MultiDex.install(this)
         instance = this
         Preferences.init(applicationContext)
         Realm.init(this)
