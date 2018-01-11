@@ -1,6 +1,5 @@
 package com.ninebx.ui.home.calendar
 
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import java.util.*
@@ -8,15 +7,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.AdapterClickListener
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.calendar.DaysRecyclerViewAdapter.ViewHolder
 
 /**
  * Created by Alok on 09/01/18.
  */
-class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selectedDate: Int, val adapterClickListener: DaysAdapterClickListener ) : RecyclerView.Adapter<ViewHolder>() {
+class DaysRecyclerViewAdapter(val monthDates: Int, val startDay: Int, var selectedDate: Int, val isWeekView : Boolean, val weekOfMonth : Int, val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return 1
@@ -120,6 +121,31 @@ class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selec
         setDrawable( holder.tvFriday6)
         setDrawable( holder.tvSaturday6)
 
+        if( isWeekView ) {
+            holder.layoutWeek1.hide()
+            holder.layoutWeek2.hide()
+            holder.layoutWeek3.hide()
+            holder.layoutWeek4.hide()
+            holder.layoutWeek5.hide()
+            holder.layoutWeek6.hide()
+            when( weekOfMonth ) {
+                1 -> holder.layoutWeek1.show()
+                2 -> holder.layoutWeek2.show()
+                3 -> holder.layoutWeek3.show()
+                4 -> holder.layoutWeek4.show()
+                5 -> holder.layoutWeek5.show()
+                6 -> holder.layoutWeek6.show()
+            }
+        }
+        else {
+            holder.layoutWeek1.show()
+            holder.layoutWeek2.show()
+            holder.layoutWeek3.show()
+            holder.layoutWeek4.show()
+            holder.layoutWeek5.show()
+            holder.layoutWeek6.show()
+        }
+
     }
 
     private fun setDrawable(textView: TextView?) {
@@ -214,6 +240,13 @@ class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selec
         val tvSaturday4 = itemView!!.findViewById<TextView>(R.id.tvSaturday4)
         val tvSaturday5 = itemView!!.findViewById<TextView>(R.id.tvSaturday5)
         val tvSaturday6 = itemView!!.findViewById<TextView>(R.id.tvSaturday6)
+
+        val layoutWeek1 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek1)
+        val layoutWeek2 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek2)
+        val layoutWeek3 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek3)
+        val layoutWeek4 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek4)
+        val layoutWeek5 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek5)
+        val layoutWeek6 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek6)
 
         init {
 

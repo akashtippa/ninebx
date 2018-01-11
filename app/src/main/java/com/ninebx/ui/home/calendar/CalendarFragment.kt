@@ -43,13 +43,15 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
         ivPreviousMonth.setOnClickListener {
             mCalendar.add( Calendar.MONTH, -1 )
             tvMonthYear.text = mMonthFormat.format(mCalendar.time)
-            setDaysAdapter(mCalendar.get(Calendar.DATE))
+            setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
+            rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
         }
 
         ivNextMonth.setOnClickListener {
             mCalendar.add( Calendar.MONTH, 1 )
             tvMonthYear.text = mMonthFormat.format(mCalendar.time)
-            setDaysAdapter(mCalendar.get(Calendar.DATE))
+            setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
+            rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
         }
 
         tvMonthYear.text = mMonthFormat.format(mCalendar.time)
@@ -58,32 +60,39 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
         rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
 
         rvDays.layoutManager = LinearLayoutManager(context)
-        setDaysAdapter(mCalendar.get(Calendar.DATE))
-
-
+        setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
 
         tvToday.setOnClickListener {
             mCalendar = Calendar.getInstance()
             tvMonthYear.text = mMonthFormat.format(mCalendar.time)
-            setDaysAdapter(mCalendar.get(Calendar.DATE))
+            setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
         }
+
         tvWeekMonth.setOnClickListener {
             when( tvWeekMonth.text.toString() ) {
                 "Week" -> {
                     tvWeekMonth.text = getString(R.string.month)
+                    setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
                 }
                 "Month" -> {
                     tvWeekMonth.text = getString(R.string.week)
+                    setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
                 }
             }
         }
 
     }
 
-    private fun setDaysAdapter( selectedDate : Int ) {
+    private fun setDaysAdapter(selectedDate: Int, weekOfMonth: Int) {
         val monthStartDate = mCalendar
         monthStartDate.set(Calendar.DAY_OF_MONTH, 1)
-        rvDays.adapter = DaysRecyclerViewAdapter( mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH), monthStartDate.get(Calendar.DAY_OF_WEEK), selectedDate, this )
+        rvDays.adapter = DaysRecyclerViewAdapter(
+                mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH),
+                monthStartDate.get(Calendar.DAY_OF_WEEK),
+                selectedDate,
+                tvWeekMonth.text.toString() == "Month",
+                weekOfMonth,
+                this )
     }
 
     override fun onDayClick(dayOfMonth: Int) {
