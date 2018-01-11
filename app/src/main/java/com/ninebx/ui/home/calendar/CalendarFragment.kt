@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -85,6 +86,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
     }
 
     override fun onDayClick(dayOfMonth: Int) {
+        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
     }
 

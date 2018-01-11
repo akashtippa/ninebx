@@ -73,4 +73,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
 
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+
+    //Realm recyclerview
+    compile 'com.github.thorbenprimke:realm-recyclerview:0.9.25'
 }
