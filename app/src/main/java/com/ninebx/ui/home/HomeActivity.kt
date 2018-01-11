@@ -95,6 +95,7 @@ class HomeActivity : AppCompatActivity() {
             changeToolbarTitle(titleText)
             callHomeFragment()
             showBottomView()
+            ivBack.hide()
         }
 
         ivBack.setOnClickListener {
