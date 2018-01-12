@@ -11,6 +11,7 @@ import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 03/01/18.
@@ -38,6 +39,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
     private lateinit var mPrevMonth : String
     private var mCalendar = Calendar.getInstance()
     private var isWeekView = false
+    private var isYearChange = false
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,8 +48,14 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
         ivPreviousMonth.setOnClickListener {
             if( isWeekView ) {
                 mCalendar.add( Calendar.WEEK_OF_YEAR, -1 )
+
                 if( mPrevMonth != mMonthFormat.format(mCalendar.time) ) {
+                    AppLogger.d(TAG, "Week dates : Max Date for month : " + mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
                     mCalendar.set(Calendar.DAY_OF_MONTH, mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+                    AppLogger.d(TAG, "Week dates : Months : " + mPrevMonth + " : " + mMonthFormat.format(mCalendar.time) )
+                    if( mPrevMonth.contains("January") && mMonthFormat.format(mCalendar.time).contains("December") ) {
+                        isYearChange = true
+                    }
                 }
             }
             else {
@@ -122,23 +130,33 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
             //Need separate adapter for display of weeks
             val weekCalendar = Calendar.getInstance()
             weekCalendar.clear()
-            weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.get(Calendar.WEEK_OF_YEAR))
+            if( isYearChange ) {
+                weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.getMaximum(Calendar.WEEK_OF_YEAR))
+                isYearChange = false
+            }
+            else
+                weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.get(Calendar.WEEK_OF_YEAR))
             weekCalendar.set(Calendar.YEAR, mCalendar.get(Calendar.YEAR))
 
-            val minDate = weekCalendar.get(Calendar.DATE)
-            val startDay = weekCalendar.get(Calendar.DAY_OF_WEEK)
 
-            weekCalendar.add(Calendar.DAY_OF_MONTH, 6)
+
+            val weekDates = ArrayList<Int>()
+            val minDate = weekCalendar.get(Calendar.DATE)
+            weekDates.add(minDate)
+            for( i in 1 until 7 ) {
+                weekCalendar.add(Calendar.DAY_OF_MONTH, 1)
+                weekDates.add(weekCalendar.get(Calendar.DATE))
+            }
+
             val maxDate = weekCalendar.get(Calendar.DATE)
 
             AppLogger.d(TAG, "Week dates : " + minDate + " : " + maxDate )
+            AppLogger.d(TAG, "Week dates : List : " + weekDates )
             //Create a list of dates to be passed across.
 
             mWeekDaysRecyclerAdpater = WeekDaysRecyclerViewAdapter(
-                    minDate,
-                    maxDate,
+                    weekDates,
                     selectedDate,
-                    startDay,
                     this)
             rvDays.adapter = mWeekDaysRecyclerAdpater
             //mDaysRecyclerAdapter!!.toggleWeekView( selectedDate, weekOfMonth, isWeekView )
@@ -159,7 +177,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
 
         onDayClick(selectedDate)
 
-        AppLogger.d(TAG, "Selected Date : " + selectedDate + " : Date in month : " + mCalendar.get(Calendar.DATE))
+        AppLogger.d(TAG, "Week dates : Selected Date : " + selectedDate + " : Date in month : " + mCalendar.get(Calendar.DATE))
 
     }
 
