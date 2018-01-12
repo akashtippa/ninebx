@@ -111,18 +111,41 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
 
     private val TAG: String = CalendarFragment::class.java.simpleName
     private var mDaysRecyclerAdapter : DaysRecyclerViewAdapter ?= null
+    private var mWeekDaysRecyclerAdpater : WeekDaysRecyclerViewAdapter ?= null
 
     private fun setDaysAdapter(selectedDate: Int, weekOfMonth: Int) {
 
         isWeekView = tvWeekMonth.text.toString() == "Month"
-        val monthStartDate = mCalendar
-        monthStartDate.set(Calendar.DAY_OF_MONTH, 1)
+
 
         if( isWeekView ) {
             //Need separate adapter for display of weeks
-            mDaysRecyclerAdapter!!.toggleWeekView( selectedDate, weekOfMonth, isWeekView )
+            val weekCalendar = Calendar.getInstance()
+            weekCalendar.clear()
+            weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.get(Calendar.WEEK_OF_YEAR))
+            weekCalendar.set(Calendar.YEAR, mCalendar.get(Calendar.YEAR))
+
+            val minDate = weekCalendar.get(Calendar.DATE)
+            val startDay = weekCalendar.get(Calendar.DAY_OF_WEEK)
+
+            weekCalendar.add(Calendar.DAY_OF_MONTH, 6)
+            val maxDate = weekCalendar.get(Calendar.DATE)
+
+            AppLogger.d(TAG, "Week dates : " + minDate + " : " + maxDate )
+            //Create a list of dates to be passed across.
+
+            mWeekDaysRecyclerAdpater = WeekDaysRecyclerViewAdapter(
+                    minDate,
+                    maxDate,
+                    selectedDate,
+                    startDay,
+                    this)
+            rvDays.adapter = mWeekDaysRecyclerAdpater
+            //mDaysRecyclerAdapter!!.toggleWeekView( selectedDate, weekOfMonth, isWeekView )
         }
         else {
+            val monthStartDate = mCalendar
+            monthStartDate.set(Calendar.DAY_OF_MONTH, 1)
             mDaysRecyclerAdapter = DaysRecyclerViewAdapter(
                     mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH),
                     monthStartDate.get(Calendar.DAY_OF_WEEK),
