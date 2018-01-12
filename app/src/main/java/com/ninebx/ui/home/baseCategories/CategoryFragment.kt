@@ -1,16 +1,17 @@
 package com.ninebx.ui.home.baseCategories
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.utility.FragmentBackHelper
@@ -41,21 +42,27 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     private fun inflateLayout(categories: ArrayList<Category>) {
-        
+
         val inflater = LayoutInflater.from(context)
-        
+
         for( category in categories ) {
             val categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
+            val tvCategory = categoryView.findViewById<TextView>(R.id.tvCategory)
+            val tvCount = categoryView.findViewById<TextView>(R.id.tvCount)
             val rvSubCategory = categoryView.findViewById<RecyclerView>(R.id.rvSubCategory)
+            val id = context.resources.getIdentifier(category.drawableString, "drawable", context.packageName)
+            tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, id), null, null, null)
+            tvCategory.compoundDrawablePadding = context.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
+            tvCategory.text = category.title
+            tvCount.text = category.formsCount.toString()
             rvSubCategory.layoutManager = LinearLayoutManager( context )
-            
-            val actionClickListener : ActionClickListener = object :ActionClickListener {
-                override fun onItemClick(position: Int, action: String) {
-
+            val subCategoryAdapter = SubCategoryAdapter( category.subCategories, object :CategoryItemClickListener {
+                override fun onItemClick(subCategory: SubCategory, action: String) {
+                    //DO something with this
                 }
-            }
-            val subCategoryAdapter = SubCategoryAdapter( category.subCategories, actionClickListener )
-                    rvSubCategory.adapter = subCategoryAdapter
+            } )
+            rvSubCategory.adapter = subCategoryAdapter
+            layoutCategory.addView(categoryView)
         }
     }
 

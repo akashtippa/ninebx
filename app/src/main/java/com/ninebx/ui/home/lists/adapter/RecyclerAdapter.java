@@ -42,11 +42,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     }
 
     public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
-        private final EditText etTitleTextView;
+        private EditText etTitleTextView;
 
         public RecyclerItemViewHolder(final View parent) {
             super(parent);
-            etTitleTextView = (EditText) parent.findViewById(R.id.edtAddedList);
+            //etTitleTextView = (EditText) parent.findViewById(R.id.edtAddedList);
         }
     }
 }
