@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_height="@dimen/divider_height"
+        android:id="@+id/dividerView"
+        android:background="@color/divider_color"
+        android:layout_marginStart="@dimen/default_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerView"
+        android:textColor="@color/black"
+        android:id="@+id/tvSubTitle"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawablePadding="@dimen/default_mini_padding"
+        android:gravity="center_vertical"
+        android:padding="@dimen/default_mini_padding"
+        android:layout_marginLeft="@dimen/default_margin"
+        tools:text="@string/app_name"
+        android:layout_marginStart="@dimen/default_margin" />
+
+
+</RelativeLayout>

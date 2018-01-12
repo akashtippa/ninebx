@@ -23,5 +23,8 @@ object Constants {
     val PASS_CODE_COMPLETE = 4
 
 
+    val SUB_CATEGORY_ADD_PERSON = 0
+    val SUB_CATEGORY_ADD_ITEM = 1
+    val SUB_CATEGORY_DISPLAY_PERSON = 2
 
 }

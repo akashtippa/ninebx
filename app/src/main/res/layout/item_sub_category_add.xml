@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_height="@dimen/divider_height"
+        android:id="@+id/dividerView"
+        android:background="@color/divider_color"
+        android:layout_marginStart="@dimen/default_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerView"
+        android:textColor="@color/black"
+        android:id="@+id/tvSubTitle"
+        android:layout_marginTop="@dimen/default_micro_padding"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@id/tvCount"
+        android:layout_toStartOf="@id/tvCount"
+        android:padding="@dimen/default_mini_padding"
+        android:layout_marginLeft="@dimen/default_margin"
+        tools:text="@string/app_name"
+        android:layout_marginStart="@dimen/default_margin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/black"
+        android:gravity="center"
+        tools:text="0"
+        android:drawableRight="@drawable/ic_add_circle_outline_blue_300_24dp"
+        android:drawableEnd="@drawable/ic_add_circle_outline_blue_300_24dp"
+        android:drawablePadding="@dimen/default_mini_padding"
+        android:id="@+id/tvCount"
+        android:padding="@dimen/default_mini_padding"
+        />
+
+
+</RelativeLayout>
