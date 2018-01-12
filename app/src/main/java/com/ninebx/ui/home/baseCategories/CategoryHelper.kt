@@ -379,15 +379,11 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-        categoryList.add(category)
-
         categoryIndex += 1000
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
-
-        categoryList.add(category)
 
         categoryList.add(category)
 

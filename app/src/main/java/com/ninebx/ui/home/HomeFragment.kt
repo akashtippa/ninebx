@@ -82,21 +82,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         layoutMemories.setOnClickListener(this)
         layoutShopping.setOnClickListener(this)
 
-//        setupPager()
-
     }
-
-    private fun setupPager() {
-        val fragments = ArrayList<Fragment>()
-        fragments.add(SearchFragment())
-        fragments.add(CalendarFragment())
-        fragments.add(ListsFragment())
-        fragments.add(NotificationsFragment())
-        fragments.add(AccountFragment())
-        vpParent.adapter = HomeViewPagerAdapter(fragments, activity.supportFragmentManager)
-        vpParent.setPagingEnabled(false)
-    }
-
 
     private fun callBottomViewFragment(option: Int) {
         val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
@@ -106,50 +92,42 @@ class HomeFragment : Fragment(), View.OnClickListener {
         bundle.putInt("category", option)
         val categoryFragment = CategoryFragment()
         categoryFragment.arguments = bundle
+        NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
 
         when (option) {
             (R.string.home_amp_money) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.travel) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.contacts) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.education_work) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.personal) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.interests) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.interests))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.wellness) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.memories) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.shopping) -> {
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
