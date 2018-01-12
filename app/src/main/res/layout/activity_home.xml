@@ -29,6 +29,8 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="start"
                 android:visibility="gone"
+                android:padding="@dimen/default_micro_padding"
+                tools:visibility="visible"
                 app:srcCompat="@drawable/ic_icon_arrow_left" />
 
             <TextView
