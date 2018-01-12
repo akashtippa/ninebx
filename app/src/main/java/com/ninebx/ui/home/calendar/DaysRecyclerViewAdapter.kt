@@ -1,19 +1,28 @@
 package com.ninebx.ui.home.calendar
 
+import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import java.util.*
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.AdapterClickListener
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.calendar.DaysRecyclerViewAdapter.ViewHolder
 
 /**
  * Created by Alok on 09/01/18.
  */
-class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selectedDate: Int, val adapterClickListener: DaysAdapterClickListener ) : RecyclerView.Adapter<ViewHolder>() {
+class DaysRecyclerViewAdapter(val monthDates: Int,
+                              val startDay: Int,
+                              var selectedDate: Int,
+                              private var isWeekView : Boolean,
+                              private var weekOfMonth : Int,
+                              val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return 1
@@ -21,7 +30,7 @@ class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selec
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
 
-        holder!!.tvSunday1.isSelected = isSelected(holder.tvSunday1)
+       /* holder!!.tvSunday1.isSelected = isSelected(holder.tvSunday1)
         holder.tvMonday1.isSelected = isSelected(holder.tvMonday1)
         holder.tvTuesday1.isSelected = isSelected(holder.tvTuesday1)
         holder.tvWednesday1.isSelected = isSelected(holder.tvWednesday1)
@@ -67,25 +76,125 @@ class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selec
         holder.tvWednesday6.isSelected = isSelected(holder.tvWednesday6)
         holder.tvThursday6.isSelected = isSelected(holder.tvThursday6)
         holder.tvFriday6.isSelected = isSelected(holder.tvFriday6)
-        holder.tvSaturday6.isSelected = isSelected(holder.tvSaturday6)
+        holder.tvSaturday6.isSelected = isSelected(holder.tvSaturday6)*/
 
+        setDrawable( holder!!.tvSunday1)
+        setDrawable( holder.tvMonday1)
+        setDrawable( holder.tvTuesday1)
+        setDrawable( holder.tvWednesday1)
+        setDrawable( holder.tvThursday1)
+        setDrawable( holder.tvFriday1)
+        setDrawable( holder.tvSaturday1)
+
+        setDrawable( holder.tvSunday2)
+        setDrawable( holder.tvMonday2)
+        setDrawable( holder.tvTuesday2)
+        setDrawable( holder.tvWednesday2)
+        setDrawable( holder.tvThursday2)
+        setDrawable( holder.tvFriday2)
+        setDrawable( holder.tvSaturday2)
+
+        setDrawable( holder.tvSunday3)
+        setDrawable( holder.tvMonday3)
+        setDrawable( holder.tvTuesday3)
+        setDrawable( holder.tvWednesday3)
+        setDrawable( holder.tvThursday3)
+        setDrawable( holder.tvFriday3)
+        setDrawable( holder.tvSaturday3)
+
+        setDrawable( holder.tvSunday4)
+        setDrawable( holder.tvMonday4)
+        setDrawable( holder.tvTuesday4)
+        setDrawable( holder.tvWednesday4)
+        setDrawable( holder.tvThursday4)
+        setDrawable( holder.tvFriday4)
+        setDrawable( holder.tvSaturday4)
+
+        setDrawable( holder.tvSunday5)
+        setDrawable( holder.tvMonday5)
+        setDrawable( holder.tvTuesday5)
+        setDrawable( holder.tvWednesday5)
+        setDrawable( holder.tvThursday5)
+        setDrawable( holder.tvFriday5)
+        setDrawable( holder.tvSaturday5)
+
+        setDrawable( holder.tvSunday6)
+        setDrawable( holder.tvMonday6)
+        setDrawable( holder.tvTuesday6)
+        setDrawable( holder.tvWednesday6)
+        setDrawable( holder.tvThursday6)
+        setDrawable( holder.tvFriday6)
+        setDrawable( holder.tvSaturday6)
+
+        if( isWeekView ) {
+            holder.layoutWeek1.hide()
+            holder.layoutWeek2.hide()
+            holder.layoutWeek3.hide()
+            holder.layoutWeek4.hide()
+            holder.layoutWeek5.hide()
+            holder.layoutWeek6.hide()
+            when( weekOfMonth ) {
+                1 -> holder.layoutWeek1.show()
+                2 -> holder.layoutWeek2.show()
+                3 -> holder.layoutWeek3.show()
+                4 -> holder.layoutWeek4.show()
+                5 -> holder.layoutWeek5.show()
+                6 -> holder.layoutWeek6.show()
+            }
+        }
+        else {
+            holder.layoutWeek1.show()
+            holder.layoutWeek2.show()
+            holder.layoutWeek3.show()
+            holder.layoutWeek4.show()
+            holder.layoutWeek5.show()
+            holder.layoutWeek6.show()
+        }
+
+    }
+
+    private fun setDrawable(textView: TextView?) {
+        textView!!.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
+                              else if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() % 7 != 0 ) mEventDrawable
+                              else mUnSelectedDrawable
+
+
+        textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
+        else if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() % 7 != 0 ) mBlackColor
+        else mBlackColor)
     }
 
     private fun isSelected(textView : TextView?): Boolean {
         return textView!!.text.isNotEmpty() && textView.text.toString().toInt() == selectedDate
     }
+    private lateinit var mEventDrawable : Drawable
+    private lateinit var mSelectedDrawable : Drawable
+    private lateinit var mUnSelectedDrawable : Drawable
 
+    private var mBlackColor : Int = 0
+    private var mWhiteColor : Int = 0
+    
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.item_rv_days, parent, false))
+        
+        mEventDrawable = ContextCompat.getDrawable(parent!!.context, R.drawable.event_day)
+        mSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.selected_day)
+        mUnSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.unselected_day)
+
+        mBlackColor = ContextCompat.getColor(parent.context, R.color.black)
+        mWhiteColor = ContextCompat.getColor(parent.context, R.color.white)
+
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_rv_days, parent, false))
     }
 
     inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         override fun onClick(view: View?) {
             val dayTextView : TextView = view as TextView
-            selectedDate = dayTextView.text.toString().toInt()
-            adapterClickListener.onDayClick( selectedDate )
-            notifyDataSetChanged()
+            if( dayTextView.text.toString().isNotEmpty() ) {
+                selectedDate = dayTextView.text.toString().toInt()
+                adapterClickListener.onDayClick( selectedDate )
+                notifyDataSetChanged()
+            }
         }
 
         private val viewsList = ArrayList<TextView>()
@@ -138,6 +247,13 @@ class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selec
         val tvSaturday4 = itemView!!.findViewById<TextView>(R.id.tvSaturday4)
         val tvSaturday5 = itemView!!.findViewById<TextView>(R.id.tvSaturday5)
         val tvSaturday6 = itemView!!.findViewById<TextView>(R.id.tvSaturday6)
+
+        val layoutWeek1 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek1)
+        val layoutWeek2 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek2)
+        val layoutWeek3 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek3)
+        val layoutWeek4 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek4)
+        val layoutWeek5 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek5)
+        val layoutWeek6 = itemView!!.findViewById<LinearLayout>(R.id.layoutWeek6)
 
         init {
 
@@ -257,10 +373,15 @@ class DaysRecyclerViewAdapter( val monthDates: Int, val startDay: Int, var selec
                     viewsList[dayIndex + (skip - 1) ].text = i.toString()
                     viewsList[dayIndex + (skip - 1)].isSelected = i == selectedDate
                 }
-
-
             }
         }
 
+    }
+
+    fun toggleWeekView(selectedDate: Int, weekOfMonth: Int, weekView: Boolean) {
+        this.selectedDate = selectedDate
+        this.weekOfMonth = weekOfMonth
+        this.isWeekView = weekView
+        notifyDataSetChanged()
     }
 }
