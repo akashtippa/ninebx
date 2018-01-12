@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_icon_lists_contacts"
+            android:drawableLeft="@drawable/ic_icon_health_records"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
             android:text="@string/personal_health_record"
