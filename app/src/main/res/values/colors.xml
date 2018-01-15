@@ -19,4 +19,9 @@
     <color name="plan4">#E16047</color>
     <color name="pass_code_background">#D9000000</color>
     <color name="divider_color">#EFEFEF</color>
+
+    <!-- Finger Print Colors -->
+    <color name="warning_color">#f4511e</color>
+    <color name="hint_color">#42000000</color>
+    <color name="success_color">#009688</color>
 </resources>
