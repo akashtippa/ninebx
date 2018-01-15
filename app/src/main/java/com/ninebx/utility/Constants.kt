@@ -21,6 +21,7 @@ object Constants {
     val ACCOUNT_PASSWORD_COMPLETE = 2
     val OTP_COMPLETE = 3
     val PASS_CODE_COMPLETE = 4
+    val FINGER_PRINT_COMPLETE = 5
 
 
     val SUB_CATEGORY_ADD_PERSON = 0

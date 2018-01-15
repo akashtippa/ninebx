@@ -13,6 +13,7 @@ import org.spongycastle.crypto.PBEParametersGenerator
 import org.spongycastle.crypto.digests.SHA256Digest
 import org.spongycastle.crypto.generators.PKCS5S2ParametersGenerator
 import org.spongycastle.crypto.params.KeyParameter
+import org.spongycastle.crypto.params.ParametersWithIV
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -29,7 +30,7 @@ class LoginTask(private var userName: String, private var password: String, priv
 
     val TAG: String = LoginTask::class.java.simpleName
     var strUsername: String = "test.box24@yopmail.com"
-    val prefrences = NineBxPreferences()
+    private val prefrences = NineBxPreferences()
 
     var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
 
@@ -81,12 +82,12 @@ class LoginTask(private var userName: String, private var password: String, priv
 
     private fun encryptViaSpongyCastle() {
 
-        val generator = PKCS5S2ParametersGenerator(SHA256Digest()!!)
+        val generator = PKCS5S2ParametersGenerator(SHA256Digest())
         generator.init(PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
-        val key = generator.generateDerivedMacParameters(256) as KeyParameter
-        //val key = generator.generateDerivedParameters(256, 16) as ParametersWithIV
-        password = toHex(key.key)
-
+        //val key = generator.generateDerivedMacParameters(256) as KeyParameter
+        val key = generator.generateDerivedParameters(256, 16) as ParametersWithIV
+        //password = toHex(key.key)
+        password = Arrays.toString(key.iv.toTypedArray())
 
         AppLogger.d(TAG, "encryptViaSpongyCastle Password generate " + password)
         AppLogger.d(TAG, "encryptViaSpongyCastle Password original " + strPassword)

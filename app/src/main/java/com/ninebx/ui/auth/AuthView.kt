@@ -13,8 +13,10 @@ interface AuthView : BaseView {
     fun navigateToOTP()
     fun navigateToAccountPassword()
     fun navigateToCreatePassCode( isCreatePassCode : Boolean  )
+    fun navigateToFingerPrint()
     fun getAuthPresenter() : AuthPresenter
     fun onSuccess( syncUser: SyncUser? )
+    fun onError( error : String )
     fun getAccountEmail() : String
     fun setAccountEmail(accountEmail: String)
 

@@ -1,5 +1,6 @@
 package com.ninebx.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,12 +12,20 @@ import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.Constants
 import io.realm.SyncUser
+import android.hardware.fingerprint.FingerprintManager
+import android.os.Build
+import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
+
 
 /**
  * Created by Alok on 02/01/18.
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+
+    override fun onError(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+    }
 
     private lateinit var mCurrentTag: String
     private lateinit var mAuthPresenter: AuthPresenter
@@ -119,7 +128,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onError(error: Int) {
-        Toast.makeText(this, getString(error), Toast.LENGTH_LONG).show()
+        onError(getString(error))
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,6 +158,13 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 navigateToCreatePassCode(true)
             }
             Constants.PASS_CODE_COMPLETE -> {
+                if( checkForFingerPrint() )
+                    navigateToFingerPrint()
+                else {
+                    navigateToHome()
+                }
+            }
+            Constants.FINGER_PRINT_COMPLETE ->{
                 navigateToHome()
             }
             Constants.SIGN_UP_COMPLETE -> {
@@ -156,6 +173,26 @@ class AuthActivity : AppCompatActivity(), AuthView {
             }
         }
 
+    }
+
+    private fun checkForFingerPrint(): Boolean {
+        // Check if we're running on Android 6.0 (M) or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //Fingerprint API only available on from Android 6.0 (M)
+            val fingerprintManager = this.getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
+            return fingerprintManager.isHardwareDetected
+        }
+        else return false
+    }
+
+    override fun navigateToFingerPrint() {
+        if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
+            NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
+        mCurrentTag = "FingerPrint"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val fingerPrintFragment = FingerPrintFragment()
+        fragmentTransaction.replace(R.id.container, fingerPrintFragment).commit()
     }
 
     override fun onBackPressed() {
