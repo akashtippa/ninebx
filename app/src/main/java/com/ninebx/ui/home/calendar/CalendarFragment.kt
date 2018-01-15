@@ -131,7 +131,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
             val weekCalendar = Calendar.getInstance()
             weekCalendar.clear()
             if( isYearChange ) {
-                weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.getMaximum(Calendar.WEEK_OF_YEAR))
+                weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.getMaximum(Calendar.WEEK_OF_YEAR) - 1)
                 isYearChange = false
             }
             else
