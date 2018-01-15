@@ -28,7 +28,6 @@ class AccountPasswordFragment : BaseAuthFragment() {
         btnSubmit.setOnClickListener {
             if( validate() ) {
                 mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())
-
             }
         }
         if( NineBxApplication.autoTestMode ) {

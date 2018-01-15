@@ -7,6 +7,4 @@ package com.ninebx.ui.home.lists.model
 class AddedItem {
     var id: String = ""
     var strAddedItem: String = ""
-
-
 }

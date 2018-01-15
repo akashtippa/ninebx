@@ -34,76 +34,69 @@ class ListsFragment : Fragment(), ListsCommunicationView {
         super.onViewCreated(view, savedInstanceState)
 
         layHome.setOnClickListener {
-            callBottomViewFragment(getString(R.string.home_amp_money))
+            callSubListFragment(getString(R.string.home_amp_money))
         }
         layTravel.setOnClickListener {
-            callBottomViewFragment(getString(R.string.travel))
+            callSubListFragment(getString(R.string.travel))
         }
         layContact.setOnClickListener {
-            callBottomViewFragment(getString(R.string.contacts))
+            callSubListFragment(getString(R.string.contacts))
         }
         layEducation.setOnClickListener {
-            callBottomViewFragment(getString(R.string.education_work))
+            callSubListFragment(getString(R.string.education_work))
         }
         layPersonal.setOnClickListener {
-            callBottomViewFragment(getString(R.string.personal))
+            callSubListFragment(getString(R.string.personal))
         }
         layInterests.setOnClickListener {
-            callBottomViewFragment(getString(R.string.interests))
+            callSubListFragment(getString(R.string.interests))
         }
         layWellness.setOnClickListener {
-            callBottomViewFragment(getString(R.string.wellness))
+            callSubListFragment(getString(R.string.wellness))
         }
         layMemories.setOnClickListener {
-            callBottomViewFragment(getString(R.string.memories))
+            callSubListFragment(getString(R.string.memories))
         }
         layShopping.setOnClickListener {
-            callBottomViewFragment(getString(R.string.shopping))
+            callSubListFragment(getString(R.string.shopping))
         }
 
     }
 
-    private fun callBottomViewFragment(option: String) {
+    private fun callSubListFragment(option: String) {
         val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
         NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
         NineBxApplication.instance.activityInstance!!.hideBottomView()
+        fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+
         when (option) {
             getString(R.string.home_amp_money) -> {
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
             }
             getString(R.string.travel) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
             }
             getString(R.string.contacts) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
             }
             getString(R.string.education_work) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
             }
             getString(R.string.personal) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
             }
             getString(R.string.interests) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.interests))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
             }
             getString(R.string.wellness) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
             }
             getString(R.string.memories) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
             }
             getString(R.string.shopping) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
-                fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
             }
         }
     }

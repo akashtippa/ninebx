@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
-
+import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.lists.FragmentSuperSubListFragment
 import com.ninebx.ui.home.lists.model.AddedItem
+import java.util.*
 
-import java.util.ArrayList
-
-class RecyclerAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.Adapter<RecyclerAdapter.RecyclerItemViewHolder>() {
+internal class RecyclerAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.Adapter<RecyclerAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -25,6 +25,11 @@ class RecyclerAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.etTitleTextView.text = myList!![position].strAddedItem
         mLastPosition = position
+        holder.layoutAddedList.setOnClickListener {
+            val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.replace(R.id.frameLayout, FragmentSuperSubListFragment()).commit()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,13 +42,9 @@ class RecyclerAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.
     }
 
     internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
-        private val etTitleTextView: TextView
-        private val layoutAddedList: RelativeLayout
+        val etTitleTextView: TextView = parent.findViewById<View>(R.id.txtListAdded) as TextView
+        val layoutAddedList: RelativeLayout = parent.findViewById<View>(R.id.layoutAddedList) as RelativeLayout
 
-        init {
-            etTitleTextView = parent.findViewById<View>(R.id.txtListAdded) as TextView
-            layoutAddedList = parent.findViewById<View>(R.id.layoutAddedList) as RelativeLayout
-        }
     }
 
     fun add(location: Int, iName: String) {

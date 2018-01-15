@@ -1,17 +1,16 @@
 package com.ninebx.ui.home.account
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.*
-import com.ninebx.R
-import kotlinx.android.synthetic.main.fragment_account.*
-import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.view.*
 import android.widget.ImageView
-import com.ninebx.ui.home.HomeFragment
+import com.ninebx.R
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
+import kotlinx.android.synthetic.main.fragment_account.*
 
 
 /**
@@ -23,7 +22,6 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.txtProfile -> {
-                // later to be converted in Fragments, for now just to show UI
                 navigateToMyProfile()
             }
 
@@ -64,7 +62,16 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
             R.id.txtAutoLock -> {
                 openOperationDialog(getString(R.string.auto_lock_device_setting))
             }
+            R.id.txtMasterPassword -> {
+                navigateToMasterPassword()
+            }
         }
+    }
+
+    private fun navigateToMasterPassword() {
+        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.frameLayout, MasterPasswordFragment()).commit()
     }
 
     // Single method to open static page dialog,
@@ -190,6 +197,7 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
         txtFeedback.setOnClickListener(this)
         txtAutoLock.setOnClickListener(this)
         txtFamily.setOnClickListener(this)
+        txtMasterPassword.setOnClickListener(this)
     }
 
 }

@@ -71,8 +71,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_44sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_travel" />
 
@@ -99,8 +99,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_44sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_contacts" />
 
@@ -162,8 +162,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_41sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_personal" />
 
@@ -190,8 +190,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_41sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_interests" />
 
@@ -225,8 +225,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_41sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_wellness" />
 
@@ -253,8 +253,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_41sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_memories" />
 
@@ -281,8 +281,8 @@
                 android:padding="@dimen/_2sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_41sdp"
+                    android:layout_height="@dimen/_41sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_home_icon_shopping" />
 
