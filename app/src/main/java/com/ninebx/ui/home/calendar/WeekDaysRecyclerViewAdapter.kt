@@ -13,10 +13,8 @@ import java.util.ArrayList
 /**
  * Created by Alok on 11/01/18.
  */
-class WeekDaysRecyclerViewAdapter (val minDate: Int,
-                                   val maxDate: Int,
+class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
                                    var selectedDate: Int,
-                                   val startDay : Int,
                                    val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<WeekDaysRecyclerViewAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -113,23 +111,15 @@ class WeekDaysRecyclerViewAdapter (val minDate: Int,
             viewsList.add(tvSaturday1)
 
 
-            setValues( startDay - 1 )
+            setValues( )
 
         }
 
-        private fun setValues(skip: Int) {
+        private fun setValues() {
 
-            var skippedIndex = 0
-            for( skipped in 0 until skip ) {
-                viewsList[skipped].text = ""
-                skippedIndex = skipped
-            }
-
-            for( date in minDate..maxDate + 1 ) {
-                if( skippedIndex < 7 ) {
-                    viewsList[ skippedIndex ].text = date.toString()
-                    viewsList[ skippedIndex++ ].isSelected = date == selectedDate
-                }
+            for((dayIndex, date) in weekDates.withIndex()) {
+                viewsList[ dayIndex ].text = date.toString()
+                viewsList[dayIndex].isSelected = date == selectedDate
             }
 
         }
