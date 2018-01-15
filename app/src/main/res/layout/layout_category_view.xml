@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
+            android:id="@+id/tvCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_toLeftOf="@+id/tvCount"
             android:layout_toStartOf="@+id/tvCount"
-            android:id="@+id/tvCategory"
-            android:padding="@dimen/default_mini_padding"
-            android:drawableStart="@drawable/ic_icon_financial_accounts"
+            android:background="@color/grey_100"
             android:drawableLeft="@drawable/ic_icon_financial_accounts"
             android:drawablePadding="@dimen/default_mini_padding"
-            tools:text="@string/app_name"
+            android:drawableStart="@drawable/ic_icon_financial_accounts"
+            android:gravity="center_vertical"
+            android:padding="@dimen/default_mini_padding"
+            android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:background="@color/grey_100"
-             />
+            tools:text="@string/app_name" />
+
         <TextView
+            android:id="@+id/tvCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:textColor="@color/black"
-            android:gravity="center"
-            tools:text="0"
-            android:drawableRight="@drawable/ic_arrow_right"
+            android:background="@color/grey_100"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="@dimen/default_mini_padding"
-            android:id="@+id/tvCount"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center"
             android:padding="@dimen/default_mini_padding"
-            android:background="@color/grey_100"
-            />
+            android:textColor="@color/black"
+            tools:text="0" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSubCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:id="@+id/rvSubCategory"/>
+        android:nestedScrollingEnabled="false" />
 
     <View
+        android:id="@+id/dividerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:layout_marginBottom="@dimen/default_margin"
-        android:id="@+id/dividerView"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color" />
 
 </LinearLayout>

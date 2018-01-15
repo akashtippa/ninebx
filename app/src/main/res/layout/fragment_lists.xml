@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clickable="true"
     android:orientation="vertical">
 
     <ScrollView
@@ -17,8 +18,9 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/layHome"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -29,7 +31,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_home"
+                    android:background="@drawable/bg_lt_home"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -68,8 +70,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layTravel"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -80,7 +83,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_travell"
+                    android:background="@drawable/bg_lt_travell"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -119,8 +122,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layContact"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -131,12 +135,12 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_contacts"
+                    android:background="@drawable/bg_lt_contacts"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
                     <ImageView
-                        android:layout_width="@dimen/_32sdp"
+                        android:layout_width="37dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_home_icon_contacts" />
@@ -170,8 +174,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layEducation"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -182,7 +187,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_education"
+                    android:background="@drawable/bg_lt_edu"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -221,8 +226,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layPersonal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -233,7 +239,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_personal"
+                    android:background="@drawable/bg_lt_personal"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -272,8 +278,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layInterests"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -284,7 +291,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_interests"
+                    android:background="@drawable/bg_lt_interests"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -323,8 +330,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layWellness"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -335,7 +343,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_wellness"
+                    android:background="@drawable/bg_lt_wellness"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -374,8 +382,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layMemories"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -386,7 +395,7 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_memories"
+                    android:background="@drawable/bg_lt_wellness"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
@@ -425,8 +434,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layShopping"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@color/grey_100"
                 android:orientation="horizontal"
@@ -437,13 +447,13 @@
                     android:layout_width="@dimen/_41sdp"
                     android:layout_height="@dimen/_41sdp"
                     android:layout_margin="@dimen/_3sdp"
-                    android:background="@drawable/bg_shopping"
+                    android:background="@drawable/bg_lt_shopping"
                     android:orientation="vertical"
                     android:padding="@dimen/_2sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_32sdp"
-                        android:layout_height="@dimen/_32sdp"
+                        android:layout_height="37dp"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_home_icon_shopping" />
 
@@ -459,7 +469,6 @@
                     android:text="@string/shopping"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
-
 
                 <TextView
                     android:id="@+id/txtShoppingNumber"

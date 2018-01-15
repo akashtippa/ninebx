@@ -6,35 +6,6 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/grey_100">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_icon_arrow_left" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:text="@string/my_profile"
-            android:textColor="@color/colorPrimary" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher" />
-
-    </RelativeLayout>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -73,6 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/_9sdp"
                     android:layout_toRightOf="@+id/imgEdit"
                     app:srcCompat="@drawable/ic_icon_delete_icon" />

@@ -8,8 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/grey_100"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        android:background="@color/grey_100">
 
         <ImageView
             android:id="@+id/imgBack"
@@ -62,14 +62,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/end_to_end_encryption_description1" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/end_to_end_encryption_description1"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -79,14 +81,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/end_to_end_encryption_description2" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/end_to_end_encryption_description2"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -105,14 +109,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/only_you_have_the_key_description1" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/only_you_have_the_key_description1"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -122,14 +128,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/only_you_have_the_key_description2" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/only_you_have_the_key_description2"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -149,14 +157,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/multi_factor_authentication_description1" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/multi_factor_authentication_description1"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -166,14 +176,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/multi_factor_authentication_description2" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/multi_factor_authentication_description2"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -192,14 +204,16 @@
                 android:layout_margin="@dimen/_9sdp">
 
                 <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:background="@drawable/bg_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/secure_and_reliable_description" />
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/secure_and_reliable_description"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
         </LinearLayout>

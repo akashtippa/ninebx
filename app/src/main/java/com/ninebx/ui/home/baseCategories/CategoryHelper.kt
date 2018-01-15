@@ -175,7 +175,7 @@ class CategoryHelper(
         var categoryIndex = 1003
         var category_id = "contacts_" + categoryIndex
         var category = Category(category_id)
-        category.title = "Drivers License"
+        category.title = "Shared Contacts"
         category.drawableString = "ic_icon_lists_contacts"
 
         categoryList.add(category)
@@ -303,8 +303,8 @@ class CategoryHelper(
         category.title = "Payment Methods"
         category.drawableString = "ic_icon_payment_methods"
 
-        category.subCategories.add(SubCategory("Credit/Debit Cards", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Other Payment Accounts", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Credit/Debit cards", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Other payment accounts", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -314,10 +314,10 @@ class CategoryHelper(
         category.title = "Property"
         category.drawableString = "ic_icon_property"
 
-        category.subCategories.add(SubCategory("Primary Home (owned)", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Primary home (owned)", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Property (rented for own use)", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Vacation Home", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Investment/Rental Property", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Vacation home", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Investment/Rental property", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -335,7 +335,7 @@ class CategoryHelper(
         categoryIndex += 1000
         category_id = "home_" + categoryIndex
         category = Category(category_id)
-        category.title = "Other Assests"
+        category.title = "Other Assets"
         category.drawableString = "ic_icon_other_assets"
 
         category.subCategories.add(SubCategory("Jewelry", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
@@ -352,10 +352,10 @@ class CategoryHelper(
         category.title = "Insurance"
         category.drawableString = "ic_icon_insurance"
 
-        category.subCategories.add(SubCategory("Homeowners/\nRenters Insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Auto Insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Life Insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Health Insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Homeowners/\nRenters insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Auto insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Life insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Health insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Umbrella insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
