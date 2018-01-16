@@ -16,6 +16,7 @@
     <dimen name="divider_height">1dp</dimen>
     <dimen name="margin_72">72dp</dimen>
     <dimen name="margin_56">56dp</dimen>
+    <dimen name="text_14">14sp</dimen>
 
     <string name="app_title">16sp</string>
 </resources>

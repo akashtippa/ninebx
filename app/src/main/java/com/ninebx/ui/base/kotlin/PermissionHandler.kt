@@ -15,9 +15,9 @@ import android.support.v4.content.PermissionChecker
  * HANDLE PERMISSIONS IN v4 FRAGMENTS *
  *************************************/
 
-fun android.support.v4.app.Fragment.isPermissionGranted(permission: AppPermission) = (PermissionChecker.checkSelfPermission(activity, permission.permissionName) == PackageManager.PERMISSION_GRANTED)
+fun android.support.v4.app.Fragment.isPermissionGranted(permission: AppPermission) = (PermissionChecker.checkSelfPermission(activity!!, permission.permissionName) == PackageManager.PERMISSION_GRANTED)
 
-fun android.support.v4.app.Fragment.isRationaleNeeded(permission: AppPermission) = shouldShowRequestPermissionRationale(activity, permission.permissionName)
+fun android.support.v4.app.Fragment.isRationaleNeeded(permission: AppPermission) = shouldShowRequestPermissionRationale(activity!!, permission.permissionName)
 
 fun android.support.v4.app.Fragment.requestPermission(permission: AppPermission) = requestPermissions(arrayOf(permission.permissionName), permission.requestCode)
 

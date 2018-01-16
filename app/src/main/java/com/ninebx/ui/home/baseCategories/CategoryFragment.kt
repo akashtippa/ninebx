@@ -50,9 +50,9 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             val tvCategory = categoryView.findViewById<TextView>(R.id.tvCategory)
             val tvCount = categoryView.findViewById<TextView>(R.id.tvCount)
             val rvSubCategory = categoryView.findViewById<RecyclerView>(R.id.rvSubCategory)
-            val id = context.resources.getIdentifier(category.drawableString, "drawable", context.packageName)
-            tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, id), null, null, null)
-            tvCategory.compoundDrawablePadding = context.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
+            val id = context!!.resources.getIdentifier(category.drawableString, "drawable", context!!.packageName)
+            tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context!!, id), null, null, null)
+            tvCategory.compoundDrawablePadding = context!!.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
             tvCategory.text = category.title
             tvCount.text = category.formsCount.toString()
             rvSubCategory.layoutManager = LinearLayoutManager(context)
@@ -69,14 +69,14 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
     private lateinit var mCategoryPresenter: CategoryPresenter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_category, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mCategoryPresenter = CategoryPresenter(arguments.getInt("category"), this)
+        mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
     }
 
     override fun onBackPressed(): Boolean {

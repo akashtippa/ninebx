@@ -14,9 +14,8 @@ import com.ninebx.R
 
 class FragmentSwipeToLearnMore : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_swipe_to_learn, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_swipe_to_learn, container, false)
     }
 
     companion object {

@@ -16,7 +16,7 @@ import java.util.*
 /*
 * Function to save image locally before accessing imageUri in Signup and Editprofile class
 * */
-private val IMAGE_DIRECTORY: String = "/FITLINKS"
+private val IMAGE_DIRECTORY: String = "/NineBx_Images"
 fun saveImage(bitmap: Bitmap): String {
     val bytes = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);

@@ -23,7 +23,7 @@ public class CalendarEvents extends RealmObject implements Parcelable {
     private String  notes  = "";
     private Date  startsDate  = new Date();
     private Date  endsDate  = new Date();
-    private String  repeats  = "";
+    private String  repeats  = "Never";
     private String  endRepeat  = "";
     private String  reminder  = "";
     private String  travelTime  = "";
@@ -121,6 +121,8 @@ public class CalendarEvents extends RealmObject implements Parcelable {
     }
 
     public String getRepeats() {
+        if( repeats.equals("") )
+            repeats = "Never";
         return repeats;
     }
 

@@ -16,9 +16,8 @@ import kotlinx.android.synthetic.main.dialog_security_overview.*
 
 class FragmentRelaxed : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_relaxed, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_relaxed, container, false)
     }
 
     companion object {
@@ -31,7 +30,7 @@ class FragmentRelaxed : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         textDescription.setOnClickListener {
            openSecurityDialog()

@@ -54,9 +54,9 @@ class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
 
-        mEventDrawable = ContextCompat.getDrawable(parent!!.context, R.drawable.event_day)
-        mSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.selected_day)
-        mUnSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.unselected_day)
+        mEventDrawable = ContextCompat.getDrawable(parent!!.context, R.drawable.event_day)!!
+        mSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.selected_day)!!
+        mUnSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.unselected_day)!!
 
         mBlackColor = ContextCompat.getColor(parent.context, R.color.black)
         mWhiteColor = ContextCompat.getColor(parent.context, R.color.white)

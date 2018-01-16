@@ -48,11 +48,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         layoutHome.setOnClickListener(this)
         layoutTravell.setOnClickListener(this)
@@ -67,8 +67,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun callBottomViewFragment(option: Int) {
-        NineBxApplication.instance.activityInstance!!.toolbarTitle.textSize = NineBxApplication.instance.activityInstance!!.pxFromDp(10F, context)
-        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
+        NineBxApplication.instance.activityInstance!!.toolbarTitle.textSize = NineBxApplication.instance.activityInstance!!.pxFromDp(10F, context!!)
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
         val bundle = Bundle()

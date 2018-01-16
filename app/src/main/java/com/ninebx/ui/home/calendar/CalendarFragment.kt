@@ -33,7 +33,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_calendar, container, false)
     }
 
@@ -49,7 +49,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
     private var mCalendar = Calendar.getInstance()
     private var isWeekView = false
     private var isYearChange = false
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())

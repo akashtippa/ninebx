@@ -19,11 +19,11 @@ import android.text.TextUtils
  */
 class SignUpFragment : BaseAuthFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.activity_sign_up, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_sign_up, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setHasOptionsMenu(true)
@@ -43,7 +43,7 @@ class SignUpFragment : BaseAuthFragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when( item!!.itemId ) {
             android.R.id.home -> {
-                activity.onBackPressed()
+                activity!!.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -57,7 +57,7 @@ class SignUpFragment : BaseAuthFragment() {
         /*val assets = Typeface.createFromAsset(context.assets,"fonts/Futura-Medium.ttf")
         titleTextView.typeface = assets*/
         titleTextView.text = getString(R.string.sign_up)
-        toolbar.navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
+        toolbar.navigationIcon = ContextCompat.getDrawable(context!!, R.drawable.ic_arrow_back)
         appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         appCompatActivity.supportActionBar!!.setHomeButtonEnabled(true)
     }

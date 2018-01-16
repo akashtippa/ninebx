@@ -29,11 +29,11 @@ class SubListsFragment : FragmentBackHelper() {
     var myList: ArrayList<AddedItem> = ArrayList()
     var strAddItem = ""
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_sub_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_sub_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mRecyclerAdapter = RecyclerAdapter(myList)
@@ -49,14 +49,14 @@ class SubListsFragment : FragmentBackHelper() {
             if (strAddItem == "") {
                 Toast.makeText(context, "Please enter title of the list", Toast.LENGTH_SHORT).show()
                 edtAddList.clearFocus()
-                KeyboardUtil.hideSoftKeyboard(activity)
+                KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
                 val mLog = AddedItem()
                 mLog.strAddedItem = strAddItem
                 myList.add(mLog)
                 mRecyclerAdapter!!.notifyData(myList)
                 edtAddList.text.clear()
-                KeyboardUtil.hideSoftKeyboard(activity)
+                KeyboardUtil.hideSoftKeyboard(activity!!)
             }
 
         }

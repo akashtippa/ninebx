@@ -89,7 +89,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         }
 
         fingerprintUiHelper = FingerprintUiHelper(
-                activity.getSystemService(FingerprintManager::class.java),
+                activity!!.getSystemService(FingerprintManager::class.java),
                 view.findViewById(R.id.fingerprint_icon),
                 view.findViewById(R.id.fingerprint_status),
                 this

@@ -27,17 +27,17 @@ class PassCodeFragment : BaseAuthFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_pass_code, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_pass_code, container, false)
     }
 
     private var isCreatePassCode: Boolean = false
     private var passCode : String = ""
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isCreatePassCode = arguments.getBoolean("isCreatePassCode", false)
-        passCode = arguments.getString("passCode", "")
+        isCreatePassCode = arguments!!.getBoolean("isCreatePassCode", false)
+        passCode = arguments!!.getString("passCode", "")
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
         setupToolbar()
         setHasOptionsMenu(!isCreatePassCode)
@@ -130,7 +130,7 @@ class PassCodeFragment : BaseAuthFragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when( item!!.itemId ) {
             android.R.id.home -> {
-                activity.onBackPressed()
+                activity!!.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

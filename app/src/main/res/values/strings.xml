@@ -388,6 +388,7 @@
     <string name="notes">Notes</string>
     <string name="attachment_name">Attachment name</string>
     <string name="end_repeat">End Repeat</string>
+    <string name="action_gallery">Gallery</string>
 
 
 </resources>

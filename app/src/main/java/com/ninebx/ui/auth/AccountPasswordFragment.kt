@@ -17,11 +17,11 @@ import kotlinx.android.synthetic.main.fragment_account_password.*
 
 class AccountPasswordFragment : BaseAuthFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_account_password, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setHasOptionsMenu(true)
@@ -39,7 +39,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when( item!!.itemId ) {
             android.R.id.home -> {
-                activity.onBackPressed()
+                activity!!.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

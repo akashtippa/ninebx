@@ -69,7 +69,7 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
     }
 
     private fun navigateToMasterPassword() {
-        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.replace(R.id.frameLayout, MasterPasswordFragment()).commit()
     }
@@ -146,7 +146,7 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
     }
 
     private fun navigateToMyProfile() {
-        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
         fragmentTransaction.replace(R.id.frameLayout, MyProfileFragment()).commit()
     }
@@ -181,11 +181,11 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
     override fun onError(error: Int) {
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_account, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_account, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         txtProfile.setOnClickListener(this)
         txtSecurityOverview.setOnClickListener(this)

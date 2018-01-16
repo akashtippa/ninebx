@@ -51,12 +51,12 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
     private val PERMISSIONS_REQUEST_CODE_FINGER_PRINT = 113
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_finger_print, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_finger_print, container, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermissions()
     }
@@ -64,7 +64,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     @RequiresApi(Build.VERSION_CODES.M)
     private fun checkPermissions() {
         val permissionList = arrayListOf<String>(Manifest.permission.USE_FINGERPRINT)
-        if (!handleMultiplePermission(context, permissionList)) {
+        if (!handleMultiplePermission(context!!, permissionList)) {
             requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_FINGER_PRINT)
         }
         else {
@@ -84,14 +84,14 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
     private fun setUpPurchaseButtons(cipherNotInvalidated: Cipher, defaultCipher: Cipher) {
 
-        val keyguardManager = context.getSystemService(KeyguardManager::class.java)
+        val keyguardManager = context!!.getSystemService(KeyguardManager::class.java)
         if (!keyguardManager.isKeyguardSecure) {
             // Show a message that the user hasn't set up a fingerprint or lock screen.
             mAuthView.onError(getString(R.string.setup_lock_screen))
             return
         }
 
-        val fingerprintManager = context.getSystemService(FingerprintManager::class.java)
+        val fingerprintManager = context!!.getSystemService(FingerprintManager::class.java)
         if (!fingerprintManager.hasEnrolledFingerprints()) {
             // This happens when no fingerprints are registered.
             mAuthView.onError(getString(R.string.register_fingerprint))
@@ -208,12 +208,12 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     }
 
     private fun loadDialog() {
-        val dialogBuilder = AlertDialog.Builder(context)
+        val dialogBuilder = AlertDialog.Builder(context!!)
         dialogBuilder.setTitle("Finger print permission required to enable instant access")
         dialogBuilder.setMessage("Allow app to access finger print?")
         dialogBuilder.setPositiveButton("Open App Permission") { dialog, whichButton ->
             val intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.fromParts("package", context.packageName, null));
+                    Uri.fromParts("package", context!!.packageName, null));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }

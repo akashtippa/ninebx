@@ -247,7 +247,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     private var mPassCodeDialog: PassCodeDialog? = null
 
     private fun showPasswordDialog() {
-        if (NineBxApplication.getPreferences().isPasswordRequired && !NineBxApplication.getPreferences().isMapsShown ) {
+        if (NineBxApplication.getPreferences().isPasswordRequired && !NineBxApplication.getPreferences().isPasswordEnabled) {
             if( mPassCodeDialog != null && mPassCodeDialog!!.isShowing() ) {
                 return
             }
