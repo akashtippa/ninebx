@@ -135,6 +135,28 @@
 
             </LinearLayout>
 
+
+            <TextView
+                android:id="@+id/txtMasterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_9sdp"
+                android:layout_marginLeft="@dimen/_9sdp"
+                android:layout_marginStart="@dimen/_9sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:drawableRight="@drawable/ic_arrow_right"
+                android:text="@string/account_master_password" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_9sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/grey_100" />
+
+
             <TextView
                 android:id="@+id/txtSecurityOverview"
                 android:layout_width="match_parent"

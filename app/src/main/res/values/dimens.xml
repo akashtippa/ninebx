@@ -17,4 +17,5 @@
     <dimen name="margin_72">72dp</dimen>
     <dimen name="margin_56">56dp</dimen>
 
+    <string name="app_title">16sp</string>
 </resources>

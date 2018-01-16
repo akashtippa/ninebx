@@ -107,6 +107,7 @@
     <string name="engaged">engaged</string>
     <string name="relaxed">relaxed</string>
     <string name="empowered">empowered</string>
+
     <string name="shopping">Shopping</string>
     <string name="memories">Memories</string>
     <string name="wellness">Wellness</string>
@@ -116,6 +117,8 @@
     <string name="contacts">Contacts</string>
     <string name="travel">Travel</string>
     <string name="home_amp_money"><![CDATA[Home & Money]]></string>
+
+
     <string name="my_profile">My Profile</string>
     <string name="family_users">Family/Users</string>
     <string name="subscription_plan">Subscription plan</string>
@@ -133,8 +136,12 @@
 
     <string name="create_account_password">Create Account Password</string>
     <string name="create_master_password">Create Master Password</string>
+    <string name="new_master_password">New master password</string>
     <string name="confirm_master_password">Confirm Master Password</string>
+    <string name="confirm_new_master_password">Confirm new master password</string>
+    <string name="current_master_password">Current master password</string>
     <string name="create_account_master_password">Create your account\n Master Password</string>
+    <string name="change_account_master_password">Change your account\n Master Password</string>
     <string name="choose_a_strong_password">\u25CF Choose a strong password, with at least\n\t\u25CB eight characters\n\t\u25CB one uppercase letter\n\t\u25CB one lowercase letter\n\t\u25CB one number\n\t\u25CB one symbol(!, @, #, $, etc)</string>
     <string name="error_passwords_dont_match">Passwords don\'t match</string>
     <string name="authenticate_device">Authenticate Device</string>
@@ -358,4 +365,14 @@
         Secure lock screen hasn\'t set been up.\n
         Go to \'Settings -> Security -> Fingerprint\' to set up a fingerprint
     </string>
+    <string name="account_master_password">Account master password</string>
+    <string name="account_password">Account password</string>
+
+
+    <string name="account_master_password_share">\u25CF Choose one you can share - you will need to share this master password with users you add to this account</string>
+
+    <string name="account_master_password_remember">\u25CF Please remember it - only you and your other account users will know this password. For this security, your master password is never saced on our servers and canot be retrieved if forgotten.</string>
+    <string name="add_list">Add list</string>
+
+
 </resources>

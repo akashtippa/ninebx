@@ -1,16 +1,16 @@
 package com.ninebx.ui.home.account
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.*
-import com.ninebx.R
-import kotlinx.android.synthetic.main.fragment_account.*
-import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.view.*
 import android.widget.ImageView
+import com.ninebx.R
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
+import kotlinx.android.synthetic.main.fragment_account.*
 
 
 /**
@@ -22,7 +22,6 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.txtProfile -> {
-                // later to be converted in Fragments, for now just to show UI
                 navigateToMyProfile()
             }
 
@@ -63,7 +62,16 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
             R.id.txtAutoLock -> {
                 openOperationDialog(getString(R.string.auto_lock_device_setting))
             }
+            R.id.txtMasterPassword -> {
+                navigateToMasterPassword()
+            }
         }
+    }
+
+    private fun navigateToMasterPassword() {
+        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.frameLayout, MasterPasswordFragment()).commit()
     }
 
     // Single method to open static page dialog,
@@ -137,24 +145,10 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
         }
     }
 
-    // Later to be changed in Fragment
     private fun navigateToMyProfile() {
-        val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.fragment_my_profile)
-        val window = dialog.window
-        val wlp = window.attributes
-
-        wlp.gravity = Gravity.CENTER
-        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
-        window.attributes = wlp
-        dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        dialog.show()
-
-        val imgBack = dialog.findViewById<View>(R.id.imgBack) as ImageView
-        imgBack.setOnClickListener {
-            dialog.cancel()
-        }
+        val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
+        fragmentTransaction.disallowAddToBackStack()
+        fragmentTransaction.replace(R.id.frameLayout, MyProfileFragment()).commit()
     }
 
     private fun navigateToMyProfileUsers() {
@@ -203,6 +197,7 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
         txtFeedback.setOnClickListener(this)
         txtAutoLock.setOnClickListener(this)
         txtFamily.setOnClickListener(this)
+        txtMasterPassword.setOnClickListener(this)
     }
 
 }

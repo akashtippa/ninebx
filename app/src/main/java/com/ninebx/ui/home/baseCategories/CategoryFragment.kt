@@ -38,14 +38,14 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     override fun onSuccess(categories: ArrayList<Category>) {
         hideProgress()
-        inflateLayout( categories )
+        inflateLayout(categories)
     }
 
     private fun inflateLayout(categories: ArrayList<Category>) {
 
         val inflater = LayoutInflater.from(context)
 
-        for( category in categories ) {
+        for (category in categories) {
             val categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
             val tvCategory = categoryView.findViewById<TextView>(R.id.tvCategory)
             val tvCount = categoryView.findViewById<TextView>(R.id.tvCount)
@@ -55,19 +55,19 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             tvCategory.compoundDrawablePadding = context.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
             tvCategory.text = category.title
             tvCount.text = category.formsCount.toString()
-            rvSubCategory.layoutManager = LinearLayoutManager( context )
-            val subCategoryAdapter = SubCategoryAdapter( category.subCategories, object :CategoryItemClickListener {
+            rvSubCategory.layoutManager = LinearLayoutManager(context)
+            val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
                     //DO something with this
                 }
-            } )
+            })
             rvSubCategory.adapter = subCategoryAdapter
             layoutCategory.addView(categoryView)
         }
     }
 
     val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
-    private lateinit var mCategoryPresenter : CategoryPresenter
+    private lateinit var mCategoryPresenter: CategoryPresenter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_category, container, false)

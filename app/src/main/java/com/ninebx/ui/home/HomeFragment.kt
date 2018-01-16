@@ -7,25 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.auth.SignUpFragment
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.adapter.HomeViewPagerAdapter
 import com.ninebx.ui.home.baseCategories.CategoryFragment
-import com.ninebx.ui.home.calendar.CalendarFragment
-import com.ninebx.ui.home.fragments.contacts.ContactsFragment
-import com.ninebx.ui.home.fragments.education.EducationFragment
-import com.ninebx.ui.home.fragments.home_and_money.HomeAndMoneyFragment
-import com.ninebx.ui.home.fragments.interests.InterestFragment
-import com.ninebx.ui.home.fragments.memories.MemoriesFragment
-import com.ninebx.ui.home.fragments.personal.PersonalFragment
-import com.ninebx.ui.home.fragments.shopping.ShoppingFragment
-import com.ninebx.ui.home.fragments.travell.TravelllFragment
-import com.ninebx.ui.home.fragments.wellness.WellnessFragment
-import com.ninebx.ui.home.lists.ListsFragment
-import com.ninebx.ui.home.notifications.NotificationsFragment
-import com.ninebx.ui.home.search.SearchFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -85,6 +67,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun callBottomViewFragment(option: Int) {
+        NineBxApplication.instance.activityInstance!!.toolbarTitle.textSize = NineBxApplication.instance.activityInstance!!.pxFromDp(10F, context)
         val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 

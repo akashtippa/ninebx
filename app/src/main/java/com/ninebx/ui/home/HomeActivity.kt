@@ -3,32 +3,34 @@ package com.ninebx.ui.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.customView.BottomNavigationViewHelper
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.realm.*
-import kotlinx.android.synthetic.main.activity_home.*
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
+import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.Constants
-import android.text.Html
-import com.ninebx.NineBxApplication
-import com.ninebx.ui.auth.SignUpFragment
-import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.utility.FragmentBackHelper
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.realm.Realm
+import io.realm.SyncConfiguration
+import io.realm.SyncCredentials
+import io.realm.SyncUser
+import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
@@ -96,12 +98,20 @@ class HomeActivity : AppCompatActivity() {
             callHomeFragment()
             showBottomView()
             ivBack.hide()
+            toolbarTitle.textSize = pxFromDp(16F, this)
         }
 
         ivBack.setOnClickListener {
             onBackPressed()
         }
+
         callHomeFragment()
+        toggleCheck(false)
+        toolbarTitle.textSize = pxFromDp(16F, this)
+    }
+
+    public fun pxFromDp(dp: Float, mContext: Context): Float {
+        return dp * mContext.resources.displayMetrics.density
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -214,6 +224,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun callBottomViewFragment(option: String) {
+        toolbarTitle.textSize = pxFromDp(10F, this)
         ivHome.show()
         layoutQuickAdd.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -241,10 +252,6 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(R.id.frameLayout, AccountFragment()).commit()
             }
         }
-    }
-
-    private fun showORhideBottomView(isCheckable: Boolean) {
-        bottomNavigationView.show()
     }
 
     override fun attachBaseContext(newBase: Context?) {
@@ -285,23 +292,61 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    public fun showHomeNhideQuickAdd() {
+    fun showHomeNhideQuickAdd() {
         layoutQuickAdd.hide()
         ivHome.show()
         ivBack.show()
     }
 
-    public fun hideHomeNShowQuickAdd() {
+    fun hideHomeNShowQuickAdd() {
         layoutQuickAdd.show()
         ivHome.hide()
         ivBack.hide()
+        toolbarTitle.textSize = pxFromDp(16F, this)
     }
 
-    public fun hideBottomView() {
+
+    /*
+    We need 4 different methods, to Show and Hide
+    01. HomeIcon
+    02. BackIcon
+    03. BottomView
+    04. QuickAdd
+
+    Because, at some places only HomeIcon is there, and some places only BackIcon is there, and so on.
+     */
+
+    fun hideBottomView() {
         bottomNavigationView.hide()
     }
 
-    public fun showBottomView() {
+    fun showBottomView() {
         bottomNavigationView.show()
     }
+
+    fun hideHomeIcon() {
+        ivHome.hide()
+    }
+
+    fun showHomeIcon() {
+        ivHome.show()
+    }
+
+    fun hideBackIcon() {
+        ivBack.hide()
+    }
+
+    fun showBackIcon() {
+        ivBack.show()
+    }
+
+    fun hideQuickAdd() {
+        layoutQuickAdd.hide()
+    }
+
+    fun showQuickAdd() {
+        layoutQuickAdd.show()
+    }
+
+
 }
