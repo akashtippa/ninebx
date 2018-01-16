@@ -9,7 +9,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home_updated.*
 
 /***
  * Created by TechnoBlogger on 08/01/18.
@@ -18,51 +18,51 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.layoutHome -> {
+            R.id.txtHome -> {
                 callBottomViewFragment((R.string.home_amp_money))
             }
-            R.id.layoutTravell -> {
+            R.id.txtTravel -> {
                 callBottomViewFragment((R.string.travel))
             }
-            R.id.layoutContacts -> {
+            R.id.txtContacts -> {
                 callBottomViewFragment((R.string.contacts))
             }
-            R.id.layoutEducation -> {
+            R.id.txtEducation -> {
                 callBottomViewFragment((R.string.education_work))
             }
-            R.id.layoutPersonal -> {
+            R.id.txtPersonal -> {
                 callBottomViewFragment((R.string.personal))
             }
-            R.id.layoutInterests -> {
+            R.id.txtInterests -> {
                 callBottomViewFragment((R.string.interests))
             }
-            R.id.layoutWellness -> {
+            R.id.txtWellness -> {
                 callBottomViewFragment((R.string.wellness))
             }
-            R.id.layoutMemories -> {
+            R.id.txtMemories -> {
                 callBottomViewFragment((R.string.memories))
             }
-            R.id.layoutShopping -> {
+            R.id.txtShopping -> {
                 callBottomViewFragment((R.string.shopping))
             }
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_home_updated, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        layoutHome.setOnClickListener(this)
-        layoutTravell.setOnClickListener(this)
-        layoutContacts.setOnClickListener(this)
-        layoutEducation.setOnClickListener(this)
-        layoutPersonal.setOnClickListener(this)
-        layoutInterests.setOnClickListener(this)
-        layoutWellness.setOnClickListener(this)
-        layoutMemories.setOnClickListener(this)
-        layoutShopping.setOnClickListener(this)
+        txtHome.setOnClickListener(this)
+        txtTravel.setOnClickListener(this)
+        txtContacts.setOnClickListener(this)
+        txtEducation.setOnClickListener(this)
+        txtPersonal.setOnClickListener(this)
+        txtInterests.setOnClickListener(this)
+        txtWellness.setOnClickListener(this)
+        txtMemories.setOnClickListener(this)
+        txtShopping.setOnClickListener(this)
 
     }
 

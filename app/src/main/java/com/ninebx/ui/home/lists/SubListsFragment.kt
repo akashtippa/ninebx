@@ -2,17 +2,21 @@ package com.ninebx.ui.home.lists
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListAdapter
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.home.lists.adapter.RecyclerAdapter
+import com.ninebx.ui.home.lists.adapter.ListsAdapter
+import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
@@ -25,7 +29,7 @@ import java.util.*
  */
 class SubListsFragment : FragmentBackHelper() {
 
-    private var mRecyclerAdapter: RecyclerAdapter? = null
+    private var mListsAdapter: ListsAdapter? = null
     var myList: ArrayList<AddedItem> = ArrayList()
     var strAddItem = ""
 
@@ -36,25 +40,36 @@ class SubListsFragment : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mRecyclerAdapter = RecyclerAdapter(myList)
+        mListsAdapter = ListsAdapter(myList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
-        rvAddedLists!!.adapter = mRecyclerAdapter
+        rvAddedLists!!.adapter = mListsAdapter
+
+
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = rvAddedLists.adapter as ListsAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(rvAddedLists)
+
 
         txtDone.setOnClickListener {
             strAddItem = edtAddList.text.toString()
             txtDone.hide()
 
             if (strAddItem == "") {
-                Toast.makeText(context, "Please enter title of the list", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.please_enter_title_of_the_list), Toast.LENGTH_SHORT).show()
                 edtAddList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
                 val mLog = AddedItem()
                 mLog.strAddedItem = strAddItem
                 myList.add(mLog)
-                mRecyclerAdapter!!.notifyData(myList)
+                mListsAdapter!!.notifyData(myList)
                 edtAddList.text.clear()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             }

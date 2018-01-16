@@ -4,9 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.ninebx.ui.tutorial.activity.WalkThroughActivity">
+
+    <ImageView
+        android:id="@+id/imgWalkthroughBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/walkthrough_bg" />
 
     <TextView
         android:id="@+id/txtGetStarted"
@@ -15,20 +21,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="end"
-        android:textSize="@dimen/_15sdp"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"
+        android:layout_margin="@dimen/_14sdp"
         android:drawablePadding="@dimen/_2sdp"
         android:drawableRight="@drawable/ic_arrow_right"
-        android:layout_margin="@dimen/_14sdp"
-        android:text="GET STARTED" />
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:text="GET STARTED"
+        android:textSize="@dimen/_15sdp" />
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/activity_help_view_pager"
         android:layout_width="match_parent"
-        android:background="@drawable/walkthrough_bg"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/activity_help_view_page_indicator"
         android:layout_below="@+id/txtGetStarted"
         android:layout_marginBottom="@dimen/_14sdp"

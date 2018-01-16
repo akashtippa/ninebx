@@ -11,10 +11,10 @@ import com.ninebx.utility.FragmentBackHelper
 /***
  * Created by TechnoBlogger on 15/01/18.
  */
-class MyProfileFragment : FragmentBackHelper() {
+class AddFamilyUsersFragment : FragmentBackHelper() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_my_profile, container, false)
+        return inflater.inflate(R.layout.fragment_family_users, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

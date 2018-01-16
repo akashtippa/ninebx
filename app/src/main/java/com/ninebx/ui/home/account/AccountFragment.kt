@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.*
 import android.widget.ImageView
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
@@ -146,28 +147,17 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
     }
 
     private fun navigateToMyProfile() {
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.disallowAddToBackStack()
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.replace(R.id.frameLayout, MyProfileFragment()).commit()
     }
 
     private fun navigateToMyProfileUsers() {
-        val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.fragment_family_users)
-        val window = dialog.window
-        val wlp = window.attributes
-
-        wlp.gravity = Gravity.CENTER
-        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
-        window.attributes = wlp
-        dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        dialog.show()
-
-        val imgBack = dialog.findViewById<View>(R.id.imgBack) as ImageView
-        imgBack.setOnClickListener {
-            dialog.cancel()
-        }
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.frameLayout, AddFamilyUsersFragment()).commit()
     }
 
     override fun showProgress(message: Int) {

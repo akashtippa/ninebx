@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.ImageView
 import com.ninebx.R
-import kotlinx.android.synthetic.main.fragment_relaxed.*
 import kotlinx.android.synthetic.main.dialog_security_overview.*
+import kotlinx.android.synthetic.main.fragment_relaxed.*
 
 
 /***
@@ -33,7 +33,7 @@ class FragmentRelaxed : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         textDescription.setOnClickListener {
-           openSecurityDialog()
+            openSecurityDialog()
         }
     }
 
@@ -49,5 +49,11 @@ class FragmentRelaxed : Fragment() {
         window.attributes = wlp
         dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         dialog.show()
+
+        val imgBack = dialog.findViewById<View>(R.id.imgBack) as ImageView
+
+        imgBack.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 }
