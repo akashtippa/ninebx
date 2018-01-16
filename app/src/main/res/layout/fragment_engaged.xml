@@ -15,11 +15,11 @@
         android:id="@+id/layoutHeadingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/imgDescription"
+        android:layout_marginBottom="@dimen/_2sdp"
         android:layout_marginLeft="@dimen/_32sdp"
         android:layout_marginStart="@dimen/_32sdp"
         android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
-        android:layout_below="@+id/imgDescription"
         android:orientation="vertical">
 
         <TextView
@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/be"
+            android:textColor="@color/be_engaged"
             android:textSize="@dimen/_17sdp" />
 
         <TextView
@@ -42,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_54sdp"
         android:layout_below="@+id/layoutHeadingText"
-        android:background="@color/colorAccent">
+        android:background="@color/be_engaged">
 
         <TextView
             android:id="@+id/textDescription"

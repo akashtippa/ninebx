@@ -26,18 +26,18 @@ class AccountPasswordFragment : BaseAuthFragment() {
         setupToolbar()
         setHasOptionsMenu(true)
         btnSubmit.setOnClickListener {
-            if( validate() ) {
+            if (validate()) {
                 mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())
             }
         }
-        if( NineBxApplication.autoTestMode ) {
+        if (NineBxApplication.autoTestMode) {
             etCreatePassword.setText("a")
             etConfirmPassword.setText("a")
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when( item!!.itemId ) {
+        when (item!!.itemId) {
             android.R.id.home -> {
                 activity.onBackPressed()
             }
@@ -45,7 +45,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    var mSyncUser : SyncUser? = null
+    var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
         mAuthView.navigateToOTP()
@@ -56,8 +56,8 @@ class AccountPasswordFragment : BaseAuthFragment() {
     private fun setupToolbar() {
         appCompatActivity = activity as AppCompatActivity
         appCompatActivity.setSupportActionBar(toolbar)
-        /*val assets = Typeface.createFromAsset(context.assets,"fonts/Futura-Medium.ttf")
-        titleTextView.typeface = assets*/
+        appCompatActivity.supportActionBar!!.setDisplayShowTitleEnabled(false);
+        toolbar.title = " "
         appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         appCompatActivity.supportActionBar!!.setHomeButtonEnabled(true)
     }
@@ -65,17 +65,17 @@ class AccountPasswordFragment : BaseAuthFragment() {
     override fun validate(): Boolean {
         var isValid = true
 
-        if( etCreatePassword.text.toString().isEmpty() ) {
+        if (etCreatePassword.text.toString().isEmpty()) {
             isValid = false
             etCreatePassword.error = getString(R.string.required)
         }
 
-        if( etConfirmPassword.text.toString().isEmpty() ) {
+        if (etConfirmPassword.text.toString().isEmpty()) {
             isValid = false
             etConfirmPassword.error = getString(R.string.required)
         }
 
-        if( isValid && !etConfirmPassword.text.toString().equals(etCreatePassword.text.toString())) {
+        if (isValid && !etConfirmPassword.text.toString().equals(etCreatePassword.text.toString())) {
             isValid = false
             mAuthView.onError(R.string.error_passwords_dont_match)
         }

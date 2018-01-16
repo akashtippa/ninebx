@@ -24,4 +24,9 @@
     <color name="warning_color">#f4511e</color>
     <color name="hint_color">#42000000</color>
     <color name="success_color">#009688</color>
+
+    <color name="be_relaxed">#1874BA</color>
+    <color name="be_organized">#EB1B3F</color>
+    <color name="be_engaged">#24A495</color>
+    <color name="be_empowered">#544A9B</color>
 </resources>

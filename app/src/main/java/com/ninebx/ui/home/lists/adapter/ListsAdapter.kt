@@ -13,7 +13,7 @@ import com.ninebx.ui.home.lists.FragmentSuperSubListFragment
 import com.ninebx.ui.home.lists.model.AddedItem
 import java.util.*
 
-internal class RecyclerAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.Adapter<RecyclerAdapter.RecyclerItemViewHolder>() {
+internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.Adapter<ListsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -35,6 +35,13 @@ internal class RecyclerAdapter(private var myList: ArrayList<AddedItem>?) : Recy
     override fun getItemCount(): Int {
         return if (null != myList) myList!!.size else 0
     }
+
+
+    fun removeAt(position: Int) {
+        myList!!.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
 
     fun notifyData(myList: ArrayList<AddedItem>) {
         this.myList = myList

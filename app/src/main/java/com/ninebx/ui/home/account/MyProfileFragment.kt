@@ -19,10 +19,14 @@ class MyProfileFragment : FragmentBackHelper() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
+        NineBxApplication.instance.activityInstance!!.showBackIcon()
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
+        NineBxApplication.instance.activityInstance!!.showBottomView()
+        NineBxApplication.instance.activityInstance!!.hideBackIcon()
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 }

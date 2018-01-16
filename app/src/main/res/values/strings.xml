@@ -116,7 +116,7 @@
     <string name="interests">Interests</string>
     <string name="contacts">Contacts</string>
     <string name="travel">Travel</string>
-    <string name="home_amp_money"><![CDATA[Home & Money]]></string>
+    <string name="home_amp_money"><![CDATA[Home\n& Money]]></string>
 
 
     <string name="my_profile">My Profile</string>
@@ -236,14 +236,14 @@
     <string name="can_easily_become_one_of_my_top_4_5_apps">Can easily become one of my top 4-5 apps.</string>
     <string name="i_might_use_some_of_the_features">I might use some of the features</string>
     <string name="i_see_no_use_for_it">I see no use for it.</string>
-    <string name="overall_how_useful_did_you_find">Overall how useful did you find</string>
+    <string name="overall_how_useful_did_you_find">Overall how useful did you find it?</string>
     <string name="very_intutive_i_always_knew_where_i_was">Very intuitive - I always knew where I was</string>
     <string name="took_some_getting_used_to">Took some getting used to</string>
     <string name="it_was_a_naze_i_got_lost_a_number_of_times">It was a maze - I got lost a number of times.</string>
     <string name="loved_the_look_made_me_want_to_engage">Loved the look - made me want to engage</string>
     <string name="quite_ordinary_didn_t_grab_my_attention">Quite ordinary - didn\'t grab my attention</string>
     <string name="significant_room_for_improvement">Significant room for improvement</string>
-    <string name="thank_you_for_trying_out_ninebx_please_let_us_know_what_you_thought">Thank you for trying out NineBx! Please let us know what you thought...</string>
+    <string name="thank_you_for_trying_out_ninebx_please_let_us_know_what_you_thought">Thank you for trying out NineBx! Please let us know what you thought of it.</string>
     <string name="add_family_member_user">Add Family Member/User</string>
     <string name="error_wrong_passcode">Wrong pass code</string>
     <string name="num_one">1</string>
@@ -355,7 +355,7 @@
     <string name="new_fingerprint_enrolled_description">A new fingerprint was added to this device, so your password is required.</string>
     <string name="use_fingerprint_in_future">Use fingerprint in the future</string>
     <string name="use_fingerprint_to_authenticate_title">Use fingerprint to authenticate</string>
-    <string name="use_fingerprint_to_authenticate_key" >use_fingerprint_to_authenticate_key</string>
+    <string name="use_fingerprint_to_authenticate_key">use_fingerprint_to_authenticate_key</string>
     <string name="description_bugdroid_icon">Android bugdroid image</string>
     <string name="description_fingerprint_icon">Fingerprint icon</string>
     <string name="register_fingerprint">
@@ -373,6 +373,17 @@
 
     <string name="account_master_password_remember">\u25CF Please remember it - only you and your other account users will know this password. For this security, your master password is never saced on our servers and canot be retrieved if forgotten.</string>
     <string name="add_list">Add list</string>
+    <string name="please_enter_title_of_the_list">Please enter title of the list</string>
+    <string name="done">Done</string>
+    <string name="hide_completed">Hide completed</string>
+    <string name="check_all">Check all</string>
+    <string name="created">Created</string>
+    <string name="privates">Private</string>
+    <string name="last_modified">Last Modified</string>
+    <string name="date">Date</string>
+    <string name="how_was_it_in_terms_of_visual_appeal">How was it in terms of visual appeal?</string>
+    <string name="how_was_it_to_navigate">How was it to navigate?</string>
+    <string name="by_signing_up_you_agree_to_our">By signing up, you agree to our</string>
 
 
 </resources>

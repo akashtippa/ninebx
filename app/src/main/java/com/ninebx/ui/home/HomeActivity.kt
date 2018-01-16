@@ -98,7 +98,7 @@ class HomeActivity : AppCompatActivity() {
             callHomeFragment()
             showBottomView()
             ivBack.hide()
-            toolbarTitle.textSize = pxFromDp(16F, this)
+//            toolbarTitle.textSize = pxFromDp(16F, this)
         }
 
         ivBack.setOnClickListener {
@@ -107,10 +107,10 @@ class HomeActivity : AppCompatActivity() {
 
         callHomeFragment()
         toggleCheck(false)
-        toolbarTitle.textSize = pxFromDp(16F, this)
+//        toolbarTitle.textSize = pxFromDp(16F, this)
     }
 
-    public fun pxFromDp(dp: Float, mContext: Context): Float {
+    fun pxFromDp(dp: Float, mContext: Context): Float {
         return dp * mContext.resources.displayMetrics.density
     }
 
@@ -224,7 +224,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun callBottomViewFragment(option: String) {
-        toolbarTitle.textSize = pxFromDp(10F, this)
+//        toolbarTitle.textSize = pxFromDp(10F, this)
         ivHome.show()
         layoutQuickAdd.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -302,7 +302,7 @@ class HomeActivity : AppCompatActivity() {
         layoutQuickAdd.show()
         ivHome.hide()
         ivBack.hide()
-        toolbarTitle.textSize = pxFromDp(16F, this)
+//        toolbarTitle.textSize = pxFromDp(16F, this)
     }
 
 

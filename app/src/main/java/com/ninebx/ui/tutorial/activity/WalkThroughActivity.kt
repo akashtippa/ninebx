@@ -2,13 +2,12 @@ package com.ninebx.ui.tutorial.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
-import com.ninebx.ui.tutorial.MaterialTutorialPresenter
 import com.ninebx.ui.tutorial.adapter.TutorialAdapter
 import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.activity_walk_through.*
@@ -34,10 +33,26 @@ class WalkThroughActivity : AppCompatActivity() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 // Here, we will change the text color of GET STARTED
                 when (position) {
-                    0 -> txtGetStarted.setTextColor(resources.getColor(R.color.colorAccent))
-                    1 -> txtGetStarted.setTextColor(resources.getColor(R.color.colorPrimary))
-                    2 -> txtGetStarted.setTextColor(resources.getColor(R.color.colorAccent))
-                    3 -> txtGetStarted.setTextColor(resources.getColor(R.color.colorPrimary))
+                    0 -> {
+                        txtGetStarted.setTextColor(resources.getColor(R.color.black))
+                        imgWalkthroughBg.setImageDrawable(null)
+                    }
+                    1 -> {
+                        txtGetStarted.setTextColor(resources.getColor(R.color.be_organized))
+                        imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
+                    }
+                    2 -> {
+                        txtGetStarted.setTextColor(resources.getColor(R.color.be_engaged))
+                        imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
+                    }
+                    3 -> {
+                        txtGetStarted.setTextColor(resources.getColor(R.color.be_empowered))
+                        imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
+                    }
+                    4 -> {
+                        txtGetStarted.setTextColor(resources.getColor(R.color.be_relaxed))
+                        imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
+                    }
                 }
             }
 

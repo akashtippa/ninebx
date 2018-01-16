@@ -216,6 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_14sdp"
+                    android:drawableLeft="@drawable/ic_icon_add_photo_memories"
                     android:drawablePadding="@dimen/_14sdp"
                     android:text="Attachment Here"
                     android:textSize="@dimen/_14sdp" />
