@@ -4,6 +4,10 @@ import android.os.AsyncTask
 import android.util.Base64
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
+import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
+import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
+import com.ninebx.ui.auth.passwordHash.PasswordEncrypter
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.NineBxPreferences
@@ -46,8 +50,8 @@ class LoginTask(private var userName: String, private var password: String, priv
             authView.onSuccess(result)
         }
 
-        if( NineBxApplication.autoTestMode )
-            authView.navigateToHome()
+        /*if( NineBxApplication.autoTestMode )
+            authView.navigateToHome()*/
     }
 
     override fun onPreExecute() {
@@ -63,6 +67,7 @@ class LoginTask(private var userName: String, private var password: String, priv
         try {
             //encryptPassword()
             encryptViaSpongyCastle()
+            //encrypted()
 
             val myCredentials = SyncCredentials.usernamePassword(userName, password, false)
             val user = SyncUser.login(myCredentials, Constants.SERVER_IP)
@@ -80,17 +85,30 @@ class LoginTask(private var userName: String, private var password: String, priv
 
     }
 
+    private fun encrypted() {
+        password = Arrays.toString(PasswordEncrypter.customPasswordCrypt(userName.toByteArray(Charsets.UTF_8), password.toCharArray(), 32).toTypedArray())
+        AppLogger.d(TAG, "encrypted Password generate " + password)
+        AppLogger.d(TAG, "encrypted Password original " + strPassword)
+
+    }
+
     private fun encryptViaSpongyCastle() {
 
-        val generator = PKCS5S2ParametersGenerator(SHA256Digest())
-        generator.init(PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
-        //val key = generator.generateDerivedMacParameters(256) as KeyParameter
-        val key = generator.generateDerivedParameters(256, 16) as ParametersWithIV
+        val generator = CustomPKCS5S2ParametersGenerator(SHA256Digest())
+        generator.init(CustomPBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
+        val key = generator.generateDerivedMacParameters(256) as CustomKeyParameter
+        //val key = generator.generateDerivedParameters(256, 16) as ParametersWithIV
         //password = toHex(key.key)
-        password = Arrays.toString(key.iv.toTypedArray())
+        password = Arrays.toString(key.key.toTypedArray())
+
+        val bytesArray : ByteArray = kotlin.ByteArray(key.key.size)
+        for( index in 0 until key.key.size ) {
+            bytesArray[index] = key.key[index]
+        }
 
         AppLogger.d(TAG, "encryptViaSpongyCastle Password generate " + password)
         AppLogger.d(TAG, "encryptViaSpongyCastle Password original " + strPassword)
+        AppLogger.d(TAG, "encryptViaSpongyCastle Password non convert " +  Arrays.toString(bytesArray))
     }
 
     /**

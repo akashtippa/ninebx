@@ -14,6 +14,7 @@ import com.ninebx.utility.Constants
 import io.realm.SyncUser
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
+import android.support.annotation.RequiresApi
 import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
 
 
@@ -22,6 +23,7 @@ import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+
 
     override fun onError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
@@ -119,6 +121,16 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
     }
 
+    override fun navigateToInvitePeople() {
+        if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
+            NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
+        mCurrentTag = "InvitePeople"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val invitePeopleFragment = InvitePeopleFragment()
+        fragmentTransaction.replace(R.id.container, invitePeopleFragment).commit()
+    }
+
     override fun showProgress(message: Int) {
         showProgressDialog(getString(message))
     }
@@ -135,17 +147,12 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-
         navigateToScreen()
-
     }
 
     private fun navigateToScreen() {
         mAuthPresenter = AuthPresenter(this)
         when (NineBxApplication.getPreferences().currentStep) {
-            Constants.ALL_COMPLETE -> {
-                navigateToHome()
-            }
             Constants.ACCOUNT_PASSWORD_COMPLETE -> {
                 navigateToSignUp()
                 navigateToAccountPassword()
@@ -159,12 +166,17 @@ class AuthActivity : AppCompatActivity(), AuthView {
             }
             Constants.PASS_CODE_COMPLETE -> {
                 if( checkForFingerPrint() )
-                    navigateToFingerPrint()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        navigateToFingerPrint()
+                    }
                 else {
-                    navigateToHome()
+                    navigateToInvitePeople()
                 }
             }
             Constants.FINGER_PRINT_COMPLETE ->{
+                navigateToInvitePeople()
+            }
+            Constants.INVITE_USERS_COMPLETE, Constants.ALL_COMPLETE -> {
                 navigateToHome()
             }
             Constants.SIGN_UP_COMPLETE -> {
@@ -185,9 +197,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
         else return false
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun navigateToFingerPrint() {
-        if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
-            NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
+        if (NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE)
+            NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
         mCurrentTag = "FingerPrint"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)

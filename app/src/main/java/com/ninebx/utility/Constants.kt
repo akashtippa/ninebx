@@ -22,6 +22,7 @@ object Constants {
     val OTP_COMPLETE = 3
     val PASS_CODE_COMPLETE = 4
     val FINGER_PRINT_COMPLETE = 5
+    val INVITE_USERS_COMPLETE = 6
 
 
     val SUB_CATEGORY_ADD_PERSON = 0
