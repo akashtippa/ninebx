@@ -184,4 +184,8 @@ class PassCodeDialog( val context : Context, val passCode : String, val passCode
         fun onFailure( error : Int )
     }
 
+    fun isShowing(): Boolean {
+        return dialog.isShowing
+    }
+
 }

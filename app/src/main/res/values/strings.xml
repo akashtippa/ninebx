@@ -346,6 +346,7 @@
     <string name="purchase_button_not_invalidated_description">
         You can proceed to purchase with this button \n even if a new fingerprint is enrolled
     </string>
+    <string name="map_api_key">AIzaSyCFSgzAY6uows7793koL81HAzRqEM8EX5E</string>
     <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
     <string name="fingerprint_success">Fingerprint recognized</string>
     <string name="item_title">White Mesh Pluto Backpack</string>
@@ -386,6 +387,7 @@
     <string name="none">None</string>
     <string name="notes">Notes</string>
     <string name="attachment_name">Attachment name</string>
+    <string name="end_repeat">End Repeat</string>
 
 
 </resources>

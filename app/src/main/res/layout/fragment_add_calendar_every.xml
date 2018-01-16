@@ -69,23 +69,26 @@
         android:orientation="vertical">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:background="@color/grey_100"
-            android:gravity="center"
             android:textColor="@color/grey_400"
-            android:text="@string/title"
+            android:id="@+id/etTitle"
+            android:inputType="textCapWords"
+            android:hint="@string/title"
             android:textSize="@dimen/_18sdp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
+            android:id="@+id/etLocation"
             android:textColor="@color/grey_400"
             android:background="@color/grey_100"
+            android:inputType="textCapWords"
             android:drawableRight="@drawable/ic_icon_search_normal"
-            android:text="@string/location"
+            android:hint="@string/location"
             android:drawableEnd="@drawable/ic_icon_search_normal" />
 
 
@@ -94,6 +97,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_below="@id/titleLayout"
         android:layout_width="match_parent"
+        android:fillViewport="true"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -107,6 +111,7 @@
             <Switch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/switchAllDay"
                 android:text="@string/all_day"
                 android:textColor="@color/grey_600"
                 android:padding="@dimen/default_margin"
@@ -127,8 +132,8 @@
                 android:textSize="@dimen/_9sdp" />
 
 
-            <EditText
-                android:id="@+id/txtFirstName"
+            <TextView
+                android:id="@+id/tvStarts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -154,8 +159,8 @@
                 android:textSize="@dimen/_9sdp" />
 
 
-            <EditText
-                android:id="@+id/txtEnds"
+            <TextView
+                android:id="@+id/tvEnds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -172,7 +177,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/layoutrepeat"
+                android:id="@+id/layoutRepeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -192,12 +197,54 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tvRepeat"
                     android:drawableRight="@drawable/ic_icon_arrow_right"
                     android:text="@string/never"
                     android:layout_alignParentEnd="true"
                     android:drawableEnd="@drawable/ic_icon_arrow_right" />
 
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100" />
+
+            <RelativeLayout
+                android:id="@+id/layoutEndRepeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="@dimen/_9sdp"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:text="@string/end_repeat"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tvEndRepeat"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:text="@string/never"
+                    android:layout_alignParentEnd="true"
+                    android:drawableEnd="@drawable/ic_icon_arrow_right" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_100" />
 
             <RelativeLayout
                 android:id="@+id/layoutReminder"
@@ -220,6 +267,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:id="@+id/tvReminder"
+                    android:gravity="center_vertical"
                     android:drawableRight="@drawable/ic_icon_arrow_right"
                     android:text="@string/none"
                     android:layout_alignParentEnd="true"
@@ -252,9 +301,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_14sdp"
+                    android:id="@+id/etNotes"
                     android:textColor="@color/grey_400"
                     android:background="@color/transparent_white"
-                    android:text="@string/notes" />
+                    android:hint="@string/notes" />
             </LinearLayout>
 
             <View
@@ -288,6 +338,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_below="@+id/dividerView"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/item_event"

@@ -223,7 +223,11 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun onPause() {
         super.onPause()
-        NineBxApplication.getPreferences().isPasswordRequired = true
+        //NineBxApplication.getPreferences().isPasswordRequired = true
+        dismissPasswordDialog()
+    }
+
+    private fun dismissPasswordDialog() {
         if (mPassCodeDialog != null) {
             mPassCodeDialog!!.dismissDialog()
         }
@@ -243,7 +247,10 @@ class HomeActivity : AppCompatActivity(), HomeView {
     private var mPassCodeDialog: PassCodeDialog? = null
 
     private fun showPasswordDialog() {
-        if (NineBxApplication.getPreferences().isPasswordRequired) {
+        if (NineBxApplication.getPreferences().isPasswordRequired && !NineBxApplication.getPreferences().isMapsShown ) {
+            if( mPassCodeDialog != null && mPassCodeDialog!!.isShowing() ) {
+                return
+            }
             mPassCodeDialog = PassCodeDialog(this, "111111", object : PassCodeDialog.PassCodeDialogListener {
                 override fun onSuccess() {
                     NineBxApplication.getPreferences().isPasswordRequired = false

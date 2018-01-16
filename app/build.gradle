@@ -83,4 +83,7 @@ dependencies {
 
     //MultiDex
     implementation 'com.android.support:multidex:1.0.2'
+
+    compile "com.google.android.gms:play-services-location:$places_version"
+    compile "com.google.android.gms:play-services-places:$places_version"
 }
