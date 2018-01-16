@@ -1,5 +1,8 @@
 package com.ninebx.ui.home.calendar.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -9,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Alok on 11/01/18.
  */
 
-public class CalendarEvents extends RealmObject {
+public class CalendarEvents extends RealmObject implements Parcelable {
 
     @PrimaryKey
     private Integer  id  = 0;
@@ -203,4 +206,65 @@ public class CalendarEvents extends RealmObject {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.classType);
+        dest.writeString(this.title);
+        dest.writeString(this.location);
+        dest.writeValue(this.isAllDay);
+        dest.writeString(this.notes);
+        dest.writeLong(this.startsDate != null ? this.startsDate.getTime() : -1);
+        dest.writeLong(this.endsDate != null ? this.endsDate.getTime() : -1);
+        dest.writeString(this.repeats);
+        dest.writeString(this.endRepeat);
+        dest.writeString(this.reminder);
+        dest.writeString(this.travelTime);
+        dest.writeString(this.alert);
+        dest.writeString(this.showAs);
+        dest.writeString(this.url);
+        dest.writeValue(this.isReminderSet);
+        dest.writeString(this.attachmentNames);
+    }
+
+    protected CalendarEvents(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.classType = in.readString();
+        this.title = in.readString();
+        this.location = in.readString();
+        this.isAllDay = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        long tmpStartsDate = in.readLong();
+        this.startsDate = tmpStartsDate == -1 ? null : new Date(tmpStartsDate);
+        long tmpEndsDate = in.readLong();
+        this.endsDate = tmpEndsDate == -1 ? null : new Date(tmpEndsDate);
+        this.repeats = in.readString();
+        this.endRepeat = in.readString();
+        this.reminder = in.readString();
+        this.travelTime = in.readString();
+        this.alert = in.readString();
+        this.showAs = in.readString();
+        this.url = in.readString();
+        this.isReminderSet = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.attachmentNames = in.readString();
+    }
+
+    public static final Parcelable.Creator<CalendarEvents> CREATOR = new Parcelable.Creator<CalendarEvents>() {
+        @Override
+        public CalendarEvents createFromParcel(Parcel source) {
+            return new CalendarEvents(source);
+        }
+
+        @Override
+        public CalendarEvents[] newArray(int size) {
+            return new CalendarEvents[size];
+        }
+    };
 }

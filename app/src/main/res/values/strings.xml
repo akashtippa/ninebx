@@ -373,6 +373,19 @@
 
     <string name="account_master_password_remember">\u25CF Please remember it - only you and your other account users will know this password. For this security, your master password is never saced on our servers and canot be retrieved if forgotten.</string>
     <string name="add_list">Add list</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="title">Title</string>
+    <string name="location">Location</string>
+    <string name="all_day">All Day</string>
+    <string name="starts">Starts</string>
+    <string name="ends">Ends</string>
+    <string name="repeat">Repeat</string>
+    <string name="never">Never</string>
+    <string name="reminder">Reminder</string>
+    <string name="none">None</string>
+    <string name="notes">Notes</string>
+    <string name="attachment_name">Attachment name</string>
 
 
 </resources>

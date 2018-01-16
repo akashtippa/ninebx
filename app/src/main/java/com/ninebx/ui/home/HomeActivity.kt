@@ -14,9 +14,13 @@ import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.calendar.AddEventFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.home.calendar.model.CalendarEvents
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
@@ -35,7 +39,31 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
 @Suppress("DEPRECATION")
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeView {
+    override fun showProgress(message: Int) {
+        showProgressDialog(getString(message))
+    }
+
+    override fun hideProgress() {
+        hideProgressDialog()
+    }
+
+    override fun addEditCalendarEvent( calendarEvent: CalendarEvents? ) {
+        val addEventFragment = AddEventFragment()
+        val bundle = Bundle()
+        bundle.putBoolean("isAddEvent", calendarEvent == null )
+        var event = calendarEvent
+        if( event == null ) event = CalendarEvents()
+        bundle.putParcelable("calendarEvent", event )
+        addEventFragment.arguments = bundle
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.frameLayout, addEventFragment).commit()
+    }
+
+    override fun onError(error: Int) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+    }
 
     var strUsername: String = "test.box24@yopmail.com"
     var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
@@ -134,6 +162,14 @@ class HomeActivity : AppCompatActivity() {
 
     public fun changeToolbarTitle(title: String) {
         toolbarTitle.text = Html.fromHtml(title)
+    }
+
+    fun hideToolbar() {
+        toolbar.hide()
+    }
+
+    fun showToolbar() {
+        toolbar.show()
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -260,6 +296,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         var isToWorkOnBack = true
+        showToolbar()
+        showBottomView()
         if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack()) {
             val list = supportFragmentManager.fragments
             if (list != null) {
@@ -280,8 +318,8 @@ class HomeActivity : AppCompatActivity() {
             super.onBackPressed()
         else {
             backBtnCount++
-            @Suppress("DEPRECATED_IDENTITY_EQUALS")
-            if (backBtnCount === 2) {
+
+            if (backBtnCount == 2) {
                 System.exit(0)
                 finish()
                 return
