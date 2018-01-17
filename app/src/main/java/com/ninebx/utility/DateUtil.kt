@@ -12,19 +12,19 @@ import java.util.*
  */
 
 fun getMonthYearFormat( date : Date ) : String {
-    return SimpleDateFormat("MM/YYYY", Locale.getDefault()).format( date )
+    return SimpleDateFormat("MM/yyyy", Locale.getDefault()).format( date )
 }
 
 fun getDateMonthYearFormat( date : Date ) : String {
-    return SimpleDateFormat("MM/dd/YYYY", Locale.getDefault()).format( date )
+    return SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format( date )
 }
 
 fun getDateMonthYearTimeFormat( date : Date ) : String {
-    return SimpleDateFormat("MM/dd/YYYY HH:mm", Locale.getDefault()).format( date )
+    return SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault()).format( date )
 }
 
 fun parseDateMonthYearFormat( date : String ) : Date {
-    return SimpleDateFormat("MM/dd/YYYY", Locale.getDefault()).parse( date )
+    return SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse( date )
 }
 
 fun getDateFromPicker(context : Context, calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
@@ -34,7 +34,7 @@ fun getDateFromPicker(context : Context, calendar: Calendar, dateTimeSelectionLi
 
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                calendar.set(Calendar.YEAR, year)
+                calendar.set( Calendar.YEAR, year)
                 dateTimeSelectionListener.onDateTimeSelected((calendar))
 
             },

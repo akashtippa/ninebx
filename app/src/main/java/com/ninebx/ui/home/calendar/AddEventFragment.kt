@@ -96,7 +96,13 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         tvAttachment.setOnClickListener { startCameraIntent() }
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
-        layoutEndRepeat.setOnClickListener {  showSelectionDialog(tvEndRepeat.text.toString().trim(), "End Repeat" )  }
+        layoutEndRepeat.setOnClickListener {
+            var endRepeat = mCalendarEvent.endRepeat
+            if( endRepeat != "Never") {
+                endRepeat = "On Date"
+            }
+            showSelectionDialog(endRepeat, "End Repeat" )
+        }
         layoutReminder.setOnClickListener { showSelectionDialog(tvReminder.text.toString().trim(), "Reminder" ) }
 
         rvAttachments.layoutManager = LinearLayoutManager(context)
@@ -174,7 +180,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         }
     }
 
-    private fun showSelectionDialog(selectedInterval : String, selectionType : String ) {
+    private fun showSelectionDialog( selectedInterval : String, selectionType : String ) {
         val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -215,6 +221,8 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         val tvTitle = dialog.findViewById<TextView>(R.id.tvTitle)
         val rvRepeatInterval = dialog.findViewById<RecyclerView>(R.id.rvRepeatInterval)
         rvRepeatInterval.layoutManager = LinearLayoutManager( context )
+
+
         rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, if( selectionType != "End Repeat" ) intervals[0] else "" , object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
                 if( selectionType == "Repeat" ) {
