@@ -10,9 +10,11 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.lists.model.AddedSubItem
+import com.ninebx.utility.DateTimeSelectionListener
+import com.ninebx.utility.getDateFromPicker
+import com.ninebx.utility.getDateMonthYearFormat
 import java.util.*
 
 
@@ -37,21 +39,11 @@ internal class SubListsAdapter(private var myList: ArrayList<AddedSubItem>?) : R
         holder.edtSuperSubItemName.setText(myList!![position].strAddedItem)
         mLastPosition = position
         holder.txtDate.setOnClickListener {
-            val c = Calendar.getInstance()
-            val mYear = c.get(Calendar.YEAR) // current year
-            val mMonth = c.get(Calendar.MONTH) // current month
-            val mDay = c.get(Calendar.DAY_OF_MONTH) // current day
-
-            var datePickerDialog: DatePickerDialog? = null
-            datePickerDialog = DatePickerDialog(NineBxApplication.instance.activityInstance,
-                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                        selectedDate = dayOfMonth.toString()
-                        selectedMonth = (monthOfYear + 1).toString()
-                        selectedYear = year.toString()
-
-                        holder.txtDate.text = ("$selectedMonth/$selectedDate/$selectedYear")
-                    }, mYear, mMonth, mDay)
-            datePickerDialog.show()
+            getDateFromPicker( holder.itemView.context, Calendar.getInstance(), object : DateTimeSelectionListener {
+                override fun onDateTimeSelected(selectedDate: Calendar) {
+                    holder.txtDate.text = (getDateMonthYearFormat(selectedDate.time))
+                }
+            })
         }
     }
 

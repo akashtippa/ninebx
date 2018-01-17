@@ -9,8 +9,6 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeView
 import com.ninebx.ui.home.calendar.model.CalendarEvents
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.getDateMonthYearFormat
 import kotlinx.android.synthetic.main.fragment_add_calendar_every.*
 import android.content.Intent
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -19,6 +17,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -27,16 +26,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
+import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.saveImage
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
-import com.ninebx.utility.AppLogger
+import com.ninebx.utility.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.*
 
 
 /***
@@ -79,14 +79,30 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
         setValues( mCalendarEvent )
 
-        switchAllDay.setOnCheckedChangeListener { button, isChecked -> toggleViews(isChecked) }
+        switchAllDay.setOnCheckedChangeListener { _, isChecked -> changeDateFormat(isChecked) }
 
-        tvStarts.setOnClickListener {  }
-        tvEnds.setOnClickListener {  }
+        tvStarts.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.time = mCalendarEvent.startsDate
+            showDateTimeSelector( tvStarts, calendar, switchAllDay.isSelected )
+        }
+
+        tvEnds.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.time = mCalendarEvent.endsDate
+            showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
+        }
+
         tvAttachment.setOnClickListener { startCameraIntent() }
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
-        layoutEndRepeat.setOnClickListener {  }
+        layoutEndRepeat.setOnClickListener {
+            var endRepeat = mCalendarEvent.endRepeat
+            if( endRepeat != "Never") {
+                endRepeat = "On Date"
+            }
+            showSelectionDialog(endRepeat, "End Repeat" )
+        }
         layoutReminder.setOnClickListener { showSelectionDialog(tvReminder.text.toString().trim(), "Reminder" ) }
 
         rvAttachments.layoutManager = LinearLayoutManager(context)
@@ -95,7 +111,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         etLocation.setOnTouchListener{ _, event ->
             if( event.action == MotionEvent.ACTION_UP ) {
                 val DRAWABLE_RIGHT = 2;
-                if(event.getRawX() >= (etLocation.getRight() - etLocation.compoundDrawables[DRAWABLE_RIGHT].getBounds().width()))
+                if(event.rawX >= (etLocation.right - etLocation.compoundDrawables[DRAWABLE_RIGHT].bounds.width()))
                 {
                     try {
                         NineBxApplication.getPreferences().isPasswordEnabled = true
@@ -120,7 +136,51 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         }
     }
 
-    private fun showSelectionDialog(selectedInterval : String, selectionType : String ) {
+    private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, isAllDay: Boolean) {
+
+        if( isAllDay ) {
+            calendar!!.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+
+        getDateFromPicker( context!!, calendar!!, object : DateTimeSelectionListener {
+
+            override fun onDateTimeSelected(selectedDate: Calendar) {
+
+                if( isAllDay ) {
+                    setDateTime( dateTimeTextView, selectedDate, isAllDay )
+                }
+                else {
+                    getTimeFromPicker( context!!, selectedDate, object  : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            setDateTime(dateTimeTextView, selectedDate, isAllDay)
+                        }
+
+                    })
+                }
+
+            }
+        })
+
+    }
+
+    private fun setDateTime(dateTimeTextView: TextView?, selectedDate: Calendar, allDay: Boolean) {
+
+        if( allDay ) {
+            dateTimeTextView!!.text = getDateMonthYearFormat(selectedDate.time)
+        }
+        else
+            dateTimeTextView!!.text = getDateMonthYearTimeFormat(selectedDate.time)
+
+        if( dateTimeTextView.id == tvStarts.id ) {
+            mCalendarEvent.startsDate = selectedDate.time
+        }
+        else {
+            mCalendarEvent.endsDate = selectedDate.time
+        }
+    }
+
+    private fun showSelectionDialog( selectedInterval : String, selectionType : String ) {
         val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -137,6 +197,10 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
                 intervals.add("Every Month")
                 intervals.add("Every Year")
 
+            }
+            "End Repeat" -> {
+                intervals.add("Never")
+                intervals.add("On Date")
             }
             "Reminder" -> {
 
@@ -157,16 +221,45 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         val tvTitle = dialog.findViewById<TextView>(R.id.tvTitle)
         val rvRepeatInterval = dialog.findViewById<RecyclerView>(R.id.rvRepeatInterval)
         rvRepeatInterval.layoutManager = LinearLayoutManager( context )
-        rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, intervals[0], object : ActionClickListener {
+
+
+        rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, if( selectionType != "End Repeat" ) intervals[0] else "" , object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
                 if( selectionType == "Repeat" ) {
                     tvRepeat.text = action
                     hideShowEndRepeat()
+                    dialog.dismiss()
+                }
+                else if( selectionType == "End Repeat" ) {
+                    tvEndRepeat.text = action
+                    if( action != "Never" ) {
+
+                        val calendar = Calendar.getInstance()
+                        if( mCalendarEvent.endRepeat != "Never" ) {
+                            calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat)
+                        }
+
+                        getDateFromPicker( context!!, calendar, object : DateTimeSelectionListener {
+                            override fun onDateTimeSelected(selectedDate: Calendar) {
+                                mCalendarEvent.endRepeat = getDateMonthYearFormat( selectedDate.time )
+                                tvEndRepeat.text = mCalendarEvent.endRepeat
+                                dialog.dismiss()
+                            }
+
+                        })
+                    }
+                    else {
+                        mCalendarEvent.endRepeat = action
+                        dialog.dismiss()
+                    }
+
+
                 }
                 else {
                     tvReminder.text = action
+                    dialog.dismiss()
                 }
-                dialog.dismiss()
+
             }
 
         } )
@@ -253,7 +346,21 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
     var PLACE_AUTOCOMPLETE_REQUEST_CODE : Int = 1
 
-    private fun toggleViews(isAllDay: Boolean) {
+    private fun changeDateFormat(isAllDay: Boolean) {
+        val calendar = Calendar.getInstance()
+        calendar.time = mCalendarEvent.startsDate
+        if( isAllDay ) {
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+        setDateTime(tvStarts, calendar, isAllDay)
+
+        calendar.time = mCalendarEvent.endsDate
+        if( isAllDay ) {
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+        setDateTime(tvEnds, calendar, isAllDay)
 
     }
 
@@ -265,6 +372,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             tvStarts.text = getDateMonthYearFormat(mCalendarEvent.startsDate)
             tvEnds.text = getDateMonthYearFormat(mCalendarEvent.endsDate)
             tvRepeat.text = mCalendarEvent.repeats
+            tvEndRepeat.text = mCalendarEvent.endRepeat
 
             hideShowEndRepeat()
 
@@ -309,7 +417,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     override fun onOptionSelected(position: Int) {
         bottomSheetDialogFragment.dismiss()
         if (position == 1) {
-            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
             if (!handleMultiplePermission(context!!, permissionList)) {
                 requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA)
             } else {
@@ -317,9 +425,9 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             }
 
         } else {
-            val permission = arrayListOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (!handleMultiplePermission(context!!, permission)) {
-                requestPermissions( permission.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
+            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission(context!!, permissionList)) {
+                requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
             } else {
                 beginGalleryAttachmentFlow()
             }
@@ -337,10 +445,31 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     }
 
     private fun beginCameraAttachmentFlow() {
+
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         if (callCameraIntent.resolveActivity(activity!!.packageManager) != null) {
             startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
         }
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        if (requestCode == PERMISSIONS_REQUEST_CODE_CAMERA) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                beginCameraAttachmentFlow()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+        else if( requestCode == PERMISSIONS_REQUEST_CODE_GALLERY ) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                beginGalleryAttachmentFlow()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 }
