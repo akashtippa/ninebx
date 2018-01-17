@@ -50,8 +50,8 @@ class LoginTask(private var userName: String, private var password: String, priv
             authView.onSuccess(result)
         }
 
-        /*if( NineBxApplication.autoTestMode )
-            authView.navigateToHome()*/
+        if( NineBxApplication.autoTestMode )
+            authView.navigateToAccountPassword()
     }
 
     override fun onPreExecute() {
