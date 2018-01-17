@@ -9,8 +9,6 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeView
 import com.ninebx.ui.home.calendar.model.CalendarEvents
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.getDateMonthYearFormat
 import kotlinx.android.synthetic.main.fragment_add_calendar_every.*
 import android.content.Intent
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -29,16 +27,16 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.saveImage
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
-import com.ninebx.utility.AppLogger
+import com.ninebx.utility.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.*
 
 
 /***
@@ -81,10 +79,20 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
         setValues( mCalendarEvent )
 
-        switchAllDay.setOnCheckedChangeListener { button, isChecked -> toggleViews(isChecked) }
+        switchAllDay.setOnCheckedChangeListener { _, isChecked -> changeDateFormat(isChecked) }
 
-        tvStarts.setOnClickListener {  }
-        tvEnds.setOnClickListener {  }
+        tvStarts.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.time = mCalendarEvent.startsDate
+            showDateTimeSelector( tvStarts, calendar, switchAllDay.isSelected )
+        }
+
+        tvEnds.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.time = mCalendarEvent.endsDate
+            showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
+        }
+
         tvAttachment.setOnClickListener { startCameraIntent() }
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
@@ -97,7 +105,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         etLocation.setOnTouchListener{ _, event ->
             if( event.action == MotionEvent.ACTION_UP ) {
                 val DRAWABLE_RIGHT = 2;
-                if(event.getRawX() >= (etLocation.getRight() - etLocation.compoundDrawables[DRAWABLE_RIGHT].getBounds().width()))
+                if(event.rawX >= (etLocation.right - etLocation.compoundDrawables[DRAWABLE_RIGHT].bounds.width()))
                 {
                     try {
                         NineBxApplication.getPreferences().isPasswordEnabled = true
@@ -119,6 +127,50 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
                     false
             }
             else false
+        }
+    }
+
+    private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, isAllDay: Boolean) {
+
+        if( isAllDay ) {
+            calendar!!.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+
+        getDateFromPicker( calendar!!, object : DateTimeSelectionListener {
+
+            override fun onDateTimeSelected(selectedDate: Calendar) {
+
+                if( isAllDay ) {
+                    setDateTime( dateTimeTextView, selectedDate, isAllDay )
+                }
+                else {
+                    getTimeFromPicker( selectedDate, object  : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            setDateTime(dateTimeTextView, selectedDate, isAllDay)
+                        }
+
+                    })
+                }
+
+            }
+        })
+
+    }
+
+    private fun setDateTime(dateTimeTextView: TextView?, selectedDate: Calendar, allDay: Boolean) {
+
+        if( allDay ) {
+            dateTimeTextView!!.text = getDateMonthYearFormat(selectedDate.time)
+        }
+        else
+            dateTimeTextView!!.text = getDateMonthYearTimeFormat(selectedDate.time)
+
+        if( dateTimeTextView.id == tvStarts.id ) {
+            mCalendarEvent.startsDate = selectedDate.time
+        }
+        else {
+            mCalendarEvent.endsDate = selectedDate.time
         }
     }
 
@@ -255,7 +307,21 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
     var PLACE_AUTOCOMPLETE_REQUEST_CODE : Int = 1
 
-    private fun toggleViews(isAllDay: Boolean) {
+    private fun changeDateFormat(isAllDay: Boolean) {
+        val calendar = Calendar.getInstance()
+        calendar.time = mCalendarEvent.startsDate
+        if( isAllDay ) {
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+        setDateTime(tvStarts, calendar, isAllDay)
+
+        calendar.time = mCalendarEvent.endsDate
+        if( isAllDay ) {
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+        setDateTime(tvEnds, calendar, isAllDay)
 
     }
 

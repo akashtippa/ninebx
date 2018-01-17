@@ -18,6 +18,10 @@ fun getDateMonthYearFormat( date : Date ) : String {
     return SimpleDateFormat("MM/DD/YYYY", Locale.getDefault()).format( date )
 }
 
+fun getDateMonthYearTimeFormat( date : Date ) : String {
+    return SimpleDateFormat("MM/DD/YYYY HH:mm", Locale.getDefault()).format( date )
+}
+
 fun getDateFromPicker(calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
 
     val datePickerDialog = DatePickerDialog(NineBxApplication.instance.activityInstance,

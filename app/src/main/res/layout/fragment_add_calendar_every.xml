@@ -114,8 +114,10 @@
                 android:id="@+id/switchAllDay"
                 android:text="@string/all_day"
                 android:textColor="@color/grey_600"
-                android:padding="@dimen/default_margin"
-                />
+                android:paddingRight="@dimen/default_margin"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingTop="@dimen/default_margin"
+                android:paddingEnd="@dimen/default_margin" />
 
             <View
                 android:layout_width="match_parent"
@@ -125,8 +127,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
                 android:text="@string/starts"
                 android:textSize="@dimen/_9sdp" />
@@ -136,9 +136,8 @@
                 android:id="@+id/tvStarts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginBottom="@dimen/default_micro_padding"
                 android:background="@null"
                 android:hint="@string/starts"
                 android:textSize="@dimen/_12sdp" />
@@ -152,8 +151,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
                 android:text="@string/ends"
                 android:textSize="@dimen/_9sdp" />
@@ -163,9 +160,8 @@
                 android:id="@+id/tvEnds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginBottom="@dimen/default_micro_padding"
                 android:background="@null"
                 android:hint="@string/ends"
                 android:textSize="@dimen/_12sdp" />
@@ -186,8 +182,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginBottom="@dimen/_9sdp"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginStart="@dimen/_9sdp"
                     android:layout_marginTop="@dimen/_14sdp"
                     android:text="@string/repeat"
                     android:layout_alignParentStart="true" />
@@ -221,8 +215,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginBottom="@dimen/_9sdp"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginStart="@dimen/_9sdp"
                     android:layout_marginTop="@dimen/_14sdp"
                     android:text="@string/end_repeat"
                     android:layout_alignParentStart="true" />
@@ -256,8 +248,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginBottom="@dimen/_9sdp"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_marginStart="@dimen/_9sdp"
                     android:layout_marginTop="@dimen/_14sdp"
                     android:text="@string/reminder"
                     android:layout_alignParentStart="true" />
@@ -287,7 +277,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_margin="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:orientation="vertical">
 
                 <TextView
@@ -301,6 +292,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_14sdp"
+                    android:gravity="top"
+                    android:minLines="3"
                     android:id="@+id/etNotes"
                     android:textColor="@color/grey_400"
                     android:background="@color/transparent_white"
@@ -326,7 +319,10 @@
                     android:drawablePadding="@dimen/default_mini_padding"
                     android:id="@+id/tvAttachment"
                     android:text="@string/attachment_name"
-                    android:padding="@dimen/default_margin"
+                    android:paddingRight="@dimen/default_margin"
+                    android:paddingEnd="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_margin"
+                    android:paddingBottom="@dimen/default_margin"
                     android:textSize="@dimen/_14sdp" />
 
                 <View
