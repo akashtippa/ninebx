@@ -95,4 +95,10 @@ dependencies {
         transitive = false
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+
+    //Job scheduler for android alarms
+    compile 'com.evernote:android-job:1.2.2'
+
+    //Gson
+    compile 'com.google.code.gson:gson:2.8.1'
 }

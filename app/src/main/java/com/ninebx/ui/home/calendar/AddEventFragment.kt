@@ -62,6 +62,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
         mCalendarEvent = arguments!!.getParcelable<CalendarEvents>("calendarEvent")
@@ -393,6 +394,9 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     }
 
     private fun saveCalendarEvent() {
+        val eventCalendar = Calendar.getInstance()
+        eventCalendar.time = mCalendarEvent.startsDate
+        AlarmJob.scheduleJob( mCalendarEvent, eventCalendar, false )
         goBack()
     }
 
