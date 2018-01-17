@@ -96,7 +96,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         tvAttachment.setOnClickListener { startCameraIntent() }
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
-        layoutEndRepeat.setOnClickListener {  }
+        layoutEndRepeat.setOnClickListener {  showSelectionDialog(tvEndRepeat.text.toString().trim(), "End Repeat" )  }
         layoutReminder.setOnClickListener { showSelectionDialog(tvReminder.text.toString().trim(), "Reminder" ) }
 
         rvAttachments.layoutManager = LinearLayoutManager(context)
@@ -137,7 +137,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             calendar.set(Calendar.MINUTE, 0)
         }
 
-        getDateFromPicker( calendar!!, object : DateTimeSelectionListener {
+        getDateFromPicker( context!!, calendar!!, object : DateTimeSelectionListener {
 
             override fun onDateTimeSelected(selectedDate: Calendar) {
 
@@ -145,7 +145,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
                     setDateTime( dateTimeTextView, selectedDate, isAllDay )
                 }
                 else {
-                    getTimeFromPicker( selectedDate, object  : DateTimeSelectionListener {
+                    getTimeFromPicker( context!!, selectedDate, object  : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
                             setDateTime(dateTimeTextView, selectedDate, isAllDay)
                         }
@@ -192,6 +192,10 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
                 intervals.add("Every Year")
 
             }
+            "End Repeat" -> {
+                intervals.add("Never")
+                intervals.add("On Date")
+            }
             "Reminder" -> {
 
                 intervals.add("None")
@@ -211,16 +215,43 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         val tvTitle = dialog.findViewById<TextView>(R.id.tvTitle)
         val rvRepeatInterval = dialog.findViewById<RecyclerView>(R.id.rvRepeatInterval)
         rvRepeatInterval.layoutManager = LinearLayoutManager( context )
-        rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, intervals[0], object : ActionClickListener {
+        rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, if( selectionType != "End Repeat" ) intervals[0] else "" , object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
                 if( selectionType == "Repeat" ) {
                     tvRepeat.text = action
                     hideShowEndRepeat()
+                    dialog.dismiss()
+                }
+                else if( selectionType == "End Repeat" ) {
+                    tvEndRepeat.text = action
+                    if( action != "Never" ) {
+
+                        val calendar = Calendar.getInstance()
+                        if( mCalendarEvent.endRepeat != "Never" ) {
+                            calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat)
+                        }
+
+                        getDateFromPicker( context!!, calendar, object : DateTimeSelectionListener {
+                            override fun onDateTimeSelected(selectedDate: Calendar) {
+                                mCalendarEvent.endRepeat = getDateMonthYearFormat( selectedDate.time )
+                                tvEndRepeat.text = mCalendarEvent.endRepeat
+                                dialog.dismiss()
+                            }
+
+                        })
+                    }
+                    else {
+                        mCalendarEvent.endRepeat = action
+                        dialog.dismiss()
+                    }
+
+
                 }
                 else {
                     tvReminder.text = action
+                    dialog.dismiss()
                 }
-                dialog.dismiss()
+
             }
 
         } )
@@ -333,6 +364,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             tvStarts.text = getDateMonthYearFormat(mCalendarEvent.startsDate)
             tvEnds.text = getDateMonthYearFormat(mCalendarEvent.endsDate)
             tvRepeat.text = mCalendarEvent.repeats
+            tvEndRepeat.text = mCalendarEvent.endRepeat
 
             hideShowEndRepeat()
 
@@ -405,11 +437,13 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     }
 
     private fun beginCameraAttachmentFlow() {
+
         val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         if (callCameraIntent.resolveActivity(activity!!.packageManager) != null) {
             startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
         }
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

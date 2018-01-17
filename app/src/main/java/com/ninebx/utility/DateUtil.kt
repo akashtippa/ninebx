@@ -2,6 +2,7 @@ package com.ninebx.utility
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import com.ninebx.NineBxApplication
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,16 +16,20 @@ fun getMonthYearFormat( date : Date ) : String {
 }
 
 fun getDateMonthYearFormat( date : Date ) : String {
-    return SimpleDateFormat("MM/DD/YYYY", Locale.getDefault()).format( date )
+    return SimpleDateFormat("MM/dd/YYYY", Locale.getDefault()).format( date )
 }
 
 fun getDateMonthYearTimeFormat( date : Date ) : String {
-    return SimpleDateFormat("MM/DD/YYYY HH:mm", Locale.getDefault()).format( date )
+    return SimpleDateFormat("MM/dd/YYYY HH:mm", Locale.getDefault()).format( date )
 }
 
-fun getDateFromPicker(calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
+fun parseDateMonthYearFormat( date : String ) : Date {
+    return SimpleDateFormat("MM/dd/YYYY", Locale.getDefault()).parse( date )
+}
 
-    val datePickerDialog = DatePickerDialog(NineBxApplication.instance.activityInstance,
+fun getDateFromPicker(context : Context, calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
+
+    val datePickerDialog = DatePickerDialog( context,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
                 calendar.set(Calendar.MONTH, monthOfYear)
@@ -45,9 +50,9 @@ interface DateTimeSelectionListener {
     fun onDateTimeSelected(selectedDate : Calendar )
 }
 
-fun getTimeFromPicker(calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
+fun getTimeFromPicker(context : Context, calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
 
-    val timePickerDialog = TimePickerDialog( NineBxApplication.instance.activityInstance, TimePickerDialog.OnTimeSetListener { _, hours, minutes ->
+    val timePickerDialog = TimePickerDialog( context, TimePickerDialog.OnTimeSetListener { _, hours, minutes ->
             calendar.set(Calendar.HOUR_OF_DAY, hours)
             calendar.set(Calendar.MINUTE, minutes)
             dateTimeSelectionListener.onDateTimeSelected(calendar)

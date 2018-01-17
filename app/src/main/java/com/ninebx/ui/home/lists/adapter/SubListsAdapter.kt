@@ -39,7 +39,7 @@ internal class SubListsAdapter(private var myList: ArrayList<AddedSubItem>?) : R
         holder.edtSuperSubItemName.setText(myList!![position].strAddedItem)
         mLastPosition = position
         holder.txtDate.setOnClickListener {
-            getDateFromPicker( Calendar.getInstance(), object : DateTimeSelectionListener {
+            getDateFromPicker( holder.itemView.context, Calendar.getInstance(), object : DateTimeSelectionListener {
                 override fun onDateTimeSelected(selectedDate: Calendar) {
                     holder.txtDate.text = (getDateMonthYearFormat(selectedDate.time))
                 }
