@@ -103,8 +103,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/default_mini_padding"
-            android:layout_marginStart="@dimen/default_mini_padding"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
             android:orientation="vertical"
             >
 
@@ -117,7 +117,8 @@
                 android:paddingRight="@dimen/default_margin"
                 android:paddingBottom="@dimen/default_margin"
                 android:paddingTop="@dimen/default_margin"
-                android:paddingEnd="@dimen/default_margin" />
+                android:paddingEnd="@dimen/default_margin"
+                tools:ignore="RtlSymmetry" />
 
             <View
                 android:layout_width="match_parent"
@@ -136,8 +137,8 @@
                 android:id="@+id/tvStarts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginBottom="@dimen/default_micro_padding"
+                android:paddingTop="@dimen/_9sdp"
+                android:paddingBottom="@dimen/default_micro_padding"
                 android:background="@null"
                 android:hint="@string/starts"
                 android:textSize="@dimen/_12sdp" />
@@ -160,8 +161,8 @@
                 android:id="@+id/tvEnds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginBottom="@dimen/default_micro_padding"
+                android:paddingTop="@dimen/_9sdp"
+                android:paddingBottom="@dimen/default_micro_padding"
                 android:background="@null"
                 android:hint="@string/ends"
                 android:textSize="@dimen/_12sdp" />
