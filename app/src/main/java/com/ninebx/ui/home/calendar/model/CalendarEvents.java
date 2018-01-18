@@ -260,6 +260,29 @@ public class CalendarEvents extends RealmObject implements Parcelable {
         this.attachmentNames = in.readString();
     }
 
+    @Override
+    public String toString() {
+        return "CalendarEvents{" +
+                "id=" + id +
+                ", classType='" + classType + '\'' +
+                ", title='" + title + '\'' +
+                ", location='" + location + '\'' +
+                ", isAllDay=" + isAllDay +
+                ", notes='" + notes + '\'' +
+                ", startsDate=" + startsDate +
+                ", endsDate=" + endsDate +
+                ", repeats='" + repeats + '\'' +
+                ", endRepeat='" + endRepeat + '\'' +
+                ", reminder='" + reminder + '\'' +
+                ", travelTime='" + travelTime + '\'' +
+                ", alert='" + alert + '\'' +
+                ", showAs='" + showAs + '\'' +
+                ", url='" + url + '\'' +
+                ", isReminderSet=" + isReminderSet +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                '}';
+    }
+
     public static final Parcelable.Creator<CalendarEvents> CREATOR = new Parcelable.Creator<CalendarEvents>() {
         @Override
         public CalendarEvents createFromParcel(Parcel source) {

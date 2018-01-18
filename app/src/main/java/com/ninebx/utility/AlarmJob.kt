@@ -1,12 +1,15 @@
 package com.ninebx.utility
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
@@ -46,27 +49,74 @@ class AlarmJob : Job() {
         }*/
         title = "Reminder : ${reminder.title}"
         desc = reminder.reminder
-        val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            NotificationCompat.Builder(context, "Reminders")
-                    .setContentTitle(title)
-                    .setContentText(desc)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pendingIntent)
-                    .setSound(defaultSoundUri)
-                    .build()
-        } else {
-            NotificationCompat.Builder(context, "Reminders")
-                    .setContentTitle(title)
-                    .setContentText(desc)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pendingIntent)
-                    .setSound(defaultSoundUri)
-                    .build()
-        }
-        notificationManager.notify(1, notification)
+        
+        showNotification( title, desc )
+        
         return Result.SUCCESS
+    }
+
+    private fun showNotification(title: String, desc: String?) {
+        val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
+
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val notificationBuilder: NotificationCompat.Builder
+        val channelId = "Reminders"
+        if( Build.VERSION.SDK_INT == Build.VERSION_CODES.O ) {
+            // The id of the channel.
+
+            // The user-visible name of the channel.
+            val name = title
+            // The user-visible description of the channel.
+            val description = desc
+            val mChannel = NotificationChannel(channelId, name, NotificationManager.IMPORTANCE_DEFAULT)
+            // Configure the notification channel.
+            mChannel.description = description
+            mChannel.enableLights(true)
+            // Sets the notification light color for notifications posted to this
+            // channel, if the device supports this feature.
+            mChannel.lightColor = Color.RED
+            mChannel.enableVibration(true)
+            mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+            notificationManager.createNotificationChannel(mChannel)
+
+            notificationBuilder = NotificationCompat.Builder(context, channelId)
+                    .setAutoCancel(true)   //Automatically delete the notification
+                    .setSmallIcon(R.mipmap.ic_launcher) //NotificationModel icon
+                    .setContentIntent(pendingIntent)
+                    .setContentTitle(title)
+                    .setContentText(desc)
+                    .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                    .setChannelId(channelId)
+                    .setWhen(0)
+                    .setSound(defaultSoundUri)
+
+        }
+        else
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                notificationBuilder = NotificationCompat.Builder(context, channelId)
+                        .setAutoCancel(true)   //Automatically delete the notification
+                        .setSmallIcon(R.mipmap.ic_launcher) //NotificationModel icon
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle(title)
+                        .setContentText(desc)
+                        .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                        .setWhen(0)
+                        .setSound(defaultSoundUri)
+            } else {
+                notificationBuilder = NotificationCompat.Builder(context,channelId)
+                        .setAutoCancel(true)   //Automatically delete the notification
+                        .setSmallIcon(R.mipmap.ic_launcher) //NotificationModel icon
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle(title)
+                        .setContentText(desc)
+                        .setPriority(android.app.Notification.PRIORITY_HIGH)
+                        .setWhen(0)
+                        .setSound(defaultSoundUri)
+            }
+
+
+           notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
     }
 
 
@@ -75,7 +125,7 @@ class AlarmJob : Job() {
         val TAG = AlarmJob::class.java.simpleName
 
         fun scheduleJob(reminder: CalendarEvents, calendar: Calendar, repeatDaily: Boolean) {
-
+            AppLogger.d(TAG, "scheduleJob : " + reminder.toString())
             val gson = Gson()
             val reminderString = gson.toJson(reminder)
             val extras = PersistableBundleCompat()
@@ -89,6 +139,7 @@ class AlarmJob : Job() {
                 if (repeatDaily)
                     jobId = JobRequest.Builder(id)
                             .setPeriodic(TimeUnit.DAYS.toDays(1))
+                            //.setExact(reminderTimeInMillis)
                             .setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
                             .setRequiresDeviceIdle(false)
                             .setExtras(extras)
@@ -96,7 +147,8 @@ class AlarmJob : Job() {
                             .schedule()
                 else
                     jobId = JobRequest.Builder(id)
-                            .setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
+                            .setExact((reminderTimeInMillis - currentCalendar.timeInMillis))
+                            //.setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
                             .setRequiresDeviceIdle(false)
                             .setExtras(extras)
                             .build()
