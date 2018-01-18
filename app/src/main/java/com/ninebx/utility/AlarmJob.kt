@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
-import android.util.Log
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
@@ -28,7 +27,6 @@ class AlarmJob : Job() {
 
     override fun onRunJob(params: Params): Result {
         val gson = Gson()
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val extraModel = params.extras["reminder"] as String
         val reminder = gson.fromJson(extraModel, CalendarEvents::class.java)
         val title: String
@@ -47,8 +45,10 @@ class AlarmJob : Job() {
             desc = reminder.reminder
             pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
         }*/
-        title = "Reminder : ${reminder.title}"
-        desc = reminder.reminder
+        title = "Reminder : ${reminder.title[0]!!}"
+        if( reminder.reminder.size > 0 )
+            desc = reminder.reminder[0]!!
+        else desc = reminder.title[0]!!
         
         showNotification( title, desc )
         
@@ -124,10 +124,11 @@ class AlarmJob : Job() {
 
         val TAG = AlarmJob::class.java.simpleName
 
-        fun scheduleJob(reminder: CalendarEvents, calendar: Calendar, repeatDaily: Boolean) {
+        fun scheduleJob( reminder: CalendarEvents, calendar: Calendar ) {
             AppLogger.d(TAG, "scheduleJob : " + reminder.toString())
             val gson = Gson()
             val reminderString = gson.toJson(reminder)
+            AppLogger.d(TAG, "scheduleJob : Json : " + reminderString)
             val extras = PersistableBundleCompat()
             extras.putString("reminder", reminderString)
             val reminderTimeInMillis: Long = calendar.timeInMillis
@@ -135,8 +136,8 @@ class AlarmJob : Job() {
 
             var jobId: Int = -1
             val currentCalendar = Calendar.getInstance()
-            if (reminderTimeInMillis > currentCalendar.timeInMillis )
-                if (repeatDaily)
+            if (reminderTimeInMillis > currentCalendar.timeInMillis ) {
+                /*if (repeatDaily)
                     jobId = JobRequest.Builder(id)
                             .setPeriodic(TimeUnit.DAYS.toDays(1))
                             //.setExact(reminderTimeInMillis)
@@ -145,7 +146,7 @@ class AlarmJob : Job() {
                             .setExtras(extras)
                             .build()
                             .schedule()
-                else
+                else*/
                     jobId = JobRequest.Builder(id)
                             .setExact((reminderTimeInMillis - currentCalendar.timeInMillis))
                             //.setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
@@ -153,6 +154,8 @@ class AlarmJob : Job() {
                             .setExtras(extras)
                             .build()
                             .schedule()
+            }
+
 
 
         }

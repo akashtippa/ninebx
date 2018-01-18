@@ -402,7 +402,9 @@
     <string name="how_was_it_in_terms_of_visual_appeal">How was it in terms of visual appeal?</string>
     <string name="how_was_it_to_navigate">How was it to navigate?</string>
     <string name="by_signing_up_you_agree_to_our">By signing up, you agree to our</string>
-
+    <string name="error_empty_title">Title should not be empty</string>
+    <string name="error_empty_start_date">Start date cannot be empty</string>
+    <string name="error_empty_end_date">End date cannot be empty</string>
 
 
 </resources>

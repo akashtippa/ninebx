@@ -18,7 +18,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.calendar.AddEventFragment
+import com.ninebx.ui.home.calendar.AddEditEventFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.model.CalendarEvents
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper
@@ -36,6 +36,7 @@ import io.realm.SyncCredentials
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -48,13 +49,16 @@ class HomeActivity : AppCompatActivity(), HomeView {
         hideProgressDialog()
     }
 
-    override fun addEditCalendarEvent( calendarEvent: CalendarEvents? ) {
-        val addEventFragment = AddEventFragment()
+    override fun addEditCalendarEvent( calendarEvent: CalendarEvents?, selectedDate: Date ) {
+        val addEventFragment = AddEditEventFragment()
         val bundle = Bundle()
         bundle.putBoolean("isAddEvent", calendarEvent == null )
         var event = calendarEvent
-        if( event == null ) event = CalendarEvents()
-        bundle.putParcelable("calendarEvent", event )
+        if( event == null ) {
+            event = CalendarEvents()
+        }
+        addEventFragment.setCalendarEvent( event )
+        bundle.putLong("selectedDate", selectedDate.time)
         addEventFragment.arguments = bundle
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)

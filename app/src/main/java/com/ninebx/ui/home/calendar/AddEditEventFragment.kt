@@ -28,12 +28,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
-import com.ninebx.ui.base.kotlin.handleMultiplePermission
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.saveImage
-import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
+import io.realm.Realm
+import kotlinx.android.synthetic.main.fragment_master_account_password.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
@@ -42,7 +41,7 @@ import java.util.*
 /***
  * Created by Alok Omkar on 10/01/18.
  */
-class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,6 +57,9 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     private lateinit var mHomeView : HomeView
     private lateinit var mCalendarEvent : CalendarEvents
     private var isAddEvent = false
+    private lateinit var mSelectedDate : Date
+
+    private var mSelectedDateIndex = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -65,8 +67,14 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
-        mCalendarEvent = arguments!!.getParcelable<CalendarEvents>("calendarEvent")
         isAddEvent = arguments!!.getBoolean("isAddEvent", false)
+        val selectedDate = Calendar.getInstance()
+        selectedDate.timeInMillis = arguments!!.getLong("selectedDate", Date().time)
+        mSelectedDate = selectedDate.time
+
+        if( !isAddEvent ) {
+            mSelectedDateIndex = mCalendarEvent.startsDate.indexOf(getDateMonthYearTimeFormat(mSelectedDate))
+        }
 
         NineBxApplication.instance.activityInstance!!.hideToolbar()
         NineBxApplication.instance.activityInstance!!.hideBottomView()
@@ -77,20 +85,22 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
                 saveCalendarEvent()
             }
         }
-
+        layoutEndRepeat.hide()
         setValues( mCalendarEvent )
 
         switchAllDay.setOnCheckedChangeListener { _, isChecked -> changeDateFormat(isChecked) }
 
         tvStarts.setOnClickListener {
             val calendar = Calendar.getInstance()
-            calendar.time = mCalendarEvent.startsDate
+            if( mCalendarEvent.startsDate.size > 0 )
+                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
             showDateTimeSelector( tvStarts, calendar, switchAllDay.isSelected )
         }
 
         tvEnds.setOnClickListener {
             val calendar = Calendar.getInstance()
-            calendar.time = mCalendarEvent.endsDate
+            if( mCalendarEvent.endsDate.size > 0 )
+                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
             showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
         }
 
@@ -98,7 +108,14 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
         layoutEndRepeat.setOnClickListener {
-            var endRepeat = mCalendarEvent.endRepeat
+
+            var endRepeat = ""
+
+            if( mCalendarEvent.endRepeat.size > 0 )
+                endRepeat = mCalendarEvent.endRepeat[mSelectedDateIndex]!!
+
+            if( endRepeat.isEmpty() ) endRepeat = "Never"
+
             if( endRepeat != "Never") {
                 endRepeat = "On Date"
             }
@@ -174,10 +191,16 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             dateTimeTextView!!.text = getDateMonthYearTimeFormat(selectedDate.time)
 
         if( dateTimeTextView.id == tvStarts.id ) {
-            mCalendarEvent.startsDate = selectedDate.time
+            if( mCalendarEvent.startsDate.size > 0 )
+                mCalendarEvent.startsDate[mSelectedDateIndex] = getDateMonthYearTimeFormat(selectedDate.time)
+            else
+                mCalendarEvent.startsDate.add( getDateMonthYearTimeFormat(selectedDate.time) )
         }
         else {
-            mCalendarEvent.endsDate = selectedDate.time
+            if( mCalendarEvent.endsDate.size > 0 )
+                mCalendarEvent.endsDate[mSelectedDateIndex] = getDateMonthYearTimeFormat(selectedDate.time)
+            else
+                mCalendarEvent.endsDate.add( getDateMonthYearTimeFormat(selectedDate.time) )
         }
     }
 
@@ -206,15 +229,25 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             "Reminder" -> {
 
                 intervals.add("None")
-                intervals.add("At time of event")
-                intervals.add("5 minutes before")
-                intervals.add("15 minutes before")
-                intervals.add("30 minutes before")
-                intervals.add("1 hour before")
-                intervals.add("2 hour before")
-                intervals.add("1 day before")
-                intervals.add("2 day before")
-                intervals.add("1 week before")
+
+                if( switchAllDay.isSelected ) {
+                    intervals.add("On day of event(9:00 AM)")
+                    intervals.add("One day before(9:00 AM)")
+                    intervals.add("Two days before(9:00 AM)")
+                    intervals.add("1 week before")
+                }
+                else {
+                    intervals.add("At time of event")
+                    intervals.add("5 minutes before")
+                    intervals.add("15 minutes before")
+                    intervals.add("30 minutes before")
+                    intervals.add("1 hour before")
+                    intervals.add("2 hour before")
+                    intervals.add("1 day before")
+                    intervals.add("2 day before")
+                    intervals.add("1 week before")
+                }
+
 
             }
         }
@@ -226,31 +259,38 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
         rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, if( selectionType != "End Repeat" ) intervals[0] else "" , object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
+
                 if( selectionType == "Repeat" ) {
                     tvRepeat.text = action
                     hideShowEndRepeat()
                     dialog.dismiss()
                 }
                 else if( selectionType == "End Repeat" ) {
+
                     tvEndRepeat.text = action
                     if( action != "Never" ) {
 
                         val calendar = Calendar.getInstance()
-                        if( mCalendarEvent.endRepeat != "Never" ) {
-                            calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat)
+                        if( mCalendarEvent.endRepeat.size > 0 && mCalendarEvent.endRepeat[mSelectedDateIndex] != "Never" ) {
+                            calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat[mSelectedDateIndex]!!)
                         }
 
                         getDateFromPicker( context!!, calendar, object : DateTimeSelectionListener {
                             override fun onDateTimeSelected(selectedDate: Calendar) {
-                                mCalendarEvent.endRepeat = getDateMonthYearFormat( selectedDate.time )
-                                tvEndRepeat.text = mCalendarEvent.endRepeat
+                                if( mCalendarEvent.endRepeat.size > 0 )
+                                    mCalendarEvent.endRepeat[mSelectedDateIndex] = getDateMonthYearFormat( selectedDate.time )
+                                else
+                                    mCalendarEvent.endRepeat.add( getDateMonthYearFormat( selectedDate.time ) )
+                                tvEndRepeat.text= mCalendarEvent.endRepeat[mSelectedDateIndex]
                                 dialog.dismiss()
                             }
-
                         })
                     }
                     else {
-                        mCalendarEvent.endRepeat = action
+                        if( mCalendarEvent.endRepeat.size > 0 )
+                            mCalendarEvent.endRepeat[mSelectedDateIndex] = action
+                        else
+                            mCalendarEvent.endRepeat.add( action )
                         dialog.dismiss()
                     }
 
@@ -281,7 +321,7 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
         }
     }
 
-    private val TAG: String = AddEventFragment::class.java.simpleName
+    private val TAG: String = AddEditEventFragment::class.java.simpleName
 
     //a Uri object to store file path
     private var filePath: Uri? = null
@@ -349,35 +389,44 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
 
     private fun changeDateFormat(isAllDay: Boolean) {
         val calendar = Calendar.getInstance()
-        calendar.time = mCalendarEvent.startsDate
+        calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
         if( isAllDay ) {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
         }
         setDateTime(tvStarts, calendar, isAllDay)
 
-        calendar.time = mCalendarEvent.endsDate
+        calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
         if( isAllDay ) {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
         }
         setDateTime(tvEnds, calendar, isAllDay)
+        if( mCalendarEvent.isAllDay.size > 0 )
+            mCalendarEvent.isAllDay[mSelectedDateIndex] = isAllDay
+        else
+            mCalendarEvent.isAllDay.add( isAllDay )
 
     }
 
     private fun setValues(mCalendarEvent: CalendarEvents) {
         if( !isAddEvent ) {
 
-            etTitle.setText(  mCalendarEvent.alert )
-            etLocation.setText( mCalendarEvent.location )
-            tvStarts.text = getDateMonthYearFormat(mCalendarEvent.startsDate)
-            tvEnds.text = getDateMonthYearFormat(mCalendarEvent.endsDate)
-            tvRepeat.text = mCalendarEvent.repeats
-            tvEndRepeat.text = mCalendarEvent.endRepeat
+            etTitle.setText(  mCalendarEvent.alert[mSelectedDateIndex] )
+            etLocation.setText( mCalendarEvent.location[mSelectedDateIndex] )
+            tvStarts.text = (mCalendarEvent.startsDate[mSelectedDateIndex])
+            tvEnds.text = (mCalendarEvent.endsDate[mSelectedDateIndex])
+            tvRepeat.text = mCalendarEvent.repeats[mSelectedDateIndex]
+            if( mCalendarEvent.endRepeat.size > 0 ) {
+                tvEndRepeat.text = mCalendarEvent.endRepeat[mSelectedDateIndex]
+                layoutEndRepeat.show()
+            }
+            switchAllDay.isSelected = mCalendarEvent.isAllDay[mSelectedDateIndex]!!
+            etNotes.setText( mCalendarEvent.notes[mSelectedDateIndex] )
 
             hideShowEndRepeat()
 
-            tvReminder.text = mCalendarEvent.reminder
+            tvReminder.text = mCalendarEvent.reminder[mSelectedDateIndex]
 
         }
     }
@@ -390,13 +439,38 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
     }
 
     private fun validate(): Boolean {
+
+        if( etTitle.text.toString().isEmpty() ) {
+            etTitle.requestFocus()
+            context!!.showToast(R.string.error_empty_title)
+            return false
+        }
+        if( mCalendarEvent.title.size > 0 )
+            mCalendarEvent.title[mSelectedDateIndex] = etTitle.text.toString().trim()
+        else
+            mCalendarEvent.title.add( etTitle.text.toString().trim() )
+
+        if( tvStarts.text.toString().isEmpty() ) {
+            tvStarts.requestFocus()
+            context!!.showToast(R.string.error_empty_start_date)
+            return false
+        }
+        //mCalendarEvent.startsDate[mSelectedDateIndex] = tvStarts.text.toString().trim()
+
+        if( tvEnds.text.toString().isEmpty() ) {
+            tvEnds.requestFocus()
+            context!!.showToast(R.string.error_empty_end_date)
+            return false
+        }
+        //mCalendarEvent.endsDate[mSelectedDateIndex] = tvEnds.text.toString().trim()
+
         return true
     }
 
     private fun saveCalendarEvent() {
         val eventCalendar = Calendar.getInstance()
-        eventCalendar.time = mCalendarEvent.startsDate
-        AlarmJob.scheduleJob( mCalendarEvent, eventCalendar, false )
+        eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+        AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
         goBack()
     }
 
@@ -475,5 +549,9 @@ class AddEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFra
             }
         }
 
+    }
+
+    fun setCalendarEvent(event: CalendarEvents) {
+        mCalendarEvent = event
     }
 }

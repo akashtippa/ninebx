@@ -3,55 +3,54 @@ package com.ninebx.ui.home.calendar.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Alok on 11/01/18.
  */
 
-public class CalendarEvents extends RealmObject implements Parcelable {
+public class CalendarEvents extends RealmObject {
 
     @PrimaryKey
-    private Integer  id  = 0;
-    private String  classType  = "Calendar";
-    private String  title  = "";
-    private String  location  = "";
-    private Boolean  isAllDay = false;
-    private String  notes  = "";
-    private Date  startsDate  = new Date();
-    private Date  endsDate  = new Date();
-    private String  repeats  = "Never";
-    private String  endRepeat  = "Never";
-    private String  reminder  = "";
-    private String  travelTime  = "";
-    private String  alert  = "";
-    private String  showAs  = "";
-    private String  url  = "";
-    private Boolean  isReminderSet  = false;
-    private String  attachmentNames  = "";
+    Integer id = 0;
+    
+    private RealmList<String> eventID = new RealmList<>();
+    private String classType = "Calendar";
 
-    public CalendarEvents(Integer id, String classType, String title, String location, Boolean isAllDay, String notes, Date startsDate, Date endsDate, String repeats, String endRepeat, String reminder, String travelTime, String alert, String showAs, String url, Boolean isReminderSet, String attachmentNames) {
-        this.id = id;
-        this.classType = classType;
-        this.title = title;
-        this.location = location;
-        this.isAllDay = isAllDay;
-        this.notes = notes;
-        this.startsDate = startsDate;
-        this.endsDate = endsDate;
-        this.repeats = repeats;
-        this.endRepeat = endRepeat;
-        this.reminder = reminder;
-        this.travelTime = travelTime;
-        this.alert = alert;
-        this.showAs = showAs;
-        this.url = url;
-        this.isReminderSet = isReminderSet;
-        this.attachmentNames = attachmentNames;
-    }
+    private RealmList<String> title = new RealmList<>();
+    private RealmList<String> location = new RealmList<>();
+
+    private RealmList<Boolean> isAllDay = new RealmList<>();
+
+    private RealmList<String> notes = new RealmList<>();
+    private RealmList<String> startsDate = new RealmList<>();
+    private RealmList<String> endsDate = new RealmList<>();
+
+    private RealmList<String> repeats = new RealmList<>();
+    private RealmList<String> endRepeat = new RealmList<>();
+    private RealmList<String> reminder = new RealmList<>();
+    private RealmList<String> travelTime = new RealmList<>();
+    //dynamic var invites = RLMArray
+    private RealmList<String> alert = new RealmList<>();
+    private RealmList<String> showAs = new RealmList<>();
+    private RealmList<String> url = new RealmList<>();
+
+    private RealmList<Boolean> isReminderSet = new RealmList<>();
+
+    private String attachmentNames = "";
+
+    private RealmList<String> backingImages = new RealmList<>();
+
+    @Ignore
+    private List<String> photosId = new ArrayList<>();
+
 
     public CalendarEvents() {
     }
@@ -64,6 +63,14 @@ public class CalendarEvents extends RealmObject implements Parcelable {
         this.id = id;
     }
 
+    public RealmList<String> getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(RealmList<String> eventID) {
+        this.eventID = eventID;
+    }
+
     public String getClassType() {
         return classType;
     }
@@ -72,120 +79,116 @@ public class CalendarEvents extends RealmObject implements Parcelable {
         this.classType = classType;
     }
 
-    public String getTitle() {
+    public RealmList<String> getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(RealmList<String> title) {
         this.title = title;
     }
 
-    public String getLocation() {
+    public RealmList<String> getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(RealmList<String> location) {
         this.location = location;
     }
 
-    public Boolean getAllDay() {
+    public RealmList<Boolean> getIsAllDay() {
         return isAllDay;
     }
 
-    public void setAllDay(Boolean allDay) {
-        isAllDay = allDay;
+    public void setIsAllDay(RealmList<Boolean> isAllDay) {
+        this.isAllDay = isAllDay;
     }
 
-    public String getNotes() {
+    public RealmList<String> getNotes() {
         return notes;
     }
 
-    public void setNotes(String notes) {
+    public void setNotes(RealmList<String> notes) {
         this.notes = notes;
     }
 
-    public Date getStartsDate() {
+    public RealmList<String> getStartsDate() {
         return startsDate;
     }
 
-    public void setStartsDate(Date startsDate) {
+    public void setStartsDate(RealmList<String> startsDate) {
         this.startsDate = startsDate;
     }
 
-    public Date getEndsDate() {
+    public RealmList<String> getEndsDate() {
         return endsDate;
     }
 
-    public void setEndsDate(Date endsDate) {
+    public void setEndsDate(RealmList<String> endsDate) {
         this.endsDate = endsDate;
     }
 
-    public String getRepeats() {
-        if( repeats.equals("") )
-            repeats = "Never";
+    public RealmList<String> getRepeats() {
         return repeats;
     }
 
-    public void setRepeats(String repeats) {
+    public void setRepeats(RealmList<String> repeats) {
         this.repeats = repeats;
     }
 
-    public String getEndRepeat() {
-        if( endRepeat.equals("") )
-            endRepeat = "Never";
+    public RealmList<String> getEndRepeat() {
         return endRepeat;
     }
 
-    public void setEndRepeat(String endRepeat) {
+    public void setEndRepeat(RealmList<String> endRepeat) {
         this.endRepeat = endRepeat;
     }
 
-    public String getReminder() {
+    public RealmList<String> getReminder() {
         return reminder;
     }
 
-    public void setReminder(String reminder) {
+    public void setReminder(RealmList<String> reminder) {
         this.reminder = reminder;
     }
 
-    public String getTravelTime() {
+    public RealmList<String> getTravelTime() {
         return travelTime;
     }
 
-    public void setTravelTime(String travelTime) {
+    public void setTravelTime(RealmList<String> travelTime) {
         this.travelTime = travelTime;
     }
 
-    public String getAlert() {
+    public RealmList<String> getAlert() {
         return alert;
     }
 
-    public void setAlert(String alert) {
+    public void setAlert(RealmList<String> alert) {
         this.alert = alert;
     }
 
-    public String getShowAs() {
+    public RealmList<String> getShowAs() {
         return showAs;
     }
 
-    public void setShowAs(String showAs) {
+    public void setShowAs(RealmList<String> showAs) {
         this.showAs = showAs;
     }
 
-    public String getUrl() {
+    public RealmList<String> getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(RealmList<String> url) {
         this.url = url;
     }
 
-    public Boolean getReminderSet() {
+    public RealmList<Boolean> getIsReminderSet() {
         return isReminderSet;
     }
 
-    public void setReminderSet(Boolean reminderSet) {
-        isReminderSet = reminderSet;
+    public void setIsReminderSet(RealmList<Boolean> isReminderSet) {
+        this.isReminderSet = isReminderSet;
     }
 
     public String getAttachmentNames() {
@@ -196,102 +199,21 @@ public class CalendarEvents extends RealmObject implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CalendarEvents that = (CalendarEvents) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
+    public RealmList<String> getBackingImages() {
+        return backingImages;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public void setBackingImages(RealmList<String> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public List<String> getPhotosId() {
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
-        dest.writeString(this.classType);
-        dest.writeString(this.title);
-        dest.writeString(this.location);
-        dest.writeValue(this.isAllDay);
-        dest.writeString(this.notes);
-        dest.writeLong(this.startsDate != null ? this.startsDate.getTime() : -1);
-        dest.writeLong(this.endsDate != null ? this.endsDate.getTime() : -1);
-        dest.writeString(this.repeats);
-        dest.writeString(this.endRepeat);
-        dest.writeString(this.reminder);
-        dest.writeString(this.travelTime);
-        dest.writeString(this.alert);
-        dest.writeString(this.showAs);
-        dest.writeString(this.url);
-        dest.writeValue(this.isReminderSet);
-        dest.writeString(this.attachmentNames);
-    }
-
-    protected CalendarEvents(Parcel in) {
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.classType = in.readString();
-        this.title = in.readString();
-        this.location = in.readString();
-        this.isAllDay = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.notes = in.readString();
-        long tmpStartsDate = in.readLong();
-        this.startsDate = tmpStartsDate == -1 ? null : new Date(tmpStartsDate);
-        long tmpEndsDate = in.readLong();
-        this.endsDate = tmpEndsDate == -1 ? null : new Date(tmpEndsDate);
-        this.repeats = in.readString();
-        this.endRepeat = in.readString();
-        this.reminder = in.readString();
-        this.travelTime = in.readString();
-        this.alert = in.readString();
-        this.showAs = in.readString();
-        this.url = in.readString();
-        this.isReminderSet = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.attachmentNames = in.readString();
-    }
-
-    @Override
-    public String toString() {
-        return "CalendarEvents{" +
-                "id=" + id +
-                ", classType='" + classType + '\'' +
-                ", title='" + title + '\'' +
-                ", location='" + location + '\'' +
-                ", isAllDay=" + isAllDay +
-                ", notes='" + notes + '\'' +
-                ", startsDate=" + startsDate +
-                ", endsDate=" + endsDate +
-                ", repeats='" + repeats + '\'' +
-                ", endRepeat='" + endRepeat + '\'' +
-                ", reminder='" + reminder + '\'' +
-                ", travelTime='" + travelTime + '\'' +
-                ", alert='" + alert + '\'' +
-                ", showAs='" + showAs + '\'' +
-                ", url='" + url + '\'' +
-                ", isReminderSet=" + isReminderSet +
-                ", attachmentNames='" + attachmentNames + '\'' +
-                '}';
-    }
-
-    public static final Parcelable.Creator<CalendarEvents> CREATOR = new Parcelable.Creator<CalendarEvents>() {
-        @Override
-        public CalendarEvents createFromParcel(Parcel source) {
-            return new CalendarEvents(source);
-        }
-
-        @Override
-        public CalendarEvents[] newArray(int size) {
-            return new CalendarEvents[size];
-        }
-    };
 }
