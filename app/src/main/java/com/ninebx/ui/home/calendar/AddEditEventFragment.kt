@@ -34,8 +34,10 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_master_account_password.*
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /***
@@ -104,7 +106,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
         }
 
-        tvAttachment.setOnClickListener { startCameraIntent() }
+        etAttachment.setOnClickListener { startCameraIntent() }
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
         layoutEndRepeat.setOnClickListener {
@@ -124,7 +126,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         layoutReminder.setOnClickListener { showSelectionDialog(tvReminder.text.toString().trim(), "Reminder" ) }
 
         rvAttachments.layoutManager = LinearLayoutManager(context)
-        rvAttachments.adapter = DayEventsRecyclerViewAdapter(4)
+
 
         etLocation.setOnTouchListener{ _, event ->
             if( event.action == MotionEvent.ACTION_UP ) {
@@ -325,6 +327,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
     //a Uri object to store file path
     private var filePath: Uri? = null
+    private var mImagesList : ArrayList<Uri> = ArrayList()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             NineBxApplication.getPreferences().isPasswordEnabled = false
@@ -341,19 +344,26 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
                 // The user canceled the operation.
             }
         }
-        else if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            filePath = data.data
-            try {
-                uploadImageFirebase()
-                val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, filePath)
-
-                /*if( profileImageView != null )
-                    Glide.with(profileImageView.context).load(bitmap).apply(options).into(profileImageView)*/
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
+        else if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null ) {
+                if (data.clipData != null) {
+                    val count = data.clipData.itemCount
+                    var currentItem = 0
+                    while (currentItem < count) {
+                        val imageUri = data.clipData.getItemAt(currentItem).uri
+                        mImagesList.add(imageUri)
+                        //do something with the image (save it to some directory or whatever you need to do with it here)
+                        currentItem += 1
+                    }
+                    context!!.showToast("Selected $count images")
+                    etAttachment.isEnabled = true
+                    setImagesAdapter()
+                } else if (data.data != null) {
+                    val imagePath = data.data.path
+                    mImagesList.add(Uri.fromFile(File(imagePath)))
+                    //do something with the image (save it to some directory or whatever you need to do with it here)
+                    etAttachment.isEnabled = true
+                    setImagesAdapter()
+                }
 
         }
         else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
@@ -372,6 +382,24 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         }
         else
             super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter ?= null
+    private fun setImagesAdapter() {
+        attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
+            override fun onItemClick(position: Int, action: String) {
+                when( action ) {
+                    "delete" -> {
+                        mImagesList.removeAt(position)
+                        attachmentRecyclerAdapter!!.notifyDataSetChanged()
+                    }
+                    "view" -> {
+                        ImageViewDialog( context!!, mImagesList, getString(R.string.attachments) )
+                    }
+                }
+            }
+        })
+        rvAttachments.adapter = attachmentRecyclerAdapter
     }
 
     private fun uploadImageFirebase() {
@@ -515,7 +543,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
     private fun beginGalleryAttachmentFlow() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT;
+        intent.action = Intent.ACTION_GET_CONTENT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }

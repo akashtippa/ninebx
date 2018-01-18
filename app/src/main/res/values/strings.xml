@@ -405,6 +405,7 @@
     <string name="error_empty_title">Title should not be empty</string>
     <string name="error_empty_start_date">Start date cannot be empty</string>
     <string name="error_empty_end_date">End date cannot be empty</string>
+    <string name="attachments">Attachments</string>
 
 
 </resources>

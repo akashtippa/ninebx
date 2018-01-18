@@ -65,3 +65,7 @@ fun Activity.hideProgressDialog() {
 fun Context.showToast(toastMessage : Int ) {
     Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
 }
+
+fun Context.showToast(toastMessage : String ) {
+    Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+}
