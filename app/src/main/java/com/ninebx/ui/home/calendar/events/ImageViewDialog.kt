@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.calendar
+package com.ninebx.ui.home.calendar.events
 
 
 import android.app.Dialog
@@ -53,7 +53,7 @@ class ImageViewDialog( private val context: Context, private val imagesList : Ar
 
         GravitySnapHelper( Gravity.START ).attachToRecyclerView(mRvImages)
 
-        mRvImages.adapter = ImageRecyclerViewAdapter( imagesList, object : ActionClickListener {
+        mRvImages.adapter = ImageRecyclerViewAdapter(imagesList, object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
 
             }

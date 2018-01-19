@@ -18,7 +18,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.calendar.AddEditEventFragment
+import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.model.CalendarEvents
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper

@@ -51,43 +51,43 @@ fun saveImage(bitmap: Bitmap): String {
 
 @SuppressLint("NewApi")
 @Throws(URISyntaxException::class)
-private fun getPath(uri: Uri): String? {
-    var uri = uri
+fun getPath(uri: Uri): String? {
+    var documentUri = uri
     val needToCheckUri = Build.VERSION.SDK_INT >= 19
     var selection: String? = null
     var selectionArgs: Array<String>? = null
     // Uri is different in versions after KITKAT (Android 4.4), we need to
     // deal with different Uris.
-    if (needToCheckUri && DocumentsContract.isDocumentUri(NineBxApplication.instance, uri)) {
-        if (isExternalStorageDocument(uri)) {
-            val docId = DocumentsContract.getDocumentId(uri)
+    if (needToCheckUri && DocumentsContract.isDocumentUri(NineBxApplication.instance, documentUri)) {
+        if (isExternalStorageDocument(documentUri)) {
+            val docId = DocumentsContract.getDocumentId(documentUri)
             val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
-        } else if (isDownloadsDocument(uri)) {
-            val id = DocumentsContract.getDocumentId(uri)
-            uri = ContentUris.withAppendedId(
+        } else if (isDownloadsDocument(documentUri)) {
+            val id = DocumentsContract.getDocumentId(documentUri)
+            documentUri = ContentUris.withAppendedId(
                     Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)!!)
-        } else if (isMediaDocument(uri)) {
-            val docId = DocumentsContract.getDocumentId(uri)
+        } else if (isMediaDocument(documentUri)) {
+            val docId = DocumentsContract.getDocumentId(documentUri)
             val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val type = split[0]
             if ("image" == type) {
-                uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                documentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             } else if ("video" == type) {
-                uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                documentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
             } else if ("audio" == type) {
-                uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                documentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
             }
             selection = "_id=?"
             selectionArgs = arrayOf(split[1])
         }
     }
-    if ("content".equals(uri.scheme, ignoreCase = true)) {
+    if ("content".equals(documentUri.scheme, ignoreCase = true)) {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         var cursor: Cursor? = null
         try {
             cursor = NineBxApplication.instance.getContentResolver()
-                    .query(uri, projection, selection, selectionArgs, null)
+                    .query(documentUri, projection, selection, selectionArgs, null)
             val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             if (cursor.moveToFirst()) {
                 return cursor.getString(column_index)
@@ -95,8 +95,8 @@ private fun getPath(uri: Uri): String? {
         } catch (e: Exception) {
         }
 
-    } else if ("file".equals(uri.scheme, ignoreCase = true)) {
-        return uri.path
+    } else if ("file".equals(documentUri.scheme, ignoreCase = true)) {
+        return documentUri.path
     }
     return null
 }

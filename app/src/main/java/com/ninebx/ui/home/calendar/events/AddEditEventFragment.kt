@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.calendar
+package com.ninebx.ui.home.calendar.events
 
 import android.Manifest
 import android.app.Activity
@@ -32,7 +32,6 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -55,6 +54,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
     private lateinit var mHomeView : HomeView
     private lateinit var mCalendarEvent : CalendarEvents
+    private lateinit var mAWSFileUploadHelper: AWSFileUploadHelper
     private var isAddEvent = false
     private lateinit var mSelectedDate : Date
 
@@ -64,6 +64,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
         super.onViewCreated(view, savedInstanceState)
 
+        mAWSFileUploadHelper = AWSFileUploadHelper(context!!)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
         isAddEvent = arguments!!.getBoolean("isAddEvent", false)
@@ -256,53 +257,50 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         rvRepeatInterval.layoutManager = LinearLayoutManager( context )
 
 
-        rvRepeatInterval.adapter = RepeatIntervalAdapter( intervals, selectedInterval, if( selectionType != "End Repeat" ) intervals[0] else "" , object : ActionClickListener {
+        rvRepeatInterval.adapter = RepeatIntervalAdapter(intervals, selectedInterval, if (selectionType != "End Repeat") intervals[0] else "", object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
 
-                if( selectionType == "Repeat" ) {
+                if (selectionType == "Repeat") {
                     tvRepeat.text = action
                     hideShowEndRepeat()
                     dialog.dismiss()
-                }
-                else if( selectionType == "End Repeat" ) {
+                } else if (selectionType == "End Repeat") {
 
                     tvEndRepeat.text = action
-                    if( action != "Never" ) {
+                    if (action != "Never") {
 
                         val calendar = Calendar.getInstance()
-                        if( mCalendarEvent.endRepeat.size > 0 && mCalendarEvent.endRepeat[mSelectedDateIndex] != "Never" ) {
+                        if (mCalendarEvent.endRepeat.size > 0 && mCalendarEvent.endRepeat[mSelectedDateIndex] != "Never") {
                             calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat[mSelectedDateIndex]!!)
                         }
 
-                        getDateFromPicker( context!!, calendar, object : DateTimeSelectionListener {
+                        getDateFromPicker(context!!, calendar, object : DateTimeSelectionListener {
                             override fun onDateTimeSelected(selectedDate: Calendar) {
-                                if( mCalendarEvent.endRepeat.size > 0 )
-                                    mCalendarEvent.endRepeat[mSelectedDateIndex] = getDateMonthYearFormat( selectedDate.time )
+                                if (mCalendarEvent.endRepeat.size > 0)
+                                    mCalendarEvent.endRepeat[mSelectedDateIndex] = getDateMonthYearFormat(selectedDate.time)
                                 else
-                                    mCalendarEvent.endRepeat.add( getDateMonthYearFormat( selectedDate.time ) )
-                                tvEndRepeat.text= mCalendarEvent.endRepeat[mSelectedDateIndex]
+                                    mCalendarEvent.endRepeat.add(getDateMonthYearFormat(selectedDate.time))
+                                tvEndRepeat.text = mCalendarEvent.endRepeat[mSelectedDateIndex]
                                 dialog.dismiss()
                             }
                         })
-                    }
-                    else {
-                        if( mCalendarEvent.endRepeat.size > 0 )
+                    } else {
+                        if (mCalendarEvent.endRepeat.size > 0)
                             mCalendarEvent.endRepeat[mSelectedDateIndex] = action
                         else
-                            mCalendarEvent.endRepeat.add( action )
+                            mCalendarEvent.endRepeat.add(action)
                         dialog.dismiss()
                     }
 
 
-                }
-                else {
+                } else {
                     tvReminder.text = action
                     dialog.dismiss()
                 }
 
             }
 
-        } )
+        })
         tvTitle.text = selectionType
 
         val window = dialog.window
@@ -362,32 +360,26 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             saveImage(data.extras.get("data") as Bitmap)
             filePath = getImageUri(data.extras.get("data") as Bitmap)
-            try {
-                if (filePath != null) {
-                    uploadImageFirebase()
-                }
-                /*if( profileImageView != null )
-                    profileImageView!!.setImageBitmap(data.extras.get("data") as Bitmap)*/
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+            mImagesList.add(filePath!!)
+            etAttachment.isEnabled = true
+            setImagesAdapter()
 
         }
         else
             super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter ?= null
+    private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter?= null
     private fun setImagesAdapter() {
         attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
-                when( action ) {
+                when (action) {
                     "delete" -> {
                         mImagesList.removeAt(position)
                         attachmentRecyclerAdapter!!.notifyDataSetChanged()
                     }
                     "view" -> {
-                        ImageViewDialog( context!!, mImagesList, getString(R.string.attachments) )
+                        ImageViewDialog(context!!, mImagesList, getString(R.string.attachments))
                     }
                 }
             }
@@ -395,9 +387,14 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         rvAttachments.adapter = attachmentRecyclerAdapter
     }
 
-    private fun uploadImageFirebase() {
-        //TODO
+    private fun uploadImageAws() {
+        if( mImagesList.size > 0 ) {
+            for( imageUri in mImagesList ) {
+                mAWSFileUploadHelper.beginUpload(getPath(imageUri))
+            }
+        }
     }
+
 
     fun getImageUri(bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
@@ -492,6 +489,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         val eventCalendar = Calendar.getInstance()
         eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
         AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
+        uploadImageAws()
         goBack()
     }
 

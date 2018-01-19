@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.calendar
+package com.ninebx.ui.home.calendar.events
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,12 +10,11 @@ import com.ninebx.R
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.home.calendar.RepeatIntervalAdapter.ViewHolder
 
 /**
  * Created by Alok on 16/01/18.
  */
-class RepeatIntervalAdapter( val intervals: ArrayList<String>, var selectedInterval: String, var emptyInterval : String, val actionClickListener : ActionClickListener) : RecyclerView.Adapter<ViewHolder>() {
+class RepeatIntervalAdapter( val intervals: ArrayList<String>, var selectedInterval: String, var emptyInterval : String, val actionClickListener : ActionClickListener) : RecyclerView.Adapter<RepeatIntervalAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.item_repeat_interval, parent, false))
     }
