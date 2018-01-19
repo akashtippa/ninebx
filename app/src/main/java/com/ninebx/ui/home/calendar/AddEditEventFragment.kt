@@ -31,10 +31,7 @@ import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
-import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_master_account_password.*
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
