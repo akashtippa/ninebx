@@ -90,7 +90,10 @@
                 android:layout_below="@id/tabMonths"
                 android:id="@+id/layoutDays"
                 android:weightSum="7"
-                android:layout_margin="@dimen/default_mini_padding"
+                android:layout_marginLeft="@dimen/_24sdp"
+                android:layout_marginRight="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"

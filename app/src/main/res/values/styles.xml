@@ -32,7 +32,7 @@
         <item name="android:layout_width">@dimen/_31sdp</item>
         <item name="android:background">@drawable/day_selector</item>
         <item name="android:layout_height">@dimen/_31sdp</item>
-        <item name="android:layout_margin">@dimen/default_mini_padding</item>
+        <item name="android:layout_margin">@dimen/_4sdp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/text_selector</item>
     </style>

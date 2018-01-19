@@ -118,7 +118,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
             if( endRepeat.isEmpty() ) endRepeat = "Never"
 
-            if( endRepeat != "Never") {
+            if( endRepeat != "Never" ) {
                 endRepeat = "On Date"
             }
             showSelectionDialog(endRepeat, "End Repeat" )
