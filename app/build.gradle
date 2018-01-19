@@ -104,4 +104,9 @@ dependencies {
 
     //CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    //Amazon AWS
+    compile 'com.amazonaws:aws-android-sdk-core:2.6.+'
+    compile 'com.amazonaws:aws-android-sdk-s3:2.6.+'
+    compile 'com.amazonaws:aws-android-sdk-ddb:2.6.+'
 }
