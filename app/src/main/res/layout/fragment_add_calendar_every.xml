@@ -311,14 +311,15 @@
                 android:layout_height="wrap_content">
 
 
-                <TextView
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_icon_add_photo_memories_grey"
                     android:drawableStart="@drawable/ic_icon_add_photo_memories_grey"
                     android:gravity="center_vertical"
+                    android:background="@color/transparent_white"
                     android:drawablePadding="@dimen/default_mini_padding"
-                    android:id="@+id/tvAttachment"
+                    android:id="@+id/etAttachment"
                     android:text="@string/attachment_name"
                     android:paddingRight="@dimen/default_margin"
                     android:paddingEnd="@dimen/default_margin"
@@ -329,7 +330,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:id="@+id/dividerView"
-                    android:layout_below="@+id/tvAttachment"
+                    android:layout_below="@+id/etAttachment"
                     android:layout_height="1dp"
                     android:background="@color/grey_100" />
 
@@ -338,7 +339,7 @@
                     android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_event"
+                    tools:listitem="@layout/item_attachment"
                     android:id="@+id/rvAttachments"/>
 
             </RelativeLayout>

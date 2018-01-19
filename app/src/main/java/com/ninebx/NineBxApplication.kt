@@ -3,6 +3,7 @@ package com.ninebx
 import android.annotation.SuppressLint
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
+import com.evernote.android.job.JobManager
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -61,6 +62,7 @@ class NineBxApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
+        JobManager.create(this).addJobCreator( NineBxJobCreator() )
         instance = this
         Preferences.init(applicationContext)
         Realm.init(this)

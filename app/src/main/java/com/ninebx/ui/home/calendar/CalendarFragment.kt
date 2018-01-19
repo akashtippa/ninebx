@@ -125,7 +125,7 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
         }
 
         tvAddEvent.setOnClickListener {
-            mHomeView.addEditCalendarEvent( null )
+            mHomeView.addEditCalendarEvent( null, Date() )
         }
 
     }

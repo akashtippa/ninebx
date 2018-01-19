@@ -20,11 +20,15 @@ fun getDateMonthYearFormat( date : Date ) : String {
 }
 
 fun getDateMonthYearTimeFormat( date : Date ) : String {
-    return SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault()).format( date )
+    return SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.getDefault()).format( date )
 }
 
 fun parseDateMonthYearFormat( date : String ) : Date {
     return SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse( date )
+}
+
+fun parseDateMonthYearTimeFormat( date : String ) : Date {
+    return SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.getDefault()).parse( date )
 }
 
 fun getDateFromPicker(context : Context, calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
@@ -58,7 +62,7 @@ fun getTimeFromPicker(context : Context, calendar: Calendar, dateTimeSelectionLi
             dateTimeSelectionListener.onDateTimeSelected(calendar)
     },
             calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE), true)
+            calendar.get(Calendar.MINUTE), false)
 
     timePickerDialog.show()
 
