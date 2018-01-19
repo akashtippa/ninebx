@@ -10,6 +10,10 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.security.SecureRandom
+import com.amazonaws.regions.Regions
+import com.amazonaws.auth.CognitoCachingCredentialsProvider
+
+
 
 
 /***
@@ -73,6 +77,12 @@ class NineBxApplication : MultiDexApplication() {
                 .setDefaultFontPath("fonts/AvenirNextLTPro-Regular.otf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
+        )
+
+        val credentialsProvider = CognitoCachingCredentialsProvider(
+                this, /* get the context for the application */
+                "", /* Identity Pool ID */
+                Regions.US_WEST_2           /* Region for your identity pool--US_EAST_1 or EU_WEST_1*/
         )
     }
 

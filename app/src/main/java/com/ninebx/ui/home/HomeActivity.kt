@@ -51,18 +51,14 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun addEditCalendarEvent( calendarEvent: CalendarEvents?, selectedDate: Date ) {
         val addEventFragment = AddEditEventFragment()
-    override fun addEditCalendarEvent(calendarEvent: CalendarEvents?) {
-        val addEventFragment = AddEventFragment()
         val bundle = Bundle()
-        bundle.putBoolean("isAddEvent", calendarEvent == null)
+        bundle.putBoolean("isAddEvent", calendarEvent == null )
         var event = calendarEvent
         if( event == null ) {
             event = CalendarEvents()
         }
         addEventFragment.setCalendarEvent( event )
         bundle.putLong("selectedDate", selectedDate.time)
-        if (event == null) event = CalendarEvents()
-        bundle.putParcelable("calendarEvent", event)
         addEventFragment.arguments = bundle
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)

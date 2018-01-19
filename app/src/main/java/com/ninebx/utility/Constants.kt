@@ -1,5 +1,7 @@
 package com.ninebx.utility
 
+import com.amazonaws.regions.Regions
+
 /**
  * Created by TechnoBlogger on 18/12/17.
  */
@@ -29,5 +31,7 @@ object Constants {
     val SUB_CATEGORY_ADD_PERSON = 0
     val SUB_CATEGORY_ADD_ITEM = 1
     val SUB_CATEGORY_DISPLAY_PERSON = 2
+    val COGNITO_POOL_ID: String = "us-west-2:c2651f16-d7e1-4c2f-9f1f-1100caf406e3"
+    val COGNITO_POOL_REGION: Regions = Regions.US_WEST_2
 
 }
