@@ -23,8 +23,8 @@ class AccountPasswordFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
-        setHasOptionsMenu(true)
+//        setupToolbar()
+//        setHasOptionsMenu(true)
         btnSubmit.setOnClickListener {
             if (validate()) {
                 mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())

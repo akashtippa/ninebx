@@ -19,6 +19,7 @@
         android:layout_below="@+id/dividerView"
         android:textColor="@color/black"
         android:id="@+id/tvSubTitle"
+        android:singleLine="true"
         android:layout_marginTop="@dimen/default_micro_padding"
         android:gravity="center_vertical"
         android:layout_toLeftOf="@id/tvCount"

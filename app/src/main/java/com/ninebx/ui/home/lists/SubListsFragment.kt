@@ -1,6 +1,8 @@
 package com.ninebx.ui.home.lists
 
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -9,7 +11,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
@@ -51,6 +52,22 @@ class SubListsFragment : FragmentBackHelper() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvAddedLists.adapter as ListsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
+
+
+//                val name = myList[viewHolder.adapterPosition].strAddedItem
+
+                val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
+                snackBar.setAction("UNDO", View.OnClickListener {
+                    // undo is selected, restore the deleted item
+                    val mLog = AddedItem()
+                    mLog.strAddedItem = strAddItem
+                    myList.add(mLog)
+                    mListsAdapter!!.notifyData(myList)
+
+                })
+                snackBar.setActionTextColor(Color.YELLOW)
+                snackBar.show()
+
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
@@ -101,6 +118,8 @@ class SubListsFragment : FragmentBackHelper() {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
         NineBxApplication.instance.activityInstance!!.showBottomView()
+        NineBxApplication.instance.activityInstance!!.hideBackIcon()
+
         return super.onBackPressed()
     }
 }

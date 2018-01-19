@@ -117,6 +117,7 @@
     <string name="contacts">Contacts</string>
     <string name="travel">Travel</string>
     <string name="home_amp_money"><![CDATA[Home\n& Money]]></string>
+    <string name="home_n_money"><![CDATA[Home & Money]]></string>
 
 
     <string name="my_profile">My Profile</string>
@@ -134,8 +135,8 @@
     <string name="about">About</string>
     <string name="security">Security</string>
 
-    <string name="create_account_password">Create Account Password</string>
-    <string name="create_master_password">Create Master Password</string>
+    <string name="create_account_password">Create account password</string>
+    <string name="create_master_password">Create master password</string>
     <string name="new_master_password">New master password</string>
     <string name="confirm_master_password">Confirm Master Password</string>
     <string name="confirm_new_master_password">Confirm new master password</string>
@@ -394,6 +395,7 @@
     <string name="please_enter_title_of_the_list">Please enter title of the list</string>
     <string name="done">Done</string>
     <string name="hide_completed">Hide completed</string>
+    <string name="show_completed">Show completed</string>
     <string name="check_all">Check all</string>
     <string name="created">Created</string>
     <string name="privates">Private</string>
@@ -406,6 +408,36 @@
     <string name="error_empty_start_date">Start date cannot be empty</string>
     <string name="error_empty_end_date">End date cannot be empty</string>
     <string name="attachments">Attachments</string>
+    <string name="uncheck_all">Uncheck all</string>
+    <string name="add_others_to_account">Add others to account</string>
+    <string name="set_permissions">Set Permissions</string>
+    <string name="no_notifications">No Notifications</string>
 
+    <string-array name="gender">
+        <item></item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="relationship">
+        <item></item>
+        <item>Spouse</item>
+        <item>Partner</item>
+        <item>Daughter</item>
+        <item>Son</item>
+        <item>Mother</item>
+        <item>Father</item>
+        <item>Sister</item>
+        <item>Brother</item>
+        <item>Pet</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="role">
+        <item></item>
+        <item>Co-administrator</item>
+        <item>User</item>
+        <item>Non-user</item>
+    </string-array>
 
 </resources>

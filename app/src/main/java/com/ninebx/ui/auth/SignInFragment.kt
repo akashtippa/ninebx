@@ -1,11 +1,11 @@
 package com.ninebx.ui.auth
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeActivity
@@ -42,8 +42,12 @@ class SignInFragment : BaseAuthFragment() {
         btnSignUp.setOnClickListener {
             mAuthView.navigateToSignUp()
         }
-        txtTermsOfUse.setOnClickListener {}
-        txtPrivacyPolicy.setOnClickListener {}
+        txtTermsOfUse.setOnClickListener {
+            openStaticLayoutDialog(getString(R.string.terms_of_use))
+        }
+        txtPrivacyPolicy.setOnClickListener {
+            openStaticLayoutDialog(getString(R.string.privacy_policy))
+        }
 
         if (NineBxApplication.autoTestMode) {
             edtEmailAddress.setText("test.box24@yopmail.com")
@@ -84,4 +88,33 @@ class SignInFragment : BaseAuthFragment() {
         mSyncUser = syncUser
         mAuthView.navigateToHome()
     }
+
+    private fun openStaticLayoutDialog(option: String) {
+        val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        when (option) {
+            getString(R.string.terms_of_use) -> {
+                dialog.setContentView(R.layout.dialog_terms_of_use)
+            }
+            getString(R.string.privacy_policy) -> {
+                dialog.setContentView(R.layout.dialog_privacy_policy)
+            }
+        }
+
+        val window = dialog.window
+        val wlp = window.attributes
+
+        wlp.gravity = Gravity.CENTER
+        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+        window.attributes = wlp
+        dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.show()
+
+        val imgBack = dialog.findViewById<View>(R.id.imgBack) as ImageView
+        imgBack.setOnClickListener {
+            dialog.cancel()
+        }
+    }
+
 }

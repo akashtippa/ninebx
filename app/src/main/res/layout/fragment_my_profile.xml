@@ -7,6 +7,62 @@
     android:orientation="vertical">
 
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarProfile"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            android:visibility="gone"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:padding="@dimen/default_micro_padding"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_icon_arrow_left" />
+
+            <TextView
+                android:id="@+id/toolbarProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/my_profile"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:id="@+id/txtSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:padding="@dimen/default_margin"
+                android:text="@string/save"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible" />
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,6 +93,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_19sdp"
                     android:layout_toRightOf="@+id/imgEditProfile"
+                    android:padding="@dimen/default_margin"
                     app:srcCompat="@drawable/ic_icon_edit" />
 
                 <ImageView
@@ -44,9 +101,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/_9sdp"
                     android:layout_toRightOf="@+id/imgEdit"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_icon_delete_icon" />
 
                 <TextView
@@ -111,6 +168,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="Last Name"
                 android:textSize="@dimen/_12sdp" />
 
@@ -141,6 +199,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="sampleEmailAddress@nineBx.com"
                 android:textSize="@dimen/_12sdp" />
 
@@ -171,6 +230,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="sampleEmailAddress@nineBx.com"
                 android:textSize="@dimen/_12sdp" />
 
@@ -201,6 +261,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+
                 android:text="01/12/1212" />
 
             <View
@@ -230,6 +291,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+
                 android:text="12/12/1212" />
 
             <View
@@ -253,13 +315,24 @@
 
 
             <TextView
-                android:id="@+id/txtGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:text="Male" />
+                android:text="Male"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/txtGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:background="@null"
+                android:entries="@array/gender" />
+
 
             <View
                 android:layout_width="match_parent"
@@ -289,7 +362,9 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="9876543210"
+                android:inputType="number"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -320,6 +395,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="Sample Address 1"
                 android:textSize="@dimen/_12sdp" />
 
@@ -351,6 +427,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="Sample Address 2"
                 android:textSize="@dimen/_12sdp" />
 
@@ -382,6 +459,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="Sample City"
                 android:textSize="@dimen/_12sdp" />
 
@@ -413,6 +491,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="Sample State"
                 android:textSize="@dimen/_12sdp" />
 
@@ -444,7 +523,9 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="560061"
+                android:inputType="number"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -475,6 +556,7 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
+
                 android:hint="India"
                 android:textSize="@dimen/_12sdp" />
 

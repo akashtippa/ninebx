@@ -9,7 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.lists.FragmentSuperSubListFragment
+import com.ninebx.ui.home.lists.SuperSubListFragment
 import com.ninebx.ui.home.lists.model.AddedItem
 import java.util.*
 
@@ -28,12 +28,18 @@ internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : Recycle
         holder.layoutAddedList.setOnClickListener {
             val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, FragmentSuperSubListFragment()).commit()
+            fragmentTransaction.replace(R.id.frameLayout, SuperSubListFragment()).commit()
         }
     }
 
     override fun getItemCount(): Int {
         return if (null != myList) myList!!.size else 0
+    }
+
+
+    fun restoreAt(position: Int, iItem: AddedItem) {
+        myList!!.add(position, iItem)
+        notifyItemRemoved(position)
     }
 
 
@@ -57,4 +63,6 @@ internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : Recycle
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
     }
+
+
 }

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/_23sdp"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,9 +47,9 @@
                 app:passwordToggleTint="@color/colorAccent">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edtPassword"
                     android:hint="@string/master_password"
                     android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
@@ -59,7 +57,7 @@
 
             <Button
                 android:id="@+id/btnLogin"
-                android:layout_width="@dimen/_170sdp"
+                android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_14sdp"
@@ -73,11 +71,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_26sdp"
-                android:text="NEED AN ACCOUNT ?" />
+                android:text="NEED AN ACCOUNT ?"
+                android:textSize="@dimen/text_16" />
 
             <Button
                 android:id="@+id/btnSignUp"
-                android:layout_width="@dimen/_170sdp"
+                android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_5sdp"

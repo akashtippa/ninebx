@@ -51,14 +51,18 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun addEditCalendarEvent( calendarEvent: CalendarEvents?, selectedDate: Date ) {
         val addEventFragment = AddEditEventFragment()
+    override fun addEditCalendarEvent(calendarEvent: CalendarEvents?) {
+        val addEventFragment = AddEventFragment()
         val bundle = Bundle()
-        bundle.putBoolean("isAddEvent", calendarEvent == null )
+        bundle.putBoolean("isAddEvent", calendarEvent == null)
         var event = calendarEvent
         if( event == null ) {
             event = CalendarEvents()
         }
         addEventFragment.setCalendarEvent( event )
         bundle.putLong("selectedDate", selectedDate.time)
+        if (event == null) event = CalendarEvents()
+        bundle.putParcelable("calendarEvent", event)
         addEventFragment.arguments = bundle
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -250,9 +254,9 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     private var mPassCodeDialog: PassCodeDialog? = null
 
-    private fun showPasswordDialog() {
+    fun showPasswordDialog() {
         if (NineBxApplication.getPreferences().isPasswordRequired && !NineBxApplication.getPreferences().isPasswordEnabled) {
-            if( mPassCodeDialog != null && mPassCodeDialog!!.isShowing() ) {
+            if (mPassCodeDialog != null && mPassCodeDialog!!.isShowing()) {
                 return
             }
             mPassCodeDialog = PassCodeDialog(this, "111111", object : PassCodeDialog.PassCodeDialogListener {
@@ -396,6 +400,5 @@ class HomeActivity : AppCompatActivity(), HomeView {
     fun showQuickAdd() {
         layoutQuickAdd.show()
     }
-
 
 }

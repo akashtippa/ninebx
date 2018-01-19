@@ -50,7 +50,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_9sdp"
                     android:layout_toRightOf="@+id/layoutHome"
-                    android:text="@string/home_amp_money"
+                    android:text="@string/home_n_money"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
 

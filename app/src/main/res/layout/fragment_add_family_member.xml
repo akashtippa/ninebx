@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarProfile"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            android:visibility="visible"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <ImageView
+                android:id="@+id/ivBackAddOthers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:padding="@dimen/default_micro_padding"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_icon_arrow_left" />
+
+            <TextView
+                android:id="@+id/toolbarProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/add_others_to_account"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:id="@+id/txtSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:padding="@dimen/default_mini_padding"
+                android:text="@string/save"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/account_bg"
+                android:padding="@dimen/default_mini_padding">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imgEditProfile"
+                    android:layout_width="@dimen/_95sdp"
+                    android:layout_height="@dimen/_95sdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/splash_screen" />
+
+
+                <TextView
+                    android:id="@+id/txtUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/imgEditProfile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/default_mini_padding"
+                    android:layout_marginTop="@dimen/default_mini_padding"
+                    android:text="Add/Edit photo"
+                    android:textColor="@color/colorPrimary" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginStart="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="First Name"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <EditText
+                android:id="@+id/txtFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginStart="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/default_mini_padding"
+                android:background="@null"
+                android:hint="First Name"
+                android:textSize="@dimen/_12sdp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginRight="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginStart="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="Last Name"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <EditText
+                android:id="@+id/txtLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginStart="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/default_mini_padding"
+                android:background="@null"
+                android:hint="Last Name"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginRight="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginStart="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="Relationship to Primary account holder"
+                android:textSize="@dimen/_12sdp" />
+
+            <Spinner
+                android:id="@+id/txtRelationship"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:background="@null"
+                android:entries="@array/relationship" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/default_mini_padding"
+                android:layout_marginRight="@dimen/default_mini_padding"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/layoutOtherViews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_mini_padding"
+                    android:layout_marginStart="@dimen/default_mini_padding"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:text="Role"
+                    android:textSize="@dimen/_12sdp" />
+
+                <Spinner
+                    android:id="@+id/txtsRole"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:background="@null"
+                    android:entries="@array/role" />
+
+                <LinearLayout
+                    android:id="@+id/layNonUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginRight="@dimen/default_mini_padding"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@color/black" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:text="Email address"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <EditText
+                        android:id="@+id/edtEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:layout_marginTop="@dimen/default_mini_padding"
+                        android:background="@null"
+                        android:hint="sampleEmailAddress@nineBx.com"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginRight="@dimen/default_mini_padding"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:id="@+id/txtPermissions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:drawablePadding="@dimen/default_mini_padding"
+                        android:drawableRight="@drawable/ic_icon_save"
+                        android:gravity="center_vertical"
+                        android:text="Permissions" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
