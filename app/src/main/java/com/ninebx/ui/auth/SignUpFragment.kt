@@ -1,13 +1,11 @@
 package com.ninebx.ui.auth
 
+import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -24,8 +22,8 @@ class SignUpFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
-        setHasOptionsMenu(true)
+//        setupToolbar()
+//        setHasOptionsMenu(true)
         btnSubmit.setOnClickListener {
             if (validate()) {
                 mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
@@ -36,6 +34,13 @@ class SignUpFragment : BaseAuthFragment() {
             edtFirstName.setText("Test")
             edtLastName.setText("Test")
             edtEmailAddress.setText("test.box24@yopmail.com")
+        }
+
+        txtTermsOfUse.setOnClickListener {
+            openStaticLayoutDialog(getString(R.string.terms_of_use))
+        }
+        txtPrivacyPolicy.setOnClickListener {
+            openStaticLayoutDialog(getString(R.string.privacy_policy))
         }
     }
 
@@ -57,7 +62,9 @@ class SignUpFragment : BaseAuthFragment() {
         /*val assets = Typeface.createFromAsset(context.assets,"fonts/Futura-Medium.ttf")
         titleTextView.typeface = assets*/
         titleTextView.text = getString(R.string.sign_up)
-        toolbar.navigationIcon = ContextCompat.getDrawable(context!!, R.drawable.ic_arrow_back)
+
+//        toolbar.navigationIcon!!.isVisible
+//        toolbar.navigationIcon = ContextCompat.getDrawable(context!!, R.drawable.ic_icon_arrow_left)
         appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         appCompatActivity.supportActionBar!!.setHomeButtonEnabled(true)
     }
@@ -95,4 +102,33 @@ class SignUpFragment : BaseAuthFragment() {
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
+
+    private fun openStaticLayoutDialog(option: String) {
+        val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        when (option) {
+            getString(R.string.terms_of_use) -> {
+                dialog.setContentView(R.layout.dialog_terms_of_use)
+            }
+            getString(R.string.privacy_policy) -> {
+                dialog.setContentView(R.layout.dialog_privacy_policy)
+            }
+        }
+
+        val window = dialog.window
+        val wlp = window.attributes
+
+        wlp.gravity = Gravity.CENTER
+        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+        window.attributes = wlp
+        dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.show()
+
+        val imgBack = dialog.findViewById<View>(R.id.imgBack) as ImageView
+        imgBack.setOnClickListener {
+            dialog.cancel()
+        }
+    }
+
 }

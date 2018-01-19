@@ -188,6 +188,16 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
         txtAutoLock.setOnClickListener(this)
         txtFamily.setOnClickListener(this)
         txtMasterPassword.setOnClickListener(this)
+        layoutLock.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
+        }
+
+        layoutLogOut.setOnClickListener {
+//            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
+
+        }
+
+
     }
 
 }

@@ -51,8 +51,9 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/default_mini_margin"
                 android:layout_marginRight="@dimen/default_mini_margin"
-                android:src="@mipmap/ic_launcher" />
-
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_launcher"
+                android:visibility="visible" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>

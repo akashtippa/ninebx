@@ -27,6 +27,7 @@
         android:gravity="center"
         android:padding="@dimen/_5sdp"
         android:text="GET STARTED"
+        android:textColor="@color/grey_600"
         android:textSize="@dimen/_15sdp" />
 
 
@@ -51,7 +52,7 @@
         android:minHeight="24dp"
         app:centered="true"
         app:fillColor="@color/colorPrimary"
-        app:pageColor="@color/grey_100"
+        app:pageColor="@color/grey_400"
         app:radius="4dp"
         app:strokeColor="#E0E0E0"
         app:strokeWidth="0dp" />

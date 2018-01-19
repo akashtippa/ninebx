@@ -35,22 +35,31 @@ class WalkThroughActivity : AppCompatActivity() {
                 when (position) {
                     0 -> {
                         txtGetStarted.setTextColor(resources.getColor(R.color.black))
+                        txtGetStarted.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_one, 0);
                         imgWalkthroughBg.setImageDrawable(null)
                     }
                     1 -> {
                         txtGetStarted.setTextColor(resources.getColor(R.color.be_organized))
+                        txtGetStarted.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_two, 0);
                         imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
+
                     }
                     2 -> {
                         txtGetStarted.setTextColor(resources.getColor(R.color.be_engaged))
+                        txtGetStarted.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_three, 0);
+
                         imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
                     }
                     3 -> {
                         txtGetStarted.setTextColor(resources.getColor(R.color.be_empowered))
+                        txtGetStarted.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_four, 0);
+
                         imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
                     }
                     4 -> {
                         txtGetStarted.setTextColor(resources.getColor(R.color.be_relaxed))
+                        txtGetStarted.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_five, 0);
+
                         imgWalkthroughBg.setImageResource(R.drawable.walkthrough_bg)
                     }
                 }

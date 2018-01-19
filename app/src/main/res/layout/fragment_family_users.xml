@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -68,9 +68,19 @@
 
         </LinearLayout>
 
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvAddedSubLists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_mini_margin"
+            android:nestedScrollingEnabled="false" />
+
     </LinearLayout>
 
+
     <RelativeLayout
+        android:id="@+id/layAddFamilyMembers"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_alignParentBottom="true"

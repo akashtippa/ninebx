@@ -352,7 +352,7 @@ class CategoryHelper(
         category.title = "Insurance"
         category.drawableString = "ic_icon_insurance"
 
-        category.subCategories.add(SubCategory("Homeowners/\nRenters insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Homeowners/Renters insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Auto insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Life insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Health insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))

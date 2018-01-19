@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imgDescription"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:src="@drawable/walkthrough_4" />
 
@@ -50,9 +50,11 @@
             android:id="@+id/textDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_3sdp"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/default_micro_padding"
             android:text="@string/screen_three_description"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutFragmentSuperSubList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -27,17 +28,42 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:padding="@dimen/default_mini_padding"
                     android:text="@string/hide_completed"
                     android:textColor="@color/colorPrimary" />
 
                 <TextView
+                    android:id="@+id/txtShowCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:padding="@dimen/default_mini_padding"
+                    android:text="@string/show_completed"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="gone" />
+
+                <CheckBox
                     android:id="@+id/txtCheckAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:padding="@dimen/default_mini_padding"
                     android:text="@string/check_all"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="visible" />
+
+                <CheckBox
+                    android:id="@+id/txtUnCheckAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/default_mini_padding"
+                    android:text="@string/uncheck_all"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -161,6 +187,7 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:hint="@string/done"
+            android:padding="@dimen/default_margin"
             android:textColorHint="@color/colorPrimary"
             android:visibility="invisible" />
 

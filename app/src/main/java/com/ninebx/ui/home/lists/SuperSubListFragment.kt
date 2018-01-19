@@ -29,7 +29,7 @@ import java.util.*
 /***
  * Created by TechnoBlogger on 15/01/18.
  */
-class FragmentSuperSubListFragment : FragmentBackHelper() {
+class SuperSubListFragment : FragmentBackHelper() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_super_sub_list, container, false)

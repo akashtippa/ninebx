@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/laySubItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <RadioButton
-        android:id="@+id/rdSuperSubItem"
+    <CheckBox
+        android:id="@+id/checkSubList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:padding="@dimen/default_mini_padding"
-        android:theme="@style/MyRadioButton" />
+        android:button="@drawable/custom_check_box"
+        android:padding="@dimen/default_mini_padding" />
 
     <EditText
         android:id="@+id/edtSuperSubItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/rdSuperSubItem"
+        android:layout_toEndOf="@+id/checkSubList"
         android:layout_toLeftOf="@+id/txtDate"
-        android:layout_toRightOf="@+id/rdSuperSubItem"
+        android:layout_toRightOf="@+id/checkSubList"
         android:layout_toStartOf="@+id/txtDate"
         android:background="@null"
         android:ellipsize="end"
@@ -37,20 +38,20 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:hint="@string/date"
-        android:padding="@dimen/default_mini_padding" />
+        android:padding="@dimen/default_margin" />
 
     <DatePicker
         android:id="@+id/simpleDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rdSuperSubItem"
+        android:layout_below="@+id/checkSubList"
         android:datePickerMode="spinner"
         android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@+id/rdSuperSubItem"
+        android:layout_below="@+id/checkSubList"
         android:layout_marginTop="@dimen/default_margin"
         android:background="@color/grey_100" />
 
