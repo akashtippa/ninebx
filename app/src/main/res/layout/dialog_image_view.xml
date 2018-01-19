@@ -54,13 +54,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/ivShare"
             android:padding="@dimen/default_mini_padding"
-            app:srcCompat="@drawable/ic_icon_upcoming_trips"/>
+            app:srcCompat="@drawable/ic_icon_share_white"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:visibility="gone"
             android:id="@+id/ivDelete"
             android:padding="@dimen/default_mini_padding"
             app:srcCompat="@drawable/ic_icon_delete_icon"/>

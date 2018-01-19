@@ -106,7 +106,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
         }
 
-        etAttachment.setOnClickListener { startCameraIntent() }
+        cvAttachment.setOnClickListener { startCameraIntent() }
 
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
         layoutEndRepeat.setOnClickListener {
@@ -351,16 +351,12 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
                     while (currentItem < count) {
                         val imageUri = data.clipData.getItemAt(currentItem).uri
                         mImagesList.add(imageUri)
-                        //do something with the image (save it to some directory or whatever you need to do with it here)
                         currentItem += 1
                     }
-                    context!!.showToast("Selected $count images")
                     etAttachment.isEnabled = true
                     setImagesAdapter()
                 } else if (data.data != null) {
-                    val imagePath = data.data.path
-                    mImagesList.add(Uri.fromFile(File(imagePath)))
-                    //do something with the image (save it to some directory or whatever you need to do with it here)
+                    mImagesList.add(data.data)
                     etAttachment.isEnabled = true
                     setImagesAdapter()
                 }

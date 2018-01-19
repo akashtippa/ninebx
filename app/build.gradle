@@ -101,4 +101,7 @@ dependencies {
 
     //Gson
     compile 'com.google.code.gson:gson:2.8.1'
+
+    //CircleImageView
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }
