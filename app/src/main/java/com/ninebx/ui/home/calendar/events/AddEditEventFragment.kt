@@ -54,7 +54,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
     private lateinit var mHomeView : HomeView
     private lateinit var mCalendarEvent : CalendarEvents
-    private lateinit var mAWSFileUploadHelper: AWSFileUploadHelper
+    private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
     private var isAddEvent = false
     private lateinit var mSelectedDate : Date
 
@@ -64,7 +64,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
         super.onViewCreated(view, savedInstanceState)
 
-        mAWSFileUploadHelper = AWSFileUploadHelper(context!!)
+        mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
         isAddEvent = arguments!!.getBoolean("isAddEvent", false)
@@ -81,9 +81,11 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
         ivBack.setOnClickListener { goBack() }
         tvSave.setOnClickListener {
-            if( validate() ) {
+            /*if( validate() ) {
                 saveCalendarEvent()
-            }
+            }*/
+            //uploadImageAws()
+            downloadImageAws()
         }
         layoutEndRepeat.hide()
         setValues( mCalendarEvent )
@@ -152,6 +154,10 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             }
             else false
         }
+    }
+
+    private fun downloadImageAws() {
+        mAWSFileTransferHelper.beginDownload("IMG-20180121-WA0000.jpg")
     }
 
     private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, isAllDay: Boolean) {
@@ -340,21 +346,21 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             }
         }
         else if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null ) {
-                if (data.clipData != null) {
-                    val count = data.clipData.itemCount
-                    var currentItem = 0
-                    while (currentItem < count) {
-                        val imageUri = data.clipData.getItemAt(currentItem).uri
-                        mImagesList.add(imageUri)
-                        currentItem += 1
-                    }
-                    etAttachment.isEnabled = true
-                    setImagesAdapter()
-                } else if (data.data != null) {
-                    mImagesList.add(data.data)
-                    etAttachment.isEnabled = true
-                    setImagesAdapter()
+            if (data.clipData != null) {
+                val count = data.clipData.itemCount
+                var currentItem = 0
+                while (currentItem < count) {
+                    val imageUri = data.clipData.getItemAt(currentItem).uri
+                    mImagesList.add(imageUri)
+                    currentItem += 1
                 }
+                etAttachment.isEnabled = true
+                setImagesAdapter()
+            } else if (data.data != null) {
+                mImagesList.add(data.data)
+                etAttachment.isEnabled = true
+                setImagesAdapter()
+            }
 
         }
         else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
@@ -390,7 +396,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
     private fun uploadImageAws() {
         if( mImagesList.size > 0 ) {
             for( imageUri in mImagesList ) {
-                mAWSFileUploadHelper.beginUpload(getPath(imageUri))
+                mAWSFileTransferHelper.beginUpload(getPath(imageUri))
             }
         }
     }
@@ -407,14 +413,19 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
     private fun changeDateFormat(isAllDay: Boolean) {
         val calendar = Calendar.getInstance()
-        calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+
+        if( mCalendarEvent.startsDate.size > 0 )
+            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+
         if( isAllDay ) {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
         }
         setDateTime(tvStarts, calendar, isAllDay)
 
-        calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
+        if( mCalendarEvent.endsDate.size > 0 )
+            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
+
         if( isAllDay ) {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
@@ -490,7 +501,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
         AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
         uploadImageAws()
-        goBack()
+        //goBack()
     }
 
     fun goBack() {
