@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarPermissions"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            android:visibility="visible"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <ImageView
+                android:id="@+id/ivBackPermissions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:padding="@dimen/default_micro_padding"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_icon_arrow_left" />
+
+            <TextView
+                android:id="@+id/toolbarProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/set_permissions"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:id="@+id/txtSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:padding="@dimen/default_mini_padding"
+                android:text="@string/save"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_micro_padding"
+        android:text="Sample User"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_micro_padding"
+        android:text="Sample Role" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGrey">
+
+        <LinearLayout
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/default_micro_padding"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Edit"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_home"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_home_money" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/home_n_money"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <!--      <RadioGroup
+                              android:id="@+id/rd1"
+                              android:layout_width="match_parent"
+                              android:orientation="horizontal"
+                              android:layout_height="match_parent">
+      -->
+                    <CheckBox
+                        android:id="@+id/chkView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <!--</RadioGroup>-->
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_travell"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_travel" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/travel"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_contacts"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_contacts" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/contacts"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_edu"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_education_work" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/education_work"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_personal"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_personal" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/personal"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_interests"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_interests" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/interests"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_wellness"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_wellness" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/wellness"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_memories"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_memories" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/memories"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_mini_padding"
+                android:background="@color/colorGrey"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_lt_shopping"
+                    android:padding="@dimen/_2sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_home_icon_shopping" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_marginStart="@dimen/_9sdp"
+                    android:layout_weight="0.9"
+                    android:text="@string/shopping"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.6"
+                    android:gravity="end"
+                    android:weightSum="3">
+
+                    <CheckBox
+                        android:id="@+id/chkView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkAdd9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                    <CheckBox
+                        android:id="@+id/chkEdit9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_mini_padding"
+                        android:layout_marginStart="@dimen/default_mini_padding"
+                        android:button="@drawable/custom_check"
+                        android:padding="@dimen/default_mini_padding" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/default_margin">
+
+                <CheckBox
+                    android:id="@+id/chkAddOrRemoveUsers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_mini_padding"
+                    android:layout_marginStart="@dimen/default_mini_padding"
+                    android:button="@null"
+                    android:drawableRight="@drawable/custom_check"
+                    android:padding="@dimen/default_margin"
+                    android:text="Adding/Removing users" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
