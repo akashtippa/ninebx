@@ -32,6 +32,7 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -84,8 +85,9 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             /*if( validate() ) {
                 saveCalendarEvent()
             }*/
-            //uploadImageAws()
-            downloadImageAws()
+            uploadImageAws()
+            //downloadImageAws()
+            //val decryptFile = decryptFile(File("/storage/emulated/0/IMG-20180121-WA0000.jpg"))
         }
         layoutEndRepeat.hide()
         setValues( mCalendarEvent )

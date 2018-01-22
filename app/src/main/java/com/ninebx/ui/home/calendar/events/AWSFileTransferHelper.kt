@@ -11,6 +11,8 @@ import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Util.fillMap
 import com.ninebx.utility.Util.getTransferUtility
+import com.ninebx.utility.decryptFile
+import com.ninebx.utility.encryptFile
 import java.io.File
 import java.util.ArrayList
 import java.util.HashMap
@@ -97,7 +99,9 @@ class AWSFileTransferHelper(private val context : Context) {
             context.showToast("Could not find the filepath of the selected file")
             return
         }
-        val file = File(filePath)
+
+        val file = encryptFile( File(filePath) )
+
         val observer = transferUtility.upload(Constants.BUCKET_NAME, file.name,
                 file)
         /*
@@ -144,6 +148,9 @@ class AWSFileTransferHelper(private val context : Context) {
          * -> set listeners to in progress transfers.
          */
          observer.setTransferListener( FileTransferListener( "download"))
+
+
+
     }
 
     /*
@@ -166,6 +173,7 @@ class AWSFileTransferHelper(private val context : Context) {
 
         override fun onStateChanged(id: Int, newState: TransferState) {
             AppLogger.d(TAG, "$type : onStateChanged: $id, $newState")
+
             updateList()
         }
     }
@@ -186,6 +194,14 @@ class AWSFileTransferHelper(private val context : Context) {
             downloadMap = transferDownloadRecordMaps[i]
             fillMap(downloadMap, downloadObserver, i == downloadCheckedIndex)
         }
+        /*if( downloadMap != null ) {
+            for( key in downloadMap.keys ) {
+                if( key == "fileName" ) {
+                    val decryptFile = decryptFile(File(downloadMap[key].toString()))
+                }
+
+            }
+        }*/
     }
 
 
