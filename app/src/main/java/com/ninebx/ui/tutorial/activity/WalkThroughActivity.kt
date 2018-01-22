@@ -34,7 +34,7 @@ class WalkThroughActivity : AppCompatActivity() {
                 // Here, we will change the text color of GET STARTED
                 when (position) {
                     0 -> {
-                        txtGetStarted.setTextColor(resources.getColor(R.color.black))
+                        txtGetStarted.setTextColor(resources.getColor(R.color.get_started))
                         txtGetStarted.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_one, 0);
                         imgWalkthroughBg.setImageDrawable(null)
                     }

@@ -56,6 +56,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             tvCategory.text = category.title
             tvCount.text = category.formsCount.toString()
             rvSubCategory.layoutManager = LinearLayoutManager(context)
+
             val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
                     //DO something with this

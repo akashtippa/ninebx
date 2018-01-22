@@ -211,21 +211,20 @@
                     android:layout_marginTop="@dimen/_9sdp"
                     android:entries="@array/role" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginLeft="@dimen/default_mini_padding"
+                    android:layout_marginRight="@dimen/default_mini_padding"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+
                 <LinearLayout
                     android:id="@+id/layNonUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginLeft="@dimen/default_mini_padding"
-                        android:layout_marginRight="@dimen/default_mini_padding"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:background="@color/black" />
-
 
                     <TextView
                         android:layout_width="match_parent"
@@ -257,16 +256,28 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:background="@color/black" />
 
-                    <TextView
-                        android:id="@+id/txtPermissions"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/default_margin"
-                        android:drawablePadding="@dimen/default_margin"
-                        android:drawableRight="@drawable/ic_icon_save"
-                        android:gravity="center_vertical"
-                        android:text="Permissions" />
+
+                        android:layout_margin="@dimen/default_mini_padding">
+
+                        <TextView
+                            android:id="@+id/txtPermissions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="@dimen/default_mini_padding"
+                            android:gravity="center_vertical"
+                            android:text="Permissions" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/default_mini_padding"
+                            app:srcCompat="@drawable/ic_icon_save" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

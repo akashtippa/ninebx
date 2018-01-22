@@ -11,35 +11,35 @@ import com.ninebx.utility.Constants
 /**
  * Created by Alok on 12/01/18.
  */
-class SubCategoryAdapter( val subCategories : ArrayList<SubCategory>, val actionClickListener: CategoryItemClickListener ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SubCategoryAdapter(val subCategories: ArrayList<SubCategory>, val actionClickListener: CategoryItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        val subCategory = getItemAtPosition( position )
-        when( getItemViewType(position) ) {
+        val subCategory = getItemAtPosition(position)
+        when (getItemViewType(position)) {
             Constants.SUB_CATEGORY_DISPLAY_PERSON -> {
-                initDisplayValues( subCategory, holder )
+                initDisplayValues(subCategory, holder)
             }
             Constants.SUB_CATEGORY_ADD_PERSON -> {
-                initCategoryValues( subCategory, holder )
+                initCategoryValues(subCategory, holder)
             }
             Constants.SUB_CATEGORY_ADD_ITEM -> {
-                initItemValues( subCategory, holder )
+                initItemValues(subCategory, holder)
             }
         }
     }
 
     private fun initDisplayValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
-        val viewHolder : DisplayViewHolder = holder as DisplayViewHolder
+        val viewHolder: DisplayViewHolder = holder as DisplayViewHolder
         viewHolder.tvSubTitle.text = subCategory.title
     }
 
     private fun initCategoryValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
-        val viewHolder : PersonViewHolder = holder as PersonViewHolder
+        val viewHolder: PersonViewHolder = holder as PersonViewHolder
         viewHolder.tvSubTitle.text = subCategory.title
     }
 
     private fun initItemValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
-        val viewHolder : ItemViewHolder = holder as ItemViewHolder
+        val viewHolder: ItemViewHolder = holder as ItemViewHolder
         viewHolder.tvSubTitle.text = subCategory.title
         viewHolder.tvCount.text = subCategory.formsCount.toString()
     }
@@ -50,9 +50,9 @@ class SubCategoryAdapter( val subCategories : ArrayList<SubCategory>, val action
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent!!.context)
-        return when( viewType ) {
+        return when (viewType) {
             Constants.SUB_CATEGORY_ADD_ITEM -> {
-               ItemViewHolder(layoutInflater.inflate(R.layout.item_sub_category_add, parent, false))
+                ItemViewHolder(layoutInflater.inflate(R.layout.item_sub_category_add, parent, false))
             }
             Constants.SUB_CATEGORY_ADD_PERSON -> {
                 PersonViewHolder(layoutInflater.inflate(R.layout.item_sub_category_add_person, parent, false))
@@ -74,15 +74,15 @@ class SubCategoryAdapter( val subCategories : ArrayList<SubCategory>, val action
         return subCategories[position].type
     }
 
-    inner class ItemViewHolder( itemView : View? ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ItemViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val tvSubTitle = itemView!!.findViewById<TextView>(R.id.tvSubTitle)
         val tvCount = itemView!!.findViewById<TextView>(R.id.tvCount)
 
         override fun onClick(view: View?) {
             val position = adapterPosition
-            if( position != RecyclerView.NO_POSITION ) {
-                when( view!!.id ) {
+            if (position != RecyclerView.NO_POSITION) {
+                when (view!!.id) {
                     R.id.tvCount -> {
                         actionClickListener.onItemClick(getItemAtPosition(position), "add_item")
                     }
@@ -101,14 +101,14 @@ class SubCategoryAdapter( val subCategories : ArrayList<SubCategory>, val action
 
     }
 
-    inner class PersonViewHolder( itemView : View? ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class PersonViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val tvSubTitle = itemView!!.findViewById<TextView>(R.id.tvSubTitle)
 
         override fun onClick(view: View?) {
             val position = adapterPosition
-            if( position != RecyclerView.NO_POSITION ) {
-                when( view!!.id ) {
+            if (position != RecyclerView.NO_POSITION) {
+                when (view!!.id) {
                     R.id.tvSubTitle -> {
                         actionClickListener.onItemClick(getItemAtPosition(position), "add_person")
                     }
@@ -123,14 +123,14 @@ class SubCategoryAdapter( val subCategories : ArrayList<SubCategory>, val action
 
     }
 
-    inner class DisplayViewHolder( itemView : View? ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class DisplayViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val tvSubTitle = itemView!!.findViewById<TextView>(R.id.tvSubTitle)
 
         override fun onClick(view: View?) {
             val position = adapterPosition
-            if( position != RecyclerView.NO_POSITION ) {
-                when( view!!.id ) {
+            if (position != RecyclerView.NO_POSITION) {
+                when (view!!.id) {
                     R.id.tvSubTitle -> {
                         actionClickListener.onItemClick(getItemAtPosition(position), "display_person")
                     }
