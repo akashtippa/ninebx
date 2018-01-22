@@ -1,12 +1,13 @@
 package com.ninebx.ui.home.calendar.events
 
 import android.content.Context
-import android.util.Log
+import android.os.Environment
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferType
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Util.fillMap
 import com.ninebx.utility.Util.getTransferUtility
@@ -17,32 +18,57 @@ import java.util.HashMap
 /**
  * Created by Alok on 19/01/18.
  */
-class AWSFileUploadHelper(private val context : Context) {
+class AWSFileTransferHelper(private val context : Context) {
 
-    private val TAG = AWSFileUploadHelper::class.java.simpleName
+    private val TAG = AWSFileTransferHelper::class.java.simpleName
+
     /**
      * This map is used to provide data to the SimpleAdapter above. See the
      * fillMap() function for how it relates observers to rows in the displayed
      * activity.
      */
     private var transferRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
+    private var transferDownloadRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
     private val transferUtility = getTransferUtility(context)
 
     // A List of all transfers
     private var observers: MutableList<TransferObserver>? = null
+    private var downloadObservers: MutableList<TransferObserver>? = null
+
     // Which row in the UI is currently checked (if any)
     private var checkedIndex: Int = Constants.INDEX_NOT_CHECKED
+    private var downloadCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
 
     init {
-        initData()
+        initUploadData()
+        initDownloadData()
     }
 
-    private fun initData() {
+    private fun initDownloadData() {
+        transferDownloadRecordMaps.clear()
+        // Uses TransferUtility to get all previous download records.
+        downloadObservers = transferUtility.getTransfersWithType(TransferType.DOWNLOAD)
+        val listener = FileTransferListener("download")
+        for (observer in downloadObservers!!) {
+            val map = HashMap<String, Any>()
+            fillMap(map, observer, false)
+            transferDownloadRecordMaps.add(map)
+
+            // Sets listeners to in progress transfers
+            if (TransferState.WAITING == observer.getState()
+                    || TransferState.WAITING_FOR_NETWORK == observer.getState()
+                    || TransferState.IN_PROGRESS == observer.getState()) {
+                observer.setTransferListener(listener)
+            }
+        }
+    }
+
+    private fun initUploadData() {
 
         transferRecordMaps.clear()
         // Use TransferUtility to get all upload transfers.
         observers = transferUtility.getTransfersWithType(TransferType.UPLOAD)
-        val listener = UploadListener()
+        val listener = FileTransferListener("upload")
         for ( observer in observers!! ) {
 
             // For each transfer we will will create an entry in
@@ -67,6 +93,7 @@ class AWSFileUploadHelper(private val context : Context) {
     fun beginUpload(filePath: String?) {
 
         if (filePath == null) {
+            AppLogger.e( TAG, "Could not find the filepath of the selected file" )
             context.showToast("Could not find the filepath of the selected file")
             return
         }
@@ -80,7 +107,7 @@ class AWSFileUploadHelper(private val context : Context) {
          * startActivityForResult -> onActivityResult -> beginUpload -> onResume
          * -> set listeners to in progress transfers.
          */
-        // observer.setTransferListener(new UploadListener());
+         observer.setTransferListener(FileTransferListener("upload"))
     }
 
     fun clearTransferListeners( ) {
@@ -91,28 +118,54 @@ class AWSFileUploadHelper(private val context : Context) {
                 observer.cleanTransferListener()
             }
         }
+
+        if (downloadObservers != null && !downloadObservers!!.isEmpty()) {
+            for (observer in downloadObservers!!) {
+                observer.cleanTransferListener()
+            }
+        }
+    }
+
+    /*
+     * Begins to download the file specified by the key in the bucket.
+     */
+    fun beginDownload(key: String) {
+        // Location to download files from S3 to. You can choose any accessible
+        // file.
+        val file = File(Environment.getExternalStorageDirectory().toString() + "/" + key)
+
+        // Initiate the download
+        val observer = transferUtility.download(Constants.BUCKET_NAME, key, file)
+        /*
+         * Note that usually we set the transfer listener after initializing the
+         * transfer. However it isn't required in this sample app. The flow is
+         * click upload button -> start an activity for image selection
+         * startActivityForResult -> onActivityResult -> beginUpload -> onResume
+         * -> set listeners to in progress transfers.
+         */
+         observer.setTransferListener( FileTransferListener( "download"))
     }
 
     /*
      * A TransferListener class that can listen to a upload task and be notified
      * when the status changes.
      */
-    private inner class UploadListener : TransferListener {
+    private inner class FileTransferListener( val type : String ) : TransferListener {
 
         // Simply updates the UI list when notified.
         override fun onError(id: Int, e: Exception) {
-            Log.e(TAG, "Error during upload: " + id, e)
+            AppLogger.e(TAG, type + " : Error during upload: " + id + " : Exception : " + e.message)
             updateList()
         }
 
         override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
-            Log.d(TAG, String.format("onProgressChanged: %d, total: %d, current: %d",
+            AppLogger.d(TAG, type + " : " + String.format("onProgressChanged: %d, total: %d, current: %d",
                     id, bytesTotal, bytesCurrent))
             updateList()
         }
 
         override fun onStateChanged(id: Int, newState: TransferState) {
-            Log.d(TAG, "onStateChanged: $id, $newState")
+            AppLogger.d(TAG, "$type : onStateChanged: $id, $newState")
             updateList()
         }
     }
@@ -124,6 +177,14 @@ class AWSFileUploadHelper(private val context : Context) {
             observer = observers!!.get(i)
             map = transferRecordMaps[i]
             fillMap(map, observer, i == checkedIndex)
+        }
+
+        var downloadObserver: TransferObserver? = null
+        var downloadMap: HashMap<String, Any>? = null
+        for (i in downloadObservers!!.indices) {
+            downloadObserver = downloadObservers!!.get(i)
+            downloadMap = transferDownloadRecordMaps[i]
+            fillMap(downloadMap, downloadObserver, i == downloadCheckedIndex)
         }
     }
 
