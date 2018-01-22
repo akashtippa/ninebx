@@ -49,15 +49,15 @@ class HomeActivity : AppCompatActivity(), HomeView {
         hideProgressDialog()
     }
 
-    override fun addEditCalendarEvent( calendarEvent: CalendarEvents?, selectedDate: Date ) {
+    override fun addEditCalendarEvent(calendarEvent: CalendarEvents?, selectedDate: Date) {
         val addEventFragment = AddEditEventFragment()
         val bundle = Bundle()
         bundle.putBoolean("isAddEvent", calendarEvent == null )
         var event = calendarEvent
-        if( event == null ) {
+        if (event == null) {
             event = CalendarEvents()
         }
-        addEventFragment.setCalendarEvent( event )
+        addEventFragment.setCalendarEvent(event)
         bundle.putLong("selectedDate", selectedDate.time)
         addEventFragment.arguments = bundle
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -250,7 +250,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     private var mPassCodeDialog: PassCodeDialog? = null
 
-    fun showPasswordDialog() {
+    private fun showPasswordDialog() {
         if (NineBxApplication.getPreferences().isPasswordRequired && !NineBxApplication.getPreferences().isPasswordEnabled) {
             if (mPassCodeDialog != null && mPassCodeDialog!!.isShowing()) {
                 return
@@ -396,5 +396,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
     fun showQuickAdd() {
         layoutQuickAdd.show()
     }
+
 
 }

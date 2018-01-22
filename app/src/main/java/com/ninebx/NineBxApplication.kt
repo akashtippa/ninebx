@@ -5,7 +5,11 @@ import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
 import com.evernote.android.job.JobManager
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.utility.*
+import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.utility.FragmentOrganiser
+import com.ninebx.utility.NineBxJobCreator
+import com.ninebx.utility.NineBxPreferences
+import com.ninebx.utility.Preferences
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -25,6 +29,8 @@ class NineBxApplication : MultiDexApplication() {
         private set
 
     private var fragmentOrganiser: FragmentOrganiser? = null
+
+    private var iMemberAdded: IMemberAdded? = null
 
     val fragmentOpener: FragmentOrganiser
         get() {
@@ -66,7 +72,7 @@ class NineBxApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
-        JobManager.create(this).addJobCreator( NineBxJobCreator() )
+        JobManager.create(this).addJobCreator(NineBxJobCreator())
         instance = this
         Preferences.init(applicationContext)
         Realm.init(this)
@@ -97,5 +103,14 @@ class NineBxApplication : MultiDexApplication() {
         realmDefaultInstance!!.close()
         activityInstance = null
         fragmentOrganiser = null
+    }
+
+
+    fun getiMemberAdded(): IMemberAdded? {
+        return this!!.iMemberAdded
+    }
+
+    fun setiMemberAdded(iMemberAdded: IMemberAdded) {
+        this.iMemberAdded = iMemberAdded
     }
 }

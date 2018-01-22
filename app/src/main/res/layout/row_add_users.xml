@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layAddedMembers"
+    android:layout_marginTop="@dimen/default_mini_padding"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
         android:background="@color/grey_100"
         android:padding="@dimen/default_micro_padding">
 
@@ -63,30 +64,33 @@
 
         </LinearLayout>
 
-        <LinearLayout
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/default_margin">
+
+
+        <ImageView
+            android:id="@+id/imgEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            app:srcCompat="@drawable/ic_icon_edit" />
 
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_icon_delete_icon" />
 
-            <ImageView
-                android:id="@+id/imgEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_icon_edit" />
-
-            <ImageView
-                android:id="@+id/imgDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_micro_padding"
-                android:layout_marginStart="@dimen/default_micro_padding"
-                app:srcCompat="@drawable/ic_icon_delete_icon" />
-
-
-        </LinearLayout>
 
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

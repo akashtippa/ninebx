@@ -34,6 +34,10 @@ class AccountPasswordFragment : BaseAuthFragment() {
             etCreatePassword.setText("a")
             etConfirmPassword.setText("a")
         }
+
+        ivBackPass.setOnClickListener {
+            activity!!.onBackPressed()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

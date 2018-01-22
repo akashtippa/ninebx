@@ -77,46 +77,49 @@ class MyProfileFragment : FragmentBackHelper() {
     private fun checkValidations() {
         if (txtFirstName.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
-            return;
-        }
-
-        if (txtLastName.text.toString().trim().isEmpty()) {
-            Toast.makeText(context, "Please enter 'Last name'", Toast.LENGTH_LONG).show()
+            txtFirstName.requestFocus()
             return;
         }
 
         if (txtDOB.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Date of birth'", Toast.LENGTH_LONG).show()
+            txtDOB.requestFocus()
             return;
         }
 
         if (!(txtGender != null && txtGender.selectedItem.toString() != null)) {
             Toast.makeText(context, "Please enter 'Gender'", Toast.LENGTH_LONG).show()
+            txtGender.requestFocus()
             return;
         }
 
         if (txtMobileNumber.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Mobile number'", Toast.LENGTH_LONG).show()
+            txtMobileNumber.requestFocus()
             return;
         }
 
         if (txtAddress1.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Street address 1'", Toast.LENGTH_LONG).show()
+            txtAddress1.requestFocus()
             return;
         }
 
         if (txtCity.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'City'", Toast.LENGTH_LONG).show()
+            txtCity.requestFocus()
             return;
         }
 
         if (txtState.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'State'", Toast.LENGTH_LONG).show()
+            txtState.requestFocus()
             return;
         }
 
         if (txtZipCode.text.toString().trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Zip code'", Toast.LENGTH_LONG).show()
+            txtZipCode.requestFocus()
             return;
         }
 

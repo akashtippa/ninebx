@@ -11,7 +11,7 @@ import com.ninebx.ui.home.account.adapter.AddOrEditPermissionAdapter
 import com.ninebx.ui.home.account.model.AddEditPermissions
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_permissions.*
-import java.util.*
+
 
 /***
  * Created by TechnoBlogger on 18/01/18.
@@ -19,8 +19,8 @@ import java.util.*
 
 class PermissionFragment : FragmentBackHelper() {
 
-    private var mSubListAdapter: AddOrEditPermissionAdapter? = null
-    var myList: ArrayList<AddEditPermissions> = ArrayList()
+    private lateinit var myList: ArrayList<AddEditPermissions>
+    private var mListsAdapter: AddOrEditPermissionAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_permissions, container, false)
@@ -34,15 +34,28 @@ class PermissionFragment : FragmentBackHelper() {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
-        mSubListAdapter = AddOrEditPermissionAdapter(myList)
+        txtSave.setOnClickListener {
+
+        }
+
+        myList = ArrayList()
+        for (i in 0 until PermissionData.menuName.size) {
+            myList.add(AddEditPermissions(
+                    PermissionData.bgDrawable[i],
+                    PermissionData.menuDrawable[i],
+                    PermissionData.menuName[i],
+                    PermissionData.chkView[i],
+                    PermissionData.chkAdd[i],
+                    PermissionData.chkEdit[i]
+            ))
+        }
+
+        mListsAdapter = AddOrEditPermissionAdapter(myList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvPermissions!!.layoutManager = layoutManager
-        rvPermissions!!.adapter = mSubListAdapter
+        rvPermissions!!.adapter = mListsAdapter
+
 
     }
-
-    private fun addEditOrAddMenu() {
-    }
-
 }

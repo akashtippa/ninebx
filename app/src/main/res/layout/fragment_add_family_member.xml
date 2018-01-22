@@ -177,10 +177,7 @@
                 android:id="@+id/txtRelationship"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:background="@null"
                 android:entries="@array/relationship" />
 
             <View
@@ -211,10 +208,7 @@
                     android:id="@+id/txtsRole"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_9sdp"
-                    android:background="@null"
                     android:entries="@array/role" />
 
                 <LinearLayout
@@ -251,7 +245,7 @@
                         android:layout_marginStart="@dimen/default_mini_padding"
                         android:layout_marginTop="@dimen/default_mini_padding"
                         android:background="@null"
-                        android:hint="sampleEmailAddress@nineBx.com"
+                        android:hint="Email address"
                         android:textSize="@dimen/_12sdp" />
 
                     <View
@@ -268,8 +262,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/default_mini_padding"
-                        android:drawablePadding="@dimen/default_mini_padding"
+                        android:layout_margin="@dimen/default_margin"
+                        android:drawablePadding="@dimen/default_margin"
                         android:drawableRight="@drawable/ic_icon_save"
                         android:gravity="center_vertical"
                         android:text="Permissions" />

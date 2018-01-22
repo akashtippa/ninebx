@@ -42,6 +42,10 @@ class SignUpFragment : BaseAuthFragment() {
         txtPrivacyPolicy.setOnClickListener {
             openStaticLayoutDialog(getString(R.string.privacy_policy))
         }
+
+        ivBackSignUp.setOnClickListener {
+            activity!!.onBackPressed()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

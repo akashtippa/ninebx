@@ -420,7 +420,7 @@
     </string-array>
 
     <string-array name="relationship">
-        <item></item>
+        <item>Relationship</item>
         <item>Spouse</item>
         <item>Partner</item>
         <item>Daughter</item>
@@ -434,7 +434,7 @@
     </string-array>
 
     <string-array name="role">
-        <item></item>
+        <item>Role</item>
         <item>Co-administrator</item>
         <item>User</item>
         <item>Non-user</item>
