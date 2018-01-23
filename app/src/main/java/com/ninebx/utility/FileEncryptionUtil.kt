@@ -1,5 +1,6 @@
 package com.ninebx.utility
 
+import android.os.Environment
 import org.cryptonode.jncryptor.AES256JNCryptor
 import java.io.*
 
@@ -12,14 +13,14 @@ fun encryptFile( inputFile : File ) : File {
     val size = inputFile.length().toInt()
     val fileBytes = ByteArray(size)
     val aeS256JNCryptor = AES256JNCryptor()
-
+    val file = File(Environment.getExternalStorageDirectory().toString() + "/Encrypted_" + inputFile.name)
     try {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
         val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, "master_password".toCharArray())
 
-        val bufOut = BufferedOutputStream(FileOutputStream(inputFile))
+        val bufOut = BufferedOutputStream(FileOutputStream(file))
         bufOut.write(encryptedFileBytes)
 
         buf.close()
@@ -33,7 +34,7 @@ fun encryptFile( inputFile : File ) : File {
         e.printStackTrace()
     }
 
-    return inputFile
+    return file
 
 }
 
@@ -43,14 +44,14 @@ fun decryptFile( inputFile : File ) : File {
     val size = inputFile.length().toInt()
     val fileBytes = ByteArray(size)
     val aeS256JNCryptor = AES256JNCryptor()
-
+    val file = File(Environment.getExternalStorageDirectory().toString() + "/Decrypted_" + inputFile.name)
     try {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
         val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, "master_password".toCharArray())
 
-        val bufOut = BufferedOutputStream(FileOutputStream(inputFile))
+        val bufOut = BufferedOutputStream(FileOutputStream(file))
         bufOut.write(decryptedFileBytes)
 
         buf.close()
@@ -64,5 +65,5 @@ fun decryptFile( inputFile : File ) : File {
         e.printStackTrace()
     }
 
-    return inputFile
+    return file
 }
