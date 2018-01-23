@@ -259,7 +259,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
     }
 
     //Testing code
-    fun performOperation(filePath: String) {
+    fun performOperation(filePath: String, fileOperationsCompletionListener: FileOperationsCompletionListener) {
         FileOperationsTask( "Encryption", filePath, object : FileOperationsCompletionListener {
             override fun onSuccess(outputFile: File?) {
 
@@ -267,8 +267,14 @@ class AWSFileTransferHelper( private val context : Context? ) {
                     context?.showToast("Encryption Success" )
                     FileOperationsTask("Decryption", outputFile.absolutePath, object : FileOperationsCompletionListener {
                         override fun onSuccess(outputFile: File?) {
-                            if( outputFile != null )
+
+                            if( outputFile != null ) {
                                 context?.showToast("Decryption Success" )
+                                fileOperationsCompletionListener.onSuccess(outputFile)
+                            }
+
+
+
                         }
 
                     }).execute()
