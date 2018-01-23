@@ -85,9 +85,10 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             /*if( validate() ) {
                 saveCalendarEvent()
             }*/
-            uploadImageAws()
+            //uploadImageAws()
             //downloadImageAws()
             //val decryptFile = decryptFile(File("/storage/emulated/0/IMG-20180121-WA0000.jpg"))
+            //mAWSFileTransferHelper.performOperation( "/storage/emulated/0/WhatsApp/Media/WhatsApp Images/IMG-20180120-WA0008.jpg" )
         }
         layoutEndRepeat.hide()
         setValues( mCalendarEvent )

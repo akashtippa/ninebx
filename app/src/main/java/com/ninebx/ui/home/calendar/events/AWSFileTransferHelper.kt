@@ -1,6 +1,8 @@
 package com.ninebx.ui.home.calendar.events
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Environment
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
@@ -20,7 +22,7 @@ import java.util.HashMap
 /**
  * Created by Alok on 19/01/18.
  */
-class AWSFileTransferHelper(private val context : Context) {
+class AWSFileTransferHelper( private val context : Context? ) {
 
     private val TAG = AWSFileTransferHelper::class.java.simpleName
 
@@ -31,7 +33,7 @@ class AWSFileTransferHelper(private val context : Context) {
      */
     private var transferRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
     private var transferDownloadRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
-    private val transferUtility = getTransferUtility(context)
+    private val transferUtility = getTransferUtility(context!!)
 
     // A List of all transfers
     private var observers: MutableList<TransferObserver>? = null
@@ -96,22 +98,30 @@ class AWSFileTransferHelper(private val context : Context) {
 
         if (filePath == null) {
             AppLogger.e( TAG, "Could not find the filepath of the selected file" )
-            context.showToast("Could not find the filepath of the selected file")
+            context?.showToast("Could not find the filepath of the selected file")
             return
         }
 
-        val file = encryptFile( File(filePath) )
+        FileOperationsTask( "Encryption", filePath, object : FileOperationsCompletionListener {
+            override fun onSuccess(outputFile: File?) {
 
-        val observer = transferUtility.upload(Constants.BUCKET_NAME, file.name,
-                file)
-        /*
-         * Note that usually we set the transfer listener after initializing the
-         * transfer. However it isn't required in this sample app. The flow is
-         * click upload button -> start an activity for image selection
-         * startActivityForResult -> onActivityResult -> beginUpload -> onResume
-         * -> set listeners to in progress transfers.
-         */
-         observer.setTransferListener(FileTransferListener("upload"))
+                val observer = transferUtility.upload(Constants.BUCKET_NAME, outputFile!!.name,
+                        outputFile)
+                /*
+                 * Note that usually we set the transfer listener after initializing the
+                 * transfer. However it isn't required in this sample app. The flow is
+                 * click upload button -> start an activity for image selection
+                 * startActivityForResult -> onActivityResult -> beginUpload -> onResume
+                 * -> set listeners to in progress transfers.
+                 */
+                observer.setTransferListener(FileTransferListener("upload"))
+            }
+
+        }).execute()
+
+
+
+
     }
 
     fun clearTransferListeners( ) {
@@ -162,46 +172,111 @@ class AWSFileTransferHelper(private val context : Context) {
         // Simply updates the UI list when notified.
         override fun onError(id: Int, e: Exception) {
             AppLogger.e(TAG, type + " : Error during upload: " + id + " : Exception : " + e.message)
-            updateList()
+            updateList( type )
         }
 
         override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
             AppLogger.d(TAG, type + " : " + String.format("onProgressChanged: %d, total: %d, current: %d",
                     id, bytesTotal, bytesCurrent))
-            updateList()
+            updateList( type )
         }
 
         override fun onStateChanged(id: Int, newState: TransferState) {
             AppLogger.d(TAG, "$type : onStateChanged: $id, $newState")
-
-            updateList()
+            updateList( type )
         }
     }
 
-    private fun updateList() {
-        var observer: TransferObserver? = null
-        var map: HashMap<String, Any>? = null
-        for (i in observers!!.indices) {
-            observer = observers!!.get(i)
-            map = transferRecordMaps[i]
-            fillMap(map, observer, i == checkedIndex)
+    private fun updateList(type: String) {
+
+        if( type == "upload" ) {
+
+            var observer: TransferObserver?
+            var map: HashMap<String, Any>?
+            for (i in observers!!.indices) {
+                observer = observers!!.get(i)
+                map = transferRecordMaps[i]
+                fillMap(map, observer, i == checkedIndex)
+            }
+        }
+        else {
+            var downloadObserver: TransferObserver?
+            var downloadMap: HashMap<String, Any>? = null
+            for (i in downloadObservers!!.indices) {
+                downloadObserver = downloadObservers!!.get(i)
+                downloadMap = transferDownloadRecordMaps[i]
+                fillMap(downloadMap, downloadObserver, i == downloadCheckedIndex)
+            }
+            decryptFiles( downloadMap )
         }
 
-        var downloadObserver: TransferObserver? = null
-        var downloadMap: HashMap<String, Any>? = null
-        for (i in downloadObservers!!.indices) {
-            downloadObserver = downloadObservers!!.get(i)
-            downloadMap = transferDownloadRecordMaps[i]
-            fillMap(downloadMap, downloadObserver, i == downloadCheckedIndex)
-        }
-        /*if( downloadMap != null ) {
+    }
+
+    private fun decryptFiles(downloadMap: HashMap<String, Any>?) {
+        if( downloadMap != null ) {
             for( key in downloadMap.keys ) {
                 if( key == "fileName" ) {
-                    val decryptFile = decryptFile(File(downloadMap[key].toString()))
+                    FileOperationsTask("Decryption", downloadMap.get("fileName").toString(), object : FileOperationsCompletionListener {
+                        override fun onSuccess(outputFile: File?) {
+
+                        }
+
+                    })
                 }
 
             }
-        }*/
+        }
+    }
+
+    interface FileOperationsCompletionListener {
+        fun onSuccess( outputFile : File? )
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    inner class FileOperationsTask( private val operationType : String,
+                                    private val filePath : String,
+                                    private val fileOperationsCompletionListener: FileOperationsCompletionListener ) : AsyncTask<Void, Void, File>() {
+
+
+        override fun onPostExecute(result: File?) {
+            super.onPostExecute(result)
+            fileOperationsCompletionListener.onSuccess( result )
+        }
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+            context?.showToast(operationType + " in progress" )
+        }
+
+        override fun doInBackground(vararg aVoid: Void?): File {
+            AppLogger.d("FileOperations", operationType + " : " + filePath )
+            if( operationType == "Encryption" )
+                return encryptFile( File( filePath ) )
+            else
+                return decryptFile( File( filePath ) )
+        }
+
+    }
+
+    //Testing code
+    fun performOperation(filePath: String) {
+        FileOperationsTask( "Encryption", filePath, object : FileOperationsCompletionListener {
+            override fun onSuccess(outputFile: File?) {
+
+                if( outputFile != null ) {
+                    context?.showToast("Encryption Success" )
+                    FileOperationsTask("Decryption", outputFile.absolutePath, object : FileOperationsCompletionListener {
+                        override fun onSuccess(outputFile: File?) {
+                            if( outputFile != null )
+                                context?.showToast("Decryption Success" )
+                        }
+
+                    }).execute()
+                }
+
+            }
+
+        }).execute()
     }
 
 
