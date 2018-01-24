@@ -27,6 +27,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
     override fun getChildView(groupPosition: Int, childPosition: Int,
                               isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
+
         var convertView = convertView
 
         if (convertView == null) {
@@ -42,7 +43,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                     convertView = infalInflater.inflate(R.layout.level2_item_location, null)
                     convertView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                     convertView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-                    convertView.findViewById<EditText>(R.id.etSubHeader).setText( level2SubCategory.titleValue)
+                    convertView.findViewById<EditText>(R.id.etSubHeader).setText( level2SubCategory.titleValue )
                 }
                 Constants.LEVEL2_PASSWORD -> {
                     convertView = infalInflater.inflate(R.layout.level2_password, null)

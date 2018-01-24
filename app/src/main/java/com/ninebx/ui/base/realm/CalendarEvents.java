@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.calendar.model;
+package com.ninebx.ui.base.realm;
 
 import android.os.Parcel;
 import android.os.Parcelable;

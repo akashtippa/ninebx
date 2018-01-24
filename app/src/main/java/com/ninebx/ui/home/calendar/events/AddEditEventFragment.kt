@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeView
-import com.ninebx.ui.home.calendar.model.CalendarEvents
+import com.ninebx.ui.base.realm.CalendarEvents
 import kotlinx.android.synthetic.main.fragment_add_calendar_every.*
 import android.content.Intent
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
