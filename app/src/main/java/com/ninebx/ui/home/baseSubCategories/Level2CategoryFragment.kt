@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
-import android.widget.LinearLayout
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.utility.FragmentBackHelper
@@ -37,15 +35,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
-        val inflater = LayoutInflater.from(context)
-
-        val categoryView = inflater.inflate(R.layout.expandable_view, null) as LinearLayout
-        val layExpandable = categoryView.findViewById<ExpandableListView>(R.id.layExpandable)
-
         layExpandable.setAdapter(ExpandableListViewAdapter(context!!, categories))
-        layoutLevel2Category.addView(categoryView)
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

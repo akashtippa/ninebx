@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.EditText
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.utility.Constants
@@ -32,15 +33,16 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
             val infalInflater = this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-            val headerTitle = (getChild(groupPosition, childPosition) as Level2SubCategory).title
+            val level2SubCategory = (getChild(groupPosition, childPosition) as Level2SubCategory)
+            val headerTitle = level2SubCategory.title
 
             when (getItemType(groupPosition, childPosition)) {
 
                 Constants.LEVEL2_LOCATION -> {
                     convertView = infalInflater.inflate(R.layout.level2_item_location, null)
-                    val lblListHeader = convertView!!
-                            .findViewById<View>(R.id.txtHeader) as TextView
-                    lblListHeader.text = headerTitle
+                    convertView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                    convertView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
+                    convertView.findViewById<EditText>(R.id.etSubHeader).setText( level2SubCategory.titleValue)
                 }
                 Constants.LEVEL2_PASSWORD -> {
                     convertView = infalInflater.inflate(R.layout.level2_password, null)

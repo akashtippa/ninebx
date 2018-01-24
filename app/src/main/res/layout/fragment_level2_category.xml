@@ -9,15 +9,11 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/layoutLevel2Category"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/layoutProgress"
@@ -42,7 +38,47 @@
                 android:text="@string/loading" />
 
         </LinearLayout>
-    </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/titleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_100"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/grey_100"
+                android:hint="@string/institution_name"
+                android:inputType="textCapWords"
+                android:textColor="@color/grey_400"
+                android:textSize="@dimen/_18sdp" />
+
+            <EditText
+                android:id="@+id/etTitleValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/grey_100"
+                android:hint="@string/account_name"
+                android:inputType="textCapWords"
+                android:textColor="@color/grey_400" />
+
+
+        </LinearLayout>
+
+        <com.ninebx.utility.NonScrollableListView
+            android:id="@+id/layExpandable"
+            android:scrollbars="none"
+            android:layout_below="@+id/titleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/default_mini_padding" />
+
+    </RelativeLayout>
 
 
 </android.support.v4.widget.NestedScrollView>

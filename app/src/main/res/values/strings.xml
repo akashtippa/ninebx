@@ -412,6 +412,8 @@
     <string name="add_others_to_account">Add others to account</string>
     <string name="set_permissions">Set Permissions</string>
     <string name="no_notifications">No Notifications</string>
+    <string name="account_name">Account name</string>
+    <string name="institution_name">Institution name</string>
 
     <string-array name="gender">
         <item></item>
