@@ -151,7 +151,7 @@
             android:checked="true"
             android:drawableEnd="@drawable/custom_check"
             android:drawableRight="@drawable/custom_check"
-            android:padding="@dimen/default_margin"
+            android:padding="@dimen/default_micro_padding"
             android:text="Adding/Removing users" />
 
 

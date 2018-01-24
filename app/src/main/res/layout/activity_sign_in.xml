@@ -17,7 +17,7 @@
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_gravity="center|top"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_nine" />
 
         <LinearLayout
             android:layout_width="match_parent"

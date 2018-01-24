@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:clickable="true"
     android:fillViewport="true"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/layoutCategory"/>
 
         <LinearLayout
+            android:id="@+id/layoutCategory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            tools:visibility="gone"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/layoutProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/white"
+            android:gravity="center"
             android:orientation="vertical"
-            android:id="@+id/layoutProgress">
+            tools:visibility="gone">
 
             <ProgressBar
+                android:id="@+id/pbCategory"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pbCategory"/>
+                android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/tvProgress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/default_margin"
-                android:id="@+id/tvProgress"
-                android:text="@string/loading"/>
+                android:text="@string/loading" />
 
         </LinearLayout>
     </FrameLayout>
-
 
 
 </android.support.v4.widget.NestedScrollView>

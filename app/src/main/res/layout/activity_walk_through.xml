@@ -21,13 +21,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="end"
-        android:layout_margin="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_14sdp"
         android:drawablePadding="@dimen/_2sdp"
         android:drawableRight="@drawable/ic_arrow_right"
         android:gravity="center"
         android:padding="@dimen/_5sdp"
         android:text="GET STARTED"
-        android:textColor="@color/grey_600"
+        android:textColor="#757575"
         android:textSize="@dimen/_15sdp" />
 
 
@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/activity_help_view_page_indicator"
         android:layout_below="@+id/txtGetStarted"
-        android:layout_marginBottom="@dimen/_14sdp"
+        android:layout_marginBottom="@dimen/margin_24"
         android:visibility="visible">
 
     </android.support.v4.view.ViewPager>

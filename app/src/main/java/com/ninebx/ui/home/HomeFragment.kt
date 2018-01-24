@@ -67,7 +67,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun callBottomViewFragment(option: Int) {
-        NineBxApplication.instance.activityInstance!!.toolbarTitle.textSize = NineBxApplication.instance.activityInstance!!.pxFromDp(10F, context!!)
+//        NineBxApplication.instance.activityInstance!!.toolbarTitle.textSize = NineBxApplication.instance.activityInstance!!.pxFromDp(10F, context!!)
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 

@@ -33,14 +33,24 @@
                 app:srcCompat="@drawable/ic_icon_arrow_left"
                 tools:visibility="visible" />
 
+            <ImageView
+                android:id="@+id/imgToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@drawable/logo_nine"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/toolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
+                android:text="@string/engaged"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/text_16" />
 
             <ImageView
                 android:id="@+id/ivHome"

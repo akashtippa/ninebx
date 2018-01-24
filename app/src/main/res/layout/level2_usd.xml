@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/default_mini_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/default_mini_padding"
+        android:text="Location" />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtHeader"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:padding="@dimen/default_mini_padding"
+        android:text="dasdad" />
+
+
+    <TextView
+        android:id="@+id/txtPickerCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtHeader"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/default_mini_padding"
+        android:text="USD"
+        android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>

@@ -4,47 +4,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/imgDescription"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/walkthrough_2" />
-
     <LinearLayout
-        android:id="@+id/layoutHeadingText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgDescription"
-        android:layout_marginBottom="@dimen/_2sdp"
-        android:layout_marginLeft="@dimen/_32sdp"
-        android:layout_marginStart="@dimen/_32sdp"
-        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/titleHelpText"
+        <ImageView
+            android:id="@+id/imgDescription"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/be"
-            android:textColor="@color/be_organized"
-            android:textSize="@dimen/_17sdp" />
+            android:layout_height="@dimen/_220sdp"
+            android:background="@drawable/walkthrough_2" />
 
-        <TextView
-            android:id="@+id/titleHelpTextExtended"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layoutHeadingText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="@string/organized"
-            android:textSize="@dimen/_17sdp" />
+            android:layout_marginBottom="@dimen/default_mini_padding"
+            android:layout_marginTop="@dimen/default_mini_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleHelpText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/be"
+                android:textColor="@color/be_organized"
+                android:textSize="@dimen/_17sdp" />
+
+            <TextView
+                android:id="@+id/titleHelpTextExtended"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/organized"
+                android:textSize="@dimen/_17sdp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_54sdp"
-        android:layout_below="@+id/layoutHeadingText"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
         android:background="@color/be_organized">
 
         <TextView
@@ -55,7 +57,7 @@
             android:padding="@dimen/default_micro_padding"
             android:text="@string/screen_one_description"
             android:textColor="@color/white"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/text_14" />
 
     </RelativeLayout>
 
