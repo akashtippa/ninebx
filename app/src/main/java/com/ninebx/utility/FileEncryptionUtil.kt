@@ -10,7 +10,9 @@ import java.io.*
 import java.util.*
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
-
+import org.cryptonode.jncryptor.AES256JNCryptorInputStream
+import org.cryptonode.jncryptor.AES256JNCryptorOutputStream
+import java.nio.charset.Charset
 
 
 /**
@@ -108,4 +110,20 @@ fun generateKey(password: String, username : String ) : CharArray {
     generator.init(CustomPBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), username.toByteArray(Charsets.UTF_8), 20000)
     val key = generator.generateDerivedMacParameters(256) as CustomKeyParameter
     return Arrays.toString(key.key.toTypedArray()).toCharArray()
+}
+
+fun encryptFileStream( inputFile: File ) : File {
+    val size = inputFile.length().toInt()
+    val fileBytes = ByteArray(size)
+    AES256JNCryptorOutputStream( inputFile.outputStream(), generateKey("master", "bruce") ).write(fileBytes)
+    return inputFile
+
+}
+
+fun decryptFileStream( inputFile: File ) : File {
+    val size = inputFile.length().toInt()
+    val fileBytes = ByteArray(size)
+    AES256JNCryptorInputStream( inputFile.inputStream(), generateKey("master", "bruce") ).read(fileBytes)
+    return inputFile
+
 }

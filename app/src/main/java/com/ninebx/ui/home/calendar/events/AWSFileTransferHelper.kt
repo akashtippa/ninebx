@@ -9,12 +9,9 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferType
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.Constants
+import com.ninebx.utility.*
 import com.ninebx.utility.Util.fillMap
 import com.ninebx.utility.Util.getTransferUtility
-import com.ninebx.utility.decryptFile
-import com.ninebx.utility.encryptFile
 import java.io.File
 import java.util.ArrayList
 import java.util.HashMap
@@ -251,9 +248,9 @@ class AWSFileTransferHelper( private val context : Context? ) {
         override fun doInBackground(vararg aVoid: Void?): File {
             AppLogger.d("FileOperations", operationType + " : " + filePath )
             if( operationType == "Encryption" )
-                return encryptFile( File( filePath ) )
+                return encryptFileStream( File( filePath ) )
             else
-                return decryptFile( File( filePath ) )
+                return decryptFileStream( File( filePath ) )
         }
 
     }
