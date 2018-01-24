@@ -36,4 +36,14 @@ object Constants {
     val BUCKET_NAME: String? = "ninebxfiles"
     val INDEX_NOT_CHECKED: Int = -1
 
+    val LEVEL2_LOCATION = 10
+    val LEVEL2_PASSWORD = 11
+    val LEVEL2_RADIO = 12
+    val LEVEL2_SPINNER = 13
+    val LEVEL2_SWITCH = 14
+    val LEVEL2_USD = 15
+    val LEVEL2_NOTES = 16
+    val LEVEL2_NORMAL = 17
+    val LEVEL2_ATTACHMENTS = 18
+
 }

@@ -39,7 +39,7 @@
             android:gravity="center"
             android:padding="@dimen/default_mini_padding"
             android:textColor="@color/black"
-            tools:text="0" />
+            tools:text="" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

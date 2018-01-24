@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/be"
-                android:textColor="@color/be_empowered"
+                android:textColor="@color/be_organized"
                 android:textSize="@dimen/_17sdp" />
 
             <TextView

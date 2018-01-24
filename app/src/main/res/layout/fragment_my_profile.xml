@@ -261,7 +261,6 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-
                 android:text="01/12/1212" />
 
             <View

@@ -14,7 +14,7 @@
             android:id="@+id/imgDescription"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_220sdp"
-            android:background="@drawable/walkthrough_4" />
+            android:src="@drawable/walkthrough_4" />
 
         <LinearLayout
             android:id="@+id/layoutHeadingText"

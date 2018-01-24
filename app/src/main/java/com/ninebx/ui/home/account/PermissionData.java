@@ -18,10 +18,10 @@ public class PermissionData {
             R.drawable.bg_lt_shopping
     };
 
-    static Integer[] menuDrawable = {R.drawable.ic_home_icon_home_money,
+    static Integer[] menuDrawable = {R.drawable.ic_home_icon_home_money_per,
             R.drawable.ic_home_icon_travel,
             R.drawable.ic_home_icon_contacts,
-            R.drawable.ic_home_icon_education_work,
+            R.drawable.ic_home_icon_education_work_per,
             R.drawable.ic_home_icon_personal,
             R.drawable.ic_home_icon_interests,
             R.drawable.ic_home_icon_wellness,

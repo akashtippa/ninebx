@@ -268,14 +268,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="@dimen/default_mini_padding"
+                            android:drawablePadding="@dimen/default_mini_padding"
+                            android:drawableRight="@drawable/ic_icon_save"
                             android:gravity="center_vertical"
                             android:text="Permissions" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_mini_padding"
-                            app:srcCompat="@drawable/ic_icon_save" />
 
                     </LinearLayout>
 
