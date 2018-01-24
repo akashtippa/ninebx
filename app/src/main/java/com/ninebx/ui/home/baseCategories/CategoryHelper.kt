@@ -547,7 +547,7 @@ class CategoryHelper(
         category.title = "Work"
         category.drawableString = "ic_icon_work"
 
-        category.subCategories.add(SubCategory("Add Person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+        category.subCategories.add(SubCategory("Add person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
         categoryList.add(category)
 

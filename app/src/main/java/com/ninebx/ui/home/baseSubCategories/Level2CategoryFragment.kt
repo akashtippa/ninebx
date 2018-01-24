@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.utility.FragmentBackHelper
@@ -46,6 +47,13 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mCategoryPresenter = Level2CategoryPresenter(arguments!!.getString("categoryName"), this)
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
+    }
+
+    override fun onBackPressed(): Boolean {
+        NineBxApplication.instance.activityInstance!!.showBottomView()
+        return super.onBackPressed()
+
 
     }
 

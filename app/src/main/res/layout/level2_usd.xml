@@ -2,31 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/default_mini_padding"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/_10sdp"
         android:padding="@dimen/default_mini_padding"
-        android:text="Location" />
+        android:text="" />
 
-    <TextView
-        android:id="@+id/txtPrice"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etSubHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtHeader"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:padding="@dimen/default_mini_padding"
-        android:text="dasdad" />
+        android:layout_toLeftOf="@+id/txtPickerCurrency"
+        android:layout_toStartOf="@+id/txtPickerCurrency"
+        android:background="@null"
+        android:hint=""
+        android:padding="@dimen/default_mini_padding" />
 
 
     <TextView

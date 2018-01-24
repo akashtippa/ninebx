@@ -33,6 +33,7 @@ class SubListsFragment : FragmentBackHelper() {
     private var mListsAdapter: ListsAdapter? = null
     var myList: ArrayList<AddedItem> = ArrayList()
     var strAddItem = ""
+    var fragmentValue = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sub_list, container, false)
@@ -47,6 +48,8 @@ class SubListsFragment : FragmentBackHelper() {
         rvAddedLists!!.layoutManager = layoutManager
         rvAddedLists!!.adapter = mListsAdapter
 
+
+        fragmentValue = arguments!!.getString("homeScreen")
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -116,10 +119,15 @@ class SubListsFragment : FragmentBackHelper() {
     /** Setting the adapter to the ListView */
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
-        NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
 
+        if (fragmentValue == "HomeScreen") {
+            NineBxApplication.instance.activityInstance!!.showBottomView()
+            NineBxApplication.instance.activityInstance!!.hideBackIcon()
+        } else if (fragmentValue == "bottom") {
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
+            NineBxApplication.instance.activityInstance!!.showBottomView()
+            NineBxApplication.instance.activityInstance!!.hideBackIcon()
+        }
         return super.onBackPressed()
     }
 }

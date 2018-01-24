@@ -1,5 +1,11 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.os.Bundle
+import com.ninebx.NineBxApplication
+import com.ninebx.R
+import com.ninebx.ui.home.fragments.FragmentTestContact
+import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
+import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.Constants
 
 /***
@@ -128,7 +134,73 @@ class Level2CategoryHelper(
             "Other travel document" -> {
                 getOtherTravelDocuments()
             }
+
+        // Common View
+            "Service/Other Accounts" -> {
+                getServicesOthersAccounts()
+            }
+            "Other Attachments" -> {
+                getOtherAttachments()
+            }
+            "Lists" -> {
+                getFragmentSubList()
+            }
+
+            "Memory Timeline" -> {
+                getMemoryTimeLine()
+            }
+
+            "Shared Contacts" -> {
+                getContactsList()
+            }
+
+            "Loyalty Programs" -> {
+                getLoyaltyPrograms()
+            }
+
+            "Recent Purchases" -> {
+                getRecentPurchases()
+            }
+
+            "Add Person" -> {
+                getEducation()
+            }
+
+            "Add person" -> {
+                getWork()
+            }
+
         }
+    }
+
+
+    private fun getFragmentSubList() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val bundle = Bundle()
+        bundle.putString("homeScreen", "HomeScreen")
+
+        val categoryFragment = SubListsFragment()
+        categoryFragment.arguments = bundle
+
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
+
+    private fun getMemoryTimeLine() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val categoryFragment = FragmentTestMemoryTimeLine()
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
+
+    private fun getContactsList() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val categoryFragment = FragmentTestContact()
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 
     // Home & Money
@@ -151,6 +223,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -171,6 +251,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -197,6 +285,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -219,6 +315,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -245,6 +349,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -269,6 +381,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -291,6 +411,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -322,6 +450,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -370,6 +506,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -406,6 +550,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -439,6 +591,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -477,6 +637,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -509,6 +677,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -544,6 +720,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -582,6 +766,13 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
         categoryView.onSuccess(categoryList)
     }
 
@@ -616,6 +807,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -648,6 +847,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -728,6 +935,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -754,6 +969,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -774,6 +997,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -797,6 +1028,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -840,6 +1079,14 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
         categoryView.onSuccess(categoryList)
     }
 
@@ -862,6 +1109,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1213,16 +1468,6 @@ class Level2CategoryHelper(
         categoryIndex += 2032
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2032
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
@@ -1233,6 +1478,7 @@ class Level2CategoryHelper(
         category.title = "Attachments"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
+
 
         categoryView.onSuccess(categoryList)
     }
@@ -1265,8 +1511,131 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
+
         categoryView.onSuccess(categoryList)
     }
 
+    private fun getOtherAttachments() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2034
+        var category_id = "notes" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+        categoryIndex += 2032
+        category_id = "notes" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getRecentPurchases() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2034
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Purchased by", "Purchased by", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Purchased date", "Purchased date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchased price", "Purchased price", "", Constants.LEVEL2_USD))
+        categoryList.add(category)
+
+        categoryIndex += 2034
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2034
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getLoyaltyPrograms() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2033
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Account Details"
+        category.subCategories.add(Level2SubCategory("Name(s) on account", "Name(s) on account", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2033
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        categoryList.add(category)
+
+        categoryIndex += 2033
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2033
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getTravelDatesAndPlans() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2035
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH))
+        category.subCategories.add(Level2SubCategory("Start date", "Start date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", "Plans to visit/consider 1", "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", "Plans to visit/consider 2", "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", "Plans to visit/consider 3", "", Constants.LEVEL2_LOCATION))
+        categoryList.add(category)
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
 
 }

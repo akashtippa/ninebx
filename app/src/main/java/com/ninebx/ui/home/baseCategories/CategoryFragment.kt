@@ -15,8 +15,6 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
-import com.ninebx.ui.home.fragments.FragmentTestContact
-import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_category.*
 
@@ -56,40 +54,34 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             val tvCount = categoryView.findViewById<TextView>(R.id.tvCount)
             val rvSubCategory = categoryView.findViewById<RecyclerView>(R.id.rvSubCategory)
             val id = context!!.resources.getIdentifier(category.drawableString, "drawable", context!!.packageName)
-
             tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context!!, id), null, null, null)
+
             tvCategory.compoundDrawablePadding = context!!.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
             tvCategory.text = category.title
-            tvCount.text = category.formsCount.toString()
+            if (category.subCategories.size == 0) {
+                tvCount.text = category.formsCount.toString()
+            } else {
+                tvCount.text = ""
+            }
             rvSubCategory.layoutManager = LinearLayoutManager(context)
 
             tvCategory.setOnClickListener {
-                Toast.makeText(context, " " + tvCategory.text.toString(), Toast.LENGTH_LONG).show()
-                when (tvCategory.text.toString()) {
-                    "Shared Contacts" -> {
-                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                        fragmentTransaction.addToBackStack(null)
 
-                        val bundle = Bundle()
-                        val categoryFragment = FragmentTestContact()
-                        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-                    }
-                    "Memory Timeline" -> {
-                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                        fragmentTransaction.addToBackStack(null)
-
-                        val bundle = Bundle()
-                        val categoryFragment = FragmentTestMemoryTimeLine()
-                        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-                    }
+                if (category.subCategories.size == 0) {
+                    val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                    fragmentTransaction.addToBackStack(null)
+                    val bundle = Bundle()
+                    bundle.putString("categoryName", category.title)
+                    val categoryFragment = Level2CategoryFragment()
+                    categoryFragment.arguments = bundle
+                    fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                 }
+
             }
 
             val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(category: SubCategory, action: String) {
-                    //DO something with this
-                    Toast.makeText(context, " " + category.title, Toast.LENGTH_LONG).show()
-                    // Will Call the Sub
+
                     val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
 

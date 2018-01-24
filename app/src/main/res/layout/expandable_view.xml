@@ -5,7 +5,6 @@
     android:background="@color/white"
     android:clickable="true"
     android:fillViewport="true"
-    android:focusable="true"
     android:orientation="vertical">
 
     <LinearLayout
@@ -39,12 +38,84 @@
 
     </LinearLayout>
 
-    <ExpandableListView
-        android:id="@+id/layExpandable"
-        android:scrollbars="none"
-        android:layout_below="@+id/titleLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/default_mini_padding" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleLayout">
 
- </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ExpandableListView
+                android:id="@+id/layExpandable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_mini_padding"
+                android:groupIndicator="@null"
+                android:listSelector="@android:color/transparent"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/layCreated"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/default_micro_padding"
+                android:layout_marginBottom="@dimen/margin_48"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_micro_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="Created :"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:text="Private :"
+                        android:textColor="@color/colorPrimary" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_micro_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="Last modified :"
+                        android:textColor="@color/colorPrimary" />
+
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

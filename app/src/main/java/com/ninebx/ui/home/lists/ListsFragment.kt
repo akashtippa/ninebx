@@ -68,7 +68,13 @@ class ListsFragment : Fragment(), ListsCommunicationView {
         fragmentTransaction.addToBackStack(null)
         NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        fragmentTransaction.add(R.id.frameLayout, SubListsFragment()).commit()
+
+        val bundle = Bundle()
+        bundle.putString("homeScreen", "bottom")
+
+        val categoryFragment = SubListsFragment()
+        categoryFragment.arguments = bundle
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
 
         when (option) {
             getString(R.string.home_amp_money) -> {
