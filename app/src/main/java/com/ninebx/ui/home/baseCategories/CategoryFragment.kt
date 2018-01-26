@@ -15,7 +15,10 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.ui.home.fragments.FragmentTestContact
+import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
 import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_category.*
 
 /**
@@ -67,7 +70,11 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
             tvCategory.setOnClickListener {
 
-                if (category.subCategories.size == 0) {
+                if (category.title == "Shared Contacts") {
+                    getContactsList()
+                } else if (category.title == "Memory Timeline") {
+                    getMemoryTimeLine()
+                } else if (category.subCategories.size == 0) {
                     val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
                     val bundle = Bundle()
@@ -76,6 +83,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     categoryFragment.arguments = bundle
                     fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                 }
+
 
             }
 
@@ -110,6 +118,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
+        KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
     }
 
     override fun onBackPressed(): Boolean {
@@ -117,4 +126,21 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
     }
+
+    private fun getContactsList() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val categoryFragment = FragmentTestContact()
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
+
+    private fun getMemoryTimeLine() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val categoryFragment = FragmentTestMemoryTimeLine()
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
+
 }

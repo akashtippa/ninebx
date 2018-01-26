@@ -27,8 +27,7 @@
         android:drawableEnd="@drawable/ic_icon_search_normal"
         android:drawableRight="@drawable/ic_icon_search_normal"
         android:hint="sadasdasdasda"
-        android:inputType="text"
-        android:textColor="@color/grey_400" />
+        android:inputType="text" />
 
 
 </LinearLayout>

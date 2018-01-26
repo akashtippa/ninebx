@@ -46,4 +46,10 @@ object Constants {
     val LEVEL2_NORMAL = 17
     val LEVEL2_ATTACHMENTS = 18
 
+    val KEYBOARD_NUMBER = "number"
+    val KEYBOARD_SPINNER = "spinner"
+    val KEYBOARD_SEARCH = "search"
+    val KEYBOARD_PICKER = "picker"
+
+
 }

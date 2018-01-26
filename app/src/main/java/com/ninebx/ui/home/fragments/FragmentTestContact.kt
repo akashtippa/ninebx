@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.FragmentBackHelper
+import kotlinx.android.synthetic.main.add_memory.*
 
 /***
  * Created by TechnoBlogger on 24/01/18.
@@ -20,6 +21,18 @@ class FragmentTestContact : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
+        NineBxApplication.instance.activityInstance!!.showToolbar()
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
 
+        ivBack.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+        }
+
+
+    }
+
+    override fun onBackPressed(): Boolean {
+        NineBxApplication.instance.activityInstance!!.showBottomView()
+        return super.onBackPressed()
     }
 }

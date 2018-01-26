@@ -9,7 +9,7 @@ import android.os.Parcelable
 class Level2SubCategory(
         var title: String = "",
         var titleValue: String = "",
-        var drawableString: String = "",
+        var inputType: String = "",
         var type: Int = 0
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -24,7 +24,7 @@ class Level2SubCategory(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(title)
         writeString(titleValue)
-        writeString(drawableString)
+        writeString(inputType)
         writeInt(type)
     }
 

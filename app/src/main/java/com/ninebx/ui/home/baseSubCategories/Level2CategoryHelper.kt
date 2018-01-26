@@ -169,8 +169,237 @@ class Level2CategoryHelper(
             "Add person" -> {
                 getWork()
             }
+            "Travel Dates And Plans" -> {
+                getTravelDatesAndPlans()
+            }
+            "Homeowners/Renters insurance" -> {
+                gtHomeOwnerRentersInsurance()
+            }
+            "Auto insurance" -> {
+                getAutoInsurance()
+            }
+            "Life insurance" -> {
+                getLifeInsurance()
+            }
+            "Health insurance" -> {
+                getHealthInsurance()
+            }
+            "Umbrella insurance" -> {
+                getUmbrellaInsurance()
+            }
 
         }
+    }
+
+    // Types of InputTYpe
+    // Number
+    // Picker
+    // Password
+
+
+    private fun getUmbrellaInsurance() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2036
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Policy Details"
+        category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", Constants.KEYBOARD_NUMBER, Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+        categoryIndex += 2036
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        categoryList.add(category)
+
+        categoryIndex += 2006
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getHealthInsurance() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2036
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Policy Details"
+        category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+        categoryIndex += 2036
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        categoryList.add(category)
+
+        categoryIndex += 2006
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getLifeInsurance() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2036
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Policy Details"
+        category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+        categoryIndex += 2036
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        categoryList.add(category)
+
+        categoryIndex += 2006
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getAutoInsurance() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2036
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Policy Details"
+        category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+        categoryIndex += 2036
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        categoryList.add(category)
+
+        categoryIndex += 2006
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun gtHomeOwnerRentersInsurance() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2036
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Policy Details"
+        category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+        categoryIndex += 2036
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        categoryList.add(category)
+
+        categoryIndex += 2006
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
     }
 
 
@@ -745,7 +974,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", "SWIFT/other code", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("ABA routing number", "ABA routing number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("ABA routing number", "ABA routing number", Constants.KEYBOARD_NUMBER, Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 

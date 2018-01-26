@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseSubCategories
 
 import android.content.Context
 import android.database.DataSetObserver
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,15 +40,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
         val level2SubCategory = (getChild(groupPosition, childPosition) as Level2SubCategory)
         val headerTitle = level2SubCategory.title
-
-        /**
-         * I have a Expandable List View, with different Child Layout.
-         * Suppose I clicked the GroupView of 3rd Position, and its respective child Layout pop up.
-         * So far so good.
-         * But now if I click, say group position 2nd, then its child layout will pop out, but the child layout of previous group is also adding.
-         * Any Help.
-         */
-
+        val keyBoardType = level2SubCategory.inputType
 
         when (getItemType(groupPosition, childPosition)) {
 
@@ -55,7 +48,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView = infalInflater.inflate(R.layout.level2_item_location, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
+//                childView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
             }
             Constants.LEVEL2_PASSWORD -> {
                 childView = infalInflater.inflate(R.layout.level2_password, null)
@@ -95,7 +88,12 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
+
+                if(keyBoardType == Constants.KEYBOARD_NUMBER) {
+                    childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
+                }
+
+//                childView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
 
             }
             Constants.LEVEL2_ATTACHMENTS -> {
@@ -103,7 +101,6 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
             }
 
         }
-        //}
         return childView!!
     }
 
