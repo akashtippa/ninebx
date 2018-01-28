@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/default_mini_padding"
@@ -14,18 +14,36 @@
         android:padding="@dimen/default_mini_padding"
         android:text="sadsadasd" />
 
-    <EditText
-        android:id="@+id/etSubHeader"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:drawableEnd="@drawable/ic_add_circle_outline_blue_300_24dp"
-        android:drawablePadding="@dimen/default_mini_padding"
-        android:drawableRight="@drawable/ic_add_circle_outline_blue_300_24dp"
-        android:gravity="center_vertical"
-        android:hint="asdasda"
-        android:padding="@dimen/default_mini_padding"
-        android:singleLine="true" />
+        android:layout_below="@+id/txtHeader">
+
+        <EditText
+            android:id="@+id/etSubHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/spinnerUsers"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="asdasda"
+            android:padding="@dimen/default_mini_padding"
+            android:singleLine="true" />
+
+        <Spinner
+            android:id="@+id/spinnerUsers"
+            android:layout_width="@dimen/default_big"
+            android:layout_height="@dimen/default_big"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_add_circle_outline_blue_300_24dp"
+            android:entries="@array/dummyUser"
+            android:gravity="center_vertical"
+            android:padding="@dimen/default_margin"
+            android:visibility="visible" />
+
+    </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

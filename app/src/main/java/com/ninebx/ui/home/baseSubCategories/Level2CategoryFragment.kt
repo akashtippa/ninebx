@@ -8,6 +8,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_level2_category.*
 
 /***
@@ -57,14 +58,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
-
         setTitle()
-
-
     }
 
     private fun setTitle() {
-        var bundleValue = arguments!!.getString("categoryName")
+        val bundleValue = arguments!!.getString("categoryName")
 
         when (bundleValue) {
 
@@ -356,7 +354,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.hint = "Brand/Retailer"
                 etTitle.hint = "Item"
                 toolbarTitle.text = "Add Purchase"
-
             }
 
 
@@ -366,9 +363,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
+        KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         return super.onBackPressed()
-
-
     }
 
 }

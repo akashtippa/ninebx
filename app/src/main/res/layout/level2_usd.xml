@@ -14,31 +14,31 @@
         android:padding="@dimen/default_mini_padding"
         android:text="" />
 
-    <EditText
-        android:id="@+id/etSubHeader"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/txtHeader"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/txtPickerCurrency"
-        android:layout_toStartOf="@+id/txtPickerCurrency"
-        android:background="@null"
-        android:hint=""
-        android:padding="@dimen/default_mini_padding" />
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/etSubHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/spinnerCurrency"
+            android:background="@null"
+            android:padding="@dimen/default_mini_padding" />
 
-    <TextView
-        android:id="@+id/txtPickerCurrency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/txtHeader"
-        android:layout_centerVertical="true"
-        android:padding="@dimen/default_mini_padding"
-        android:text="USD"
-        android:textColor="@color/colorPrimary" />
+        <Spinner
+            android:id="@+id/spinnerCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:entries="@array/dummyCurrency"
+            android:visibility="visible" />
 
+    </RelativeLayout>
 </RelativeLayout>

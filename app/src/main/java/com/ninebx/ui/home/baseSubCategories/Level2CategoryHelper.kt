@@ -55,7 +55,7 @@ class Level2CategoryHelper(
                 getVehicles()
             }
             "Maintenance" -> {
-
+                getMaintenance()
             }
             "Jewelry" -> {
                 getJewelry()
@@ -191,6 +191,38 @@ class Level2CategoryHelper(
         }
     }
 
+    private fun getMaintenance() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Service Details"
+        category.subCategories.add(Level2SubCategory("Name of service provider", "Name of service provider", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of service", "Date of service", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", Constants.KEYBOARD_NUMBER, Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
     // Types of InputTYpe
     // Number
     // Picker
@@ -205,8 +237,8 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", Constants.KEYBOARD_NUMBER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -246,8 +278,8 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -287,8 +319,8 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -328,8 +360,8 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -369,8 +401,8 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy effective date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Policy effective date", "Policy expiration date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -502,7 +534,7 @@ class Level2CategoryHelper(
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -534,7 +566,7 @@ class Level2CategoryHelper(
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -566,7 +598,7 @@ class Level2CategoryHelper(
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -598,7 +630,7 @@ class Level2CategoryHelper(
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -630,7 +662,7 @@ class Level2CategoryHelper(
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -667,9 +699,9 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Color", "Color", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name on title", "Name on title", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Registration expiration date", "Registration expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Registration expiration date", "Registration expiration date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchased", "Leased", "", Constants.LEVEL2_RADIO))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Financed through loan", "Financed through loan", "", Constants.LEVEL2_SWITCH))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -712,7 +744,7 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Property Details"
         category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
@@ -724,8 +756,8 @@ class Level2CategoryHelper(
         category.title = "Rental Details"
         category.subCategories.add(Level2SubCategory("Currently rented", "", "", Constants.LEVEL2_SWITCH))
         category.subCategories.add(Level2SubCategory("Name of tenant", "Name of tenant", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Lease start date", "Lease start date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Lease end date", "Lease end date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Lease start date", "Lease start date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Lease end date", "Lease end date", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2010
@@ -766,7 +798,7 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Property Details"
         category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
@@ -810,8 +842,8 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Rental Details"
         category.subCategories.add(Level2SubCategory("Name of landlord", "Name of landlord", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Lease start date", "Lease start date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Lease end date", "Lease end date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Lease start date", "Lease start date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Lease end date", "Lease end date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -853,7 +885,7 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Property Details"
         category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
@@ -927,9 +959,9 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Card Details"
         category.subCategories.add(Level2SubCategory("Card number", "Card number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Card type", "Card type", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Card type", "Card type", Constants.KEYBOARD_SPINNER, Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Card holder", "Card holder", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Expiry date", "Expiry date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Expiry date", "Expiry date", Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("CVV code", "CVV code", "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("Issuing bank", "Issuing bank", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
@@ -1096,12 +1128,12 @@ class Level2CategoryHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Account type", "Account type", Constants.KEYBOARD_SPINNER, Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name(s) on account", "Name(s) on account", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", "SWIFT/other code", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("ABA routing number", "ABA routing number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("ABA routing number", "ABA routing number", "", Constants.LEVEL2_NUMBER))
         category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -1186,8 +1218,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Issuing country", "Issuing country", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Issuing state", "Issuing state", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("ID number", "ID number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
 
         categoryList.add(category)
 
@@ -1217,7 +1249,7 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name 1 on certificate", "Name 1 on certificate", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name 2 on certificate", "Name 2 on certificate", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of marriage", "Date of marriage", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of marriage", "Date of marriage", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Place of marriage", "Place of marriage", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
@@ -1247,7 +1279,7 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on certificate", "Name on certificate", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Gender", "Gender", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of birth", "Date of birth", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of birth", "Date of birth", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Time of birth", "Time of birth", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place of birth", "Place of birth", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
@@ -1329,8 +1361,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Issuing country", "Issuing country", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Issuing state", "Issuing state", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("License number", "License number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Data issued", "Data issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Data issued", "Data issued", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2018
@@ -1591,8 +1623,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Issuing country", "Account number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Passport number", "Passport number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", "Place issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2029
@@ -1623,8 +1655,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Visa type", "Visa type", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Visa number", "Visa number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", "Place issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2030
@@ -1655,8 +1687,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Travel document type", "Travel document type", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Travel document number", "Travel document number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", "Place issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2031
@@ -1773,7 +1805,7 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Purchased by", "Purchased by", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Purchased date", "Purchased date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchased date", "Purchased date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchased price", "Purchased price", "", Constants.LEVEL2_USD))
         categoryList.add(category)
 
@@ -1842,8 +1874,8 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH))
-        category.subCategories.add(Level2SubCategory("Start date", "Start date", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Start date", "Start date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", "Plans to visit/consider 1", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", "Plans to visit/consider 2", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", "Plans to visit/consider 3", "", Constants.LEVEL2_LOCATION))

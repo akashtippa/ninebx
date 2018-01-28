@@ -107,43 +107,6 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
         strEmail = edtEmailAddress.text.toString()
 
 
-        /* txtRelationship.onItemSelectedListener = object : OnItemSelectedListener {
-             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                 // your code here
-                 val newValue = txtRelationship.getItemAtPosition(position) as String
-                 if (newValue == "Pet") {
-                     layoutOtherViews.hide()
-                 } else {
-                     layoutOtherViews.show()
-                 }
-             }
-
-             override fun onNothingSelected(parentView: AdapterView<*>) {
-                 Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
-             }
-
-         };
-
-         txtsRole.onItemSelectedListener = object : OnItemSelectedListener {
-             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                 // your code here
-                 val newValue = txtsRole.getItemAtPosition(position) as String
-                 if (newValue == "Non-user") {
-                     layNonUser.hide()
-                 } else {
-                     layNonUser.show()
-                 }
-             }
-
-             override fun onNothingSelected(parentView: AdapterView<*>) {
-                 // your code here
-                 Toast.makeText(context, "Please enter 'Role'", Toast.LENGTH_LONG).show()
-
-             }
-
-         };*/
-
-
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
             txtFirstName.requestFocus()

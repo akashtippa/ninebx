@@ -16,25 +16,14 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:hint="Location" />
 
-    <EditText
+    <TextView
         android:id="@+id/etSubHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_mini_padding"
         android:background="@null"
         android:hint="@string/location"
-        android:inputType="textCapWords"
         android:visibility="visible" />
 
-
-    <Spinner
-        android:id="@+id/spinnerAccountType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_mini_padding"
-        android:layout_marginTop="@dimen/default_mini_padding"
-        android:background="@null"
-        android:entries="@array/AccountType"
-        android:visibility="gone" />
 
 </LinearLayout>

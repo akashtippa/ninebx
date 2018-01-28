@@ -17,6 +17,7 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
 import com.ninebx.ui.home.fragments.FragmentTestContact
 import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
+import com.ninebx.ui.home.fragments.WellnessFragment
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_category.*
@@ -70,6 +71,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
             tvCategory.setOnClickListener {
 
+
                 if (category.title == "Shared Contacts") {
                     getContactsList()
                 } else if (category.title == "Memory Timeline") {
@@ -92,12 +94,19 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
                     val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
-
                     val bundle = Bundle()
                     bundle.putString("categoryName", category.title)
-                    val categoryFragment = Level2CategoryFragment()
-                    categoryFragment.arguments = bundle
-                    fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+
+                    if (category.title == "Add Persons.") {
+                        val categoryFragment = WellnessFragment()
+                        categoryFragment.arguments = bundle
+                        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+                    } else {
+                        val categoryFragment = Level2CategoryFragment()
+                        categoryFragment.arguments = bundle
+                        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+                    }
+
 
                 }
             })

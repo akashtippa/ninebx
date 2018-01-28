@@ -1,18 +1,22 @@
 package com.ninebx.ui.home.baseSubCategories
 
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.database.DataSetObserver
 import android.text.InputType
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.view.*
+import android.view.View.OnTouchListener
+import android.widget.*
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.utility.Constants
+import com.ninebx.utility.DateTimeSelectionListener
+import com.ninebx.utility.getDateFromPicker
+import com.ninebx.utility.getDateMonthYearFormat
+import java.util.*
 
 
 /***
@@ -29,6 +33,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
         return childPosition.toLong()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun getChildView(groupPosition: Int, childPosition: Int,
                               isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
         var childView = convertView
@@ -48,13 +53,24 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView = infalInflater.inflate(R.layout.level2_item_location, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-//                childView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
+
+
+                childView.findViewById<EditText>(R.id.etSubHeader).setOnTouchListener(OnTouchListener { _, event ->
+                    val DRAWABLE_RIGHT = 2
+
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        if (event.rawX >= childView!!.findViewById<EditText>(R.id.etSubHeader).right - childView!!.findViewById<EditText>(R.id.etSubHeader).getCompoundDrawables()[DRAWABLE_RIGHT].bounds.width()) {
+                            openStaticLayoutDialog()
+                            return@OnTouchListener true
+                        }
+                    }
+                    false
+                });
             }
             Constants.LEVEL2_PASSWORD -> {
                 childView = infalInflater.inflate(R.layout.level2_password, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etCurrentPassword).hint = headerTitle
-//                    convertView.findViewById<EditText>(R.id.etCurrentPassword).setText(level2SubCategory.titleValue)
             }
             Constants.LEVEL2_RADIO -> {
                 childView = infalInflater.inflate(R.layout.level2_radio, null)
@@ -63,11 +79,27 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView.findViewById<CheckBox>(R.id.chkRight).hint = level2SubCategory.titleValue
 
             }
+
             Constants.LEVEL2_SPINNER -> {
                 childView = infalInflater.inflate(R.layout.level2_spinner, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-//                    convertView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
+
+
+                childView.findViewById<Spinner>(R.id.spinnerUsers).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                    override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                        val newValue = childView!!.findViewById<Spinner>(R.id.spinnerUsers).getItemAtPosition(position) as String
+                        childView!!.findViewById<EditText>(R.id.etSubHeader).setText(newValue)
+
+                    }
+
+
+                };
+
 
             }
             Constants.LEVEL2_SWITCH -> {
@@ -78,10 +110,47 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView = infalInflater.inflate(R.layout.level2_usd, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-//                    convertView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
+
+
+                childView.findViewById<Spinner>(R.id.spinnerCurrency).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                    override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                        val newValue = childView!!.findViewById<Spinner>(R.id.spinnerCurrency).getItemAtPosition(position) as String
+
+                    }
+
+
+                };
+
             }
             Constants.LEVEL2_NOTES -> {
                 childView = infalInflater.inflate(R.layout.level2_notes, null)
+            }
+            Constants.LEVEL2_PICKER -> {
+                childView = infalInflater.inflate(R.layout.level2_item_picker, null)
+
+                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                childView.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
+
+                childView.findViewById<TextView>(R.id.etSubHeader).setOnClickListener {
+                    getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            childView!!.findViewById<TextView>(R.id.etSubHeader).text = getDateMonthYearFormat(selectedDate.time)
+                        }
+                    })
+                }
+            }
+
+            Constants.LEVEL2_NUMBER -> {
+                childView = infalInflater.inflate(R.layout.level2_item_number, null)
+
+                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                childView.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
+
+                childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
             }
             Constants.LEVEL2_NORMAL -> {
                 childView = infalInflater.inflate(R.layout.level2_item_normal, null)
@@ -89,11 +158,34 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
 
-                if(keyBoardType == Constants.KEYBOARD_NUMBER) {
-                    childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
-                }
 
-//                childView.findViewById<EditText>(R.id.etSubHeader).setText(level2SubCategory.titleValue)
+                if (keyBoardType == Constants.KEYBOARD_NUMBER) {
+                    childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
+                } else if (keyBoardType == Constants.KEYBOARD_SPINNER) {
+                    childView.findViewById<EditText>(R.id.etSubHeader).hide()
+                    childView.findViewById<Spinner>(R.id.spinnerAccountType).show()
+
+
+                    childView.findViewById<Spinner>(R.id.spinnerAccountType).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                        }
+
+                        override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+//                            val newValue = childView!!.findViewById<Spinner>(R.id.spinnerAccountType).getItemAtPosition(position) as String
+
+                        }
+
+
+                    }
+
+                } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
+                    getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            childView!!.findViewById<EditText>(R.id.etSubHeader).setText(getDateMonthYearFormat(selectedDate.time))
+                        }
+                    })
+                }
 
             }
             Constants.LEVEL2_ATTACHMENTS -> {
@@ -157,7 +249,21 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
     }
 
     override fun registerDataSetObserver(observer: DataSetObserver) {
-        /* used to make the notifyDataSetChanged() method work */
         super.registerDataSetObserver(observer)
     }
+
+    private fun openStaticLayoutDialog() {
+        val dialog = Dialog(_context, android.R.style.Theme_Translucent_NoTitleBar)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        dialog.setContentView(R.layout.fragment_search_location)
+        dialog.show()
+
+        val imgBack = dialog.findViewById<View>(R.id.ivBack) as ImageView
+        imgBack.setOnClickListener {
+            dialog.cancel()
+        }
+    }
+
+
 }

@@ -442,4 +442,28 @@
         <item>Non-user</item>
     </string-array>
 
+
+    <string-array name="dummyUser">
+        <item></item>
+        <item>Aman</item>
+        <item>Shekhar</item>
+        <item>Alok</item>
+        <item>Varun</item>
+
+    </string-array>
+
+    <string-array name="dummyCurrency">
+        <item>USD</item>
+        <item>INR</item>
+        <item>DOLLAR</item>
+
+    </string-array>
+
+    <string-array name="AccountType">
+        <item>Checking</item>
+        <item>Saving</item>
+        <item>Other</item>
+
+    </string-array>
+
 </resources>
