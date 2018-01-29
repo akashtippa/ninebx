@@ -16,9 +16,8 @@ import com.evernote.android.job.util.support.PersistableBundleCompat
 import com.google.gson.Gson
 import com.ninebx.R
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.calendar.model.CalendarEvents
+import com.ninebx.ui.base.realm.CalendarEvents
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by Alok on 17/01/18.
@@ -124,7 +123,7 @@ class AlarmJob : Job() {
 
         val TAG = AlarmJob::class.java.simpleName
 
-        fun scheduleJob( reminder: CalendarEvents, calendar: Calendar ) {
+        fun scheduleJob(reminder: CalendarEvents, calendar: Calendar ) {
             AppLogger.d(TAG, "scheduleJob : " + reminder.toString())
             val gson = Gson()
             val reminderString = gson.toJson(reminder)

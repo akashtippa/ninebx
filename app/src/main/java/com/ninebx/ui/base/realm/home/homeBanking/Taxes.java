@@ -1,0 +1,193 @@
+package com.ninebx.ui.base.realm.home.homeBanking;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
+/**
+ * Created by Alok on 24/01/18.
+ */
+
+public class Taxes extends RealmObject {
+
+    @PrimaryKey
+    Integer id = 0;
+
+    private RealmList<String> backingImages = new RealmList<>();
+
+    @Ignore
+    private List<String> photosId = new ArrayList<>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public RealmList<String> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(RealmList<String> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        photosId.addAll( backingImages.subList(0, backingImages.size() - 1));
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        backingImages.addAll(photosId);
+    }
+
+    private String selectionType = "";
+
+    private String returnName = "";
+    private String taxYear = "";
+    private String taxPayer = "";
+    private String contacts = "";
+
+    private String imageName = "";
+    private String attachmentNames = "";
+
+    private String notes = "";
+    private String title = "";
+
+    private String created = "";
+    private String modified = "";
+    private Boolean isPrivate = false;
+    private String createdUser = "";
+
+    public Taxes(String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.returnName = returnName;
+        this.taxYear = taxYear;
+        this.taxPayer = taxPayer;
+        this.contacts = contacts;
+        this.imageName = imageName;
+        this.attachmentNames = attachmentNames;
+        this.notes = notes;
+        this.title = title;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public String getSelectionType() {
+        return selectionType;
+    }
+
+    public void setSelectionType(String selectionType) {
+        this.selectionType = selectionType;
+    }
+
+    public String getReturnName() {
+        return returnName;
+    }
+
+    public void setReturnName(String returnName) {
+        this.returnName = returnName;
+    }
+
+    public String getTaxYear() {
+        return taxYear;
+    }
+
+    public void setTaxYear(String taxYear) {
+        this.taxYear = taxYear;
+    }
+
+    public String getTaxPayer() {
+        return taxPayer;
+    }
+
+    public void setTaxPayer(String taxPayer) {
+        this.taxPayer = taxPayer;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getAttachmentNames() {
+        return attachmentNames;
+    }
+
+    public void setAttachmentNames(String attachmentNames) {
+        this.attachmentNames = attachmentNames;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
+
+    public Boolean getPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(Boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public Taxes() {
+    }
+}

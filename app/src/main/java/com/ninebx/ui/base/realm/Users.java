@@ -26,6 +26,7 @@ public class Users extends RealmObject {
     private  String state                = "";
     private  String zipCode              = "";
     private  String country              = "";
+    private  String userId               = "";
 
     private  Integer id                   = 0;
 
@@ -51,6 +52,33 @@ public class Users extends RealmObject {
     }
 
     public Users() {
+    }
+
+    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, Integer id, RealmList<Member> members) {
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
+        this.relationship = relationship;
+        this.dateOfBirth = dateOfBirth;
+        this.anniversary = anniversary;
+        this.gender = gender;
+        this.mobileNumber = mobileNumber;
+        this.street_1 = street_1;
+        this.street_2 = street_2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.country = country;
+        this.userId = userId;
+        this.id = id;
+        this.members = members;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getFullName() {

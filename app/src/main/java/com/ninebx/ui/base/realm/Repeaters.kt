@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.calendar.model
+package com.ninebx.ui.base.realm
 
 /**
  * Created by Alok on 10/01/18.

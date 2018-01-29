@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeView
-import com.ninebx.ui.home.calendar.model.CalendarEvents
+import com.ninebx.ui.base.realm.CalendarEvents
 import kotlinx.android.synthetic.main.fragment_add_calendar_every.*
 import android.content.Intent
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -88,7 +88,10 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             //uploadImageAws()
             //downloadImageAws()
             //val decryptFile = decryptFile(File("/storage/emulated/0/IMG-20180121-WA0000.jpg"))
-            mAWSFileTransferHelper.performOperation( "/storage/emulated/0/WhatsApp/Media/WhatsApp Images/IMG-20180120-WA0008.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
+
+            //PDF : "/storage/emulated/0/Download/ninebx/pdf-sample.pdf"
+            //Image : ""
+            /*mAWSFileTransferHelper.performOperation( "/storage/emulated/0/image.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
                 override fun onSuccess(outputFile: File?) {
 
                     mImagesList.add( Uri.fromFile(outputFile) )
@@ -96,7 +99,8 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
                 }
 
-            })
+            })*/
+            //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/Encrypted_image.jpg") )
         }
         layoutEndRepeat.hide()
         setValues( mCalendarEvent )
