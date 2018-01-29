@@ -12,12 +12,12 @@ public class CombineShopping {
 
     private int id = 0;
 
-    private RealmList loyaltyProgramsItems            = new RealmList<LoyaltyPrograms>();
-    private RealmList recentPurchaseItems             = new RealmList<RecentPurchase>();
-    private RealmList shoppingItems                   = new RealmList<Shopping>();
-    private RealmList clothingSizesItems              = new RealmList<ClothingSizes>();
+    private RealmList<LoyaltyPrograms> loyaltyProgramsItems            = new RealmList<LoyaltyPrograms>();
+    private RealmList<RecentPurchase> recentPurchaseItems             = new RealmList<RecentPurchase>();
+    private RealmList<Shopping> shoppingItems                   = new RealmList<Shopping>();
+    private RealmList<ClothingSizes> clothingSizesItems              = new RealmList<ClothingSizes>();
 
-    private RealmList listItems                       = new RealmList<ShoppingList>();
+    private RealmList<ShoppingList> listItems                       = new RealmList<ShoppingList>();
 
     public CombineShopping(int id, RealmList loyaltyProgramsItems, RealmList recentPurchaseItems, RealmList shoppingItems, RealmList clothingSizesItems, RealmList listItems) {
         this.id = id;

@@ -20,14 +20,14 @@ public class CombinePersonal extends RealmObject {
     @PrimaryKey
     private Integer id = 0;
 
-    RealmList certificateItems        = new RealmList<Certificate>();
-    RealmList governmentItems         = new RealmList<Government>();
-    RealmList licenseItems            = new RealmList<License>();
-    RealmList personalItems           = new RealmList<Personal>();
-    RealmList socialItems             = new RealmList<Social>();
-    RealmList taxIDItems              = new RealmList<TaxID>();
+    RealmList<Certificate> certificateItems        = new RealmList<Certificate>();
+    RealmList<Government> governmentItems         = new RealmList<Government>();
+    RealmList<License> licenseItems            = new RealmList<License>();
+    RealmList<Personal> personalItems           = new RealmList<Personal>();
+    RealmList<Social> socialItems             = new RealmList<Social>();
+    RealmList<TaxID> taxIDItems              = new RealmList<TaxID>();
     
-    RealmList listItems               = new RealmList<PersonalList>();
+    RealmList<PersonalList> listItems               = new RealmList<PersonalList>();
 
     public CombinePersonal(Integer id, RealmList certificateItems, RealmList governmentItems, RealmList licenseItems, RealmList personalItems, RealmList socialItems, RealmList taxIDItems, RealmList listItems) {
         this.id = id;

@@ -15,12 +15,12 @@ public class CombineTravel extends RealmObject {
     @PrimaryKey
     private Integer id = 0;
 
-    private RealmList documentsItems      = new RealmList<Documents>();
-    private RealmList loyaltyItems        = new RealmList<Loyalty>();
-    private RealmList travelItems         = new RealmList<Travel>();
-    private RealmList vacationsItems      = new RealmList<Vacations>();
+    private RealmList<Documents> documentsItems      = new RealmList<Documents>();
+    private RealmList<Loyalty> loyaltyItems        = new RealmList<Loyalty>();
+    private RealmList<Travel> travelItems         = new RealmList<Travel>();
+    private RealmList<Vacations> vacationsItems      = new RealmList<Vacations>();
 
-    private RealmList listItems           = new RealmList<TravelsList>();
+    private RealmList<TravelsList> listItems           = new RealmList<TravelsList>();
 
     public CombineTravel(Integer id, RealmList documentsItems, RealmList loyaltyItems, RealmList travelItems, RealmList vacationsItems, RealmList listItems) {
         this.id = id;

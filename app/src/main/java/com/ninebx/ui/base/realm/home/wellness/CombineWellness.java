@@ -15,19 +15,19 @@ public class CombineWellness extends RealmObject {
     @PrimaryKey
     private Integer id = 0;
 
-    private RealmList checkupsItems                   = new RealmList<Checkups>();
-    private RealmList emergencyContactsItems          = new RealmList<EmergencyContacts>();
-    private RealmList eyeglassPrescriptionsItems      = new RealmList<EyeglassPrescriptions>();
-    private RealmList healthcareProvidersItems        = new RealmList<HealthcareProviders>();
-    private RealmList identificationItems             = new RealmList<Identification>();
-    private RealmList medicalConditionsItems          = new RealmList<MedicalConditions>();
-    private RealmList medicalHistoryItems             = new RealmList<MedicalHistory>();
-    private RealmList medicationsItems                = new RealmList<Medication>();
-    private RealmList vitalNumbersItems               = new RealmList<VitalNumbers>();
-    private RealmList wellnessItems                   = new RealmList<Wellness>();
+    private RealmList<Checkups> checkupsItems                   = new RealmList<Checkups>();
+    private RealmList<EmergencyContacts> emergencyContactsItems          = new RealmList<EmergencyContacts>();
+    private RealmList<EyeglassPrescriptions> eyeglassPrescriptionsItems      = new RealmList<EyeglassPrescriptions>();
+    private RealmList<HealthcareProviders> healthcareProvidersItems        = new RealmList<HealthcareProviders>();
+    private RealmList<Identification> identificationItems             = new RealmList<Identification>();
+    private RealmList<MedicalConditions> medicalConditionsItems          = new RealmList<MedicalConditions>();
+    private RealmList<MedicalHistory> medicalHistoryItems             = new RealmList<MedicalHistory>();
+    private RealmList<Medication> medicationsItems                = new RealmList<Medication>();
+    private RealmList<VitalNumbers> vitalNumbersItems               = new RealmList<VitalNumbers>();
+    private RealmList<Wellness> wellnessItems                   = new RealmList<Wellness>();
 
 
-    private RealmList listItems                       = new RealmList<WellnessList>();
+    private RealmList<WellnessList> listItems                       = new RealmList<WellnessList>();
 
     public CombineWellness(Integer id, RealmList checkupsItems, RealmList emergencyContactsItems, RealmList eyeglassPrescriptionsItems, RealmList healthcareProvidersItems, RealmList identificationItems, RealmList medicalConditionsItems, RealmList medicalHistoryItems, RealmList medicationsItems, RealmList vitalNumbersItems, RealmList wellnessItems, RealmList listItems) {
         this.id = id;
