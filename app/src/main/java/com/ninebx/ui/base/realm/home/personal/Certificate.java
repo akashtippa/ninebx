@@ -233,4 +233,7 @@ public class Certificate extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public Certificate() {
+    }
 }

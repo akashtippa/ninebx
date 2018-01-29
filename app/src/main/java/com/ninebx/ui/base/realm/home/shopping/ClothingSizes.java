@@ -603,4 +603,7 @@ public class ClothingSizes extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public ClothingSizes() {
+    }
 }

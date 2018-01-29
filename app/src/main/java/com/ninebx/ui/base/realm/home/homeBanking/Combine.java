@@ -3,13 +3,14 @@ package com.ninebx.ui.base.realm.home.homeBanking;
 import com.ninebx.ui.base.realm.lists.HomeList;
 
 import io.realm.RealmList;
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Alok on 24/01/18.
  */
 
-public class Combine {
+public class Combine extends RealmObject {
 
     @PrimaryKey
     private Integer id = 0;
@@ -34,6 +35,9 @@ public class Combine {
         this.insuranceItems = insuranceItems;
         this.taxesItems = taxesItems;
         this.listItems = listItems;
+    }
+
+    public Combine() {
     }
 
     public Integer getId() {

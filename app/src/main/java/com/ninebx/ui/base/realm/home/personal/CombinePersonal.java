@@ -103,4 +103,7 @@ public class CombinePersonal extends RealmObject {
     public void setListItems(RealmList listItems) {
         this.listItems = listItems;
     }
+
+    public CombinePersonal() {
+    }
 }

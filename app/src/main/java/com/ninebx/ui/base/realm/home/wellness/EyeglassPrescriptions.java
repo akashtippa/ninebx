@@ -285,4 +285,7 @@ public class EyeglassPrescriptions extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public EyeglassPrescriptions() {
+    }
 }

@@ -181,4 +181,7 @@ public class RecentPurchase extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public RecentPurchase() {
+    }
 }

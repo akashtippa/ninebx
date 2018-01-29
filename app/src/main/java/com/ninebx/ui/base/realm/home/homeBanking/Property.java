@@ -291,4 +291,7 @@ public class Property extends RealmObject {
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
     }
+
+    public Property() {
+    }
 }

@@ -282,4 +282,7 @@ public class Shopping extends RealmObject{
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
     }
+
+    public Shopping() {
+    }
 }

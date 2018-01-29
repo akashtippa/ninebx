@@ -281,4 +281,7 @@ public class Interests extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public Interests() {
+    }
 }

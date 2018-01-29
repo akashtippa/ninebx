@@ -58,4 +58,7 @@ public class CombineMemories extends RealmObject {
     public void setListItems(RealmList<MemoriesList> listItems) {
         this.listItems = listItems;
     }
+
+    public CombineMemories() {
+    }
 }

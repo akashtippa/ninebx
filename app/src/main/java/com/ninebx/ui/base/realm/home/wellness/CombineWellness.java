@@ -139,4 +139,7 @@ public class CombineWellness extends RealmObject {
     public void setListItems(RealmList listItems) {
         this.listItems = listItems;
     }
+
+    public CombineWellness() {
+    }
 }

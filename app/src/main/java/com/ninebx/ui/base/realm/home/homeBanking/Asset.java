@@ -219,4 +219,7 @@ public class Asset extends RealmObject {
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
     }
+
+    public Asset() {
+    }
 }

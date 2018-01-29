@@ -178,4 +178,7 @@ public class MemoryTimeLine extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public MemoryTimeLine() {
+    }
 }

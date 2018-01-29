@@ -47,4 +47,7 @@ public class CombineInterests extends RealmObject {
     public void setListItems(RealmList<InterestsList> listItems) {
         this.listItems = listItems;
     }
+
+    public CombineInterests() {
+    }
 }

@@ -38,6 +38,9 @@ public class Payment extends RealmObject {
         this.backingImages = backingImages;
     }
 
+    public Payment() {
+    }
+
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
         photosId.addAll( backingImages.subList(0, backingImages.size() - 1));

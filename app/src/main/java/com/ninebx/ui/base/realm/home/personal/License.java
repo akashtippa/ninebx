@@ -156,4 +156,7 @@ public class License extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public License() {
+    }
 }

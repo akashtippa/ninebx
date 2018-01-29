@@ -213,4 +213,7 @@ public class LoyaltyPrograms extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    public LoyaltyPrograms() {
+    }
 }

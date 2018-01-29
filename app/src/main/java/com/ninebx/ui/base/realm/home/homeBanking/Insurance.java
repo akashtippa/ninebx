@@ -98,6 +98,9 @@ public class Insurance extends RealmObject {
         this.attachmentNames = attachmentNames;
     }
 
+    public Insurance() {
+    }
+
     public String getSelectionType() {
         return selectionType;
     }

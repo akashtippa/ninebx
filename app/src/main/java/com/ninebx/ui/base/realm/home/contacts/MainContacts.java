@@ -256,5 +256,6 @@ public class MainContacts extends RealmObject {
         backingImages.addAll(photosId);
     }
 
-
+    public MainContacts() {
+    }
 }

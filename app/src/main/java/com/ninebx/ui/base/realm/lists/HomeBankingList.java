@@ -130,4 +130,7 @@ public class HomeBankingList extends RealmObject {
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
     }
+
+    public HomeBankingList() {
+    }
 }

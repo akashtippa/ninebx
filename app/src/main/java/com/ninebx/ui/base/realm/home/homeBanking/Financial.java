@@ -100,6 +100,9 @@ public class Financial extends RealmObject {
         this.attachmentNames = attachmentNames;
     }
 
+    public Financial() {
+    }
+
     public String getSelectionType() {
         return selectionType;
     }
