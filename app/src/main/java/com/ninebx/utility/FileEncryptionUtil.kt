@@ -83,12 +83,51 @@ fun decryptFile( inputFile : File ) : File {
         //bufOut.write(decryptedFileBytes)
 
         val fileOutputStream = FileOutputStream( file.absolutePath )
+        fileOutputStream.write(decryptedFileBytes)
+
+        /*val bitmap = BitmapFactory.decodeByteArray(decryptedFileBytes, 0, decryptedFileBytes.size)
+        if( bitmap != null )
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+        */
+
+        buf.close()
+        fileOutputStream.close()
+        //bufOut.close()
+
+    } catch (e: FileNotFoundException) {
+        // TODO Auto-generated catch block
+        e.printStackTrace()
+    } catch (e: IOException) {
+        // TODO Auto-generated catch block
+        e.printStackTrace()
+    }
+
+    return file
+}
+
+fun decryptImageFile( inputFile : File ) : File {
+
+    val size = inputFile.length().toInt()
+    val fileBytes = ByteArray(size)
+    val aeS256JNCryptor = AES256JNCryptor()
+    val file = File(Environment.getExternalStorageDirectory().toString() + "/Decrypted_" + inputFile.name)
+    try {
+        val buf = BufferedInputStream(FileInputStream(inputFile))
+        buf.read(fileBytes, 0, fileBytes.size)
+
+        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, generateKey("master_password", "alok"))
+
+        if( file.exists() ) file.delete()
+
+        //val bufOut = BufferedOutputStream(file.outputStream())
+        //bufOut.write(decryptedFileBytes)
+
+        val fileOutputStream = FileOutputStream( file.absolutePath )
         //fileOutputStream.write(decryptedFileBytes)
 
         val bitmap = BitmapFactory.decodeByteArray(decryptedFileBytes, 0, decryptedFileBytes.size)
         if( bitmap != null )
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-
 
         buf.close()
         fileOutputStream.close()

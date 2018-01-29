@@ -1,7 +1,7 @@
 package com.ninebx.utility
 
 import io.realm.Realm
-import io.realm.edRealmObject
+import io.realm.RealmObject
 
 /**
  * Created by Alok on 18/01/18.

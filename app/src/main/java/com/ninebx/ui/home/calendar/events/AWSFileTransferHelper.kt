@@ -248,9 +248,9 @@ class AWSFileTransferHelper( private val context : Context? ) {
         override fun doInBackground(vararg aVoid: Void?): File {
             AppLogger.d("FileOperations", operationType + " : " + filePath )
             if( operationType == "Encryption" )
-                return encryptFileStream( File( filePath ) )
+                return encryptFile( File( filePath ) )
             else
-                return decryptFileStream( File( filePath ) )
+                return decryptFile( File( filePath ) )
         }
 
     }
@@ -270,12 +270,26 @@ class AWSFileTransferHelper( private val context : Context? ) {
                                 fileOperationsCompletionListener.onSuccess(outputFile)
                             }
 
-
-
                         }
 
                     }).execute()
                 }
+
+            }
+
+        }).execute()
+    }
+
+    fun decryptEncryptedFile(outputFile: File) {
+        FileOperationsTask("Decryption", outputFile.absolutePath, object : FileOperationsCompletionListener {
+            override fun onSuccess(outputFile: File?) {
+
+                if( outputFile != null ) {
+                    context?.showToast("Decryption Success" )
+                    //fileOperationsCompletionListener.onSuccess(outputFile)
+                }
+
+
 
             }
 

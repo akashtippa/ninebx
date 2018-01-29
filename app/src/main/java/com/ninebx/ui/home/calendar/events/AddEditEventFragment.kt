@@ -88,7 +88,10 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             //uploadImageAws()
             //downloadImageAws()
             //val decryptFile = decryptFile(File("/storage/emulated/0/IMG-20180121-WA0000.jpg"))
-            mAWSFileTransferHelper.performOperation( "/storage/emulated/0/Download/ninebx/pdf-sample.pdf", object : AWSFileTransferHelper.FileOperationsCompletionListener {
+
+            //PDF : "/storage/emulated/0/Download/ninebx/pdf-sample.pdf"
+            //Image : ""
+            /*mAWSFileTransferHelper.performOperation( "/storage/emulated/0/image.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
                 override fun onSuccess(outputFile: File?) {
 
                     mImagesList.add( Uri.fromFile(outputFile) )
@@ -96,7 +99,8 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
                 }
 
-            })
+            })*/
+            //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/Encrypted_image.jpg") )
         }
         layoutEndRepeat.hide()
         setValues( mCalendarEvent )
