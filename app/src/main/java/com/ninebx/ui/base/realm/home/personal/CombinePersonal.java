@@ -1,16 +1,21 @@
 package com.ninebx.ui.base.realm.home.personal;
 
-import com.ninebx.ui.base.realm.home.homeBanking.BaseAttachmentObject;
+
 import com.ninebx.ui.base.realm.lists.PersonalList;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Alok on 24/01/18.
  */
 
-public class CombinePersonal extends BaseAttachmentObject {
+public class CombinePersonal extends RealmObject {
 
     @PrimaryKey
     private Integer id = 0;
@@ -35,12 +40,10 @@ public class CombinePersonal extends BaseAttachmentObject {
         this.listItems = listItems;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
 
-    @Override
     public void setId(Integer id) {
         this.id = id;
     }

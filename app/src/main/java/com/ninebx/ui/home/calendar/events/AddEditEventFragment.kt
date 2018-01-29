@@ -88,7 +88,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             //uploadImageAws()
             //downloadImageAws()
             //val decryptFile = decryptFile(File("/storage/emulated/0/IMG-20180121-WA0000.jpg"))
-            mAWSFileTransferHelper.performOperation( "/storage/emulated/0/WhatsApp/Media/WhatsApp Images/IMG-20180120-WA0008.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
+            mAWSFileTransferHelper.performOperation( "/storage/emulated/0/Download/ninebx/pdf-sample.pdf", object : AWSFileTransferHelper.FileOperationsCompletionListener {
                 override fun onSuccess(outputFile: File?) {
 
                     mImagesList.add( Uri.fromFile(outputFile) )
