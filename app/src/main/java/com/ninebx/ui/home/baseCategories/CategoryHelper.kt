@@ -291,7 +291,7 @@ class CategoryHelper(
 
         category.subCategories.add(SubCategory("Banking", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Investments/Retirement", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Loan/Mortgages", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Loans/Mortgages", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Other financial accounts", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
 
 
@@ -425,7 +425,7 @@ class CategoryHelper(
         category.title = "Clothing sizes"
         category.drawableString = "ic_icon_clothing_sizes"
 
-        category.subCategories.add(SubCategory("Add Person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+        category.subCategories.add(SubCategory("Add Person.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
         categoryList.add(category)
 

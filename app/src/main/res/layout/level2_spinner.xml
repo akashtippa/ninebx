@@ -37,6 +37,7 @@
             android:layout_height="@dimen/default_big"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/default_margin"
             android:background="@drawable/ic_add_circle_outline_blue_300_24dp"
             android:entries="@array/dummyUser"
             android:gravity="center_vertical"

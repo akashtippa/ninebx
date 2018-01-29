@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.FragmentBackHelper
+import kotlinx.android.synthetic.main.add_memory.*
 
 /***
  * Created by TechnoBlogger on 24/01/18.
@@ -21,6 +22,10 @@ class FragmentTestMemoryTimeLine : FragmentBackHelper() {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
+
+        ivBack.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+        }
 
 
     }

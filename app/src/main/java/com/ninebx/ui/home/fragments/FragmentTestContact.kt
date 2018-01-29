@@ -24,9 +24,9 @@ class FragmentTestContact : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.showToolbar()
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
 
-        ivBack.setOnClickListener {
+     /*   ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
-        }
+        }*/
 
 
     }

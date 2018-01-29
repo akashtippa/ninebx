@@ -24,7 +24,7 @@ class Level2CategoryHelper(
             "Investments/Retirement" -> {
                 getInvestments()
             }
-            "Loan/Mortgages" -> {
+            "Loans/Mortgages" -> {
                 getLoadMortgages()
             }
             "Other financial accounts" -> {
@@ -188,7 +188,462 @@ class Level2CategoryHelper(
                 getUmbrellaInsurance()
             }
 
+        // Wellness
+
+            "Identification" -> {
+                getIdentification()
+            }
+            "Medical history" -> {
+                getMedicalHistory()
+            }
+            "Healthcare providers" -> {
+                getHealthCareProviders()
+            }
+            "Emergency contacts" -> {
+
+            }
+            "Medications" -> {
+                getMedications()
+            }
+            "Medical conditions/Allergies" -> {
+                getMedicalConditions()
+            }
+            "Eyeglass prescriptions" -> {
+                getEyeGlassPrescriptions()
+            }
+            "Vital numbers" -> {
+                getVitalNumbers()
+            }
+            "Checkups and visits" -> {
+                getCheckUps()
+            }
+
+        // Clothing Sizes
+            "Womens sizes" -> {
+                getWomensSizes()
+            }
+            "Mens sizes" -> {
+                getMensSizes()
+            }
+            "Girls sizes" -> {
+                getGirlsSizes()
+            }
+            "Boy's sizes" -> {
+                getBoysSizes()
+            }
+            "Baby's sizes" -> {
+                getBabysSizes()
+            }
+
         }
+    }
+
+    private fun getBabysSizes() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Clothing", "Clothing", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Shoes", "Shoes", "", Constants.LEVEL2_NORMAL))
+
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getBoysSizes() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Tops"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Bottoms"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Outwear"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Shoes"
+        category.subCategories.add(Level2SubCategory("Toddler size (US)", "Toddler size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Little and big kid size(US)", "Little and big kid size(US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Width", "Width", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Accessories"
+        category.subCategories.add(Level2SubCategory("Belts", "Belts", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Belts(Numeric size)", "Belts(Numeric size)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Hats", "Hats", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Tights", "Tights", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Socks", "Socks", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Measurements"
+        category.subCategories.add(Level2SubCategory("Chest(in)", "Chest(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist(in)", "Waist(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Seat(in)", "Seat(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getGirlsSizes() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Tops"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Bottoms"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Dresses"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Outwear"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Swimwear"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Shoes"
+        category.subCategories.add(Level2SubCategory("Toddler size (US)", "Toddler size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Little and big kid size(US)", "Little and big kid size(US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Width", "Width", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Accessories"
+        category.subCategories.add(Level2SubCategory("Belts", "Belts", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Belts(Numeric size)", "Belts(Numeric size)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Hats", "Hats", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Tights", "Tights", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Socks", "Socks", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Measurements"
+        category.subCategories.add(Level2SubCategory("Chest(in)", "Chest(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist(in)", "Waist(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Seat(in)", "Seat(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getMensSizes() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Tops"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Bottoms"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Suiting-Jackets"
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Suiting-Pants"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Outwear"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Shoes"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Width", "Width", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Accessories"
+        category.subCategories.add(Level2SubCategory("Belts", "Belts", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Belts(Numeric size)", "Belts(Numeric size)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Tights", "Tights", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Measurements"
+        category.subCategories.add(Level2SubCategory("Neck(in)", "Neck(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Chest(in)", "Chest(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist(in)", "Waist(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Arm length(in)", "Arm length(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getWomensSizes() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Tops"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Bottoms"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Dresses"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Outwear"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Swimwear"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Bra band/cup size (US)", "Bra band/cup size (US)", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Bottoms"
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Width", "Width", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Accessories"
+        category.subCategories.add(Level2SubCategory("Belts", "Belts", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Hats", "Hats", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Tights", "Tights", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Measurements"
+        category.subCategories.add(Level2SubCategory("Bust(in)", "Bust(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist(in)", "Waist(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Hips(in)", "Hips(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Arm length(in)", "Arm length(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
     }
 
     private fun getMaintenance() {
@@ -732,18 +1187,18 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("City", "City", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2010
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Property Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
@@ -786,18 +1241,18 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("City", "City", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2009
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Property Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
@@ -830,10 +1285,10 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("City", "City", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -873,18 +1328,18 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("City", "City", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Zip Code", "Zip Code", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2007
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Property Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name(s) on title", "Name(s) on title", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", "Estimated market value", "", Constants.LEVEL2_USD))
@@ -916,7 +1371,7 @@ class Level2CategoryHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", "Name(s) on account", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
@@ -958,8 +1413,8 @@ class Level2CategoryHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Card Details"
-        category.subCategories.add(Level2SubCategory("Card number", "Card number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Card type", "Card type", Constants.KEYBOARD_SPINNER, Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Card number", "Card number", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Card type", "Card type", Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Card holder", "Card holder", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Expiry date", "Expiry date", Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("CVV code", "CVV code", "", Constants.LEVEL2_PASSWORD))
@@ -1187,6 +1642,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Payment method on file", "Payment method on file", "", Constants.LEVEL2_SPINNER))
+
         categoryList.add(category)
 
         categoryIndex += 3001
@@ -1755,7 +2212,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH))
+        category.subCategories.add(Level2SubCategory("Currently working here", "", "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
         categoryIndex += 2033
@@ -1899,4 +2356,296 @@ class Level2CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
+
+    // Wellness
+
+    private fun getIdentification() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Gender", "Gender", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of birth", "Date of birth", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Age", "Age", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Height(ft, in)", "Height(ft, in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Weight", "Weight", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Hair color", "Hair color", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Eye color", "Eye color", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Visible marks", "Visible marks", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Blood type", "Blood type", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Organ donor", "Organ donor", "", Constants.LEVEL2_SWITCH))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getMedicalHistory() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Past Conditions And Treatment"
+        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Immunization History"
+        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Family History"
+        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getHealthCareProviders() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Practice/Group name", "Practice/Group name", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Phone number 1", "Phone number 1", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Phone number 2", "Phone number 2", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Email address", "Email address", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("City", "City", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Zip code", "Zip code", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_NORMAL))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getMedications() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Frequency", "Frequency", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Start date", "Start date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_PICKER))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getMedicalConditions() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getEyeGlassPrescriptions() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getVitalNumbers() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Height (ft, in)", "Height (ft, in)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Weight(lbs)", "Weight(lbs)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist", "Waist", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Body fat(%)", "Body fat(%)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Body mass index(BMI kg/m2)", "Body mass index(BMI kg/m2)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Blood pressure(xx/yy)", "Blood pressure(xx/yy)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Heart rate(bpm)", "Heart rate(bpm)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Total cholesterol(mg/dL)", "Total cholesterol(mg/dL)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("HDL cholesterol(mg/dL)", "HDL cholesterol(mg/dL)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("LDL cholesterol(mg/dL)", "LDL cholesterol(mg/dL)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Cholesterol ration(Total cholesterol/HDL)", "Cholesterol ration(Total cholesterol/HDL)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Triglycerides(mg/dL)", "Triglycerides(mg/dL)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Blood glucose(mg/dL)", "Blood glucose(mg/dL)", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Hemoglobin A1C(%)", "Hemoglobin A1C(%)", "", Constants.LEVEL2_SWITCH))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
+    private fun getCheckUps() {
+        val categoryList = ArrayList<Level2Category>()
+
+        var categoryIndex = 2050
+        var category_id = "account_details" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Type of physician", "Type of physician", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Reason", "Reason", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of visit", "Date of visit", "", Constants.LEVEL2_PICKER))
+        categoryList.add(category)
+
+
+
+        categoryIndex += 2050
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
 }

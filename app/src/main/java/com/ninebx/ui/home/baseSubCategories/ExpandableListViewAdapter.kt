@@ -25,6 +25,13 @@ import java.util.*
 
 class ExpandableListViewAdapter(private val _context: Context, private val categories: ArrayList<Level2Category>) : BaseExpandableListAdapter() {
 
+    // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
+
+    var sizeCategoryArray = arrayOf("Size category (US)", "Regular", "Petite", "Tall")
+    var womenTopSize = arrayOf("Size (US)", "XXXS", "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL")
+    var accountType = arrayOf("Checking", "Savings", "Other")
+    var cardType = arrayOf("Card type", "Credit", "Debit")
+
     override fun getChild(groupPosition: Int, childPosititon: Int): Any {
         return categories[groupPosition].subCategories[childPosititon]
     }
@@ -75,7 +82,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
             Constants.LEVEL2_RADIO -> {
                 childView = infalInflater.inflate(R.layout.level2_radio, null)
 
-                childView!!.findViewById<CheckBox>(R.id.chkLeft).hint = headerTitle
+                childView.findViewById<CheckBox>(R.id.chkLeft).hint = headerTitle
                 childView.findViewById<CheckBox>(R.id.chkRight).hint = level2SubCategory.titleValue
 
             }
@@ -113,12 +120,20 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
 
                 childView.findViewById<Spinner>(R.id.spinnerCurrency).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
                     override fun onNothingSelected(p0: AdapterView<*>?) {
 
                     }
 
                     override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                         val newValue = childView!!.findViewById<Spinner>(R.id.spinnerCurrency).getItemAtPosition(position) as String
+                        var test = newValue.split("-")
+
+//                        val separated = newValue.split("-")
+//                        separated[0]
+//                        separated[1]
+//                        AppLogger.e("Country ", " is " + separated[1])
+
 
                     }
 
@@ -127,7 +142,14 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
             }
             Constants.LEVEL2_NOTES -> {
+
                 childView = infalInflater.inflate(R.layout.level2_notes, null)
+
+                if (headerTitle.equals("")) {
+                    childView!!.findViewById<EditText>(R.id.edtNotes).hint = "Notes"
+                } else {
+                    childView!!.findViewById<EditText>(R.id.edtNotes).hint = headerTitle
+                }
             }
             Constants.LEVEL2_PICKER -> {
                 childView = infalInflater.inflate(R.layout.level2_item_picker, null)
@@ -190,6 +212,34 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
             }
             Constants.LEVEL2_ATTACHMENTS -> {
                 childView = infalInflater.inflate(R.layout.level2_atachments, null)
+            }
+            Constants.LEVEL_NORMAL_SPINNER -> {
+
+                childView = infalInflater.inflate(R.layout.level2_item_spinner_value, null)
+
+                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+
+                val spinnerItem: Spinner = childView.findViewById<View>(R.id.spinnerValue) as Spinner
+
+                if (headerTitle == "Size category(US)") {
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, sizeCategoryArray)
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerItem.adapter = arrayAdapter
+                } else if (headerTitle == "Size (US)") {
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopSize)
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerItem.adapter = arrayAdapter
+                } else if (headerTitle == "Account type") {
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, accountType)
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerItem.adapter = arrayAdapter
+                } else if (headerTitle == "Card type") {
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, cardType)
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerItem.adapter = arrayAdapter
+                }
+
+
             }
 
         }

@@ -15,6 +15,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.ui.home.fragments.ClothesFragment
 import com.ninebx.ui.home.fragments.FragmentTestContact
 import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
 import com.ninebx.ui.home.fragments.WellnessFragment
@@ -66,6 +67,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 tvCount.text = category.formsCount.toString()
             } else {
                 tvCount.text = ""
+                tvCount.setCompoundDrawables(null, null, null, null)
             }
             rvSubCategory.layoutManager = LinearLayoutManager(context)
 
@@ -86,6 +88,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                 }
 
+                Toast.makeText(context, "" + category.title, Toast.LENGTH_LONG).show()
 
             }
 
@@ -99,6 +102,10 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
                     if (category.title == "Add Persons.") {
                         val categoryFragment = WellnessFragment()
+                        categoryFragment.arguments = bundle
+                        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+                    } else if (category.title == "Add Person.") {
+                        val categoryFragment = ClothesFragment()
                         categoryFragment.arguments = bundle
                         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                     } else {

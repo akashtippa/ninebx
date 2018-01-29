@@ -68,7 +68,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         // Common Items in Every
 
-
         // Financial Accounts
             "Banking" -> {
                 etTitle.hint = "Institution name"
@@ -354,6 +353,93 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.hint = "Brand/Retailer"
                 etTitle.hint = "Item"
                 toolbarTitle.text = "Add Purchase"
+            }
+
+
+            "Womens sizes" -> {
+                etTitle.hint = "User name"
+                etTitleValue.hint = "Size name"
+                toolbarTitle.text = "Add Women's sizes"
+            }
+
+
+            "Mens sizes" -> {
+                etTitle.hint = "User name"
+                etTitleValue.hint = "Size name"
+                toolbarTitle.text = "Add Mens's sizes"
+            }
+
+            "Girls sizes" -> {
+                etTitle.hint = "User name"
+                etTitleValue.hint = "Size name"
+                toolbarTitle.text = "Add Girls's sizes"
+            }
+            "Boy's sizes" -> {
+                etTitle.hint = "User name"
+                etTitleValue.hint = "Size name"
+                toolbarTitle.text = "Add Boy's sizes"
+            }
+
+            "Baby's sizes" -> {
+                etTitle.hint = "User name"
+                etTitleValue.hint = "Size name"
+                toolbarTitle.text = "Add Baby's sizes"
+            }
+
+            "Identification" -> {
+                etTitle.hint = "User name"
+                etTitleValue.hint = ""
+                toolbarTitle.text = "Add Identification"
+            }
+
+
+            "Medical history" -> {
+                etTitle.hint = "History"
+                etTitleValue.hint = ""
+                toolbarTitle.text = "Add History"
+            }
+
+
+            "Healthcare providers" -> {
+                etTitle.hint = "Name"
+                etTitleValue.hint = "Type of physician"
+                toolbarTitle.text = "Add Providers"
+            }
+
+
+            "Emergency contacts" -> {
+            }
+
+
+            "Medications" -> {
+                etTitle.hint = "Name"
+                etTitleValue.hint = "Dose/strength"
+                toolbarTitle.text = "Add Medications"
+            }
+
+            "Medical conditions/Allergies" -> {
+                etTitle.hint = "Condition"
+                etTitleValue.hint = "Date diagnosed"
+                toolbarTitle.text = "Add Conditions"
+            }
+
+            "Eyeglass prescriptions" -> {
+                etTitle.hint = "Physician name"
+                etTitleValue.hint = "Date prescribed"
+                toolbarTitle.text = "Add Prescription"
+            }
+
+            "Vital numbers" -> {
+                etTitle.hint = "Description"
+                etTitleValue.hint = "Measurement date"
+                toolbarTitle.text = "Add Record"
+            }
+
+
+            "Checkups and visits" -> {
+                etTitle.hint = "Description"
+                etTitleValue.hint = "Physician name"
+                toolbarTitle.text = "Add Visit"
             }
 
 

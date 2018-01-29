@@ -60,10 +60,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="@dimen/default_mini_padding"
-
         android:background="@color/colorGrey"
         android:gravity="center_vertical">
 
@@ -72,33 +70,11 @@
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/default_mini_padding"
             android:text="Title"
             android:textSize="@dimen/text_16" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/default_micro_padding"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_icon_save" />
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_micro_padding"
-                app:srcCompat="@drawable/ic_icon_delete_icon" />
-
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/txtDate"
@@ -106,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/txtTitle"
+            android:layout_margin="@dimen/default_mini_padding"
             android:text="Date" />
 
     </RelativeLayout>
@@ -198,6 +175,11 @@
                 android:padding="@dimen/default_mini_padding"
                 android:singleLine="true" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:background="@color/colorGrey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -214,6 +196,12 @@
                 android:hint="Notes"
 
                 android:padding="@dimen/default_mini_padding" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:background="@color/colorGrey" />
 
             <LinearLayout
                 android:id="@+id/layCreated"
