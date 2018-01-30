@@ -82,9 +82,9 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
         ivBack.setOnClickListener { goBack() }
         tvSave.setOnClickListener {
-            /*if( validate() ) {
+            if( validate() ) {
                 saveCalendarEvent()
-            }*/
+            }
             //uploadImageAws()
             //downloadImageAws()
             //val decryptFile = decryptFile(File("/storage/emulated/0/IMG-20180121-WA0000.jpg"))
