@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layoutWomens"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Women's sizes" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutMens"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Men's sizes" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutGirls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Girl's sizes" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutBoys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Boy's sizes" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutBaby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Baby's sizes" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

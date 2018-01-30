@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:padding="@dimen/default_micro_padding"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_icon_arrow_form"
+            tools:visibility="visible" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_mini_padding"
+            android:layout_toEndOf="@+id/ivBack"
+            android:layout_toLeftOf="@+id/ivHome"
+            android:layout_toRightOf="@+id/ivBack"
+            android:layout_toStartOf="@+id/ivHome"
+            android:background="@color/colorGrey"
+            android:gravity="center_vertical"
+            android:hint="Search for location"
+            android:padding="@dimen/default_margin"
+            android:textSize="@dimen/text_16" />
+
+
+        <TextView
+            android:id="@+id/ivHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="end"
+            android:layout_marginRight="@dimen/default_margin"
+            android:text="Save"
+            android:textColor="@color/colorPrimary"
+            android:visibility="visible" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -99,7 +99,7 @@
 
     <string name="screen_one_description">Gather your family\'s information in one place.</string>
     <string name="screen_two_description">Involve everyone in building the complete picture.</string>
-    <string name="screen_three_description">Take better decisions with access to collective information, anywhere, anytime</string>
+    <string name="screen_three_description">Take better decisions with access to collective information anywhere anytime</string>
     <string name="screen_four_description">Feel comfortable knowing you have full control on a <u>secure platform</u> you can trust.</string>
     <string name="swipe_to_learn_more">Swipe to learn more</string>
     <string name="be">be</string>
@@ -143,7 +143,7 @@
     <string name="current_master_password">Current master password</string>
     <string name="create_account_master_password">Create your account\n Master Password</string>
     <string name="change_account_master_password">Change your account\n Master Password</string>
-    <string name="choose_a_strong_password">\u25CF Choose a strong password, with at least\n\t\u25CB eight characters\n\t\u25CB one uppercase letter\n\t\u25CB one lowercase letter\n\t\u25CB one number\n\t\u25CB one symbol(!, @, #, $, etc)</string>
+    <string name="choose_a_strong_password">\u25CF Choose a strong password with at least\n\t\u25CB eight characters\n\t\u25CB one uppercase letter\n\t\u25CB one lowercase letter\n\t\u25CB one number\n\t\u25CB one symbol(! @ # $ etc)</string>
     <string name="error_passwords_dont_match">Passwords don\'t match</string>
     <string name="authenticate_device">Authenticate Device</string>
     <string name="enter_six_digit_code">Enter 6 digit code sent to</string>
@@ -157,20 +157,20 @@
 
     <!--Security OverView Screen in Walkthrough-->
     <string name="end_to_end_encryption">End-to-end encryption</string>
-    <string name="end_to_end_encryption_description1">With NineBx, all your data, whether at rest or in transit, is fully encrypted and cannot be read by anyone other than you. Your data is encrypted and decrypted only at the device level, and only on your authorized device, so only you can see it.</string>
-    <string name="end_to_end_encryption_description2">Your data is secured using military-grade AES 256-bit encryption with PBKDF2 key derivation with 10,000 iterations. This makes it effectively impossible for anyone to decrypt your data without knowledge of your Master Password.</string>
+    <string name="end_to_end_encryption_description1">With NineBx all your data whether at rest or in transit is fully encrypted and cannot be read by anyone other than you. Your data is encrypted and decrypted only at the device level and only on your authorized device so only you can see it.</string>
+    <string name="end_to_end_encryption_description2">Your data is secured using military-grade AES 256-bit encryption with PBKDF2 key derivation with 10000 iterations. This makes it effectively impossible for anyone to decrypt your data without knowledge of your Master Password.</string>
 
     <string name="only_you_have_the_key">Only you have the key to your data</string>
     <string name="only_you_have_the_key_description1">All encryption and decryption of data requires knowledge of the Master Password which only you as the user know.</string>
-    <string name="only_you_have_the_key_description2">For your security, the Master Password is never stored on our servers and is never transmitted over the internet. Given this added security measure, NineBx is not able to help you access your data if you ever happen to forget your Master Password.</string>
+    <string name="only_you_have_the_key_description2">For your security the Master Password is never stored on our servers and is never transmitted over the internet. Given this added security measure NineBx is not able to help you access your data if you ever happen to forget your Master Password.</string>
 
 
     <string name="multi_factor_authentication">Multi-factor authentication</string>
-    <string name="multi_factor_authentication_description1">In addition to confirming your Master Password, NineBx security requires you to authenticate any new device you use with a time-based one-time password (OTP) that is sent to your registered email.</string>
-    <string name="multi_factor_authentication_description2">For added security, the app is locked whenever it is pushed to the background on your device. Unlocking it requires you to enter a 6-digit Personal Passcode for NineBx that you create at Sign Up. For your convenience, you can enable Touch ID so you do not have to key in this passcode every time.</string>
+    <string name="multi_factor_authentication_description1">In addition to confirming your Master Password NineBx security requires you to authenticate any new device you use with a time-based one-time password (OTP) that is sent to your registered email.</string>
+    <string name="multi_factor_authentication_description2">For added security the app is locked whenever it is pushed to the background on your device. Unlocking it requires you to enter a 6-digit Personal Passcode for NineBx that you create at Sign Up. For your convenience you can enable Touch ID so you do not have to key in this passcode every time.</string>
 
     <string name="secure_and_reliable">Secure and reliable cloud storage</string>
-    <string name="secure_and_reliable_description">NineBx servers are hosted on Amazon Web Services (AWS), widely considered to be one of the most secure and reliable cloud platforms in the industry.</string>
+    <string name="secure_and_reliable_description">NineBx servers are hosted on Amazon Web Services (AWS) widely considered to be one of the most secure and reliable cloud platforms in the industry.</string>
     <string name="ninebx_best_in_class_security">NineBx Best-in-Class Security</string>
 
     <string name="ninebx_privacy_policy">NineBx Privacy Policy</string>
@@ -178,18 +178,18 @@
     <string name="support_email">support@ninebx.com</string>
     <string name="choose_your_plan">Choose your plan</string>
     <string name="one">One</string>
-    <string name="_1_user_no_cloud_backup">1 user, no cloud backup</string>
+    <string name="_1_user_no_cloud_backup">1 user no cloud backup</string>
     <string name="free">FREE</string>
     <string name="one_plus">One Plus</string>
-    <string name="_1_user_cloud_backup_and_5_gb_file_storage">1 user, cloud backup and 5 GB file storage</string>
+    <string name="_1_user_cloud_backup_and_5_gb_file_storage">1 user cloud backup and 5 GB file storage</string>
     <string name="_2_99_month">$2.99/month</string>
     <string name="_29_99_year">$29.99/year</string>
     <string name="family">Family</string>
-    <string name="up_to_3_users_cloud_backup_and_10gb_file_storage">Up to 3 users, cloud backup and 10GB file storage</string>
+    <string name="up_to_3_users_cloud_backup_and_10gb_file_storage">Up to 3 users cloud backup and 10GB file storage</string>
     <string name="_3_99_month">$3.99/month</string>
     <string name="_39_99_year">$39.99/year</string>
     <string name="family_plus">Family Plus</string>
-    <string name="up_to_5_users_cloud_backup_and_20gb_file_storage">Up to 5 users, cloud backup and 20GB file storage</string>
+    <string name="up_to_5_users_cloud_backup_and_20gb_file_storage">Up to 5 users cloud backup and 20GB file storage</string>
     <string name="_4_99_month">$4.99/month</string>
     <string name="_49_99_year">$49.99/year</string>
     <string name="_16_savings">16% savings</string>
@@ -216,18 +216,18 @@
     <string name="ability_to_make_records_private">Ability to make records private</string>
     <string name="customizable_user_permissions">Customizable user permissions</string>
     <string name="ability_to_track_modifications_to_records">Ability to track modifications to records</string>
-    <string name="ability_to_add_records_for_non_users_ex_minors_pets">Ability to add records for non-users(ex.minors, pets</string>
+    <string name="ability_to_add_records_for_non_users_ex_minors_pets">Ability to add records for non-users(ex.minors pets</string>
     <string name="up_to_3_non_users">Up to 3 \n non-users</string>
     <string name="unlimited">Unlimited</string>
-    <string name="secure_multi_user_collaboration_and_sharing">Secure, multi-user collaboration and sharing</string>
+    <string name="secure_multi_user_collaboration_and_sharing">Secure multi-user collaboration and sharing</string>
     <string name="up_to_5_users">Up to 5 users</string>
     <string name="upto_3_users">Up to 3 users</string>
     <string name="ability_to_push_files_into_ninebx_from_email_photo_gallery">Ability to push files into NineBx from email/photo gallery</string>
     <string name="notifications_reminders_and_alerts">Notifications - reminders and alerts</string>
-    <string name="comprehensive_search_across_nine_boxes_calendar_and_lists">Comprehensive search across nine boxes, calendar, and lists</string>
-    <string name="quick_fill_using_voice_pre_populated_options_location_search">Quick-fill using voice, pre-populated options, location search</string>
+    <string name="comprehensive_search_across_nine_boxes_calendar_and_lists">Comprehensive search across nine boxes calendar and lists</string>
+    <string name="quick_fill_using_voice_pre_populated_options_location_search">Quick-fill using voice pre-populated options location search</string>
     <string name="customizable_lists">Customizable lists</string>
-    <string name="access_to_intuitive_pre_defined_folders_across_all_nine_boxes">Access to intuitive, pre-defined folders across all nine boxes</string>
+    <string name="access_to_intuitive_pre_defined_folders_across_all_nine_boxes">Access to intuitive pre-defined folders across all nine boxes</string>
     <string name="functionality">Functionality</string>
     <string name="secure_and_convenient_touch_id_login">Secure and convenient Touch ID login</string>
     <string name="military_grade_encryption_aes_256_bit">Military grade encryption (AES 256-bit)</string>
@@ -354,7 +354,7 @@
     <string name="item_price">$62.68</string>
     <string name="item_description">Mesh backpack in white. Black textile trim throughout.</string>
     <string name="purchase_done">Purchase successful</string>
-    <string name="new_fingerprint_enrolled_description">A new fingerprint was added to this device, so your password is required.</string>
+    <string name="new_fingerprint_enrolled_description">A new fingerprint was added to this device so your password is required.</string>
     <string name="use_fingerprint_in_future">Use fingerprint in the future</string>
     <string name="use_fingerprint_to_authenticate_title">Use fingerprint to authenticate</string>
     <string name="use_fingerprint_to_authenticate_key">use_fingerprint_to_authenticate_key</string>
@@ -373,7 +373,7 @@
 
     <string name="account_master_password_share">\u25CF Choose one you can share - you will need to share this master password with users you add to this account</string>
 
-    <string name="account_master_password_remember">\u25CF Please remember it - only you and your other account users will know this password. For this security, your master password is never saced on our servers and canot be retrieved if forgotten.</string>
+    <string name="account_master_password_remember">\u25CF Please remember it - only you and your other account users will know this password. For this security your master password is never saced on our servers and canot be retrieved if forgotten.</string>
     <string name="add_list">Add list</string>
 
     <string name="save">Save</string>
@@ -403,7 +403,7 @@
     <string name="date">Date</string>
     <string name="how_was_it_in_terms_of_visual_appeal">How was it in terms of visual appeal?</string>
     <string name="how_was_it_to_navigate">How was it to navigate?</string>
-    <string name="by_signing_up_you_agree_to_our">By signing up, you agree to our</string>
+    <string name="by_signing_up_you_agree_to_our">By signing up you agree to our</string>
     <string name="error_empty_title">Title should not be empty</string>
     <string name="error_empty_start_date">Start date cannot be empty</string>
     <string name="error_empty_end_date">End date cannot be empty</string>
@@ -440,6 +440,494 @@
         <item>Co-administrator</item>
         <item>User</item>
         <item>Non-user</item>
+    </string-array>
+
+
+    <string-array name="dummyUser">
+        <item>All</item>
+        <item>Aman</item>
+        <item>Shekhar</item>
+        <item>Alok</item>
+        <item>Varun</item>
+
+    </string-array>
+
+    <string-array name="dummyCurrency">
+        <item>USD</item>
+        <item>INR</item>
+        <item>DOLLAR</item>
+
+
+    </string-array>
+
+    <string-array name="AccountType">
+        <item>Account Type</item>
+        <item>Checking</item>
+        <item>Saving</item>
+        <item>Other</item>
+
+    </string-array>
+
+
+    <string-array name="currency">
+        <item>USD</item>
+        <item>US Dollar - USD</item>
+        <item>Afghanistan Afghani - AFA</item>
+        <item>Albanian Lek - ALL</item>
+        <item>
+        Algerian Dinar - DZD
+        </item>
+
+        <item>
+        Angolan Kwanza Reajustado - AOR
+        </item>
+
+        <item>
+        Argentine Peso - ARS
+        </item>
+
+        <item>
+        Armenian Dram - AMD
+        </item>
+
+        <item>
+        Aruban Guilder - AWG
+        </item>
+
+        <item>
+        Australian Dollar - AUD
+        </item>
+
+        <item>
+        Azerbaijanian New Manat - AZN
+        </item>
+
+        <item>
+        Bahamian Dollar - BSD
+        </item>
+
+        <item>
+        Bahraini Dinar - BHD
+        </item>
+
+        <item>
+        Bangladeshi Taka - BDT
+        </item>
+
+        <item>
+            Barbados Dollar - BBD</item>
+
+        <item>   Belarusian Ruble - BYN</item>
+
+        <item>   Belize Dollar - BZD</item>
+
+        <item>Bermudian Dollar - BMD
+
+        <item>Bhutan Ngultrum - BTN
+
+        <item>Bolivian Boliviano - BOB
+        </item>
+
+        <item>
+            Botswana Pula - BWP</item>
+        </item>
+
+        <item>
+            Brazilian Real - BRL</item>
+        </item>
+
+        <item>
+            British Pound - GBP</item>
+
+        <item>
+        Brunei Dollar - BND
+        </item>
+        <item>
+        Bulgarian Lev - BGN
+        </item>
+        <item>
+        Burundi Franc - BIF
+        </item>
+        <item>
+        Cambodian Riel - KHR
+        </item>
+        <item>
+        Canadian Dollar - CAD
+        </item>
+        <item>
+        Cape Verde Escudo - CVE
+        </item>
+        <item>
+        Cayman Islands Dollar - KYD
+        </item>
+        <item>
+        CFA Franc BCEAO - XOF
+        </item>
+        <item>
+        CFA Franc BEAC - XAF
+        </item>
+        <item>
+        CFP Franc - XPF
+        </item>
+        <item>
+        Chilean Peso - CLP
+        </item>
+        <item>
+        Chinese Yuan Renminbi - CNY
+        </item>
+        <item>
+        Colombian Peso - COP
+        </item>
+        <item>
+        Comoros Franc - KMF
+        </item>
+        <item>
+        Congolese Franc - CDF
+        </item>
+        <item>
+        Costa Rican Colon - CRC
+        </item>
+        <item>
+        Croatian Kuna - HRK
+        </item>
+        <item>
+        Cuban Peso - CUP
+        </item>
+        <item>
+        Czech Koruna - CZK
+        </item>
+        <item>
+        Danish Krone - DKK
+        </item>
+        <item>
+        Djibouti Franc - DJF
+        </item>
+        <item>
+        Dominican Peso - DOP
+        </item>
+        <item>
+        East Caribbean Dollar - XCD
+        </item>
+        <item>
+        Egyptian Pound - EGP
+        </item>
+        <item>
+        El Salvador Colon - SVC
+        </item>
+        <item>
+        Eritrean Nakfa - ERN
+        </item>
+        <item>
+        Estonian Kroon - EEK
+        </item>
+        <item>
+        Ethiopian Birr - ETB
+        </item>
+        <item>
+        EU Euro - EUR
+        </item>
+        <item>
+        Falkland Islands Pound - FKP
+        </item>
+        <item>
+        Fiji Dollar - FJD
+        </item>
+        <item>
+        Gambian Dalasi - GMD
+        </item>
+        <item>
+        Georgian Lari - GEL
+        </item>
+        <item>
+        Ghanaian New Cedi - GHS
+        </item>
+        <item>
+        Gibraltar Pound - GIP
+        </item>
+        <item>
+        Gold (Ounce) - XAU
+        </item>
+        <item>
+        Gold Franc - XFO
+        </item>
+        <item>
+        Guatemalan Quetzal - GTQ
+        </item>
+        <item>
+        Guinean Franc - GNF
+        </item>
+        <item>
+        Guyana Dollar - GYD
+        </item>
+        <item>
+        Haitian Gourde - HTG
+        </item>
+        <item>
+        Honduran Lempira - HNL
+        </item>
+        <item>
+        Hong Kong SAR Dollar - HKD
+        </item>
+        <item>
+        Hungarian Forint - HUF
+        </item>
+        <item>
+        Icelandic Krona - ISK
+        </item>
+        <item>
+        IMF Special Drawing Right - XDR
+        </item>
+        <item>
+        Indian Rupee - INR
+        </item>
+        <item>
+        Indonesian Rupiah - IDR
+        </item>
+        <item>
+        Iranian Rial - IRR
+        </item>
+        <item>
+        Iraqi Dinar - IQD
+        </item>
+        <item>
+        Israeli New Shekel - ILS
+        </item>
+        <item>
+        Jamaican Dollar - JMD
+        </item>
+        <item>
+        Japanese Yen - JPY
+        </item>
+        <item>
+        Jordanian Dinar - JOD
+        </item>
+        <item>
+        Kazakh Tenge - KZT
+        </item>
+        <item>
+        Kenyan Shilling - KES
+        </item>
+        <item>
+        Kuwaiti Dinar - KWD
+        </item>
+        <item>
+        Kyrgyz Som - KGS
+        </item>
+        <item>
+        Lao Kip - LAK
+        </item>
+        <item>
+        Latvian Lats - LVL
+        </item>
+        <item>
+        Lebanese Pound - LBP
+        </item>
+        <item>
+        Lesotho Loti - LSL
+        </item>
+
+        <item>
+        Liberian Dollar - LRD
+        </item>
+
+        <item>
+        Libyan Dinar - LYD
+        </item>
+
+        <item>
+        Lithuanian Litas - LTL
+        </item>
+
+        <item>
+        Macao SAR Pataca - MOP
+        </item>
+
+        <item>
+        Macedonian Denar - MKD
+        </item>
+
+        <item>
+        Malagasy Ariary - MGA
+        </item>
+
+        <item>
+        Malawi Kwacha - MWK
+        </item>
+
+        <item>
+        Malaysian Ringgit - MYR
+        </item>
+
+        <item>
+        Maldivian Rufiyaa - MVR
+        </item>
+
+        <item>
+        Mauritanian Ouguiya - MRO
+        </item>
+
+        <item>
+        Mauritius Rupee - MUR
+        </item>
+
+        <item>
+        Mexican Peso - MXN
+        </item>
+
+        <item>
+        Moldovan Leu - MDL
+        </item>
+
+        <item>
+        Mongolian Tugrik - MNT
+        </item>
+
+        <item>
+        Moroccan Dirham - MAD
+        </item>
+
+        <item>
+        Mozambique New metical - MZN
+        </item>
+
+        <item>
+        Myanmar Kyat - MMK
+        </item>
+
+        <item>
+        Namibian Dollar - NAD
+        </item>
+
+        <item>
+        Nepalese Rupee - NPR
+        </item>
+
+        <item>
+        Netherlands Antillian Guilder - ANG
+        </item>
+
+        <item>
+        New Zealand Dollar - NZD
+        </item>
+
+        <item>
+        Nicaraguan Cordoba oro - NIO
+        </item>
+
+        <item>
+        Nigerian Naira - NGN
+        </item>
+
+        <item>
+        North Korean Won - KPW
+        </item>
+        <item>
+        Norwegian Krone - NOK
+        </item>
+        <item>
+        Omani Rial - OMR
+        </item>
+        <item>
+        Pakistani Rupee - PKR
+        </item>
+        <item>
+        Palladium (Ounce) - XPD
+        </item>
+        <item>
+        Panamanian Balboa - PAB
+        </item>
+        <item>
+        Papua New Guinea Kina - PGK
+        </item>
+        <item>
+        Paraguayan Guarani - PYG
+        </item>
+        <item>
+        Peruvian Nuevo Sol - PEN
+        </item>
+        <item>
+        Philippine Peso - PHP
+        </item>
+        <item>
+        Platinum (Ounce) - XPT
+        </item>
+        <item>
+        Polish Zloty - PLN
+        </item>
+        <item>
+        Qatari Rial - QAR
+        </item>
+        <item>
+            Romanian New Leu - RON</item>
+
+        <item> Russian Ruble - RUB</item>
+
+        <item>     Rwandan Franc - RWF</item>
+
+        <item>     Saint Helena Pound - SHP</item>
+
+        <item>     Samoan Tala - WST</item>
+
+        <item>     Sao Tome And Principe Dobra - STD</item>
+
+        <item>     Saudi Riyal - SAR</item>
+
+        <item>      Serbian Dinar - RSD</item>
+
+        <item>     Seychelles Rupee - SCR</item>
+
+        <item>     Sierra Leone Leone - SLL</item>
+
+        <item>     Silver (Ounce) - XAG</item>
+
+        <item>    Singapore Dollar - SGD</item>
+
+        <item>    Solomon Islands Dollar - SBD</item>
+
+        <item>    Somali Shilling - SOS</item>
+
+        <item>    South African Rand - ZAR</item>
+
+        <item>     South Korean Won - KRW</item>
+
+        <item>     Sri Lanka Rupee - LKR</item>
+
+        <item>    Sudanese Pound - SDG</item>
+
+        <item>    Suriname Dollar - SRD</item>
+
+        <item>    Swaziland Lilangeni - SZL</item>
+
+        <item>  Swedish Krona - SEK</item>
+
+        <item>  Swiss Franc - CHF</item>
+
+        <item>  Syrian Pound - SYP</item>
+
+        <item> Taiwan New Dollar - TWD</item>
+
+        <item>Tajik Somoni - TJS</item>
+
+        <item>  Tanzanian Shilling - TZS</item>
+        <item>  Thai Baht - THB</item>
+        <item>  Tongan Paanga - TOP</item>
+        <item>  Trinidad And Tobago Dollar - TTD</item>
+        <item>   Tunisian Dinar - TND</item>
+        <item>  Turkish Lira - TRY</item>
+        <item>   Turkmen New Manat - TMT</item>
+        <item>   UAE Dirham - AED</item>
+        <item>   Uganda New Shilling - UGX</item>
+        <item>   UIC Franc - XFU</item>
+        <item>   Ukrainian Hryvnia - UAH</item>
+        <item>  Uruguayan Peso Uruguayo - UYU</item>
+        <item>  US Dollar - USD</item>
+        <item>  Uzbekistani Sum - UZS</item>
+        <item>   Vanuatu Vatu - VUV</item>
+        <item>   Venezuelan Bolivar Fuerte - VEF</item>
+        <item>   Vietnamese Dong - VND</item>
+        <item>  Yemeni Rial - YER</item>
+        <item>Zambian Kwacha - ZMK</item>
+        <item>   Zimbabwe Dollar - ZWL</item>
     </string-array>
 
 </resources>

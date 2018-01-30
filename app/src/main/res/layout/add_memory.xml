@@ -1,17 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:padding="@dimen/default_micro_padding"
+                app:srcCompat="@drawable/ic_icon_arrow_form" />
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Add Memory"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:text="Save"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="@dimen/default_micro_padding"
         android:background="@color/colorGrey"
         android:gravity="center_vertical">
 
@@ -21,29 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="Title" />
+            android:layout_margin="@dimen/default_mini_padding"
+            android:text="Title"
+            android:textSize="@dimen/text_16" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/default_micro_padding"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_icon_save" />
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_micro_padding"
-                app:srcCompat="@drawable/ic_icon_delete_icon" />
-
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/txtDate"
@@ -51,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/txtTitle"
+            android:layout_margin="@dimen/default_mini_padding"
             android:text="Date" />
 
     </RelativeLayout>
@@ -63,7 +95,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -140,10 +171,15 @@
                 android:background="@null"
                 android:drawableRight="@drawable/ic_add_circle_outline_blue_300_24dp"
                 android:gravity="center_vertical"
+                android:hint="@string/contacts"
                 android:padding="@dimen/default_mini_padding"
-                android:singleLine="true"
-                tools:hint="@string/contacts" />
+                android:singleLine="true" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:background="@color/colorGrey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -155,11 +191,17 @@
             <EditText
                 android:id="@+id/edtNotes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/margin_72"
                 android:background="@null"
                 android:hint="Notes"
 
                 android:padding="@dimen/default_mini_padding" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:background="@color/colorGrey" />
 
             <LinearLayout
                 android:id="@+id/layCreated"

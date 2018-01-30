@@ -5,68 +5,282 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:id="@+id/layoutPersonalHealthRecord"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_32sdp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/_5sdp"
-        android:background="@color/grey_100">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_icon_health_records"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="@string/personal_health_record"
-            android:textColor="@color/colorPrimary" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layoutAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@color/white"
-        android:gravity="center">
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_icon_add_list"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="@dimen/_5sdp"
-            android:hint="@string/add_person"
-            android:textColor="@color/colorPrimary" />
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Identification" />
 
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey_100" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvPersonAdded"
+    <RelativeLayout
+        android:id="@+id/layoutMedicalHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:visibility="gone" />
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
 
-    <include layout="@layout/layout_bottom"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Medical history" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutHealthCare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Healthcare providers" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutEmergency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Emergency contacts" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutMedications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Medications" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutMedicalConditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Medical conditions/Allergies" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutEye"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Eyeglass prescriptions" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutVitalNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Vital numbers" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutCheckUps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@color/grey_100"
+        android:padding="@dimen/default_mini_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="start"
+            android:text="Checkups and visits" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>
