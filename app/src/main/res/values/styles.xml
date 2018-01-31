@@ -47,8 +47,14 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
-    <style parent="@android:style/Widget.Spinner" name="SpinnerwithNoArrow">
+    <style name="SpinnerwithNoArrow" parent="@android:style/Widget.Spinner">
         <item name="android:background">@android:drawable/edit_text</item>
+    </style>
+
+
+    <style name="mySpinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/colorHint</item>
+        <item name="android:background">@null</item>
     </style>
 
 

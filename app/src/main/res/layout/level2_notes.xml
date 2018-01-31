@@ -15,6 +15,8 @@
         android:layout_marginRight="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:background="@null"
+        android:textSize="@dimen/text_14"
+
         android:gravity="start"
         android:hint="Notes" />
 

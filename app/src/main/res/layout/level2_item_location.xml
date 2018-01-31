@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/default_mini_padding"
-    android:layout_marginStart="@dimen/default_mini_padding"
-    android:layout_marginTop="@dimen/default_mini_padding"
+    android:layout_margin="@dimen/default_mini_padding"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <TextView
@@ -14,20 +13,26 @@
         android:layout_marginLeft="@dimen/default_mini_padding"
         android:layout_marginStart="@dimen/default_mini_padding"
         android:layout_marginTop="@dimen/default_mini_padding"
-        android:text="asdasdasadsas" />
+        android:text="asdasdasadsas"
+        android:textSize="@dimen/text_14" />
 
 
     <EditText
         android:id="@+id/etSubHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_mini_padding"
+        android:layout_marginBottom="@dimen/default_mini_padding"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_mini_padding"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_mini_padding"
         android:layout_marginTop="@dimen/default_mini_padding"
         android:background="@null"
-        android:drawableEnd="@drawable/ic_icon_search_normal"
-        android:drawableRight="@drawable/ic_icon_search_normal"
+        android:drawableEnd="@drawable/ic_icon_search_selected"
+        android:drawableRight="@drawable/ic_icon_search_selected"
         android:hint="sadasdasdasda"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textSize="@dimen/text_14" />
 
 
 </LinearLayout>

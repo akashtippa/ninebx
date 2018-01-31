@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
-import kotlinx.android.synthetic.main.activity_home.*
+import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_home_updated.*
 
 /***
  * Created by TechnoBlogger on 08/01/18.
  */
 class HomeFragment : Fragment(), View.OnClickListener {
+
+    val prefrences = NineBxPreferences()
+
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -80,38 +83,55 @@ class HomeFragment : Fragment(), View.OnClickListener {
         when (option) {
             (R.string.home_amp_money) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
+                prefrences.currentBox = "Home"
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.travel) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
+                prefrences.currentBox = "Travel"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.contacts) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
+                prefrences.currentBox = "Contacts"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.education_work) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
+                prefrences.currentBox = "Education"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.personal) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
+                prefrences.currentBox = "Personal"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.interests) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.interests))
+                prefrences.currentBox = "Interests"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.wellness) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
+                prefrences.currentBox = "Wellness"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.memories) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
+                prefrences.currentBox = "Memories"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.shopping) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
+                prefrences.currentBox = "Shopping"
+
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
         }

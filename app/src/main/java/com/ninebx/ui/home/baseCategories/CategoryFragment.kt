@@ -19,6 +19,7 @@ import com.ninebx.ui.home.fragments.ClothesFragment
 import com.ninebx.ui.home.fragments.FragmentTestContact
 import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
 import com.ninebx.ui.home.fragments.WellnessFragment
+import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_category.*
@@ -78,6 +79,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     getContactsList()
                 } else if (category.title == "Memory Timeline") {
                     getMemoryTimeLine()
+                } else if (category.title == "Lists") {
+                    getFragmentSubList()
                 } else if (category.subCategories.size == 0) {
                     val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
@@ -88,7 +91,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                 }
 
-                Toast.makeText(context, "" + category.title, Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "" + category.title, Toast.LENGTH_LONG).show()
 
             }
 
@@ -158,5 +161,19 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         val categoryFragment = FragmentTestMemoryTimeLine()
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
+
+    private fun getFragmentSubList() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val bundle = Bundle()
+        bundle.putString("homeScreen", "HomeScreen")
+
+        val categoryFragment = SubListsFragment()
+        categoryFragment.arguments = bundle
+
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
+
 
 }

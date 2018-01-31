@@ -69,8 +69,9 @@ class HomeActivity : AppCompatActivity(), HomeView {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
-    var strUsername: String = "test.box24@yopmail.com"
-    var strPassword: String = "[188, 156, 77, 221, 202, 199, 239, 127, 240, 3, 139, 248, 54, 89, 82, 75, 68, 77, 138, 158, 124, 167, 135, 222, 160, 208, 203, 142, 112, 179, 91, 49]"
+
+    var USERNAME: String = "aman.shekhar@cognitiveclouds.com"
+    var PASSWORD: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
 
     var myCredentials: SyncCredentials? = null
     var user: SyncUser? = null
@@ -198,7 +199,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     private fun syncNow() {
-        myCredentials = SyncCredentials.usernamePassword(strUsername, strPassword, false)
+        myCredentials = SyncCredentials.usernamePassword(USERNAME, PASSWORD, false)
         user = SyncUser.login(myCredentials, Constants.SERVER_IP)
         config = SyncConfiguration.Builder(user, Constants.SERVER_URL + "DummyTB")
                 .waitForInitialRemoteData()

@@ -129,17 +129,15 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         val newValue = childView!!.findViewById<Spinner>(R.id.spinnerCurrency).getItemAtPosition(position) as String
                         var test = newValue.split("-")
 
-//                        val separated = newValue.split("-")
-//                        separated[0]
-//                        separated[1]
-//                        AppLogger.e("Country ", " is " + separated[1])
-
 
                     }
 
 
                 };
 
+            }
+            Constants.LEVEL2_EYEGLASS -> {
+                childView = infalInflater.inflate(R.layout.item_eye_prescription, null)
             }
             Constants.LEVEL2_NOTES -> {
 
@@ -182,6 +180,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
 
                 if (keyBoardType == Constants.KEYBOARD_NUMBER) {
+                    childView = infalInflater.inflate(R.layout.level2_item_number, null)
                     childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
                 } else if (keyBoardType == Constants.KEYBOARD_SPINNER) {
                     childView.findViewById<EditText>(R.id.etSubHeader).hide()
@@ -262,9 +261,9 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
         lblListHeader.text = headerTitle
 
         if (isExpanded) {
-            lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_icon_arrow_down, 0);
-        } else {
             lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_five, 0);
+        } else {
+            lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_icon_arrow_down, 0);
         }
 
         return convertView

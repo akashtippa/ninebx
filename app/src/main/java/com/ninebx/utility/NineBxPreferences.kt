@@ -13,4 +13,6 @@ class NineBxPreferences : Preferences() {
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP)
 
+    var currentBox by stringPref(Constants.CURRENT_BOX)
+
 }

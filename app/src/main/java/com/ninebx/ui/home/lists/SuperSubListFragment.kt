@@ -140,9 +140,10 @@ class SuperSubListFragment : FragmentBackHelper() {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
+        NineBxApplication.instance.activityInstance!!.showBackIcon()
         NineBxApplication.instance.activityInstance!!.showToolbar()
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
+
         return super.onBackPressed()
     }
 }

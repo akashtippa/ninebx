@@ -444,6 +444,7 @@
 
 
     <string-array name="dummyUser">
+        <item></item>
         <item>All</item>
         <item>Aman</item>
         <item>Shekhar</item>
@@ -466,6 +467,13 @@
         <item>Saving</item>
         <item>Other</item>
 
+    </string-array>
+
+    <string-array name="test">
+        <item>0.00 </item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 
 

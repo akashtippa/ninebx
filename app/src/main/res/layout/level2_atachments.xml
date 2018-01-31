@@ -35,11 +35,11 @@
             android:background="@color/transparent_white"
             android:drawablePadding="@dimen/default_mini_padding"
             android:gravity="center_vertical"
+            android:hint="@string/attachment_name"
             android:paddingBottom="@dimen/default_margin"
             android:paddingEnd="@dimen/default_margin"
             android:paddingRight="@dimen/default_margin"
             android:paddingTop="@dimen/default_margin"
-            android:text="@string/attachment_name"
             android:textSize="@dimen/_14sdp" />
 
         <View

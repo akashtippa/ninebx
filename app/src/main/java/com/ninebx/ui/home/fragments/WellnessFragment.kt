@@ -60,6 +60,16 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
 
+        layoutEmergency.setOnClickListener {
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            val bundle = Bundle()
+            bundle.putString("categoryName", "Emergency contacts")
+            val categoryFragment = Level2CategoryFragment()
+            categoryFragment.arguments = bundle
+            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+        }
+
         layoutMedications.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)

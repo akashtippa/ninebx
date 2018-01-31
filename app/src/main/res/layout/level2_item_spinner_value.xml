@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_mini_padding"
+        android:textSize="@dimen/text_14"
+
         android:layout_marginStart="@dimen/default_mini_padding"
         android:layout_marginTop="@dimen/_10sdp"
         android:hint="" />
@@ -20,10 +22,13 @@
         android:id="@+id/spinnerValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_14"
+
         android:layout_marginBottom="@dimen/default_mini_padding"
         android:layout_marginTop="@dimen/default_mini_padding"
         android:background="@null"
         android:entries="@array/AccountType"
+        android:textColor="@android:color/darker_gray"
         android:visibility="visible" />
 
 </LinearLayout>

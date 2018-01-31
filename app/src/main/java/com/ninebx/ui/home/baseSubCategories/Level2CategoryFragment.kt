@@ -9,6 +9,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
+import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_level2_category.*
 
 /***
@@ -22,6 +23,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private var strTitle = ""
     private var strSubTitle = ""
+    private var boxValue = ""
+    val prefrences = NineBxPreferences()
 
 
     override fun showProgress(message: Int) {
@@ -31,6 +34,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun hideProgress() {
         layoutProgress.hide()
     }
+
 
     override fun onError(error: Int) {
     }
@@ -58,7 +62,41 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
+        boxValue = prefrences.currentBox!!
+
         setTitle()
+
+        setCamera(boxValue)
+    }
+
+    private fun setCamera(boxValue: String?) {
+        when (boxValue) {
+            "Home" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_home)
+            }
+            "Travel" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_travel)
+            }
+            "Contacts" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_contacts)
+            }
+            "Personal" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_personal)
+            }
+            "Interests" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_interests)
+            }
+            "Wellness" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_wellness)
+            }
+            "Memories" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_memories)
+            }
+            "Shopping" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
+            }
+
+        }
     }
 
     private fun setTitle() {
@@ -79,7 +117,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.hint = "Account name"
                 toolbarTitle.text = "Add Account"
             }
-            "Loan/Mortgages" -> {
+            "Loans/Mortgages" -> {
                 etTitle.hint = "Institution name"
                 etTitleValue.hint = "Account name"
                 toolbarTitle.text = "Add Account"
@@ -119,7 +157,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Vacation home" -> {
                 etTitle.hint = "Property name"
                 etTitleValue.hint = ""
-                toolbarTitle.text = "Add Account"
+                toolbarTitle.text = "Add Property"
             }
             "Investment/Rental property" -> {
                 etTitle.hint = "Property name"
@@ -221,7 +259,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Airline"
                 etTitleValue.hint = "Account name"
                 toolbarTitle.text = "Add Account"
-
             }
 
             "Hotel" -> {

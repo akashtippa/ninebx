@@ -18,6 +18,7 @@ object Constants {
     var SERVER_API_ADDRESS = "http://13.59.129.162/api/"
 
     val CURRENT_STEP: String = "current_step"
+    val CURRENT_BOX: String = "current_box"
 
     val ALL_COMPLETE = 99
     val SIGN_UP_COMPLETE = 1
@@ -48,6 +49,7 @@ object Constants {
     val LEVEL2_PICKER = 19
     val LEVEL2_NUMBER = 20
     val LEVEL_NORMAL_SPINNER = 21
+    val LEVEL2_EYEGLASS = 22
 
     val KEYBOARD_NUMBER = "number"
     val KEYBOARD_SPINNER = "spinner"
