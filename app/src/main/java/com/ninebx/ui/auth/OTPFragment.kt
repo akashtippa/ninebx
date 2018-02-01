@@ -30,10 +30,11 @@ class OTPFragment : BaseAuthFragment() {
         tvEmail.text = arguments!!.getString("email", "")
         btnSubmit.setOnClickListener {
             if( validate() ) {
+                emailOtp = ""
                 mAuthView.navigateToCreatePassCode( true )
             }
         }
-        
+
         setupOtp()
     }
 
@@ -57,7 +58,7 @@ class OTPFragment : BaseAuthFragment() {
             }
 
             override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                
+
 
             }
 
@@ -170,6 +171,9 @@ class OTPFragment : BaseAuthFragment() {
             etOtp5.setText("1")
             etOtp6.setText("1")
         }
+
+        mAuthView.getAuthPresenter().requestOTP( mAuthView.getAccountEmail() )
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -204,6 +208,16 @@ class OTPFragment : BaseAuthFragment() {
         if( !validateView( etOtp5 ) ) isValid = false
         if( !validateView( etOtp6 ) ) isValid = false
 
+        if( isValid && emailOtp != "" ) {
+            val otp = etOtp1.text.toString().trim() +
+                    etOtp2.text.toString().trim() +
+                    etOtp3.text.toString().trim() +
+                    etOtp4.text.toString().trim() +
+                    etOtp5.text.toString().trim() +
+                    etOtp6.text.toString().trim()
+            isValid = emailOtp == otp
+        }
+
         return isValid
     }
 
@@ -213,5 +227,11 @@ class OTPFragment : BaseAuthFragment() {
             etOtp.error = getString(R.string.required)
         }
         return isValid
+    }
+
+    var emailOtp = ""
+
+    fun setEmailOTP(emailOtp: String) {
+        this.emailOtp = emailOtp
     }
 }

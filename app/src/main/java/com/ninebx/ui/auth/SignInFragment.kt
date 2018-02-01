@@ -27,9 +27,9 @@ class SignInFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnLogin.setOnClickListener {
-            /*   if (validate()) {
+               if (validate()) {
                    mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
-               }*/
+               }
 
 
             val intent = Intent(context, HomeActivity::class.java)
@@ -50,8 +50,8 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("test.box24@yopmail.com")
-            edtPassword.setText("Test.box24")
+            edtEmailAddress.setText("aman.shekhar@cognitiveclouds.com")
+            edtPassword.setText("Password14.")
         }
     }
 

@@ -53,6 +53,7 @@ object Constants {
     val KEYBOARD_SPINNER = "spinner"
     val KEYBOARD_SEARCH = "search"
     val KEYBOARD_PICKER = "picker"
+    val CURRENT_USER: String = "current_user"
 
 
 }

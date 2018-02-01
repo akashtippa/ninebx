@@ -48,6 +48,10 @@ android {
     }
     productFlavors {
     }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 realm {
@@ -103,7 +107,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
 
     //CircleImageView
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
     //Amazon AWS
     compile 'com.amazonaws:aws-android-sdk-core:2.6.+'
@@ -112,4 +116,7 @@ dependencies {
 
     //Jncryptor
     compile 'org.cryptonode.jncryptor:jncryptor:1.2.0'
+
+    //SendGrid Email Client
+    //compile 'com.github.danysantiago:sendgrid-android:1'
 }

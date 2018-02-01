@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth
 
 import com.ninebx.ui.base.BaseView
+import com.ninebx.ui.base.realm.Users
 import io.realm.SyncUser
 
 /**
@@ -11,7 +12,7 @@ interface AuthView : BaseView {
     fun navigateToSignIn()
     fun navigateToHome()
     fun navigateToOTP()
-    fun navigateToAccountPassword()
+    fun navigateToAccountPassword( users : Users )
     fun navigateToCreatePassCode( isCreatePassCode : Boolean  )
     fun navigateToFingerPrint()
     fun navigateToInvitePeople()
@@ -20,5 +21,6 @@ interface AuthView : BaseView {
     fun onError( error : String )
     fun getAccountEmail() : String
     fun setAccountEmail(accountEmail: String)
-
+    fun createUser(firstName: String, lastName: String, email: String)
+    fun validateEmailOTP(emailOtp: String)
 }

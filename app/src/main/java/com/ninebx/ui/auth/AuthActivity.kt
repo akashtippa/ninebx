@@ -16,6 +16,7 @@ import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.support.annotation.RequiresApi
 import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
+import com.ninebx.ui.base.realm.Users
 
 
 /**
@@ -23,6 +24,17 @@ import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+    override fun validateEmailOTP(emailOtp: String) {
+        if( otpFragment != null ) {
+            otpFragment!!.setEmailOTP( emailOtp )
+        }
+    }
+
+    override fun createUser(firstName: String, lastName: String, email: String) {
+        val currentUser = mAuthPresenter.createUser( email, firstName, lastName )
+        NineBxApplication.getPreferences().setCurrentUser( currentUser )
+        navigateToAccountPassword( currentUser )
+    }
 
 
     override fun onError(error: String) {
@@ -83,26 +95,30 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var accountPasswordFragment: AccountPasswordFragment? = null
-    override fun navigateToAccountPassword() {
+    override fun navigateToAccountPassword( users : Users ) {
         if (NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE
         mCurrentTag = "AccountPassword"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         accountPasswordFragment = AccountPasswordFragment()
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.CURRENT_USER, users)
+        accountPasswordFragment!!.arguments = bundle
         fragmentTransaction.replace(R.id.container, accountPasswordFragment).commit()
     }
 
+    private var otpFragment : OTPFragment ?= null
     override fun navigateToOTP() {
         if (NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        val otpFragment = OTPFragment()
+        otpFragment = OTPFragment()
         val bundle = Bundle()
         bundle.putString("email", mEmail)
-        otpFragment.arguments = bundle
+        otpFragment!!.arguments = bundle
         fragmentTransaction.replace(R.id.container, otpFragment).commit()
     }
 
@@ -155,12 +171,12 @@ class AuthActivity : AppCompatActivity(), AuthView {
         when (NineBxApplication.getPreferences().currentStep) {
             Constants.ACCOUNT_PASSWORD_COMPLETE -> {
                 navigateToSignUp()
-                navigateToAccountPassword()
+                navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
                 navigateToOTP()
             }
             Constants.OTP_COMPLETE -> {
                 navigateToSignUp()
-                navigateToAccountPassword()
+                navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
                 navigateToOTP()
                 navigateToCreatePassCode(true)
             }
@@ -181,7 +197,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             }
             Constants.SIGN_UP_COMPLETE -> {
                 navigateToSignUp()
-                navigateToAccountPassword()
+                navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
             }
         }
 

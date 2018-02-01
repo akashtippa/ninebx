@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Users
+import com.ninebx.utility.Constants
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account_password.*
 
@@ -18,21 +20,24 @@ import kotlinx.android.synthetic.main.fragment_account_password.*
 class AccountPasswordFragment : BaseAuthFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_account_password, container, false)
+        return inflater.inflate(R.layout.fragment_account_password, container, false)
     }
+
+    private lateinit var mCurrentUser : Users
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setupToolbar()
-//        setHasOptionsMenu(true)
+
+        mCurrentUser = arguments!!.getParcelable(Constants.CURRENT_USER)
+
         btnSubmit.setOnClickListener {
             if (validate()) {
                 mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())
             }
         }
         if (NineBxApplication.autoTestMode) {
-            etCreatePassword.setText("a")
-            etConfirmPassword.setText("a")
+            etCreatePassword.setText("Password14.")
+            etConfirmPassword.setText("Password14.")
         }
 
         ivBackPass.setOnClickListener {
@@ -53,17 +58,6 @@ class AccountPasswordFragment : BaseAuthFragment() {
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
         mAuthView.navigateToOTP()
-    }
-
-    private lateinit var appCompatActivity: AppCompatActivity
-
-    private fun setupToolbar() {
-        appCompatActivity = activity as AppCompatActivity
-        appCompatActivity.setSupportActionBar(toolbar)
-        appCompatActivity.supportActionBar!!.setDisplayShowTitleEnabled(false);
-        toolbar.title = " "
-        appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        appCompatActivity.supportActionBar!!.setHomeButtonEnabled(true)
     }
 
     override fun validate(): Boolean {

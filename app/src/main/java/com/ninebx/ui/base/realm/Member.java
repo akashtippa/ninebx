@@ -1,12 +1,15 @@
 package com.ninebx.ui.base.realm;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by Alok on 11/01/18.
  */
 
-public class Member extends RealmObject {
+public class Member extends RealmObject implements Parcelable {
 
     private String  firstName            = "";
     private String  lastName             = "";
@@ -505,4 +508,123 @@ public class Member extends RealmObject {
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.relationship);
+        dest.writeString(this.role);
+        dest.writeString(this.email);
+        dest.writeString(this.dateOfBirth);
+        dest.writeString(this.anniversary);
+        dest.writeString(this.gender);
+        dest.writeString(this.mobileNumber);
+        dest.writeString(this.street_1);
+        dest.writeString(this.street_2);
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.zipCode);
+        dest.writeString(this.country);
+        dest.writeString(this.userId);
+        dest.writeValue(this.homeAdd);
+        dest.writeValue(this.homeEdit);
+        dest.writeValue(this.homeView);
+        dest.writeValue(this.travelAdd);
+        dest.writeValue(this.travelEdit);
+        dest.writeValue(this.travelView);
+        dest.writeValue(this.contactsAdd);
+        dest.writeValue(this.contactsEdit);
+        dest.writeValue(this.contactsView);
+        dest.writeValue(this.educationlAdd);
+        dest.writeValue(this.educationlEdit);
+        dest.writeValue(this.educationlView);
+        dest.writeValue(this.personalAdd);
+        dest.writeValue(this.personalEdit);
+        dest.writeValue(this.personalView);
+        dest.writeValue(this.interestsAdd);
+        dest.writeValue(this.interestsEdit);
+        dest.writeValue(this.interestsView);
+        dest.writeValue(this.wellnessAdd);
+        dest.writeValue(this.wellnessEdit);
+        dest.writeValue(this.wellnessView);
+        dest.writeValue(this.memoriesAdd);
+        dest.writeValue(this.memoriesEdit);
+        dest.writeValue(this.memoriesView);
+        dest.writeValue(this.shoppingAdd);
+        dest.writeValue(this.shoppingEdit);
+        dest.writeValue(this.shoppingView);
+        dest.writeValue(this.addingRemovingMember);
+        dest.writeValue(this.changingMasterPassword);
+        dest.writeValue(this.isCompleteProfile);
+        dest.writeString(this.profilePhoto);
+    }
+
+    protected Member(Parcel in) {
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.relationship = in.readString();
+        this.role = in.readString();
+        this.email = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.gender = in.readString();
+        this.mobileNumber = in.readString();
+        this.street_1 = in.readString();
+        this.street_2 = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.userId = in.readString();
+        this.homeAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.homeEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.homeView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.travelAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.travelEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.travelView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.contactsAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.contactsEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.contactsView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.educationlAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.educationlEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.educationlView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.personalAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.personalEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.personalView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.interestsAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.interestsEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.interestsView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.wellnessAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.wellnessEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.wellnessView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.memoriesAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.memoriesEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.memoriesView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.shoppingAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.shoppingEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.shoppingView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.addingRemovingMember = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.changingMasterPassword = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.profilePhoto = in.readString();
+    }
+
+    public static final Parcelable.Creator<Member> CREATOR = new Parcelable.Creator<Member>() {
+        @Override
+        public Member createFromParcel(Parcel source) {
+            return new Member(source);
+        }
+
+        @Override
+        public Member[] newArray(int size) {
+            return new Member[size];
+        }
+    };
 }

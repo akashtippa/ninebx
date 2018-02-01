@@ -1,5 +1,12 @@
 package com.ninebx.ui.base.realm;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.ninebx.NineBxApplication;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,25 +17,29 @@ import io.realm.RealmObject;
  * Created by Alok on 11/01/18.
  */
 
-public class Users extends RealmObject {
+public class Users extends RealmObject implements Parcelable {
 
-    private  String fullName             = "";
-    private  String emailAddress         = "";
-    private  String relationship         = "";
-    private  String dateOfBirth          = "";
-    private  String anniversary          = "";
-    private  String gender               = "";
-    private  String mobileNumber         = "";
+    private String fullName             = "";
+    private String firstName            = "";
+    private String lastName             = "";
+    private String emailAddress         = "";
+    private String relationship         = "";
+    private String dateOfBirth          = "";
+    private String anniversary          = "";
+    private String gender               = "";
+    private String mobileNumber         = "";
 
-    private  String street_1             = "";
-    private  String street_2             = "";
-    private  String city                 = "";
-    private  String state                = "";
-    private  String zipCode              = "";
-    private  String country              = "";
-    private  String userId               = "";
+    private String street_1             = "";
+    private String street_2             = "";
+    private String city                 = "";
+    private String state                = "";
+    private String zipCode              = "";
+    private String country              = "";
+    private String userId               = "";
 
-    private  Integer id                   = 0;
+    private Integer id                  = 0;
+    private Boolean isCompleteProfile   = false;
+    private String profilePhoto         = "";
 
     private RealmList<Member> members = new RealmList<Member>();
 
@@ -201,6 +212,38 @@ public class Users extends RealmObject {
         this.members = members;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Boolean getCompleteProfile() {
+        return isCompleteProfile;
+    }
+
+    public void setCompleteProfile(Boolean completeProfile) {
+        isCompleteProfile = completeProfile;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -215,4 +258,82 @@ public class Users extends RealmObject {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    @NotNull
+    public static Users createUser(@NotNull String email, @NotNull String firstName, @NotNull String lastName) {
+
+        Users users = new Users();
+        users.firstName = firstName;
+        users.lastName = lastName;
+        users.fullName = firstName + " " + lastName;
+        users.emailAddress = email;
+        return users;
+
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fullName);
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.emailAddress);
+        dest.writeString(this.relationship);
+        dest.writeString(this.dateOfBirth);
+        dest.writeString(this.anniversary);
+        dest.writeString(this.gender);
+        dest.writeString(this.mobileNumber);
+        dest.writeString(this.street_1);
+        dest.writeString(this.street_2);
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.zipCode);
+        dest.writeString(this.country);
+        dest.writeString(this.userId);
+        dest.writeValue(this.id);
+        dest.writeValue(this.isCompleteProfile);
+        dest.writeString(this.profilePhoto);
+        dest.writeTypedList(this.members);
+    }
+
+    protected Users(Parcel in) {
+        this.fullName = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.emailAddress = in.readString();
+        this.relationship = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.gender = in.readString();
+        this.mobileNumber = in.readString();
+        this.street_1 = in.readString();
+        this.street_2 = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.userId = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.profilePhoto = in.readString();
+        this.members = new RealmList<>();
+        this.members.addAll(in.createTypedArrayList(Member.CREATOR));
+    }
+
+    public static final Parcelable.Creator<Users> CREATOR = new Parcelable.Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel source) {
+            return new Users(source);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
 }

@@ -414,6 +414,7 @@
     <string name="no_notifications">No Notifications</string>
     <string name="account_name">Account name</string>
     <string name="institution_name">Institution name</string>
+    <string name="requesting_otp">Requesting OTP</string>
 
     <string-array name="gender">
         <item></item>

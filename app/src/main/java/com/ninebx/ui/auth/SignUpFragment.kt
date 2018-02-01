@@ -22,18 +22,17 @@ class SignUpFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setupToolbar()
-//        setHasOptionsMenu(true)
         btnSubmit.setOnClickListener {
             if (validate()) {
                 mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
-                mAuthView.navigateToAccountPassword()
+                mAuthView.createUser( edtFirstName.text.toString().trim(), edtLastName.text.toString().trim(), edtEmailAddress.text.toString().trim() )
+
             }
         }
         if (NineBxApplication.autoTestMode) {
-            edtFirstName.setText("Test")
-            edtLastName.setText("Test")
-            edtEmailAddress.setText("test.box24@yopmail.com")
+            edtFirstName.setText("Aman")
+            edtLastName.setText("Shekhar")
+            edtEmailAddress.setText("aman.shekhar@cognitiveclouds.com")
         }
 
         txtTermsOfUse.setOnClickListener {
@@ -58,20 +57,6 @@ class SignUpFragment : BaseAuthFragment() {
     }
 
     private lateinit var appCompatActivity: AppCompatActivity
-
-    private fun setupToolbar() {
-        appCompatActivity = activity as AppCompatActivity
-        appCompatActivity.setSupportActionBar(toolbar)
-        toolbar.title = " "
-        /*val assets = Typeface.createFromAsset(context.assets,"fonts/Futura-Medium.ttf")
-        titleTextView.typeface = assets*/
-        titleTextView.text = getString(R.string.sign_up)
-
-//        toolbar.navigationIcon!!.isVisible
-//        toolbar.navigationIcon = ContextCompat.getDrawable(context!!, R.drawable.ic_icon_arrow_left)
-        appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        appCompatActivity.supportActionBar!!.setHomeButtonEnabled(true)
-    }
 
     override fun validate(): Boolean {
         var isValid = true
