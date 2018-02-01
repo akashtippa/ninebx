@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
  */
 class SignInFragment : BaseAuthFragment() {
 
-    val prefrences = NineBxPreferences()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.activity_sign_in, container, false)
     }
@@ -27,17 +26,9 @@ class SignInFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnLogin.setOnClickListener {
-               if (validate()) {
-                   mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
-               }
-
-
-            val intent = Intent(context, HomeActivity::class.java)
-            startActivity(intent)
-            prefrences.isLogin = true
-            activity!!.finish()
-
-
+            if (validate()) {
+                mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
+            }
         }
         btnSignUp.setOnClickListener {
             mAuthView.navigateToSignUp()

@@ -40,16 +40,24 @@ class LoginSignupTask(private var userName: String, private var password: String
     }
 
     override fun onError(error: ObjectServerError?) {
-        authView.hideProgress()
-        if( error != null ) {
-            error.printStackTrace()
-            authView.onError(error.errorMessage!!)
+        if( type == "Signup" ) {
+            //Attempt login
+            onPostExecute(SyncCredentials.usernamePassword( userName, password, false ))
         }
+        else {
+            authView.hideProgress()
+            if( error != null ) {
+                error.printStackTrace()
+                authView.onError(error.errorMessage!!)
+            }
+        }
+
     }
 
     val TAG: String = LoginSignupTask::class.java.simpleName
     private val prefrences = NineBxPreferences()
     var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
+    private var syncCredentials : SyncCredentials ?= null
 
     override fun onPreExecute() {
         super.onPreExecute()
@@ -58,6 +66,7 @@ class LoginSignupTask(private var userName: String, private var password: String
 
     override fun onPostExecute(result: SyncCredentials?) {
         super.onPostExecute(result)
+        syncCredentials = result
         if( result != null )
             SyncUser.loginAsync(result, Constants.SERVER_IP, this)
         else {
@@ -68,8 +77,8 @@ class LoginSignupTask(private var userName: String, private var password: String
 
     override fun doInBackground(vararg aVoid: Void?): SyncCredentials? {
         encryptViaSpongyCastle()
-        val createNewUser = type == "Signup"
-        return SyncCredentials.usernamePassword( userName, password, createNewUser )
+        val isSignup = (type == "Signup")
+        return SyncCredentials.usernamePassword( userName, password, isSignup )
     }
 
     /**
