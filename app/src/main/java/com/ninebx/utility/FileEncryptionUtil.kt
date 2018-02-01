@@ -8,12 +8,7 @@ import org.cryptonode.jncryptor.AES256JNCryptor
 import org.spongycastle.crypto.digests.SHA256Digest
 import java.io.*
 import java.util.*
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
-import org.cryptonode.jncryptor.AES256JNCryptorInputStream
-import org.cryptonode.jncryptor.AES256JNCryptorOutputStream
-import org.cryptonode.jncryptor.JNCryptor
-import java.nio.charset.Charset
+
 
 
 /**

@@ -233,5 +233,14 @@ class OTPFragment : BaseAuthFragment() {
 
     fun setEmailOTP(emailOtp: String) {
         this.emailOtp = emailOtp
+        if( NineBxApplication.autoTestMode && etOtp1 != null ) {
+            var index = 0
+            etOtp1.setText(emailOtp[index++].toString())
+            etOtp2.setText(emailOtp[index++].toString())
+            etOtp3.setText(emailOtp[index++].toString())
+            etOtp4.setText(emailOtp[index++].toString())
+            etOtp5.setText(emailOtp[index++].toString())
+            etOtp6.setText(emailOtp[index].toString())
+        }
     }
 }
