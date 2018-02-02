@@ -1,31 +1,44 @@
 package com.ninebx.ui.auth
 
 import android.os.AsyncTask
-import android.util.Base64
 import com.ninebx.R
-import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
-import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
-import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
-import com.ninebx.ui.auth.passwordHash.PasswordEncrypter
 import com.ninebx.utility.*
+import io.reactivex.Observer
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.realm.ObjectServerError
-import io.realm.RealmAsyncTask
 import io.realm.SyncCredentials
 import io.realm.SyncUser
-import org.spongycastle.crypto.digests.SHA256Digest
-import java.math.BigInteger
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import java.security.SecureRandom
-import java.util.*
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
+import okhttp3.Response
+import kotlin.collections.HashMap
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class LoginSignupTask(private var userName: String, private var password: String, private val authView: AuthView, val type: String) : AsyncTask<Void, Void, SyncCredentials?>(), SyncUser.Callback<SyncUser> {
+class LoginSignupTask(private var userName: String,
+                      private var password: String,
+                      private val authView: AuthView,
+                      val type: String) : AsyncTask<Void, Void, SyncCredentials?>(),
+        SyncUser.Callback<SyncUser>, Observer<Response> {
+
+    override fun onError(e: Throwable) {
+        authView.hideProgress()
+    }
+
+    override fun onComplete() {
+        AppLogger.d( TAG, "GetUserAPI : onComplete" )
+    }
+
+    override fun onNext(t: Response) {
+        //User already present - show error dialog and take back to login screen?
+        //Attempt login
+
+    }
+
+    override fun onSubscribe(d: Disposable) {
+        mCompositeDisposable.add(d)
+    }
 
     override fun onSuccess(result: SyncUser?) {
         authView.hideProgress()
@@ -35,14 +48,34 @@ class LoginSignupTask(private var userName: String, private var password: String
         } else {
             AppLogger.d(TAG, "login : result : " + result.toString())
             AppLogger.d(TAG, result.toJson())
+            if( type == "Signup" ) {
+                //Check if user is an existing user
+                val userMap = HashMap<String, Any>()
+
+                //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
+                userMap.put("user_id", result.identity)
+                userMap.put("admin_id", result.identity)
+                userMap.put("email", userName)
+                userMap.put("hash", encryptedPassword)
+                userMap.put("is_admin", type == "Signup" )
+                val randomKey = encryptKey( randomString(16), encryptedPassword ).toString()
+                userMap.put("secure_key", randomKey)
+                AppLogger.d(TAG, "UserMap : Random Key " + randomKey)
+                AppLogger.d(TAG, "UserMap : " + userMap)
+
+                /*NineBxApplication.getUserAPI!!.getUser( userMap )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                        .subscribe(this)*/
+            }
+            else
             authView.onSuccess(result)
         }
     }
 
     override fun onError(error: ObjectServerError?) {
         if( type == "Signup" ) {
-            //Attempt login
-            onPostExecute(SyncCredentials.usernamePassword( userName, password, false ))
+            onPostExecute(SyncCredentials.usernamePassword( userName, encryptedPassword, false ))
         }
         else {
             authView.hideProgress()
@@ -56,8 +89,10 @@ class LoginSignupTask(private var userName: String, private var password: String
 
     val TAG: String = LoginSignupTask::class.java.simpleName
     private val prefrences = NineBxPreferences()
-    var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
+    //var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
     private var syncCredentials : SyncCredentials ?= null
+    private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
+    private var encryptedPassword : String = ""
 
     override fun onPreExecute() {
         super.onPreExecute()
@@ -76,45 +111,12 @@ class LoginSignupTask(private var userName: String, private var password: String
     }
 
     override fun doInBackground(vararg aVoid: Void?): SyncCredentials? {
-        encryptViaSpongyCastle()
+        encryptedPassword = encryptKey( password, userName ).toString()
+        //Attempt to login with credentials by default - if successful when signing up - the user already exists
         val isSignup = (type == "Signup")
-        return SyncCredentials.usernamePassword( userName, password, isSignup )
+        decryptAESKey()
+        return SyncCredentials.usernamePassword( userName, encryptedPassword, isSignup )
     }
 
-    /**
-     *
-     *
-    let password: Array<UInt8> = Array(password.utf8)
-    let salt: Array<UInt8> = Array(email.utf8)
-    let valueTwo = try PKCS5.PBKDF2(password: password, salt: salt, iterations: 20000, variant: .sha256).calculate()
-    return valueTwo.description
-    [-68, -100, 77, -35, -54, -57, -17, 127, -16, 3, -117, -8, 54, 89, 82, 75, 68, 77, -118, -98, 124, -89, -121, -34, -96, -48, -53, -114, 112, -77, 91, 49]
-     * */
-
-    private fun encryptViaSpongyCastle() {
-
-        val generator = CustomPKCS5S2ParametersGenerator(SHA256Digest())
-        generator.init(CustomPBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), userName.toByteArray(Charsets.UTF_8), 20000)
-        val key = generator.generateDerivedMacParameters(256) as CustomKeyParameter
-        password = Arrays.toString(key.key.toTypedArray())
-
-        val intArray = kotlin.IntArray(key.key.size)
-        for( index in 0 until key.key.size ) {
-            var keyValue =key.key[index]
-            var key = keyValue.toInt()
-            if(key < 0) {
-                key += 256
-                intArray[index] = key
-            }
-            else {
-                intArray[index] = key
-            }
-        }
-
-        AppLogger.d(TAG, "encryptViaSpongyCastle Password generate " + password)
-        AppLogger.d(TAG, "encryptViaSpongyCastle Password original " + strPassword)
-        password = Arrays.toString(intArray)
-        AppLogger.d(TAG, "encryptViaSpongyCastle Password non convert " +  Arrays.toString(intArray))
-    }
 
 }

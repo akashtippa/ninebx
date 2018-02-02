@@ -1,11 +1,7 @@
 package com.ninebx.utility
 
 import android.os.Environment
-import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
-import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
-import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
 import org.cryptonode.jncryptor.AES256JNCryptor
-import org.spongycastle.crypto.digests.SHA256Digest
 import java.io.*
 import java.util.*
 
@@ -32,7 +28,7 @@ fun encryptFile( inputFile : File ) : File {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
-        val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, generateKey("master_password", "alok"))
+        val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, encryptKey("master_password", "alok"))
 
         val bufOut = BufferedOutputStream(FileOutputStream(file))
         bufOut.write(encryptedFileBytes)
@@ -71,7 +67,7 @@ fun decryptFile( inputFile : File ) : File {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
-        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, generateKey("master_password", "alok"))
+        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, encryptKey("master_password", "alok"))
 
         if( file.exists() ) file.delete()
 
@@ -92,12 +88,7 @@ fun decryptFile( inputFile : File ) : File {
     return file
 }
 
-fun generateKey(password: String, username : String ) : CharArray {
-    val generator = CustomPKCS5S2ParametersGenerator(SHA256Digest())
-    generator.init(CustomPBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), username.toByteArray(Charsets.UTF_8), 20000)
-    val key = generator.generateDerivedMacParameters(256) as CustomKeyParameter
-    return Arrays.toString(key.key.toTypedArray()).toCharArray()
-}
+
 
 fun generateRandomOTP() : String {
     var otp = ""
@@ -112,7 +103,4 @@ fun generateRandomOTP() : String {
     return otp
 }
 
-fun generateCryptoPassword( password: String, username : String ) : ByteArray {
-    return Crypto.deriveKey( password, 2, username.toByteArray(Charsets.UTF_8) )
-}
 

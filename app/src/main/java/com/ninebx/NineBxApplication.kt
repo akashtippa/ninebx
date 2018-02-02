@@ -1,6 +1,8 @@
 package com.ninebx
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
 import com.evernote.android.job.JobManager
@@ -16,8 +18,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.security.SecureRandom
 import com.amazonaws.regions.Regions
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
-
-
+import com.ninebx.ui.base.network.NetModule
 
 
 /***
@@ -63,6 +64,12 @@ class NineBxApplication : MultiDexApplication() {
         }
 
         var autoTestMode = true
+
+        var getUserAPI : NetModule.GetUsersAPI ?= null
+        fun getUserAPI( ) : NetModule.GetUsersAPI? {
+            if( getUserAPI == null ) getUserAPI = NetModule( instance ).getUsersAPI
+            return getUserAPI
+        }
     }
 
     fun init(_homeActivity: HomeActivity) {
@@ -112,5 +119,11 @@ class NineBxApplication : MultiDexApplication() {
 
     fun setiMemberAdded(iMemberAdded: IMemberAdded) {
         this.iMemberAdded = iMemberAdded
+    }
+
+    fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }
