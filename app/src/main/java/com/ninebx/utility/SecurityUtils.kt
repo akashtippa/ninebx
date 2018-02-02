@@ -1,5 +1,6 @@
 package com.ninebx.utility
 
+import android.util.Base64
 import android.util.Log
 import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
 import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
@@ -7,6 +8,8 @@ import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
 import org.spongycastle.crypto.digests.SHA256Digest
 import java.security.*
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import javax.crypto.Cipher
 import javax.crypto.NoSuchPaddingException
 import javax.crypto.ShortBufferException
@@ -85,26 +88,29 @@ fun decryptAESKey( masterPassword : String ) : String {
     val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
-    AppLogger.d("decryptAESKey", "Master Password : " + Arrays.toString(keyBytes))
+    AppLogger.d("decryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
     AppLogger.d("decryptAESKey", "Input : " + String(input))
     AppLogger.d("decryptAESKey", "Input Bytes : " + Arrays.toString(input))
 
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
-    val cipherText = ByteArray(cipher.getOutputSize(input.size))
+    var cipherText = ByteArray(cipher.getOutputSize(input.size))
     var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
     ctLength += cipher.doFinal(cipherText, ctLength)
 
-    AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherText))
-    val convertedCipher = convertToUInt8(cipherText)
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
+
+    AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
+    val convertedCipher = convertToUInt8(cipherTextBase64)
     AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
     AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
     AppLogger.d("decryptAESKey", "Cipher Length : " + cipherText.size)
 
-
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
     val plainText = ByteArray(cipher.getOutputSize(ctLength))
+    cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
+
     var ptLength = cipher.update(cipherText, 0, plainText.size, plainText, 0)
     ptLength += cipher.doFinal(plainText, ptLength)
 
@@ -166,4 +172,21 @@ private fun convertToByte( key: CharArray ): String {
     }
     return Arrays.toString(intArray)
 
+}
+
+fun isValidPassword(password: String): Boolean {
+
+    if( password.length < 8 ) {
+        return false
+    }
+
+    val pattern: Pattern
+    val matcher: Matcher
+
+    val PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\$@\$#!%?&.,/^*()_+|}{';>~`<]).*\$"
+
+    pattern = Pattern.compile(PASSWORD_PATTERN)
+    matcher = pattern.matcher(password)
+
+    return matcher.matches()
 }

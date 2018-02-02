@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.Constants
+import com.ninebx.utility.isValidPassword
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account_password.*
 
@@ -77,6 +79,33 @@ class AccountPasswordFragment : BaseAuthFragment() {
             isValid = false
             mAuthView.onError(R.string.error_passwords_dont_match)
         }
+
+        if( isValid ) {
+            if( etCreatePassword.text.toString().isNotEmpty() && etCreatePassword.text.toString().trim().length < 8 ) {
+                context!!.showToast(R.string.password_length_8)
+                etCreatePassword.requestFocus()
+                isValid = false
+            }
+
+            if( etCreatePassword.text.toString().isNotEmpty() && !isValidPassword(etCreatePassword.text.toString().trim()) ) {
+                context!!.showToast(R.string.password_rules)
+                etCreatePassword.requestFocus()
+                isValid = false
+            }
+            if( etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8 ) {
+                context!!.showToast(R.string.password_length_8)
+                etConfirmPassword.requestFocus()
+                isValid = false
+            }
+
+            if( etConfirmPassword.text.toString().isNotEmpty() && !isValidPassword(etConfirmPassword.text.toString().trim()) ) {
+                context!!.showToast(R.string.password_rules)
+                etConfirmPassword.requestFocus()
+                isValid = false
+            }
+        }
+
+
 
         return isValid
     }

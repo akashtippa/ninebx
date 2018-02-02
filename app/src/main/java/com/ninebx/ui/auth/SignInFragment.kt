@@ -7,6 +7,8 @@ import android.view.*
 import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.isValidPassword
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -63,6 +65,18 @@ class SignInFragment : BaseAuthFragment() {
             isValid = false
             edtPassword.requestFocus()
             edtPassword.error = getString(R.string.required)
+        }
+
+        if( edtPassword.text.toString().isNotEmpty() && edtPassword.text.toString().trim().length < 8 ) {
+            context!!.showToast(R.string.password_length_8)
+            edtPassword.requestFocus()
+            isValid = false
+        }
+
+        if( edtPassword.text.toString().isNotEmpty() && !isValidPassword(edtPassword.text.toString().trim()) ) {
+            context!!.showToast(R.string.password_rules)
+            edtPassword.requestFocus()
+            isValid = false
         }
 
         return isValid
