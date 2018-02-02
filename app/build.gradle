@@ -118,7 +118,9 @@ dependencies {
     compile 'org.cryptonode.jncryptor:jncryptor:1.2.0'
 
     //SendGrid Email Client
-    //compile 'com.github.danysantiago:sendgrid-android:1'
+    compile 'com.github.danysantiago:sendgrid-android:1', {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
