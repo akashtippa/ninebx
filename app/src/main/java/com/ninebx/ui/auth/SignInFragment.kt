@@ -1,15 +1,12 @@
 package com.ninebx.ui.auth
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.HomeActivity
-import com.ninebx.utility.NineBxPreferences
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -44,6 +41,7 @@ class SignInFragment : BaseAuthFragment() {
             edtEmailAddress.setText("aman.shekhar@cognitiveclouds.com")
             edtPassword.setText("Password14.")
         }
+
     }
 
     override fun validate(): Boolean {

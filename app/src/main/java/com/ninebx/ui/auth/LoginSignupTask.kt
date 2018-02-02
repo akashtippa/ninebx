@@ -10,6 +10,7 @@ import io.realm.ObjectServerError
 import io.realm.SyncCredentials
 import io.realm.SyncUser
 import okhttp3.Response
+import java.util.*
 import kotlin.collections.HashMap
 
 
@@ -58,7 +59,7 @@ class LoginSignupTask(private var userName: String,
                 userMap.put("email", userName)
                 userMap.put("hash", encryptedPassword)
                 userMap.put("is_admin", type == "Signup" )
-                val randomKey = encryptKey( randomString(16), encryptedPassword ).toString()
+                val randomKey = encryptKey( randomString(16), encryptedPassword )
                 userMap.put("secure_key", randomKey)
                 AppLogger.d(TAG, "UserMap : Random Key " + randomKey)
                 AppLogger.d(TAG, "UserMap : " + userMap)
@@ -89,7 +90,7 @@ class LoginSignupTask(private var userName: String,
 
     val TAG: String = LoginSignupTask::class.java.simpleName
     private val prefrences = NineBxPreferences()
-    //var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
+    var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
     private var syncCredentials : SyncCredentials ?= null
     private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
     private var encryptedPassword : String = ""
@@ -111,10 +112,14 @@ class LoginSignupTask(private var userName: String,
     }
 
     override fun doInBackground(vararg aVoid: Void?): SyncCredentials? {
-        encryptedPassword = encryptKey( password, userName ).toString()
+        encryptedPassword = (encryptKey( password, userName ))
+        AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
+        AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
         //Attempt to login with credentials by default - if successful when signing up - the user already exists
         val isSignup = (type == "Signup")
-        decryptAESKey()
+        val privateKey = randomString(16)
+        encryptKey( privateKey, encryptedPassword )
+        decryptAESKey( privateKey )
         return SyncCredentials.usernamePassword( userName, encryptedPassword, isSignup )
     }
 

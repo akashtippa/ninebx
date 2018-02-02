@@ -28,7 +28,7 @@ fun encryptFile( inputFile : File ) : File {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
-        val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, encryptKey("master_password", "alok"))
+        val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, encryptKey("master_password", "alok").toCharArray())
 
         val bufOut = BufferedOutputStream(FileOutputStream(file))
         bufOut.write(encryptedFileBytes)
@@ -67,7 +67,7 @@ fun decryptFile( inputFile : File ) : File {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
-        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, encryptKey("master_password", "alok"))
+        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, encryptKey("master_password", "alok").toCharArray())
 
         if( file.exists() ) file.delete()
 

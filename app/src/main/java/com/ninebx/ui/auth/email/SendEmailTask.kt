@@ -4,8 +4,8 @@ import android.os.AsyncTask
 import android.util.Log
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthView
-/*import com.sendgrid.SendGridException
-import com.sendgrid.SendGrid*/
+import com.sendgrid.SendGridException
+import com.sendgrid.SendGrid
 import java.io.IOException
 
 
@@ -30,13 +30,11 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
         authView.showProgress(R.string.requesting_otp)
     }
 
-    private val SENDGRID_USERNAME: String = ""
-    private val SENDGRID_PASSWORD: String = ""
 
     override fun doInBackground(vararg p0: Void?): String {
 
-        /*try {
-            val sendgrid = SendGrid(SENDGRID_USERNAME, SENDGRID_PASSWORD)
+        try {
+            val sendgrid = SendGrid("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")
 
             val email = SendGrid.Email()
 
@@ -54,7 +52,7 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
             Log.e("SendAppExample", e.toString())
         } catch (e: IOException) {
             Log.e("SendAppExample", e.toString())
-        }*/
+        }
 
         return ""
 
