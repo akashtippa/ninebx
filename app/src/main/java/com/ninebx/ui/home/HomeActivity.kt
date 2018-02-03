@@ -69,9 +69,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     var myCredentials: SyncCredentials? = null
-    var user: SyncUser? = null
-    var config: SyncConfiguration? = null
-    var realm: Realm? = null
+
 
     var backBtnCount = 0
 
@@ -89,8 +87,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
         ivHome.hide()
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView)
-
-        SyncTheDb().execute()
 
         NineBxApplication.instance.init(this)
 
@@ -174,53 +170,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
         toolbar.show()
     }
 
-    @SuppressLint("StaticFieldLeak")
-    inner class SyncTheDb : AsyncTask<String, String, String>() {
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
 
-        override fun doInBackground(vararg p0: String?): String {
-            var Result: String = "";
-            try {
-                syncNow()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return Result
-        }
 
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
-        }
-    }
-
-    private fun syncNow() {
-        user = SyncUser.currentUser()
-        config = SyncConfiguration.Builder(user, Constants.SERVER_URL + "DummyTB")
-                .waitForInitialRemoteData()
-                .build()
-
-        realm = Realm.getInstance(config)
-        showToast("try")
-    }
-
-    fun showToast(msg: String) {
-        Observable.just(msg)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    val task = Realm.getInstanceAsync(config, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm) {
-                            Toast.makeText(this@HomeActivity, "Sync Successful", Toast.LENGTH_LONG).show()
-                            Log.e("Check ", " is " + realm.path)
-                        }
-
-                        override fun onError(exception: Throwable?) {
-                            super.onError(exception)
-                        }
-                    })
-                })
-    }
 
     override fun onPause() {
         super.onPause()

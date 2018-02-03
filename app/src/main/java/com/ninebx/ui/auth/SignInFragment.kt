@@ -26,6 +26,7 @@ class SignInFragment : BaseAuthFragment() {
 
         btnLogin.setOnClickListener {
             if (validate()) {
+                mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
                 mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
             }
         }
@@ -33,10 +34,10 @@ class SignInFragment : BaseAuthFragment() {
             mAuthView.navigateToSignUp()
         }
         txtTermsOfUse.setOnClickListener {
-            openStaticLayoutDialog(getString(R.string.terms_of_use))
+            openStaticLayoutDialog((R.string.terms_of_use))
         }
         txtPrivacyPolicy.setOnClickListener {
-            openStaticLayoutDialog(getString(R.string.privacy_policy))
+            openStaticLayoutDialog((R.string.privacy_policy))
         }
 
         if (NineBxApplication.autoTestMode) {
@@ -92,15 +93,15 @@ class SignInFragment : BaseAuthFragment() {
         mAuthView.navigateToHome()
     }
 
-    private fun openStaticLayoutDialog(option: String) {
+    private fun openStaticLayoutDialog(option: Int) {
         val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         when (option) {
-            getString(R.string.terms_of_use) -> {
+            (R.string.terms_of_use) -> {
                 dialog.setContentView(R.layout.dialog_terms_of_use)
             }
-            getString(R.string.privacy_policy) -> {
+            (R.string.privacy_policy) -> {
                 dialog.setContentView(R.layout.dialog_privacy_policy)
             }
         }

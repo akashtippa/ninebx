@@ -417,6 +417,7 @@
     <string name="requesting_otp">Requesting OTP</string>
     <string name="password_length_8">Password needs to be atleast 8 characters</string>
     <string name="password_rules">Password should contain at least one uppercase letter, one lowercase letter, one number, one symbol (!, @, #, $, etc.)</string>
+    <string name="connecting">Connecting</string>
 
     <string-array name="gender">
         <item></item>

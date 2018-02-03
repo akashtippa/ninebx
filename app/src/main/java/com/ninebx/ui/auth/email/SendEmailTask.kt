@@ -14,6 +14,8 @@ import java.io.IOException
  */
 class SendEmailTask( private val emailOtp : String, private val emailId : String, private val authView : AuthView ) : AsyncTask<Void, Void, String>() {
 
+    private val TAG = SendEmailTask::class.java.simpleName
+
     override fun onCancelled(result: String?) {
         super.onCancelled(result)
         authView.hideProgress()
@@ -46,12 +48,12 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
             // Send email, execute http request
             val response = sendgrid.send(email)
 
-            Log.d("SendAppExample", response.message)
+            Log.d(TAG, response.message)
             return response.message
         } catch (e: SendGridException) {
-            Log.e("SendAppExample", e.toString())
+            Log.e(TAG, e.toString())
         } catch (e: IOException) {
-            Log.e("SendAppExample", e.toString())
+            Log.e(TAG, e.toString())
         }
 
         return ""

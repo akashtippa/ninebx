@@ -37,24 +37,25 @@ fun View.showKeyboard(inputMethodManager: InputMethodManager) {
 
 var progressDialog: ProgressDialog? = null
 
-fun Activity.showProgressDialog(message: String) {
+fun Context.showProgressDialog(message: String) {
     try {
 
         if( progressDialog != null )
             hideProgressDialog()
 
-        progressDialog = ProgressDialog(window.context)
+        progressDialog = ProgressDialog(this)
         progressDialog!!.setCanceledOnTouchOutside(false)
         progressDialog!!.setCancelable(false)
         progressDialog!!.setMessage(message)
         progressDialog!!.show()
+
     } catch ( e : Exception ) {
         e.printStackTrace()
     }
 
 }
 
-fun Activity.hideProgressDialog() {
+fun Context.hideProgressDialog() {
     try {
         progressDialog!!.cancel()
     } catch ( e: Exception ) {
