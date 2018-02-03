@@ -63,6 +63,14 @@ class LoginSignupTask(private var userName: String,
                 AppLogger.d(TAG, "UserMap : Random Key " + randomKey)
                 AppLogger.d(TAG, "UserMap : " + userMap)
 
+                val privateKey = randomString(16)
+                val encryptedKey = encryptAESKey( privateKey, privateKey )
+                AppLogger.d(TAG, "Encrypted Key : " + encryptedKey)
+                val decryptedKey = decryptAESKEY( encryptedKey.toByteArray(), privateKey )
+                AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
+
+                encryptKey( privateKey, encryptedPassword )
+                encryptAESKey( privateKey )
                 /*NineBxApplication.getUserAPI!!.getUser( userMap )
                         .subscribeOn(Schedulers.io())
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
@@ -116,9 +124,7 @@ class LoginSignupTask(private var userName: String,
         AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
         //Attempt to login with credentials by default - if successful when signing up - the user already exists
         val isSignup = (type == "Signup")
-        val privateKey = randomString(16)
-        encryptKey( privateKey, encryptedPassword )
-        decryptAESKey( privateKey )
+
         return SyncCredentials.usernamePassword( userName, encryptedPassword, isSignup )
     }
 

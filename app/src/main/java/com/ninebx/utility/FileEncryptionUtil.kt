@@ -18,7 +18,7 @@ try encryptedData.write(to: fileURL)
  fileBytes - 3,1,-54,106
  encrypted - 3,1,71,68
  * */
-fun encryptFile( inputFile : File ) : File {
+fun encryptFile( inputFile : File, privateKey : CharArray ) : File {
 
     val size = inputFile.length().toInt()
     val fileBytes = ByteArray(size)
@@ -28,7 +28,7 @@ fun encryptFile( inputFile : File ) : File {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
-        val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, encryptKey("master_password", "alok").toCharArray())
+        val encryptedFileBytes = aeS256JNCryptor.encryptData(fileBytes, privateKey)
 
         val bufOut = BufferedOutputStream(FileOutputStream(file))
         bufOut.write(encryptedFileBytes)
@@ -57,7 +57,7 @@ let selected_image = UIImage.sd_image(with: decryptedData)
 encrypted - 3,1,71,68
 decrypted Bytes - 3,1,-54,106
  * */
-fun decryptFile( inputFile : File ) : File {
+fun decryptFile( inputFile : File, privateKey: CharArray ) : File {
 
     val size = inputFile.length().toInt()
     val fileBytes = ByteArray(size)
@@ -67,7 +67,7 @@ fun decryptFile( inputFile : File ) : File {
         val buf = BufferedInputStream(FileInputStream(inputFile))
         buf.read(fileBytes, 0, fileBytes.size)
 
-        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, encryptKey("master_password", "alok").toCharArray())
+        val decryptedFileBytes = aeS256JNCryptor.decryptData(fileBytes, privateKey)
 
         if( file.exists() ) file.delete()
 

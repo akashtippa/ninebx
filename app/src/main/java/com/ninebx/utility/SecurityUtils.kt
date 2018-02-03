@@ -1,7 +1,6 @@
 package com.ninebx.utility
 
 import android.util.Base64
-import android.util.Log
 import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
 import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
 import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
@@ -11,8 +10,6 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
-import javax.crypto.NoSuchPaddingException
-import javax.crypto.ShortBufferException
 import javax.crypto.spec.SecretKeySpec
 
 
@@ -42,45 +39,57 @@ let decrypted = try! encrypted?.decryptBase64ToString(cipher: aes)
 print("decrypted ===>", decrypted ?? "")
  * */
 
-fun encryptAESKey( ) : String {
+fun encryptAESKey( inputString : String, privateKey : String ) : String {
+
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    val input = "Password14.".toByteArray(Charsets.UTF_8)
-    val keyBytes = byteArrayOf(0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17)
-
+    val input = inputString.toByteArray()
+    val keyBytes = ( privateKey.toByteArray(Charsets.UTF_8) )
     val key = SecretKeySpec(keyBytes, "AES")
-    val plainText : ByteArray
-    val cipherText : ByteArray
-    try {
-        val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
-        cipher.init(Cipher.ENCRYPT_MODE, key)
-        cipherText = ByteArray(cipher.getOutputSize(input.size))
-        val ctLength = cipher.update(input, 0, input.size, cipherText, 0)
-        cipher.init(Cipher.DECRYPT_MODE, key)
-        Log.d("Encryption", "Encryption String" + convertToUInt8(cipherText))
-        plainText = ByteArray(cipher.getOutputSize(cipherText.size))
-        val ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
-        //          ptLength += cipher.doFinal(plainText, ptLength);
-        Log.d("Decryption", "Decryption String" + convertToUInt8(plainText))
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+    AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
+    AppLogger.d("encryptAESKey", "Input : " + String(input))
+    AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
 
-        return convertToUInt8(cipherText)
-    } catch (e: NoSuchAlgorithmException) {
-        e.printStackTrace()
-    } catch (e: InvalidKeyException) {
-        e.printStackTrace()
-    } catch (e: ShortBufferException) {
-        e.printStackTrace()
-    } catch (e: NoSuchPaddingException) {
-        e.printStackTrace()
-    } catch (e: NoSuchProviderException) {
-        e.printStackTrace()
-    }
+    // encryption pass
+    cipher.init(Cipher.ENCRYPT_MODE, key)
+    val cipherText = ByteArray(cipher.getOutputSize(input.size))
+    var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
+    ctLength += cipher.doFinal(cipherText, ctLength)
 
-    return ""
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
+
+    return String( cipherTextBase64 )
 
 }
 
-fun decryptAESKey( masterPassword : String ) : String {
+fun decryptAESKEY( cipherTextBase64: ByteArray?, masterPassword : String ) : String {
+
+    val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
+    val key = SecretKeySpec(keyBytes, "AES")
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+
+    AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
+    val convertedCipher = convertToUInt8(cipherTextBase64)
+    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
+    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
+
+    // decryption pass
+    cipher.init(Cipher.DECRYPT_MODE, key)
+    val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
+    val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
+
+    var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
+    ptLength += cipher.doFinal(plainText, ptLength)
+
+    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+
+    return String(plainText).substring(0, ptLength)
+}
+
+fun encryptDecryptAESKey( masterPassword : String ) : String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
@@ -105,6 +114,7 @@ fun decryptAESKey( masterPassword : String ) : String {
     AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
     AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
     AppLogger.d("decryptAESKey", "Cipher Length : " + cipherText.size)
+    AppLogger.d("decryptAESKey", "Cipher Length : " + ctLength)
 
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
@@ -120,6 +130,59 @@ fun decryptAESKey( masterPassword : String ) : String {
 
     return ""
 
+}
+
+fun encryptAESKey( masterPassword : String ) : String {
+
+    Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
+
+    val input = "www.javacodegeeks.com".toByteArray()
+    val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
+    val key = SecretKeySpec(keyBytes, "AES")
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+
+    AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
+    AppLogger.d("encryptAESKey", "Input : " + String(input))
+    AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
+
+    // encryption pass
+    cipher.init(Cipher.ENCRYPT_MODE, key)
+    val cipherText = ByteArray(cipher.getOutputSize(input.size))
+    var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
+    ctLength += cipher.doFinal(cipherText, ctLength)
+
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
+
+    decryptAESKey( cipherTextBase64, masterPassword )
+
+
+
+    return ""
+
+}
+
+fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
+
+    val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
+    val key = SecretKeySpec(keyBytes, "AES")
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+
+    AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
+    val convertedCipher = convertToUInt8(cipherTextBase64)
+    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
+    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
+
+    // decryption pass
+    cipher.init(Cipher.DECRYPT_MODE, key)
+    val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
+    val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
+
+    var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
+    ptLength += cipher.doFinal(plainText, ptLength)
+
+    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
 }
 
 /**
@@ -189,4 +252,15 @@ fun isValidPassword(password: String): Boolean {
     matcher = pattern.matcher(password)
 
     return matcher.matches()
+}
+
+
+fun securityTest( ) {
+    val privateKey = randomString(16)
+
+    val encryptedKey = encryptAESKey( privateKey, privateKey )
+    AppLogger.d("securityTest", "Encrypted Key : " + encryptedKey)
+
+    val decryptedKey = decryptAESKEY( encryptedKey.toByteArray(Charsets.UTF_8), privateKey )
+    AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
 }

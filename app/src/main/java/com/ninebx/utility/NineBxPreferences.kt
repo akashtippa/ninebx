@@ -16,6 +16,7 @@ class NineBxPreferences : Preferences() {
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP)
     var currentUser by stringPref(Constants.CURRENT_USER)
+    var privateKey by stringPref(Constants.PRIVATE_KEY)
 
     fun getCurrentUser(): Users? {
         return Gson().fromJson( currentUser, Users::class.java )
@@ -24,5 +25,7 @@ class NineBxPreferences : Preferences() {
     fun setCurrentUser( users : Users ) {
         currentUser = Gson().toJson(users)
     }
+
+
 
 }

@@ -26,8 +26,7 @@ import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.realm.Realm
@@ -136,7 +135,9 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
         callHomeFragment()
         toggleCheck(false)
-//        toolbarTitle.textSize = pxFromDp(16F, this)
+
+
+
     }
 
     fun pxFromDp(dp: Float, mContext: Context): Float {

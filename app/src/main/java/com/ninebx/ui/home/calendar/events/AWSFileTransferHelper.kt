@@ -8,6 +8,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferType
+import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.utility.*
 import com.ninebx.utility.Util.fillMap
@@ -39,6 +40,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
     // Which row in the UI is currently checked (if any)
     private var checkedIndex: Int = Constants.INDEX_NOT_CHECKED
     private var downloadCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
+    private var privateKey : CharArray = NineBxApplication.getPreferences().privateKey!!.toCharArray()
 
     init {
         initUploadData()
@@ -56,9 +58,9 @@ class AWSFileTransferHelper( private val context : Context? ) {
             transferDownloadRecordMaps.add(map)
 
             // Sets listeners to in progress transfers
-            if (TransferState.WAITING == observer.getState()
-                    || TransferState.WAITING_FOR_NETWORK == observer.getState()
-                    || TransferState.IN_PROGRESS == observer.getState()) {
+            if (TransferState.WAITING == observer.state
+                    || TransferState.WAITING_FOR_NETWORK == observer.state
+                    || TransferState.IN_PROGRESS == observer.state) {
                 observer.setTransferListener(listener)
             }
         }
@@ -80,9 +82,9 @@ class AWSFileTransferHelper( private val context : Context? ) {
             transferRecordMaps.add(map)
 
             // Sets listeners to in progress transfers
-            if (TransferState.WAITING == observer.getState()
-                    || TransferState.WAITING_FOR_NETWORK == observer.getState()
-                    || TransferState.IN_PROGRESS == observer.getState()) {
+            if (TransferState.WAITING == observer.state
+                    || TransferState.WAITING_FOR_NETWORK == observer.state
+                    || TransferState.IN_PROGRESS == observer.state) {
                 observer.setTransferListener(listener)
             }
         }
@@ -99,7 +101,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
             return
         }
 
-        FileOperationsTask( "Encryption", filePath, object : FileOperationsCompletionListener {
+        FileOperationsTask( "Encryption", filePath, privateKey, object : FileOperationsCompletionListener {
             override fun onSuccess(outputFile: File?) {
 
                 val observer = transferUtility.upload(Constants.BUCKET_NAME, outputFile!!.name,
@@ -213,7 +215,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
         if( downloadMap != null ) {
             for( key in downloadMap.keys ) {
                 if( key == "fileName" ) {
-                    FileOperationsTask("Decryption", downloadMap.get("fileName").toString(), object : FileOperationsCompletionListener {
+                    FileOperationsTask("Decryption", downloadMap.get("fileName").toString(), privateKey, object : FileOperationsCompletionListener {
                         override fun onSuccess(outputFile: File?) {
 
                         }
@@ -232,6 +234,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
     @SuppressLint("StaticFieldLeak")
     inner class FileOperationsTask( private val operationType : String,
                                     private val filePath : String,
+                                    private val privateKey : CharArray,
                                     private val fileOperationsCompletionListener: FileOperationsCompletionListener ) : AsyncTask<Void, Void, File>() {
 
 
@@ -248,21 +251,21 @@ class AWSFileTransferHelper( private val context : Context? ) {
         override fun doInBackground(vararg aVoid: Void?): File {
             AppLogger.d("FileOperations", operationType + " : " + filePath )
             if( operationType == "Encryption" )
-                return encryptFile( File( filePath ) )
+                return encryptFile( File( filePath ), privateKey )
             else
-                return decryptFile( File( filePath ) )
+                return decryptFile( File( filePath ), privateKey )
         }
 
     }
 
     //Testing code
-    fun performOperation(filePath: String, fileOperationsCompletionListener: FileOperationsCompletionListener) {
-        FileOperationsTask( "Encryption", filePath, object : FileOperationsCompletionListener {
+    fun performOperation(filePath: String, fileOperationsCompletionListener: FileOperationsCompletionListener, privateKey: CharArray ) {
+        FileOperationsTask( "Encryption", filePath, privateKey, object : FileOperationsCompletionListener {
             override fun onSuccess(outputFile: File?) {
 
                 if( outputFile != null ) {
                     context?.showToast("Encryption Success" )
-                    FileOperationsTask("Decryption", outputFile.absolutePath, object : FileOperationsCompletionListener {
+                    FileOperationsTask("Decryption", outputFile.absolutePath, privateKey, object : FileOperationsCompletionListener {
                         override fun onSuccess(outputFile: File?) {
 
                             if( outputFile != null ) {
@@ -280,8 +283,8 @@ class AWSFileTransferHelper( private val context : Context? ) {
         }).execute()
     }
 
-    fun decryptEncryptedFile(outputFile: File) {
-        FileOperationsTask("Decryption", outputFile.absolutePath, object : FileOperationsCompletionListener {
+    fun decryptEncryptedFile(outputFile: File, privateKey: CharArray ) {
+        FileOperationsTask("Decryption", outputFile.absolutePath, privateKey, object : FileOperationsCompletionListener {
             override fun onSuccess(outputFile: File?) {
 
                 if( outputFile != null ) {
