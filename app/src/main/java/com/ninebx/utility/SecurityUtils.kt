@@ -39,6 +39,56 @@ let decrypted = try! encrypted?.decryptBase64ToString(cipher: aes)
 print("decrypted ===>", decrypted ?? "")
  * */
 
+fun encryptAESKeyPassword( inputString : String, privateKey : ByteArray ) : String {
+
+    Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
+
+    val input = inputString.toByteArray()
+    val keyBytes = privateKey
+    val key = SecretKeySpec(keyBytes, "AES")
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+    AppLogger.d("encryptAESKeyPassword", "Private Key : " + Arrays.toString(keyBytes))
+    AppLogger.d("encryptAESKeyPassword", "Input : " + String(input))
+    AppLogger.d("encryptAESKeyPassword", "Input Bytes : " + Arrays.toString(input))
+
+    // encryption pass
+    cipher.init(Cipher.ENCRYPT_MODE, key)
+    val cipherText = ByteArray(cipher.getOutputSize(input.size))
+    var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
+    ctLength += cipher.doFinal(cipherText, ctLength)
+
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
+
+    return String( cipherTextBase64 )
+
+}
+
+fun decryptAESKEYPassword( cipherTextBase64: ByteArray?, masterPassword : ByteArray ) : String {
+
+    val keyBytes = ( masterPassword )
+    val key = SecretKeySpec(keyBytes, "AES")
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+
+    AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
+    val convertedCipher = convertToUInt8(cipherTextBase64)
+    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
+    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
+
+    // decryption pass
+    cipher.init(Cipher.DECRYPT_MODE, key)
+    val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
+    val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
+
+    var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
+    ptLength += cipher.doFinal(plainText, ptLength)
+
+    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+
+    return String(plainText).substring(0, ptLength)
+}
+
 fun encryptAESKey( inputString : String, privateKey : String ) : String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
@@ -194,14 +244,32 @@ let valueTwo = try PKCS5.PBKDF2(password: password, salt: salt, iterations: 2000
 return valueTwo.description
 [-68, -100, 77, -35, -54, -57, -17, 127, -16, 3, -117, -8, 54, 89, 82, 75, 68, 77, -118, -98, 124, -89, -121, -34, -96, -48, -53, -114, 112, -77, 91, 49]
  * */
-fun encryptKey( password: String, salt: String ) : String {
+fun encryptKey( password: String, salt: String ) : ByteArray {
     val generator = CustomPKCS5S2ParametersGenerator(SHA256Digest())
     generator.init(CustomPBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), salt.toByteArray(Charsets.UTF_8), 20000)
     val key = generator.generateDerivedMacParameters(256) as CustomKeyParameter
-    return convertToUInt8(key.key)
+    return key.key
 }
 
-private fun convertToUInt8( key: ByteArray? ): String {
+fun convertToUInt8IntArray( key: ByteArray? ): IntArray {
+
+    val intArray = kotlin.IntArray(key!!.size)
+    for( index in 0 until key.size ) {
+        val keyValue = key[index]
+        var indexKey = keyValue.toInt()
+        if(indexKey < 0) {
+            indexKey += 256
+            intArray[index] = indexKey
+        }
+        else {
+            intArray[index] = indexKey
+        }
+    }
+    return (intArray)
+
+}
+
+fun convertToUInt8( key: ByteArray? ): String {
 
     val intArray = kotlin.IntArray(key!!.size)
     for( index in 0 until key.size ) {

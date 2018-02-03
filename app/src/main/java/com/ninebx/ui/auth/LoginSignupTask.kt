@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth
 
 import android.os.AsyncTask
+import android.util.Base64
 import com.ninebx.R
 import com.ninebx.utility.*
 import io.reactivex.Observer
@@ -10,6 +11,7 @@ import io.realm.ObjectServerError
 import io.realm.SyncCredentials
 import io.realm.SyncUser
 import okhttp3.Response
+import java.util.*
 import kotlin.collections.HashMap
 
 
@@ -58,19 +60,19 @@ class LoginSignupTask(private var userName: String,
                 userMap.put("email", userName)
                 userMap.put("hash", encryptedPassword)
                 userMap.put("is_admin", type == "Signup" )
-                val randomKey = encryptKey( randomString(16), encryptedPassword )
-                userMap.put("secure_key", randomKey)
-                AppLogger.d(TAG, "UserMap : Random Key " + randomKey)
-                AppLogger.d(TAG, "UserMap : " + userMap)
 
                 val privateKey = randomString(16)
-                val encryptedKey = encryptAESKey( privateKey, privateKey )
-                AppLogger.d(TAG, "Encrypted Key : " + encryptedKey)
-                val decryptedKey = decryptAESKEY( encryptedKey.toByteArray(), privateKey )
+                val encryptedPrivateKey = encryptAESKeyPassword( privateKey, encryptedPasswordByteArray )
+
+                AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
+
+                userMap.put("secure_key", encryptedPrivateKey)
+                AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
+                AppLogger.d(TAG, "UserMap : " + userMap)
+
+                val decryptedKey = decryptAESKEYPassword( encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray )
                 AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
 
-                encryptKey( privateKey, encryptedPassword )
-                encryptAESKey( privateKey )
                 /*NineBxApplication.getUserAPI!!.getUser( userMap )
                         .subscribeOn(Schedulers.io())
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
@@ -83,7 +85,7 @@ class LoginSignupTask(private var userName: String,
 
     override fun onError(error: ObjectServerError?) {
         if( type == "Signup" ) {
-            onPostExecute(SyncCredentials.usernamePassword( userName, encryptedPassword, false ))
+            onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
         }
         else {
             authView.hideProgress()
@@ -100,7 +102,8 @@ class LoginSignupTask(private var userName: String,
     var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
     private var syncCredentials : SyncCredentials ?= null
     private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
-    private var encryptedPassword : String = ""
+    private lateinit var encryptedPasswordByteArray : ByteArray
+    private lateinit var encryptedPassword : IntArray
 
     override fun onPreExecute() {
         super.onPreExecute()
@@ -119,13 +122,16 @@ class LoginSignupTask(private var userName: String,
     }
 
     override fun doInBackground(vararg aVoid: Void?): SyncCredentials? {
-        encryptedPassword = (encryptKey( password, userName ))
+
+        encryptedPasswordByteArray = (encryptKey( password, userName ))
+        encryptedPassword = convertToUInt8IntArray( encryptedPasswordByteArray )
+
         AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
         AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
         //Attempt to login with credentials by default - if successful when signing up - the user already exists
         val isSignup = (type == "Signup")
 
-        return SyncCredentials.usernamePassword( userName, encryptedPassword, isSignup )
+        return SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), isSignup )
     }
 
 

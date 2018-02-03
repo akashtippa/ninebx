@@ -91,7 +91,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
             //PDF : "/storage/emulated/0/Download/ninebx/pdf-sample.pdf"
             //Image : ""
-            /*mAWSFileTransferHelper.performOperation( "/storage/emulated/0/image.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
+            mAWSFileTransferHelper.performOperation( "/storage/emulated/0/image.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
                 override fun onSuccess(outputFile: File?) {
 
                     mImagesList.add( Uri.fromFile(outputFile) )
@@ -99,7 +99,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
                 }
 
-            })*/
+            }, NineBxApplication.getPreferences().privateKey!!.toCharArray())
             //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/Encrypted_image.jpg") )
         }
         layoutEndRepeat.hide()
