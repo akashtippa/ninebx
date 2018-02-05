@@ -63,7 +63,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
 
-        prepareRealmConnections( context, true, mSyncUser!!.identity + "/Users", object : Realm.Callback() {
+        prepareRealmConnections( context, true, "/Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 mCurrentUser.insertOrUpdate( realm!! )
                 NineBxApplication.getPreferences().setCurrentUser( mCurrentUser )
