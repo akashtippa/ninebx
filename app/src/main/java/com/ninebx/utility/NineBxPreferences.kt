@@ -1,6 +1,8 @@
 package com.ninebx.utility
 
 import com.google.gson.Gson
+import com.ninebx.testRealm.TestFragmentA
+import com.ninebx.testRealm.model.TestUserDetails
 import com.ninebx.ui.base.realm.Users
 
 
@@ -18,6 +20,8 @@ class NineBxPreferences : Preferences() {
     var currentUser by stringPref(Constants.CURRENT_USER)
     var privateKey by stringPref(Constants.PRIVATE_KEY)
 
+    var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
+
     fun getCurrentUser(): Users? {
         return Gson().fromJson( currentUser, Users::class.java )
     }
@@ -25,6 +29,15 @@ class NineBxPreferences : Preferences() {
     fun setCurrentUser( users : Users ) {
         currentUser = Gson().toJson(users)
     }
+
+    fun getTestFragmentA(): TestUserDetails? {
+        return Gson().fromJson( testinFragmentA, TestUserDetails::class.java )
+    }
+
+    fun setTestFragmentA( testFragmentA : TestUserDetails) {
+        testinFragmentA = Gson().toJson(testFragmentA)
+    }
+
 
 
 

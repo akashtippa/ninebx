@@ -56,5 +56,9 @@ object Constants {
     val CURRENT_USER: String = "current_user"
     val PRIVATE_KEY: String = "private_key"
 
+    // Just for Testing
+    val TEST_FRAGMENT_A: String = "test_fragment_a"
+
+
 
 }
