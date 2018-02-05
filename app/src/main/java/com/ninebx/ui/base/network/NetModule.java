@@ -16,6 +16,7 @@ import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,7 +34,6 @@ public class NetModule {
     private Cache cache;
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
-
 
     // Constructor needs one parameter to instantiate.
     public NetModule(NineBxApplication application) {
@@ -99,7 +99,7 @@ public class NetModule {
         return okHttpClient;
     }
 
-    private Retrofit getRetrofit() {
+    public Retrofit getRetrofit() {
         if( retrofit == null ) {
             retrofit = provideRetrofit(getOkHttpClient());
         }
@@ -112,16 +112,12 @@ public class NetModule {
                 .create();
     }
 
-    private final GetUsersAPI getUsersAPI = getRetrofit().create( GetUsersAPI.class );
 
-    public GetUsersAPI getGetUsersAPI() {
-        return getUsersAPI;
-    }
 
     public interface GetUsersAPI {
 
         @POST("users")
-        Observable<Response> postUserDetails(@Body HashMap<String, Object> paramsMap );
+        Observable<ResponseBody> postUserDetails(@Body HashMap<String, Object> paramsMap );
 
     }
 
