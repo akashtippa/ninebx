@@ -26,6 +26,29 @@ import com.ninebx.ui.base.network.NetModule
  */
 class NineBxApplication : MultiDexApplication() {
 
+    override fun onCreate() {
+        super.onCreate()
+        MultiDex.install(this)
+        JobManager.create(this).addJobCreator(NineBxJobCreator())
+        instance = this
+        Preferences.init(applicationContext)
+        Realm.init(this)
+        val config = RealmConfiguration.Builder().name("com.ninebx.realm")/*.encryptionKey(getKey())*/.build()
+        Realm.setDefaultConfiguration(config)
+
+        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/AvenirNextLTPro-Regular.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        )
+
+        val credentialsProvider = CognitoCachingCredentialsProvider(
+                this, /* get the context for the application */
+                "", /* Identity Pool ID */
+                Regions.US_WEST_2           /* Region for your identity pool--US_EAST_1 or EU_WEST_1*/
+        )
+    }
+
     var activityInstance: HomeActivity? = null
         private set
 
@@ -78,28 +101,7 @@ class NineBxApplication : MultiDexApplication() {
         this.activityInstance = _homeActivity
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        MultiDex.install(this)
-        JobManager.create(this).addJobCreator(NineBxJobCreator())
-        instance = this
-        Preferences.init(applicationContext)
-        Realm.init(this)
-        val config = RealmConfiguration.Builder().name("com.ninebx.realm")/*.encryptionKey(getKey())*/.build()
-        Realm.setDefaultConfiguration(config)
 
-        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/AvenirNextLTPro-Regular.otf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        )
-
-        val credentialsProvider = CognitoCachingCredentialsProvider(
-                this, /* get the context for the application */
-                "", /* Identity Pool ID */
-                Regions.US_WEST_2           /* Region for your identity pool--US_EAST_1 or EU_WEST_1*/
-        )
-    }
 
     fun getKey(): ByteArray {
         val key = ByteArray(64)

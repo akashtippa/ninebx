@@ -92,10 +92,11 @@ class LoginSignupTask(private var userName: String,
 
     override fun onError(error: ObjectServerError?) {
         if( error != null ) {
-            authView.hideProgress()
+
             error.printStackTrace()
         }
         if( type == "Signup" ) {
+            type = "Signin"
             onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
         }
         else {
@@ -126,7 +127,7 @@ class LoginSignupTask(private var userName: String,
         super.onPostExecute(result)
         syncCredentials = result
         if( result != null ) {
-            type = "Signin"
+
             SyncUser.loginAsync(result, Constants.SERVER_IP, this)
         }
         else {
