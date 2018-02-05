@@ -99,7 +99,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
                 }
 
-            }, NineBxApplication.getPreferences().privateKey!!.toCharArray())
+            }, "nB8hEnaqppfWOp5L".toCharArray()/*NineBxApplication.getPreferences().privateKey!!.toCharArray()*/)
             //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/Encrypted_image.jpg") )
         }
         layoutEndRepeat.hide()

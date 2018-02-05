@@ -34,6 +34,7 @@ fun closeConnection( realmConnection : Realm ) {
     realmConnection.close()
 }
 
+private val TAG = "RealmUtils"
 
 private val connectionsMap = HashMap<String, Realm>()
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -46,11 +47,16 @@ fun prepareRealmConnections( context: Context?,
         context!!.showProgressDialog( context.getString(R.string.connecting) )
 
     if( connectionsMap.containsKey(realmEndPoint) ) {
+        AppLogger.d(TAG, "Connection Found : " + realmEndPoint )
         callback.onSuccess(connectionsMap[realmEndPoint])
     }
     else {
+        AppLogger.d(TAG, "New Connection : " + realmEndPoint )
         getRealmInstance( realmEndPoint, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+
+                AppLogger.d(TAG, "Connection established : " + realmEndPoint )
+
                 connectionsMap.put( realmEndPoint, realm!! )
                 callback.onSuccess( realm )
 
@@ -61,6 +67,8 @@ fun prepareRealmConnections( context: Context?,
             override fun onError(exception: Throwable?) {
 
                 if( exception != null && exception.localizedMessage != null ) {
+
+                    AppLogger.e(TAG, "Connection error : " + realmEndPoint )
 
                     if( isForeground )
                         context!!.showToast(exception.localizedMessage)

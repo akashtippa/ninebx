@@ -1,12 +1,13 @@
 package com.ninebx.ui.auth
 
 import android.os.AsyncTask
-import android.util.Base64
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.*
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import io.realm.ObjectServerError
 import io.realm.SyncCredentials
 import io.realm.SyncUser
@@ -21,7 +22,7 @@ import kotlin.collections.HashMap
 class LoginSignupTask(private var userName: String,
                       private var password: String,
                       private val authView: AuthView,
-                      val type: String) : AsyncTask<Void, Void, SyncCredentials?>(),
+                      var type: String) : AsyncTask<Void, Void, SyncCredentials?>(),
         SyncUser.Callback<SyncUser>, Observer<Response> {
 
     override fun onError(e: Throwable) {
@@ -33,8 +34,9 @@ class LoginSignupTask(private var userName: String,
     }
 
     override fun onNext(t: Response) {
-        //User already present - show error dialog and take back to login screen?
-        //Attempt login
+        //User details saved successfully - save user object to realm
+        AppLogger.d(TAG, "Successfully saved userMap : " + t.body().toString())
+        authView.onSuccess( mCurrentUser )
 
     }
 
@@ -43,15 +45,18 @@ class LoginSignupTask(private var userName: String,
     }
 
     override fun onSuccess(result: SyncUser?) {
-        authView.hideProgress()
+
         if (result == null) {
+            authView.hideProgress()
             authView.onError(R.string.error_login)
             prefrences.isLogin = true
         } else {
             AppLogger.d(TAG, "login : result : " + result.toString())
             AppLogger.d(TAG, result.toJson())
+            mCurrentUser = result
             if( type == "Signup" ) {
-                //Check if user is an existing user
+
+                //Save user data to realm
                 val userMap = HashMap<String, Any>()
 
                 //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
@@ -62,6 +67,8 @@ class LoginSignupTask(private var userName: String,
                 userMap.put("is_admin", type == "Signup" )
 
                 val privateKey = randomString(16)
+                NineBxApplication.getPreferences().privateKey = privateKey
+
                 val encryptedPrivateKey = encryptAESKeyPassword( privateKey, encryptedPasswordByteArray )
 
                 AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
@@ -73,17 +80,21 @@ class LoginSignupTask(private var userName: String,
                 val decryptedKey = decryptAESKEYPassword( encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray )
                 AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
 
-                /*NineBxApplication.getUserAPI!!.getUser( userMap )
+                NineBxApplication.getUserAPI()!!.postUserDetails( userMap )
                         .subscribeOn(Schedulers.io())
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                        .subscribe(this)*/
+                        .subscribe(this)
             }
             else
-            authView.onSuccess(result)
+                authView.onSuccess(result)
         }
     }
 
     override fun onError(error: ObjectServerError?) {
+        if( error != null ) {
+            authView.hideProgress()
+            error.printStackTrace()
+        }
         if( type == "Signup" ) {
             onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
         }
@@ -104,6 +115,7 @@ class LoginSignupTask(private var userName: String,
     private val mCompositeDisposable : CompositeDisposable = CompositeDisposable()
     private lateinit var encryptedPasswordByteArray : ByteArray
     private lateinit var encryptedPassword : IntArray
+    private var mCurrentUser : SyncUser ?= null
 
     override fun onPreExecute() {
         super.onPreExecute()
@@ -113,8 +125,10 @@ class LoginSignupTask(private var userName: String,
     override fun onPostExecute(result: SyncCredentials?) {
         super.onPostExecute(result)
         syncCredentials = result
-        if( result != null )
+        if( result != null ) {
+            type = "Signin"
             SyncUser.loginAsync(result, Constants.SERVER_IP, this)
+        }
         else {
             authView.hideProgress()
             authView.onError(R.string.error_login)

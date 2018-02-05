@@ -20,10 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Created by Alok on 02/02/18.
@@ -124,7 +121,7 @@ public class NetModule {
     public interface GetUsersAPI {
 
         @POST("users")
-        Observable<Response> getUser( @Body HashMap<String, Object> paramsMap );
+        Observable<Response> postUserDetails(@Body HashMap<String, Object> paramsMap );
 
     }
 

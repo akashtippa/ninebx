@@ -40,7 +40,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
     // Which row in the UI is currently checked (if any)
     private var checkedIndex: Int = Constants.INDEX_NOT_CHECKED
     private var downloadCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
-    private var privateKey : CharArray = NineBxApplication.getPreferences().privateKey!!.toCharArray()
+    private var privateKey : CharArray = "nB8hEnaqppfWOp5L".toCharArray() /*= NineBxApplication.getPreferences().privateKey!!.toCharArray()*/
 
     init {
         initUploadData()

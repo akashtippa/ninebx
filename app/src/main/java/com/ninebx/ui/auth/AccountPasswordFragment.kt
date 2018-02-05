@@ -11,7 +11,10 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.Constants
+import com.ninebx.utility.insertOrUpdate
 import com.ninebx.utility.isValidPassword
+import com.ninebx.utility.prepareRealmConnections
+import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account_password.*
 
@@ -59,7 +62,16 @@ class AccountPasswordFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        mAuthView.navigateToOTP()
+
+        prepareRealmConnections( context, true, mSyncUser!!.identity + "/Users", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                mCurrentUser.insertOrUpdate( realm!! )
+                NineBxApplication.getPreferences().setCurrentUser( mCurrentUser )
+                mAuthView.navigateToOTP()
+            }
+
+        })
+
     }
 
     override fun validate(): Boolean {

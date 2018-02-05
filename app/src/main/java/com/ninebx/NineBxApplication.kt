@@ -42,7 +42,6 @@ class NineBxApplication : MultiDexApplication() {
 
 
     companion object {
-        lateinit var instance: NineBxApplication
 
         @SuppressLint("StaticFieldLeak")
         var realmDefaultInstance: Realm? = null
@@ -65,11 +64,14 @@ class NineBxApplication : MultiDexApplication() {
 
         var autoTestMode = true
 
-        var getUserAPI : NetModule.GetUsersAPI ?= null
+        private var getUserAPI : NetModule.GetUsersAPI ?= null
         fun getUserAPI( ) : NetModule.GetUsersAPI? {
             if( getUserAPI == null ) getUserAPI = NetModule( instance ).getUsersAPI
             return getUserAPI
         }
+
+        lateinit var instance: NineBxApplication
+            private set
     }
 
     fun init(_homeActivity: HomeActivity) {
