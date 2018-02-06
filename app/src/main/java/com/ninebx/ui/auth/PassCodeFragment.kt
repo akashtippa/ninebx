@@ -114,7 +114,7 @@ class PassCodeFragment : BaseAuthFragment() {
                             mAuthView.navigateToCreatePassCode(false)
                         }
                         else {
-                            mAuthView.navigateToHome()
+                            mAuthView.navigateToFingerPrint()
                         }
                     }
                 }

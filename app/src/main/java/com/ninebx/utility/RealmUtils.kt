@@ -88,6 +88,7 @@ fun prepareRealmConnections( context: Context?,
 private fun getRealmInstance( realmEndPoint : String, callback : Realm.Callback ) {
 
     val user = SyncUser.currentUser()
+    AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_URL + realmEndPoint )
     val config = SyncConfiguration.Builder(user, Constants.SERVER_URL + realmEndPoint )
             .waitForInitialRemoteData()
             .build()

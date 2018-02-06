@@ -26,6 +26,10 @@ import com.ninebx.ui.base.network.NetModule
  */
 class NineBxApplication : MultiDexApplication() {
 
+    public fun getApplication() : NineBxApplication {
+        return this
+    }
+
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
@@ -89,7 +93,7 @@ class NineBxApplication : MultiDexApplication() {
 
         private var getUserAPI : NetModule.GetUsersAPI ?= null
         fun getUserAPI( ) : NetModule.GetUsersAPI? {
-            if( getUserAPI == null ) getUserAPI = NetModule( instance ).getUsersAPI
+            if( getUserAPI == null ) getUserAPI = NetModule( instance ).retrofit.create( NetModule.GetUsersAPI::class.java )
             return getUserAPI
         }
 

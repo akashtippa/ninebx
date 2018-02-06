@@ -190,7 +190,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 }
             }
             Constants.FINGER_PRINT_COMPLETE ->{
-                navigateToInvitePeople()
+                //navigateToInvitePeople()
+                navigateToHome()
             }
             Constants.INVITE_USERS_COMPLETE, Constants.ALL_COMPLETE -> {
                 navigateToHome()
@@ -215,13 +216,18 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun navigateToFingerPrint() {
-        if (NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE)
-            NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
-        mCurrentTag = "FingerPrint"
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val fingerPrintFragment = FingerPrintFragment()
-        fragmentTransaction.replace(R.id.container, fingerPrintFragment).commit()
+        if( checkForFingerPrint() ) {
+            if (NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE)
+                NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
+            mCurrentTag = "FingerPrint"
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            val fingerPrintFragment = FingerPrintFragment()
+            fragmentTransaction.replace(R.id.container, fingerPrintFragment).commit()
+        }
+        else {
+            navigateToInvitePeople()
+        }
     }
 
     override fun onBackPressed() {

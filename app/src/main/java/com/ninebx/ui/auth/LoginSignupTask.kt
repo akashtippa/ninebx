@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.ObjectServerError
 import io.realm.SyncCredentials
 import io.realm.SyncUser
-import okhttp3.Response
+import okhttp3.ResponseBody
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -23,7 +23,12 @@ class LoginSignupTask(private var userName: String,
                       private var password: String,
                       private val authView: AuthView,
                       var type: String) : AsyncTask<Void, Void, SyncCredentials?>(),
-        SyncUser.Callback<SyncUser>, Observer<Response> {
+        SyncUser.Callback<SyncUser>, Observer<ResponseBody> {
+    override fun onNext(t: ResponseBody) {
+        //User details saved successfully - save user object to realm
+        AppLogger.d(TAG, "Successfully saved userMap : " + t.string())
+        authView.onSuccess( mCurrentUser )
+    }
 
     override fun onError(e: Throwable) {
         authView.hideProgress()
@@ -31,13 +36,6 @@ class LoginSignupTask(private var userName: String,
 
     override fun onComplete() {
         AppLogger.d( TAG, "GetUserAPI : onComplete" )
-    }
-
-    override fun onNext(t: Response) {
-        //User details saved successfully - save user object to realm
-        AppLogger.d(TAG, "Successfully saved userMap : " + t.body().toString())
-        authView.onSuccess( mCurrentUser )
-
     }
 
     override fun onSubscribe(d: Disposable) {
@@ -83,7 +81,7 @@ class LoginSignupTask(private var userName: String,
                 NineBxApplication.getUserAPI()!!.postUserDetails( userMap )
                         .subscribeOn(Schedulers.io())
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                        .subscribe(this)
+                        .subscribe( this )
             }
             else
                 authView.onSuccess(result)
