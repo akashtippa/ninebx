@@ -6,6 +6,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import io.realm.*
+import java.util.*
 
 /**
  * Created by Alok on 18/01/18.
@@ -94,5 +95,9 @@ private fun getRealmInstance( realmEndPoint : String, callback : Realm.Callback 
             .build()
     Realm.getInstanceAsync( config, callback )
 
+}
+
+fun getUniqueId() : Int {
+    return UUID.randomUUID().hashCode()
 }
 

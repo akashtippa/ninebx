@@ -129,7 +129,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         this.cryptoObject = cryptoObject
     }
 
-    fun setStage(stage: Stage) {
+    fun setStage(stage: com.ninebx.ui.auth.fingerprint.Stage) {
         this.stage = stage
     }
 
@@ -228,4 +228,6 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         fun onPurchased(withFingerprint: Boolean, crypto: FingerprintManager.CryptoObject? = null)
         fun createKey(keyName: String, invalidatedByBiometricEnrollment: Boolean = true)
     }
+
+
 }
