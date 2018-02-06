@@ -38,6 +38,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onError(error: Int) {
     }
 
+
     override fun onSuccess(categories: ArrayList<Level2Category>) {
         hideProgress()
         inflateLayout(categories)
@@ -196,7 +197,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             }
 
             "Furniture" -> {
-                etTitle.setHint("Asset name")
+                etTitle.hint = "Asset name"
                 etTitleValue.hint = "Description/location"
                 toolbarTitle.text = "Add Asset"
             }
