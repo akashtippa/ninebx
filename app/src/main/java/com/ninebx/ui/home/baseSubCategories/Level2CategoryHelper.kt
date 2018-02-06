@@ -146,10 +146,6 @@ class Level2CategoryHelper(
                 getFragmentSubList()
             }
 
-            "Memory Timeline" -> {
-                getMemoryTimeLine()
-            }
-
             "Shared Contacts" -> {
                 getContactsList()
             }

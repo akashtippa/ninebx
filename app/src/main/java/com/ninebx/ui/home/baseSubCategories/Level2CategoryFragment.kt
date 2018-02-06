@@ -23,6 +23,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private var strTitle = ""
     private var strSubTitle = ""
+
     private var boxValue = ""
     val prefrences = NineBxPreferences()
 
@@ -482,7 +483,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.showBottomView()
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         return super.onBackPressed()

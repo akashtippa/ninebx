@@ -15,10 +15,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
-import com.ninebx.ui.home.fragments.ClothesFragment
-import com.ninebx.ui.home.fragments.FragmentTestContact
-import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
-import com.ninebx.ui.home.fragments.WellnessFragment
+import com.ninebx.ui.home.fragments.*
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_category.*
@@ -72,8 +69,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             rvSubCategory.layoutManager = LinearLayoutManager(context)
 
             tvCategory.setOnClickListener {
-
-
                 if (category.title == "Shared Contacts") {
                     getContactsList()
                 } else if (category.title == "Memory Timeline") {
@@ -83,7 +78,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     fragmentTransaction.addToBackStack(null)
                     val bundle = Bundle()
                     bundle.putString("categoryName", category.title)
-                    val categoryFragment = Level2CategoryFragment()
+                    val categoryFragment = FragmentListContainer()
                     categoryFragment.arguments = bundle
                     fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                 }
@@ -91,6 +86,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 Toast.makeText(context, "" + category.title, Toast.LENGTH_LONG).show()
 
             }
+
 
             val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(category: SubCategory, action: String) {
@@ -109,7 +105,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         categoryFragment.arguments = bundle
                         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                     } else {
-                        val categoryFragment = Level2CategoryFragment()
+                        val categoryFragment = FragmentListContainer()
                         categoryFragment.arguments = bundle
                         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
                     }
