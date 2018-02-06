@@ -91,7 +91,10 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
             //PDF : "/storage/emulated/0/Download/ninebx/pdf-sample.pdf"
             //Image : ""
-            /*mAWSFileTransferHelper.performOperation( "/storage/emulated/0/image.jpg", object : AWSFileTransferHelper.FileOperationsCompletionListener {
+            mAWSFileTransferHelper.performDecryption(
+                    File( "/storage/emulated/0/Encrypted_image.jpg"),
+                    "nB8hEnaqppfWOp5L".toCharArray(),
+                    object : AWSFileTransferHelper.FileOperationsCompletionListener {
                 override fun onSuccess(outputFile: File?) {
 
                     mImagesList.add( Uri.fromFile(outputFile) )
@@ -99,8 +102,12 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
                 }
 
-            }, "nB8hEnaqppfWOp5L".toCharArray()*//*NineBxApplication.getPreferences().privateKey!!.toCharArray()*//*)*/
-            mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/ios_encrpted.jpeg"), "nB8hEnaqppfWOp5L".toCharArray() )
+            })
+
+
+
+            //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/ios_normal.jpeg"), "nB8hEnaqppfWOp5L".toCharArray())
+            //decryptFileIOS( File("/storage/emulated/0/ios_normal.jpeg"), "nB8hEnaqppfWOp5L".toCharArray())
         }
         layoutEndRepeat.hide()
         setValues( mCalendarEvent )

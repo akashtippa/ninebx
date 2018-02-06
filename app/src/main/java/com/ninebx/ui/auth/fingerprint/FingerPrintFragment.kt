@@ -9,8 +9,11 @@ import android.hardware.fingerprint.FingerprintManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
+import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
+import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProperties.*
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AlertDialog
@@ -21,6 +24,7 @@ import android.widget.Toast
 import com.ninebx.R
 import com.ninebx.ui.auth.BaseAuthFragment
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
+import com.ninebx.ui.base.kotlin.showToast
 import java.io.IOException
 import java.security.*
 import java.security.cert.CertificateException
@@ -39,9 +43,48 @@ import javax.crypto.SecretKey
 class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogFragment.Callback {
     override fun onPurchased(withFingerprint: Boolean, crypto: FingerprintManager.CryptoObject?) {
 
+        if( context != null )
+            context!!.showToast("Verified successfully")
+        mAuthView.navigateToHome()
+
     }
 
     override fun createKey(keyName: String, invalidatedByBiometricEnrollment: Boolean) {
+        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
+        // for your flow. Use of keys is necessary if you need to know if the set of
+        // enrolled fingerprints has changed.
+        try {
+            keyStore.load(null)
+            // Set the alias of the entry in Android KeyStore where the key will appear
+            // and the constrains (purposes) in the constructor of the Builder
+
+            val builder = KeyGenParameterSpec.Builder(keyName,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    // Require the user to authenticate with a fingerprint to authorize every use
+                    // of the key
+                    .setUserAuthenticationRequired(true)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+
+            // This is a workaround to avoid crashes on devices whose API level is < 24
+            // because KeyGenParameterSpec.Builder#setInvalidatedByBiometricEnrollment is only
+            // visible on API level +24.
+            // Ideally there should be a compat library for KeyGenParameterSpec.Builder but
+            // which isn't available yet.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                builder.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
+            }
+            keyGenerator.init(builder.build())
+            keyGenerator.generateKey()
+        } catch (e: NoSuchAlgorithmException) {
+            throw RuntimeException(e)
+        } catch (e: InvalidAlgorithmParameterException) {
+            throw RuntimeException(e)
+        } catch (e: CertificateException) {
+            throw RuntimeException(e)
+        } catch (e: IOException) {
+            throw RuntimeException(e)
+        }
 
     }
 
@@ -179,6 +222,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     }
 
     private fun setupKeyStoreAndKeyGenerator() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         try {
             keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
         } catch (e: KeyStoreException) {
@@ -212,7 +256,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         dialogBuilder.setTitle("Finger print permission required to enable instant access")
         dialogBuilder.setMessage("Allow app to access finger print?")
         dialogBuilder.setPositiveButton("Open App Permission") { dialog, whichButton ->
-            val intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                     Uri.fromParts("package", context!!.packageName, null));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
