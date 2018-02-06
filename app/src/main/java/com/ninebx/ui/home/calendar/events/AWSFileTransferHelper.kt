@@ -8,7 +8,6 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferType
-import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.utility.*
 import com.ninebx.utility.Util.fillMap
@@ -251,9 +250,9 @@ class AWSFileTransferHelper( private val context : Context? ) {
         override fun doInBackground(vararg aVoid: Void?): File {
             AppLogger.d("FileOperations", operationType + " : " + filePath )
             if( operationType == "Encryption" )
-                return encryptFile( File( filePath ), privateKey )
+                return encryptFileIOS( File( filePath ), privateKey )
             else
-                return decryptFile( File( filePath ), privateKey )
+                return decryptFileIOS( File( filePath ), privateKey )
         }
 
     }
@@ -265,17 +264,21 @@ class AWSFileTransferHelper( private val context : Context? ) {
 
                 if( outputFile != null ) {
                     context?.showToast("Encryption Success" )
-                    FileOperationsTask("Decryption", outputFile.absolutePath, privateKey, object : FileOperationsCompletionListener {
-                        override fun onSuccess(outputFile: File?) {
+                    //performDecryption( outputFile, privateKey, fileOperationsCompletionListener )
+                }
 
-                            if( outputFile != null ) {
-                                context?.showToast("Decryption Success" )
-                                fileOperationsCompletionListener.onSuccess(outputFile)
-                            }
+            }
 
-                        }
+        }).execute()
+    }
 
-                    }).execute()
+    fun performDecryption(outputFile: File, privateKey: CharArray, fileOperationsCompletionListener: FileOperationsCompletionListener) {
+        FileOperationsTask("Decryption", outputFile.absolutePath, this.privateKey, object : FileOperationsCompletionListener {
+            override fun onSuccess(outputFile: File?) {
+
+                if( outputFile != null ) {
+                    context?.showToast("Decryption Success" )
+                    fileOperationsCompletionListener.onSuccess(outputFile)
                 }
 
             }

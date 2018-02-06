@@ -101,3 +101,16 @@ fun getUniqueId() : Int {
     return UUID.randomUUID().hashCode()
 }
 
+fun generateRandomOTP() : String {
+    var otp = ""
+    val random = Random()
+    otp += random.nextInt(10)
+    otp += random.nextInt(10)
+    otp += random.nextInt(10)
+    otp += random.nextInt(10)
+    otp += random.nextInt(10)
+    otp += random.nextInt(10)
+    AppLogger.d("EmailOTP", otp)
+    return otp
+}
+
