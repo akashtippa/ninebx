@@ -8,12 +8,15 @@ import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.DateTimeSelectionListener
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.getDateFromPicker
 import com.ninebx.utility.getDateMonthYearFormat
 import kotlinx.android.synthetic.main.fragment_my_profile.*
 import java.util.*
+import com.ninebx.utility.countryPicker.CountryPickerListener
+import com.ninebx.utility.countryPicker.CountryPicker
 
 
 /***
@@ -64,6 +67,11 @@ class MyProfileFragment : FragmentBackHelper() {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
+        txtCountry.setOnClickListener {
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.replace(R.id.frameLayout, CountryPicker()).commit()
+        }
 
         selectedGender = txtGender.selectedItem.toString()
         txtGender.prompt = "Gender"

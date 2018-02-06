@@ -113,13 +113,15 @@ class HomeActivity : AppCompatActivity(), HomeView {
             true
         }
 
-        changeToolbarTitle(titleText)
+//        changeToolbarTitle(titleText)
 
+        toggleToolbarImage()
         ivHome.setOnClickListener {
             layoutQuickAdd.show()
             ivHome.hide()
             toggleCheck(false)
-            changeToolbarTitle(titleText)
+//            changeToolbarTitle(titleText)
+            toggleToolbarImage()
             callHomeFragment()
             showBottomView()
             ivBack.hide()
@@ -145,6 +147,12 @@ class HomeActivity : AppCompatActivity(), HomeView {
         return dp * mContext.resources.displayMetrics.density
     }
 
+    fun toggleToolbarImage() {
+        imgToolbar.show()
+        toolbarTitle.hide()
+
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
     }
@@ -164,7 +172,9 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     public fun changeToolbarTitle(title: String) {
+        toolbarTitle.show()
         toolbarTitle.text = Html.fromHtml(title)
+        imgToolbar.hide()
     }
 
     fun hideToolbar() {
@@ -225,6 +235,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
 //        toolbarTitle.textSize = pxFromDp(10F, this)
         ivHome.show()
         layoutQuickAdd.hide()
+        toolbarTitle.show()
+        imgToolbar.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
 

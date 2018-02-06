@@ -37,7 +37,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
     var womenSizeCategories = arrayOf("Regular", "Petite", "Tall")
 
-    var menSizeCategories = arrayOf("Regular", "Short", "Tall")
+    var menSizeCategories = arrayOf("Size category (US)", "Regular", "Short", "Tall")
 
     var womenTopsSizes = arrayOf("XXXS", "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL")
 
@@ -56,23 +56,25 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
     var womenAccessoriesGloves = arrayOf("Gloves", "XS", "S", "M", "L", "XL")
     var womenAccessoriesTights = arrayOf("Tights", "XS", "S", "M", "L", "XL")
 
-    var menTopsSizes = arrayOf("XS", "S", "M", "L", "XL", "XXL")
+    var menTopsSizes = arrayOf("Size (US)", "XS", "S", "M", "L", "XL", "XXL")
 
 
-    var menTopsNumericSizes = arrayOf("32", "34", "36", "38", "40", "42", "44", "46", "48")
+    var menTopsNumericSizes = arrayOf("Numeric size(US)", "32", "34", "36", "38", "40", "42", "44", "46", "48")
 
 
-    var menBottomsNumericSizes = arrayOf("26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
+    var menBottomsNumericSizes = arrayOf("Numeric size(US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
 
-    var menJacketsNumericSizes = arrayOf("34", "36", "38", "40", "42", "44", "46")
+    var menJacketsNumericSizes = arrayOf("Numeric size(US)", "34", "36", "38", "40", "42", "44", "46")
 
-    var menShoeSizes = arrayOf("6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5", "16")
+    var menShoeSizes = arrayOf("Size (US)", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5", "16")
 
-    var menShoeWidthSizes = arrayOf("4A", "3A", "2A/B", "C", "D", "E/2E", "3E", "4E", "5E")
+    var menShoeWidthSizes = arrayOf("Width", "4A", "3A", "2A/B", "C", "D", "E/2E", "3E", "4E", "5E")
 
-    var menBelts = arrayOf("S", "M", "L", "XL", "XXL")
+    var menBelts = arrayOf("Belts", "S", "M", "L", "XL", "XXL")
+    var menBottomsNumericBeltsSizes = arrayOf("Belts (Numeric size", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46")
 
-    var menHaltsAndGloves = arrayOf("XS", "S", "M", "L", "L", "XXL")
+    var menHats = arrayOf("Hats", "XS", "S", "M", "L", "L", "XXL")
+    var menGloves = arrayOf("Gloves", "XS", "S", "M", "L", "L", "XXL")
 
     var girlsNumericSizes = arrayOf("Numeric size (US)", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16")
     var girlsBeltSizes = arrayOf("Belt", "XS", "S", "M", "L", "XL")
@@ -338,7 +340,75 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         spinnerItem.adapter = arrayAdapter
                     }
 
-                // Girls Shopping Category
+                // Men's Shopping Category
+                    Constants.PICKER_MENS_SIZE_CATEGORY_US -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menSizeCategories)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_SIZE -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_TOPS -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsNumericSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_BOTTOMS -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menJacketsNumericSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_OUTERWEAR -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsNumericSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_SHOES -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menShoeSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_SHOES_WIDTH -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menShoeWidthSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_BELTS -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBelts)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_BELTS_NUMERIC_SIZE -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericBeltsSizes)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_TIGHTS -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menHats)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+                    Constants.PICKER_MENS_GLOVES -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menGloves)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerItem.adapter = arrayAdapter
+                    }
+
+
+                // Girls and Boys Shopping Category
 
                     Constants.PICKER_GIRLS_NUMERIC_SIZE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsNumericSizes)
@@ -391,7 +461,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         spinnerItem.adapter = arrayAdapter
                     }
 
-                    // Baby Shopping Category
+                // Baby Shopping Category
                     Constants.PICKER_BABY_CLOTHING -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, babyClothings)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -402,7 +472,6 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
                     }
-
 
 
                 }

@@ -34,12 +34,13 @@
                 tools:visibility="visible" />
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:id="@+id/imgToolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:src="@drawable/logo_nine"
+                android:src="@drawable/logo"
                 android:visibility="gone" />
 
             <TextView
@@ -49,6 +50,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:text="@string/engaged"
+                android:visibility="visible"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16" />
 

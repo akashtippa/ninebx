@@ -446,7 +446,7 @@ class Level2CategoryHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_MENS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_MENS_SIZE_CATEGORY_US, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
 
@@ -456,7 +456,7 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Tops"
         category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_MENS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_TOPS, Constants.LEVEL_NORMAL_SPINNER))
 
         categoryList.add(category)
 
@@ -465,14 +465,14 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Bottoms"
         category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_MENS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_BOTTOMS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Suiting-Jackets"
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
 
@@ -481,7 +481,7 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Suiting-Pants"
         category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_MENS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
@@ -489,15 +489,15 @@ class Level2CategoryHelper(
         category = Level2Category(category_id)
         category.title = "Outwear"
         category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_MENS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_OUTERWEAR, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Shoes"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", "", Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Width", "Width", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_MENS_SHOES, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_MENS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
 
@@ -505,10 +505,10 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Accessories"
-        category.subCategories.add(Level2SubCategory("Belts", "Belts", "", Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Belts(Numeric size)", "Belts(Numeric size)", "", Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", "", Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Tights", "Tights", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Belts", "Belts", Constants.PICKER_MENS_BELTS, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Belts(Numeric size)", "Belts(Numeric size)", Constants.PICKER_MENS_BELTS_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", Constants.PICKER_MENS_GLOVES, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Tights", "Tights", Constants.PICKER_MENS_TIGHTS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050

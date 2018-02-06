@@ -87,7 +87,7 @@ object Constants {
     val PICKER_MENS_SHOES_WIDTH = "valPickerMensShoesWidth"
     val PICKER_MENS_BELTS = "valPickerMensBelts"
     val PICKER_MENS_BELTS_NUMERIC_SIZE = "valPickerMensBeltsNumericSize"
-    val PICKER_MENS_HATS = "valPickerMensHats"
+    val PICKER_MENS_TIGHTS = "valPickerMensTights"
     val PICKER_MENS_GLOVES = "valPickerMensGloves"
 
     // Shopping List For Girls and Boys

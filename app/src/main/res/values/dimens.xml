@@ -22,4 +22,6 @@
     <dimen name="margin_24">24dp</dimen>
 
     <string name="app_title">16sp</string>
+    <dimen name="cp_dialog_width">1000dp</dimen>
+    <dimen name="cp_dialog_height">1000dp</dimen>
 </resources>
