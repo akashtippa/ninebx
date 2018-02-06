@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.testRealm.TestFragment
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
@@ -51,7 +52,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun addEditCalendarEvent(calendarEvent: CalendarEvents?, selectedDate: Date) {
         val addEventFragment = AddEditEventFragment()
         val bundle = Bundle()
-        bundle.putBoolean("isAddEvent", calendarEvent == null )
+        bundle.putBoolean("isAddEvent", calendarEvent == null)
         var event = calendarEvent
         if (event == null) {
             event = CalendarEvents()
@@ -132,7 +133,11 @@ class HomeActivity : AppCompatActivity(), HomeView {
         callHomeFragment()
         toggleCheck(false)
 
-
+        layoutQuickAdd.setOnClickListener {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.disallowAddToBackStack()
+            fragmentTransaction.replace(R.id.frameLayout, TestFragment()).commit()
+        }
 
     }
 
@@ -169,8 +174,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
     fun showToolbar() {
         toolbar.show()
     }
-
-
 
 
     override fun onPause() {

@@ -9,6 +9,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
+import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_level2_category.*
 
 /***
@@ -22,7 +23,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private var strTitle = ""
     private var strSubTitle = ""
-
+    private var boxValue = ""
+    val prefrences = NineBxPreferences()
 
     override fun showProgress(message: Int) {
 
@@ -55,10 +57,43 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
 
+        boxValue = prefrences.currentBox!!
         ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
         setTitle()
+
+        setCamera(boxValue)
+    }
+
+    private fun setCamera(boxValue: String?) {
+        when (boxValue) {
+            "Home" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_home)
+            }
+            "Travel" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_travel)
+            }
+            "Contacts" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_contacts)
+            }
+            "Personal" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_personal)
+            }
+            "Interests" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_interests)
+            }
+            "Wellness" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_wellness)
+            }
+            "Memories" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_memories)
+            }
+            "Shopping" -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
+            }
+
+        }
     }
 
     private fun setTitle() {

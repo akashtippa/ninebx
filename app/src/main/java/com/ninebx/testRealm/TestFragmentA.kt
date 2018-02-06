@@ -1,5 +1,7 @@
 package com.ninebx.testRealm
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.AsyncTask.execute
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +12,11 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.testRealm.model.TestUserDetails
 import com.ninebx.ui.home.HomeFragment
-import io.realm.Realm
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.realm.*
 import java.util.UUID.randomUUID
-import io.realm.SyncManager
-import io.realm.SyncConfiguration
-import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_test_a.*
 
 
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_test_a.*
  */
 class TestFragmentA : FragmentBackHelper() {
 
-    private lateinit var mCurrentUserDetails : TestUserDetails
+    private lateinit var mCurrentUserDetails: TestUserDetails
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,48 +36,18 @@ class TestFragmentA : FragmentBackHelper() {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
-        mCurrentUserDetails = arguments!!.getParcelable(Constants.TEST_FRAGMENT_A)
 
         btnSubmit.setOnClickListener {
+            prepareRealmConnections(context, true, "Testing", object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    mCurrentUserDetails.insertOrUpdate(realm!!)
+                    mCurrentUserDetails.strFirstName = "TestingTesting"
+                    NineBxApplication.getPreferences().setTestFragmentA(mCurrentUserDetails)
+                }
+
+            })
 
         }
-
-
-
-
-    }
-
-    private fun sendData() {
-        val realm = Realm.getDefaultInstance()
-
-        val user = SyncUser.currentUser()
-        val config = SyncConfiguration.Builder(user, Constants.SERVER_URL + "TestFragmentA" )
-                .waitForInitialRemoteData()
-                .build()
-
-        realm.executeTransactionAsync({ bgRealm ->
-            val userDetails = bgRealm.createObject(TestUserDetails::class.java)
-            userDetails.strFirstName = "TestFirstName"
-            val privateKey = randomString(16)
-
-            userDetails.strLastName = encryptAESKey("TestLastName", privateKey)
-
-        }, {
-            Toast.makeText(context, "Success: ", Toast.LENGTH_LONG).show()
-        }, {
-            Toast.makeText(context, "Failure: ", Toast.LENGTH_LONG).show()
-        })
-
-//        var mSyncUser: SyncUser? = null
-//
-//        prepareRealmConnections( context, true, "/TestFragmentA", object : Realm.Callback() {
-//            override fun onSuccess(realm: Realm?) {
-//                mCurrentUserDetails.insertOrUpdate( realm!! )
-//                NineBxApplication.getPreferences().setTestFragmentA( mCurrentUserDetails )
-////                mAuthView.navigateToOTP()
-//            }
-//
-//        })
     }
 
 }
