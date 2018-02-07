@@ -27,7 +27,12 @@ android {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    api 'com.android.billingclient:billing:1.0'
+
+    api "com.android.support:appcompat-v7:$project.SUPPORT_VERSION"
+    api "com.android.support:cardview-v7:$project.SUPPORT_VERSION"
+    api "com.android.support:recyclerview-v7:$project.SUPPORT_VERSION"
+    api "com.android.support:support-annotations:$project.SUPPORT_VERSION"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

@@ -87,6 +87,40 @@
         android:visibility="visible"
         app:menu="@menu/menu_bottom" />
 
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        app:cardElevation="@dimen/default_margin"
+        android:id="@+id/cvAttachments"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_100"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_micro_padding"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/selected_photos"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                tools:layout_height="@dimen/margin_72"
+                tools:listitem="@layout/item_attachment"
+                android:id="@+id/rvAttachments"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+
     <RelativeLayout
         android:id="@+id/layoutQuickAdd"
         android:layout_width="wrap_content"
