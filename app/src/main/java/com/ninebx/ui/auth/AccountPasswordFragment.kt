@@ -70,9 +70,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 NineBxApplication.getPreferences().setCurrentUser( mCurrentUser )
                 mAuthView.navigateToOTP()
             }
-
         })
-
     }
 
     override fun validate(): Boolean {
@@ -118,10 +116,6 @@ class AccountPasswordFragment : BaseAuthFragment() {
             }
         }
 
-
-
         return isValid
     }
-
-
 }

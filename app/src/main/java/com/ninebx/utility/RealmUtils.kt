@@ -16,7 +16,7 @@ fun RealmObject.insertOrUpdate(realmInstance: Realm) {
     realmInstance.executeTransaction { realm -> realm.insertOrUpdate(this) }
 }
 
-fun Realm.insertOrUpdateObjects(realmInstance: Realm, realmObjects: RealmList<RealmObject>) {
+fun RealmObject.insertOrUpdateObjects(realmInstance: Realm, realmObjects: RealmList<RealmObject>) {
     realmInstance.insertOrUpdate(realmObjects)
 }
 
@@ -43,8 +43,8 @@ fun prepareRealmConnections(context: Context?,
                             realmEndPoint: String,
                             callback: Realm.Callback) {
 
-    if ( isForeground && context != null )
-        context.showProgressDialog(context.getString(R.string.connecting))
+    if (isForeground)
+        context!!.showProgressDialog(context.getString(R.string.connecting))
 
     if (connectionsMap.containsKey(realmEndPoint)) {
         AppLogger.d(TAG, "Connection Found : " + realmEndPoint)
@@ -59,8 +59,8 @@ fun prepareRealmConnections(context: Context?,
                 connectionsMap.put(realmEndPoint, realm!!)
                 callback.onSuccess(realm)
 
-                if ( isForeground && context != null )
-                    context.hideProgressDialog()
+                if (isForeground)
+                    context!!.hideProgressDialog()
             }
 
             override fun onError(exception: Throwable?) {
@@ -69,14 +69,14 @@ fun prepareRealmConnections(context: Context?,
 
                     AppLogger.e(TAG, "Connection error : " + realmEndPoint)
 
-                    if ( isForeground && context != null )
-                        context.showToast(exception.localizedMessage)
+                    if (isForeground)
+                        context!!.showToast(exception.localizedMessage)
 
                     exception.printStackTrace()
                 }
 
-                if ( isForeground && context != null )
-                    context.hideProgressDialog()
+                if (isForeground)
+                    context!!.hideProgressDialog()
 
             }
         })
