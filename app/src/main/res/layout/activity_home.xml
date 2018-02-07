@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="@string/engaged"
+                android:text="@string/app_name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16"
                 android:visibility="visible" />
@@ -74,49 +74,56 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNavigationView"
+        android:layout_above="@+id/bottomLayout"
         android:layout_below="@+id/toolbarLayout"
         android:background="@color/white" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/bottomLayout"
         android:layout_alignParentBottom="true"
-        android:background="@color/grey_300"
-        android:visibility="visible"
-        app:menu="@menu/menu_bottom" />
-
-    <android.support.v7.widget.CardView
-        android:visibility="gone"
-        app:cardElevation="@dimen/default_margin"
-        android:id="@+id/cvAttachments"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        >
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/grey_100"
-            android:orientation="vertical">
+            android:background="@color/grey_300"
+            android:visibility="visible"
+            app:menu="@menu/menu_bottom" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_micro_padding"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/selected_photos"/>
-
-            <android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            app:cardElevation="@dimen/default_margin"
+            android:id="@+id/cvAttachments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                tools:layout_height="@dimen/margin_72"
-                tools:listitem="@layout/item_attachment"
-                android:id="@+id/rvAttachments"/>
+                android:background="@color/grey_100"
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/default_micro_padding"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/selected_photos"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    tools:layout_height="@dimen/margin_72"
+                    tools:listitem="@layout/item_attachment"
+                    android:id="@+id/rvAttachments"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+
 
 
 
@@ -125,7 +132,7 @@
         android:id="@+id/layoutQuickAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomNavigationView"
+        android:layout_above="@+id/bottomLayout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/_5sdp">

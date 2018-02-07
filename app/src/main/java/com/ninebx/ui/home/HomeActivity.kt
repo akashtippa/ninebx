@@ -9,26 +9,27 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
+
 import android.text.Html
-import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showProgressDialog
-import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
+
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
 import com.ninebx.ui.home.calendar.events.ImageViewDialog
@@ -90,8 +91,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
@@ -304,7 +303,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             cvAttachments.show()
         }
         else {
-            layoutQuickAdd.show()
+            if( toolbar.isVisible() )
+                layoutQuickAdd.show()
+
             cvAttachments.hide()
         }
     }
