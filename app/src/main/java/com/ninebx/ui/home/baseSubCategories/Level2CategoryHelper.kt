@@ -651,7 +651,7 @@ class Level2CategoryHelper(
         category.title = "Service Details"
         category.subCategories.add(Level2SubCategory("Name of service provider", "Name of service provider", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Date of service", "Date of service", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", Constants.KEYBOARD_NUMBER, Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
 
@@ -1579,13 +1579,13 @@ class Level2CategoryHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Account type", "Account type", Constants.KEYBOARD_SPINNER, Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Account type", "Account type", Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", "Name(s) on account", "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", "SWIFT/other code", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("ABA routing number", "ABA routing number", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -2174,8 +2174,8 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Name", "Name", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Concenteration/major", "Concenteration/major", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
@@ -2206,8 +2206,8 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name", "Name", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Currently working here", "", "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 

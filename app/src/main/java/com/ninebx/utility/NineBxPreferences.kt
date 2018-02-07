@@ -1,9 +1,6 @@
 package com.ninebx.utility
 
 import com.google.gson.Gson
-import com.ninebx.testRealm.TestFragmentA
-import com.ninebx.testRealm.model.TestUserContact
-import com.ninebx.testRealm.model.TestUserDetails
 import com.ninebx.ui.base.realm.Users
 
 
@@ -25,29 +22,14 @@ class NineBxPreferences : Preferences() {
     var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
     var testinFragmentB by stringPref(Constants.TEST_FRAGMENT_B)
 
+    var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
+
     fun getCurrentUser(): Users? {
         return Gson().fromJson( currentUser, Users::class.java )
     }
 
     fun setCurrentUser( users : Users ) {
         currentUser = Gson().toJson(users)
-    }
-
-    fun getTestFragmentA(): TestUserDetails? {
-        return Gson().fromJson( testinFragmentA, TestUserDetails::class.java )
-    }
-
-    fun setTestFragmentA( testFragmentA : TestUserDetails) {
-        testinFragmentA = Gson().toJson(testFragmentA)
-    }
-
-
-    fun getTestFragmentB(): TestUserContact? {
-        return Gson().fromJson( testinFragmentB, TestUserContact::class.java )
-    }
-
-    fun setTestFragmentB( testFragmentB : TestUserContact) {
-        testinFragmentB = Gson().toJson(testFragmentB)
     }
 
 

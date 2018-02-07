@@ -1,10 +1,7 @@
 package com.ninebx.utility.countryPicker
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -13,16 +10,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ListView
-import android.widget.Toast
 import com.ninebx.NineBxApplication
-
 import com.ninebx.R
-import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.country_picker.*
-
-import java.util.ArrayList
-import java.util.Locale
+import java.util.*
 
 /**
  * Created by mukesh on 25/04/16.
@@ -60,7 +52,7 @@ class CountryPicker : FragmentBackHelper() {
         selectedCountriesList = ArrayList(countriesList.size)
         selectedCountriesList.addAll(countriesList)
 
-        adapter = CountryListAdapter(activity, selectedCountriesList)
+        adapter = CountryListAdapter(context!!, selectedCountriesList)
         countryListView!!.adapter = adapter
 
         countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -68,9 +60,6 @@ class CountryPicker : FragmentBackHelper() {
                 val country = selectedCountriesList[position]
                 listener!!.onSelectCountry(country.name, country.code, country.dialCode,
                         country.flag)
-                Toast.makeText(context, "Selected Country is " + country.name, Toast.LENGTH_LONG).show()
-                AppLogger.e("Selected Country", " is " + country.name)
-
             }
         }
 

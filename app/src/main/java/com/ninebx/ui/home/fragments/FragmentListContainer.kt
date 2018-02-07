@@ -38,7 +38,5 @@ class FragmentListContainer : FragmentBackHelper() {
             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
 
         }
-
-
     }
 }

@@ -62,6 +62,8 @@ object Constants {
     val TEST_FRAGMENT_A: String = "test_fragment_a"
     val TEST_FRAGMENT_B: String = "test_fragment_b"
 
+    val COUNTRY_SELECTED: String = "country_selected"
+
     // Shopping Size List For Women
 
     val PICKER_WOMENS_DETAILS_SIZE = "valPickerWomenSize"
@@ -107,5 +109,15 @@ object Constants {
 
     val PICKER_BABY_CLOTHING = "valPickerBabyClothing"
     val PICKER_BABY_SHOES = "valPickerBabyShoes"
+
+    // Other DropDown Values
+
+    val BANK_ACCOUNT_TYPE = "bankAccountType"
+    val CARD_TYPE = "cardType"
+    val CONTACT_SPINNER = "contactSpinner"
+
+    // Temporary Private Key
+
+    val TEMP_PRIVATE_KEY = "nB8hEnaqppfWOp5L"
 
 }

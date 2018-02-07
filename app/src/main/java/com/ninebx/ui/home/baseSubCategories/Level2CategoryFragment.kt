@@ -70,28 +70,28 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun setCamera(boxValue: String?) {
         when (boxValue) {
-            "Home" -> {
+            getString(R.string.home_amp_money) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_home)
             }
-            "Travel" -> {
+            getString(R.string.travel) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_travel)
             }
-            "Contacts" -> {
+            getString(R.string.contacts) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_contacts)
             }
-            "Personal" -> {
+            getString(R.string.personal) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_personal)
             }
-            "Interests" -> {
+            getString(R.string.interests) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_interests)
             }
-            "Wellness" -> {
+            getString(R.string.wellness) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_wellness)
             }
-            "Memories" -> {
+            getString(R.string.memories) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_memories)
             }
-            "Shopping" -> {
+            getString(R.string.shopping) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
             }
 

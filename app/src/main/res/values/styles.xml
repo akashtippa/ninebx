@@ -47,9 +47,20 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
-    <style parent="@android:style/Widget.Spinner" name="SpinnerwithNoArrow">
+    <style name="SpinnerwithNoArrow" parent="@android:style/Widget.Spinner">
         <item name="android:background">@android:drawable/edit_text</item>
     </style>
 
+    <style name="MyCustomPickerTheme" parent="MultiContactPicker.Azure">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="mcpToolbarTheme">@style/MyCustomToolbarTheme</item>
+        <item name="mcpListPopupWindowStyleTheme">@style/MyCustomToolbarTheme</item>
+    </style>
+
+    <style name="MyCustomToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+    </style>
 
 </resources>

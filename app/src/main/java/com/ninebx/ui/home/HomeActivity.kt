@@ -1,39 +1,31 @@
 package com.ninebx.ui.home
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Html
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.testRealm.TestFragment
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showProgressDialog
-import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.calendar.events.AddEditEventFragment
-import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
-import com.ninebx.utility.*
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.realm.Realm
-import io.realm.SyncConfiguration
+import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.KeyboardUtil
 import io.realm.SyncCredentials
-import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
@@ -83,7 +75,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
 
         if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true);
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
         ivHome.hide()
@@ -130,16 +122,12 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
         ivBack.setOnClickListener {
             onBackPressed()
+            KeyboardUtil.hideSoftKeyboard(this)
         }
 
         callHomeFragment()
         toggleCheck(false)
 
-        layoutQuickAdd.setOnClickListener {
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.disallowAddToBackStack()
-            fragmentTransaction.replace(R.id.frameLayout, TestFragment()).commit()
-        }
 
     }
 
@@ -151,10 +139,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
         imgToolbar.show()
         toolbarTitle.hide()
 
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
     }
 
     private fun callHomeFragment() {
@@ -171,7 +155,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         bottomNavigationView.menu.getItem(4).isCheckable = isCheckable
     }
 
-    public fun changeToolbarTitle(title: String) {
+    fun changeToolbarTitle(title: String) {
         toolbarTitle.show()
         toolbarTitle.text = Html.fromHtml(title)
         imgToolbar.hide()
@@ -203,10 +187,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
         Handler().postDelayed({
             showPasswordDialog()
         }, 700)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     private var mPassCodeDialog: PassCodeDialog? = null
