@@ -301,7 +301,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             cvAttachments.show()
         }
         else {
-            if( toolbar.isVisible() )
+
+            if( toolbar.isVisible() && mImagesList.size == 0 )
                 layoutQuickAdd.show()
 
             cvAttachments.hide()
