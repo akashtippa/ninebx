@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.baseCategories
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,7 +14,10 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.home.fragments.*
+import com.ninebx.ui.home.fragments.ClothesFragment
+import com.ninebx.ui.home.fragments.FragmentListContainer
+import com.ninebx.ui.home.fragments.WellnessFragment
+import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import com.ninebx.utility.NineBxPreferences
@@ -28,6 +32,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         layoutProgress.show()
         tvProgress.text = getString(message)
     }
+
+    var categoryName = ""
 
     override fun hideProgress() {
         layoutProgress.hide()
@@ -57,9 +63,9 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             val tvCount = categoryView.findViewById<TextView>(R.id.tvCount)
             val rvSubCategory = categoryView.findViewById<RecyclerView>(R.id.rvSubCategory)
             val id = context!!.resources.getIdentifier(category.drawableString, "drawable", context!!.packageName)
-//            tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context!!, id), null, null, null)
-//
-//            tvCategory.compoundDrawablePadding = context!!.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
+            tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context!!, id), null, null, null)
+
+            tvCategory.compoundDrawablePadding = context!!.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
             tvCategory.text = category.title
             if (category.subCategories.size == 0) {
                 tvCount.text = category.formsCount.toString()
@@ -70,9 +76,11 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             rvSubCategory.layoutManager = LinearLayoutManager(context)
 
             tvCategory.setOnClickListener {
+                categoryName = category.title
                 when {
                     category.title == "Shared Contacts" -> getContactsList()
                     category.title == "Memory Timeline" -> getMemoryTimeLine()
+                    category.title == "Lists" -> getLists()
                     category.subCategories.size == 0 -> {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
@@ -88,7 +96,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
             }
 
-
             val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(category: SubCategory, action: String) {
 
@@ -101,12 +108,12 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         category.title == "Add Persons." -> {
                             val categoryFragment = WellnessFragment()
                             categoryFragment.arguments = bundle
-                            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                         }
                         category.title == "Add Person." -> {
                             val categoryFragment = ClothesFragment()
                             categoryFragment.arguments = bundle
-                            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                         }
                         else -> {
                             val categoryFragment = FragmentListContainer()
@@ -136,10 +143,13 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         super.onViewCreated(view, savedInstanceState)
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+
     }
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.toggleToolbarImage()
+        NineBxApplication.instance.activityInstance!!.showQuickAdd()
         NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
     }
@@ -153,16 +163,33 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     private fun getContactsList() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-
-        val categoryFragment = FragmentTestContact()
+        val bundle = Bundle()
+        bundle.putString("categoryName", categoryName)
+        val categoryFragment = FragmentListContainer()
+        categoryFragment.arguments = bundle
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 
     private fun getMemoryTimeLine() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
+        val bundle = Bundle()
+        bundle.putString("categoryName", categoryName)
+        val categoryFragment = FragmentListContainer()
+        categoryFragment.arguments = bundle
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
 
-        val categoryFragment = FragmentTestMemoryTimeLine()
+    private fun getLists() {
+        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val bundle = Bundle()
+        bundle.putString("homeScreen", "HomeScreen")
+
+        val categoryFragment = SubListsFragment()
+        categoryFragment.arguments = bundle
+
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 

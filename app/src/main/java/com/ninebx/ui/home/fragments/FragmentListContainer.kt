@@ -39,4 +39,11 @@ class FragmentListContainer : FragmentBackHelper() {
 
         }
     }
+
+    override fun onBackPressed(): Boolean {
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        NineBxApplication.instance.activityInstance!!.showBottomView()
+        NineBxApplication.instance.activityInstance!!.showBackIcon()
+        return super.onBackPressed()
+    }
 }

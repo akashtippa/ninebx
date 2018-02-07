@@ -58,6 +58,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         mCategoryPresenter = Level2CategoryPresenter(arguments!!.getString("categoryName"), this)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
+        NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()
 
         boxValue = prefrences.currentBox!!
         ivBack.setOnClickListener {
@@ -68,34 +69,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         setCamera(boxValue)
     }
 
-    private fun setCamera(boxValue: String?) {
-        when (boxValue) {
-            getString(R.string.home_amp_money) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_home)
-            }
-            getString(R.string.travel) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_travel)
-            }
-            getString(R.string.contacts) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_contacts)
-            }
-            getString(R.string.personal) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_personal)
-            }
-            getString(R.string.interests) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_interests)
-            }
-            getString(R.string.wellness) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_wellness)
-            }
-            getString(R.string.memories) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_memories)
-            }
-            getString(R.string.shopping) -> {
-                imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
-            }
-
-        }
+    private fun setCamera(boxValue: String) {
+        NineBxApplication.instance.activityInstance!!.changeQuickAddCamera(boxValue)
     }
 
     private fun setTitle() {
@@ -486,6 +461,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        NineBxApplication.instance.activityInstance!!.showBackIcon()
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         return super.onBackPressed()
     }

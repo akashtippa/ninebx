@@ -56,6 +56,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
     var menTopsSizes = arrayOf("Size (US)", "XS", "S", "M", "L", "XL", "XXL")
     var menTopsNumericSizes = arrayOf("Numeric size(US)", "32", "34", "36", "38", "40", "42", "44", "46", "48")
     var menBottomsNumericSizes = arrayOf("Numeric size(US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
+    var menBottomsNumericSizesSuiting = arrayOf("Numeric (US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
     var menJacketsNumericSizes = arrayOf("Numeric size(US)", "34", "36", "38", "40", "42", "44", "46")
     var menShoeSizes = arrayOf("Size (US)", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5", "16")
     var menShoeWidthSizes = arrayOf("Width", "4A", "3A", "2A/B", "C", "D", "E/2E", "3E", "4E", "5E")
@@ -356,7 +357,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         spinnerItem.adapter = arrayAdapter
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizes)
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizesSuiting)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
                     }

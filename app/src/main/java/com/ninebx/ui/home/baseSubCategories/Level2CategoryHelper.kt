@@ -142,13 +142,16 @@ class Level2CategoryHelper(
             "Other Attachments" -> {
                 getOtherAttachments()
             }
-            "Lists" -> {
-                getFragmentSubList()
-            }
+        /* "Lists" -> {
+             getFragmentSubList()
+         }*/
 
-            "Shared Contacts" -> {
-                getContactsList()
-            }
+        /* "Shared Contacts" -> {
+             getContactsList()
+         }
+         "Memory Timeline" -> {
+             getMemoryTimeLine()
+         }*/
 
             "Loyalty Programs" -> {
                 getLoyaltyPrograms()

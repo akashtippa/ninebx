@@ -220,24 +220,4 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/layoutQuickAdd"
-        android:layout_width="@dimen/margin_48"
-        android:layout_height="@dimen/margin_48"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/default_margin">
-
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgCameraNineBx"
-            android:layout_width="@dimen/margin_48"
-            android:layout_height="@dimen/margin_48"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_icon_add_photo_memories" />
-
-    </RelativeLayout>
-
-
 </RelativeLayout>
