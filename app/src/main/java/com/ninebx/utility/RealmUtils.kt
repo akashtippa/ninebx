@@ -43,8 +43,8 @@ fun prepareRealmConnections(context: Context?,
                             realmEndPoint: String,
                             callback: Realm.Callback) {
 
-    if (isForeground)
-        context!!.showProgressDialog(context.getString(R.string.connecting))
+    if ( isForeground && context != null )
+        context.showProgressDialog(context.getString(R.string.connecting))
 
     if (connectionsMap.containsKey(realmEndPoint)) {
         AppLogger.d(TAG, "Connection Found : " + realmEndPoint)
@@ -59,8 +59,8 @@ fun prepareRealmConnections(context: Context?,
                 connectionsMap.put(realmEndPoint, realm!!)
                 callback.onSuccess(realm)
 
-                if (isForeground)
-                    context!!.hideProgressDialog()
+                if ( isForeground && context != null )
+                    context.hideProgressDialog()
             }
 
             override fun onError(exception: Throwable?) {
@@ -69,14 +69,14 @@ fun prepareRealmConnections(context: Context?,
 
                     AppLogger.e(TAG, "Connection error : " + realmEndPoint)
 
-                    if (isForeground)
-                        context!!.showToast(exception.localizedMessage)
+                    if ( isForeground && context != null )
+                        context.showToast(exception.localizedMessage)
 
                     exception.printStackTrace()
                 }
 
-                if (isForeground)
-                    context!!.hideProgressDialog()
+                if ( isForeground && context != null )
+                    context.hideProgressDialog()
 
             }
         })
