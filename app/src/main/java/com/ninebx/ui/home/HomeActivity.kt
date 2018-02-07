@@ -1,14 +1,12 @@
 package com.ninebx.ui.home
 
-import android.annotation.SuppressLint
+
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.Html
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
@@ -27,12 +25,7 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.realm.Realm
-import io.realm.SyncConfiguration
 import io.realm.SyncCredentials
-import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
