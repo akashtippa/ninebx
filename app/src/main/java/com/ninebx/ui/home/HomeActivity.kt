@@ -353,6 +353,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         Handler().postDelayed({
             showPasswordDialog()
         }, 700)
+        hideShowAttachments()
     }
 
     override fun onDestroy() {
