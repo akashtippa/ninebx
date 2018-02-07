@@ -1,25 +1,35 @@
 package com.ninebx.ui.home
 
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.text.Html
 import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.base.kotlin.showProgressDialog
+import com.ninebx.ui.base.ActionClickListener
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
+import com.ninebx.ui.home.calendar.events.ImageViewDialog
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper
+import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
@@ -32,7 +42,9 @@ import java.util.*
 
 
 @Suppress("DEPRECATION")
-class HomeActivity : AppCompatActivity(), HomeView {
+class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
+
     override fun showProgress(message: Int) {
         showProgressDialog(getString(message))
     }
@@ -73,6 +85,9 @@ class HomeActivity : AppCompatActivity(), HomeView {
         setContentView(R.layout.activity_home)
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+
+        bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
+        bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true);
@@ -122,11 +137,166 @@ class HomeActivity : AppCompatActivity(), HomeView {
             onBackPressed()
         }
 
+        layoutQuickAdd.setOnClickListener {
+            startCameraIntent()
+        }
+
         callHomeFragment()
         toggleCheck(false)
 
 
 
+
+    }
+
+    lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
+    private val PICK_IMAGE_REQUEST = 238
+    private val CAMERA_REQUEST_CODE = 239
+    private val PERMISSIONS_REQUEST_CODE_CAMERA = 115
+    private val PERMISSIONS_REQUEST_CODE_GALLERY = 116
+
+    private fun startCameraIntent() {
+        bottomSheetDialogFragment.show(supportFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    override fun onOptionSelected(position: Int) {
+        bottomSheetDialogFragment.dismiss()
+        if (position == 1) {
+            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission( this@HomeActivity, permissionList)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA )
+                }
+                else {
+                    beginCameraAttachmentFlow()
+                }
+            } else {
+                beginCameraAttachmentFlow()
+            }
+
+        } else {
+            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission(this@HomeActivity, permissionList)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
+                }
+                else {
+                    beginGalleryAttachmentFlow()
+                }
+            } else {
+                beginGalleryAttachmentFlow()
+            }
+        }
+    }
+
+    private fun beginGalleryAttachmentFlow() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    private fun beginCameraAttachmentFlow() {
+
+        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        if (callCameraIntent.resolveActivity(this@HomeActivity.packageManager) != null) {
+            startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        if (requestCode == PERMISSIONS_REQUEST_CODE_CAMERA) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                beginCameraAttachmentFlow()
+            } else {
+                Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+        else if( requestCode == PERMISSIONS_REQUEST_CODE_GALLERY ) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                beginGalleryAttachmentFlow()
+            } else {
+                Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
+
+    //a Uri object to store file path
+    private var filePath: Uri? = null
+    private var mImagesList : ArrayList<Uri> = ArrayList()
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null ) {
+            if (data.clipData != null) {
+                val count = data.clipData.itemCount
+                var currentItem = 0
+                while (currentItem < count) {
+                    val imageUri = data.clipData.getItemAt(currentItem).uri
+                    mImagesList.add(imageUri)
+                    currentItem += 1
+                }
+
+                setImagesAdapter()
+            } else if (data.data != null) {
+                mImagesList.add(data.data)
+                setImagesAdapter()
+            }
+
+        }
+        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            saveImage(data.extras.get("data") as Bitmap)
+            filePath = getImageUri(data.extras.get("data") as Bitmap)
+            mImagesList.add(filePath!!)
+            setImagesAdapter()
+        }
+        else
+            super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+    private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter?= null
+    private fun setImagesAdapter() {
+
+        rvAttachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false )
+        hideShowAttachments()
+
+        attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
+            override fun onItemClick(position: Int, action: String) {
+                when (action) {
+                    "delete" -> {
+                        mImagesList.removeAt(position)
+                        attachmentRecyclerAdapter!!.notifyDataSetChanged()
+                        hideShowAttachments()
+                    }
+                    "view" -> {
+                        ImageViewDialog(this@HomeActivity, mImagesList, getString(R.string.attachments))
+                    }
+                    "add" -> {
+                        startCameraIntent()
+                    }
+                }
+            }
+        }, LinearLayoutManager.HORIZONTAL )
+        rvAttachments.adapter = attachmentRecyclerAdapter
+    }
+
+    private fun hideShowAttachments() {
+        if( mImagesList.size > 0 ) {
+            layoutQuickAdd.hide()
+            cvAttachments.show()
+        }
+        else {
+            layoutQuickAdd.show()
+            cvAttachments.hide()
+        }
     }
 
     fun pxFromDp(dp: Float, mContext: Context): Float {

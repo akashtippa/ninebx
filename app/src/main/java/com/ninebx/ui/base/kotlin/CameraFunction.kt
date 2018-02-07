@@ -124,3 +124,4 @@ fun isDownloadsDocument(uri: Uri): Boolean {
 fun isMediaDocument(uri: Uri): Boolean {
     return "com.android.providers.media.documents" == uri.authority
 }
+

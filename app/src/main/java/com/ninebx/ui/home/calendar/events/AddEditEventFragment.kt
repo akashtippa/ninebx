@@ -387,7 +387,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         }
         else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             saveImage(data.extras.get("data") as Bitmap)
-            filePath = getImageUri(data.extras.get("data") as Bitmap)
+            filePath = activity!!.getImageUri(data.extras.get("data") as Bitmap)
             mImagesList.add(filePath!!)
             etAttachment.isEnabled = true
             setImagesAdapter()
@@ -411,7 +411,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
                     }
                 }
             }
-        })
+        }, LinearLayoutManager.VERTICAL )
         rvAttachments.adapter = attachmentRecyclerAdapter
     }
 
@@ -423,13 +423,6 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         }
     }
 
-
-    fun getImageUri(bitmap: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(activity!!.contentResolver, bitmap, "Title", null)
-        return Uri.parse(path);
-    }
 
     var PLACE_AUTOCOMPLETE_REQUEST_CODE : Int = 1
 
