@@ -9,6 +9,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
+import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_level2_category.*
 
 /***
@@ -23,6 +24,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var strTitle = ""
     private var strSubTitle = ""
 
+    private var boxValue = ""
+    val prefrences = NineBxPreferences()
 
     override fun showProgress(message: Int) {
 
@@ -34,6 +37,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun onError(error: Int) {
     }
+
 
     override fun onSuccess(categories: ArrayList<Level2Category>) {
         hideProgress()
@@ -55,10 +59,43 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
 
+        boxValue = prefrences.currentBox!!
         ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
         setTitle()
+
+        setCamera(boxValue)
+    }
+
+    private fun setCamera(boxValue: String?) {
+        when (boxValue) {
+            getString(R.string.home_amp_money) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_home)
+            }
+            getString(R.string.travel) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_travel)
+            }
+            getString(R.string.contacts) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_contacts)
+            }
+            getString(R.string.personal) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_personal)
+            }
+            getString(R.string.interests) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_interests)
+            }
+            getString(R.string.wellness) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_wellness)
+            }
+            getString(R.string.memories) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_memories)
+            }
+            getString(R.string.shopping) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
+            }
+
+        }
     }
 
     private fun setTitle() {
@@ -160,7 +197,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             }
 
             "Furniture" -> {
-                etTitle.setHint("Asset name")
+                etTitle.hint = "Asset name"
                 etTitleValue.hint = "Description/location"
                 toolbarTitle.text = "Add Asset"
             }
@@ -447,7 +484,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.showBottomView()
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         return super.onBackPressed()

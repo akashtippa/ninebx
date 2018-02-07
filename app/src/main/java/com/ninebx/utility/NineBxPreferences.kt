@@ -10,6 +10,7 @@ import com.ninebx.ui.base.realm.Users
 
 class NineBxPreferences : Preferences() {
 
+
     var firstRun by booleanPref(Constants.FIRST_RUN)
     var isLogin by booleanPref(Constants.IS_LOGIN)
     var isPasswordRequired by booleanPref(Constants.IS_PASSWORD_REQUIRED)
@@ -17,6 +18,11 @@ class NineBxPreferences : Preferences() {
     var currentStep by intPref(Constants.CURRENT_STEP)
     var currentUser by stringPref(Constants.CURRENT_USER)
     var privateKey by stringPref(Constants.PRIVATE_KEY)
+    var currentBox by stringPref(Constants.CURRENT_BOX)
+    var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
+    var testinFragmentB by stringPref(Constants.TEST_FRAGMENT_B)
+
+    var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
 
     fun getCurrentUser(): Users? {
         return Gson().fromJson( currentUser, Users::class.java )
@@ -25,6 +31,7 @@ class NineBxPreferences : Preferences() {
     fun setCurrentUser( users : Users ) {
         currentUser = Gson().toJson(users)
     }
+
 
 
 

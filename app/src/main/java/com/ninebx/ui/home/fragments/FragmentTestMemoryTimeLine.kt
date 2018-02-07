@@ -20,8 +20,8 @@ class FragmentTestMemoryTimeLine : FragmentBackHelper() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
@@ -31,8 +31,8 @@ class FragmentTestMemoryTimeLine : FragmentBackHelper() {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.showBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
+        NineBxApplication.instance.activityInstance!!.showBottomView()
         return super.onBackPressed()
     }
 }

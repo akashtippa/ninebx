@@ -40,6 +40,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())
             }
         }
+
         if (NineBxApplication.autoTestMode) {
             etCreatePassword.setText("Password14.")
             etConfirmPassword.setText("Password14.")

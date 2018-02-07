@@ -61,8 +61,8 @@ class CategoryHelper(
         categoryIndex += 1003
         category_id = "wellness_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Servicesss/Other Accounts"
+        category.drawableString = "ic_icon_Servicesss_accounts"
 
         categoryList.add(category)
 
@@ -144,8 +144,8 @@ class CategoryHelper(
         categoryIndex += 1005
         category_id = "personal" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Servicess/Other Accounts"
+        category.drawableString = "ic_icon_Servicesss_accounts"
 
         categoryList.add(category)
 
@@ -186,8 +186,8 @@ class CategoryHelper(
         categoryIndex += 1003
         category_id = "contacts_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Servicess/Other Accounts"
+        category.drawableString = "ic_icon_Servicesss_accounts"
 
         categoryList.add(category)
 
@@ -255,8 +255,8 @@ class CategoryHelper(
         categoryIndex += 1000
         category_id = "travel_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Servicess/Other Accounts"
+        category.drawableString = "ic_icon_Servicesss_accounts"
 
         categoryList.add(category)
 
@@ -325,7 +325,7 @@ class CategoryHelper(
         category_id = "home_" + categoryIndex
         category = Category(category_id)
         category.title = "Auto"
-        category.drawableString = "ic_icon_travel_document"
+        category.drawableString = "ic_icon_auto"
 
         category.subCategories.add(SubCategory("Vehicles", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Maintenance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
@@ -374,8 +374,8 @@ class CategoryHelper(
         categoryIndex += 1000
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Services/Other Accounts"
+        category.drawableString = "ic_icon_Servicess_accounts"
 
         categoryList.add(category)
 
@@ -432,8 +432,8 @@ class CategoryHelper(
         categoryIndex += 1000
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Services/Other Accounts"
+        category.drawableString = "ic_icon_Servicess_accounts"
 
         categoryList.add(category)
 
@@ -463,8 +463,8 @@ class CategoryHelper(
         var categoryIndex = 1006
         var category_id = "personal" + categoryIndex
         var category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Services/Other Accounts"
+        category.drawableString = "ic_icon_Servicess_accounts"
 
         categoryList.add(category)
 
@@ -503,8 +503,8 @@ class CategoryHelper(
         categoryIndex += 1003
         category_id = "memories_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Services/Other Accounts"
+        category.drawableString = "ic_icon_Servicess_accounts"
 
         categoryList.add(category)
 
@@ -555,8 +555,8 @@ class CategoryHelper(
         categoryIndex += 1004
         category_id = "education_" + categoryIndex
         category = Category(category_id)
-        category.title = "Service/Other Accounts"
-        category.drawableString = "ic_icon_services_accounts"
+        category.title = "Services/Other Accounts"
+        category.drawableString = "ic_icon_Servicess_accounts"
 
         categoryList.add(category)
 

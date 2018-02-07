@@ -11,7 +11,7 @@ android {
         config {
             keyAlias 'nineBx'
             keyPassword 'nineBxCC'
-            storeFile file('/Users/nithin/Documents/Projects/projectsCC/NineBx/KeyStore/nineBx')
+            storeFile file('/Users/cognitive/Documents/Android Projects/projectsCC/NineBx-Android/KeyStore/nineBx')
             storePassword 'nineBxCC'
         }
     }
@@ -138,4 +138,6 @@ dependencies {
 
     //Bouncy Castle
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.55'
+
+    compile 'com.github.broakenmedia:MultiContactPicker:1.6'
 }

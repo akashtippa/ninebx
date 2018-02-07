@@ -9,25 +9,31 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
+
 import android.text.Html
-import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
-import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.calendar.events.AddEditEventFragment
-import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.calendar.CalendarFragment
+
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
 import com.ninebx.ui.home.calendar.events.ImageViewDialog
+import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.ui.home.lists.ListsFragment
@@ -35,6 +41,8 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.KeyboardUtil
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -56,7 +64,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     override fun addEditCalendarEvent(calendarEvent: CalendarEvents?, selectedDate: Date) {
         val addEventFragment = AddEditEventFragment()
         val bundle = Bundle()
-        bundle.putBoolean("isAddEvent", calendarEvent == null )
+        bundle.putBoolean("isAddEvent", calendarEvent == null)
         var event = calendarEvent
         if (event == null) {
             event = CalendarEvents()
@@ -84,13 +92,11 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
         if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true);
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
         ivHome.hide()
@@ -120,13 +126,15 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             true
         }
 
-        changeToolbarTitle(titleText)
+//        changeToolbarTitle(titleText)
 
+        toggleToolbarImage()
         ivHome.setOnClickListener {
             layoutQuickAdd.show()
             ivHome.hide()
             toggleCheck(false)
-            changeToolbarTitle(titleText)
+//            changeToolbarTitle(titleText)
+            toggleToolbarImage()
             callHomeFragment()
             showBottomView()
             ivBack.hide()
@@ -135,6 +143,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 
         ivBack.setOnClickListener {
             onBackPressed()
+            KeyboardUtil.hideSoftKeyboard(this)
         }
 
         layoutQuickAdd.setOnClickListener {
@@ -143,8 +152,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 
         callHomeFragment()
         toggleCheck(false)
-
-
 
 
     }
@@ -294,7 +301,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             cvAttachments.show()
         }
         else {
-            layoutQuickAdd.show()
+            if( toolbar.isVisible() )
+                layoutQuickAdd.show()
+
             cvAttachments.hide()
         }
     }
@@ -303,8 +312,10 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         return dp * mContext.resources.displayMetrics.density
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
+    fun toggleToolbarImage() {
+        imgToolbar.show()
+        toolbarTitle.hide()
+
     }
 
     private fun callHomeFragment() {
@@ -321,8 +332,10 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         bottomNavigationView.menu.getItem(4).isCheckable = isCheckable
     }
 
-    public fun changeToolbarTitle(title: String) {
+    fun changeToolbarTitle(title: String) {
+        toolbarTitle.show()
         toolbarTitle.text = Html.fromHtml(title)
+        imgToolbar.hide()
     }
 
     fun hideToolbar() {
@@ -332,8 +345,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     fun showToolbar() {
         toolbar.show()
     }
-
-
 
 
     override fun onPause() {
@@ -354,10 +365,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             showPasswordDialog()
         }, 700)
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     private var mPassCodeDialog: PassCodeDialog? = null
@@ -386,6 +393,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 //        toolbarTitle.textSize = pxFromDp(10F, this)
         ivHome.show()
         layoutQuickAdd.hide()
+        toolbarTitle.show()
+        imgToolbar.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
 
