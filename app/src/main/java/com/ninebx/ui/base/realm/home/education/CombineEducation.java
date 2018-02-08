@@ -14,8 +14,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineEducation extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private RealmList<Education> educationItems          = new RealmList<>();
     @Required private RealmList<MainEducation> mainEducationItems      = new RealmList<>();
@@ -23,7 +23,7 @@ public class CombineEducation extends RealmObject {
 
     @Required private RealmList<EducationList> listItems               = new RealmList<>();
 
-    public CombineEducation(Integer id, RealmList<Education> educationItems, RealmList<MainEducation> mainEducationItems, RealmList<Work> workItems, RealmList<EducationList> listItems) {
+    public CombineEducation(int id, RealmList<Education> educationItems, RealmList<MainEducation> mainEducationItems, RealmList<Work> workItems, RealmList<EducationList> listItems) {
         this.id = id;
         this.educationItems = educationItems;
         this.mainEducationItems = mainEducationItems;
@@ -38,7 +38,7 @@ public class CombineEducation extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

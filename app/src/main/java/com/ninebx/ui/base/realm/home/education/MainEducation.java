@@ -18,8 +18,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class MainEducation extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private String selectionType = "";
     @Required private String classType = "MainEducation";
@@ -51,7 +51,7 @@ public class MainEducation extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public MainEducation(Integer id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public MainEducation(int id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -79,7 +79,7 @@ public class MainEducation extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

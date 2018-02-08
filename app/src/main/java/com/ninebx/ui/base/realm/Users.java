@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
@@ -40,14 +41,15 @@ public class Users extends RealmObject implements Parcelable {
     @Required private String country              = "";
     @Required private String userId               = "";
 
-    @Required private Integer id                  = 0;
+    @PrimaryKey //@Required
+    private int id                  = 0;
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
 
     @Required private RealmList<Member> members = new RealmList<Member>();
 
 
-    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, Integer id, RealmList<Member> members) {
+    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -68,7 +70,7 @@ public class Users extends RealmObject implements Parcelable {
     public Users() {
     }
 
-    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, Integer id, RealmList<Member> members) {
+    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -203,7 +205,7 @@ public class Users extends RealmObject implements Parcelable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -247,20 +249,6 @@ public class Users extends RealmObject implements Parcelable {
         this.profilePhoto = profilePhoto;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Users users = (Users) o;
-
-        return id != null ? id.equals(users.id) : users.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 
     @NotNull
     public static Users createUser(@NotNull String email, @NotNull String firstName, @NotNull String lastName) {

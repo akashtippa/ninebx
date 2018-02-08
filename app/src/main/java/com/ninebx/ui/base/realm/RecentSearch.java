@@ -13,8 +13,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class RecentSearch extends RealmObject {
 
-    @Required @PrimaryKey
-    private  Integer id  = 0;
+    @PrimaryKey //@Required
+    private  int id  = 0;
     @Required private  Integer search_id  = 0;
     @Required private  Integer detail_id  = 0;
     @Required private  String listName  = "";
@@ -23,7 +23,7 @@ public class RecentSearch extends RealmObject {
     @Required private  Date createdDate = new Date();
     @Required private  String classType  = "";
 
-    public RecentSearch(Integer id, Integer search_id, Integer detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
+    public RecentSearch(int id, Integer search_id, Integer detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
         this.id = id;
         this.search_id = search_id;
         this.detail_id = detail_id;
@@ -41,7 +41,7 @@ public class RecentSearch extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -101,18 +101,5 @@ public class RecentSearch extends RealmObject {
         this.classType = classType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        RecentSearch that = (RecentSearch) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

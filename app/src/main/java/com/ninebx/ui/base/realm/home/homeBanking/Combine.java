@@ -14,8 +14,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Combine extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private RealmList<Financial> financialItems      = new RealmList<Financial>();
     @Required private RealmList<Payment> paymentItems        = new RealmList<Payment>();
@@ -27,7 +27,7 @@ public class Combine extends RealmObject {
 
     @Required private RealmList<HomeList> listItems           = new RealmList<HomeList>();
 
-    public Combine(Integer id, RealmList<Financial> financialItems, RealmList<Payment> paymentItems, RealmList<Property> propertyItems, RealmList<Vehicle> vehicleItems, RealmList<Asset> assetItems, RealmList<Insurance> insuranceItems, RealmList<Taxes> taxesItems, RealmList<HomeList> listItems) {
+    public Combine(int id, RealmList<Financial> financialItems, RealmList<Payment> paymentItems, RealmList<Property> propertyItems, RealmList<Vehicle> vehicleItems, RealmList<Asset> assetItems, RealmList<Insurance> insuranceItems, RealmList<Taxes> taxesItems, RealmList<HomeList> listItems) {
         this.id = id;
         this.financialItems = financialItems;
         this.paymentItems = paymentItems;
@@ -46,7 +46,7 @@ public class Combine extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

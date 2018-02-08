@@ -14,13 +14,13 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineInterests extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private RealmList<Interests> interestItems = new RealmList<>();
     @Required private RealmList<InterestsList> listItems = new RealmList<>();
 
-    public CombineInterests(Integer id, RealmList<Interests> interestItems, RealmList<InterestsList> listItems) {
+    public CombineInterests(int id, RealmList<Interests> interestItems, RealmList<InterestsList> listItems) {
         this.id = id;
         this.interestItems = interestItems;
         this.listItems = listItems;
@@ -30,7 +30,7 @@ public class CombineInterests extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

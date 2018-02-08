@@ -18,8 +18,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Contacts extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private String selectionType = "";
 
@@ -50,7 +50,7 @@ public class Contacts extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Contacts(Integer id, String selectionType, String firstName, String lastName, String dateOfBirth, String anniversary, String mobileOne, String mobileTwo, String emailOne, String emailTwo, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages) {
+    public Contacts(int id, String selectionType, String firstName, String lastName, String dateOfBirth, String anniversary, String mobileOne, String mobileTwo, String emailOne, String emailTwo, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages) {
         this.id = id;
         this.selectionType = selectionType;
         this.firstName = firstName;
@@ -81,7 +81,7 @@ public class Contacts extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

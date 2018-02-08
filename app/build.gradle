@@ -16,7 +16,7 @@ android {
         }
     }
     compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.ninebx"
         minSdkVersion 16
@@ -59,11 +59,14 @@ realm {
 }
 
 kapt {
+    arguments {
+        arg("realm.ignoreKotlinNullability", true)
+    }
     generateStubs = true
 }
 
 dependencies {
-    compile project(':InAppBilling')
+    implementation project(':InAppBilling')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.0.2'
@@ -77,49 +80,49 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     // Implementing RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
     // For every Screen, margins are set from 1 to 600 dp, in every dimens
-    compile 'com.intuit.sdp:sdp-android:1.0.5'
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
     //Spongy Castle Encryption
-    compile 'com.madgag.spongycastle:core:1.54.0.0'
-    compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.madgag.spongycastle:core:1.54.0.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
-    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
     //MultiDex
     implementation 'com.android.support:multidex:1.0.2'
 
-    compile "com.google.android.gms:play-services-location:$places_version"
-    compile "com.google.android.gms:play-services-places:$places_version"
+    implementation "com.google.android.gms:play-services-location:$places_version"
+    implementation "com.google.android.gms:play-services-places:$places_version"
 
     //Glide
     api 'com.github.bumptech.glide:glide:4.4.0'
-    compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0'
-    compile('com.github.bumptech.glide:recyclerview-integration:4.0.0') {
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.0.0'
+    implementation('com.github.bumptech.glide:recyclerview-integration:4.0.0') {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
     //Job scheduler for android alarms
-    compile 'com.evernote:android-job:1.2.2'
+    implementation 'com.evernote:android-job:1.2.2'
 
     //Gson
-    compile 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.1'
 
     //CircleImageView
-    compile 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     //Amazon AWS
-    compile 'com.amazonaws:aws-android-sdk-core:2.6.+'
-    compile 'com.amazonaws:aws-android-sdk-s3:2.6.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-core:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-ddb:2.6.+'
 
     //Jncryptor
-    compile 'org.cryptonode.jncryptor:jncryptor:1.2.0'
+    implementation 'org.cryptonode.jncryptor:jncryptor:1.2.0'
 
     //SendGrid Email Client
-    compile 'com.github.danysantiago:sendgrid-android:1', {
+    implementation 'com.github.danysantiago:sendgrid-android:1', {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
 
@@ -132,12 +135,9 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.2.0") {
         exclude group: 'com.squareup.retrofit2', module: 'retrofit'
     }
-    // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //Bouncy Castle
-    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.55'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.55'
 
-    compile 'com.github.broakenmedia:MultiContactPicker:1.6'
+    implementation 'com.github.broakenmedia:MultiContactPicker:1.6'
 }

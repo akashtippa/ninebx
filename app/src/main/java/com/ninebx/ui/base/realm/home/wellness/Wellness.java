@@ -20,8 +20,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Wellness extends RealmObject {
 
-    @Required @PrimaryKey
-    Integer id = 0;
+    @PrimaryKey //@Required
+    int id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -33,7 +33,7 @@ public class Wellness extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

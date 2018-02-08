@@ -10,8 +10,8 @@ import io.realm.annotations.Required;
 
 public class Bank {
 
-    @Required @PrimaryKey
-    private Integer  id  = 0;
+    @PrimaryKey //@Required
+    private int id  = 0;
     @Required private String  institutionName  = "";
     @Required private String  accountName  = "";
     @Required private String  accountType  = "";
@@ -26,7 +26,7 @@ public class Bank {
     @Required private String  password  = "";
     @Required private String  pin  = "";
 
-    public Bank(Integer id, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin) {
+    public Bank(int id, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin) {
         this.id = id;
         this.institutionName = institutionName;
         this.accountName = accountName;
@@ -50,7 +50,7 @@ public class Bank {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -158,18 +158,4 @@ public class Bank {
         this.pin = pin;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Bank bank = (Bank) o;
-
-        return id != null ? id.equals(bank.id) : bank.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

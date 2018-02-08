@@ -18,8 +18,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Insurance extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -31,7 +31,7 @@ public class Insurance extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

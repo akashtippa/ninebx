@@ -1,6 +1,7 @@
 package com.ninebx.ui.base.realm.home.personal;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
@@ -9,6 +10,9 @@ import io.realm.annotations.Required;
  */
 @RealmClass
 public class License extends RealmObject {
+
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required
     private String selectionType = "";

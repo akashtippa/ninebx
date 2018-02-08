@@ -15,15 +15,15 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineContacts extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private RealmList<Contacts> contactsItems               = new RealmList<>();
     @Required private RealmList<MainContacts> mainContactsItems           = new RealmList<>();
 
     @Required private RealmList<ContactsList> listItems                   = new RealmList<>();
 
-    public CombineContacts(Integer id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
+    public CombineContacts(int id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
         this.id = id;
         this.contactsItems = contactsItems;
         this.mainContactsItems = mainContactsItems;
@@ -37,7 +37,7 @@ public class CombineContacts extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

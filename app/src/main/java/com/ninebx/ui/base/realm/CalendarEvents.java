@@ -1,8 +1,6 @@
 package com.ninebx.ui.base.realm;
 
 
-import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -16,8 +14,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CalendarEvents extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
     
     @Required
     private RealmList<String> eventID = new RealmList<>();
@@ -58,7 +56,7 @@ public class CalendarEvents extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

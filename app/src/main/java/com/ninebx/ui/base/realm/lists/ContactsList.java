@@ -13,7 +13,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class ContactsList extends RealmObject {
 
-    @Required @PrimaryKey
+    @PrimaryKey //@Required
     private int id = 0;
 
     @Required private String selectionType = "";

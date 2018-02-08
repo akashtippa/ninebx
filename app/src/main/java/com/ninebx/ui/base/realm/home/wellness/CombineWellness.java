@@ -14,8 +14,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineWellness extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
 
     @Required private RealmList<Checkups> checkupsItems                   = new RealmList<Checkups>();
     @Required private RealmList<EmergencyContacts> emergencyContactsItems          = new RealmList<EmergencyContacts>();
@@ -31,7 +31,7 @@ public class CombineWellness extends RealmObject {
 
     @Required private RealmList<WellnessList> listItems                       = new RealmList<WellnessList>();
 
-    public CombineWellness(Integer id, RealmList checkupsItems, RealmList emergencyContactsItems, RealmList eyeglassPrescriptionsItems, RealmList healthcareProvidersItems, RealmList identificationItems, RealmList medicalConditionsItems, RealmList medicalHistoryItems, RealmList medicationsItems, RealmList vitalNumbersItems, RealmList wellnessItems, RealmList listItems) {
+    public CombineWellness(int id, RealmList checkupsItems, RealmList emergencyContactsItems, RealmList eyeglassPrescriptionsItems, RealmList healthcareProvidersItems, RealmList identificationItems, RealmList medicalConditionsItems, RealmList medicalHistoryItems, RealmList medicationsItems, RealmList vitalNumbersItems, RealmList wellnessItems, RealmList listItems) {
         this.id = id;
         this.checkupsItems = checkupsItems;
         this.emergencyContactsItems = emergencyContactsItems;
@@ -50,7 +50,7 @@ public class CombineWellness extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

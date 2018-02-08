@@ -11,8 +11,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Hash extends RealmObject {
 
-    @Required @PrimaryKey
-    private Integer  id = 0;
+    @PrimaryKey //@Required
+    private int id = 0;
     @Required private String  finalPassword = "";
     @Required private String  passcode = "";
     @Required private Boolean  isEnabledTouchId = false;
@@ -20,7 +20,7 @@ public class Hash extends RealmObject {
     public Hash() {
     }
 
-    public Hash(Integer id, String finalPassword, String passcode, Boolean isEnabledTouchId) {
+    public Hash(int id, String finalPassword, String passcode, Boolean isEnabledTouchId) {
         this.id = id;
         this.finalPassword = finalPassword;
         this.passcode = passcode;
@@ -31,7 +31,7 @@ public class Hash extends RealmObject {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -59,18 +59,4 @@ public class Hash extends RealmObject {
         isEnabledTouchId = enabledTouchId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Hash hash = (Hash) o;
-
-        return id != null ? id.equals(hash.id) : hash.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }
