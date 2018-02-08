@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm.home.shopping;
 import com.ninebx.ui.base.realm.lists.ShoppingList;
 
 import io.realm.RealmList;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 29/01/18.

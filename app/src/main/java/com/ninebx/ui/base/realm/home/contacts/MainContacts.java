@@ -1,5 +1,7 @@
 package com.ninebx.ui.base.realm.home.contacts;
 
+import com.ninebx.ui.base.realm.RealmString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +9,12 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 24/01/18.
  */
-
+@RealmClass
 public class MainContacts extends RealmObject {
 
     @PrimaryKey
@@ -47,7 +50,7 @@ public class MainContacts extends RealmObject {
     private Boolean isPrivate = false;
     private String createdUser = "";
 
-    private RealmList<String> backingImages = new RealmList<>();
+    private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
     private List<String> photosId = new ArrayList<>();
@@ -236,24 +239,28 @@ public class MainContacts extends RealmObject {
         this.createdUser = createdUser;
     }
 
-    public RealmList<String> getBackingImages() {
+    public RealmList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<String> backingImages) {
+    public void setBackingImages(RealmList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        photosId.addAll( backingImages.subList(0, backingImages.size() - 1));
+        for( RealmString realmString : backingImages ) {
+            photosId.add( realmString.getStringValue() );
+        }
         return photosId;
     }
 
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        backingImages.addAll(photosId);
+        for( String string : photosId ) {
+            backingImages.add( new RealmString(string) );
+        }
     }
 
     public MainContacts() {

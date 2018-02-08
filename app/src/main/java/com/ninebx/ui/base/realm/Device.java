@@ -1,11 +1,12 @@
 package com.ninebx.ui.base.realm;
 
 import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 24/01/18.
  */
-
+@RealmClass
 public class Device extends RealmObject {
 
     private String deviceId       = "";

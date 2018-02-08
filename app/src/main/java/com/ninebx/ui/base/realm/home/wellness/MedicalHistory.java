@@ -2,6 +2,8 @@ package com.ninebx.ui.base.realm.home.wellness;
 
 
 
+import com.ninebx.ui.base.realm.RealmString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +11,18 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 29/01/18.
  */
-
+@RealmClass
 public class MedicalHistory extends RealmObject {
 
     @PrimaryKey
     Integer id = 0;
 
-    private RealmList<String> backingImages = new RealmList<>();
+    private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
     private List<String> photosId = new ArrayList<>();
@@ -32,24 +35,28 @@ public class MedicalHistory extends RealmObject {
         this.id = id;
     }
 
-    public RealmList<String> getBackingImages() {
+    public RealmList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<String> backingImages) {
+    public void setBackingImages(RealmList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        photosId.addAll( backingImages.subList(0, backingImages.size() - 1));
+        for( RealmString realmString : backingImages ) {
+            photosId.add( realmString.getStringValue() );
+        }
         return photosId;
     }
 
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        backingImages.addAll(photosId);
+        for( String string : photosId ) {
+            backingImages.add( new RealmString(string) );
+        }
     }
 
     private String selectionType = "";

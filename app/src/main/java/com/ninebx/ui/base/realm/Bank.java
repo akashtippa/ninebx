@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm;
 
 import io.realm.annotations.PrimaryKey;
 
+
 /**
  * Created by Alok on 11/01/18.
  */

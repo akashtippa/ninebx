@@ -12,11 +12,12 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 11/01/18.
  */
-
+@RealmClass
 public class Users extends RealmObject implements Parcelable {
 
     private String fullName             = "";

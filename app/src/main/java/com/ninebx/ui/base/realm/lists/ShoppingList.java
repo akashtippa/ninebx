@@ -4,11 +4,12 @@ import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 24/01/18.
  */
-
+@RealmClass
 public class ShoppingList extends RealmObject {
 
     @PrimaryKey

@@ -4,11 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 11/01/18.
  */
-
+@RealmClass
 public class Member extends RealmObject implements Parcelable {
 
     private String  firstName            = "";

@@ -1,11 +1,12 @@
 package com.ninebx.ui.base.realm.home.personal;
 
 import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 24/01/18.
  */
-
+@RealmClass
 public class License extends RealmObject {
 
     private String selectionType = "";

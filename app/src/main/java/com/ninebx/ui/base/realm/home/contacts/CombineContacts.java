@@ -5,11 +5,12 @@ import com.ninebx.ui.base.realm.lists.ContactsList;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 24/01/18.
  */
-
+@RealmClass
 public class CombineContacts extends RealmObject {
 
 
