@@ -15,7 +15,6 @@ public class InterestsList extends RealmObject {
 
 
     @PrimaryKey
-    @Required
     private Integer id = 0;
 
     @Required private String selectionType = "";

@@ -15,7 +15,6 @@ import io.realm.annotations.Required;
 public class CombineEducation extends RealmObject {
 
     @PrimaryKey
-    @Required
     private Integer id = 0;
 
     @Required private RealmList<Education> educationItems          = new RealmList<>();

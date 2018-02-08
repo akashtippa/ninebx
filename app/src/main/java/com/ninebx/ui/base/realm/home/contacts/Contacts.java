@@ -19,7 +19,6 @@ import io.realm.annotations.Required;
 public class Contacts extends RealmObject {
 
     @PrimaryKey
-    @Required
     private Integer id = 0;
 
     @Required private String selectionType = "";

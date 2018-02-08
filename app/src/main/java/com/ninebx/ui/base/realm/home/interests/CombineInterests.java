@@ -15,7 +15,6 @@ import io.realm.annotations.Required;
 public class CombineInterests extends RealmObject {
 
     @PrimaryKey
-    @Required
     private Integer id = 0;
 
     @Required private RealmList<Interests> interestItems = new RealmList<>();

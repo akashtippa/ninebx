@@ -11,7 +11,6 @@ import io.realm.annotations.Required;
 public class Bank {
 
     @PrimaryKey
-    @Required
     private Integer  id  = 0;
     @Required private String  institutionName  = "";
     @Required private String  accountName  = "";

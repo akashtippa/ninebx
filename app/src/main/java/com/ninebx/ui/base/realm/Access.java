@@ -13,8 +13,7 @@ import io.realm.annotations.Required;
 public class Access extends RealmObject {
 
     @PrimaryKey
-
-    @Required private Integer  id = 0;
+    private Integer id = 0;
 
     @Required private String  adminId  = "";
     @Required private String  adminEmail  = "";

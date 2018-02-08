@@ -12,7 +12,6 @@ import io.realm.annotations.Required;
 public class Hash extends RealmObject {
 
     @PrimaryKey
-    @Required
     private Integer  id = 0;
     @Required private String  finalPassword = "";
     @Required private String  passcode = "";

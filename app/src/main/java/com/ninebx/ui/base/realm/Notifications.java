@@ -27,7 +27,7 @@ public class Notifications extends RealmObject {
     @Required private  Boolean read  = true;
     @Required private  Integer form_id  = 0;
     @PrimaryKey
-    @Required private  Integer id  = 0;
+    private  Integer id  = 0;
 
     public Notifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, Integer id) {
         this.message = message;

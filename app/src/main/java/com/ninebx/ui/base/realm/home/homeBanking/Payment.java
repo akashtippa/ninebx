@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class Payment extends RealmObject {
 
     @PrimaryKey
-    Integer id = 0;
+    private Integer id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();

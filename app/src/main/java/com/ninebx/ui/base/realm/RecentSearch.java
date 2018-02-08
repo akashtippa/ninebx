@@ -14,7 +14,6 @@ import io.realm.annotations.Required;
 public class RecentSearch extends RealmObject {
 
     @PrimaryKey
-    @Required
     private  Integer id  = 0;
     @Required private  Integer search_id  = 0;
     @Required private  Integer detail_id  = 0;

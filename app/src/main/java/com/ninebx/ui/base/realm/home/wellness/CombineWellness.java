@@ -15,7 +15,6 @@ import io.realm.annotations.Required;
 public class CombineWellness extends RealmObject {
 
     @PrimaryKey
-    @Required
     private Integer id = 0;
 
     @Required private RealmList<Checkups> checkupsItems                   = new RealmList<Checkups>();

@@ -20,7 +20,6 @@ public class Asset extends RealmObject {
 
 
     @PrimaryKey
-    @Required
     Integer id = 0;
 
     @Required private RealmList<RealmString> backingImages = new RealmList<>();
