@@ -53,7 +53,7 @@ class SignInFragment : BaseAuthFragment() {
         if (edtEmailAddress.text.toString().isEmpty()) {
             isValid = false
             edtEmailAddress.requestFocus()
-            edtEmailAddress.error = getString(R.string.required)
+            context!!.showToast(R.string.error_empty_email)
         } else {
             if (!isValidEmail(edtEmailAddress.text.toString().trim())) {
                 isValid = false
@@ -65,7 +65,7 @@ class SignInFragment : BaseAuthFragment() {
         if (edtPassword.text.toString().isEmpty()) {
             isValid = false
             edtPassword.requestFocus()
-            edtPassword.error = getString(R.string.required)
+            context!!.showToast(R.string.error_empty_password)
         }
 
         if( edtPassword.text.toString().isNotEmpty() && edtPassword.text.toString().trim().length < 8 ) {
@@ -90,7 +90,7 @@ class SignInFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        mAuthView.navigateToHome()
+        mAuthView.navigateToOTP()
     }
 
     private fun openStaticLayoutDialog(option: Int) {

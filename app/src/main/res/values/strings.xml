@@ -421,6 +421,10 @@
 
     <string name="selected_photos">Selected Photos</string>
     <string name="select_country">Select Country</string>
+    <string name="error_empty_email">Email Required</string>
+    <string name="error_empty_password">Empty Password</string>
+    <string name="error_empty_first_name">First Name cannot be empty</string>
+    <string name="error_empty_last_name">Last name cannot be empty</string>
 
     <string-array name="gender">
         <item></item>

@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.showToast
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
@@ -64,19 +65,19 @@ class SignUpFragment : BaseAuthFragment() {
         if (edtFirstName.text.toString().isEmpty()) {
             isValid = false
             edtFirstName.requestFocus()
-            edtFirstName.error = getString(R.string.required)
+            context!!.showToast(R.string.error_empty_first_name)
         }
 
         if (edtLastName.text.toString().isEmpty()) {
             isValid = false
             edtLastName.requestFocus()
-            edtLastName.error = getString(R.string.required)
+            context!!.showToast(R.string.error_empty_last_name)
         }
 
         if (edtEmailAddress.text.toString().isEmpty()) {
             isValid = false
             edtEmailAddress.requestFocus()
-            edtEmailAddress.error = getString(R.string.required)
+            context!!.showToast(R.string.error_empty_email)
         } else {
             if (!isValidEmail(edtEmailAddress.text.toString().trim())) {
                 isValid = false

@@ -89,7 +89,7 @@ class NineBxApplication : MultiDexApplication() {
             return nineBxPreferences!!
         }
 
-        var autoTestMode = true
+        var autoTestMode = false
 
         private var getUserAPI : NetModule.GetUsersAPI ?= null
         fun getUserAPI( ) : NetModule.GetUsersAPI? {
@@ -122,7 +122,7 @@ class NineBxApplication : MultiDexApplication() {
 
 
     fun getiMemberAdded(): IMemberAdded? {
-        return this!!.iMemberAdded
+        return this.iMemberAdded
     }
 
     fun setiMemberAdded(iMemberAdded: IMemberAdded) {
