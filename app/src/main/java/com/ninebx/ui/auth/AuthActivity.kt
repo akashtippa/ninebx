@@ -43,14 +43,14 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private lateinit var mCurrentTag: String
     private lateinit var mAuthPresenter: AuthPresenter
-    private var mEmail: String? = ""
+    private var mEmail: String = ""
 
     override fun getAuthPresenter(): AuthPresenter {
         return mAuthPresenter
     }
 
     override fun getAccountEmail(): String {
-        return mEmail!!
+        return mEmail
     }
 
     override fun setAccountEmail(accountEmail: String) {

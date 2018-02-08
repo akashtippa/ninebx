@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.utility.KeyboardUtil
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_pass_code.*
 
@@ -41,6 +42,7 @@ class PassCodeFragment : BaseAuthFragment() {
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
         setupToolbar()
         setHasOptionsMenu(!isCreatePassCode)
+        KeyboardUtil.showSoftKeyboard(view)
         etPassCode.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
 
@@ -111,9 +113,11 @@ class PassCodeFragment : BaseAuthFragment() {
                         ivOtp6.isSelected = true
 
                         if( isCreatePassCode ) {
+                            KeyboardUtil.hideSoftKeyboard(activity!!)
                             mAuthView.navigateToCreatePassCode(false)
                         }
                         else {
+                            KeyboardUtil.hideSoftKeyboard(activity!!)
                             mAuthView.navigateToFingerPrint()
                         }
                     }

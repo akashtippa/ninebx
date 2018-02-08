@@ -16,6 +16,7 @@ class NineBxPreferences : Preferences() {
     var isPasswordRequired by booleanPref(Constants.IS_PASSWORD_REQUIRED)
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP)
+    var userEmail by stringPref(Constants.USER_EMAIL)
     var currentUser by stringPref(Constants.CURRENT_USER)
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
