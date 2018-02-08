@@ -18,7 +18,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class MainEducation extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     @Required private String selectionType = "";

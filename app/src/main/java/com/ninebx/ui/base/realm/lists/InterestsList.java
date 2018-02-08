@@ -14,7 +14,7 @@ import io.realm.annotations.Required;
 public class InterestsList extends RealmObject {
 
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     @Required private String selectionType = "";

@@ -14,7 +14,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineMemories extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     @Required private RealmList<MainMemories> mainMemoriesItems       = new RealmList<MainMemories>();

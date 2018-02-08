@@ -1,10 +1,6 @@
 package com.ninebx.ui.base.realm;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -20,39 +16,39 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CalendarEvents extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
     
     @Required
-    private RealmList<RealmString> eventID = new RealmList<>();
+    private RealmList<String> eventID = new RealmList<>();
     @Required private String classType = "Calendar";
 
-    @Required private RealmList<RealmString> title = new RealmList<>();
-    @Required private RealmList<RealmString> location = new RealmList<>();
+    @Required private RealmList<String> title = new RealmList<>();
+    @Required private RealmList<String> location = new RealmList<>();
 
     @Required private RealmList<Boolean> isAllDay = new RealmList<>();
 
-    @Required private RealmList<RealmString> notes = new RealmList<>();
-    @Required private RealmList<RealmString> startsDate = new RealmList<>();
-    @Required private RealmList<RealmString> endsDate = new RealmList<>();
+    @Required private RealmList<String> notes = new RealmList<>();
+    @Required private RealmList<String> startsDate = new RealmList<>();
+    @Required private RealmList<String> endsDate = new RealmList<>();
 
-    @Required private RealmList<RealmString> repeats = new RealmList<>();
-    @Required private RealmList<RealmString> endRepeat = new RealmList<>();
-    @Required private RealmList<RealmString> reminder = new RealmList<>();
-    @Required private RealmList<RealmString> travelTime = new RealmList<>();
+    @Required private RealmList<String> repeats = new RealmList<>();
+    @Required private RealmList<String> endRepeat = new RealmList<>();
+    @Required private RealmList<String> reminder = new RealmList<>();
+    @Required private RealmList<String> travelTime = new RealmList<>();
     //dynamic var invites = RLMArray
-    @Required private RealmList<RealmString> alert = new RealmList<>();
-    @Required private RealmList<RealmString> showAs = new RealmList<>();
-    @Required private RealmList<RealmString> url = new RealmList<>();
+    @Required private RealmList<String> alert = new RealmList<>();
+    @Required private RealmList<String> showAs = new RealmList<>();
+    @Required private RealmList<String> url = new RealmList<>();
 
-    @Required private RealmList<Boolean> isReminderSet = new RealmList<>();
+    @Required private RealmList<String> isReminderSet = new RealmList<>();
 
     @Required private String attachmentNames = "";
 
     @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required private RealmList<String> photosId = new RealmList<>();
 
 
     public CalendarEvents() {
@@ -66,11 +62,11 @@ public class CalendarEvents extends RealmObject {
         this.id = id;
     }
 
-    public RealmList<RealmString> getEventID() {
+    public RealmList<String> getEventID() {
         return eventID;
     }
 
-    public void setEventID(RealmList<RealmString> eventID) {
+    public void setEventID(RealmList<String> eventID) {
         this.eventID = eventID;
     }
 
@@ -82,19 +78,19 @@ public class CalendarEvents extends RealmObject {
         this.classType = classType;
     }
 
-    public RealmList<RealmString> getTitle() {
+    public RealmList<String> getTitle() {
         return title;
     }
 
-    public void setTitle(RealmList<RealmString> title) {
+    public void setTitle(RealmList<String> title) {
         this.title = title;
     }
 
-    public RealmList<RealmString> getLocation() {
+    public RealmList<String> getLocation() {
         return location;
     }
 
-    public void setLocation(RealmList<RealmString> location) {
+    public void setLocation(RealmList<String> location) {
         this.location = location;
     }
 
@@ -106,91 +102,91 @@ public class CalendarEvents extends RealmObject {
         this.isAllDay = isAllDay;
     }
 
-    public RealmList<RealmString> getNotes() {
+    public RealmList<String> getNotes() {
         return notes;
     }
 
-    public void setNotes(RealmList<RealmString> notes) {
+    public void setNotes(RealmList<String> notes) {
         this.notes = notes;
     }
 
-    public RealmList<RealmString> getStartsDate() {
+    public RealmList<String> getStartsDate() {
         return startsDate;
     }
 
-    public void setStartsDate(RealmList<RealmString> startsDate) {
+    public void setStartsDate(RealmList<String> startsDate) {
         this.startsDate = startsDate;
     }
 
-    public RealmList<RealmString> getEndsDate() {
+    public RealmList<String> getEndsDate() {
         return endsDate;
     }
 
-    public void setEndsDate(RealmList<RealmString> endsDate) {
+    public void setEndsDate(RealmList<String> endsDate) {
         this.endsDate = endsDate;
     }
 
-    public RealmList<RealmString> getRepeats() {
+    public RealmList<String> getRepeats() {
         return repeats;
     }
 
-    public void setRepeats(RealmList<RealmString> repeats) {
+    public void setRepeats(RealmList<String> repeats) {
         this.repeats = repeats;
     }
 
-    public RealmList<RealmString> getEndRepeat() {
+    public RealmList<String> getEndRepeat() {
         return endRepeat;
     }
 
-    public void setEndRepeat(RealmList<RealmString> endRepeat) {
+    public void setEndRepeat(RealmList<String> endRepeat) {
         this.endRepeat = endRepeat;
     }
 
-    public RealmList<RealmString> getReminder() {
+    public RealmList<String> getReminder() {
         return reminder;
     }
 
-    public void setReminder(RealmList<RealmString> reminder) {
+    public void setReminder(RealmList<String> reminder) {
         this.reminder = reminder;
     }
 
-    public RealmList<RealmString> getTravelTime() {
+    public RealmList<String> getTravelTime() {
         return travelTime;
     }
 
-    public void setTravelTime(RealmList<RealmString> travelTime) {
+    public void setTravelTime(RealmList<String> travelTime) {
         this.travelTime = travelTime;
     }
 
-    public RealmList<RealmString> getAlert() {
+    public RealmList<String> getAlert() {
         return alert;
     }
 
-    public void setAlert(RealmList<RealmString> alert) {
+    public void setAlert(RealmList<String> alert) {
         this.alert = alert;
     }
 
-    public RealmList<RealmString> getShowAs() {
+    public RealmList<String> getShowAs() {
         return showAs;
     }
 
-    public void setShowAs(RealmList<RealmString> showAs) {
+    public void setShowAs(RealmList<String> showAs) {
         this.showAs = showAs;
     }
 
-    public RealmList<RealmString> getUrl() {
+    public RealmList<String> getUrl() {
         return url;
     }
 
-    public void setUrl(RealmList<RealmString> url) {
+    public void setUrl(RealmList<String> url) {
         this.url = url;
     }
 
-    public RealmList<Boolean> getIsReminderSet() {
+    public RealmList<String> getIsReminderSet() {
         return isReminderSet;
     }
 
-    public void setIsReminderSet(RealmList<Boolean> isReminderSet) {
+    public void setIsReminderSet(RealmList<String> isReminderSet) {
         this.isReminderSet = isReminderSet;
     }
 
@@ -210,11 +206,11 @@ public class CalendarEvents extends RealmObject {
         this.backingImages = backingImages;
     }
 
-    public List<String> getPhotosId() {
+    public RealmList<String> getPhotosId() {
         return photosId;
     }
 
-    public void setPhotosId(List<String> photosId) {
+    public void setPhotosId(RealmList<String> photosId) {
         this.photosId = photosId;
     }
 

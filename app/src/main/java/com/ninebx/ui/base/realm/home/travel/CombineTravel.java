@@ -14,7 +14,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineTravel extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     @Required private RealmList<Documents> documentsItems      = new RealmList<Documents>();

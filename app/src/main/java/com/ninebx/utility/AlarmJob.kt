@@ -47,15 +47,15 @@ class AlarmJob : Job() {
         }*/
         title = "Reminder : ${reminder.title[0]!!}"
         if( reminder.reminder.size > 0 )
-            desc = reminder.reminder[0]!!.stringValue
-        else desc = reminder.title[0]!!.stringValue
+            desc = reminder.reminder[0]!!
+        else desc = reminder.title[0]!!
         
         showNotification( title, desc )
         
         return Result.SUCCESS
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun showNotification(title: String, desc: String?) {
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 

@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombinePersonal extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     RealmList<Certificate> certificateItems        = new RealmList<Certificate>();

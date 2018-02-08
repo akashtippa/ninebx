@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class Asset extends RealmObject {
 
 
-    @PrimaryKey
+    @Required @PrimaryKey
     Integer id = 0;
 
     @Required private RealmList<RealmString> backingImages = new RealmList<>();

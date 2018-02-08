@@ -20,7 +20,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class EyeglassPrescriptions extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     Integer id = 0;
 
     @Required

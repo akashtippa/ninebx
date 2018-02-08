@@ -16,7 +16,7 @@ public class SignUp extends RealmObject {
     @Required private String emailAddress  = "";
     @Required private String password  = "";
     @Required private String user_id  = "";
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     public SignUp(String fullName, String emailAddress, String password, String user_id, Integer id) {

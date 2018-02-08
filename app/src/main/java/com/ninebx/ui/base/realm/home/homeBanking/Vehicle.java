@@ -18,7 +18,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Vehicle extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     @Required

@@ -339,4 +339,6 @@ public class Users extends RealmObject implements Parcelable {
             return new Users[size];
         }
     };
+
+
 }

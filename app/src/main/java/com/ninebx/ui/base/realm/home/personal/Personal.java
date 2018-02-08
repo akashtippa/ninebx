@@ -20,7 +20,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Personal extends RealmObject {
 
-    @PrimaryKey
+    @Required @PrimaryKey
     private Integer id = 0;
 
     @Required
