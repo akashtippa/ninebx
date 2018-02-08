@@ -37,16 +37,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
 
         btnSubmit.setOnClickListener {
             if (validate()) {
-
-                var email = mAuthView.getAccountEmail()
-                if( email.isEmpty() ) {
-                    email = NineBxApplication.getPreferences().userEmail!!
-                    mAuthView.setAccountEmail(email)
-                }
-                else
-                    NineBxApplication.getPreferences().userEmail = email
-
-                mAuthView.getAuthPresenter().signUp(mAuthView.getAccountEmail(), etCreatePassword.text.toString().trim())
+                mAuthView.getAuthPresenter().signUp(mCurrentUser.emailAddress, etCreatePassword.text.toString().trim())
             }
         }
 
@@ -91,17 +82,20 @@ class AccountPasswordFragment : BaseAuthFragment() {
             isValid = false
             etCreatePassword.requestFocus()
             mAuthView.onError(R.string.error_empty_password)
+            return isValid
         }
 
         if (etConfirmPassword.text.toString().isEmpty()) {
             isValid = false
             etConfirmPassword.requestFocus()
             mAuthView.onError(R.string.error_empty_password)
+            return isValid
         }
 
         if (isValid && !etConfirmPassword.text.toString().equals(etCreatePassword.text.toString())) {
             isValid = false
             mAuthView.onError(R.string.error_passwords_dont_match)
+            return isValid
         }
 
         if( isValid ) {

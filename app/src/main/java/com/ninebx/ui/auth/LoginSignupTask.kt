@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.NONE_COMPLETE
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -90,12 +91,18 @@ class LoginSignupTask(private var userName: String,
 
     override fun onError(error: ObjectServerError?) {
         if( error != null ) {
-
             error.printStackTrace()
         }
         if( type == "Signup" ) {
-            type = "Signin"
-            onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
+            authView.hideProgress()
+            if( error != null ) {
+                error.printStackTrace()
+                authView.onError(error.errorMessage!!)
+            }
+            NineBxApplication.getPreferences().currentStep = NONE_COMPLETE
+            authView.navigateToSignIn()
+            //type = "Signin"
+            //onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
         }
         else {
             authView.hideProgress()

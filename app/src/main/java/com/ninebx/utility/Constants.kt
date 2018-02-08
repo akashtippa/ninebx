@@ -20,6 +20,7 @@ object Constants {
     val CURRENT_STEP: String = "current_step"
 
     val ALL_COMPLETE = 99
+    val NONE_COMPLETE = 0
     val SIGN_UP_COMPLETE = 1
     val ACCOUNT_PASSWORD_COMPLETE = 2
     val OTP_COMPLETE = 3
