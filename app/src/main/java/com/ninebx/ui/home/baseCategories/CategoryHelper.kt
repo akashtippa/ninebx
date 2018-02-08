@@ -375,7 +375,7 @@ class CategoryHelper(
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
         category.title = "Services/Other Accounts"
-        category.drawableString = "ic_icon_Services_accounts"
+        category.drawableString = "ic_icon_services_accounts"
 
         categoryList.add(category)
 
@@ -433,7 +433,7 @@ class CategoryHelper(
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
         category.title = "Services/Other Accounts"
-        category.drawableString = "ic_icon_Services_accounts"
+        category.drawableString = "ic_icon_services_accounts"
 
         categoryList.add(category)
 
@@ -464,7 +464,7 @@ class CategoryHelper(
         var category_id = "personal" + categoryIndex
         var category = Category(category_id)
         category.title = "Services/Other Accounts"
-        category.drawableString = "ic_icon_Services_accounts"
+        category.drawableString = "ic_icon_services_accounts"
 
         categoryList.add(category)
 
@@ -504,7 +504,7 @@ class CategoryHelper(
         category_id = "memories_" + categoryIndex
         category = Category(category_id)
         category.title = "Services/Other Accounts"
-        category.drawableString = "ic_icon_Services_accounts"
+        category.drawableString = "ic_icon_services_accounts"
 
         categoryList.add(category)
 
@@ -556,7 +556,7 @@ class CategoryHelper(
         category_id = "education_" + categoryIndex
         category = Category(category_id)
         category.title = "Services/Other Accounts"
-        category.drawableString = "ic_icon_Services_accounts"
+        category.drawableString = "ic_icon_services_accounts"
 
         categoryList.add(category)
 

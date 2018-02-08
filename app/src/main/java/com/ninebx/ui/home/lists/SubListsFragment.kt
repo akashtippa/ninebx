@@ -51,6 +51,8 @@ class SubListsFragment : FragmentBackHelper() {
 
         fragmentValue = arguments!!.getString("homeScreen")
 
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
+
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvAddedLists.adapter as ListsAdapter
@@ -122,7 +124,7 @@ class SubListsFragment : FragmentBackHelper() {
 
         if (fragmentValue == "HomeScreen") {
             NineBxApplication.instance.activityInstance!!.showBottomView()
-            NineBxApplication.instance.activityInstance!!.hideBackIcon()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         } else if (fragmentValue == "bottom") {
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
             NineBxApplication.instance.activityInstance!!.showBottomView()

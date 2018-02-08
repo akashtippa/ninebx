@@ -9,38 +9,29 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-
 import android.text.Html
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
-
+import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
 import com.ninebx.ui.home.calendar.events.ImageViewDialog
-import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
-import com.ninebx.utility.*
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import io.realm.SyncCredentials
@@ -154,6 +145,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
 
 
+
+
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
@@ -203,7 +196,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
     private fun beginCameraAttachmentFlow() {
@@ -302,7 +295,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         }
         else {
 
-            if( toolbar.isVisible() && mImagesList.size == 0 )
+            if (imgToolbar.isVisible() && mImagesList.size == 0)
                 layoutQuickAdd.show()
 
             cvAttachments.hide()
@@ -517,7 +510,45 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     }
 
     fun showQuickAdd() {
+        imgCameraNineBx.setImageResource(R.drawable.ic_icon_add_photo_memories)
+
+        tvQuickAdd.show()
         layoutQuickAdd.show()
+    }
+
+    fun showQuickAddDisableText() {
+        tvQuickAdd.hide()
+        layoutQuickAdd.show()
+    }
+
+    fun changeQuickAddCamera(boxValue: String) {
+        tvQuickAdd.hide()
+        when (boxValue) {
+            getString(R.string.home_amp_money) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_home)
+            }
+            getString(R.string.travel) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_travel)
+            }
+            getString(R.string.contacts) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_contacts)
+            }
+            getString(R.string.personal) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_personal)
+            }
+            getString(R.string.interests) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_interests)
+            }
+            getString(R.string.wellness) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_wellness)
+            }
+            getString(R.string.memories) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_memories)
+            }
+            getString(R.string.shopping) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
+            }
+        }
     }
 
 
