@@ -11,13 +11,13 @@ import io.realm.annotations.Required;
  * Created by Alok on 24/01/18.
  */
 @RealmClass
-public class TravelsList extends RealmObject {
+public class TravelList extends RealmObject {
 
     @PrimaryKey //@Required
     private int id = 0;
 
     @Required private String selectionType = "";
-    @Required private String classType = "TravelsList";
+    @Required private String classType = "TravelList";
 
     @Required private String listName = "";
     @Required private String dueDate = "";
@@ -33,7 +33,7 @@ public class TravelsList extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public TravelsList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public TravelList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -49,7 +49,7 @@ public class TravelsList extends RealmObject {
         this.createdUser = createdUser;
     }
 
-    public TravelsList() {
+    public TravelList() {
     }
 
     public Integer getId() {

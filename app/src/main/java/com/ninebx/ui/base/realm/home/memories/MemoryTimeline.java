@@ -17,7 +17,7 @@ import io.realm.annotations.Required;
  * Created by Alok on 24/01/18.
  */
 @RealmClass
-public class MemoryTimeLine extends RealmObject {
+public class MemoryTimeline extends RealmObject {
 
     @PrimaryKey //@Required
     int id = 0;
@@ -77,7 +77,7 @@ public class MemoryTimeLine extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public MemoryTimeLine(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public MemoryTimeline(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.title = title;
         this.date = date;
@@ -188,6 +188,6 @@ public class MemoryTimeLine extends RealmObject {
         this.createdUser = createdUser;
     }
 
-    public MemoryTimeLine() {
+    public MemoryTimeline() {
     }
 }

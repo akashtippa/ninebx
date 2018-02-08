@@ -24,7 +24,7 @@ public class CombineWellness extends RealmObject {
     @Required private RealmList<Identification> identificationItems             = new RealmList<Identification>();
     @Required private RealmList<MedicalConditions> medicalConditionsItems          = new RealmList<MedicalConditions>();
     @Required private RealmList<MedicalHistory> medicalHistoryItems             = new RealmList<MedicalHistory>();
-    @Required private RealmList<Medication> medicationsItems                = new RealmList<Medication>();
+    @Required private RealmList<Medications> medicationsItems                = new RealmList<Medications>();
     @Required private RealmList<VitalNumbers> vitalNumbersItems               = new RealmList<VitalNumbers>();
     @Required private RealmList<Wellness> wellnessItems                   = new RealmList<Wellness>();
 

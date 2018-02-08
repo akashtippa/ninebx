@@ -18,11 +18,11 @@ public class CombineMemories extends RealmObject {
     private int id = 0;
 
     @Required private RealmList<MainMemories> mainMemoriesItems       = new RealmList<>();
-    @Required private RealmList<MemoryTimeLine> memoryTimelineItems     = new RealmList<>();
+    @Required private RealmList<MemoryTimeline> memoryTimelineItems     = new RealmList<>();
 
     @Required private RealmList<MemoriesList> listItems               = new RealmList<>();
 
-    public CombineMemories(int id, RealmList<MainMemories> mainMemoriesItems, RealmList<MemoryTimeLine> memoryTimelineItems, RealmList<MemoriesList> listItems) {
+    public CombineMemories(int id, RealmList<MainMemories> mainMemoriesItems, RealmList<MemoryTimeline> memoryTimelineItems, RealmList<MemoriesList> listItems) {
         this.id = id;
         this.mainMemoriesItems = mainMemoriesItems;
         this.memoryTimelineItems = memoryTimelineItems;
@@ -45,11 +45,11 @@ public class CombineMemories extends RealmObject {
         this.mainMemoriesItems = mainMemoriesItems;
     }
 
-    public RealmList<MemoryTimeLine> getMemoryTimelineItems() {
+    public RealmList<MemoryTimeline> getMemoryTimelineItems() {
         return memoryTimelineItems;
     }
 
-    public void setMemoryTimelineItems(RealmList<MemoryTimeLine> memoryTimelineItems) {
+    public void setMemoryTimelineItems(RealmList<MemoryTimeline> memoryTimelineItems) {
         this.memoryTimelineItems = memoryTimelineItems;
     }
 

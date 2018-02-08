@@ -18,7 +18,7 @@ import io.realm.annotations.Required;
  * Created by Alok on 29/01/18.
  */
 @RealmClass
-public class Medication extends RealmObject {
+public class Medications extends RealmObject {
 
     @PrimaryKey //@Required
     int id = 0;
@@ -79,7 +79,7 @@ public class Medication extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public Medication(String selectionType, String classType, String name, String strength, String frequency, String startDate, String endDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+    public Medications(String selectionType, String classType, String name, String strength, String frequency, String startDate, String endDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
         this.name = name;
@@ -199,6 +199,6 @@ public class Medication extends RealmObject {
         this.createdUser = createdUser;
     }
 
-    public Medication() {
+    public Medications() {
     }
 }

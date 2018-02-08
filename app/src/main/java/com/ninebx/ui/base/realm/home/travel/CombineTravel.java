@@ -1,6 +1,6 @@
 package com.ninebx.ui.base.realm.home.travel;
 
-import com.ninebx.ui.base.realm.lists.TravelsList;
+import com.ninebx.ui.base.realm.lists.TravelList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -22,7 +22,7 @@ public class CombineTravel extends RealmObject {
     @Required private RealmList<Travel> travelItems         = new RealmList<Travel>();
     @Required private RealmList<Vacations> vacationsItems      = new RealmList<Vacations>();
 
-    @Required private RealmList<TravelsList> listItems           = new RealmList<TravelsList>();
+    @Required private RealmList<TravelList> listItems           = new RealmList<TravelList>();
 
     public CombineTravel(int id, RealmList documentsItems, RealmList loyaltyItems, RealmList travelItems, RealmList vacationsItems, RealmList listItems) {
         this.id = id;
