@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class Loyalty extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,31 +61,31 @@ public class Loyalty extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String airLine = "";
-    private String hotel = "";
-    private String carRentalCompany = "";
-    private String cruiseline = "";
-    private String railway = "";
-    private String other = "";
+    @Required private String airLine = "";
+    @Required private String hotel = "";
+    @Required private String carRentalCompany = "";
+    @Required private String cruiseline = "";
+    @Required private String railway = "";
+    @Required private String other = "";
 
-    private String accountName = "";
-    private String nameOnAccount = "";
-    private String accountNumber = "";
+    @Required private String accountName = "";
+    @Required private String nameOnAccount = "";
+    @Required private String accountNumber = "";
 
-    private String website = "";
-    private String userName = "";
-    private String password = "";
-    private String pin = "";
+    @Required private String website = "";
+    @Required private String userName = "";
+    @Required private String password = "";
+    @Required private String pin = "";
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
     public Loyalty(String selectionType, String airLine, String hotel, String carRentalCompany, String cruiseline, String railway, String other, String accountName, String nameOnAccount, String accountNumber, String website, String userName, String password, String pin, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

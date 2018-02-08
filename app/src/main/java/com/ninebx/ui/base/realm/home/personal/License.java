@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm.home.personal;
 
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -9,25 +10,26 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class License extends RealmObject {
 
+    @Required
     private String selectionType = "";
 
-    private String lic_description = "";
-    private String nameOnLicense = "";
-    private String issuingCountry = "";
-    private String issuingState = "";
-    private String licenseNumber = "";
-    private String dateIssued = "";
-    private String expirationDate = "";
+    @Required private String lic_description = "";
+    @Required private String nameOnLicense = "";
+    @Required private String issuingCountry = "";
+    @Required private String issuingState = "";
+    @Required private String licenseNumber = "";
+    @Required private String dateIssued = "";
+    @Required private String expirationDate = "";
 
-    private String notes = "";
+    @Required private String notes = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public License(String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;

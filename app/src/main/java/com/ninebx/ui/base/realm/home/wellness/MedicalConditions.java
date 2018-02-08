@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class MedicalConditions extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,21 +61,21 @@ public class MedicalConditions extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String classType = "MedicalConditions";
+    @Required private String selectionType = "";
+    @Required private String classType = "MedicalConditions";
 
-    private String condition = "";
+    @Required private String condition = "";
 
-    private String dateDiagnosed = "";
-    private String medi_description = "";
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String dateDiagnosed = "";
+    @Required private String medi_description = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public MedicalConditions(String selectionType, String classType, String condition, String dateDiagnosed, String medi_description, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

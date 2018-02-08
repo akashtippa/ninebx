@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -20,10 +21,11 @@ public class Insurance extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -57,31 +59,31 @@ public class Insurance extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String insuranceCompany = "";
-    private String insuredProperty = "";
-    private String insuredVehicle = "";
-    private String insuredPerson = "";
+    @Required private String insuranceCompany = "";
+    @Required private String insuredProperty = "";
+    @Required private String insuredVehicle = "";
+    @Required private String insuredPerson = "";
 
-    private String policyNumber = "";
-    private String policyEffectiveDate = "";
-    private String policyExpirationDate = "";
-    private String contacts = "";
+    @Required private String policyNumber = "";
+    @Required private String policyEffectiveDate = "";
+    @Required private String policyExpirationDate = "";
+    @Required private String contacts = "";
 
-    private String website = "";
-    private String userName = "";
-    private String password = "";
-    private String pin = "";
+    @Required private String website = "";
+    @Required private String userName = "";
+    @Required private String password = "";
+    @Required private String pin = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
-    private String notes = "";
+    @Required private String notes = "";
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
     public Insurance(String selectionType, String insuranceCompany, String insuredProperty, String insuredVehicle, String insuredPerson, String policyNumber, String policyEffectiveDate, String policyExpirationDate, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.selectionType = selectionType;

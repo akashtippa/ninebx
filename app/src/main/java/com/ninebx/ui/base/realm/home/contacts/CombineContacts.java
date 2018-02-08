@@ -6,6 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -15,12 +16,13 @@ public class CombineContacts extends RealmObject {
 
 
 
+    @Required
     private Integer id = 0;
 
-    private RealmList<Contacts> contactsItems               = new RealmList<>();
-    private RealmList<MainContacts> mainContactsItems           = new RealmList<>();
+    @Required private RealmList<Contacts> contactsItems               = new RealmList<>();
+    @Required private RealmList<MainContacts> mainContactsItems           = new RealmList<>();
 
-    private RealmList<ContactsList> listItems                   = new RealmList<>();
+    @Required private RealmList<ContactsList> listItems                   = new RealmList<>();
 
     public CombineContacts(Integer id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
         this.id = id;

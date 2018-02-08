@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class Medication extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,23 +61,23 @@ public class Medication extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String classType = "Medications";
+    @Required private String selectionType = "";
+    @Required private String classType = "Medications";
 
-    private String name = "";
+    @Required private String name = "";
 
-    private String strength = "";
-    private String frequency = "";
-    private String startDate = "";
-    private String endDate = "";
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String strength = "";
+    @Required private String frequency = "";
+    @Required private String startDate = "";
+    @Required private String endDate = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public Medication(String selectionType, String classType, String name, String strength, String frequency, String startDate, String endDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

@@ -5,6 +5,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -12,20 +13,21 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class Notifications extends RealmObject {
 
+    @Required
     private  String message  = "";
-    private  String boxName  = "";
-    private  String category  = "";
-    private  String dueDate  = "";
-    private  Date updatedDate = new Date();
-    private  String subTitle  = "";
-    private  String notifyDate  = "";
-    private  Boolean isPrivate = false;
-    private  String created  = "";
-    private  String modified  = "";
-    private  Boolean read  = true;
-    private  Integer form_id  = 0;
+    @Required private  String boxName  = "";
+    @Required private  String category  = "";
+    @Required private  String dueDate  = "";
+    @Required private  Date updatedDate = new Date();
+    @Required private  String subTitle  = "";
+    @Required private  String notifyDate  = "";
+    @Required private  Boolean isPrivate = false;
+    @Required private  String created  = "";
+    @Required private  String modified  = "";
+    @Required private  Boolean read  = true;
+    @Required private  Integer form_id  = 0;
     @PrimaryKey
-    private  Integer id  = 0;
+    @Required private  Integer id  = 0;
 
     public Notifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, Integer id) {
         this.message = message;

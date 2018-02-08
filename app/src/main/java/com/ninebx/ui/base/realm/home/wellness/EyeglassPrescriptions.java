@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class EyeglassPrescriptions extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,38 +61,38 @@ public class EyeglassPrescriptions extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String classType = "EyeglassPrescriptions";
+    @Required private String selectionType = "";
+    @Required private String classType = "EyeglassPrescriptions";
 
-    private String physicianName = "";
-    private String datePrescribed = "";
+    @Required private String physicianName = "";
+    @Required private String datePrescribed = "";
 
-    private String odSphereValue = "";
-    private String osSphereValue = "";
+    @Required private String odSphereValue = "";
+    @Required private String osSphereValue = "";
 
-    private String odCylinderValue = "";
-    private String osCylinderValue = "";
+    @Required private String odCylinderValue = "";
+    @Required private String osCylinderValue = "";
 
-    private String odAxisValue = "";
-    private String osAxisValue = "";
+    @Required private String odAxisValue = "";
+    @Required private String osAxisValue = "";
 
-    private String odPrismValue = "";
-    private String osPrismValue = "";
+    @Required private String odPrismValue = "";
+    @Required private String osPrismValue = "";
 
-    private String odAddValue = "";
-    private String osAddValue = "";
+    @Required private String odAddValue = "";
+    @Required private String osAddValue = "";
 
-    private String odBaseValue = "";
-    private String osBaseValue = "";
+    @Required private String odBaseValue = "";
+    @Required private String osBaseValue = "";
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public EyeglassPrescriptions(String selectionType, String classType, String physicianName, String datePrescribed, String odSphereValue, String osSphereValue, String odCylinderValue, String osCylinderValue, String odAxisValue, String osAxisValue, String odPrismValue, String osPrismValue, String odAddValue, String osAddValue, String odBaseValue, String osBaseValue, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

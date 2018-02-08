@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class Vacations extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,24 +61,24 @@ public class Vacations extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String vac_description = "";
-    private String startDate = "";
-    private String endDate = "";
-    private String placesToVisit_1 = "";
-    private String placesToVisit_2 = "";
-    private String placesToVisit_3 = "";
+    @Required private String vac_description = "";
+    @Required private String startDate = "";
+    @Required private String endDate = "";
+    @Required private String placesToVisit_1 = "";
+    @Required private String placesToVisit_2 = "";
+    @Required private String placesToVisit_3 = "";
 
-    private Boolean plansConfirmed = false;
+    @Required private Boolean plansConfirmed = false;
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
     public Vacations(String selectionType, String vac_description, String startDate, String endDate, String placesToVisit_1, String placesToVisit_2, String placesToVisit_3, Boolean plansConfirmed, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

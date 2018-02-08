@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -22,10 +23,11 @@ public class TaxID extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,21 +61,21 @@ public class TaxID extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String taxIdName = "";
-    private String taxIdNumber = "";
-    private String issuingCountry = "";
+    @Required private String taxIdName = "";
+    @Required private String taxIdNumber = "";
+    @Required private String issuingCountry = "";
 
-    private String name = "";
+    @Required private String name = "";
 
-    private String notes = "";
+    @Required private String notes = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
     public TaxID(String selectionType, String taxIdName, String taxIdNumber, String issuingCountry, String name, String notes, String created, String modified, Boolean isPrivate, String attachmentNames) {
         this.selectionType = selectionType;

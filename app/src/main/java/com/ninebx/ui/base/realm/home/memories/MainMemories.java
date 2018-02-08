@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm.home.memories;
 
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -9,32 +10,33 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class MainMemories extends RealmObject {
 
+    @Required
     private String selectionType = "";
-    private String institutionName = "";
-    private String accountName = "";
+    @Required private String institutionName = "";
+    @Required private String accountName = "";
 
-    private String accountType = "";
-    private String nameOnAccount = "";
-    private String accountNumber = "";
-    private String location = "";
-    private String swiftCode = "";
-    private String abaRoutingNumber = "";
-    private String contacts = "";
+    @Required private String accountType = "";
+    @Required private String nameOnAccount = "";
+    @Required private String accountNumber = "";
+    @Required private String location = "";
+    @Required private String swiftCode = "";
+    @Required private String abaRoutingNumber = "";
+    @Required private String contacts = "";
 
-    private String website = "";
-    private String userName = "";
-    private String password = "";
-    private String pin = "";
-    private String paymentMethodOnFile = "";
+    @Required private String website = "";
+    @Required private String userName = "";
+    @Required private String password = "";
+    @Required private String pin = "";
+    @Required private String paymentMethodOnFile = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String notes = "";
-    private String attachmentNames = "";
-    private String title = "";
-    private String createdUser = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
+    @Required private String title = "";
+    @Required private String createdUser = "";
 
     public MainMemories(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
         this.selectionType = selectionType;

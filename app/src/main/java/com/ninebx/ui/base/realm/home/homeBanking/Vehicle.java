@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -20,10 +21,11 @@ public class Vehicle extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -57,40 +59,40 @@ public class Vehicle extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String vehicleName = "";
-    private String licenseNumber = "";
+    @Required private String vehicleName = "";
+    @Required private String licenseNumber = "";
 
-    private String vinNumber = "";
-    private String make = "";
-    private String model = "";
-    private String modelYear = "";
-    private String color = "";
-    private String titleName = "";
-    private String estimatedMarketValue = "";
+    @Required private String vinNumber = "";
+    @Required private String make = "";
+    @Required private String model = "";
+    @Required private String modelYear = "";
+    @Required private String color = "";
+    @Required private String titleName = "";
+    @Required private String estimatedMarketValue = "";
 
-    private String registrationExpirydate = "";
-    private String purchasedOrLeased = "";
-    private String purchaseDate = "";
-    private String financedThroughLoan = "";
+    @Required private String registrationExpirydate = "";
+    @Required private String purchasedOrLeased = "";
+    @Required private String purchaseDate = "";
+    @Required private String financedThroughLoan = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
-    private String leaseStartDate = "";
-    private String leaseEndDate = "";
-    private String contacts = "";
+    @Required private String leaseStartDate = "";
+    @Required private String leaseEndDate = "";
+    @Required private String contacts = "";
 
-    private String maintenanceEvent = "";
-    private String serviceProviderName = "";
-    private String dateOfService = "";
-    private String vehicle = "";
+    @Required private String maintenanceEvent = "";
+    @Required private String serviceProviderName = "";
+    @Required private String dateOfService = "";
+    @Required private String vehicle = "";
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
     public Vehicle(String selectionType, String vehicleName, String licenseNumber, String vinNumber, String make, String model, String modelYear, String color, String titleName, String estimatedMarketValue, String registrationExpirydate, String purchasedOrLeased, String purchaseDate, String financedThroughLoan, String created, String modified, Boolean isPrivate, String createdUser, String leaseStartDate, String leaseEndDate, String contacts, String maintenanceEvent, String serviceProviderName, String dateOfService, String vehicle, String notes, String attachmentNames) {
         this.selectionType = selectionType;

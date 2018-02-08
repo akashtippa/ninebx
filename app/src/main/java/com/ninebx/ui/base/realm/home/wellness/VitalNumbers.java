@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class VitalNumbers extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,35 +61,35 @@ public class VitalNumbers extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String classType = "VitalNumbers";
+    @Required private String selectionType = "";
+    @Required private String classType = "VitalNumbers";
 
-    private String vital_description = "";
-    private String measurementDate = "";
+    @Required private String vital_description = "";
+    @Required private String measurementDate = "";
 
-    private String height = "";
-    private String weight = "";
-    private String waist = "";
-    private String bodyFat = "";
-    private String bodyMassIndex = "";
-    private String bloodPressure = "";
-    private String heartRate = "";
-    private String totalCholesterol = "";
-    private String hdlCholesterol = "";
-    private String ldlCholesterol = "";
-    private String cholesterolRatio = "";
-    private String triglycerides = "";
-    private String bloodGlucose  = "";
-    private String hemoglobin = "";
+    @Required private String height = "";
+    @Required private String weight = "";
+    @Required private String waist = "";
+    @Required private String bodyFat = "";
+    @Required private String bodyMassIndex = "";
+    @Required private String bloodPressure = "";
+    @Required private String heartRate = "";
+    @Required private String totalCholesterol = "";
+    @Required private String hdlCholesterol = "";
+    @Required private String ldlCholesterol = "";
+    @Required private String cholesterolRatio = "";
+    @Required private String triglycerides = "";
+    @Required private String bloodGlucose  = "";
+    @Required private String hemoglobin = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public VitalNumbers(String selectionType, String classType, String vital_description, String measurementDate, String height, String weight, String waist, String bodyFat, String bodyMassIndex, String bloodPressure, String heartRate, String totalCholesterol, String hdlCholesterol, String ldlCholesterol, String cholesterolRatio, String triglycerides, String bloodGlucose, String hemoglobin, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;

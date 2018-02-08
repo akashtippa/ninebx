@@ -6,6 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -14,14 +15,15 @@ import io.realm.annotations.RealmClass;
 public class CombineTravel extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private RealmList<Documents> documentsItems      = new RealmList<Documents>();
-    private RealmList<Loyalty> loyaltyItems        = new RealmList<Loyalty>();
-    private RealmList<Travel> travelItems         = new RealmList<Travel>();
-    private RealmList<Vacations> vacationsItems      = new RealmList<Vacations>();
+    @Required private RealmList<Documents> documentsItems      = new RealmList<Documents>();
+    @Required private RealmList<Loyalty> loyaltyItems        = new RealmList<Loyalty>();
+    @Required private RealmList<Travel> travelItems         = new RealmList<Travel>();
+    @Required private RealmList<Vacations> vacationsItems      = new RealmList<Vacations>();
 
-    private RealmList<TravelsList> listItems           = new RealmList<TravelsList>();
+    @Required private RealmList<TravelsList> listItems           = new RealmList<TravelsList>();
 
     public CombineTravel(Integer id, RealmList documentsItems, RealmList loyaltyItems, RealmList travelItems, RealmList vacationsItems, RealmList listItems) {
         this.id = id;

@@ -13,6 +13,7 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -20,29 +21,30 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class Users extends RealmObject implements Parcelable {
 
-    private String fullName             = "";
+    @Required private String fullName             = "";
+    @Required
     private String firstName            = "";
-    private String lastName             = "";
-    private String emailAddress         = "";
-    private String relationship         = "";
-    private String dateOfBirth          = "";
-    private String anniversary          = "";
-    private String gender               = "";
-    private String mobileNumber         = "";
+    @Required private String lastName             = "";
+    @Required private String emailAddress         = "";
+    @Required private String relationship         = "";
+    @Required private String dateOfBirth          = "";
+    @Required private String anniversary          = "";
+    @Required private String gender               = "";
+    @Required private String mobileNumber         = "";
 
-    private String street_1             = "";
-    private String street_2             = "";
-    private String city                 = "";
-    private String state                = "";
-    private String zipCode              = "";
-    private String country              = "";
-    private String userId               = "";
+    @Required private String street_1             = "";
+    @Required private String street_2             = "";
+    @Required private String city                 = "";
+    @Required private String state                = "";
+    @Required private String zipCode              = "";
+    @Required private String country              = "";
+    @Required private String userId               = "";
 
-    private Integer id                  = 0;
-    private Boolean isCompleteProfile   = false;
-    private String profilePhoto         = "";
+    @Required private Integer id                  = 0;
+    @Required private Boolean isCompleteProfile   = false;
+    @Required private String profilePhoto         = "";
 
-    private RealmList<Member> members = new RealmList<Member>();
+    @Required private RealmList<Member> members = new RealmList<Member>();
 
 
     public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, Integer id, RealmList<Member> members) {

@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class ClothingSizes extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -58,86 +60,86 @@ public class ClothingSizes extends RealmObject {
             backingImages.add( new RealmString(string) );
         }
     }
-    private String selectionType = "";
-    private String classType = "";
+    @Required private String selectionType = "";
+    @Required private String classType = "";
 
-    private String personName = "";
-    private String sizeName = "";
+    @Required private String personName = "";
+    @Required private String sizeName = "";
 
-    private String sizeCategory = "";
+    @Required private String sizeCategory = "";
 
-    private String topsSize = "";
-    private String topsNumericSize = "";
+    @Required private String topsSize = "";
+    @Required private String topsNumericSize = "";
 
-    private String bottomsSize = "";
-    private String bottomsNumericSize = "";
+    @Required private String bottomsSize = "";
+    @Required private String bottomsNumericSize = "";
 
-    private String dressesSize = "";
-    private String dressesNumericSize = "";
+    @Required private String dressesSize = "";
+    @Required private String dressesNumericSize = "";
 
-    private String outWearSize = "";
-    private String outWearNumericSize = "";
+    @Required private String outWearSize = "";
+    @Required private String outWearNumericSize = "";
 
-    private String swimWearSize = "";
-    private String swimWearNumericSize = "";
-    private String swimWearBraBandCupSize = "";
+    @Required private String swimWearSize = "";
+    @Required private String swimWearNumericSize = "";
+    @Required private String swimWearBraBandCupSize = "";
 
-    private String shoeSize = "";
-    private String shoeWidth = "";
+    @Required private String shoeSize = "";
+    @Required private String shoeWidth = "";
 
-    private String hats = "";
-    private String gloves = "";
-    private String tights = "";
+    @Required private String hats = "";
+    @Required private String gloves = "";
+    @Required private String tights = "";
 
-    private String bust = "";
+    @Required private String bust = "";
 
-    private String waist = "";
+    @Required private String waist = "";
 
-    private String hips = "";
-    private String armLength = "";
+    @Required private String hips = "";
+    @Required private String armLength = "";
 
-    private String inseam = "";
-    private String torso = "";
+    @Required private String inseam = "";
+    @Required private String torso = "";
 
     // MEN
-    private String jacketsSize = "";
-    private String jacketsNumericSize = "";
+    @Required private String jacketsSize = "";
+    @Required private String jacketsNumericSize = "";
 
-    private String pantsSize = "";
-    private String pantsNumericSize = "";
+    @Required private String pantsSize = "";
+    @Required private String pantsNumericSize = "";
 
-    private String toddlerSize = "";
-    private String kidSize = "";
+    @Required private String toddlerSize = "";
+    @Required private String kidSize = "";
 
-    private String neck = "";
-    private String chest = "";
+    @Required private String neck = "";
+    @Required private String chest = "";
 
     // BABY
-    private String clothing = "";
-    private String shoes = "";
+    @Required private String clothing = "";
+    @Required private String shoes = "";
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private Boolean isBaby = false;
-    private Boolean isWomen = false;
-    private Boolean isGirl = false;
-    private Boolean isMen = false;
-    private Boolean isBoy = false;
+    @Required private Boolean isBaby = false;
+    @Required private Boolean isWomen = false;
+    @Required private Boolean isGirl = false;
+    @Required private Boolean isMen = false;
+    @Required private Boolean isBoy = false;
 
     // BOYS
-    private String beltsNumericSize = "";
-    private String socks = "";
+    @Required private String beltsNumericSize = "";
+    @Required private String socks = "";
 
-    private String seat = "";
+    @Required private String seat = "";
 
-    private String beltSize = "";
+    @Required private String beltSize = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public ClothingSizes(String selectionType, String classType, String personName, String sizeName, String sizeCategory, String topsSize, String topsNumericSize, String bottomsSize, String bottomsNumericSize, String dressesSize, String dressesNumericSize, String outWearSize, String outWearNumericSize, String swimWearSize, String swimWearNumericSize, String swimWearBraBandCupSize, String shoeSize, String shoeWidth, String hats, String gloves, String tights, String bust, String waist, String hips, String armLength, String inseam, String torso, String jacketsSize, String jacketsNumericSize, String pantsSize, String pantsNumericSize, String toddlerSize, String kidSize, String neck, String chest, String clothing, String shoes, String notes, String attachmentNames, Boolean isBaby, Boolean isWomen, Boolean isGirl, Boolean isMen, Boolean isBoy, String beltsNumericSize, String socks, String seat, String beltSize, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

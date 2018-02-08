@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -9,12 +10,13 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class Address extends RealmObject {
 
+    @Required
     private String street_1             = "";
-    private String street_2             = "";
-    private String city                 = "";
-    private String state                = "";
-    private String zipCode              = "";
-    private String country              = "";
+    @Required private String street_2             = "";
+    @Required private String city                 = "";
+    @Required private String state                = "";
+    @Required private String zipCode              = "";
+    @Required private String country              = "";
 
     public Address(String street_1, String street_2, String city, String state, String zipCode, String country) {
         this.street_1 = street_1;

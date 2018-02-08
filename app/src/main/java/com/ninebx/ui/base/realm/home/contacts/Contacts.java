@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -18,36 +19,37 @@ import io.realm.annotations.RealmClass;
 public class Contacts extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String firstName = "";
-    private String lastName = "";
-    private String dateOfBirth = "";
-    private String anniversary = "";
-    private String mobileOne = "";
-    private String mobileTwo = "";
-    private String emailOne = "";
-    private String emailTwo = "";
-    private String streetAddressOne = "";
-    private String streetAddressTwo = "";
-    private String city = "";
-    private String state = "";
-    private String zipCode = "";
-    private String country = "";
-
-
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String firstName = "";
+    @Required private String lastName = "";
+    @Required private String dateOfBirth = "";
+    @Required private String anniversary = "";
+    @Required private String mobileOne = "";
+    @Required private String mobileTwo = "";
+    @Required private String emailOne = "";
+    @Required private String emailTwo = "";
+    @Required private String streetAddressOne = "";
+    @Required private String streetAddressTwo = "";
+    @Required private String city = "";
+    @Required private String state = "";
+    @Required private String zipCode = "";
+    @Required private String country = "";
 
 
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
+
+
+    @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Contacts(Integer id, String selectionType, String firstName, String lastName, String dateOfBirth, String anniversary, String mobileOne, String mobileTwo, String emailOne, String emailTwo, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages) {
         this.id = id;

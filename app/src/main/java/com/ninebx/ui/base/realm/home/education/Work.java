@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -18,34 +19,35 @@ import io.realm.annotations.RealmClass;
 public class Work extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private String selectionType = "";
-    private String classType = "Work";
+    @Required private String selectionType = "";
+    @Required private String classType = "Work";
 
-    private String companyName = "";
-    private String position = "";
+    @Required private String companyName = "";
+    @Required private String position = "";
 
-    private String name = "";
-    private String location = "";
-    private String from = "";
-    private String to = "";
-    private String currentWork = "";
+    @Required private String name = "";
+    @Required private String location = "";
+    @Required private String from = "";
+    @Required private String to = "";
+    @Required private String currentWork = "";
 
-    private Boolean isCurrent = false;
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private Boolean isCurrent = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String notes = "";
+    @Required private String notes = "";
 
-    private String attachmentNames = "";
-    private String createdUser = "";
+    @Required private String attachmentNames = "";
+    @Required private String createdUser = "";
 
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Work(Integer id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;

@@ -5,6 +5,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -13,24 +14,25 @@ import io.realm.annotations.RealmClass;
 public class TravelsList extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private String selectionType = "";
-    private String classType = "TravelsList";
+    @Required private String selectionType = "";
+    @Required private String classType = "TravelsList";
 
-    private String listName = "";
-    private String dueDate = "";
+    @Required private String listName = "";
+    @Required private String dueDate = "";
 
-    private Integer detailsId = 0;
-    private Boolean isSelected = false;
+    @Required private Integer detailsId = 0;
+    @Required private Boolean isSelected = false;
 
-    private Date selectedDate = new Date();
-    private Date createdDate = new Date();
+    @Required private Date selectedDate = new Date();
+    @Required private Date createdDate = new Date();
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
     public TravelsList(Integer id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;

@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -19,12 +20,13 @@ public class Asset extends RealmObject {
 
 
     @PrimaryKey
+    @Required
     Integer id = 0;
 
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -58,27 +60,22 @@ public class Asset extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String test = "";
-
-    private String assetName = "";
-    private String descriptionOrLocation = "";
-
-    private String estimatedMarketValue = "";
-    private String serialNumber = "";
-    private String purchaseDate = "";
-    private String purchasePrice = "";
-    private String contacts = "";
-
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
-
-    private String notes = "";
-
-    private String imageName = "";
-    private String attachmentNames = "";
+    @Required private String selectionType = "";
+    @Required private String test = "";
+    @Required private String assetName = "";
+    @Required private String descriptionOrLocation = "";
+    @Required private String estimatedMarketValue = "";
+    @Required private String serialNumber = "";
+    @Required private String purchaseDate = "";
+    @Required private String purchasePrice = "";
+    @Required private String contacts = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
+    @Required private String notes = "";
+    @Required private String imageName = "";
+    @Required private String attachmentNames = "";
 
     public Asset(String selectionType, String test, String assetName, String descriptionOrLocation, String estimatedMarketValue, String serialNumber, String purchaseDate, String purchasePrice, String contacts, String created, String modified, Boolean isPrivate, String createdUser, String notes, String imageName, String attachmentNames) {
         this.selectionType = selectionType;

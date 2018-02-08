@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -22,10 +23,11 @@ public class Government extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,28 +61,28 @@ public class Government extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String idName = "";
+    @Required private String idName = "";
 
-    private String name = "";
+    @Required private String name = "";
 
-    private String nameOnId = "";
-    private String issuingCountry = "";
-    private String issuingState = "";
-    private String idNumber = "";
-    private String dateIssued = "";
-    private String expirationDate = "";
+    @Required private String nameOnId = "";
+    @Required private String issuingCountry = "";
+    @Required private String issuingState = "";
+    @Required private String idNumber = "";
+    @Required private String dateIssued = "";
+    @Required private String expirationDate = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String notes = "";
+    @Required private String notes = "";
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public Government(String selectionType, String idName, String name, String nameOnId, String issuingCountry, String issuingState, String idNumber, String dateIssued, String expirationDate, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;

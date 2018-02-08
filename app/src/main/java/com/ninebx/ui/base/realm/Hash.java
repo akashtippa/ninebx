@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -11,10 +12,11 @@ import io.realm.annotations.RealmClass;
 public class Hash extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer  id = 0;
-    private String  finalPassword = "";
-    private String  passcode = "";
-    private Boolean  isEnabledTouchId = false;
+    @Required private String  finalPassword = "";
+    @Required private String  passcode = "";
+    @Required private Boolean  isEnabledTouchId = false;
     
     public Hash() {
     }

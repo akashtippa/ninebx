@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -10,12 +11,13 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class SignUp extends RealmObject {
 
+    @Required
     private String fullName  = "";
-    private String emailAddress  = "";
-    private String password  = "";
-    private String user_id  = "";
+    @Required private String emailAddress  = "";
+    @Required private String password  = "";
+    @Required private String user_id  = "";
     @PrimaryKey
-    private Integer id = 0;
+    @Required private Integer id = 0;
 
     public SignUp(String fullName, String emailAddress, String password, String user_id, Integer id) {
         this.fullName = fullName;

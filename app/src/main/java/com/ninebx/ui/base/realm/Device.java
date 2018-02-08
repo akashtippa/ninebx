@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -9,9 +10,10 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class Device extends RealmObject {
 
+    @Required
     private String deviceId       = "";
-    private Boolean isTouchIdSet  = false;
-    private String passcode       = "";
+    @Required private Boolean isTouchIdSet  = false;
+    @Required private String passcode       = "";
 
     public Device(String deviceId, Boolean isTouchIdSet, String passcode) {
         this.deviceId = deviceId;

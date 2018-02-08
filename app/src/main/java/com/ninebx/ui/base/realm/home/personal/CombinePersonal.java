@@ -11,6 +11,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -19,6 +20,7 @@ import io.realm.annotations.RealmClass;
 public class CombinePersonal extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
     RealmList<Certificate> certificateItems        = new RealmList<Certificate>();

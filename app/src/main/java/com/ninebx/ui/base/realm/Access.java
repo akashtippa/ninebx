@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -12,10 +13,12 @@ import io.realm.annotations.RealmClass;
 public class Access extends RealmObject {
 
     @PrimaryKey
-    private Integer  id = 0;
-    private String  adminId  = "";
-    private String  adminEmail  = "";
-    private String  finalHash  = "";
+
+    @Required private Integer  id = 0;
+
+    @Required private String  adminId  = "";
+    @Required private String  adminEmail  = "";
+    @Required private String  finalHash  = "";
 
     public Access(Integer id, String adminId, String adminEmail, String finalHash) {
         this.id = id;

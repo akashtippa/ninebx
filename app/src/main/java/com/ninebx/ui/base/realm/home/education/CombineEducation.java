@@ -6,6 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -14,13 +15,14 @@ import io.realm.annotations.RealmClass;
 public class CombineEducation extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private RealmList<Education> educationItems          = new RealmList<>();
-    private RealmList<MainEducation> mainEducationItems      = new RealmList<>();
-    private RealmList<Work> workItems               = new RealmList<>();
+    @Required private RealmList<Education> educationItems          = new RealmList<>();
+    @Required private RealmList<MainEducation> mainEducationItems      = new RealmList<>();
+    @Required private RealmList<Work> workItems               = new RealmList<>();
 
-    private RealmList<EducationList> listItems               = new RealmList<>();
+    @Required private RealmList<EducationList> listItems               = new RealmList<>();
 
     public CombineEducation(Integer id, RealmList<Education> educationItems, RealmList<MainEducation> mainEducationItems, RealmList<Work> workItems, RealmList<EducationList> listItems) {
         this.id = id;

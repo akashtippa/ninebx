@@ -6,6 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -14,21 +15,22 @@ import io.realm.annotations.RealmClass;
 public class CombineWellness extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private RealmList<Checkups> checkupsItems                   = new RealmList<Checkups>();
-    private RealmList<EmergencyContacts> emergencyContactsItems          = new RealmList<EmergencyContacts>();
-    private RealmList<EyeglassPrescriptions> eyeglassPrescriptionsItems      = new RealmList<EyeglassPrescriptions>();
-    private RealmList<HealthcareProviders> healthcareProvidersItems        = new RealmList<HealthcareProviders>();
-    private RealmList<Identification> identificationItems             = new RealmList<Identification>();
-    private RealmList<MedicalConditions> medicalConditionsItems          = new RealmList<MedicalConditions>();
-    private RealmList<MedicalHistory> medicalHistoryItems             = new RealmList<MedicalHistory>();
-    private RealmList<Medication> medicationsItems                = new RealmList<Medication>();
-    private RealmList<VitalNumbers> vitalNumbersItems               = new RealmList<VitalNumbers>();
-    private RealmList<Wellness> wellnessItems                   = new RealmList<Wellness>();
+    @Required private RealmList<Checkups> checkupsItems                   = new RealmList<Checkups>();
+    @Required private RealmList<EmergencyContacts> emergencyContactsItems          = new RealmList<EmergencyContacts>();
+    @Required private RealmList<EyeglassPrescriptions> eyeglassPrescriptionsItems      = new RealmList<EyeglassPrescriptions>();
+    @Required private RealmList<HealthcareProviders> healthcareProvidersItems        = new RealmList<HealthcareProviders>();
+    @Required private RealmList<Identification> identificationItems             = new RealmList<Identification>();
+    @Required private RealmList<MedicalConditions> medicalConditionsItems          = new RealmList<MedicalConditions>();
+    @Required private RealmList<MedicalHistory> medicalHistoryItems             = new RealmList<MedicalHistory>();
+    @Required private RealmList<Medication> medicationsItems                = new RealmList<Medication>();
+    @Required private RealmList<VitalNumbers> vitalNumbersItems               = new RealmList<VitalNumbers>();
+    @Required private RealmList<Wellness> wellnessItems                   = new RealmList<Wellness>();
 
 
-    private RealmList<WellnessList> listItems                       = new RealmList<WellnessList>();
+    @Required private RealmList<WellnessList> listItems                       = new RealmList<WellnessList>();
 
     public CombineWellness(Integer id, RealmList checkupsItems, RealmList emergencyContactsItems, RealmList eyeglassPrescriptionsItems, RealmList healthcareProvidersItems, RealmList identificationItems, RealmList medicalConditionsItems, RealmList medicalHistoryItems, RealmList medicationsItems, RealmList vitalNumbersItems, RealmList wellnessItems, RealmList listItems) {
         this.id = id;

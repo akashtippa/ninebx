@@ -11,6 +11,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -21,10 +22,11 @@ public class MemoryTimeLine extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -58,22 +60,22 @@ public class MemoryTimeLine extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String title = "";
-    private String date = "";
-    private String place = "";
-    private String contacts = "";
-    private String notes = "";
+    @Required private String title = "";
+    @Required private String date = "";
+    @Required private String place = "";
+    @Required private String contacts = "";
+    @Required private String notes = "";
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
-    private Date selectedDate = new Date();
+    @Required private Date selectedDate = new Date();
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
     public MemoryTimeLine(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

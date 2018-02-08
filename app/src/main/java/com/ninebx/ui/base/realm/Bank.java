@@ -1,6 +1,7 @@
 package com.ninebx.ui.base.realm;
 
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 
 /**
@@ -10,20 +11,21 @@ import io.realm.annotations.PrimaryKey;
 public class Bank {
 
     @PrimaryKey
+    @Required
     private Integer  id  = 0;
-    private String  institutionName  = "";
-    private String  accountName  = "";
-    private String  accountType  = "";
-    private String  nameOnAccount  = "";
-    private String  accountNumber  = "";
-    private String  location  = "";
-    private String  swiftCode  = "";
-    private String  abaRoutingNumber  = "";
-    private String  contacts  = "";
-    private String  website  = "";
-    private String  userName  = "";
-    private String  password  = "";
-    private String  pin  = "";
+    @Required private String  institutionName  = "";
+    @Required private String  accountName  = "";
+    @Required private String  accountType  = "";
+    @Required private String  nameOnAccount  = "";
+    @Required private String  accountNumber  = "";
+    @Required private String  location  = "";
+    @Required private String  swiftCode  = "";
+    @Required private String  abaRoutingNumber  = "";
+    @Required private String  contacts  = "";
+    @Required private String  website  = "";
+    @Required private String  userName  = "";
+    @Required private String  password  = "";
+    @Required private String  pin  = "";
 
     public Bank(Integer id, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin) {
         this.id = id;

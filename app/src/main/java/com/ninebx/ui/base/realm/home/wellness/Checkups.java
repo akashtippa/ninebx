@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class Checkups extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,23 +61,23 @@ public class Checkups extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String classType = "Checkups";
+    @Required private String selectionType = "";
+    @Required private String classType = "Checkups";
 
-    private String physicianName = "";
-    private String checkup_description = "";
+    @Required private String physicianName = "";
+    @Required private String checkup_description = "";
 
-    private String physicianType = "";
-    private String reason = "";
-    private String dateOfVisit = "";
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String physicianType = "";
+    @Required private String reason = "";
+    @Required private String dateOfVisit = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public Checkups(String selectionType, String classType, String physicianName, String checkup_description, String physicianType, String reason, String dateOfVisit, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

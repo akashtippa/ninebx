@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class Identification extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,30 +61,30 @@ public class Identification extends RealmObject {
         }
     }
 
-    private String selectionType = "";
-    private String classType = "Identification";
+    @Required private String selectionType = "";
+    @Required private String classType = "Identification";
 
-    private String name = "";
+    @Required private String name = "";
 
-    private String gender = "";
-    private String dateofBirth = "";
-    private String age = "";
-    private String height = "";
-    private String weight = "";
-    private String hairColor = "";
-    private String eyeColor = "";
-    private String visibleMarks = "";
-    private String bloodType = "";
-    private String orgonDonor = "";
+    @Required private String gender = "";
+    @Required private String dateofBirth = "";
+    @Required private String age = "";
+    @Required private String height = "";
+    @Required private String weight = "";
+    @Required private String hairColor = "";
+    @Required private String eyeColor = "";
+    @Required private String visibleMarks = "";
+    @Required private String bloodType = "";
+    @Required private String orgonDonor = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String createdUser = "";
+    @Required private String createdUser = "";
 
     public Identification(String selectionType, String classType, String name, String gender, String dateofBirth, String age, String height, String weight, String hairColor, String eyeColor, String visibleMarks, String bloodType, String orgonDonor, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;

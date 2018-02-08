@@ -6,6 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -14,12 +15,13 @@ import io.realm.annotations.RealmClass;
 public class CombineMemories extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private RealmList<MainMemories> mainMemoriesItems       = new RealmList<MainMemories>();
-    private RealmList<MemoryTimeLine> memoryTimelineItems     = new RealmList<MemoryTimeLine>();
+    @Required private RealmList<MainMemories> mainMemoriesItems       = new RealmList<MainMemories>();
+    @Required private RealmList<MemoryTimeLine> memoryTimelineItems     = new RealmList<MemoryTimeLine>();
 
-    private RealmList<MemoriesList> listItems               = new RealmList<MemoriesList>();
+    @Required private RealmList<MemoriesList> listItems               = new RealmList<MemoriesList>();
 
     public CombineMemories(Integer id, RealmList<MainMemories> mainMemoriesItems, RealmList<MemoryTimeLine> memoryTimelineItems, RealmList<MemoriesList> listItems) {
         this.id = id;

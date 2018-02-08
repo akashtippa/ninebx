@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -22,10 +23,11 @@ public class Documents extends RealmObject {
     @PrimaryKey
     Integer id = 0;
 
+    @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,35 +61,35 @@ public class Documents extends RealmObject {
         }
     }
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String passportName = "";
-    private String visaName = "";
+    @Required private String passportName = "";
+    @Required private String visaName = "";
 
-    private String nameOnPassport = "";
+    @Required private String nameOnPassport = "";
 
-    private String nameOnVisa = "";
-    private String visaType = "";
-    private String visaNumber = "";
+    @Required private String nameOnVisa = "";
+    @Required private String visaType = "";
+    @Required private String visaNumber = "";
 
-    private String travelDocumentTitle = "";
-    private String nameOnTravelDocument = "";
-    private String travelDocumentType = "";
-    private String travelDocumentNumber = "";
+    @Required private String travelDocumentTitle = "";
+    @Required private String nameOnTravelDocument = "";
+    @Required private String travelDocumentType = "";
+    @Required private String travelDocumentNumber = "";
 
-    private String issuingCountry = "";
-    private String passportNumber = "";
-    private String placeIssued = "";
-    private String dateIssued = "";
-    private String expirationDate = "";
+    @Required private String issuingCountry = "";
+    @Required private String passportNumber = "";
+    @Required private String placeIssued = "";
+    @Required private String dateIssued = "";
+    @Required private String expirationDate = "";
 
-    private String notes = "";
-    private String attachmentNames = "";
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
     public Documents(String selectionType, String passportName, String visaName, String nameOnPassport, String nameOnVisa, String visaType, String visaNumber, String travelDocumentTitle, String nameOnTravelDocument, String travelDocumentType, String travelDocumentNumber, String issuingCountry, String passportNumber, String placeIssued, String dateIssued, String expirationDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;

@@ -12,6 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -22,35 +23,36 @@ public class CalendarEvents extends RealmObject {
     @PrimaryKey
     Integer id = 0;
     
+    @Required
     private RealmList<RealmString> eventID = new RealmList<>();
-    private String classType = "Calendar";
+    @Required private String classType = "Calendar";
 
-    private RealmList<RealmString> title = new RealmList<>();
-    private RealmList<RealmString> location = new RealmList<>();
+    @Required private RealmList<RealmString> title = new RealmList<>();
+    @Required private RealmList<RealmString> location = new RealmList<>();
 
-    private RealmList<Boolean> isAllDay = new RealmList<>();
+    @Required private RealmList<Boolean> isAllDay = new RealmList<>();
 
-    private RealmList<RealmString> notes = new RealmList<>();
-    private RealmList<RealmString> startsDate = new RealmList<>();
-    private RealmList<RealmString> endsDate = new RealmList<>();
+    @Required private RealmList<RealmString> notes = new RealmList<>();
+    @Required private RealmList<RealmString> startsDate = new RealmList<>();
+    @Required private RealmList<RealmString> endsDate = new RealmList<>();
 
-    private RealmList<RealmString> repeats = new RealmList<>();
-    private RealmList<RealmString> endRepeat = new RealmList<>();
-    private RealmList<RealmString> reminder = new RealmList<>();
-    private RealmList<RealmString> travelTime = new RealmList<>();
+    @Required private RealmList<RealmString> repeats = new RealmList<>();
+    @Required private RealmList<RealmString> endRepeat = new RealmList<>();
+    @Required private RealmList<RealmString> reminder = new RealmList<>();
+    @Required private RealmList<RealmString> travelTime = new RealmList<>();
     //dynamic var invites = RLMArray
-    private RealmList<RealmString> alert = new RealmList<>();
-    private RealmList<RealmString> showAs = new RealmList<>();
-    private RealmList<RealmString> url = new RealmList<>();
+    @Required private RealmList<RealmString> alert = new RealmList<>();
+    @Required private RealmList<RealmString> showAs = new RealmList<>();
+    @Required private RealmList<RealmString> url = new RealmList<>();
 
-    private RealmList<Boolean> isReminderSet = new RealmList<>();
+    @Required private RealmList<Boolean> isReminderSet = new RealmList<>();
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
 
     public CalendarEvents() {

@@ -10,6 +10,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -18,42 +19,43 @@ import io.realm.annotations.RealmClass;
 public class Education extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private String selectionType = "";
+    @Required private String selectionType = "";
 
-    private String institutionName = "";
-    private String accountName = "";
+    @Required private String institutionName = "";
+    @Required private String accountName = "";
 
-    private String accountType = "";
-    private String nameOnAccount = "";
-    private String accountNumber = "";
-    private String location = "";
-    private String swiftCode = "";
-    private String abaRoutingNumber = "";
-    private String contacts = "";
+    @Required private String accountType = "";
+    @Required private String nameOnAccount = "";
+    @Required private String accountNumber = "";
+    @Required private String location = "";
+    @Required private String swiftCode = "";
+    @Required private String abaRoutingNumber = "";
+    @Required private String contacts = "";
 
-    private String website = "";
-    private String userName = "";
-    private String password = "";
-    private String pin = "";
-    private String paymentMethodOnFile = "";
+    @Required private String website = "";
+    @Required private String userName = "";
+    @Required private String password = "";
+    @Required private String pin = "";
+    @Required private String paymentMethodOnFile = "";
 
-    private String notes = "";
+    @Required private String notes = "";
 
-    private String attachmentNames = "";
+    @Required private String attachmentNames = "";
 
-    private String title = "";
+    @Required private String title = "";
 
-    private String created = "";
-    private String modified = "";
-    private Boolean isPrivate = false;
-    private String createdUser = "";
+    @Required private String created = "";
+    @Required private String modified = "";
+    @Required private Boolean isPrivate = false;
+    @Required private String createdUser = "";
 
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    private List<String> photosId = new ArrayList<>();
+    @Required private List<String> photosId = new ArrayList<>();
 
     public Education(Integer id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;

@@ -5,6 +5,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 11/01/18.
@@ -13,14 +14,15 @@ import io.realm.annotations.RealmClass;
 public class RecentSearch extends RealmObject {
 
     @PrimaryKey
+    @Required
     private  Integer id  = 0;
-    private  Integer search_id  = 0;
-    private  Integer detail_id  = 0;
-    private  String listName  = "";
-    private  String subCategory  = "";
-    private  String mainCategory  = "";
-    private  Date createdDate = new Date();
-    private  String classType  = "";
+    @Required private  Integer search_id  = 0;
+    @Required private  Integer detail_id  = 0;
+    @Required private  String listName  = "";
+    @Required private  String subCategory  = "";
+    @Required private  String mainCategory  = "";
+    @Required private  Date createdDate = new Date();
+    @Required private  String classType  = "";
 
     public RecentSearch(Integer id, Integer search_id, Integer detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
         this.id = id;

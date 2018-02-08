@@ -4,6 +4,7 @@ import com.ninebx.ui.base.realm.lists.ShoppingList;
 
 import io.realm.RealmList;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
@@ -11,14 +12,15 @@ import io.realm.annotations.RealmClass;
 
 public class CombineShopping {
 
+    @Required
     private int id = 0;
 
-    private RealmList<LoyaltyPrograms> loyaltyProgramsItems            = new RealmList<LoyaltyPrograms>();
-    private RealmList<RecentPurchase> recentPurchaseItems             = new RealmList<RecentPurchase>();
-    private RealmList<Shopping> shoppingItems                   = new RealmList<Shopping>();
-    private RealmList<ClothingSizes> clothingSizesItems              = new RealmList<ClothingSizes>();
+    @Required private RealmList<LoyaltyPrograms> loyaltyProgramsItems            = new RealmList<LoyaltyPrograms>();
+    @Required private RealmList<RecentPurchase> recentPurchaseItems             = new RealmList<RecentPurchase>();
+    @Required private RealmList<Shopping> shoppingItems                   = new RealmList<Shopping>();
+    @Required private RealmList<ClothingSizes> clothingSizesItems              = new RealmList<ClothingSizes>();
 
-    private RealmList<ShoppingList> listItems                       = new RealmList<ShoppingList>();
+    @Required private RealmList<ShoppingList> listItems                       = new RealmList<ShoppingList>();
 
     public CombineShopping(int id, RealmList loyaltyProgramsItems, RealmList recentPurchaseItems, RealmList shoppingItems, RealmList clothingSizesItems, RealmList listItems) {
         this.id = id;

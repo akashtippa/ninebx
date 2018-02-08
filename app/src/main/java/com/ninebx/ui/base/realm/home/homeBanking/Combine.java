@@ -6,6 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -14,17 +15,18 @@ import io.realm.annotations.RealmClass;
 public class Combine extends RealmObject {
 
     @PrimaryKey
+    @Required
     private Integer id = 0;
 
-    private RealmList<Financial> financialItems      = new RealmList<Financial>();
-    private RealmList<Payment> paymentItems        = new RealmList<Payment>();
-    private RealmList<Property> propertyItems       = new RealmList<Property>();
-    private RealmList<Vehicle> vehicleItems        = new RealmList<Vehicle>();
-    private RealmList<Asset> assetItems          = new RealmList<Asset>();
-    private RealmList<Insurance> insuranceItems      = new RealmList<Insurance>();
-    private RealmList<Taxes> taxesItems          = new RealmList<Taxes>();
+    @Required private RealmList<Financial> financialItems      = new RealmList<Financial>();
+    @Required private RealmList<Payment> paymentItems        = new RealmList<Payment>();
+    @Required private RealmList<Property> propertyItems       = new RealmList<Property>();
+    @Required private RealmList<Vehicle> vehicleItems        = new RealmList<Vehicle>();
+    @Required private RealmList<Asset> assetItems          = new RealmList<Asset>();
+    @Required private RealmList<Insurance> insuranceItems      = new RealmList<Insurance>();
+    @Required private RealmList<Taxes> taxesItems          = new RealmList<Taxes>();
 
-    private RealmList<HomeList> listItems           = new RealmList<HomeList>();
+    @Required private RealmList<HomeList> listItems           = new RealmList<HomeList>();
 
     public Combine(Integer id, RealmList<Financial> financialItems, RealmList<Payment> paymentItems, RealmList<Property> propertyItems, RealmList<Vehicle> vehicleItems, RealmList<Asset> assetItems, RealmList<Insurance> insuranceItems, RealmList<Taxes> taxesItems, RealmList<HomeList> listItems) {
         this.id = id;
