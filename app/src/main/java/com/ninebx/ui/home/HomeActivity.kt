@@ -206,7 +206,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         if (callCameraIntent.resolveActivity(this@HomeActivity.packageManager) != null) {
             startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
         }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -249,7 +248,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                 mImagesList.add(data.data)
                 setImagesAdapter()
             }
-
         }
         else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             saveImage(data.extras.get("data") as Bitmap)

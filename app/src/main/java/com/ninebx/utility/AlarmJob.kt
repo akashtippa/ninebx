@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
@@ -46,14 +47,15 @@ class AlarmJob : Job() {
         }*/
         title = "Reminder : ${reminder.title[0]!!}"
         if( reminder.reminder.size > 0 )
-            desc = reminder.reminder[0]!!
-        else desc = reminder.title[0]!!
+            desc = reminder.reminder[0]!!.stringValue
+        else desc = reminder.title[0]!!.stringValue
         
         showNotification( title, desc )
         
         return Result.SUCCESS
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showNotification(title: String, desc: String?) {
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 

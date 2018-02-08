@@ -29,6 +29,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
+import com.ninebx.ui.base.realm.RealmString
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import java.io.ByteArrayOutputStream
@@ -74,7 +75,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         mSelectedDate = selectedDate.time
 
         if( !isAddEvent ) {
-            mSelectedDateIndex = mCalendarEvent.startsDate.indexOf(getDateMonthYearTimeFormat(mSelectedDate))
+            mSelectedDateIndex = mCalendarEvent.startsDate.indexOf(RealmString(getDateMonthYearTimeFormat(mSelectedDate)))
         }
 
         NineBxApplication.instance.activityInstance!!.hideToolbar()
@@ -117,14 +118,14 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         tvStarts.setOnClickListener {
             val calendar = Calendar.getInstance()
             if( mCalendarEvent.startsDate.size > 0 )
-                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!.stringValue)
             showDateTimeSelector( tvStarts, calendar, switchAllDay.isSelected )
         }
 
         tvEnds.setOnClickListener {
             val calendar = Calendar.getInstance()
             if( mCalendarEvent.endsDate.size > 0 )
-                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
+                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!.stringValue)
             showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
         }
 
@@ -136,7 +137,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             var endRepeat = ""
 
             if( mCalendarEvent.endRepeat.size > 0 )
-                endRepeat = mCalendarEvent.endRepeat[mSelectedDateIndex]!!
+                endRepeat = mCalendarEvent.endRepeat[mSelectedDateIndex]!!.stringValue
 
             if( endRepeat.isEmpty() ) endRepeat = "Never"
 
@@ -220,15 +221,15 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
         if( dateTimeTextView.id == tvStarts.id ) {
             if( mCalendarEvent.startsDate.size > 0 )
-                mCalendarEvent.startsDate[mSelectedDateIndex] = getDateMonthYearTimeFormat(selectedDate.time)
+                mCalendarEvent.startsDate[mSelectedDateIndex] = RealmString(getDateMonthYearTimeFormat(selectedDate.time))
             else
-                mCalendarEvent.startsDate.add( getDateMonthYearTimeFormat(selectedDate.time) )
+                mCalendarEvent.startsDate.add( RealmString(getDateMonthYearTimeFormat(selectedDate.time)) )
         }
         else {
             if( mCalendarEvent.endsDate.size > 0 )
-                mCalendarEvent.endsDate[mSelectedDateIndex] = getDateMonthYearTimeFormat(selectedDate.time)
+                mCalendarEvent.endsDate[mSelectedDateIndex] = RealmString(getDateMonthYearTimeFormat(selectedDate.time))
             else
-                mCalendarEvent.endsDate.add( getDateMonthYearTimeFormat(selectedDate.time) )
+                mCalendarEvent.endsDate.add( RealmString(getDateMonthYearTimeFormat(selectedDate.time)) )
         }
     }
 
@@ -298,25 +299,25 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
                     if (action != "Never") {
 
                         val calendar = Calendar.getInstance()
-                        if (mCalendarEvent.endRepeat.size > 0 && mCalendarEvent.endRepeat[mSelectedDateIndex] != "Never") {
-                            calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat[mSelectedDateIndex]!!)
+                        if (mCalendarEvent.endRepeat.size > 0 && mCalendarEvent.endRepeat[mSelectedDateIndex]!!.stringValue != "Never") {
+                            calendar.time = parseDateMonthYearFormat(mCalendarEvent.endRepeat[mSelectedDateIndex]!!.stringValue)
                         }
 
                         getDateFromPicker(context!!, calendar, object : DateTimeSelectionListener {
                             override fun onDateTimeSelected(selectedDate: Calendar) {
                                 if (mCalendarEvent.endRepeat.size > 0)
-                                    mCalendarEvent.endRepeat[mSelectedDateIndex] = getDateMonthYearFormat(selectedDate.time)
+                                    mCalendarEvent.endRepeat[mSelectedDateIndex] = RealmString(getDateMonthYearFormat(selectedDate.time))
                                 else
-                                    mCalendarEvent.endRepeat.add(getDateMonthYearFormat(selectedDate.time))
-                                tvEndRepeat.text = mCalendarEvent.endRepeat[mSelectedDateIndex]
+                                    mCalendarEvent.endRepeat.add(RealmString(getDateMonthYearFormat(selectedDate.time)))
+                                tvEndRepeat.text = mCalendarEvent.endRepeat[mSelectedDateIndex]!!.stringValue
                                 dialog.dismiss()
                             }
                         })
                     } else {
                         if (mCalendarEvent.endRepeat.size > 0)
-                            mCalendarEvent.endRepeat[mSelectedDateIndex] = action
+                            mCalendarEvent.endRepeat[mSelectedDateIndex] = RealmString(action)
                         else
-                            mCalendarEvent.endRepeat.add(action)
+                            mCalendarEvent.endRepeat.add(RealmString(action))
                         dialog.dismiss()
                     }
 
@@ -430,7 +431,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         val calendar = Calendar.getInstance()
 
         if( mCalendarEvent.startsDate.size > 0 )
-            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!.stringValue)
 
         if( isAllDay ) {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -439,7 +440,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         setDateTime(tvStarts, calendar, isAllDay)
 
         if( mCalendarEvent.endsDate.size > 0 )
-            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
+            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!.stringValue)
 
         if( isAllDay ) {
             calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -456,21 +457,21 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
     private fun setValues(mCalendarEvent: CalendarEvents) {
         if( !isAddEvent ) {
 
-            etTitle.setText(  mCalendarEvent.alert[mSelectedDateIndex] )
-            etLocation.setText( mCalendarEvent.location[mSelectedDateIndex] )
-            tvStarts.text = (mCalendarEvent.startsDate[mSelectedDateIndex])
-            tvEnds.text = (mCalendarEvent.endsDate[mSelectedDateIndex])
-            tvRepeat.text = mCalendarEvent.repeats[mSelectedDateIndex]
+            etTitle.setText(  mCalendarEvent.alert[mSelectedDateIndex]!!.stringValue )
+            etLocation.setText( mCalendarEvent.location[mSelectedDateIndex]!!.stringValue )
+            tvStarts.text = (mCalendarEvent.startsDate[mSelectedDateIndex]!!.stringValue)
+            tvEnds.text = (mCalendarEvent.endsDate[mSelectedDateIndex]!!.stringValue)
+            tvRepeat.text = mCalendarEvent.repeats[mSelectedDateIndex]!!.stringValue
             if( mCalendarEvent.endRepeat.size > 0 ) {
-                tvEndRepeat.text = mCalendarEvent.endRepeat[mSelectedDateIndex]
+                tvEndRepeat.text = mCalendarEvent.endRepeat[mSelectedDateIndex]!!.stringValue
                 layoutEndRepeat.show()
             }
             switchAllDay.isSelected = mCalendarEvent.isAllDay[mSelectedDateIndex]!!
-            etNotes.setText( mCalendarEvent.notes[mSelectedDateIndex] )
+            etNotes.setText( mCalendarEvent.notes[mSelectedDateIndex]!!.stringValue )
 
             hideShowEndRepeat()
 
-            tvReminder.text = mCalendarEvent.reminder[mSelectedDateIndex]
+            tvReminder.text = mCalendarEvent.reminder[mSelectedDateIndex]!!.stringValue
 
         }
     }
@@ -490,9 +491,9 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
             return false
         }
         if( mCalendarEvent.title.size > 0 )
-            mCalendarEvent.title[mSelectedDateIndex] = etTitle.text.toString().trim()
+            mCalendarEvent.title[mSelectedDateIndex] = RealmString(etTitle.text.toString().trim())
         else
-            mCalendarEvent.title.add( etTitle.text.toString().trim() )
+            mCalendarEvent.title.add( RealmString(etTitle.text.toString().trim()) )
 
         if( tvStarts.text.toString().isEmpty() ) {
             tvStarts.requestFocus()
@@ -513,7 +514,7 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
 
     private fun saveCalendarEvent() {
         val eventCalendar = Calendar.getInstance()
-        eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+        eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!.stringValue)
         AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
         uploadImageAws()
         //goBack()
