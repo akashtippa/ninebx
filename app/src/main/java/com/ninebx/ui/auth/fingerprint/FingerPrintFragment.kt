@@ -41,6 +41,7 @@ import javax.crypto.SecretKey
 
 @RequiresApi(Build.VERSION_CODES.M)
 class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogFragment.Callback {
+
     override fun onPurchased(withFingerprint: Boolean, crypto: FingerprintManager.CryptoObject?) {
 
         if( context != null )

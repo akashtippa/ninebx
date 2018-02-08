@@ -3,6 +3,7 @@ package com.ninebx.ui.auth
 import android.os.AsyncTask
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.NONE_COMPLETE
 import io.reactivex.Observer
@@ -84,8 +85,11 @@ class LoginSignupTask(private var userName: String,
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
                         .subscribe( this )
             }
-            else
+            else {
+
                 authView.onSuccess(result)
+            }
+
         }
     }
 

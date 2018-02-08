@@ -8,7 +8,11 @@ import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.isValidPassword
+import com.ninebx.utility.prepareRealmConnections
+import com.ninebx.utility.retrieveObject
+import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -41,8 +45,8 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("aman.shekhar@cognitiveclouds.com")
-            edtPassword.setText("Password14.")
+            edtEmailAddress.setText("jeyachandran.m@cognitiveclouds.com")
+            edtPassword.setText("master1!A")
         }
 
     }
@@ -90,7 +94,16 @@ class SignInFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        mAuthView.navigateToOTP()
+        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val currentUser : Users = Users()
+                currentUser.retrieveObject( realm!! )
+                NineBxApplication.getPreferences().setCurrentUser(currentUser)
+                mAuthView.navigateToOTP()
+            }
+
+        })
+
     }
 
     private fun openStaticLayoutDialog(option: Int) {
