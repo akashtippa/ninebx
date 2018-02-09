@@ -12,6 +12,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.realm.Users
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.getCurrentUsers
+import com.ninebx.utility.prepareRealmConnections
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_otp.*
 
 /**
@@ -31,7 +37,22 @@ class OTPFragment : BaseAuthFragment() {
         btnSubmit.setOnClickListener {
             if( validate() ) {
                 emailOtp = ""
-                mAuthView.navigateToCreatePassCode( true )
+                prepareRealmConnections( context, true,"Users", object : Realm.Callback( ) {
+                    override fun onSuccess(realm: Realm?) {
+
+                        val currentUsers = getCurrentUsers( realm!! )
+                        if( currentUsers != null ) {
+                            context!!.hideProgressDialog()
+                            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+                            mAuthView.navigateToCreatePassCode( true )
+                        }
+                        else {
+                            mAuthView.onError(R.string.unable_to_find_user)
+                        }
+                    }
+
+                })
+
             }
         }
 

@@ -94,15 +94,8 @@ class SignInFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val currentUser : Users = Users()
-                currentUser.retrieveObject( realm!! )
-                NineBxApplication.getPreferences().setCurrentUser(currentUser)
-                mAuthView.navigateToOTP()
-            }
+        mAuthView.navigateToOTP()
 
-        })
 
     }
 

@@ -5,7 +5,9 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Users
 import io.realm.*
+import io.realm.kotlin.where
 import java.util.*
 
 /**
@@ -32,6 +34,10 @@ fun closeAllConnections() {
 
 fun closeConnection(realmConnection: Realm) {
     realmConnection.close()
+}
+
+fun getCurrentUsers(realmInstance: Realm ) : RealmResults<Users>? {
+    return realmInstance.where(Users::class.java).findAll()
 }
 
 private val TAG = "RealmUtils"
@@ -93,6 +99,31 @@ private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
             .build()
     Realm.getInstanceAsync(config, callback)
 
+}
+
+fun getRealmServerConnection( realmEndPoint: String, callback: Realm.Callback ) {
+    val user = SyncUser.currentUser()
+    AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_ADDRESS + realmEndPoint)
+    val config = SyncConfiguration.Builder(user, Constants.SERVER_ADDRESS + realmEndPoint)
+            .waitForInitialRemoteData()
+            .build()
+    Realm.getInstanceAsync(config, object : Realm.Callback() {
+        override fun onSuccess(realm: Realm?) {
+            AppLogger.d(TAG, "Connection established for Path : " + realm!!.path)
+            AppLogger.d(TAG, "Connection established : " + realmEndPoint)
+            connectionsMap.put(realmEndPoint, realm)
+            callback.onSuccess(realm)
+        }
+
+        override fun onError(exception: Throwable?) {
+            super.onError(exception)
+            if (exception != null && exception.localizedMessage != null) {
+                AppLogger.e(TAG, "Connection error : " + realmEndPoint)
+                exception.printStackTrace()
+            }
+            callback.onError(exception)
+        }
+    })
 }
 
 fun getUniqueId(): Int {

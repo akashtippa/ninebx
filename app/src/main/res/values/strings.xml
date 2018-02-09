@@ -425,6 +425,7 @@
     <string name="error_empty_password">Empty Password</string>
     <string name="error_empty_first_name">First Name cannot be empty</string>
     <string name="error_empty_last_name">Last name cannot be empty</string>
+    <string name="unable_to_find_user">Unable to find user</string>
 
     <string-array name="gender">
         <item></item>

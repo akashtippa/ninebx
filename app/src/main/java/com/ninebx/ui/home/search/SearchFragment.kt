@@ -39,16 +39,12 @@ class SearchFragment : Fragment(), SearchView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections( context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                realm!!.beginTransaction()
-                var combined : Combine = Combine()
-                /*combined.retrieveObject(realm)
-                AppLogger.d("Combine", "Combined REsults : " + combined)*/
-                val combineResult = realm.where(Combine::class.java!!).findAll()
+                val combineResult = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "Combined REsults : " + combineResult)
             }
         })
     }
-    }
+}
 

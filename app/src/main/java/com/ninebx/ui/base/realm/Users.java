@@ -328,5 +328,29 @@ public class Users extends RealmObject implements Parcelable {
         }
     };
 
-
+    @Override
+    public String toString() {
+        return "Users{" +
+                "fullName='" + fullName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", relationship='" + relationship + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", anniversary='" + anniversary + '\'' +
+                ", gender='" + gender + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", street_1='" + street_1 + '\'' +
+                ", street_2='" + street_2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", userId='" + userId + '\'' +
+                ", id=" + id +
+                ", isCompleteProfile=" + isCompleteProfile +
+                ", profilePhoto='" + profilePhoto + '\'' +
+                ", members=" + members +
+                '}';
+    }
 }

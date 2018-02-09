@@ -67,7 +67,6 @@ class AccountPasswordFragment : BaseAuthFragment() {
         prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 mCurrentUser.insertOrUpdate( realm!! )
-                NineBxApplication.getPreferences().setCurrentUser( mCurrentUser )
                 mAuthView.navigateToOTP()
             }
         })
