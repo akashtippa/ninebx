@@ -44,6 +44,7 @@ class OTPFragment : BaseAuthFragment() {
                         if( currentUsers != null ) {
                             context!!.hideProgressDialog()
                             AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+
                             mAuthView.navigateToCreatePassCode( true )
                         }
                         else {

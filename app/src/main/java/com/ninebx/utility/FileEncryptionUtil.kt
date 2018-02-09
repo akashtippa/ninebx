@@ -54,7 +54,7 @@ fun encryptFile( inputFile : File, privateKey : CharArray ) : File {
 /**
  *
 let encryptedData = fileManager.contents(atPath: filePathNormal)
-let decryptedData = try RNCryptor.decrypt(data: encryptedData!, withPassword: hashKey.description)
+let decryptedData = try RNCryptor.decryptUsers(data: encryptedData!, withPassword: hashKey.description)
 let selected_image = UIImage.sd_image(with: decryptedData)
 encrypted - 3,1,71,68
 decrypted Bytes - 3,1,-54,106
@@ -137,7 +137,7 @@ fun encryptFileIOS( inputFile : File, privateKey : CharArray ) : File {
 /**
  *
 let encryptedData = fileManager.contents(atPath: filePathNormal)
-let decryptedData = try RNCryptor.decrypt(data: encryptedData!, withPassword: hashKey.description)
+let decryptedData = try RNCryptor.decryptUsers(data: encryptedData!, withPassword: hashKey.description)
 let selected_image = UIImage.sd_image(with: decryptedData)
 encrypted - 3,1,71,68
 decrypted Bytes - 3,1,-54,106

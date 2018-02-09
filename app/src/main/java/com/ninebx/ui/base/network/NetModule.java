@@ -9,6 +9,7 @@ import com.ninebx.NineBxApplication;
 import com.ninebx.utility.Constants;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
@@ -21,7 +22,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Alok on 02/02/18.
@@ -117,7 +120,10 @@ public class NetModule {
     public interface GetUsersAPI {
 
         @POST("users")
-        Observable<ResponseBody> postUserDetails(@Body HashMap<String, Object> paramsMap );
+        Observable<ResponseBody> postUserDetails( @Body HashMap<String, Object> paramsMap );
+
+        @GET("users")
+        Observable<ArrayList<SignInResponse>> getUserDetails(@Query("user_id") String userId );
 
     }
 

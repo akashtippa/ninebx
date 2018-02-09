@@ -1,8 +1,10 @@
 package com.ninebx.ui.auth
 
 import android.os.AsyncTask
+import com.google.gson.Gson
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.network.SignInResponse
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.NONE_COMPLETE
@@ -14,7 +16,10 @@ import io.realm.ObjectServerError
 import io.realm.SyncCredentials
 import io.realm.SyncUser
 import okhttp3.ResponseBody
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -25,24 +30,9 @@ class LoginSignupTask(private var userName: String,
                       private var password: String,
                       private val authView: AuthView,
                       var type: String) : AsyncTask<Void, Void, SyncCredentials?>(),
-        SyncUser.Callback<SyncUser>, Observer<ResponseBody> {
-    override fun onNext(t: ResponseBody) {
-        //User details saved successfully - save user object to realm
-        AppLogger.d(TAG, "Successfully saved userMap : " + t.string())
-        authView.onSuccess( mCurrentUser )
-    }
+        SyncUser.Callback<SyncUser> {
 
-    override fun onError(e: Throwable) {
-        authView.hideProgress()
-    }
 
-    override fun onComplete() {
-        AppLogger.d( TAG, "GetUserAPI : onComplete" )
-    }
-
-    override fun onSubscribe(d: Disposable) {
-        mCompositeDisposable.add(d)
-    }
 
     override fun onSuccess(result: SyncUser?) {
 
@@ -83,15 +73,75 @@ class LoginSignupTask(private var userName: String,
                 NineBxApplication.getUserAPI()!!.postUserDetails( userMap )
                         .subscribeOn(Schedulers.io())
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                        .subscribe( this )
+                        .subscribe( getSignupResponse() )
             }
             else {
+                NineBxApplication.getUserAPI()!!.getUserDetails( "eq." + result.identity )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                        .subscribe( getResponseMap() )
 
-                authView.onSuccess(result)
             }
 
         }
     }
+
+    private fun getSignupResponse(): Observer<ResponseBody> {
+        return object : Observer<ResponseBody> {
+            //[
+            // {"user_id":"f2184c44c0a564dbbae1f9a0014a48bf",
+            // "admin_id":"f2184c44c0a564dbbae1f9a0014a48bf",
+            // "is_admin":true,
+            // "hash":"[164, 219, 42, 177, 85, 148, 90, 49, 197, 147, 198, 137, 151, 158, 162, 66, 47, 189, 36, 137, 98, 11, 82, 198, 39, 63, 179, 37, 44, 20, 49, 27]",
+            // "email":"jeyachandran.m@cognitiveclouds.com",
+            // "secure_key":"i4+nCkYYPpSrrMVIx9wMkNulVw+FvN7d/u5f8S2pjSM="}
+            // ]
+            override fun onNext(t: ResponseBody) {
+                //User details saved successfully - save user object to realm
+                AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
+                authView.onSuccess( mCurrentUser )
+            }
+
+            override fun onError(e: Throwable) {
+                authView.hideProgress()
+            }
+
+            override fun onComplete() {
+                AppLogger.d( TAG, "GetUserAPI : onComplete" )
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                mCompositeDisposable.add(d)
+            }
+
+        }
+    }
+
+    private fun getResponseMap(): Observer<ArrayList<SignInResponse>> {
+        return object : Observer<ArrayList<SignInResponse>> {
+            override fun onError(e: Throwable) {
+                authView.hideProgress()
+            }
+
+            override fun onComplete() {
+                AppLogger.d( TAG, "GetUserAPI : onComplete" )
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                mCompositeDisposable.add(d)
+            }
+
+            override fun onNext( responseList: ArrayList<SignInResponse>) {
+                AppLogger.d(TAG, "Response : Signin : " + responseList.toString() )
+                val privateKey = decryptAESKEYPassword( responseList[0].secureKey.toByteArray(), encryptedPasswordByteArray )
+                AppLogger.d(TAG, "Save user secure key : " + privateKey)
+                NineBxApplication.getPreferences().privateKey = privateKey
+                authView.onSuccess( mCurrentUser )
+            }
+
+        }
+    }
+
 
     override fun onError(error: ObjectServerError?) {
         if( error != null ) {

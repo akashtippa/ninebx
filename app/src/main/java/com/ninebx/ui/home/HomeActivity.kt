@@ -32,8 +32,8 @@ import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.KeyboardUtil
+import com.ninebx.utility.*
+import io.realm.Realm
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -145,6 +145,19 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
 
 
+        prepareRealmConnections( this, true,"Users", object : Realm.Callback( ) {
+            override fun onSuccess(realm: Realm?) {
+
+                val currentUsers = getCurrentUsers( realm!! )
+                if( currentUsers != null ) {
+                    this@HomeActivity.hideProgressDialog()
+                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+                    AppLogger.d("CurrentUser", "Decrypted : " + decryptUsers(currentUsers[0]!!))
+                    AppLogger.d("CurrentUser", "Encrypted : " + encryptUsers(currentUsers[0]!!))
+                }
+            }
+
+        })
 
 
     }

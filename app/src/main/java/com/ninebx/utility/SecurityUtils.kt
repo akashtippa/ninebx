@@ -1,9 +1,14 @@
 package com.ninebx.utility
 
 import android.util.Base64
+import com.ninebx.NineBxApplication
 import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
 import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
 import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
+import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
+import io.realm.RealmList
 import org.spongycastle.crypto.digests.SHA256Digest
 import java.security.*
 import java.util.*
@@ -331,4 +336,130 @@ fun securityTest( ) {
 
     val decryptedKey = decryptAESKEY( encryptedKey.toByteArray(Charsets.UTF_8), privateKey )
     AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
+}
+
+fun String.encryptString( ) : String {
+    return encryptAESKey( this, NineBxApplication.getPreferences().privateKey!! )
+}
+
+fun String.decryptString( ) : String {
+    return decryptAESKEY( this.toByteArray(), NineBxApplication.getPreferences().privateKey!! )
+}
+
+fun encryptUsers( currentUser: Users ): Users {
+
+    currentUser.fullName.encryptString()
+    currentUser.firstName.encryptString()
+    currentUser.lastName.encryptString()
+    currentUser.emailAddress.encryptString()
+    currentUser.relationship.encryptString()
+    currentUser.dateOfBirth.encryptString()
+    currentUser.anniversary.encryptString()
+    currentUser.gender.encryptString()
+    currentUser.mobileNumber.encryptString()
+
+    currentUser.street_1.encryptString()
+    currentUser.street_2.encryptString()
+    currentUser.city.encryptString()
+    currentUser.state.encryptString()
+    currentUser.zipCode.encryptString()
+    currentUser.country.encryptString()
+    currentUser.userId.encryptString()
+    currentUser.profilePhoto.encryptString()
+
+    currentUser.decryptedMembers = encryptMembers( currentUser.members )
+
+    return currentUser
+    
+}
+
+fun encryptMembers( members: RealmList<Member> ): RealmList<Member>? {
+    for( i in 0 until members.size ) {
+        var member = members[i]
+        member = encryptMember(member!!)
+    }
+    return members
+}
+
+fun encryptMember(member: Member): Member? {
+
+    member.firstName            .encryptString()
+    member. lastName             .encryptString()
+    member. relationship         .encryptString()
+    member. role                 .encryptString()
+    member. email                .encryptString()
+
+    member.dateOfBirth         .encryptString()
+    member.anniversary         .encryptString()
+    member.gender              .encryptString()
+    member.mobileNumber        .encryptString()
+    member.street_1            .encryptString()
+    member.street_2            .encryptString()
+    member.city                .encryptString()
+    member.state               .encryptString()
+    member.zipCode             .encryptString()
+    member.country             .encryptString()
+
+    member.userId              .encryptString()
+    
+    member.profilePhoto        .encryptString()
+    return member
+}
+
+fun decryptUsers(currentUser: Users ) : DecryptedUsers {
+    
+    val decryptedUsers = DecryptedUsers()
+    
+    decryptedUsers.fullName = currentUser.fullName.decryptString()
+    decryptedUsers.firstName = currentUser.firstName.decryptString()
+    decryptedUsers.lastName = currentUser.lastName.decryptString()
+    decryptedUsers.emailAddress = currentUser.emailAddress.decryptString()
+    decryptedUsers.relationship = currentUser.relationship.decryptString()
+    decryptedUsers.dateOfBirth = currentUser.dateOfBirth.decryptString()
+    decryptedUsers.anniversary = currentUser.anniversary.decryptString()
+    decryptedUsers.gender = currentUser.gender.decryptString()
+    decryptedUsers.mobileNumber = currentUser.mobileNumber.decryptString()
+
+    decryptedUsers.street_1 = currentUser.street_1.decryptString()
+    decryptedUsers.street_2 = currentUser.street_2.decryptString()
+    decryptedUsers.city = currentUser.city.decryptString()
+    decryptedUsers.state = currentUser.state.decryptString()
+    decryptedUsers.zipCode = currentUser.zipCode.decryptString()
+    decryptedUsers.country = currentUser.country.decryptString()
+    decryptedUsers.userId = currentUser.userId
+    decryptedUsers.profilePhoto = currentUser.profilePhoto
+
+    //decryptedUsers.fullName = currentUser.decryptedMembers = decryptMembers( currentUser.members )
+    AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers )
+    return decryptedUsers
+}
+
+fun decryptMembers( members: RealmList<Member> ): RealmList<Member>? {
+    for( i in 0 until members.size ) {
+        var member = members[i]
+        member = decryptMember(member!!)
+    }
+    return members
+}
+
+fun decryptMember(member: Member): Member? {
+
+    member.firstName            .decryptString()
+    member. lastName             .decryptString()
+    member. relationship         .decryptString()
+    member. role                 .decryptString()
+    member. email                .decryptString()
+
+    member.dateOfBirth         .decryptString()
+    member.anniversary         .decryptString()
+    member.gender              .decryptString()
+    member.mobileNumber        .decryptString()
+    member.street_1            .decryptString()
+    member.street_2            .decryptString()
+    member.city                .decryptString()
+    member.state               .decryptString()
+    member.zipCode             .decryptString()
+    member.country             .decryptString()
+
+    return member
 }
