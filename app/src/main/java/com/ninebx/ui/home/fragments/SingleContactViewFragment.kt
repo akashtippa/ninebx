@@ -11,7 +11,7 @@ import com.ninebx.utility.FragmentBackHelper
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class ContactsViewFragment : FragmentBackHelper() {
+class SingleContactViewFragment : FragmentBackHelper() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_level2_contacts, container, false)

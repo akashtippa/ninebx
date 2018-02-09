@@ -35,7 +35,7 @@ class PermissionFragment : FragmentBackHelper() {
         }
 
         txtSave.setOnClickListener {
-
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
         myList = ArrayList()
