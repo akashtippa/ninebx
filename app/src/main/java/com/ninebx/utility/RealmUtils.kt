@@ -130,6 +130,10 @@ fun getUniqueId(): Int {
     return UUID.randomUUID().hashCode()
 }
 
+fun generateAttachmentFileName() : String {
+    return UUID.randomUUID().toString()
+}
+
 fun generateRandomOTP(): String {
     var otp = ""
     val random = Random()

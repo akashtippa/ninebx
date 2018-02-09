@@ -1,29 +1,23 @@
-package com.ninebx.ui.base.realm;
+package com.ninebx.ui.base.realm.decrypted;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.NineBxApplication;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.ninebx.ui.base.realm.Member;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
- * Created by Alok on 11/01/18.
+ * Created by Alok on 09/02/18.
  */
-@RealmClass
-public class Users extends RealmObject implements Parcelable {
 
-    @Required private String fullName             = "";
+public class DecryptedUsers implements Parcelable {
+
+    @Required
+    private String fullName             = "";
     @Required
     private String firstName            = "";
     @Required private String lastName             = "";
@@ -48,10 +42,11 @@ public class Users extends RealmObject implements Parcelable {
     @Required private String profilePhoto         = "";
 
     @Required private RealmList<Member> members = new RealmList<Member>();
-    @Ignore private RealmList<Member> decryptedMembers = new RealmList<Member>();
+    @Ignore
+    private RealmList<Member> decryptedMembers = new RealmList<Member>();
 
 
-    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<Member> members) {
+    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -69,10 +64,10 @@ public class Users extends RealmObject implements Parcelable {
         this.members = members;
     }
 
-    public Users() {
+    public DecryptedUsers() {
     }
 
-    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<Member> members) {
+    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -261,18 +256,6 @@ public class Users extends RealmObject implements Parcelable {
         this.decryptedMembers = decryptedMembers;
     }
 
-    @NotNull
-    public static Users createUser(@NotNull String email, @NotNull String firstName, @NotNull String lastName) {
-
-        Users users = new Users();
-        users.firstName = firstName;
-        users.lastName = lastName;
-        users.fullName = firstName + " " + lastName;
-        users.emailAddress = email;
-        return users;
-
-    }
-
 
     @Override
     public int describeContents() {
@@ -304,7 +287,7 @@ public class Users extends RealmObject implements Parcelable {
         dest.writeTypedList(this.decryptedMembers);
     }
 
-    protected Users(Parcel in) {
+    protected DecryptedUsers(Parcel in) {
         this.fullName = in.readString();
         this.firstName = in.readString();
         this.lastName = in.readString();
@@ -330,21 +313,21 @@ public class Users extends RealmObject implements Parcelable {
         this.decryptedMembers.addAll(in.createTypedArrayList(Member.CREATOR));
     }
 
-    public static final Parcelable.Creator<Users> CREATOR = new Parcelable.Creator<Users>() {
+    public static final Parcelable.Creator<DecryptedUsers> CREATOR = new Parcelable.Creator<DecryptedUsers>() {
         @Override
-        public Users createFromParcel(Parcel source) {
-            return new Users(source);
+        public DecryptedUsers createFromParcel(Parcel source) {
+            return new DecryptedUsers(source);
         }
 
         @Override
-        public Users[] newArray(int size) {
-            return new Users[size];
+        public DecryptedUsers[] newArray(int size) {
+            return new DecryptedUsers[size];
         }
     };
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "DecryptedUsers{" +
                 "fullName='" + fullName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -367,6 +350,5 @@ public class Users extends RealmObject implements Parcelable {
                 ", members=" + decryptedMembers +
                 '}';
     }
-
 
 }

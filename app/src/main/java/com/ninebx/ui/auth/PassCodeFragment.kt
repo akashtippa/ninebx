@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
 import com.ninebx.utility.KeyboardUtil
-import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_pass_code.*
 
 /**
@@ -32,17 +32,16 @@ class PassCodeFragment : BaseAuthFragment() {
         return inflater.inflate(R.layout.fragment_pass_code, container, false)
     }
 
-    private var isCreatePassCode: Boolean = false
+    private var isCreatePassCode: Boolean = true
     private var passCode : String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
-        isCreatePassCode = arguments!!.getBoolean("isCreatePassCode", false)
-        passCode = arguments!!.getString("passCode", "")
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
         setupToolbar()
         setHasOptionsMenu(!isCreatePassCode)
-        KeyboardUtil.showSoftKeyboard(view)
+
         etPassCode.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
 
@@ -113,11 +112,11 @@ class PassCodeFragment : BaseAuthFragment() {
                         ivOtp6.isSelected = true
 
                         if( isCreatePassCode ) {
-                            KeyboardUtil.hideSoftKeyboard(activity!!)
-                            mAuthView.navigateToCreatePassCode(false)
+                            //KeyboardUtil.hideSoftKeyboard(activity!!)
+                            mAuthView.navigateToCreatePassCode(false, passCode)
                         }
                         else {
-                            KeyboardUtil.hideSoftKeyboard(activity!!)
+                            //KeyboardUtil.hideSoftKeyboard(activity!!)
                             mAuthView.navigateToFingerPrint()
                         }
                     }
@@ -127,9 +126,9 @@ class PassCodeFragment : BaseAuthFragment() {
         })
 
         etPassCode.requestFocus()
+        Handler().postDelayed( { KeyboardUtil.forceShowKeyboard(etPassCode) }, 700)
+
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when( item!!.itemId ) {
@@ -150,5 +149,29 @@ class PassCodeFragment : BaseAuthFragment() {
         titleTextView.text = getString(R.string.create_personal_passcode)
         appCompatActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(!isCreatePassCode)
         appCompatActivity.supportActionBar!!.setHomeButtonEnabled(!isCreatePassCode)
+    }
+
+    fun setCreatePassCode(createPassCode: Boolean) {
+        this.isCreatePassCode = createPassCode
+        if( !isCreatePassCode ) {
+
+            etPassCode.setText("")
+
+            ivOtp1.isSelected = false
+            ivOtp2.isSelected = false
+            ivOtp3.isSelected = false
+            ivOtp4.isSelected = false
+            ivOtp5.isSelected = false
+            ivOtp6.isSelected = false
+
+            tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
+            setupToolbar()
+            setHasOptionsMenu(!isCreatePassCode)
+
+        }
+    }
+
+    fun setPassCode(passCode: String) {
+        this.passCode = passCode
     }
 }

@@ -157,8 +157,11 @@
             android:gravity="center"
             android:inputType="number"
             android:maxEms="6"
+            android:focusable="true"
             android:textColor="@color/transparent_white"
-            android:visibility="visible" />
+            android:visibility="visible" >
+            <requestFocus />
+        </EditText>
 
         <TextView
             android:id="@+id/tvSecurity"
