@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.ninebx.R
 import com.onegravity.contactpicker.ContactElement
@@ -40,21 +41,19 @@ class ContactsActivity : BaseActivity() {
             callContactPicker()
         }
 
+        ivBackContacts.setOnClickListener {
+            onBackPressed()
+        }
+
         // populate contact list
         populateContactList(mGroups, mContacts)
 
     }
 
-    fun callContactPicker() {
+    private fun callContactPicker() {
         val intent = Intent(this@ContactsActivity, ContactPickerActivity::class.java)
-                .putExtra(ContactPickerActivity.EXTRA_THEME, if (mDarkTheme)
-                    R.style.Theme_Dark
-                else
-                    R.style.Theme_Light)
-
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE,
                         ContactPictureType.ROUND.name)
-
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
                         ContactDescription.ADDRESS.name)
                 .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, true)
@@ -96,6 +95,8 @@ class ContactsActivity : BaseActivity() {
     private fun populateContactList(groups: List<Group>?, contacts: List<Contact>?) {
         // we got a result from the contact picker --> show the picked contacts
         val contactsView = findViewById<View>(R.id.contacts) as TextView
+        val imgEditContact = findViewById<View>(R.id.imgEditContact) as ImageView
+        val imgDeleteContact = findViewById<View>(R.id.imgDeleteContact) as ImageView
         val result = SpannableStringBuilder()
 
         try {
@@ -109,7 +110,7 @@ class ContactsActivity : BaseActivity() {
                 }
             }
             if (contacts != null && !contacts.isEmpty()) {
-                result.append("CONTACTS\n")
+                result.append("\n")
                 for (contact in contacts) {
                     populateContact(result, contact, "")
                 }

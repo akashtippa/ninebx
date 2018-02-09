@@ -951,5 +951,8 @@
 
     <string name="light_theme">Light Theme</string>
     <string name="dark_theme">Dark Theme</string>
+    <string name="backpress">backpress</string>
+    <string name="edit_the_contact">Edit The Contact</string>
+    <string name="delete_the_image">Delete The Image</string>
 
 </resources>
