@@ -29,10 +29,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
-import com.ninebx.ui.base.realm.RealmString
+import com.ninebx.ui.home.customView.CalendarBottomFragment
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,7 +40,7 @@ import kotlin.collections.ArrayList
 /***
  * Created by Alok Omkar on 10/01/18.
  */
-class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.BottomSheetSelectedListener {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,8 +66,8 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         super.onViewCreated(view, savedInstanceState)
 
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
-        bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
-        bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
+        optionsDialogFragment = CalendarBottomFragment()
+        optionsDialogFragment.setBottomSheetSelectionListener(this)
         isAddEvent = arguments!!.getBoolean("isAddEvent", false)
         val selectedDate = Calendar.getInstance()
         selectedDate.timeInMillis = arguments!!.getLong("selectedDate", Date().time)
@@ -528,18 +527,18 @@ class AddEditEventFragment : FragmentBackHelper(), CustomBottomSheetProfileDialo
         NineBxApplication.instance.activityInstance!!.onBackPressed()
     }
 
-    lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
+    lateinit var optionsDialogFragment: CalendarBottomFragment
     private val PICK_IMAGE_REQUEST = 234
     private val CAMERA_REQUEST_CODE = 235
     private val PERMISSIONS_REQUEST_CODE_CAMERA = 111
     private val PERMISSIONS_REQUEST_CODE_GALLERY = 112
 
     private fun startCameraIntent() {
-        bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
+        optionsDialogFragment.show(childFragmentManager, "optionsDialogFragment")
     }
 
     override fun onOptionSelected(position: Int) {
-        bottomSheetDialogFragment.dismiss()
+        optionsDialogFragment.dismiss()
         if (position == 1) {
             val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
             if (!handleMultiplePermission(context!!, permissionList)) {
