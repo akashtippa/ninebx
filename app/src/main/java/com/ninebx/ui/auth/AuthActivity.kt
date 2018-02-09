@@ -32,7 +32,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun createUser(firstName: String, lastName: String, email: String) {
         val currentUser = mAuthPresenter.createUser( email, firstName, lastName )
-        NineBxApplication.getPreferences().setCurrentUser( currentUser )
         navigateToAccountPassword( currentUser )
     }
 
@@ -174,16 +173,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
         mAuthPresenter = AuthPresenter(this)
         when (NineBxApplication.getPreferences().currentStep) {
             Constants.ACCOUNT_PASSWORD_COMPLETE -> {
-                navigateToSignUp()
-                if( NineBxApplication.getPreferences().getCurrentUser() != null )
-                    navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
                 navigateToOTP()
             }
             Constants.OTP_COMPLETE -> {
-                navigateToSignUp()
-                if( NineBxApplication.getPreferences().getCurrentUser() != null )
-                    navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
-                navigateToOTP()
                 navigateToCreatePassCode(true)
             }
             Constants.PASS_CODE_COMPLETE -> {
@@ -204,8 +196,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
             }
             Constants.SIGN_UP_COMPLETE -> {
                 navigateToSignUp()
-                if( NineBxApplication.getPreferences().getCurrentUser() != null )
-                    navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
             }
         }
 

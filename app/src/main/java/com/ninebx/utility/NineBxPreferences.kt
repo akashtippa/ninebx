@@ -18,27 +18,12 @@ class NineBxPreferences : Preferences() {
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP, NONE_COMPLETE)
     var userEmail by stringPref(Constants.USER_EMAIL, "")
-    var currentUser by stringPref(Constants.CURRENT_USER, "")
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
     var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
     var testinFragmentB by stringPref(Constants.TEST_FRAGMENT_B)
 
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
-
-    fun getCurrentUser(): Users? {
-
-        if( currentUser!!.isEmpty() )
-            return null
-
-        return Gson().fromJson( currentUser, Users::class.java )
-    }
-
-    fun setCurrentUser( users : Users ) {
-        currentUser = Gson().toJson(users)
-    }
-
-
 
 
 }
