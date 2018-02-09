@@ -13,7 +13,6 @@ import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.getCurrentUsers
 import com.ninebx.utility.prepareRealmConnections
@@ -45,7 +44,7 @@ class OTPFragment : BaseAuthFragment() {
                             context!!.hideProgressDialog()
                             AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
 
-                            mAuthView.navigateToCreatePassCode( true )
+                            mAuthView.navigateToCreatePassCode(true, "")
                         }
                         else {
                             mAuthView.onError(R.string.unable_to_find_user)
