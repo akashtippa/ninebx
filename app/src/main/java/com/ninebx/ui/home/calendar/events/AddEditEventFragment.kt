@@ -91,7 +91,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
             //PDF : "/storage/emulated/0/Download/ninebx/pdf-sample.pdf"
             //Image : ""
-            mAWSFileTransferHelper.performDecryption(
+            /*mAWSFileTransferHelper.performDecryption(
                     File( "/storage/emulated/0/Encrypted_image.jpg"),
                     "nB8hEnaqppfWOp5L".toCharArray(),
                     object : AWSFileTransferHelper.FileOperationsCompletionListener {
@@ -102,7 +102,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
                 }
 
-            })
+            })*/
 
 
 

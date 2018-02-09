@@ -125,19 +125,22 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.replace(R.id.container, otpFragment).commit()
     }
 
-    override fun navigateToCreatePassCode(isCreatePassCode: Boolean) {
+    private var passCodeFragment: PassCodeFragment ?= null
+    override fun navigateToCreatePassCode(isCreatePassCode: Boolean, passCode: String) {
         if (!isCreatePassCode) {
             if (NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         }
         mCurrentTag = "PassCode"
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val passCodeFragment = PassCodeFragment()
-        val bundle = Bundle()
-        bundle.putBoolean("isCreatePassCode", isCreatePassCode)
-        passCodeFragment.arguments = bundle
-        fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
+        if( passCodeFragment == null ) {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            passCodeFragment = PassCodeFragment()
+            fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
+        }
+        passCodeFragment!!.setCreatePassCode( isCreatePassCode )
+        passCodeFragment!!.setPassCode( passCode )
+
     }
 
     override fun navigateToInvitePeople() {
@@ -176,7 +179,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 navigateToOTP()
             }
             Constants.OTP_COMPLETE -> {
-                navigateToCreatePassCode(true)
+                navigateToCreatePassCode(true, "")
             }
             Constants.PASS_CODE_COMPLETE -> {
                 if( checkForFingerPrint() )

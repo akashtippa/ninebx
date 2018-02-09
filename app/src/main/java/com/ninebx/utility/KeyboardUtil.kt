@@ -32,4 +32,9 @@ object KeyboardUtil {
         view.requestFocus()
         inputMethodManager.showSoftInput(view, 0)
     }
+
+    fun forceShowKeyboard( view : View ) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    }
 }

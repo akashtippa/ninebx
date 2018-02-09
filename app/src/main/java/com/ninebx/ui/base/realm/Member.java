@@ -630,4 +630,57 @@ public class Member extends RealmObject implements Parcelable {
             return new Member[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", relationship='" + relationship + '\'' +
+                ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", anniversary='" + anniversary + '\'' +
+                ", gender='" + gender + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", street_1='" + street_1 + '\'' +
+                ", street_2='" + street_2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", userId='" + userId + '\'' +
+                ", homeAdd=" + homeAdd +
+                ", homeEdit=" + homeEdit +
+                ", homeView=" + homeView +
+                ", travelAdd=" + travelAdd +
+                ", travelEdit=" + travelEdit +
+                ", travelView=" + travelView +
+                ", contactsAdd=" + contactsAdd +
+                ", contactsEdit=" + contactsEdit +
+                ", contactsView=" + contactsView +
+                ", educationlAdd=" + educationlAdd +
+                ", educationlEdit=" + educationlEdit +
+                ", educationlView=" + educationlView +
+                ", personalAdd=" + personalAdd +
+                ", personalEdit=" + personalEdit +
+                ", personalView=" + personalView +
+                ", interestsAdd=" + interestsAdd +
+                ", interestsEdit=" + interestsEdit +
+                ", interestsView=" + interestsView +
+                ", wellnessAdd=" + wellnessAdd +
+                ", wellnessEdit=" + wellnessEdit +
+                ", wellnessView=" + wellnessView +
+                ", memoriesAdd=" + memoriesAdd +
+                ", memoriesEdit=" + memoriesEdit +
+                ", memoriesView=" + memoriesView +
+                ", shoppingAdd=" + shoppingAdd +
+                ", shoppingEdit=" + shoppingEdit +
+                ", shoppingView=" + shoppingView +
+                ", addingRemovingMember=" + addingRemovingMember +
+                ", changingMasterPassword=" + changingMasterPassword +
+                ", isCompleteProfile=" + isCompleteProfile +
+                ", profilePhoto='" + profilePhoto + '\'' +
+                '}';
+    }
 }

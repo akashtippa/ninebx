@@ -95,8 +95,6 @@ class SignInFragment : BaseAuthFragment() {
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
         mAuthView.navigateToOTP()
-
-
     }
 
     private fun openStaticLayoutDialog(option: Int) {

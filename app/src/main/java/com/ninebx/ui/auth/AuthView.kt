@@ -13,7 +13,7 @@ interface AuthView : BaseView {
     fun navigateToHome()
     fun navigateToOTP()
     fun navigateToAccountPassword( users : Users )
-    fun navigateToCreatePassCode( isCreatePassCode : Boolean  )
+    fun navigateToCreatePassCode(isCreatePassCode: Boolean, passCode: String)
     fun navigateToFingerPrint()
     fun navigateToInvitePeople()
     fun getAuthPresenter() : AuthPresenter
