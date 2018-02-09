@@ -37,8 +37,6 @@ fun closeConnection(realmConnection: Realm) {
 }
 
 fun getCurrentUsers(realmInstance: Realm ) : RealmResults<Users>? {
-//    val encryptedEmail = encryptAESKey( email, "brbEsfBnWDn45QJx" )
-//    AppLogger.d(TAG, "getCurrentUsers : " + encryptedEmail)
     return realmInstance.where(Users::class.java).findAll()
 }
 

@@ -41,11 +41,10 @@ class SearchFragment : Fragment(), SearchView {
 
         prepareRealmConnections( context, true, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                realm!!.beginTransaction()
-                val combineResult = realm.where(Combine::class.java!!).findAll()
+                val combineResult = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "Combined REsults : " + combineResult)
             }
         })
     }
-    }
+}
 
