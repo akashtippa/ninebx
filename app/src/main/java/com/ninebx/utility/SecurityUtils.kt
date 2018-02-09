@@ -10,13 +10,13 @@ import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import io.realm.RealmList
 import org.spongycastle.crypto.digests.SHA256Digest
-import java.security.*
+import java.security.SecureRandom
+import java.security.Security
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
-
 
 /**
  * Created by Alok on 02/02/18.
