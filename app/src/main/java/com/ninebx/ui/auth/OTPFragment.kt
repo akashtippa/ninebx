@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.getCurrentUsers
@@ -41,6 +42,7 @@ class OTPFragment : BaseAuthFragment() {
 
                         val currentUsers = getCurrentUsers( realm!! )
                         if( currentUsers != null ) {
+                            context!!.hideProgressDialog()
                             AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
                             mAuthView.navigateToCreatePassCode( true )
                         }
