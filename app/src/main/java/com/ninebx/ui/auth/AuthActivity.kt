@@ -117,6 +117,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
         fragmentTransaction.addToBackStack(null)
         otpFragment = OTPFragment()
         val bundle = Bundle()
+
+        if( mEmail.isEmpty() )
+            mEmail = NineBxApplication.getPreferences().userEmail!!
+
         bundle.putString("email", mEmail)
         otpFragment!!.arguments = bundle
         fragmentTransaction.replace(R.id.container, otpFragment).commit()
@@ -171,12 +175,14 @@ class AuthActivity : AppCompatActivity(), AuthView {
         when (NineBxApplication.getPreferences().currentStep) {
             Constants.ACCOUNT_PASSWORD_COMPLETE -> {
                 navigateToSignUp()
-                navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
+                if( NineBxApplication.getPreferences().getCurrentUser() != null )
+                    navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
                 navigateToOTP()
             }
             Constants.OTP_COMPLETE -> {
                 navigateToSignUp()
-                navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
+                if( NineBxApplication.getPreferences().getCurrentUser() != null )
+                    navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
                 navigateToOTP()
                 navigateToCreatePassCode(true)
             }
@@ -198,7 +204,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
             }
             Constants.SIGN_UP_COMPLETE -> {
                 navigateToSignUp()
-                navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
+                if( NineBxApplication.getPreferences().getCurrentUser() != null )
+                    navigateToAccountPassword( NineBxApplication.getPreferences().getCurrentUser()!! )
             }
         }
 

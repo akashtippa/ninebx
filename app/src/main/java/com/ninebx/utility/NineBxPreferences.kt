@@ -2,6 +2,7 @@ package com.ninebx.utility
 
 import com.google.gson.Gson
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.utility.Constants.NONE_COMPLETE
 
 
 /***
@@ -15,9 +16,9 @@ class NineBxPreferences : Preferences() {
     var isLogin by booleanPref(Constants.IS_LOGIN)
     var isPasswordRequired by booleanPref(Constants.IS_PASSWORD_REQUIRED)
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
-    var currentStep by intPref(Constants.CURRENT_STEP)
-    var userEmail by stringPref(Constants.USER_EMAIL)
-    var currentUser by stringPref(Constants.CURRENT_USER)
+    var currentStep by intPref(Constants.CURRENT_STEP, NONE_COMPLETE)
+    var userEmail by stringPref(Constants.USER_EMAIL, "")
+    var currentUser by stringPref(Constants.CURRENT_USER, "")
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
     var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
@@ -26,6 +27,10 @@ class NineBxPreferences : Preferences() {
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
 
     fun getCurrentUser(): Users? {
+
+        if( currentUser!!.isEmpty() )
+            return null
+
         return Gson().fromJson( currentUser, Users::class.java )
     }
 
