@@ -1,6 +1,5 @@
 package com.ninebx.ui.home.search
 
-import android.util.Log
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptAESKEY
@@ -15,17 +14,76 @@ class SearchPresenter( private val searchView: SearchView ) {
 
     init {
         val context = getApplicationContext()
-        /*prepareRealmConnections( context, true, "Combine", object : Realm.Callback() {
+
+        prepareRealmConnections( context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineResult = realm!!.where(Combine::class.java!!).findAll()
-                AppLogger.d("Combine", "Combined REsults : " + combineResult)
-
-                for ( index in 0 until  combineResult.size){
-                    var res = combineResult[index].toString().toByteArray(Charsets.UTF_8)
-                    var decrypt = decryptAESKEY( res, "brbEsfBnWDn45QJx" )
-                    Log.e("Search", "Search Decrypted" + decrypt)
-                }
+                AppLogger.d("Combine", "Combined Results : " + combineResult)
             }
-        })*/
+        })
+
+        prepareRealmConnections( context, false, "CombineTravel", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineTravel = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineMemories", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineMemories = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedMemories : " + combineMemories)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineShopping", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineShopping = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedMemories : " + combineShopping)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineContacts", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineContacts = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedContacts : " + combineContacts)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineEducation", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineEducation = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedEducation : " + combineEducation)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombinePersonal", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combinePersonal = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedPersonal : " + combinePersonal)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineInterests", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineInterests = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedInterests : " + combineInterests)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineWellness", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineWellness = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedWellness : " + combineWellness)
+            }
+        })
+
+        prepareRealmConnections( context, false, "CombineEvents", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineEvents = realm!!.where(Combine::class.java!!).findAll()
+                AppLogger.d("Combine", "CombinedEvents : " + combineEvents)
+            }
+        })
+
     }
 }

@@ -4,8 +4,12 @@ import android.util.Log;
 
 import com.ninebx.ui.base.realm.lists.HomeList;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
@@ -117,7 +121,7 @@ public class Combine extends RealmObject {
         this.listItems = listItems;
     }
 
-    void decryptValues(){
+   /* public void decryptValues(){
 
         Byte[] b = new Byte[50];
         getFinancialItems();
@@ -126,8 +130,10 @@ public class Combine extends RealmObject {
             byte[] result = financialItems.get(i).toString().getBytes();
             String decrypt = decryptAESKEY(result, "brbEsfBnWDn45QJx");
              Log.d("CombineDecrypt", "Decrypted Array" + decrypt);
-           /* String decrypt = decryptAESKEY(result.toString(), "brbEsfBnWDn45QJx");*/
+           *//* String decrypt = decryptAESKEY(result.toString(), "brbEsfBnWDn45QJx");*//*
         }
         return ;
-    }
+    }*/
+
+
 }
