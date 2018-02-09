@@ -30,4 +30,7 @@
     <color name="be_engaged">#24A495</color>
     <color name="be_empowered">#544A9B</color>
     <color name="primary_text">#757575</color>
+
+    <color name="background_dark">#263238</color>
+
 </resources>

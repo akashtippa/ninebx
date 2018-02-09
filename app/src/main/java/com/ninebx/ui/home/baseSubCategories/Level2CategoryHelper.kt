@@ -136,22 +136,12 @@ class Level2CategoryHelper(
             }
 
         // Common View
-            "Service/Other Accounts" -> {
+            "Services/Other Accounts" -> {
                 getServicesOthersAccounts()
             }
             "Other Attachments" -> {
                 getOtherAttachments()
             }
-        /* "Lists" -> {
-             getFragmentSubList()
-         }*/
-
-        /* "Shared Contacts" -> {
-             getContactsList()
-         }
-         "Memory Timeline" -> {
-             getMemoryTimeLine()
-         }*/
 
             "Loyalty Programs" -> {
                 getLoyaltyPrograms()

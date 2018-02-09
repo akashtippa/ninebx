@@ -42,7 +42,7 @@
                 android:layout_gravity="center"
                 android:text="@string/add_others_to_account"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/text_16" />
 
             <TextView
                 android:id="@+id/txtSave"

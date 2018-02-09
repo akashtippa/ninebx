@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:text="@string/my_profile"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/text_16" />
 
             <TextView
                 android:id="@+id/txtSave"
@@ -93,20 +93,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_19sdp"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_toEndOf="@+id/imgEditProfile"
                     android:layout_toRightOf="@+id/imgEditProfile"
                     android:padding="@dimen/default_margin"
                     app:srcCompat="@drawable/ic_icon_edit" />
-
-                <ImageView
-                    android:id="@+id/imgDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_9sdp"
-                    android:layout_toRightOf="@+id/imgEdit"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_icon_delete_icon" />
 
                 <TextView
                     android:id="@+id/txtUserName"

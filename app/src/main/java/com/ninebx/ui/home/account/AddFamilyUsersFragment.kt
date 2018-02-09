@@ -57,7 +57,6 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
         rvAddFamilyMembers!!.layoutManager = layoutManager
         rvAddFamilyMembers!!.adapter = mListsAdapter
 
-
         NineBxApplication.instance.setiMemberAdded(this@AddFamilyUsersFragment)
 
         layAddFamilyMembers.setOnClickListener {
@@ -113,7 +112,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
                 Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
             }
 
-        };
+        }
 
         txtsRole.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
@@ -134,7 +133,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
 
             }
 
-        };
+        }
 
         txtPermissions.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -146,23 +145,23 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
         txtSave.setOnClickListener {
             if (txtFirstName.text.toString().trim().isEmpty()) {
                 Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
 
             if (strRelationship.isEmpty()) {
                 Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             if (strRoles.isEmpty()) {
                 Toast.makeText(context, "Please enter 'Role'", Toast.LENGTH_LONG).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             if (edtEmailAddress.text.toString().trim().isEmpty()) {
                 Toast.makeText(context, "Please enter 'Email address'", Toast.LENGTH_LONG).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
 

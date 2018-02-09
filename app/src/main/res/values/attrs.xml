@@ -73,4 +73,12 @@
         <!--<attr name="font" format="string" />-->
     <!--</declare-styleable>-->
 
+
+    <declare-styleable name="Theme">
+        <attr name="icTheme" format="reference" />
+        <attr name="icPickContact" format="reference" />
+        <attr name="backgroundColor" format="color|reference" />
+    </declare-styleable>
+
+
 </resources>

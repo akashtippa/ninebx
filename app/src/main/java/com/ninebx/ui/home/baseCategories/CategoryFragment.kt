@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.baseCategories
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.home.activities.ContactsActivity
 import com.ninebx.ui.home.fragments.ClothesFragment
 import com.ninebx.ui.home.fragments.FragmentListContainer
 import com.ninebx.ui.home.fragments.WellnessFragment
@@ -79,6 +81,11 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 categoryName = category.title
                 when {
                     category.title == "Lists" -> getLists()
+                    category.title == "Shared Contacts" -> {
+                        val intent = Intent(context, ContactsActivity::class.java)
+                        startActivity(intent)
+
+                    }
                     category.subCategories.size == 0 -> {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)

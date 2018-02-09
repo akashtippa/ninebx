@@ -51,16 +51,26 @@
         <item name="android:background">@android:drawable/edit_text</item>
     </style>
 
-    <style name="MyCustomPickerTheme" parent="MultiContactPicker.Azure">
+
+    <!-- LIGHT Theme -->
+    <style name="Theme_Light_Base" parent="@style/ContactPicker_Theme_Light">
+        <!-- ActionBarCompat -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="mcpToolbarTheme">@style/MyCustomToolbarTheme</item>
-        <item name="mcpListPopupWindowStyleTheme">@style/MyCustomToolbarTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyCustomToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/colorAccent</item>
-        <item name="android:textColorSecondary">@color/colorAccent</item>
+    <style name="Theme_Light" parent="@style/Theme_Light_Base" />
+
+    <!-- DARK Theme -->
+    <style name="Theme_Dark_Base" parent="@style/ContactPicker_Theme_Dark">
+        <!-- ActionBarCompat -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
     </style>
+
+    <style name="Theme_Dark" parent="@style/Theme_Dark_Base" />
 
 </resources>

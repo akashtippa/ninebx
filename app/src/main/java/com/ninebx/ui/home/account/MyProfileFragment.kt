@@ -132,47 +132,47 @@ class MyProfileFragment : FragmentBackHelper() {
             return
         }
 
-        /* if (txtDOB.text.toString().trim().isEmpty()) {
+        if (txtDOB.text.toString().trim().isEmpty()) {
              Toast.makeText(context, "Please enter 'Date of birth'", Toast.LENGTH_LONG).show()
              txtDOB.requestFocus()
-             return;
+            return
          }
 
          if (!(txtGender != null && txtGender.selectedItem.toString() != null)) {
              Toast.makeText(context, "Please enter 'Gender'", Toast.LENGTH_LONG).show()
              txtGender.requestFocus()
-             return;
+             return
          }
 
          if (txtMobileNumber.text.toString().trim().isEmpty()) {
              Toast.makeText(context, "Please enter 'Mobile number'", Toast.LENGTH_LONG).show()
              txtMobileNumber.requestFocus()
-             return;
+             return
          }
 
          if (txtAddress1.text.toString().trim().isEmpty()) {
              Toast.makeText(context, "Please enter 'Street address 1'", Toast.LENGTH_LONG).show()
              txtAddress1.requestFocus()
-             return;
+             return
          }
 
          if (txtCity.text.toString().trim().isEmpty()) {
              Toast.makeText(context, "Please enter 'City'", Toast.LENGTH_LONG).show()
              txtCity.requestFocus()
-             return;
+             return
          }
 
          if (txtState.text.toString().trim().isEmpty()) {
              Toast.makeText(context, "Please enter 'State'", Toast.LENGTH_LONG).show()
              txtState.requestFocus()
-             return;
+             return
          }
 
          if (txtZipCode.text.toString().trim().isEmpty()) {
              Toast.makeText(context, "Please enter 'Zip code'", Toast.LENGTH_LONG).show()
              txtZipCode.requestFocus()
-             return;
-         }*/
+             return
+         }
 
         strFirstName = encryptAESKey(txtFirstName.text.toString(), Constants.TEMP_PRIVATE_KEY)
         strLastName = encryptAESKey(txtLastName.text.toString(), Constants.TEMP_PRIVATE_KEY)
@@ -234,7 +234,7 @@ class MyProfileFragment : FragmentBackHelper() {
 
     override fun onResume() {
         super.onResume()
-        enableEditing()
+//        enableEditing()
         var countrySelected = prefrences.countrySelected
         if (countrySelected.toString().trim().isEmpty()) {
             txtCountry.hint = "Select Country"

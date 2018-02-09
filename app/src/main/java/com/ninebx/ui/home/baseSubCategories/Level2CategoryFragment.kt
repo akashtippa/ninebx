@@ -299,7 +299,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
             }
 
-            "Service/Other Accounts" -> {
+            "Services/Other Accounts" -> {
                 etTitle.hint = "Institution name"
                 etTitleValue.hint = "Account name"
                 toolbarTitle.text = "Add Account"

@@ -62,29 +62,30 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/default_margin"
         android:background="@color/colorGrey"
         android:gravity="center_vertical">
 
 
-        <TextView
+        <EditText
             android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_margin="@dimen/default_mini_padding"
-            android:text="Title"
+            android:background="@null"
+            android:hint="Title"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_16" />
 
 
         <TextView
             android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/txtTitle"
             android:layout_margin="@dimen/default_mini_padding"
-            android:text="Date" />
+            android:hint="Date"
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
@@ -108,7 +109,6 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cvAttachment"
                 android:layout_width="@dimen/margin_48"
-
                 android:layout_height="@dimen/margin_48"
                 android:layout_margin="@dimen/default_mini_padding"
                 android:layout_marginTop="@dimen/default_micro_padding"
@@ -128,25 +128,33 @@
                 android:layout_marginTop="@dimen/default_micro_padding"
                 android:background="@color/colorGrey" />
 
-            <TextView
-                android:id="@+id/txtHeader"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_mini_padding"
-                android:text="Location" />
+                android:gravity="center_vertical">
 
+                <TextView
+                    android:id="@+id/txtHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_mini_padding"
+                    android:text="Location" />
 
-            <EditText
-                android:id="@+id/etSubHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_mini_padding"
-                android:background="@null"
-                android:drawableEnd="@drawable/ic_icon_search_normal"
-                android:drawableRight="@drawable/ic_icon_search_normal"
-                android:hint="@string/location"
-                android:inputType="textCapWords"
-                android:textColor="@color/grey_400" />
+                <EditText
+                    android:id="@+id/edtLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtHeader"
+                    android:layout_margin="@dimen/default_mini_padding"
+                    android:background="@null"
+                    android:drawableEnd="@drawable/ic_icon_search_normal"
+                    android:drawableRight="@drawable/ic_icon_search_normal"
+                    android:hint="@string/location"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/grey_400" />
+
+            </RelativeLayout>
+
 
             <View
                 android:layout_width="match_parent"
@@ -155,48 +163,66 @@
                 android:background="@color/colorGrey" />
 
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:padding="@dimen/default_mini_padding"
-                android:text="Contacts" />
+                android:gravity="center_vertical">
 
-            <EditText
-                android:id="@+id/tvSubTitle"
+
+                <TextView
+                    android:id="@+id/txtTitleContacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/default_mini_padding"
+                    android:text="Contacts" />
+
+
+                <EditText
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtTitleContacts"
+                    android:layout_marginTop="@dimen/default_micro_padding"
+                    android:layout_toLeftOf="@id/tvCount"
+                    android:layout_toStartOf="@id/tvCount"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_add_circle_outline_blue_300_24dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/contacts"
+                    android:padding="@dimen/default_mini_padding"
+                    android:singleLine="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:background="@color/colorGrey" />
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_micro_padding"
-                android:layout_toLeftOf="@id/tvCount"
-                android:layout_toStartOf="@id/tvCount"
-                android:background="@null"
-                android:drawableRight="@drawable/ic_add_circle_outline_blue_300_24dp"
                 android:gravity="center_vertical"
-                android:hint="@string/contacts"
-                android:padding="@dimen/default_mini_padding"
-                android:singleLine="true" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/default_micro_padding"
-                android:background="@color/colorGrey" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/default_mini_padding"
+                    android:text="Notes" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:padding="@dimen/default_mini_padding"
-                android:text="Notes" />
+                <EditText
+                    android:id="@+id/edtNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_72"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="Notes"
+                    android:padding="@dimen/default_mini_padding" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/edtNotes"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_72"
-                android:background="@null"
-                android:hint="Notes"
-
-                android:padding="@dimen/default_mini_padding" />
 
             <View
                 android:layout_width="match_parent"

@@ -73,17 +73,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/my_profile" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/default_mini_margin"
+                android:layout_marginTop="@dimen/default_mini_margin"
                 android:background="@color/grey_100" />
 
             <TextView
@@ -92,17 +90,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/family_users" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_marginLeft="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/default_mini_margin"
+                android:layout_marginTop="@dimen/default_mini_margin"
                 android:background="@color/grey_100" />
 
             <TextView
@@ -112,7 +108,7 @@
                 android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/subscription_plan" />
 
@@ -139,10 +135,9 @@
                 android:id="@+id/txtMasterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/account_master_password" />
 
@@ -160,10 +155,9 @@
                 android:id="@+id/txtSecurityOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/security_overview" />
 
@@ -180,10 +174,9 @@
                 android:id="@+id/txtPersonalPassCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/personal_passcode" />
 
@@ -206,9 +199,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginBottom="@dimen/_9sdp"
+
                     android:layout_marginLeft="@dimen/_9sdp"
                     android:layout_marginStart="@dimen/_9sdp"
-                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/touch_id" />
 
                 <Switch
@@ -237,7 +231,7 @@
                 android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/auto_lock_device_setting" />
 
@@ -263,10 +257,9 @@
                 android:id="@+id/txtTermsOfUse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/ac_terms_of_use" />
 
@@ -283,10 +276,9 @@
                 android:id="@+id/txtPrivacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/ac_privacy_policy" />
 
@@ -304,10 +296,9 @@
                 android:id="@+id/txtFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/give_us_feedback" />
 
@@ -324,10 +315,9 @@
                 android:id="@+id/txtRecommend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/recommend_to_friends" />
 
@@ -347,7 +337,7 @@
                 android:layout_marginBottom="@dimen/_9sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:text="@string/support" />
 

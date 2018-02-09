@@ -1,11 +1,13 @@
 package com.ninebx.ui.home.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.activities.ContactsActivity
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_list_container.*
@@ -34,11 +36,10 @@ class FragmentListContainer : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             bundle.putString("categoryName", fragmentValue)
 
-            if (fragmentValue == "Shared Contact") {
+            if (fragmentValue == "Shared Contacts") {
 
-                val categoryFragment = ContactsViewFragment()
-                categoryFragment.arguments = bundle
-                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                val intent = Intent(context, ContactsActivity::class.java)
+                startActivity(intent)
 
             } else if (fragmentValue == "Memory Timeline") {
 
