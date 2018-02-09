@@ -42,9 +42,6 @@ class SearchFragment : Fragment(), SearchView {
         prepareRealmConnections( context, true, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 realm!!.beginTransaction()
-                var combined : Combine = Combine()
-                /*combined.retrieveObject(realm)
-                AppLogger.d("Combine", "Combined REsults : " + combined)*/
                 val combineResult = realm.where(Combine::class.java!!).findAll()
                 AppLogger.d("Combine", "Combined REsults : " + combineResult)
             }
