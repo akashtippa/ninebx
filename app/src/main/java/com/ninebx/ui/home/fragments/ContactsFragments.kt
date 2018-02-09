@@ -28,6 +28,7 @@ import java.util.*
 
 class ContactsFragments : FragmentBackHelper() {
 
+
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
@@ -48,8 +49,8 @@ class ContactsFragments : FragmentBackHelper() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         OpenTheContactPicker().execute()
+
 
         // populate contact list
         populateContactList(mGroups, mContacts)
@@ -138,7 +139,6 @@ class ContactsFragments : FragmentBackHelper() {
         }
     }
 
-
     private fun setContactsList() {
         mListsAdapter = ContactsAdapter(mContacts)
         val layoutManager = LinearLayoutManager(context)
@@ -153,4 +153,6 @@ class ContactsFragments : FragmentBackHelper() {
         result.append(prefix)
         result.append(displayName + "\n")
     }
+
+
 }

@@ -1,8 +1,8 @@
 package com.ninebx.ui
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.home.HomeActivity
@@ -49,6 +49,7 @@ class SplashActivity : AppCompatActivity() {
 
                         !prefrences.isLogin -> {
                             val homeIntent = Intent(this@SplashActivity, AuthActivity::class.java)
+//                            val homeIntent = Intent(this@SplashActivity, HomeActivity::class.java)
                             startActivity(homeIntent)
                             disposables.clear()
                             finish()
