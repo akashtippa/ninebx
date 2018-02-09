@@ -3,8 +3,8 @@ package com.ninebx.ui.home.baseSubCategories
 import android.os.Bundle
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.fragments.FragmentTestContact
-import com.ninebx.ui.home.fragments.FragmentTestMemoryTimeLine
+import com.ninebx.ui.home.fragments.ContactsViewFragment
+import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.Constants
 
@@ -906,7 +906,7 @@ class Level2CategoryHelper(
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
-        val categoryFragment = FragmentTestMemoryTimeLine()
+        val categoryFragment = MemoryTimeLineFragment()
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 
@@ -914,7 +914,7 @@ class Level2CategoryHelper(
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
-        val categoryFragment = FragmentTestContact()
+        val categoryFragment = ContactsViewFragment()
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 

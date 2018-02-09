@@ -64,7 +64,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         txtWellness.setOnClickListener(this)
         txtMemories.setOnClickListener(this)
         txtShopping.setOnClickListener(this)
-
     }
 
     private fun callBottomViewFragment(option: Int) {

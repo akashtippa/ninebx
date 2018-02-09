@@ -33,9 +33,24 @@ class FragmentListContainer : FragmentBackHelper() {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             bundle.putString("categoryName", fragmentValue)
-            val categoryFragment = Level2CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+
+            if (fragmentValue == "Shared Contact") {
+
+                val categoryFragment = ContactsViewFragment()
+                categoryFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+
+            } else if (fragmentValue == "Memory Timeline") {
+
+                val categoryFragment = MemoryTimeLineFragment()
+                categoryFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+
+            } else {
+                val categoryFragment = Level2CategoryFragment()
+                categoryFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+            }
 
         }
     }

@@ -78,8 +78,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             tvCategory.setOnClickListener {
                 categoryName = category.title
                 when {
-                    category.title == "Shared Contacts" -> getContactsList()
-                    category.title == "Memory Timeline" -> getMemoryTimeLine()
                     category.title == "Lists" -> getLists()
                     category.subCategories.size == 0 -> {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -131,7 +129,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         }
     }
 
-    private val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
     private lateinit var mCategoryPresenter: CategoryPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

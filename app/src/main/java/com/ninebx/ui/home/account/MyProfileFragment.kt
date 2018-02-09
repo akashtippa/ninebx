@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.*
 import com.ninebx.utility.countryPicker.CountryPicker
 import io.realm.Realm
@@ -215,26 +216,21 @@ class MyProfileFragment : FragmentBackHelper() {
         realm = Realm.getInstance(config)
     }
 
-//    private fun sendDataToServer() {
-//        realm = Realm.getInstance(config)
-//
-//        realm.executeTransactionAsync({ bgRealm ->
-//            val user = bgRealm.createObject(TestDemo::class.java)
-//            user.name = strFirstName // Just for testing, LGb5ps0HypDZMGF/llxgbg==
-//            lateinit var encryptedPasswordByteArray : ByteArray
-//
-//            val decryptedKey = decryptAESKEYPassword( strFirstName.toByteArray(), encryptedPasswordByteArray )
-//            AppLogger.d("Test", "Decrypted Key : " + decryptedKey)
-//
-//
-//        }, {
-//            // Transaction was a success.
-//            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
-//        }, {
-//            Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
-//        })
-//
-//    }
+    private fun sendDataToServer() {
+        realm = Realm.getInstance(config)
+
+        realm.executeTransactionAsync({ bgRealm ->
+            val user = bgRealm.createObject(Users::class.java)
+            user.firstName = strFirstName // Just for testing, LGb5ps0HypDZMGF/llxgbg==
+
+        }, {
+            // Transaction was a success.
+            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
+        }, {
+            Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
+        })
+
+    }
 
     override fun onResume() {
         super.onResume()
