@@ -117,7 +117,10 @@ class PassCodeFragment : BaseAuthFragment() {
                         }
                         else {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
-                            mAuthView.navigateToFingerPrint()
+                            if( validate() ) {
+                                mAuthView.navigateToFingerPrint()
+                            }
+
                         }
                     }
                 }
