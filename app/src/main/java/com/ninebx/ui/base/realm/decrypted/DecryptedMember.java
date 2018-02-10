@@ -3,75 +3,73 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.annotations.Required;
-
 /**
  * Created by Alok on 10/02/18.
  */
 
 public class DecryptedMember implements Parcelable {
 
-    @Required
+    
     private String  firstName            = "";
-    @Required private String  lastName             = "";
-    @Required private String  relationship         = "";
-    @Required private String  role                 = "";
-    @Required private String  email                = "";
+     private String  lastName             = "";
+     private String  relationship         = "";
+     private String  role                 = "";
+     private String  email                = "";
 
-    @Required private String dateOfBirth         = "";
-    @Required private String anniversary         = "";
-    @Required private String gender              = "";
-    @Required private String mobileNumber        = "";
-    @Required private String street_1            = "";
-    @Required private String street_2            = "";
-    @Required private String city                = "";
-    @Required private String state               = "";
-    @Required private String zipCode             = "";
-    @Required private String country             = "";
+     private String dateOfBirth         = "";
+     private String anniversary         = "";
+     private String gender              = "";
+     private String mobileNumber        = "";
+     private String street_1            = "";
+     private String street_2            = "";
+     private String city                = "";
+     private String state               = "";
+     private String zipCode             = "";
+     private String country             = "";
 
-    @Required private String userId              = "";
+     private String userId              = "";
     ///For permissions
-    @Required private Boolean homeAdd                = true;
-    @Required private Boolean homeEdit               = false;
-    @Required private Boolean homeView               = true;
+     private Boolean homeAdd                = true;
+     private Boolean homeEdit               = false;
+     private Boolean homeView               = true;
 
-    @Required private Boolean travelAdd              = true;
-    @Required private Boolean travelEdit             = false;
-    @Required private Boolean travelView             = true;
+     private Boolean travelAdd              = true;
+     private Boolean travelEdit             = false;
+     private Boolean travelView             = true;
 
-    @Required private Boolean contactsAdd              = true;
-    @Required private Boolean contactsEdit             = false;
-    @Required private Boolean contactsView             = true;
+     private Boolean contactsAdd              = true;
+     private Boolean contactsEdit             = false;
+     private Boolean contactsView             = true;
 
-    @Required private Boolean educationlAdd              = true;
-    @Required private Boolean educationlEdit             = false;
-    @Required private Boolean educationlView             = true;
+     private Boolean educationlAdd              = true;
+     private Boolean educationlEdit             = false;
+     private Boolean educationlView             = true;
 
-    @Required private Boolean personalAdd              = true;
-    @Required private Boolean personalEdit             = false;
-    @Required private Boolean personalView             = true;
+     private Boolean personalAdd              = true;
+     private Boolean personalEdit             = false;
+     private Boolean personalView             = true;
 
-    @Required private Boolean interestsAdd              = true;
-    @Required private Boolean interestsEdit             = false;
-    @Required private Boolean interestsView             = true;
+     private Boolean interestsAdd              = true;
+     private Boolean interestsEdit             = false;
+     private Boolean interestsView             = true;
 
-    @Required private Boolean wellnessAdd              = true;
-    @Required private Boolean wellnessEdit             = false;
-    @Required private Boolean wellnessView             = true;
+     private Boolean wellnessAdd              = true;
+     private Boolean wellnessEdit             = false;
+     private Boolean wellnessView             = true;
 
-    @Required private Boolean memoriesAdd              = true;
-    @Required private Boolean memoriesEdit             = false;
-    @Required private Boolean memoriesView             = true;
+     private Boolean memoriesAdd              = true;
+     private Boolean memoriesEdit             = false;
+     private Boolean memoriesView             = true;
 
-    @Required private Boolean shoppingAdd              = true;
-    @Required private Boolean shoppingEdit             = false;
-    @Required private Boolean shoppingView             = true;
+     private Boolean shoppingAdd              = true;
+     private Boolean shoppingEdit             = false;
+     private Boolean shoppingView             = true;
 
-    @Required private Boolean addingRemovingMember    = false;
-    @Required private Boolean changingMasterPassword  = false;
+     private Boolean addingRemovingMember    = false;
+     private Boolean changingMasterPassword  = false;
 
-    @Required private Boolean isCompleteProfile     = false;
-    @Required private String profilePhoto        = "";
+     public Boolean isCompleteProfile     = false;
+     private String profilePhoto        = "";
 
     public DecryptedMember(String firstName, String lastName, String relationship, String role, String email) {
         this.firstName = firstName;
@@ -616,6 +614,8 @@ public class DecryptedMember implements Parcelable {
         this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.profilePhoto = in.readString();
     }
+    
+    
 
     public static final Parcelable.Creator<DecryptedMember> CREATOR = new Parcelable.Creator<DecryptedMember>() {
         @Override

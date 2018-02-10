@@ -466,5 +466,50 @@ fun decryptMember(member: Member): DecryptedMember? {
     decryptedMember.zipCode = member.zipCode             .decryptString()
     decryptedMember.country = member.country             .decryptString()
 
+    decryptedMember.userId              = member.userId
+    ///For permissions
+    decryptedMember.homeAdd                = member.homeAdd
+    decryptedMember.homeEdit               = member.homeEdit
+    decryptedMember.homeView               = member.homeView
+
+    decryptedMember.travelAdd              = member.travelAdd
+    decryptedMember.travelEdit             = member.travelEdit
+    decryptedMember.travelView             = member.travelView
+
+    decryptedMember.contactsAdd              = member.contactsAdd
+    decryptedMember.contactsEdit             = member.contactsEdit
+    decryptedMember.contactsView             = member.contactsView
+
+    decryptedMember.educationlAdd              = member.educationlAdd
+    decryptedMember.educationlEdit             = member.educationlEdit
+    decryptedMember.educationlView             = member.educationlView
+
+    decryptedMember.personalAdd              = member.personalAdd
+    decryptedMember.personalEdit             = member.personalEdit
+    decryptedMember.personalView             = member.personalView
+
+    decryptedMember.interestsAdd              = member.interestsAdd
+    decryptedMember.interestsEdit             = member.interestsEdit
+    decryptedMember.interestsView             = member.interestsView
+
+    decryptedMember.wellnessAdd              = member.wellnessAdd
+    decryptedMember.wellnessEdit             = member.wellnessEdit
+    decryptedMember.wellnessView             = member.wellnessView
+
+    decryptedMember.memoriesAdd              = member.memoriesAdd
+    decryptedMember.memoriesEdit             = member.memoriesEdit
+    decryptedMember.memoriesView             = member.memoriesView
+
+    decryptedMember.shoppingAdd              = member.shoppingAdd
+    decryptedMember.shoppingEdit             = member.shoppingEdit
+    decryptedMember.shoppingView             = member.shoppingView
+
+    decryptedMember.addingRemovingMember    = member.addingRemovingMember
+    decryptedMember.changingMasterPassword  = member.changingMasterPassword
+
+    decryptedMember.isCompleteProfile     = member.completeProfile
+    decryptedMember.profilePhoto        = "";
+    
+
     return decryptedMember
 }
