@@ -7,6 +7,7 @@ import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
 import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import io.realm.RealmList
 import org.spongycastle.crypto.digests.SHA256Digest
@@ -429,37 +430,41 @@ fun decryptUsers(currentUser: Users ) : DecryptedUsers {
     decryptedUsers.userId = currentUser.userId
     decryptedUsers.profilePhoto = currentUser.profilePhoto
 
-    //decryptedUsers.fullName = currentUser.decryptedMembers = decryptMembers( currentUser.members )
+    decryptedUsers.decryptedMembers = decryptMembers( currentUser.members )
     AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers )
     return decryptedUsers
 }
 
-fun decryptMembers( members: RealmList<Member> ): RealmList<Member>? {
+fun decryptMembers( members: RealmList<Member> ): RealmList<DecryptedMember>? {
+    val decryptedMembers = RealmList<DecryptedMember>()
     for( i in 0 until members.size ) {
-        var member = members[i]
-        member = decryptMember(member!!)
+        val member = members[i]
+        val decryptedMember = decryptMember( member!!)
+        decryptedMembers.add( decryptedMember )
     }
-    return members
+    return decryptedMembers
 }
 
-fun decryptMember(member: Member): Member? {
+fun decryptMember(member: Member): DecryptedMember? {
 
-    member.firstName            .decryptString()
-    member. lastName             .decryptString()
-    member. relationship         .decryptString()
-    member. role                 .decryptString()
-    member. email                .decryptString()
+    val decryptedMember = DecryptedMember()
+    
+    decryptedMember.firstName = member.firstName            .decryptString()
+    decryptedMember.lastName = member. lastName             .decryptString()
+    decryptedMember.relationship = member. relationship         .decryptString()
+    decryptedMember.role = member. role                 .decryptString()
+    decryptedMember.email = member. email                .decryptString()
 
-    member.dateOfBirth         .decryptString()
-    member.anniversary         .decryptString()
-    member.gender              .decryptString()
-    member.mobileNumber        .decryptString()
-    member.street_1            .decryptString()
-    member.street_2            .decryptString()
-    member.city                .decryptString()
-    member.state               .decryptString()
-    member.zipCode             .decryptString()
-    member.country             .decryptString()
+    decryptedMember.dateOfBirth = member.dateOfBirth         .decryptString()
+    decryptedMember.anniversary = member.anniversary         .decryptString()
+    decryptedMember.gender = member.gender              .decryptString()
+    decryptedMember.mobileNumber = member.mobileNumber        .decryptString()
+    decryptedMember.street_1 = member.street_1            .decryptString()
+    decryptedMember.street_2 = member.street_2            .decryptString()
+    decryptedMember.city = member.city                .decryptString()
+    decryptedMember.state = member.state               .decryptString()
+    decryptedMember.zipCode = member.zipCode             .decryptString()
+    decryptedMember.country = member.country             .decryptString()
 
-    return member
+    return decryptedMember
 }
