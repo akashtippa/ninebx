@@ -27,89 +27,6 @@ public class DecryptedVehical implements Parcelable {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    protected DecryptedVehical(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        vehicleName = in.readString();
-        licenseNumber = in.readString();
-        vinNumber = in.readString();
-        make = in.readString();
-        model = in.readString();
-        modelYear = in.readString();
-        color = in.readString();
-        titleName = in.readString();
-        estimatedMarketValue = in.readString();
-        registrationExpirydate = in.readString();
-        purchasedOrLeased = in.readString();
-        purchaseDate = in.readString();
-        financedThroughLoan = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        leaseStartDate = in.readString();
-        leaseEndDate = in.readString();
-        contacts = in.readString();
-        maintenanceEvent = in.readString();
-        serviceProviderName = in.readString();
-        dateOfService = in.readString();
-        vehicle = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(vehicleName);
-        dest.writeString(licenseNumber);
-        dest.writeString(vinNumber);
-        dest.writeString(make);
-        dest.writeString(model);
-        dest.writeString(modelYear);
-        dest.writeString(color);
-        dest.writeString(titleName);
-        dest.writeString(estimatedMarketValue);
-        dest.writeString(registrationExpirydate);
-        dest.writeString(purchasedOrLeased);
-        dest.writeString(purchaseDate);
-        dest.writeString(financedThroughLoan);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-        dest.writeString(leaseStartDate);
-        dest.writeString(leaseEndDate);
-        dest.writeString(contacts);
-        dest.writeString(maintenanceEvent);
-        dest.writeString(serviceProviderName);
-        dest.writeString(dateOfService);
-        dest.writeString(vehicle);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<DecryptedVehical> CREATOR = new Creator<DecryptedVehical>() {
-        @Override
-        public DecryptedVehical createFromParcel(Parcel in) {
-            return new DecryptedVehical(in);
-        }
-
-        @Override
-        public DecryptedVehical[] newArray(int size) {
-            return new DecryptedVehical[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -428,6 +345,89 @@ public class DecryptedVehical implements Parcelable {
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
     }
+
+    protected DecryptedVehical(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        vehicleName = in.readString();
+        licenseNumber = in.readString();
+        vinNumber = in.readString();
+        make = in.readString();
+        model = in.readString();
+        modelYear = in.readString();
+        color = in.readString();
+        titleName = in.readString();
+        estimatedMarketValue = in.readString();
+        registrationExpirydate = in.readString();
+        purchasedOrLeased = in.readString();
+        purchaseDate = in.readString();
+        financedThroughLoan = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        leaseStartDate = in.readString();
+        leaseEndDate = in.readString();
+        contacts = in.readString();
+        maintenanceEvent = in.readString();
+        serviceProviderName = in.readString();
+        dateOfService = in.readString();
+        vehicle = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeStringList(photosId);
+        dest.writeString(selectionType);
+        dest.writeString(vehicleName);
+        dest.writeString(licenseNumber);
+        dest.writeString(vinNumber);
+        dest.writeString(make);
+        dest.writeString(model);
+        dest.writeString(modelYear);
+        dest.writeString(color);
+        dest.writeString(titleName);
+        dest.writeString(estimatedMarketValue);
+        dest.writeString(registrationExpirydate);
+        dest.writeString(purchasedOrLeased);
+        dest.writeString(purchaseDate);
+        dest.writeString(financedThroughLoan);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(createdUser);
+        dest.writeString(leaseStartDate);
+        dest.writeString(leaseEndDate);
+        dest.writeString(contacts);
+        dest.writeString(maintenanceEvent);
+        dest.writeString(serviceProviderName);
+        dest.writeString(dateOfService);
+        dest.writeString(vehicle);
+        dest.writeString(notes);
+        dest.writeString(attachmentNames);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DecryptedVehical> CREATOR = new Creator<DecryptedVehical>() {
+        @Override
+        public DecryptedVehical createFromParcel(Parcel in) {
+            return new DecryptedVehical(in);
+        }
+
+        @Override
+        public DecryptedVehical[] newArray(int size) {
+            return new DecryptedVehical[size];
+        }
+    };
 
     @Override
     public String toString() {

@@ -18,7 +18,6 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedProperty implements Parcelable {
-
     @PrimaryKey //@Required
     private int id = 0;
 
@@ -27,48 +26,6 @@ public class DecryptedProperty implements Parcelable {
 
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
-
-    protected DecryptedProperty(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        propertyName = in.readString();
-        streetAddressOne = in.readString();
-        streetAddressTwo = in.readString();
-        city = in.readString();
-        state = in.readString();
-        zipCode = in.readString();
-        country = in.readString();
-        titleName = in.readString();
-        purchaseDate = in.readString();
-        purchasePrice = in.readString();
-        estimatedMarketValue = in.readString();
-        contacts = in.readString();
-        byte tmpCurrentlyRented = in.readByte();
-        currentlyRented = tmpCurrentlyRented == 0 ? null : tmpCurrentlyRented == 1;
-        tenantName = in.readString();
-        leaseStartDate = in.readString();
-        leaseEndDate = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
-
-    public static final Creator<DecryptedProperty> CREATOR = new Creator<DecryptedProperty>() {
-        @Override
-        public DecryptedProperty createFromParcel(Parcel in) {
-            return new DecryptedProperty(in);
-        }
-
-        @Override
-        public DecryptedProperty[] newArray(int size) {
-            return new DecryptedProperty[size];
-        }
-    };
 
     public Integer getId() {
         return id;
@@ -134,35 +91,6 @@ public class DecryptedProperty implements Parcelable {
     @Required private String attachmentNames = "";
 
     public DecryptedProperty() {
-    }
-
-    public DecryptedProperty(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String propertyName, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String titleName, String purchaseDate, String purchasePrice, String estimatedMarketValue, String contacts, Boolean currentlyRented, String tenantName, String leaseStartDate, String leaseEndDate, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
-        this.id = id;
-        this.backingImages = backingImages;
-        this.photosId = photosId;
-        this.selectionType = selectionType;
-        this.propertyName = propertyName;
-        this.streetAddressOne = streetAddressOne;
-        this.streetAddressTwo = streetAddressTwo;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.country = country;
-        this.titleName = titleName;
-        this.purchaseDate = purchaseDate;
-        this.purchasePrice = purchasePrice;
-        this.estimatedMarketValue = estimatedMarketValue;
-        this.contacts = contacts;
-        this.currentlyRented = currentlyRented;
-        this.tenantName = tenantName;
-        this.leaseStartDate = leaseStartDate;
-        this.leaseEndDate = leaseEndDate;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
     }
 
     public String getSelectionType() {
@@ -349,9 +277,34 @@ public class DecryptedProperty implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    protected DecryptedProperty(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        propertyName = in.readString();
+        streetAddressOne = in.readString();
+        streetAddressTwo = in.readString();
+        city = in.readString();
+        state = in.readString();
+        zipCode = in.readString();
+        country = in.readString();
+        titleName = in.readString();
+        purchaseDate = in.readString();
+        purchasePrice = in.readString();
+        estimatedMarketValue = in.readString();
+        contacts = in.readString();
+        byte tmpCurrentlyRented = in.readByte();
+        currentlyRented = tmpCurrentlyRented == 0 ? null : tmpCurrentlyRented == 1;
+        tenantName = in.readString();
+        leaseStartDate = in.readString();
+        leaseEndDate = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
     }
 
     @Override
@@ -383,37 +336,21 @@ public class DecryptedProperty implements Parcelable {
         dest.writeString(attachmentNames);
     }
 
-    protected DecryptedProperty(Parcelable in) {}
-
     @Override
-    public String toString() {
-        return "DecryptedProperty{" +
-                "id=" + id +
-                ", backingImages=" + backingImages +
-                ", photosId=" + photosId +
-                ", selectionType='" + selectionType + '\'' +
-                ", propertyName='" + propertyName + '\'' +
-                ", streetAddressOne='" + streetAddressOne + '\'' +
-                ", streetAddressTwo='" + streetAddressTwo + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", country='" + country + '\'' +
-                ", titleName='" + titleName + '\'' +
-                ", purchaseDate='" + purchaseDate + '\'' +
-                ", purchasePrice='" + purchasePrice + '\'' +
-                ", estimatedMarketValue='" + estimatedMarketValue + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", currentlyRented=" + currentlyRented +
-                ", tenantName='" + tenantName + '\'' +
-                ", leaseStartDate='" + leaseStartDate + '\'' +
-                ", leaseEndDate='" + leaseEndDate + '\'' +
-                ", created='" + created + '\'' +
-                ", modified='" + modified + '\'' +
-                ", isPrivate=" + isPrivate +
-                ", createdUser='" + createdUser + '\'' +
-                ", notes='" + notes + '\'' +
-                ", attachmentNames='" + attachmentNames + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
     }
+
+    public static final Creator<DecryptedProperty> CREATOR = new Creator<DecryptedProperty>() {
+        @Override
+        public DecryptedProperty createFromParcel(Parcel in) {
+            return new DecryptedProperty(in);
+        }
+
+        @Override
+        public DecryptedProperty[] newArray(int size) {
+            return new DecryptedProperty[size];
+        }
+    };
+
 }

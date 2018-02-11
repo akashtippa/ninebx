@@ -15,7 +15,6 @@ import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 import static com.ninebx.utility.SecurityUtilsKt.decryptAESKEY;
-
 /**
  * Created by Alok on 24/01/18.
  */
@@ -120,20 +119,6 @@ public class Combine extends RealmObject {
     public void setListItems(RealmList<HomeList> listItems) {
         this.listItems = listItems;
     }
-
-   /* public void decryptValues(){
-
-        Byte[] b = new Byte[50];
-        getFinancialItems();
-        for (int i = 0; i<=financialItems.size(); i++ )
-        {
-            byte[] result = financialItems.get(i).toString().getBytes();
-            String decrypt = decryptAESKEY(result, "brbEsfBnWDn45QJx");
-             Log.d("CombineDecrypt", "Decrypted Array" + decrypt);
-           *//* String decrypt = decryptAESKEY(result.toString(), "brbEsfBnWDn45QJx");*//*
-        }
-        return ;
-    }*/
 
 
 }

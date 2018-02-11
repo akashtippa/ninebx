@@ -28,42 +28,6 @@ public class DecryptedPayment implements Parcelable{
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    protected DecryptedPayment(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        insuranceCompany = in.readString();
-        insuredProperty = in.readString();
-        insuredVehicle = in.readString();
-        insuredPerson = in.readString();
-        policyNumber = in.readString();
-        policyEffectiveDate = in.readString();
-        policyExpirationDate = in.readString();
-        contacts = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
-
-    public static final Creator<DecryptedPayment> CREATOR = new Creator<DecryptedPayment>() {
-        @Override
-        public DecryptedPayment createFromParcel(Parcel in) {
-            return new DecryptedPayment(in);
-        }
-
-        @Override
-        public DecryptedPayment[] newArray(int size) {
-            return new DecryptedPayment[size];
-        }
-    };
 
     public Integer getId() {
         return id;
@@ -151,162 +115,29 @@ public class DecryptedPayment implements Parcelable{
         this.attachmentNames = attachmentNames;
     }
 
-    public String getSelectionType() {
-        return selectionType;
-    }
-
-    public void setSelectionType(String selectionType) {
-        this.selectionType = selectionType;
-    }
-
-    public String getInsuranceCompany() {
-        return insuranceCompany;
-    }
-
-    public void setInsuranceCompany(String insuranceCompany) {
-        this.insuranceCompany = insuranceCompany;
-    }
-
-    public String getInsuredProperty() {
-        return insuredProperty;
-    }
-
-    public void setInsuredProperty(String insuredProperty) {
-        this.insuredProperty = insuredProperty;
-    }
-
-    public String getInsuredVehicle() {
-        return insuredVehicle;
-    }
-
-    public void setInsuredVehicle(String insuredVehicle) {
-        this.insuredVehicle = insuredVehicle;
-    }
-
-    public String getInsuredPerson() {
-        return insuredPerson;
-    }
-
-    public void setInsuredPerson(String insuredPerson) {
-        this.insuredPerson = insuredPerson;
-    }
-
-    public String getPolicyNumber() {
-        return policyNumber;
-    }
-
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
-    }
-
-    public String getPolicyEffectiveDate() {
-        return policyEffectiveDate;
-    }
-
-    public void setPolicyEffectiveDate(String policyEffectiveDate) {
-        this.policyEffectiveDate = policyEffectiveDate;
-    }
-
-    public String getPolicyExpirationDate() {
-        return policyExpirationDate;
-    }
-
-    public void setPolicyExpirationDate(String policyExpirationDate) {
-        this.policyExpirationDate = policyExpirationDate;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPin() {
-        return pin;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
-    }
-
-    public Boolean getPrivate() {
-        return isPrivate;
-    }
-
-    public void setPrivate(Boolean aPrivate) {
-        isPrivate = aPrivate;
-    }
-
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getAttachmentNames() {
-        return attachmentNames;
-    }
-
-    public void setAttachmentNames(String attachmentNames) {
-        this.attachmentNames = attachmentNames;
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
+    protected DecryptedPayment(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        insuranceCompany = in.readString();
+        insuredProperty = in.readString();
+        insuredVehicle = in.readString();
+        insuredPerson = in.readString();
+        policyNumber = in.readString();
+        policyEffectiveDate = in.readString();
+        policyExpirationDate = in.readString();
+        contacts = in.readString();
+        website = in.readString();
+        userName = in.readString();
+        password = in.readString();
+        pin = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
     }
 
     @Override
@@ -334,33 +165,21 @@ public class DecryptedPayment implements Parcelable{
         dest.writeString(attachmentNames);
     }
 
-    protected DecryptedPayment(Parcelable in){}
-
     @Override
-    public String toString() {
-        return "DecryptedPayment{" +
-                "id=" + id +
-                ", backingImages=" + backingImages +
-                ", photosId=" + photosId +
-                ", selectionType='" + selectionType + '\'' +
-                ", insuranceCompany='" + insuranceCompany + '\'' +
-                ", insuredProperty='" + insuredProperty + '\'' +
-                ", insuredVehicle='" + insuredVehicle + '\'' +
-                ", insuredPerson='" + insuredPerson + '\'' +
-                ", policyNumber='" + policyNumber + '\'' +
-                ", policyEffectiveDate='" + policyEffectiveDate + '\'' +
-                ", policyExpirationDate='" + policyExpirationDate + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", website='" + website + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", pin='" + pin + '\'' +
-                ", created='" + created + '\'' +
-                ", modified='" + modified + '\'' +
-                ", isPrivate=" + isPrivate +
-                ", createdUser='" + createdUser + '\'' +
-                ", notes='" + notes + '\'' +
-                ", attachmentNames='" + attachmentNames + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
     }
+
+    public static final Creator<DecryptedPayment> CREATOR = new Creator<DecryptedPayment>() {
+        @Override
+        public DecryptedPayment createFromParcel(Parcel in) {
+            return new DecryptedPayment(in);
+        }
+
+        @Override
+        public DecryptedPayment[] newArray(int size) {
+            return new DecryptedPayment[size];
+        }
+    };
+
 }

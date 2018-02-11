@@ -17,9 +17,9 @@ import io.realm.annotations.Required;
  * Created by smrit on 11-02-2018.
  */
 
-public class DecryptedFinancial implements Parcelable {
+public class DecryptedFinancial implements Parcelable{
 
-    @PrimaryKey
+    @PrimaryKey //@Required
     private int id = 0;
 
     @Required
@@ -27,33 +27,6 @@ public class DecryptedFinancial implements Parcelable {
 
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
-
-    protected DecryptedFinancial(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        institutionName = in.readString();
-        accountName = in.readString();
-        accountType = in.readString();
-        nameOnAccount = in.readString();
-        accountNumber = in.readString();
-        location = in.readString();
-        swiftCode = in.readString();
-        abaRoutingNumber = in.readString();
-        contacts = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
-
 
     public Integer getId() {
         return id;
@@ -114,6 +87,9 @@ public class DecryptedFinancial implements Parcelable {
 
     @Required private String attachmentNames = "";
 
+    public DecryptedFinancial() {
+    }
+
     public DecryptedFinancial(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
@@ -138,9 +114,6 @@ public class DecryptedFinancial implements Parcelable {
         this.createdUser = createdUser;
         this.notes = notes;
         this.attachmentNames = attachmentNames;
-    }
-
-    public DecryptedFinancial() {
     }
 
     public String getSelectionType() {
@@ -304,52 +277,6 @@ public class DecryptedFinancial implements Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.selectionType);
-        dest.writeString(this.institutionName);
-        dest.writeString(this.accountName);
-        dest.writeString(this.accountType);
-        dest.writeString(this.nameOnAccount);
-        dest.writeString(this.accountNumber);
-        dest.writeString(this.location);
-        dest.writeString(this.swiftCode);
-        dest.writeString(this.abaRoutingNumber);
-        dest.writeString(this.contacts);
-        dest.writeString(this.website);
-        dest.writeString(this.userName);
-        dest.writeString(this.password);
-        dest.writeString(this.pin);
-        dest.writeString(this.created);
-        dest.writeString(this.modified);
-        dest.writeString(String.valueOf(this.isPrivate));
-        dest.writeString(this.createdUser);
-        dest.writeString(this.notes);
-        dest.writeString(this.attachmentNames);
-    }
-
-    public static final Creator<DecryptedFinancial> CREATOR = new Creator<DecryptedFinancial>() {
-        @Override
-        public DecryptedFinancial createFromParcel(Parcel in) {
-            return new DecryptedFinancial(in);
-        }
-
-        @Override
-        public DecryptedFinancial[] newArray(int size) {
-            return new DecryptedFinancial[size];
-        }
-    };
-
-    protected DecryptedFinancial(Parcelable in)
-    {
-
-    }
-
-    @Override
     public String toString() {
         return "DecryptedFinancial{" +
                 "id=" + id +
@@ -377,4 +304,73 @@ public class DecryptedFinancial implements Parcelable {
                 ", attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
+
+    protected DecryptedFinancial(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        institutionName = in.readString();
+        accountName = in.readString();
+        accountType = in.readString();
+        nameOnAccount = in.readString();
+        accountNumber = in.readString();
+        location = in.readString();
+        swiftCode = in.readString();
+        abaRoutingNumber = in.readString();
+        contacts = in.readString();
+        website = in.readString();
+        userName = in.readString();
+        password = in.readString();
+        pin = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeStringList(photosId);
+        dest.writeString(selectionType);
+        dest.writeString(institutionName);
+        dest.writeString(accountName);
+        dest.writeString(accountType);
+        dest.writeString(nameOnAccount);
+        dest.writeString(accountNumber);
+        dest.writeString(location);
+        dest.writeString(swiftCode);
+        dest.writeString(abaRoutingNumber);
+        dest.writeString(contacts);
+        dest.writeString(website);
+        dest.writeString(userName);
+        dest.writeString(password);
+        dest.writeString(pin);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(createdUser);
+        dest.writeString(notes);
+        dest.writeString(attachmentNames);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DecryptedFinancial> CREATOR = new Creator<DecryptedFinancial>() {
+        @Override
+        public DecryptedFinancial createFromParcel(Parcel in) {
+            return new DecryptedFinancial(in);
+        }
+
+        @Override
+        public DecryptedFinancial[] newArray(int size) {
+            return new DecryptedFinancial[size];
+        }
+    };
 }
