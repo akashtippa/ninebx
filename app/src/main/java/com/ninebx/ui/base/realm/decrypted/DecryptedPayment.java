@@ -17,9 +17,9 @@ import io.realm.annotations.Required;
  * Created by smrit on 11-02-2018.
  */
 
-public class DecryptedFinancial implements Parcelable {
+public class DecryptedPayment implements Parcelable{
 
-    @PrimaryKey
+    @PrimaryKey //@Required
     private int id = 0;
 
     @Required
@@ -28,18 +28,17 @@ public class DecryptedFinancial implements Parcelable {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    protected DecryptedFinancial(Parcel in) {
+    protected DecryptedPayment(Parcel in) {
         id = in.readInt();
         photosId = in.createStringArrayList();
         selectionType = in.readString();
-        institutionName = in.readString();
-        accountName = in.readString();
-        accountType = in.readString();
-        nameOnAccount = in.readString();
-        accountNumber = in.readString();
-        location = in.readString();
-        swiftCode = in.readString();
-        abaRoutingNumber = in.readString();
+        insuranceCompany = in.readString();
+        insuredProperty = in.readString();
+        insuredVehicle = in.readString();
+        insuredPerson = in.readString();
+        policyNumber = in.readString();
+        policyEffectiveDate = in.readString();
+        policyExpirationDate = in.readString();
         contacts = in.readString();
         website = in.readString();
         userName = in.readString();
@@ -54,6 +53,17 @@ public class DecryptedFinancial implements Parcelable {
         attachmentNames = in.readString();
     }
 
+    public static final Creator<DecryptedPayment> CREATOR = new Creator<DecryptedPayment>() {
+        @Override
+        public DecryptedPayment createFromParcel(Parcel in) {
+            return new DecryptedPayment(in);
+        }
+
+        @Override
+        public DecryptedPayment[] newArray(int size) {
+            return new DecryptedPayment[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -89,15 +99,14 @@ public class DecryptedFinancial implements Parcelable {
 
     @Required private String selectionType = "";
 
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
+    @Required private String insuranceCompany = "";
+    @Required private String insuredProperty = "";
+    @Required private String insuredVehicle = "";
+    @Required private String insuredPerson = "";
 
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
+    @Required private String policyNumber = "";
+    @Required private String policyEffectiveDate = "";
+    @Required private String policyExpirationDate = "";
     @Required private String contacts = "";
 
     @Required private String website = "";
@@ -114,19 +123,21 @@ public class DecryptedFinancial implements Parcelable {
 
     @Required private String attachmentNames = "";
 
-    public DecryptedFinancial(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+    public DecryptedPayment() {
+    }
+
+    public DecryptedPayment(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String insuranceCompany, String insuredProperty, String insuredVehicle, String insuredPerson, String policyNumber, String policyEffectiveDate, String policyExpirationDate, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
         this.selectionType = selectionType;
-        this.institutionName = institutionName;
-        this.accountName = accountName;
-        this.accountType = accountType;
-        this.nameOnAccount = nameOnAccount;
-        this.accountNumber = accountNumber;
-        this.location = location;
-        this.swiftCode = swiftCode;
-        this.abaRoutingNumber = abaRoutingNumber;
+        this.insuranceCompany = insuranceCompany;
+        this.insuredProperty = insuredProperty;
+        this.insuredVehicle = insuredVehicle;
+        this.insuredPerson = insuredPerson;
+        this.policyNumber = policyNumber;
+        this.policyEffectiveDate = policyEffectiveDate;
+        this.policyExpirationDate = policyExpirationDate;
         this.contacts = contacts;
         this.website = website;
         this.userName = userName;
@@ -140,9 +151,6 @@ public class DecryptedFinancial implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    public DecryptedFinancial() {
-    }
-
     public String getSelectionType() {
         return selectionType;
     }
@@ -151,68 +159,60 @@ public class DecryptedFinancial implements Parcelable {
         this.selectionType = selectionType;
     }
 
-    public String getInstitutionName() {
-        return institutionName;
+    public String getInsuranceCompany() {
+        return insuranceCompany;
     }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany;
     }
 
-    public String getAccountName() {
-        return accountName;
+    public String getInsuredProperty() {
+        return insuredProperty;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setInsuredProperty(String insuredProperty) {
+        this.insuredProperty = insuredProperty;
     }
 
-    public String getAccountType() {
-        return accountType;
+    public String getInsuredVehicle() {
+        return insuredVehicle;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setInsuredVehicle(String insuredVehicle) {
+        this.insuredVehicle = insuredVehicle;
     }
 
-    public String getNameOnAccount() {
-        return nameOnAccount;
+    public String getInsuredPerson() {
+        return insuredPerson;
     }
 
-    public void setNameOnAccount(String nameOnAccount) {
-        this.nameOnAccount = nameOnAccount;
+    public void setInsuredPerson(String insuredPerson) {
+        this.insuredPerson = insuredPerson;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getPolicyNumber() {
+        return policyNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setPolicyNumber(String policyNumber) {
+        this.policyNumber = policyNumber;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPolicyEffectiveDate() {
+        return policyEffectiveDate;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPolicyEffectiveDate(String policyEffectiveDate) {
+        this.policyEffectiveDate = policyEffectiveDate;
     }
 
-    public String getSwiftCode() {
-        return swiftCode;
+    public String getPolicyExpirationDate() {
+        return policyExpirationDate;
     }
 
-    public void setSwiftCode(String swiftCode) {
-        this.swiftCode = swiftCode;
-    }
-
-    public String getAbaRoutingNumber() {
-        return abaRoutingNumber;
-    }
-
-    public void setAbaRoutingNumber(String abaRoutingNumber) {
-        this.abaRoutingNumber = abaRoutingNumber;
+    public void setPolicyExpirationDate(String policyExpirationDate) {
+        this.policyExpirationDate = policyExpirationDate;
     }
 
     public String getContacts() {
@@ -303,6 +303,7 @@ public class DecryptedFinancial implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -310,60 +311,45 @@ public class DecryptedFinancial implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.selectionType);
-        dest.writeString(this.institutionName);
-        dest.writeString(this.accountName);
-        dest.writeString(this.accountType);
-        dest.writeString(this.nameOnAccount);
-        dest.writeString(this.accountNumber);
-        dest.writeString(this.location);
-        dest.writeString(this.swiftCode);
-        dest.writeString(this.abaRoutingNumber);
-        dest.writeString(this.contacts);
-        dest.writeString(this.website);
-        dest.writeString(this.userName);
-        dest.writeString(this.password);
-        dest.writeString(this.pin);
-        dest.writeString(this.created);
-        dest.writeString(this.modified);
-        dest.writeString(String.valueOf(this.isPrivate));
-        dest.writeString(this.createdUser);
-        dest.writeString(this.notes);
-        dest.writeString(this.attachmentNames);
+        dest.writeInt(id);
+        dest.writeStringList(photosId);
+        dest.writeString(selectionType);
+        dest.writeString(insuranceCompany);
+        dest.writeString(insuredProperty);
+        dest.writeString(insuredVehicle);
+        dest.writeString(insuredPerson);
+        dest.writeString(policyNumber);
+        dest.writeString(policyEffectiveDate);
+        dest.writeString(policyExpirationDate);
+        dest.writeString(contacts);
+        dest.writeString(website);
+        dest.writeString(userName);
+        dest.writeString(password);
+        dest.writeString(pin);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(createdUser);
+        dest.writeString(notes);
+        dest.writeString(attachmentNames);
     }
 
-    public static final Creator<DecryptedFinancial> CREATOR = new Creator<DecryptedFinancial>() {
-        @Override
-        public DecryptedFinancial createFromParcel(Parcel in) {
-            return new DecryptedFinancial(in);
-        }
-
-        @Override
-        public DecryptedFinancial[] newArray(int size) {
-            return new DecryptedFinancial[size];
-        }
-    };
-
-    protected DecryptedFinancial(Parcelable in)
-    {
-
-    }
+    protected DecryptedPayment(Parcelable in){}
 
     @Override
     public String toString() {
-        return "DecryptedFinancial{" +
+        return "DecryptedPayment{" +
                 "id=" + id +
                 ", backingImages=" + backingImages +
                 ", photosId=" + photosId +
                 ", selectionType='" + selectionType + '\'' +
-                ", institutionName='" + institutionName + '\'' +
-                ", accountName='" + accountName + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", nameOnAccount='" + nameOnAccount + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", location='" + location + '\'' +
-                ", swiftCode='" + swiftCode + '\'' +
-                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                ", insuranceCompany='" + insuranceCompany + '\'' +
+                ", insuredProperty='" + insuredProperty + '\'' +
+                ", insuredVehicle='" + insuredVehicle + '\'' +
+                ", insuredPerson='" + insuredPerson + '\'' +
+                ", policyNumber='" + policyNumber + '\'' +
+                ", policyEffectiveDate='" + policyEffectiveDate + '\'' +
+                ", policyExpirationDate='" + policyExpirationDate + '\'' +
                 ", contacts='" + contacts + '\'' +
                 ", website='" + website + '\'' +
                 ", userName='" + userName + '\'' +
