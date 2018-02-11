@@ -350,5 +350,4 @@ public class DecryptedUsers implements Parcelable {
                 ", members=" + decryptedMembers +
                 '}';
     }
-
 }

@@ -509,7 +509,6 @@ fun decryptMember(member: Member): DecryptedMember? {
 
     decryptedMember.isCompleteProfile     = member.completeProfile
     decryptedMember.profilePhoto        = "";
-    
 
     return decryptedMember
 }

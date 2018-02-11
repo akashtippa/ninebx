@@ -158,8 +158,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             }
 
         })
-
-
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
