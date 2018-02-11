@@ -78,6 +78,9 @@ public class DecryptedAsset implements Parcelable {
     @Required private String imageName = "";
     @Required private String attachmentNames = "";
 
+    public DecryptedAsset() {
+    }
+
     public DecryptedAsset(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String test, String assetName, String descriptionOrLocation, String estimatedMarketValue, String serialNumber, String purchaseDate, String purchasePrice, String contacts, String created, String modified, Boolean isPrivate, String createdUser, String notes, String imageName, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;

@@ -7,8 +7,9 @@ import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
 import com.ninebx.ui.auth.passwordHash.CustomPKCS5S2ParametersGenerator
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.ui.base.realm.decrypted.DecryptedMember
-import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
+import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.homeBanking.*
+import com.ninebx.ui.base.realm.lists.HomeList
 import io.realm.RealmList
 import org.spongycastle.crypto.digests.SHA256Digest
 import java.security.*
@@ -511,4 +512,250 @@ fun decryptMember(member: Member): DecryptedMember? {
     decryptedMember.profilePhoto        = "";
 
     return decryptedMember
+}
+
+fun decryptFinancial(finance : Financial) : DecryptedFinancial {
+
+    val decryptedFinancial = DecryptedFinancial()
+
+    //decryptedFinancial.id = finance.id.decryptString()
+    //decryptedFinancial.photosId = finance.photosId.decryptString()
+    //decryptedFinancial.backingImages = finance.backingImages.decryptString()
+
+    decryptedFinancial.selectionType = finance.selectionType.decryptString()
+    decryptedFinancial.institutionName = finance.institutionName.decryptString()
+    decryptedFinancial.accountName = finance.accountName.decryptString()
+    decryptedFinancial.accountType = finance.accountType.decryptString()
+    decryptedFinancial.nameOnAccount = finance.nameOnAccount.decryptString()
+    decryptedFinancial.accountNumber = finance.accountNumber.decryptString()
+    decryptedFinancial.location = finance.location.decryptString()
+    decryptedFinancial.swiftCode = finance.swiftCode.decryptString()
+    decryptedFinancial.abaRoutingNumber = finance.abaRoutingNumber.decryptString()
+    decryptedFinancial.abaRoutingNumber = finance.abaRoutingNumber.decryptString()
+    decryptedFinancial.contacts = finance.contacts.decryptString()
+    decryptedFinancial.website = finance.website.decryptString()
+    decryptedFinancial.userName = finance.userName.decryptString()
+    decryptedFinancial.password = finance.password.decryptString()
+    decryptedFinancial.pin = finance.pin.decryptString()
+    decryptedFinancial.created = finance.created.decryptString()
+    decryptedFinancial.modified = finance.modified.decryptString()
+ // decryptedFinancial.isPrivate = finance.isPrivate.decryptString()
+    decryptedFinancial.createdUser = finance.createdUser.decryptString()
+    decryptedFinancial.notes = finance.notes.decryptString()
+    decryptedFinancial.attachmentNames = finance.attachmentNames.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedFinancial : " + decryptedFinancial )
+
+    return decryptedFinancial
+}
+
+fun decryptPayment(payment: Payment) : DecryptedPayment {
+
+    val decryptedPayment = DecryptedPayment()
+
+    //decryptedPayment.id = payment.id.decryptString()
+    //decryptedPayment.photosId = payment.photosId.decryptString()
+    //decryptedPayment.backingImages = payment.backingImages.decryptString()
+
+    decryptedPayment.selectionType = payment.selectionType.decryptString()
+    decryptedPayment.insuranceCompany = payment.insuranceCompany.decryptString()
+    decryptedPayment.insuredProperty = payment.insuredProperty.decryptString()
+    decryptedPayment.insuredVehicle = payment.insuredVehicle.decryptString()
+    decryptedPayment.insuredPerson = payment.insuredPerson.decryptString()
+    decryptedPayment.policyNumber = payment.policyNumber.decryptString()
+    decryptedPayment.policyEffectiveDate = payment.policyEffectiveDate.decryptString()
+    decryptedPayment.policyExpirationDate = payment.policyExpirationDate.decryptString()
+    decryptedPayment.contacts = payment.contacts.decryptString()
+    decryptedPayment.website = payment.website.decryptString()
+    decryptedPayment.password = payment.password.decryptString()
+    decryptedPayment.pin = payment.pin.decryptString()
+    decryptedPayment.created = payment.created.decryptString()
+    decryptedPayment.modified = payment.modified.decryptString()
+   // decryptedPayment.isPrivate = payment.isPrivate.decryptString()
+    decryptedPayment.createdUser = payment.createdUser.decryptString()
+    decryptedPayment.notes = payment.notes.decryptString()
+    decryptedPayment.attachmentNames = payment.attachmentNames.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedPayment : " + decryptedPayment )
+
+    return decryptedPayment
+}
+
+fun decryptProperty(property : Property) : DecryptedProperty{
+    val decryptedProperty = DecryptedProperty()
+
+    //decryptedProperty.id = property.id.decryptString()
+    //decryptedProperty.photosId = property.photosId.decryptString()
+    //decryptedProperty.backingImages = property.backingImages.decryptString()
+
+    decryptedProperty.selectionType = property.selectionType.decryptString()
+    decryptedProperty.propertyName = property.propertyName.decryptString()
+    decryptedProperty.streetAddressOne = property.streetAddressOne.decryptString()
+    decryptedProperty.streetAddressTwo = property.streetAddressTwo.decryptString()
+    decryptedProperty.city = property.city.decryptString()
+    decryptedProperty.state = property.state.decryptString()
+    decryptedProperty.zipCode = property.zipCode.decryptString()
+    decryptedProperty.country = property.country.decryptString()
+    decryptedProperty.titleName = property.titleName.decryptString()
+    decryptedProperty.purchaseDate = property.purchaseDate.decryptString()
+    decryptedProperty.purchasePrice = property.purchasePrice.decryptString()
+    decryptedProperty.estimatedMarketValue = property.estimatedMarketValue.decryptString()
+    decryptedProperty.contacts = property.contacts.decryptString()
+   // decryptedProperty.currentlyRented = property.currentlyRented.decryptString()
+    decryptedProperty.tenantName = property.tenantName.decryptString()
+    decryptedProperty.leaseStartDate = property.leaseStartDate.decryptString()
+    decryptedProperty.leaseEndDate = property.leaseEndDate.decryptString()
+    decryptedProperty.created = property.created.decryptString()
+    decryptedProperty.modified = property.modified.decryptString()
+   // decryptedProperty.isPrivate = property.isPrivate.decryptString()
+    decryptedProperty.createdUser = property.createdUser.decryptString()
+    decryptedProperty.notes = property.notes.decryptString()
+    decryptedProperty.attachmentNames = property.attachmentNames.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedProperty : " + decryptedProperty )
+
+    return decryptedProperty
+}
+
+fun decryptVehicle(vehicle: Vehicle) : DecryptedVehicle {
+    val decryptedVehicle = DecryptedVehicle()
+
+    //decryptedVehicle.id = vehicle.id.decryptString()
+    //decryptedVehicle.photosId = vehicle.photosId.decryptString()
+    //decryptedVehicle.backingImages = vehicle.backingImages.decryptString()
+
+    decryptedVehicle.selectionType = vehicle.selectionType.decryptString()
+    decryptedVehicle.vehicleName = vehicle.vehicleName.decryptString()
+    decryptedVehicle.vinNumber = vehicle.vinNumber.decryptString()
+    decryptedVehicle.make = vehicle.make.decryptString()
+    decryptedVehicle.model = vehicle.model.decryptString()
+    decryptedVehicle.modelYear = vehicle.modelYear.decryptString()
+    decryptedVehicle.color = vehicle.color.decryptString()
+    decryptedVehicle.titleName = vehicle.titleName.decryptString()
+    decryptedVehicle.estimatedMarketValue = vehicle.estimatedMarketValue.decryptString()
+    decryptedVehicle.registrationExpirydate = vehicle.registrationExpirydate.decryptString()
+    decryptedVehicle.purchasedOrLeased = vehicle.purchasedOrLeased.decryptString()
+    decryptedVehicle.financedThroughLoan = vehicle.financedThroughLoan.decryptString()
+    decryptedVehicle.created = vehicle.created.decryptString()
+    decryptedVehicle.modified = vehicle.modified.decryptString()
+   // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
+    decryptedVehicle.createdUser = vehicle.createdUser.decryptString()
+    decryptedVehicle.leaseStartDate = vehicle.leaseStartDate.decryptString()
+    decryptedVehicle.leaseEndDate = vehicle.leaseEndDate.decryptString()
+    decryptedVehicle.contacts = vehicle.contacts.decryptString()
+    decryptedVehicle.maintenanceEvent = vehicle.maintenanceEvent.decryptString()
+    decryptedVehicle.serviceProviderName = vehicle.serviceProviderName.decryptString()
+    decryptedVehicle.dateOfService = vehicle.dateOfService.decryptString()
+    decryptedVehicle.vehicle = vehicle.vehicle.decryptString()
+    decryptedVehicle.notes = vehicle.notes.decryptString()
+    decryptedVehicle.attachmentNames = vehicle.attachmentNames.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedVehicle : " + decryptedVehicle )
+    return decryptedVehicle
+}
+
+fun decryptAsset(asset: Asset) : DecryptedAsset{
+    val decryptedAsset = DecryptedAsset()
+
+    //decryptedAsset.id = asset.id.decryptString()
+    //decryptedAsset.photosId = asset.photosId.decryptString()
+    //decryptedAsset.backingImages = asset.backingImages.decryptString()
+
+    decryptedAsset.selectionType = asset.selectionType.decryptString()
+    decryptedAsset.test = asset.test.decryptString()
+    decryptedAsset.assetName = asset.assetName.decryptString()
+    decryptedAsset.descriptionOrLocation = asset.descriptionOrLocation.decryptString()
+    decryptedAsset.estimatedMarketValue = asset.estimatedMarketValue.decryptString()
+    decryptedAsset.serialNumber = asset.serialNumber.decryptString()
+    decryptedAsset.purchaseDate = asset.purchaseDate.decryptString()
+    decryptedAsset.purchasePrice = asset.purchasePrice.decryptString()
+    decryptedAsset.contacts = asset.contacts.decryptString()
+    decryptedAsset.created = asset.created.decryptString()
+    decryptedAsset.modified = asset.modified.decryptString()
+    //decryptedAsset.isPrivate = asset.isPrivate.decryptString()
+    decryptedAsset.createdUser = asset.createdUser.decryptString()
+    decryptedAsset.notes = asset.notes.decryptString()
+    decryptedAsset.imageName = asset.imageName.decryptString()
+    decryptedAsset.attachmentNames = asset.attachmentNames.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedAsset : " + decryptedAsset )
+
+    return decryptedAsset
+}
+
+fun decryptInsurance(insurance: Insurance) : DecryptedInsurance{
+    val decryptedInsurance = DecryptedInsurance()
+
+    //decryptedInsurance.id = insurance.id.decryptString()
+    //decryptedInsurance.photosId = insurance.photosId.decryptString()
+    //decryptedInsurance.backingImages = insurance.backingImages.decryptString()
+
+    decryptedInsurance.selectionType = insurance.selectionType.decryptString()
+    decryptedInsurance.insuranceCompany = insurance.insuranceCompany.decryptString()
+    decryptedInsurance.insuredProperty = insurance.insuredProperty.decryptString()
+    decryptedInsurance.insuredVehicle = insurance.insuredVehicle.decryptString()
+    decryptedInsurance.insuredPerson = insurance.insuredPerson.decryptString()
+    decryptedInsurance.policyNumber = insurance.policyNumber.decryptString()
+    decryptedInsurance.policyEffectiveDate = insurance.policyEffectiveDate.decryptString()
+    decryptedInsurance.policyExpirationDate = insurance.policyExpirationDate.decryptString()
+    decryptedInsurance.contacts = insurance.contacts.decryptString()
+    decryptedInsurance.website = insurance.website.decryptString()
+    decryptedInsurance.userName = insurance.userName.decryptString()
+    decryptedInsurance.password = insurance.password.decryptString()
+    decryptedInsurance.pin = insurance.pin.decryptString()
+    decryptedInsurance.created = insurance.created.decryptString()
+    decryptedInsurance.modified = insurance.modified.decryptString()
+    //decryptedInsurance.isPrivate = insurance.isPrivate.decryptString()
+    decryptedInsurance.createdUser = insurance.createdUser.decryptString()
+    decryptedInsurance.notes = insurance.notes.decryptString()
+    decryptedInsurance.attachmentNames = insurance.attachmentNames.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedInsurance : " + decryptedInsurance )
+    return decryptedInsurance
+}
+
+fun decryptTaxes(taxes: Taxes) : DecryptedTax{
+    val decryptedTax = DecryptedTax()
+
+    //decryptedInsurance.id = insurance.id.decryptString()
+    //decryptedInsurance.photosId = insurance.photosId.decryptString()
+    //decryptedInsurance.backingImages = insurance.backingImages.decryptString()
+
+    decryptedTax.selectionType = taxes.selectionType.decryptString()
+    decryptedTax.returnName = taxes.returnName.decryptString()
+    decryptedTax.taxYear = taxes.taxYear.decryptString()
+    decryptedTax.taxPayer = taxes.taxPayer.decryptString()
+    decryptedTax.contacts = taxes.contacts.decryptString()
+    decryptedTax.imageName = taxes.imageName.decryptString()
+    decryptedTax.attachmentNames = taxes.attachmentNames.decryptString()
+    decryptedTax.notes = taxes.notes.decryptString()
+    decryptedTax.title = taxes.title.decryptString()
+    decryptedTax.created = taxes.created.decryptString()
+    decryptedTax.modified = taxes.modified.decryptString()
+   // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
+    decryptedTax.createdUser = taxes.createdUser.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax )
+    return decryptedTax
+}
+
+fun decryptHomeList(homeList : HomeList) : DecryptedHomeList{
+    val decryptedHomeList = DecryptedHomeList()
+
+    //decryptedHomeList.id = homeList.id.decryptString()
+
+    decryptedHomeList.selectionType = homeList.selectionType.decryptString()
+    decryptedHomeList.listName = homeList.listName.decryptString()
+    decryptedHomeList.dueDate = homeList.dueDate.decryptString()
+  /*  decryptedHomeList.detailsId = homeList.detailsId.decryptString()
+    decryptedHomeList.isSelected = homeList.isSelected.decryptString() */
+ /*   decryptedHomeList.selectedDate = homeList.selectedDate.decryptString()
+    decryptedHomeList.createdDate = homeList.createdDate.decryptString()*/
+    decryptedHomeList.created = homeList.created.decryptString()
+    decryptedHomeList.modified = homeList.modified.decryptString()
+    /*decryptedHomeList.isPrivate = homeList.isPrivate.decryptString()  */
+    decryptedHomeList.createdUser = homeList.createdUser.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedHomeList : " + decryptedHomeList )
+    return decryptedHomeList
 }

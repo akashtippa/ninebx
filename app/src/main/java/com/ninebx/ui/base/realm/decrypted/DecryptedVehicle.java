@@ -17,7 +17,7 @@ import io.realm.annotations.Required;
  * Created by smrit on 11-02-2018.
  */
 
-public class DecryptedVehical implements Parcelable {
+public class DecryptedVehicle implements Parcelable {
     @PrimaryKey //@Required
     private int id = 0;
 
@@ -94,10 +94,10 @@ public class DecryptedVehical implements Parcelable {
     @Required private String notes = "";
     @Required private String attachmentNames = "";
 
-    public DecryptedVehical() {
+    public DecryptedVehicle() {
     }
 
-    public DecryptedVehical(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String vehicleName, String licenseNumber, String vinNumber, String make, String model, String modelYear, String color, String titleName, String estimatedMarketValue, String registrationExpirydate, String purchasedOrLeased, String purchaseDate, String financedThroughLoan, String created, String modified, Boolean isPrivate, String createdUser, String leaseStartDate, String leaseEndDate, String contacts, String maintenanceEvent, String serviceProviderName, String dateOfService, String vehicle, String notes, String attachmentNames) {
+    public DecryptedVehicle(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String vehicleName, String licenseNumber, String vinNumber, String make, String model, String modelYear, String color, String titleName, String estimatedMarketValue, String registrationExpirydate, String purchasedOrLeased, String purchaseDate, String financedThroughLoan, String created, String modified, Boolean isPrivate, String createdUser, String leaseStartDate, String leaseEndDate, String contacts, String maintenanceEvent, String serviceProviderName, String dateOfService, String vehicle, String notes, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -346,7 +346,7 @@ public class DecryptedVehical implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedVehical(Parcel in) {
+    protected DecryptedVehicle(Parcel in) {
         id = in.readInt();
         photosId = in.createStringArrayList();
         selectionType = in.readString();
@@ -417,21 +417,21 @@ public class DecryptedVehical implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedVehical> CREATOR = new Creator<DecryptedVehical>() {
+    public static final Creator<DecryptedVehicle> CREATOR = new Creator<DecryptedVehicle>() {
         @Override
-        public DecryptedVehical createFromParcel(Parcel in) {
-            return new DecryptedVehical(in);
+        public DecryptedVehicle createFromParcel(Parcel in) {
+            return new DecryptedVehicle(in);
         }
 
         @Override
-        public DecryptedVehical[] newArray(int size) {
-            return new DecryptedVehical[size];
+        public DecryptedVehicle[] newArray(int size) {
+            return new DecryptedVehicle[size];
         }
     };
 
     @Override
     public String toString() {
-        return "DecryptedVehical{" +
+        return "DecryptedVehicle{" +
                 "id=" + id +
                 ", backingImages=" + backingImages +
                 ", photosId=" + photosId +

@@ -88,6 +88,9 @@ public class DecryptedInsurance implements Parcelable {
 
     @Required private String attachmentNames = "";
 
+    public DecryptedInsurance() {
+    }
+
     public DecryptedInsurance(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String insuranceCompany, String insuredProperty, String insuredVehicle, String insuredPerson, String policyNumber, String policyEffectiveDate, String policyExpirationDate, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
