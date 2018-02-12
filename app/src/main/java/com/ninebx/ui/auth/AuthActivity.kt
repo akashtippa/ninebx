@@ -138,8 +138,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
             passCodeFragment = PassCodeFragment()
             fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
         }
+        NineBxApplication.getPreferences().passCode = passCode
         passCodeFragment!!.setCreatePassCode( isCreatePassCode )
-        passCodeFragment!!.setPassCode( passCode )
 
     }
 
