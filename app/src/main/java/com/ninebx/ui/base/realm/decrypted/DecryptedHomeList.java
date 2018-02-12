@@ -14,29 +14,47 @@ import io.realm.annotations.Required;
 
 public class DecryptedHomeList implements Parcelable {
 
+    public static final Creator<DecryptedHomeList> CREATOR = new Creator<DecryptedHomeList>() {
+        @Override
+        public DecryptedHomeList createFromParcel(Parcel in) {
+            return new DecryptedHomeList(in);
+        }
+
+        @Override
+        public DecryptedHomeList[] newArray(int size) {
+            return new DecryptedHomeList[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
-    @Required private String classType = "HomeList";
-
-    @Required private String listName = "";
-    @Required private String dueDate = "";
-
-    @Required private Integer detailsId = 0;
-    @Required private Boolean isSelected = false;
-
-    @Required private Date selectedDate = new Date();
-    @Required private Date createdDate = new Date();
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
+    @Required
+    private String classType = "HomeList";
+    @Required
+    private String listName = "";
+    @Required
+    private String dueDate = "";
+    @Required
+    private Integer detailsId = 0;
+    @Required
+    private Boolean isSelected = false;
+    @Required
+    private Date selectedDate = new Date();
+    @Required
+    private Date createdDate = new Date();
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     public DecryptedHomeList() {
     }
+
 
     public DecryptedHomeList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
@@ -54,7 +72,25 @@ public class DecryptedHomeList implements Parcelable {
         this.createdUser = createdUser;
     }
 
-
+    protected DecryptedHomeList(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        classType = in.readString();
+        listName = in.readString();
+        dueDate = in.readString();
+        if (in.readByte() == 0) {
+            detailsId = null;
+        } else {
+            detailsId = in.readInt();
+        }
+        byte tmpIsSelected = in.readByte();
+        isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+    }
 
     public int getId() {
         return id;
@@ -160,26 +196,6 @@ public class DecryptedHomeList implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    protected DecryptedHomeList(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        classType = in.readString();
-        listName = in.readString();
-        dueDate = in.readString();
-        if (in.readByte() == 0) {
-            detailsId = null;
-        } else {
-            detailsId = in.readInt();
-        }
-        byte tmpIsSelected = in.readByte();
-        isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -204,18 +220,6 @@ public class DecryptedHomeList implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedHomeList> CREATOR = new Creator<DecryptedHomeList>() {
-        @Override
-        public DecryptedHomeList createFromParcel(Parcel in) {
-            return new DecryptedHomeList(in);
-        }
-
-        @Override
-        public DecryptedHomeList[] newArray(int size) {
-            return new DecryptedHomeList[size];
-        }
-    };
 
     @Override
     public String toString() {

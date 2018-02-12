@@ -3,12 +3,7 @@ package com.ninebx.ui.base.realm;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.NineBxApplication;
-
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -23,7 +18,19 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Users extends RealmObject implements Parcelable {
 
-    @Required private String fullName             = "";
+    public static final Parcelable.Creator<Users> CREATOR = new Parcelable.Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel source) {
+            return new Users(source);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
+    @Required
+    private String fullName = "";
     @Required
     private String firstName            = "";
     @Required private String lastName             = "";
@@ -33,7 +40,6 @@ public class Users extends RealmObject implements Parcelable {
     @Required private String anniversary          = "";
     @Required private String gender               = "";
     @Required private String mobileNumber         = "";
-
     @Required private String street_1             = "";
     @Required private String street_2             = "";
     @Required private String city                 = "";
@@ -41,15 +47,12 @@ public class Users extends RealmObject implements Parcelable {
     @Required private String zipCode              = "";
     @Required private String country              = "";
     @Required private String userId               = "";
-
     @PrimaryKey //@Required
     private int id                  = 0;
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
-
     @Required private RealmList<Member> members = new RealmList<Member>();
     @Ignore private RealmList<Member> decryptedMembers = new RealmList<Member>();
-
 
     public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<Member> members) {
         this.fullName = fullName;
@@ -72,6 +75,7 @@ public class Users extends RealmObject implements Parcelable {
     public Users() {
     }
 
+
     public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
@@ -91,7 +95,43 @@ public class Users extends RealmObject implements Parcelable {
         this.members = members;
     }
 
+    protected Users(Parcel in) {
+        this.fullName = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.emailAddress = in.readString();
+        this.relationship = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.gender = in.readString();
+        this.mobileNumber = in.readString();
+        this.street_1 = in.readString();
+        this.street_2 = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.userId = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.profilePhoto = in.readString();
+        this.members = new RealmList<>();
+        this.members.addAll(in.createTypedArrayList(Member.CREATOR));
+        this.decryptedMembers = new RealmList<>();
+        this.decryptedMembers.addAll(in.createTypedArrayList(Member.CREATOR));
+    }
 
+    @NotNull
+    public static Users createUser(@NotNull String email, @NotNull String firstName, @NotNull String lastName) {
+
+        Users users = new Users();
+        users.firstName = firstName;
+        users.lastName = lastName;
+        users.fullName = firstName + " " + lastName;
+        users.emailAddress = email;
+        return users;
+
+    }
 
     public String getUserId() {
         return userId;
@@ -261,19 +301,6 @@ public class Users extends RealmObject implements Parcelable {
         this.decryptedMembers = decryptedMembers;
     }
 
-    @NotNull
-    public static Users createUser(@NotNull String email, @NotNull String firstName, @NotNull String lastName) {
-
-        Users users = new Users();
-        users.firstName = firstName;
-        users.lastName = lastName;
-        users.fullName = firstName + " " + lastName;
-        users.emailAddress = email;
-        return users;
-
-    }
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -303,44 +330,6 @@ public class Users extends RealmObject implements Parcelable {
         dest.writeTypedList(this.members);
         dest.writeTypedList(this.decryptedMembers);
     }
-
-    protected Users(Parcel in) {
-        this.fullName = in.readString();
-        this.firstName = in.readString();
-        this.lastName = in.readString();
-        this.emailAddress = in.readString();
-        this.relationship = in.readString();
-        this.dateOfBirth = in.readString();
-        this.anniversary = in.readString();
-        this.gender = in.readString();
-        this.mobileNumber = in.readString();
-        this.street_1 = in.readString();
-        this.street_2 = in.readString();
-        this.city = in.readString();
-        this.state = in.readString();
-        this.zipCode = in.readString();
-        this.country = in.readString();
-        this.userId = in.readString();
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.profilePhoto = in.readString();
-        this.members = new RealmList<>();
-        this.members.addAll(in.createTypedArrayList(Member.CREATOR));
-        this.decryptedMembers = new RealmList<>();
-        this.decryptedMembers.addAll(in.createTypedArrayList(Member.CREATOR));
-    }
-
-    public static final Parcelable.Creator<Users> CREATOR = new Parcelable.Creator<Users>() {
-        @Override
-        public Users createFromParcel(Parcel source) {
-            return new Users(source);
-        }
-
-        @Override
-        public Users[] newArray(int size) {
-            return new Users[size];
-        }
-    };
 
     @Override
     public String toString() {

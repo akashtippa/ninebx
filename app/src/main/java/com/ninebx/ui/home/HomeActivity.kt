@@ -142,12 +142,40 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
 
 
-        prepareRealmConnections( this, true,"Users", object : Realm.Callback( ) {
+        prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
 
-                val currentUsers = getCurrentUsers( realm!! )
-                if( currentUsers != null ) {
+                val currentUsers = getCurrentUsers(realm!!)
+                if (currentUsers != null) {
                     this@HomeActivity.hideProgressDialog()
+                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+
+                    /*     [(Users
+                            {
+                                fullName = '',
+                                firstName = 'IlknmnuBmU7zIssTPV2H0g==',
+                                lastName = 'eQ9xbxOvk7QAuJ/irrh7RA==',
+                                emailAddress = 'USnk9kHqDQgrTxKtjhzMleTaVdiPc2EKa9R/lvZy8yaQ+1Pt1Bex9AqTkXcceL2X',
+                                relationship = 'WAKmiU6q/6cJffKmTwBxIg==',
+                                dateOfBirth = 'Nt81ULb3/q1WlDnxA0S+Uw==',
+                                anniversary = '',
+                                gender = '+ALF7jhRFBzMIVVcXDWSAw==',
+                                mobileNumber = 'jSjQqGEsTRNa9sLHQV/oaJD7U+3UF7H0CpORdxx4vZc=',
+                                street_1 = 'ZpFNGh36F3nrC9o4IMmS6bxXM9EMHSZUXFo3JilQzAU=',
+                                street_2 = '9QkLLqpfKnDrA+chPfQrPw==',
+                                city = 'MvIAtZ7Zn/Q4ZQXIdIm2wA==',
+                                state = 'q0D6DfJ1RRCOcMzWuEPhjA==',
+                                zipCode = 'XnSFgr2I17R7UjWj0JNW8Q==',
+                                country = 'meye3+tDd0KoAzpq4s1UBg==',
+                                userId = 'ef65d95a015e9235a81a5dc030ded645',
+                                id = 1604651164,
+                                isCompleteProfile = true,
+                                profilePhoto = '',
+                                members = RealmList<?>@[]
+                            })]*/
+
+                    AppLogger.d("CurrentUser", "Decrypted : " + decryptUsers(currentUsers[0]!!))
+                    AppLogger.d("CurrentUser", "Encrypted : " + encryptUsers(currentUsers[0]!!))
                     AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
                 }
             }
@@ -222,8 +250,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             } else {
                 Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }
-        }
-        else if( requestCode == PERMISSIONS_REQUEST_CODE_GALLERY ) {
+        } else if (requestCode == PERMISSIONS_REQUEST_CODE_GALLERY) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 beginGalleryAttachmentFlow()
             } else {

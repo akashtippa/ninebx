@@ -18,14 +18,103 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedProperty implements Parcelable {
+    public static final Creator<DecryptedProperty> CREATOR = new Creator<DecryptedProperty>() {
+        @Override
+        public DecryptedProperty createFromParcel(Parcel in) {
+            return new DecryptedProperty(in);
+        }
+
+        @Override
+        public DecryptedProperty[] newArray(int size) {
+            return new DecryptedProperty[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String propertyName = "";
+    @Required
+    private String streetAddressOne = "";
+    @Required
+    private String streetAddressTwo = "";
+    @Required
+    private String city = "";
+    @Required
+    private String state = "";
+    @Required
+    private String zipCode = "";
+    @Required
+    private String country = "";
+    @Required
+    private String titleName = "";
+    @Required
+    private String purchaseDate = "";
+    @Required
+    private String purchasePrice = "";
+    @Required
+    private String estimatedMarketValue = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private Boolean currentlyRented = false;
+    @Required
+    private String tenantName = "";
+    @Required
+    private String leaseStartDate = "";
+    @Required
+    private String leaseEndDate = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+
+    public DecryptedProperty() {
+    }
+
+    protected DecryptedProperty(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        propertyName = in.readString();
+        streetAddressOne = in.readString();
+        streetAddressTwo = in.readString();
+        city = in.readString();
+        state = in.readString();
+        zipCode = in.readString();
+        country = in.readString();
+        titleName = in.readString();
+        purchaseDate = in.readString();
+        purchasePrice = in.readString();
+        estimatedMarketValue = in.readString();
+        contacts = in.readString();
+        byte tmpCurrentlyRented = in.readByte();
+        currentlyRented = tmpCurrentlyRented == 0 ? null : tmpCurrentlyRented == 1;
+        tenantName = in.readString();
+        leaseStartDate = in.readString();
+        leaseEndDate = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+    }
 
     public Integer getId() {
         return id;
@@ -42,10 +131,11 @@ public class DecryptedProperty implements Parcelable {
     public void setBackingImages(RealmList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
+
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -53,44 +143,9 @@ public class DecryptedProperty implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String propertyName = "";
-
-    @Required private String streetAddressOne = "";
-    @Required private String streetAddressTwo = "";
-    @Required private String city = "";
-    @Required private String state = "";
-    @Required private String zipCode = "";
-    @Required private String country = "";
-
-    @Required private String titleName = "";
-    @Required private String purchaseDate = "";
-    @Required private String purchasePrice = "";
-    @Required private String estimatedMarketValue = "";
-    @Required private String contacts = "";
-
-    @Required private Boolean currentlyRented = false;
-    @Required private String tenantName = "";
-    @Required private String leaseStartDate = "";
-    @Required private String leaseEndDate = "";
-
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    @Required private String notes = "";
-
-    @Required private String attachmentNames = "";
-
-    public DecryptedProperty() {
     }
 
     public String getSelectionType() {
@@ -277,36 +332,6 @@ public class DecryptedProperty implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedProperty(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        propertyName = in.readString();
-        streetAddressOne = in.readString();
-        streetAddressTwo = in.readString();
-        city = in.readString();
-        state = in.readString();
-        zipCode = in.readString();
-        country = in.readString();
-        titleName = in.readString();
-        purchaseDate = in.readString();
-        purchasePrice = in.readString();
-        estimatedMarketValue = in.readString();
-        contacts = in.readString();
-        byte tmpCurrentlyRented = in.readByte();
-        currentlyRented = tmpCurrentlyRented == 0 ? null : tmpCurrentlyRented == 1;
-        tenantName = in.readString();
-        leaseStartDate = in.readString();
-        leaseEndDate = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -340,17 +365,5 @@ public class DecryptedProperty implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedProperty> CREATOR = new Creator<DecryptedProperty>() {
-        @Override
-        public DecryptedProperty createFromParcel(Parcel in) {
-            return new DecryptedProperty(in);
-        }
-
-        @Override
-        public DecryptedProperty[] newArray(int size) {
-            return new DecryptedProperty[size];
-        }
-    };
 
 }

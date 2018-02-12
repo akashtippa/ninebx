@@ -1,9 +1,7 @@
 package com.ninebx.ui.home.fragments
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.widget.LinearLayoutManager
@@ -28,7 +26,6 @@ import java.util.*
 
 class ContactsFragments : FragmentBackHelper() {
 
-
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
@@ -49,12 +46,31 @@ class ContactsFragments : FragmentBackHelper() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        OpenTheContactPicker().execute()
 
+//        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
+        callContactPicker()
 
         // populate contact list
         populateContactList(mGroups, mContacts)
 
+    }
+
+    private fun callContactPicker() {
+        val intent = Intent(context, ContactPickerActivity::class.java)
+
+                .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE,
+                        ContactPictureType.ROUND.name)
+                .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
+                        ContactDescription.ADDRESS.name)
+                .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, true)
+                .putExtra(ContactPickerActivity.EXTRA_SELECT_CONTACTS_LIMIT, 0)
+                .putExtra(ContactPickerActivity.EXTRA_ONLY_CONTACTS_WITH_PHONE, false)
+                .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE,
+                        ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER,
+                        ContactSortOrder.AUTOMATIC.name)
+        startActivityForResult(intent, REQUEST_CONTACT)
     }
 
     private fun populateContactList(groups: List<Group>?, contacts: List<Contact>?) {
@@ -81,39 +97,6 @@ class ContactsFragments : FragmentBackHelper() {
             result.append(e.message)
         }
 
-    }
-
-
-    @SuppressLint("StaticFieldLeak")
-    inner class OpenTheContactPicker : AsyncTask<String, String, String>() {
-
-        override fun doInBackground(vararg p0: String?): String {
-            val Result: String = ""
-            try {
-                callContactPicker()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return Result
-        }
-
-    }
-
-    private fun callContactPicker() {
-        val intent = Intent(context, ContactPickerActivity::class.java)
-
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE,
-                        ContactPictureType.ROUND.name)
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
-                        ContactDescription.ADDRESS.name)
-                .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, true)
-                .putExtra(ContactPickerActivity.EXTRA_SELECT_CONTACTS_LIMIT, 0)
-                .putExtra(ContactPickerActivity.EXTRA_ONLY_CONTACTS_WITH_PHONE, false)
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE,
-                        ContactsContract.CommonDataKinds.Email.TYPE_WORK)
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER,
-                        ContactSortOrder.AUTOMATIC.name)
-        startActivityForResult(intent, REQUEST_CONTACT)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -153,6 +136,11 @@ class ContactsFragments : FragmentBackHelper() {
         result.append(prefix)
         result.append(displayName + "\n")
     }
+/*
+    override fun onBackPressed(): Boolean {
+        NineBxApplication.instance.activityInstance!!.showToolbar()
 
+        return super.onBackPressed()
+    }*/
 
 }
