@@ -1,11 +1,9 @@
 package com.ninebx.ui.auth
 
 import android.os.AsyncTask
-import com.google.gson.Gson
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.network.SignInResponse
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.NONE_COMPLETE
 import io.reactivex.Observer
@@ -16,10 +14,7 @@ import io.realm.ObjectServerError
 import io.realm.SyncCredentials
 import io.realm.SyncUser
 import okhttp3.ResponseBody
-import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -186,7 +181,6 @@ class LoginSignupTask(private var userName: String,
         super.onPostExecute(result)
         syncCredentials = result
         if( result != null ) {
-
             SyncUser.loginAsync(result, Constants.SERVER_IP, this)
         }
         else {

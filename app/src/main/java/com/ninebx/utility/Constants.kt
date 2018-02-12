@@ -61,8 +61,8 @@ object Constants {
     val CURRENT_BOX = "valCurrentBox"
 
     // Just for Testing
-    val TEST_FRAGMENT_A: String = "test_fragment_a"
-    val TEST_FRAGMENT_B: String = "test_fragment_b"
+    val USER_EMAIL_ID: String = "user_email"
+    val USER_PASSWORD: String = "user_password"
 
     val COUNTRY_SELECTED: String = "country_selected"
 

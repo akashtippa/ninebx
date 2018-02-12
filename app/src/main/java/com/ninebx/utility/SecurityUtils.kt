@@ -217,6 +217,7 @@ fun encryptAESKey( masterPassword : String ) : String {
 
 }
 
+
 fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
 
     val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
@@ -508,8 +509,8 @@ fun decryptMember(member: Member): DecryptedMember? {
     decryptedMember.changingMasterPassword  = member.changingMasterPassword
 
     decryptedMember.isCompleteProfile     = member.completeProfile
-    decryptedMember.profilePhoto        = "";
-    
+    decryptedMember.profilePhoto = ""
+
 
     return decryptedMember
 }

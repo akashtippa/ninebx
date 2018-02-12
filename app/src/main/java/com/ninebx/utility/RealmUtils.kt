@@ -7,12 +7,12 @@ import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import io.realm.*
-import io.realm.kotlin.where
 import java.util.*
 
 /**
  * Created by Alok on 18/01/18.
  */
+
 
 fun RealmObject.insertOrUpdate(realmInstance: Realm) {
     realmInstance.executeTransaction { realm -> realm.insertOrUpdate(this) }
@@ -36,7 +36,7 @@ fun closeConnection(realmConnection: Realm) {
     realmConnection.close()
 }
 
-fun getCurrentUsers(realmInstance: Realm ) : RealmResults<Users>? {
+fun getCurrentUsers(realmInstance: Realm): RealmResults<Users>? {
     return realmInstance.where(Users::class.java).findAll()
 }
 
@@ -101,7 +101,8 @@ private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
 
 }
 
-fun getRealmServerConnection( realmEndPoint: String, callback: Realm.Callback ) {
+
+fun getRealmServerConnection(realmEndPoint: String, callback: Realm.Callback) {
     val user = SyncUser.currentUser()
     AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_ADDRESS + realmEndPoint)
     val config = SyncConfiguration.Builder(user, Constants.SERVER_ADDRESS + realmEndPoint)
@@ -130,7 +131,7 @@ fun getUniqueId(): Int {
     return UUID.randomUUID().hashCode()
 }
 
-fun generateAttachmentFileName() : String {
+fun generateAttachmentFileName(): String {
     return UUID.randomUUID().toString()
 }
 
