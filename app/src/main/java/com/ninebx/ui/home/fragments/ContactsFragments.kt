@@ -46,6 +46,9 @@ class ContactsFragments : FragmentBackHelper() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         callContactPicker()
 
         // populate contact list
@@ -133,6 +136,11 @@ class ContactsFragments : FragmentBackHelper() {
         result.append(prefix)
         result.append(displayName + "\n")
     }
+/*
+    override fun onBackPressed(): Boolean {
+        NineBxApplication.instance.activityInstance!!.showToolbar()
 
+        return super.onBackPressed()
+    }*/
 
 }

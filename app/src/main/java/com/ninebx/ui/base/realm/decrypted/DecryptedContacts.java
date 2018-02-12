@@ -9,21 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
  */
-@RealmClass
 public class DecryptedContacts implements Parcelable {
 
+    public static final Creator<DecryptedContacts> CREATOR = new Creator<DecryptedContacts>() {
+        @Override
+        public DecryptedContacts createFromParcel(Parcel in) {
+            return new DecryptedContacts(in);
+        }
+
+        @Override
+        public DecryptedContacts[] newArray(int size) {
+            return new DecryptedContacts[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
     @Required
@@ -62,11 +69,8 @@ public class DecryptedContacts implements Parcelable {
     private Boolean isPrivate = false;
     @Required
     private String createdUser = "";
-
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -95,10 +99,33 @@ public class DecryptedContacts implements Parcelable {
         this.backingImages = backingImages;
     }
 
+
     public DecryptedContacts() {
     }
 
-    public DecryptedContacts(Parcel source) {
+    protected DecryptedContacts(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        dateOfBirth = in.readString();
+        anniversary = in.readString();
+        mobileOne = in.readString();
+        mobileTwo = in.readString();
+        emailOne = in.readString();
+        emailTwo = in.readString();
+        streetAddressOne = in.readString();
+        streetAddressTwo = in.readString();
+        city = in.readString();
+        state = in.readString();
+        zipCode = in.readString();
+        country = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
     }
 
     public Integer getId() {
@@ -269,7 +296,6 @@ public class DecryptedContacts implements Parcelable {
         this.backingImages = backingImages;
     }
 
-
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
         for (RealmString realmString : backingImages) {
@@ -277,7 +303,6 @@ public class DecryptedContacts implements Parcelable {
         }
         return photosId;
     }
-
 
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
@@ -313,19 +338,6 @@ public class DecryptedContacts implements Parcelable {
         dest.writeString(this.createdUser);
         dest.writeValue(this.isPrivate);
     }
-
-    public static final Parcelable.Creator<DecryptedContacts> CREATOR = new Parcelable.Creator<DecryptedContacts>() {
-        @Override
-        public DecryptedContacts createFromParcel(Parcel source) {
-            return new DecryptedContacts(source);
-        }
-
-        @Override
-        public DecryptedContacts[] newArray(int size) {
-            return new DecryptedContacts[size];
-        }
-    };
-
 
     @Override
     public String toString() {

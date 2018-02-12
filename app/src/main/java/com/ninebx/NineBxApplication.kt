@@ -5,7 +5,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
+import com.amazonaws.auth.CognitoCachingCredentialsProvider
+import com.amazonaws.regions.Regions
 import com.evernote.android.job.JobManager
+import com.ninebx.ui.base.network.NetModule
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.utility.FragmentOrganiser
@@ -16,9 +19,6 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.security.SecureRandom
-import com.amazonaws.regions.Regions
-import com.amazonaws.auth.CognitoCachingCredentialsProvider
-import com.ninebx.ui.base.network.NetModule
 
 
 /***
@@ -26,7 +26,7 @@ import com.ninebx.ui.base.network.NetModule
  */
 class NineBxApplication : MultiDexApplication() {
 
-    public fun getApplication() : NineBxApplication {
+    fun getApplication(): NineBxApplication {
         return this
     }
 

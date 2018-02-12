@@ -18,65 +18,56 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedAsset implements Parcelable {
+    public static final Creator<DecryptedAsset> CREATOR = new Creator<DecryptedAsset>() {
+        @Override
+        public DecryptedAsset createFromParcel(Parcel in) {
+            return new DecryptedAsset(in);
+        }
+
+        @Override
+        public DecryptedAsset[] newArray(int size) {
+            return new DecryptedAsset[size];
+        }
+    };
     @PrimaryKey //@Required
             int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public RealmList<RealmString> getBackingImages() {
-        return backingImages;
-    }
-
-    public void setBackingImages(RealmList<RealmString> backingImages) {
-        this.backingImages = backingImages;
-    }
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String test = "";
-    @Required private String assetName = "";
-    @Required private String descriptionOrLocation = "";
-    @Required private String estimatedMarketValue = "";
-    @Required private String serialNumber = "";
-    @Required private String purchaseDate = "";
-    @Required private String purchasePrice = "";
-    @Required private String contacts = "";
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-    @Required private String notes = "";
-    @Required private String imageName = "";
-    @Required private String attachmentNames = "";
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String test = "";
+    @Required
+    private String assetName = "";
+    @Required
+    private String descriptionOrLocation = "";
+    @Required
+    private String estimatedMarketValue = "";
+    @Required
+    private String serialNumber = "";
+    @Required
+    private String purchaseDate = "";
+    @Required
+    private String purchasePrice = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String imageName = "";
+    @Required
+    private String attachmentNames = "";
 
     public DecryptedAsset() {
     }
@@ -101,6 +92,60 @@ public class DecryptedAsset implements Parcelable {
         this.notes = notes;
         this.imageName = imageName;
         this.attachmentNames = attachmentNames;
+    }
+
+    protected DecryptedAsset(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        test = in.readString();
+        assetName = in.readString();
+        descriptionOrLocation = in.readString();
+        estimatedMarketValue = in.readString();
+        serialNumber = in.readString();
+        purchaseDate = in.readString();
+        purchasePrice = in.readString();
+        contacts = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        notes = in.readString();
+        imageName = in.readString();
+        attachmentNames = in.readString();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public RealmList<RealmString> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(RealmList<RealmString> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public String getSelectionType() {
@@ -231,28 +276,6 @@ public class DecryptedAsset implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedAsset(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        test = in.readString();
-        assetName = in.readString();
-        descriptionOrLocation = in.readString();
-        estimatedMarketValue = in.readString();
-        serialNumber = in.readString();
-        purchaseDate = in.readString();
-        purchasePrice = in.readString();
-        contacts = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        imageName = in.readString();
-        attachmentNames = in.readString();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -279,18 +302,6 @@ public class DecryptedAsset implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedAsset> CREATOR = new Creator<DecryptedAsset>() {
-        @Override
-        public DecryptedAsset createFromParcel(Parcel in) {
-            return new DecryptedAsset(in);
-        }
-
-        @Override
-        public DecryptedAsset[] newArray(int size) {
-            return new DecryptedAsset[size];
-        }
-    };
 
     @Override
     public String toString() {

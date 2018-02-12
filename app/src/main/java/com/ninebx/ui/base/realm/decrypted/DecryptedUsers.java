@@ -3,8 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.Member;
-
 import io.realm.RealmList;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -16,6 +14,17 @@ import io.realm.annotations.Required;
 
 public class DecryptedUsers implements Parcelable {
 
+    public static final Parcelable.Creator<DecryptedUsers> CREATOR = new Parcelable.Creator<DecryptedUsers>() {
+        @Override
+        public DecryptedUsers createFromParcel(Parcel source) {
+            return new DecryptedUsers(source);
+        }
+
+        @Override
+        public DecryptedUsers[] newArray(int size) {
+            return new DecryptedUsers[size];
+        }
+    };
     @Required
     private String fullName             = "";
     @Required
@@ -27,7 +36,6 @@ public class DecryptedUsers implements Parcelable {
     @Required private String anniversary          = "";
     @Required private String gender               = "";
     @Required private String mobileNumber         = "";
-
     @Required private String street_1             = "";
     @Required private String street_2             = "";
     @Required private String city                 = "";
@@ -35,16 +43,13 @@ public class DecryptedUsers implements Parcelable {
     @Required private String zipCode              = "";
     @Required private String country              = "";
     @Required private String userId               = "";
-
     @PrimaryKey //@Required
     private int id                  = 0;
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
-
     @Required private RealmList<DecryptedMember> members = new RealmList<DecryptedMember>();
     @Ignore
     private RealmList<DecryptedMember> decryptedMembers = new RealmList<DecryptedMember>();
-
 
     public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<DecryptedMember> members) {
         this.fullName = fullName;
@@ -67,6 +72,7 @@ public class DecryptedUsers implements Parcelable {
     public DecryptedUsers() {
     }
 
+
     public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<DecryptedMember> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
@@ -86,7 +92,31 @@ public class DecryptedUsers implements Parcelable {
         this.members = members;
     }
 
-
+    protected DecryptedUsers(Parcel in) {
+        this.fullName = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.emailAddress = in.readString();
+        this.relationship = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.gender = in.readString();
+        this.mobileNumber = in.readString();
+        this.street_1 = in.readString();
+        this.street_2 = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.userId = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.profilePhoto = in.readString();
+        this.members = new RealmList<>();
+        this.members.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
+        this.decryptedMembers = new RealmList<>();
+        this.decryptedMembers.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
+    }
 
     public String getUserId() {
         return userId;
@@ -256,7 +286,6 @@ public class DecryptedUsers implements Parcelable {
         this.decryptedMembers = decryptedMembers;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -286,44 +315,6 @@ public class DecryptedUsers implements Parcelable {
         dest.writeTypedList(this.members);
         dest.writeTypedList(this.decryptedMembers);
     }
-
-    protected DecryptedUsers(Parcel in) {
-        this.fullName = in.readString();
-        this.firstName = in.readString();
-        this.lastName = in.readString();
-        this.emailAddress = in.readString();
-        this.relationship = in.readString();
-        this.dateOfBirth = in.readString();
-        this.anniversary = in.readString();
-        this.gender = in.readString();
-        this.mobileNumber = in.readString();
-        this.street_1 = in.readString();
-        this.street_2 = in.readString();
-        this.city = in.readString();
-        this.state = in.readString();
-        this.zipCode = in.readString();
-        this.country = in.readString();
-        this.userId = in.readString();
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.profilePhoto = in.readString();
-        this.members = new RealmList<>();
-        this.members.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
-        this.decryptedMembers = new RealmList<>();
-        this.decryptedMembers.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
-    }
-
-    public static final Parcelable.Creator<DecryptedUsers> CREATOR = new Parcelable.Creator<DecryptedUsers>() {
-        @Override
-        public DecryptedUsers createFromParcel(Parcel source) {
-            return new DecryptedUsers(source);
-        }
-
-        @Override
-        public DecryptedUsers[] newArray(int size) {
-            return new DecryptedUsers[size];
-        }
-    };
 
     @Override
     public String toString() {

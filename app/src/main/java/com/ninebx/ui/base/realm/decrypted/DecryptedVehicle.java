@@ -18,81 +18,78 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedVehicle implements Parcelable {
+    public static final Creator<DecryptedVehicle> CREATOR = new Creator<DecryptedVehicle>() {
+        @Override
+        public DecryptedVehicle createFromParcel(Parcel in) {
+            return new DecryptedVehicle(in);
+        }
+
+        @Override
+        public DecryptedVehicle[] newArray(int size) {
+            return new DecryptedVehicle[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public RealmList<RealmString> getBackingImages() {
-        return backingImages;
-    }
-
-    public void setBackingImages(RealmList<RealmString> backingImages) {
-        this.backingImages = backingImages;
-    }
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String vehicleName = "";
-    @Required private String licenseNumber = "";
-
-    @Required private String vinNumber = "";
-    @Required private String make = "";
-    @Required private String model = "";
-    @Required private String modelYear = "";
-    @Required private String color = "";
-    @Required private String titleName = "";
-    @Required private String estimatedMarketValue = "";
-
-    @Required private String registrationExpirydate = "";
-    @Required private String purchasedOrLeased = "";
-    @Required private String purchaseDate = "";
-    @Required private String financedThroughLoan = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    @Required private String leaseStartDate = "";
-    @Required private String leaseEndDate = "";
-    @Required private String contacts = "";
-
-    @Required private String maintenanceEvent = "";
-    @Required private String serviceProviderName = "";
-    @Required private String dateOfService = "";
-    @Required private String vehicle = "";
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String vehicleName = "";
+    @Required
+    private String licenseNumber = "";
+    @Required
+    private String vinNumber = "";
+    @Required
+    private String make = "";
+    @Required
+    private String model = "";
+    @Required
+    private String modelYear = "";
+    @Required
+    private String color = "";
+    @Required
+    private String titleName = "";
+    @Required
+    private String estimatedMarketValue = "";
+    @Required
+    private String registrationExpirydate = "";
+    @Required
+    private String purchasedOrLeased = "";
+    @Required
+    private String purchaseDate = "";
+    @Required
+    private String financedThroughLoan = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
+    @Required
+    private String leaseStartDate = "";
+    @Required
+    private String leaseEndDate = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String maintenanceEvent = "";
+    @Required
+    private String serviceProviderName = "";
+    @Required
+    private String dateOfService = "";
+    @Required
+    private String vehicle = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
 
     public DecryptedVehicle() {
     }
@@ -128,6 +125,71 @@ public class DecryptedVehicle implements Parcelable {
         this.vehicle = vehicle;
         this.notes = notes;
         this.attachmentNames = attachmentNames;
+    }
+
+    protected DecryptedVehicle(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        vehicleName = in.readString();
+        licenseNumber = in.readString();
+        vinNumber = in.readString();
+        make = in.readString();
+        model = in.readString();
+        modelYear = in.readString();
+        color = in.readString();
+        titleName = in.readString();
+        estimatedMarketValue = in.readString();
+        registrationExpirydate = in.readString();
+        purchasedOrLeased = in.readString();
+        purchaseDate = in.readString();
+        financedThroughLoan = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        leaseStartDate = in.readString();
+        leaseEndDate = in.readString();
+        contacts = in.readString();
+        maintenanceEvent = in.readString();
+        serviceProviderName = in.readString();
+        dateOfService = in.readString();
+        vehicle = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public RealmList<RealmString> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(RealmList<RealmString> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public String getSelectionType() {
@@ -346,39 +408,6 @@ public class DecryptedVehicle implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedVehicle(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        vehicleName = in.readString();
-        licenseNumber = in.readString();
-        vinNumber = in.readString();
-        make = in.readString();
-        model = in.readString();
-        modelYear = in.readString();
-        color = in.readString();
-        titleName = in.readString();
-        estimatedMarketValue = in.readString();
-        registrationExpirydate = in.readString();
-        purchasedOrLeased = in.readString();
-        purchaseDate = in.readString();
-        financedThroughLoan = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        leaseStartDate = in.readString();
-        leaseEndDate = in.readString();
-        contacts = in.readString();
-        maintenanceEvent = in.readString();
-        serviceProviderName = in.readString();
-        dateOfService = in.readString();
-        vehicle = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -416,18 +445,6 @@ public class DecryptedVehicle implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedVehicle> CREATOR = new Creator<DecryptedVehicle>() {
-        @Override
-        public DecryptedVehicle createFromParcel(Parcel in) {
-            return new DecryptedVehicle(in);
-        }
-
-        @Override
-        public DecryptedVehicle[] newArray(int size) {
-            return new DecryptedVehicle[size];
-        }
-    };
 
     @Override
     public String toString() {

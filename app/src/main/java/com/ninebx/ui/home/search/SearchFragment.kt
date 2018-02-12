@@ -34,7 +34,7 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        SearchPresenter( this )
+        SearchPresenter(this)
     }
 }
 
