@@ -25,6 +25,10 @@ import com.ninebx.ui.base.realm.Users
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+    override fun fingerPrintCancelled() {
+        if( fingerPrintFragment != null ) fingerPrintFragment!!.fingerPrintCancelled()
+    }
+
     override fun navigateToStart() {
         supportFragmentManager.popBackStack()
         supportFragmentManager.popBackStack()
@@ -220,6 +224,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
         else return false
     }
 
+    private var fingerPrintFragment: FingerPrintFragment ?= null
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun navigateToFingerPrint() {
         if( checkForFingerPrint() ) {
@@ -228,7 +234,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             mCurrentTag = "FingerPrint"
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(FingerPrintFragment::class.java.simpleName)
-            val fingerPrintFragment = FingerPrintFragment()
+            fingerPrintFragment = FingerPrintFragment()
             fragmentTransaction.replace(R.id.container, fingerPrintFragment).commit()
         }
         else {

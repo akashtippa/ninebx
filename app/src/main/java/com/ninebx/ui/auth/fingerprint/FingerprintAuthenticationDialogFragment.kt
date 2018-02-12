@@ -89,7 +89,9 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         secondDialogButton = view.findViewById(R.id.second_dialog_button)
         useFingerprintFutureCheckBox = view.findViewById(R.id.use_fingerprint_in_future_check)
         fingerprint_description.text = getString(R.string.fingerprint_description) + " " + NineBxApplication.getPreferences().userEmail
-        cancelButton.setOnClickListener { dismiss() }
+        cancelButton.setOnClickListener {
+            authView!!.fingerPrintCancelled()
+            dismiss() }
         passwordEditText.setOnEditorActionListener(this)
         secondDialogButton.setOnClickListener {
             if (stage == Stage.FINGERPRINT) goToBackup() else verifyPassword()
