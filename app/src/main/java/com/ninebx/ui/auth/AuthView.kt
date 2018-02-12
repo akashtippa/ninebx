@@ -24,4 +24,5 @@ interface AuthView : BaseView {
     fun createUser(firstName: String, lastName: String, email: String)
     fun validateEmailOTP(emailOtp: String)
     fun navigateToStart()
+    fun fingerPrintCancelled()
 }

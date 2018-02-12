@@ -17,6 +17,7 @@ import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProperties.*
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AlertDialog
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,6 +122,12 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
                 mAuthView.navigateToHome()
             }
          }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvQuickAccess.text = Html.fromHtml( getString(R.string.allow_quicker_access), Html.FROM_HTML_MODE_LEGACY )
+        }
+        else {
+            tvQuickAccess.text = Html.fromHtml( getString(R.string.allow_quicker_access))
+        }
 
 
     }
@@ -143,7 +150,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         setupKeyStoreAndKeyGenerator()
         val (defaultCipher: Cipher, cipherNotInvalidated: Cipher) = setupCiphers()
         setUpPurchaseButtons(cipherNotInvalidated, defaultCipher)
-        showAuthDialog(defaultCipher, DEFAULT_KEY_NAME)
+        //showAuthDialog(defaultCipher, DEFAULT_KEY_NAME)
     }
 
     private fun setUpPurchaseButtons(cipherNotInvalidated: Cipher, defaultCipher: Cipher) {
@@ -171,6 +178,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     private fun showAuthDialog(cipher: Cipher, keyName: String) {
         val fragment = FingerprintAuthenticationDialogFragment()
         fragment.setCryptoObject(FingerprintManager.CryptoObject(cipher))
+        fragment.setAuthView( mAuthView )
         fragment.setCallback(this)
 
         // Set up the crypto object for later, which will be authenticated by fingerprint usage.
@@ -295,5 +303,9 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         private val KEY_NAME_NOT_INVALIDATED = "key_not_invalidated"
         private val SECRET_MESSAGE = "Very secret message"
         private val TAG = FingerPrintFragment::class.java.simpleName
+    }
+
+    fun fingerPrintCancelled() {
+        if( switchTouchId != null ) switchTouchId.isChecked = false
     }
 }
