@@ -104,7 +104,8 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
                 this
         )
         updateStage()
-
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
         // If fingerprint authentication is not available, switch immediately to the backup
         // (password) screen.
         if (!fingerprintUiHelper.isFingerprintAuthAvailable) {
