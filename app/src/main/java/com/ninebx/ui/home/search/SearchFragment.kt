@@ -16,11 +16,21 @@ import com.ninebx.utility.decryptFinancial
  * Created by Alok on 03/01/18.
  */
 class SearchFragment : Fragment(), SearchView {
-    override fun onCombineResultFetched(combine: Combine) {
+
+    override fun onCombineFetchedFinancial(combine: Combine) {
         //Show in logs
-        //  AppLogger.d("Combine", "DecryptedCombine" + decryptFinancial(combine[]!!))
-         AppLogger.d("CombineResult", "COmbine result fetched" + combine.financialItems[0]!!)
+
+         AppLogger.d("CombinFinancial", "Combine result fetched" + decryptFinancial(combine.financialItems[0]!!))
+         AppLogger.d("CombineFinancial", "Encrypted result fetched" + combine.financialItems[0]!!)
+
+
     }
+
+    override fun onCombineFetchedPayment(combine: Combine) {
+
+        AppLogger.d("CombinePayment", "Encrypted result fetched" + combine.paymentItems[0]!!)
+    }
+
 
     override fun showProgress(message: Int) {
 

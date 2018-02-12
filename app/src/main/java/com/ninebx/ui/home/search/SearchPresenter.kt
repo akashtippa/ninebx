@@ -18,8 +18,10 @@ class SearchPresenter( private val searchView: SearchView ) {
             override fun onSuccess(realm: Realm?) {
                 val combineResult = realm!!.where(Combine::class.java!!).findAll()
                 AppLogger.d("Combine", "Combined Results : " + combineResult)
-                if( combineResult.size > 0 )
-                    searchView.onCombineResultFetched(combineResult[0]!!)
+                if( combineResult.size > 0 ) {
+                    searchView.onCombineFetchedFinancial(combineResult[0]!!)
+                    searchView.onCombineFetchedPayment(combineResult[1]!!)
+                }
             }
         })
 
@@ -85,6 +87,5 @@ class SearchPresenter( private val searchView: SearchView ) {
                 AppLogger.d("Combine", "CombinedEvents : " + combineEvents)
             }
         })
-
     }
 }

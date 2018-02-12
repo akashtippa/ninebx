@@ -7,5 +7,6 @@ import com.ninebx.ui.base.realm.home.homeBanking.Combine
  * Created by Alok on 03/01/18.
  */
 interface SearchView : BaseView {
-    fun onCombineResultFetched(combine: Combine)
+    fun onCombineFetchedFinancial(combine: Combine)
+    fun onCombineFetchedPayment(combine: Combine)
 }
