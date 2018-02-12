@@ -86,7 +86,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun navigateToSignUp() {
         mCurrentTag = "SignUp"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addToBackStack(SignUpFragment::class.java.simpleName)
         fragmentTransaction.replace(R.id.container, SignUpFragment()).commit()
     }
 
@@ -94,7 +94,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun navigateToSignIn() {
         mCurrentTag = "SignIn"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addToBackStack(SignInFragment::class.java.simpleName)
         signInFragment = SignInFragment()
         fragmentTransaction.replace(R.id.container, signInFragment).commit()
     }
@@ -105,7 +105,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE
         mCurrentTag = "AccountPassword"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addToBackStack(AccountPasswordFragment::class.java.simpleName)
         accountPasswordFragment = AccountPasswordFragment()
         val bundle = Bundle()
         bundle.putParcelable(Constants.CURRENT_USER, users)
@@ -119,7 +119,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addToBackStack(OTPFragment::class.java.simpleName)
         otpFragment = OTPFragment()
         val bundle = Bundle()
 
@@ -140,7 +140,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         mCurrentTag = "PassCode"
         if( passCodeFragment == null ) {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.addToBackStack(PassCodeFragment::class.java.simpleName)
             passCodeFragment = PassCodeFragment()
             fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
         }
@@ -154,7 +154,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
             NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
         mCurrentTag = "InvitePeople"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addToBackStack(InvitePeopleFragment::class.java.simpleName)
         val invitePeopleFragment = InvitePeopleFragment()
         fragmentTransaction.replace(R.id.container, invitePeopleFragment).commit()
     }
@@ -227,7 +227,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
             mCurrentTag = "FingerPrint"
             val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.addToBackStack(FingerPrintFragment::class.java.simpleName)
             val fingerPrintFragment = FingerPrintFragment()
             fragmentTransaction.replace(R.id.container, fingerPrintFragment).commit()
         }
