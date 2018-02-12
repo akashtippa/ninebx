@@ -10,6 +10,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.SyncUser
@@ -64,6 +65,8 @@ class AccountPasswordFragment : BaseAuthFragment() {
         prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 mCurrentUser.id = getUniqueId()
+                mCurrentUser = encryptUsers( mCurrentUser )
+                AppLogger.d( "Encrypted", "Encrypted USer : " + mCurrentUser.toString())
                 mCurrentUser.insertOrUpdate( realm!! )
                 mAuthView.navigateToOTP()
             }

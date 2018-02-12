@@ -149,8 +149,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                 if( currentUsers != null ) {
                     this@HomeActivity.hideProgressDialog()
                     AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
-                    AppLogger.d("CurrentUser", "Decrypted : " + decryptUsers(currentUsers[0]!!))
-                    AppLogger.d("CurrentUser", "Encrypted : " + encryptUsers(currentUsers[0]!!))
                 }
             }
 

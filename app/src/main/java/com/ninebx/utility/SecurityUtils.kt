@@ -350,24 +350,22 @@ fun String.decryptString( ) : String {
 
 fun encryptUsers( currentUser: Users ): Users {
 
-    currentUser.fullName.encryptString()
-    currentUser.firstName.encryptString()
-    currentUser.lastName.encryptString()
-    currentUser.emailAddress.encryptString()
-    currentUser.relationship.encryptString()
-    currentUser.dateOfBirth.encryptString()
-    currentUser.anniversary.encryptString()
-    currentUser.gender.encryptString()
-    currentUser.mobileNumber.encryptString()
+    currentUser.fullName = currentUser.fullName.encryptString()
+    currentUser.firstName = currentUser.firstName.encryptString()
+    currentUser.lastName = currentUser.lastName.encryptString()
+    currentUser.emailAddress = currentUser.emailAddress.encryptString()
+    currentUser.relationship = currentUser.relationship.encryptString()
+    currentUser.dateOfBirth = currentUser.dateOfBirth.encryptString()
+    currentUser.anniversary = currentUser.anniversary.encryptString()
+    currentUser.gender = currentUser.gender.encryptString()
+    currentUser.mobileNumber = currentUser.mobileNumber.encryptString()
 
-    currentUser.street_1.encryptString()
-    currentUser.street_2.encryptString()
-    currentUser.city.encryptString()
-    currentUser.state.encryptString()
-    currentUser.zipCode.encryptString()
-    currentUser.country.encryptString()
-    currentUser.userId.encryptString()
-    currentUser.profilePhoto.encryptString()
+    currentUser.street_1 = currentUser.street_1.encryptString()
+    currentUser.street_2 = currentUser.street_2.encryptString()
+    currentUser.city = currentUser.city.encryptString()
+    currentUser.state = currentUser.state.encryptString()
+    currentUser.zipCode = currentUser.zipCode.encryptString()
+    currentUser.country = currentUser.country.encryptString()
 
     currentUser.decryptedMembers = encryptMembers( currentUser.members )
 
@@ -408,7 +406,7 @@ fun encryptMember(member: Member): Member? {
     return member
 }
 
-fun decryptUsers(currentUser: Users ) : DecryptedUsers {
+fun decryptUsers( currentUser: Users ) : DecryptedUsers {
     
     val decryptedUsers = DecryptedUsers()
     
