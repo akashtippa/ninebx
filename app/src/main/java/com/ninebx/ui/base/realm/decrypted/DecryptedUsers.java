@@ -41,12 +41,12 @@ public class DecryptedUsers implements Parcelable {
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
 
-    @Required private RealmList<Member> members = new RealmList<Member>();
+    @Required private RealmList<DecryptedMember> members = new RealmList<DecryptedMember>();
     @Ignore
-    private RealmList<Member> decryptedMembers = new RealmList<Member>();
+    private RealmList<DecryptedMember> decryptedMembers = new RealmList<DecryptedMember>();
 
 
-    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<Member> members) {
+    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<DecryptedMember> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -67,7 +67,7 @@ public class DecryptedUsers implements Parcelable {
     public DecryptedUsers() {
     }
 
-    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<Member> members) {
+    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<DecryptedMember> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -208,11 +208,11 @@ public class DecryptedUsers implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<Member> getMembers() {
+    public RealmList<DecryptedMember> getMembers() {
         return members;
     }
 
-    public void setMembers(RealmList<Member> members) {
+    public void setMembers(RealmList<DecryptedMember> members) {
         this.members = members;
     }
 
@@ -248,11 +248,11 @@ public class DecryptedUsers implements Parcelable {
         this.profilePhoto = profilePhoto;
     }
 
-    public RealmList<Member> getDecryptedMembers() {
+    public RealmList<DecryptedMember> getDecryptedMembers() {
         return decryptedMembers;
     }
 
-    public void setDecryptedMembers(RealmList<Member> decryptedMembers) {
+    public void setDecryptedMembers(RealmList<DecryptedMember> decryptedMembers) {
         this.decryptedMembers = decryptedMembers;
     }
 
@@ -308,9 +308,9 @@ public class DecryptedUsers implements Parcelable {
         this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.profilePhoto = in.readString();
         this.members = new RealmList<>();
-        this.members.addAll(in.createTypedArrayList(Member.CREATOR));
+        this.members.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
         this.decryptedMembers = new RealmList<>();
-        this.decryptedMembers.addAll(in.createTypedArrayList(Member.CREATOR));
+        this.decryptedMembers.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
     }
 
     public static final Parcelable.Creator<DecryptedUsers> CREATOR = new Parcelable.Creator<DecryptedUsers>() {

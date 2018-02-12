@@ -512,6 +512,9 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private fun saveCalendarEvent() {
+
+        if( isAddEvent ) mCalendarEvent.id = getUniqueId()
+
         val eventCalendar = Calendar.getInstance()
         eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
         AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
