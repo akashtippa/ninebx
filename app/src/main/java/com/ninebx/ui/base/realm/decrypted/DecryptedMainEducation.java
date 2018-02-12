@@ -1,4 +1,7 @@
-package com.ninebx.ui.base.realm.home.education;
+package com.ninebx.ui.base.realm.decrypted;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
@@ -6,22 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
- * Created by Alok on 24/01/18.
+ * Created by smrit on 12-02-2018.
  */
-@RealmClass
-public class MainEducation extends RealmObject {
+
+public class DecryptedMainEducation implements Parcelable{
 
     @PrimaryKey //@Required
     private int id = 0;
 
-    @Required private String selectionType = "";
+    @Required
+    private String selectionType = "";
     @Required private String classType = "MainEducation";
 
     @Required private String institutionName = "";
@@ -67,7 +69,10 @@ public class MainEducation extends RealmObject {
         }
     }
 
-    public MainEducation(int id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public DecryptedMainEducation() {
+    }
+
+    public DecryptedMainEducation(int id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -86,12 +91,11 @@ public class MainEducation extends RealmObject {
         this.isPrivate = isPrivate;
         this.attachmentNames = attachmentNames;
         this.createdUser = createdUser;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
     }
 
-    public MainEducation() {
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -243,4 +247,93 @@ public class MainEducation extends RealmObject {
         this.backingImages = backingImages;
     }
 
+    protected DecryptedMainEducation(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        classType = in.readString();
+        institutionName = in.readString();
+        qualification = in.readString();
+        name = in.readString();
+        location = in.readString();
+        major = in.readString();
+        from = in.readString();
+        to = in.readString();
+        currentlyStudying = in.readString();
+        byte tmpIsCurrent = in.readByte();
+        isCurrent = tmpIsCurrent == 0 ? null : tmpIsCurrent == 1;
+        notes = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        attachmentNames = in.readString();
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(selectionType);
+        dest.writeString(classType);
+        dest.writeString(institutionName);
+        dest.writeString(qualification);
+        dest.writeString(name);
+        dest.writeString(location);
+        dest.writeString(major);
+        dest.writeString(from);
+        dest.writeString(to);
+        dest.writeString(currentlyStudying);
+        dest.writeByte((byte) (isCurrent == null ? 0 : isCurrent ? 1 : 2));
+        dest.writeString(notes);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(attachmentNames);
+        dest.writeString(createdUser);
+        dest.writeStringList(photosId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DecryptedMainEducation> CREATOR = new Creator<DecryptedMainEducation>() {
+        @Override
+        public DecryptedMainEducation createFromParcel(Parcel in) {
+            return new DecryptedMainEducation(in);
+        }
+
+        @Override
+        public DecryptedMainEducation[] newArray(int size) {
+            return new DecryptedMainEducation[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "DecryptedMainEducation{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", qualification='" + qualification + '\'' +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", major='" + major + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", currentlyStudying='" + currentlyStudying + '\'' +
+                ", isCurrent=" + isCurrent +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }

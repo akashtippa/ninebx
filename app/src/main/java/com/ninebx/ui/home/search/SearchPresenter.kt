@@ -2,7 +2,6 @@ package com.ninebx.ui.home.search
 
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.utility.AppLogger
-import com.ninebx.utility.decryptAESKEY
 import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
@@ -19,6 +18,8 @@ class SearchPresenter( private val searchView: SearchView ) {
             override fun onSuccess(realm: Realm?) {
                 val combineResult = realm!!.where(Combine::class.java!!).findAll()
                 AppLogger.d("Combine", "Combined Results : " + combineResult)
+                if( combineResult.size > 0 )
+                    searchView.onCombineResultFetched(combineResult[0]!!)
             }
         })
 

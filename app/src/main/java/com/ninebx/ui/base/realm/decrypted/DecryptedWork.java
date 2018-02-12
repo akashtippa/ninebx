@@ -1,4 +1,7 @@
-package com.ninebx.ui.base.realm.home.education;
+package com.ninebx.ui.base.realm.decrypted;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
@@ -6,22 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
- * Created by Alok on 24/01/18.
+ * Created by smrit on 12-02-2018.
  */
-@RealmClass
-public class Work extends RealmObject {
 
+public class DecryptedWork implements Parcelable{
     @PrimaryKey //@Required
     private int id = 0;
 
-    @Required private String selectionType = "";
+    @Required
+    private String selectionType = "";
     @Required private String classType = "Work";
 
     @Required private String companyName = "";
@@ -48,6 +49,68 @@ public class Work extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
+    protected DecryptedWork(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        classType = in.readString();
+        companyName = in.readString();
+        position = in.readString();
+        name = in.readString();
+        location = in.readString();
+        from = in.readString();
+        to = in.readString();
+        currentWork = in.readString();
+        byte tmpIsCurrent = in.readByte();
+        isCurrent = tmpIsCurrent == 0 ? null : tmpIsCurrent == 1;
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        notes = in.readString();
+        attachmentNames = in.readString();
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(selectionType);
+        dest.writeString(classType);
+        dest.writeString(companyName);
+        dest.writeString(position);
+        dest.writeString(name);
+        dest.writeString(location);
+        dest.writeString(from);
+        dest.writeString(to);
+        dest.writeString(currentWork);
+        dest.writeByte((byte) (isCurrent == null ? 0 : isCurrent ? 1 : 2));
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(notes);
+        dest.writeString(attachmentNames);
+        dest.writeString(createdUser);
+        dest.writeStringList(photosId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DecryptedWork> CREATOR = new Creator<DecryptedWork>() {
+        @Override
+        public DecryptedWork createFromParcel(Parcel in) {
+            return new DecryptedWork(in);
+        }
+
+        @Override
+        public DecryptedWork[] newArray(int size) {
+            return new DecryptedWork[size];
+        }
+    };
+
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
         for( RealmString realmString : backingImages ) {
@@ -64,7 +127,10 @@ public class Work extends RealmObject {
         }
     }
 
-    public Work(int id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public DecryptedWork() {
+    }
+
+    public DecryptedWork(int id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -86,10 +152,7 @@ public class Work extends RealmObject {
         this.photosId = photosId;
     }
 
-    public Work() {
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -233,4 +296,28 @@ public class Work extends RealmObject {
         this.backingImages = backingImages;
     }
 
+    @Override
+    public String toString() {
+        return "DecryptedWork{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", position='" + position + '\'' +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", currentWork='" + currentWork + '\'' +
+                ", isCurrent=" + isCurrent +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }
