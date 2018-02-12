@@ -117,19 +117,16 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             true
         }
 
-//        changeToolbarTitle(titleText)
 
         toggleToolbarImage()
         ivHome.setOnClickListener {
             layoutQuickAdd.show()
             ivHome.hide()
             toggleCheck(false)
-//            changeToolbarTitle(titleText)
             toggleToolbarImage()
             callHomeFragment()
             showBottomView()
             ivBack.hide()
-//            toolbarTitle.textSize = pxFromDp(16F, this)
         }
 
         ivBack.setOnClickListener {
