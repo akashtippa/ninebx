@@ -25,6 +25,7 @@ class NineBxPreferences : Preferences() {
     var testinFragmentB by stringPref(Constants.TEST_FRAGMENT_B)
 
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
+    var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)
 
 
 }
