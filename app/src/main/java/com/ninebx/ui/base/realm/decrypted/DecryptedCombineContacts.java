@@ -15,7 +15,6 @@ import io.realm.annotations.Required;
 /**
  * Created by Alok on 24/01/18.
  */
-@RealmClass
 public class DecryptedCombineContacts implements Parcelable {
 
     public static final Creator<DecryptedCombineContacts> CREATOR = new Creator<DecryptedCombineContacts>() {

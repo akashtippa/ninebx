@@ -1,13 +1,9 @@
-package com.ninebx.ui.base.realm.home.education;
+package com.ninebx.ui.base.realm.decrypted;
 
-import com.ninebx.ui.base.realm.RealmString;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
@@ -15,14 +11,13 @@ import io.realm.annotations.Required;
 /**
  * Created by Alok on 24/01/18.
  */
-@RealmClass
-public class Education extends RealmObject {
+public class DecryptedMainMemories implements Parcelable {
 
     @PrimaryKey //@Required
     private int id = 0;
 
-    @Required private String selectionType = "";
-
+    @Required
+    private String selectionType = "";
     @Required private String institutionName = "";
     @Required private String accountName = "";
 
@@ -40,40 +35,16 @@ public class Education extends RealmObject {
     @Required private String pin = "";
     @Required private String paymentMethodOnFile = "";
 
-    @Required private String notes = "";
-
-    @Required private String attachmentNames = "";
-
-    @Required private String title = "";
-
     @Required private String created = "";
     @Required private String modified = "";
     @Required private Boolean isPrivate = false;
+
+    @Required private String notes = "";
+    @Required private String attachmentNames = "";
+    @Required private String title = "";
     @Required private String createdUser = "";
 
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
-
-    @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
-    public Education(int id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
-        this.id = id;
+    public DecryptedMainMemories(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
         this.selectionType = selectionType;
         this.institutionName = institutionName;
         this.accountName = accountName;
@@ -89,27 +60,85 @@ public class Education extends RealmObject {
         this.password = password;
         this.pin = pin;
         this.paymentMethodOnFile = paymentMethodOnFile;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.title = title;
         this.created = created;
         this.modified = modified;
         this.isPrivate = isPrivate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.title = title;
         this.createdUser = createdUser;
-        this.backingImages = backingImages;
-        this.photosId = photosId;
     }
 
-    public Education() {
+    protected DecryptedMainMemories(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        institutionName = in.readString();
+        accountName = in.readString();
+        accountType = in.readString();
+        nameOnAccount = in.readString();
+        accountNumber = in.readString();
+        location = in.readString();
+        swiftCode = in.readString();
+        abaRoutingNumber = in.readString();
+        contacts = in.readString();
+        website = in.readString();
+        userName = in.readString();
+        password = in.readString();
+        pin = in.readString();
+        paymentMethodOnFile = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        notes = in.readString();
+        attachmentNames = in.readString();
+        title = in.readString();
+        createdUser = in.readString();
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(selectionType);
+        dest.writeString(institutionName);
+        dest.writeString(accountName);
+        dest.writeString(accountType);
+        dest.writeString(nameOnAccount);
+        dest.writeString(accountNumber);
+        dest.writeString(location);
+        dest.writeString(swiftCode);
+        dest.writeString(abaRoutingNumber);
+        dest.writeString(contacts);
+        dest.writeString(website);
+        dest.writeString(userName);
+        dest.writeString(password);
+        dest.writeString(pin);
+        dest.writeString(paymentMethodOnFile);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(notes);
+        dest.writeString(attachmentNames);
+        dest.writeString(title);
+        dest.writeString(createdUser);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    public static final Creator<DecryptedMainMemories> CREATOR = new Creator<DecryptedMainMemories>() {
+        @Override
+        public DecryptedMainMemories createFromParcel(Parcel in) {
+            return new DecryptedMainMemories(in);
+        }
+
+        @Override
+        public DecryptedMainMemories[] newArray(int size) {
+            return new DecryptedMainMemories[size];
+        }
+    };
 
     public String getSelectionType() {
         return selectionType;
@@ -231,30 +260,6 @@ public class Education extends RealmObject {
         this.paymentMethodOnFile = paymentMethodOnFile;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getAttachmentNames() {
-        return attachmentNames;
-    }
-
-    public void setAttachmentNames(String attachmentNames) {
-        this.attachmentNames = attachmentNames;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getCreated() {
         return created;
     }
@@ -279,6 +284,30 @@ public class Education extends RealmObject {
         isPrivate = aPrivate;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getAttachmentNames() {
+        return attachmentNames;
+    }
+
+    public void setAttachmentNames(String attachmentNames) {
+        this.attachmentNames = attachmentNames;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getCreatedUser() {
         return createdUser;
     }
@@ -287,12 +316,6 @@ public class Education extends RealmObject {
         this.createdUser = createdUser;
     }
 
-    public RealmList<RealmString> getBackingImages() {
-        return backingImages;
+    public DecryptedMainMemories() {
     }
-
-    public void setBackingImages(RealmList<RealmString> backingImages) {
-        this.backingImages = backingImages;
-    }
-
 }

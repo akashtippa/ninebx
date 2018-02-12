@@ -9,6 +9,9 @@ import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.RealmString
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.education.Education
+import com.ninebx.ui.base.realm.home.education.MainEducation
+import com.ninebx.ui.base.realm.home.education.Work
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.homeBanking.*
 import com.ninebx.ui.base.realm.lists.HomeList
@@ -74,14 +77,14 @@ fun encryptAESKeyPassword(inputString: String, privateKey: ByteArray): String {
 
 fun decryptAESKEYPassword(cipherTextBase64: ByteArray?, masterPassword: ByteArray): String {
 
-    val keyBytes = (masterPassword)
+    val keyBytes = ( masterPassword )
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
     AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
     val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
+    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
 
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
@@ -98,12 +101,12 @@ fun decryptAESKEYPassword(cipherTextBase64: ByteArray?, masterPassword: ByteArra
     return String(plainText).substring(0, ptLength)
 }
 
-fun encryptAESKey(inputString: String, privateKey: String): String {
+fun encryptAESKey( inputString : String, privateKey : String ) : String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
     val input = inputString.toByteArray()
-    val keyBytes = (privateKey.toByteArray(Charsets.UTF_8))
+    val keyBytes = ( privateKey.toByteArray(Charsets.UTF_8) )
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
     AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
@@ -116,22 +119,22 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
     var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
     ctLength += cipher.doFinal(cipherText, ctLength)
 
-    val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
 
-    return String(cipherTextBase64)
+    return String( cipherTextBase64 )
 
 }
 
-fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String {
+fun decryptAESKEY( cipherTextBase64: ByteArray?, masterPassword : String ) : String {
 
-    val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
+    val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
     AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
     val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
+    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
 
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
@@ -148,12 +151,12 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
     return String(plainText).substring(0, ptLength)
 }
 
-fun encryptDecryptAESKey(masterPassword: String): String {
+fun encryptDecryptAESKey( masterPassword : String ) : String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
     val input = "www.javacodegeeks.com".toByteArray()
-    val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
+    val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
     AppLogger.d("decryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
@@ -166,12 +169,12 @@ fun encryptDecryptAESKey(masterPassword: String): String {
     var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
     ctLength += cipher.doFinal(cipherText, ctLength)
 
-    val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
 
     AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
     val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher )
+    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()) )
     AppLogger.d("decryptAESKey", "Cipher Length : " + cipherText.size)
     AppLogger.d("decryptAESKey", "Cipher Length : " + ctLength)
 
@@ -191,12 +194,12 @@ fun encryptDecryptAESKey(masterPassword: String): String {
 
 }
 
-fun encryptAESKey(masterPassword: String): String {
+fun encryptAESKey( masterPassword : String ) : String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
     val input = "www.javacodegeeks.com".toByteArray()
-    val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
+    val keyBytes = ( masterPassword.toByteArray(Charsets.UTF_8) )
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
@@ -210,9 +213,9 @@ fun encryptAESKey(masterPassword: String): String {
     var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
     ctLength += cipher.doFinal(cipherText, ctLength)
 
-    val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
+    val cipherTextBase64 = Base64.encode( cipherText, Base64.DEFAULT )
 
-    decryptAESKey(cipherTextBase64, masterPassword)
+    decryptAESKey( cipherTextBase64, masterPassword )
 
 
 
@@ -254,23 +257,24 @@ let valueTwo = try PKCS5.PBKDF2(password: password, salt: salt, iterations: 2000
 return valueTwo.description
 [-68, -100, 77, -35, -54, -57, -17, 127, -16, 3, -117, -8, 54, 89, 82, 75, 68, 77, -118, -98, 124, -89, -121, -34, -96, -48, -53, -114, 112, -77, 91, 49]
  * */
-fun encryptKey(password: String, salt: String): ByteArray {
+fun encryptKey( password: String, salt: String ) : ByteArray {
     val generator = CustomPKCS5S2ParametersGenerator(SHA256Digest())
     generator.init(CustomPBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password.toCharArray()), salt.toByteArray(Charsets.UTF_8), 20000)
     val key = generator.generateDerivedMacParameters(256) as CustomKeyParameter
     return key.key
 }
 
-fun convertToUInt8IntArray(key: ByteArray?): IntArray {
+fun convertToUInt8IntArray( key: ByteArray? ): IntArray {
 
     val intArray = kotlin.IntArray(key!!.size)
-    for (index in 0 until key.size) {
+    for( index in 0 until key.size ) {
         val keyValue = key[index]
         var indexKey = keyValue.toInt()
-        if (indexKey < 0) {
+        if(indexKey < 0) {
             indexKey += 256
             intArray[index] = indexKey
-        } else {
+        }
+        else {
             intArray[index] = indexKey
         }
     }
@@ -278,16 +282,17 @@ fun convertToUInt8IntArray(key: ByteArray?): IntArray {
 
 }
 
-fun convertToUInt8(key: ByteArray?): String {
+fun convertToUInt8( key: ByteArray? ): String {
 
     val intArray = kotlin.IntArray(key!!.size)
-    for (index in 0 until key.size) {
+    for( index in 0 until key.size ) {
         val keyValue = key[index]
         var indexKey = keyValue.toInt()
-        if (indexKey < 0) {
+        if(indexKey < 0) {
             indexKey += 256
             intArray[index] = indexKey
-        } else {
+        }
+        else {
             intArray[index] = indexKey
         }
     }
@@ -295,16 +300,17 @@ fun convertToUInt8(key: ByteArray?): String {
 
 }
 
-private fun convertToByte(key: CharArray): String {
+private fun convertToByte( key: CharArray ): String {
 
     val intArray = kotlin.IntArray(key.size)
-    for (index in 0 until key.size) {
+    for( index in 0 until key.size ) {
         val keyValue = key[index]
         var indexKey = keyValue.toInt()
-        if (indexKey > 128) {
+        if(indexKey > 128) {
             indexKey -= 256
             intArray[index] = indexKey
-        } else {
+        }
+        else {
             intArray[index] = indexKey
         }
     }
@@ -314,7 +320,7 @@ private fun convertToByte(key: CharArray): String {
 
 fun isValidPassword(password: String): Boolean {
 
-    if (password.length < 8) {
+    if( password.length < 8 ) {
         return false
     }
 
@@ -330,53 +336,54 @@ fun isValidPassword(password: String): Boolean {
 }
 
 
-fun securityTest() {
+fun securityTest( ) {
     val privateKey = randomString(16)
 
-    val encryptedKey = encryptAESKey(privateKey, privateKey)
+    val encryptedKey = encryptAESKey( privateKey, privateKey )
     AppLogger.d("securityTest", "Encrypted Key : " + encryptedKey)
 
-    val decryptedKey = decryptAESKEY(encryptedKey.toByteArray(Charsets.UTF_8), privateKey)
+    val decryptedKey = decryptAESKEY( encryptedKey.toByteArray(Charsets.UTF_8), privateKey )
     AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
 }
 
-fun String.encryptString(): String {
-    return encryptAESKey(this, NineBxApplication.getPreferences().privateKey!!)
+fun String.encryptString( ) : String {
+    return encryptAESKey( this, NineBxApplication.getPreferences().privateKey!! )
 }
 
-fun String.decryptString(): String {
-    return decryptAESKEY(this.toByteArray(), NineBxApplication.getPreferences().privateKey!!)
+fun String.decryptString( ) : String {
+    if( this.isEmpty() ) {
+        return ""
+    }
+    return decryptAESKEY( this.toByteArray(), NineBxApplication.getPreferences().privateKey!! )
 }
 
-fun encryptUsers(currentUser: Users): Users {
+fun encryptUsers( currentUser: Users ): Users {
 
-    currentUser.fullName.encryptString()
-    currentUser.firstName.encryptString()
-    currentUser.lastName.encryptString()
-    currentUser.emailAddress.encryptString()
-    currentUser.relationship.encryptString()
-    currentUser.dateOfBirth.encryptString()
-    currentUser.anniversary.encryptString()
-    currentUser.gender.encryptString()
-    currentUser.mobileNumber.encryptString()
+    currentUser.fullName = currentUser.fullName.encryptString()
+    currentUser.firstName = currentUser.firstName.encryptString()
+    currentUser.lastName = currentUser.lastName.encryptString()
+    currentUser.emailAddress = currentUser.emailAddress.encryptString()
+    currentUser.relationship = currentUser.relationship.encryptString()
+    currentUser.dateOfBirth = currentUser.dateOfBirth.encryptString()
+    currentUser.anniversary = currentUser.anniversary.encryptString()
+    currentUser.gender = currentUser.gender.encryptString()
+    currentUser.mobileNumber = currentUser.mobileNumber.encryptString()
 
-    currentUser.street_1.encryptString()
-    currentUser.street_2.encryptString()
-    currentUser.city.encryptString()
-    currentUser.state.encryptString()
-    currentUser.zipCode.encryptString()
-    currentUser.country.encryptString()
-    currentUser.userId.encryptString()
-    currentUser.profilePhoto.encryptString()
+    currentUser.street_1 = currentUser.street_1.encryptString()
+    currentUser.street_2 = currentUser.street_2.encryptString()
+    currentUser.city = currentUser.city.encryptString()
+    currentUser.state = currentUser.state.encryptString()
+    currentUser.zipCode = currentUser.zipCode.encryptString()
+    currentUser.country = currentUser.country.encryptString()
 
-    currentUser.decryptedMembers = encryptMembers(currentUser.members)
+    currentUser.decryptedMembers = encryptMembers( currentUser.members )
 
     return currentUser
-
+    
 }
 
-fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
-    for (i in 0 until members.size) {
+fun encryptMembers( members: RealmList<Member> ): RealmList<Member>? {
+    for( i in 0 until members.size ) {
         var member = members[i]
         member = encryptMember(member!!)
     }
@@ -385,33 +392,33 @@ fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName.encryptString()
-    member.lastName.encryptString()
-    member.relationship.encryptString()
-    member.role.encryptString()
-    member.email.encryptString()
+    member.firstName            .encryptString()
+    member. lastName             .encryptString()
+    member. relationship         .encryptString()
+    member. role                 .encryptString()
+    member. email                .encryptString()
 
-    member.dateOfBirth.encryptString()
-    member.anniversary.encryptString()
-    member.gender.encryptString()
-    member.mobileNumber.encryptString()
-    member.street_1.encryptString()
-    member.street_2.encryptString()
-    member.city.encryptString()
-    member.state.encryptString()
-    member.zipCode.encryptString()
-    member.country.encryptString()
+    member.dateOfBirth         .encryptString()
+    member.anniversary         .encryptString()
+    member.gender              .encryptString()
+    member.mobileNumber        .encryptString()
+    member.street_1            .encryptString()
+    member.street_2            .encryptString()
+    member.city                .encryptString()
+    member.state               .encryptString()
+    member.zipCode             .encryptString()
+    member.country             .encryptString()
 
-    member.userId.encryptString()
-
-    member.profilePhoto.encryptString()
+    member.userId              .encryptString()
+    
+    member.profilePhoto        .encryptString()
     return member
 }
 
-fun decryptUsers(currentUser: Users): DecryptedUsers {
-
+fun decryptUsers(currentUser: Users ) : DecryptedUsers {
+    
     val decryptedUsers = DecryptedUsers()
-
+    
     decryptedUsers.fullName = currentUser.fullName.decryptString()
     decryptedUsers.firstName = currentUser.firstName.decryptString()
     decryptedUsers.lastName = currentUser.lastName.decryptString()
@@ -431,17 +438,17 @@ fun decryptUsers(currentUser: Users): DecryptedUsers {
     decryptedUsers.userId = currentUser.userId
     decryptedUsers.profilePhoto = currentUser.profilePhoto
 
-    decryptedUsers.decryptedMembers = decryptMembers(currentUser.members)
-    AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers)
+    decryptedUsers.decryptedMembers = decryptMembers( currentUser.members )
+    AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers )
     return decryptedUsers
 }
 
-fun decryptMembers(members: RealmList<Member>): RealmList<DecryptedMember>? {
+fun decryptMembers( members: RealmList<Member> ): RealmList<DecryptedMember>? {
     val decryptedMembers = RealmList<DecryptedMember>()
-    for (i in 0 until members.size) {
+    for( i in 0 until members.size ) {
         val member = members[i]
-        val decryptedMember = decryptMember(member!!)
-        decryptedMembers.add(decryptedMember)
+        val decryptedMember = decryptMember( member!!)
+        decryptedMembers.add( decryptedMember )
     }
     return decryptedMembers
 }
@@ -449,74 +456,72 @@ fun decryptMembers(members: RealmList<Member>): RealmList<DecryptedMember>? {
 fun decryptMember(member: Member): DecryptedMember? {
 
     val decryptedMember = DecryptedMember()
+    
+    decryptedMember.firstName = member.firstName            .decryptString()
+    decryptedMember.lastName = member. lastName             .decryptString()
+    decryptedMember.relationship = member. relationship         .decryptString()
+    decryptedMember.role = member. role                 .decryptString()
+    decryptedMember.email = member. email                .decryptString()
 
-    decryptedMember.firstName = member.firstName.decryptString()
-    decryptedMember.lastName = member.lastName.decryptString()
-    decryptedMember.relationship = member.relationship.decryptString()
-    decryptedMember.role = member.role.decryptString()
-    decryptedMember.email = member.email.decryptString()
+    decryptedMember.dateOfBirth = member.dateOfBirth         .decryptString()
+    decryptedMember.anniversary = member.anniversary         .decryptString()
+    decryptedMember.gender = member.gender              .decryptString()
+    decryptedMember.mobileNumber = member.mobileNumber        .decryptString()
+    decryptedMember.street_1 = member.street_1            .decryptString()
+    decryptedMember.street_2 = member.street_2            .decryptString()
+    decryptedMember.city = member.city                .decryptString()
+    decryptedMember.state = member.state               .decryptString()
+    decryptedMember.zipCode = member.zipCode             .decryptString()
+    decryptedMember.country = member.country             .decryptString()
 
-    decryptedMember.dateOfBirth = member.dateOfBirth.decryptString()
-    decryptedMember.anniversary = member.anniversary.decryptString()
-    decryptedMember.gender = member.gender.decryptString()
-    decryptedMember.mobileNumber = member.mobileNumber.decryptString()
-    decryptedMember.street_1 = member.street_1.decryptString()
-    decryptedMember.street_2 = member.street_2.decryptString()
-    decryptedMember.city = member.city.decryptString()
-    decryptedMember.state = member.state.decryptString()
-    decryptedMember.zipCode = member.zipCode.decryptString()
-    decryptedMember.country = member.country.decryptString()
-
-    decryptedMember.userId = member.userId
+    decryptedMember.userId              = member.userId
     ///For permissions
-    decryptedMember.homeAdd = member.homeAdd
-    decryptedMember.homeEdit = member.homeEdit
-    decryptedMember.homeView = member.homeView
+    decryptedMember.homeAdd                = member.homeAdd
+    decryptedMember.homeEdit               = member.homeEdit
+    decryptedMember.homeView               = member.homeView
 
-    decryptedMember.travelAdd = member.travelAdd
-    decryptedMember.travelEdit = member.travelEdit
-    decryptedMember.travelView = member.travelView
+    decryptedMember.travelAdd              = member.travelAdd
+    decryptedMember.travelEdit             = member.travelEdit
+    decryptedMember.travelView             = member.travelView
 
-    decryptedMember.contactsAdd = member.contactsAdd
-    decryptedMember.contactsEdit = member.contactsEdit
-    decryptedMember.contactsView = member.contactsView
+    decryptedMember.contactsAdd              = member.contactsAdd
+    decryptedMember.contactsEdit             = member.contactsEdit
+    decryptedMember.contactsView             = member.contactsView
 
-    decryptedMember.educationlAdd = member.educationlAdd
-    decryptedMember.educationlEdit = member.educationlEdit
-    decryptedMember.educationlView = member.educationlView
+    decryptedMember.educationlAdd              = member.educationlAdd
+    decryptedMember.educationlEdit             = member.educationlEdit
+    decryptedMember.educationlView             = member.educationlView
 
-    decryptedMember.personalAdd = member.personalAdd
-    decryptedMember.personalEdit = member.personalEdit
-    decryptedMember.personalView = member.personalView
+    decryptedMember.personalAdd              = member.personalAdd
+    decryptedMember.personalEdit             = member.personalEdit
+    decryptedMember.personalView             = member.personalView
 
-    decryptedMember.interestsAdd = member.interestsAdd
-    decryptedMember.interestsEdit = member.interestsEdit
-    decryptedMember.interestsView = member.interestsView
+    decryptedMember.interestsAdd              = member.interestsAdd
+    decryptedMember.interestsEdit             = member.interestsEdit
+    decryptedMember.interestsView             = member.interestsView
 
-    decryptedMember.wellnessAdd = member.wellnessAdd
-    decryptedMember.wellnessEdit = member.wellnessEdit
-    decryptedMember.wellnessView = member.wellnessView
+    decryptedMember.wellnessAdd              = member.wellnessAdd
+    decryptedMember.wellnessEdit             = member.wellnessEdit
+    decryptedMember.wellnessView             = member.wellnessView
 
-    decryptedMember.memoriesAdd = member.memoriesAdd
-    decryptedMember.memoriesEdit = member.memoriesEdit
-    decryptedMember.memoriesView = member.memoriesView
+    decryptedMember.memoriesAdd              = member.memoriesAdd
+    decryptedMember.memoriesEdit             = member.memoriesEdit
+    decryptedMember.memoriesView             = member.memoriesView
 
-    decryptedMember.shoppingAdd = member.shoppingAdd
-    decryptedMember.shoppingEdit = member.shoppingEdit
-    decryptedMember.shoppingView = member.shoppingView
+    decryptedMember.shoppingAdd              = member.shoppingAdd
+    decryptedMember.shoppingEdit             = member.shoppingEdit
+    decryptedMember.shoppingView             = member.shoppingView
 
-    decryptedMember.addingRemovingMember = member.addingRemovingMember
-    decryptedMember.changingMasterPassword = member.changingMasterPassword
+    decryptedMember.addingRemovingMember    = member.addingRemovingMember
+    decryptedMember.changingMasterPassword  = member.changingMasterPassword
 
-    decryptedMember.isCompleteProfile = member.completeProfile
-    decryptedMember.profilePhoto = ""
-
-    decryptedMember.profilePhoto = ""
+    decryptedMember.isCompleteProfile     = member.completeProfile
+    decryptedMember.profilePhoto        = "";
 
     return decryptedMember
 }
 
-fun decryptFinancial(finance: Financial): DecryptedFinancial {
+fun decryptFinancial(finance : Financial) : DecryptedFinancial {
 
     val decryptedFinancial = DecryptedFinancial()
 
@@ -541,17 +546,17 @@ fun decryptFinancial(finance: Financial): DecryptedFinancial {
     decryptedFinancial.pin = finance.pin.decryptString()
     decryptedFinancial.created = finance.created.decryptString()
     decryptedFinancial.modified = finance.modified.decryptString()
-    // decryptedFinancial.isPrivate = finance.isPrivate.decryptString()
+ // decryptedFinancial.isPrivate = finance.isPrivate.decryptString()
     decryptedFinancial.createdUser = finance.createdUser.decryptString()
     decryptedFinancial.notes = finance.notes.decryptString()
     decryptedFinancial.attachmentNames = finance.attachmentNames.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedFinancial : " + decryptedFinancial)
+    AppLogger.d("Decrypt", "decryptedFinancial : " + decryptedFinancial )
 
     return decryptedFinancial
 }
 
-fun decryptPayment(payment: Payment): DecryptedPayment {
+fun decryptPayment(payment: Payment) : DecryptedPayment {
 
     val decryptedPayment = DecryptedPayment()
 
@@ -573,17 +578,17 @@ fun decryptPayment(payment: Payment): DecryptedPayment {
     decryptedPayment.pin = payment.pin.decryptString()
     decryptedPayment.created = payment.created.decryptString()
     decryptedPayment.modified = payment.modified.decryptString()
-    // decryptedPayment.isPrivate = payment.isPrivate.decryptString()
+   // decryptedPayment.isPrivate = payment.isPrivate.decryptString()
     decryptedPayment.createdUser = payment.createdUser.decryptString()
     decryptedPayment.notes = payment.notes.decryptString()
     decryptedPayment.attachmentNames = payment.attachmentNames.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedPayment : " + decryptedPayment)
+    AppLogger.d("Decrypt", "decryptedPayment : " + decryptedPayment )
 
     return decryptedPayment
 }
 
-fun decryptProperty(property: Property): DecryptedProperty {
+fun decryptProperty(property : Property) : DecryptedProperty{
     val decryptedProperty = DecryptedProperty()
 
     //decryptedProperty.id = property.id.decryptString()
@@ -603,23 +608,23 @@ fun decryptProperty(property: Property): DecryptedProperty {
     decryptedProperty.purchasePrice = property.purchasePrice.decryptString()
     decryptedProperty.estimatedMarketValue = property.estimatedMarketValue.decryptString()
     decryptedProperty.contacts = property.contacts.decryptString()
-    // decryptedProperty.currentlyRented = property.currentlyRented.decryptString()
+   // decryptedProperty.currentlyRented = property.currentlyRented.decryptString()
     decryptedProperty.tenantName = property.tenantName.decryptString()
     decryptedProperty.leaseStartDate = property.leaseStartDate.decryptString()
     decryptedProperty.leaseEndDate = property.leaseEndDate.decryptString()
     decryptedProperty.created = property.created.decryptString()
     decryptedProperty.modified = property.modified.decryptString()
-    // decryptedProperty.isPrivate = property.isPrivate.decryptString()
+   // decryptedProperty.isPrivate = property.isPrivate.decryptString()
     decryptedProperty.createdUser = property.createdUser.decryptString()
     decryptedProperty.notes = property.notes.decryptString()
     decryptedProperty.attachmentNames = property.attachmentNames.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedProperty : " + decryptedProperty)
+    AppLogger.d("Decrypt", "decryptedProperty : " + decryptedProperty )
 
     return decryptedProperty
 }
 
-fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
+fun decryptVehicle(vehicle: Vehicle) : DecryptedVehicle {
     val decryptedVehicle = DecryptedVehicle()
 
     //decryptedVehicle.id = vehicle.id.decryptString()
@@ -640,7 +645,7 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
     decryptedVehicle.financedThroughLoan = vehicle.financedThroughLoan.decryptString()
     decryptedVehicle.created = vehicle.created.decryptString()
     decryptedVehicle.modified = vehicle.modified.decryptString()
-    // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
+   // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
     decryptedVehicle.createdUser = vehicle.createdUser.decryptString()
     decryptedVehicle.leaseStartDate = vehicle.leaseStartDate.decryptString()
     decryptedVehicle.leaseEndDate = vehicle.leaseEndDate.decryptString()
@@ -652,11 +657,11 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
     decryptedVehicle.notes = vehicle.notes.decryptString()
     decryptedVehicle.attachmentNames = vehicle.attachmentNames.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedVehicle : " + decryptedVehicle)
+    AppLogger.d("Decrypt", "decryptedVehicle : " + decryptedVehicle )
     return decryptedVehicle
 }
 
-fun decryptAsset(asset: Asset): DecryptedAsset {
+fun decryptAsset(asset: Asset) : DecryptedAsset{
     val decryptedAsset = DecryptedAsset()
 
     //decryptedAsset.id = asset.id.decryptString()
@@ -680,12 +685,12 @@ fun decryptAsset(asset: Asset): DecryptedAsset {
     decryptedAsset.imageName = asset.imageName.decryptString()
     decryptedAsset.attachmentNames = asset.attachmentNames.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedAsset : " + decryptedAsset)
+    AppLogger.d("Decrypt", "decryptedAsset : " + decryptedAsset )
 
     return decryptedAsset
 }
 
-fun decryptInsurance(insurance: Insurance): DecryptedInsurance {
+fun decryptInsurance(insurance: Insurance) : DecryptedInsurance{
     val decryptedInsurance = DecryptedInsurance()
 
     //decryptedInsurance.id = insurance.id.decryptString()
@@ -712,11 +717,11 @@ fun decryptInsurance(insurance: Insurance): DecryptedInsurance {
     decryptedInsurance.notes = insurance.notes.decryptString()
     decryptedInsurance.attachmentNames = insurance.attachmentNames.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedInsurance : " + decryptedInsurance)
+    AppLogger.d("Decrypt", "decryptedInsurance : " + decryptedInsurance )
     return decryptedInsurance
 }
 
-fun decryptTaxes(taxes: Taxes): DecryptedTax {
+fun decryptTaxes(taxes: Taxes) : DecryptedTax{
     val decryptedTax = DecryptedTax()
 
     //decryptedInsurance.id = insurance.id.decryptString()
@@ -734,14 +739,14 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
     decryptedTax.title = taxes.title.decryptString()
     decryptedTax.created = taxes.created.decryptString()
     decryptedTax.modified = taxes.modified.decryptString()
-    // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
+   // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
     decryptedTax.createdUser = taxes.createdUser.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
+    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax )
     return decryptedTax
 }
 
-fun decryptHomeList(homeList: HomeList): DecryptedHomeList {
+fun decryptHomeList(homeList : HomeList) : DecryptedHomeList{
     val decryptedHomeList = DecryptedHomeList()
 
     //decryptedHomeList.id = homeList.id.decryptString()
@@ -749,18 +754,89 @@ fun decryptHomeList(homeList: HomeList): DecryptedHomeList {
     decryptedHomeList.selectionType = homeList.selectionType.decryptString()
     decryptedHomeList.listName = homeList.listName.decryptString()
     decryptedHomeList.dueDate = homeList.dueDate.decryptString()
-    /*  decryptedHomeList.detailsId = homeList.detailsId.decryptString()
-      decryptedHomeList.isSelected = homeList.isSelected.decryptString() */
-    /*   decryptedHomeList.selectedDate = homeList.selectedDate.decryptString()
-       decryptedHomeList.createdDate = homeList.createdDate.decryptString()*/
+  /*  decryptedHomeList.detailsId = homeList.detailsId.decryptString()
+    decryptedHomeList.isSelected = homeList.isSelected.decryptString() */
+ /*   decryptedHomeList.selectedDate = homeList.selectedDate.decryptString()
+    decryptedHomeList.createdDate = homeList.createdDate.decryptString()*/
     decryptedHomeList.created = homeList.created.decryptString()
     decryptedHomeList.modified = homeList.modified.decryptString()
     /*decryptedHomeList.isPrivate = homeList.isPrivate.decryptString()  */
     decryptedHomeList.createdUser = homeList.createdUser.decryptString()
 
-    AppLogger.d("Decrypt", "decryptedHomeList : " + decryptedHomeList)
+    AppLogger.d("Decrypt", "decryptedHomeList : " + decryptedHomeList )
     return decryptedHomeList
 }
+
+fun decryptEducation(education : Education) : DecryptedEducation{
+    val decryptedEducation = DecryptedEducation()
+    decryptedEducation.selectionType = education.selectionType.decryptString()
+    decryptedEducation.institutionName = education.institutionName.decryptString()
+    decryptedEducation.accountName = education.accountName.decryptString()
+    decryptedEducation.nameOnAccount = education.nameOnAccount.decryptString()
+    decryptedEducation.accountNumber = education.accountNumber.decryptString()
+    decryptedEducation.location = education.location.decryptString()
+    decryptedEducation.swiftCode = education.swiftCode.decryptString()
+    decryptedEducation.abaRoutingNumber = education.abaRoutingNumber.decryptString()
+    decryptedEducation.contacts = education.contacts.decryptString()
+    decryptedEducation.website = education.website.decryptString()
+    decryptedEducation.userName = education.userName.decryptString()
+    decryptedEducation.password = education.password.decryptString()
+    decryptedEducation.pin = education.pin.decryptString()
+    decryptedEducation.paymentMethodOnFile = education.paymentMethodOnFile.decryptString()
+    decryptedEducation.notes = education.notes.decryptString()
+    decryptedEducation.attachmentNames = education.attachmentNames.decryptString()
+    decryptedEducation.title = education.title.decryptString()
+    decryptedEducation.created = education.created.decryptString()
+    decryptedEducation.createdUser = education.createdUser.decryptString()
+    decryptedEducation.modified = education.modified.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedEducation : " + decryptedEducation )
+    return decryptedEducation
+}
+
+fun decryptMainEducation(mainEducation: MainEducation) : DecryptedMainEducation{
+    val decryptedMainEducation = DecryptedMainEducation()
+    decryptedMainEducation.selectionType = mainEducation.selectionType.decryptString()
+    decryptedMainEducation.classType = mainEducation.classType.decryptString()
+    decryptedMainEducation.institutionName = mainEducation.institutionName.decryptString()
+    decryptedMainEducation.qualification = mainEducation.qualification.decryptString()
+    decryptedMainEducation.name = mainEducation.name.decryptString()
+    decryptedMainEducation.location = mainEducation.location.decryptString()
+    decryptedMainEducation.major = mainEducation.major.decryptString()
+    decryptedMainEducation.from = mainEducation.from.decryptString()
+    decryptedMainEducation.to = mainEducation.to.decryptString()
+    decryptedMainEducation.currentlyStudying = mainEducation.to.decryptString()
+    decryptedMainEducation.notes = mainEducation.notes.decryptString()
+    decryptedMainEducation.created = mainEducation.created.decryptString()
+    decryptedMainEducation.modified = mainEducation.modified.decryptString()
+    decryptedMainEducation.attachmentNames = mainEducation.attachmentNames.decryptString()
+    decryptedMainEducation.createdUser = mainEducation.createdUser.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedMainEducation : " + decryptedMainEducation )
+    return decryptedMainEducation
+}
+
+fun decryptWrok(work: Work) : DecryptedWork{
+    val decryptedWork = DecryptedWork()
+    decryptedWork.selectionType = work.selectionType.decryptString()
+    decryptedWork.classType = work.classType.decryptString()
+    decryptedWork.companyName = work.companyName.decryptString()
+    decryptedWork.position = work.position.decryptString()
+    decryptedWork.name = work.name.decryptString()
+    decryptedWork.location = work.location.decryptString()
+    decryptedWork.from = work.from.decryptString()
+    decryptedWork.to = work.to.decryptString()
+    decryptedWork.currentWork = work.currentWork.decryptString()
+    decryptedWork.created = work.created.decryptString()
+    decryptedWork.modified = work.modified.decryptString()
+    decryptedWork.notes = work.notes.decryptString()
+    decryptedWork.attachmentNames = work.attachmentNames.decryptString()
+    decryptedWork.createdUser = work.createdUser.decryptString()
+
+    AppLogger.d("Decrypt", "decryptedWork : " + decryptedWork )
+    return decryptedWork
+}
+
 
 
 // For Contacts List

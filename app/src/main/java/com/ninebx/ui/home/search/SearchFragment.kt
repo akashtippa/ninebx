@@ -7,13 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
+import com.ninebx.ui.base.realm.home.homeBanking.Combine.*
+import com.ninebx.ui.base.realm.home.homeBanking.Financial
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.decryptFinancial
 
 /**
  * Created by Alok on 03/01/18.
  */
 class SearchFragment : Fragment(), SearchView {
     override fun onCombineResultFetched(combine: Combine) {
-
+        //Show in logs
+        //  AppLogger.d("Combine", "DecryptedCombine" + decryptFinancial(combine[]!!))
+         AppLogger.d("CombineResult", "COmbine result fetched" + combine.financialItems[0]!!)
     }
 
     override fun showProgress(message: Int) {
