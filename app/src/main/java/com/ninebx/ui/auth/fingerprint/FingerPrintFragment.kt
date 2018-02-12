@@ -119,7 +119,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
                 mAuthView.navigateToHome()
             }
             else {
-                mAuthView.navigateToHome()
+                mAuthView.navigateToInvitePeople()
             }
          }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

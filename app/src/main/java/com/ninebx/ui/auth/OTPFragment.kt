@@ -14,6 +14,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.utility.AppLogger
+import com.ninebx.utility.decryptString
 import com.ninebx.utility.getCurrentUsers
 import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
@@ -40,7 +41,9 @@ class OTPFragment : BaseAuthFragment() {
                     override fun onSuccess(realm: Realm?) {
 
                         val currentUsers = getCurrentUsers( realm!! )
-                        if( currentUsers != null ) {
+
+                        if( currentUsers != null && currentUsers.size > 0 ) {
+                            NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
                             context!!.hideProgressDialog()
                             AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
 

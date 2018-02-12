@@ -25,6 +25,8 @@ import com.ninebx.ui.base.realm.Users
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun fingerPrintCancelled() {
         if( fingerPrintFragment != null ) fingerPrintFragment!!.fingerPrintCancelled()
     }
