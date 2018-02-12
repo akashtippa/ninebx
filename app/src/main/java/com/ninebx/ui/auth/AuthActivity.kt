@@ -16,6 +16,7 @@ import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.support.annotation.RequiresApi
 import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 
 
@@ -24,6 +25,11 @@ import com.ninebx.ui.base.realm.Users
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+    override fun navigateToStart() {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.popBackStack()
+    }
+
     override fun validateEmailOTP(emailOtp: String) {
         if( otpFragment != null ) {
             otpFragment!!.setEmailOTP( emailOtp )
@@ -37,7 +43,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
 
     override fun onError(error: String) {
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+        this@AuthActivity.showToast(error)
     }
 
     private lateinit var mCurrentTag: String

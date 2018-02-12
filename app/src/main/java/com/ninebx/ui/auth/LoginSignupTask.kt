@@ -154,7 +154,7 @@ class LoginSignupTask(private var userName: String,
                 authView.onError(error.errorMessage!!)
             }
             NineBxApplication.getPreferences().currentStep = NONE_COMPLETE
-            authView.navigateToSignIn()
+            authView.navigateToStart()
             //type = "Signin"
             //onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
         }

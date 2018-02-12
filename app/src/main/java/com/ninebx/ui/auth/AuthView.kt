@@ -23,4 +23,5 @@ interface AuthView : BaseView {
     fun setAccountEmail(accountEmail: String)
     fun createUser(firstName: String, lastName: String, email: String)
     fun validateEmailOTP(emailOtp: String)
+    fun navigateToStart()
 }
