@@ -954,5 +954,6 @@
     <string name="backpress">backpress</string>
     <string name="edit_the_contact">Edit The Contact</string>
     <string name="delete_the_image">Delete The Image</string>
+    <string name="error_passcodes_dont_match">Passcodes don\'t match</string>
 
 </resources>

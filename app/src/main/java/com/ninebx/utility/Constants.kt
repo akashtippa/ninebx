@@ -56,6 +56,7 @@ object Constants {
     val KEYBOARD_PICKER = "picker"
     val CURRENT_USER: String = "current_user"
     val USER_EMAIL: String = "user_email"
+    val PASSCODE : String = "passCode"
     val PRIVATE_KEY: String = "private_key"
 
     val CURRENT_BOX = "valCurrentBox"
