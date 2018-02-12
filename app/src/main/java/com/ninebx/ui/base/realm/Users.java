@@ -23,7 +23,8 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Users extends RealmObject implements Parcelable {
 
-    @Required private String fullName             = "";
+    @Required
+    private String fullName             = "";
     @Required
     private String firstName            = "";
     @Required private String lastName             = "";

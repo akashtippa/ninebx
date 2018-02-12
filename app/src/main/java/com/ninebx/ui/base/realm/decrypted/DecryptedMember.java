@@ -9,67 +9,67 @@ import android.os.Parcelable;
 
 public class DecryptedMember implements Parcelable {
 
-    
-    private String  firstName            = "";
-     private String  lastName             = "";
-     private String  relationship         = "";
-     private String  role                 = "";
-     private String  email                = "";
 
-     private String dateOfBirth         = "";
-     private String anniversary         = "";
-     private String gender              = "";
-     private String mobileNumber        = "";
-     private String street_1            = "";
-     private String street_2            = "";
-     private String city                = "";
-     private String state               = "";
-     private String zipCode             = "";
-     private String country             = "";
+    private String firstName = "";
+    private String lastName = "";
+    private String relationship = "";
+    private String role = "";
+    private String email = "";
 
-     private String userId              = "";
+    private String dateOfBirth = "";
+    private String anniversary = "";
+    private String gender = "";
+    private String mobileNumber = "";
+    private String street_1 = "";
+    private String street_2 = "";
+    private String city = "";
+    private String state = "";
+    private String zipCode = "";
+    private String country = "";
+
+    private String userId = "";
     ///For permissions
-     private Boolean homeAdd                = true;
-     private Boolean homeEdit               = false;
-     private Boolean homeView               = true;
+    private Boolean homeAdd = true;
+    private Boolean homeEdit = false;
+    private Boolean homeView = true;
 
-     private Boolean travelAdd              = true;
-     private Boolean travelEdit             = false;
-     private Boolean travelView             = true;
+    private Boolean travelAdd = true;
+    private Boolean travelEdit = false;
+    private Boolean travelView = true;
 
-     private Boolean contactsAdd              = true;
-     private Boolean contactsEdit             = false;
-     private Boolean contactsView             = true;
+    private Boolean contactsAdd = true;
+    private Boolean contactsEdit = false;
+    private Boolean contactsView = true;
 
-     private Boolean educationlAdd              = true;
-     private Boolean educationlEdit             = false;
-     private Boolean educationlView             = true;
+    private Boolean educationlAdd = true;
+    private Boolean educationlEdit = false;
+    private Boolean educationlView = true;
 
-     private Boolean personalAdd              = true;
-     private Boolean personalEdit             = false;
-     private Boolean personalView             = true;
+    private Boolean personalAdd = true;
+    private Boolean personalEdit = false;
+    private Boolean personalView = true;
 
-     private Boolean interestsAdd              = true;
-     private Boolean interestsEdit             = false;
-     private Boolean interestsView             = true;
+    private Boolean interestsAdd = true;
+    private Boolean interestsEdit = false;
+    private Boolean interestsView = true;
 
-     private Boolean wellnessAdd              = true;
-     private Boolean wellnessEdit             = false;
-     private Boolean wellnessView             = true;
+    private Boolean wellnessAdd = true;
+    private Boolean wellnessEdit = false;
+    private Boolean wellnessView = true;
 
-     private Boolean memoriesAdd              = true;
-     private Boolean memoriesEdit             = false;
-     private Boolean memoriesView             = true;
+    private Boolean memoriesAdd = true;
+    private Boolean memoriesEdit = false;
+    private Boolean memoriesView = true;
 
-     private Boolean shoppingAdd              = true;
-     private Boolean shoppingEdit             = false;
-     private Boolean shoppingView             = true;
+    private Boolean shoppingAdd = true;
+    private Boolean shoppingEdit = false;
+    private Boolean shoppingView = true;
 
-     private Boolean addingRemovingMember    = false;
-     private Boolean changingMasterPassword  = false;
+    private Boolean addingRemovingMember = false;
+    private Boolean changingMasterPassword = false;
 
-     public Boolean isCompleteProfile     = false;
-     private String profilePhoto        = "";
+    public Boolean isCompleteProfile = false;
+    private String profilePhoto = "";
 
     public DecryptedMember(String firstName, String lastName, String relationship, String role, String email) {
         this.firstName = firstName;
@@ -614,8 +614,7 @@ public class DecryptedMember implements Parcelable {
         this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.profilePhoto = in.readString();
     }
-    
-    
+
 
     public static final Parcelable.Creator<DecryptedMember> CREATOR = new Parcelable.Creator<DecryptedMember>() {
         @Override
@@ -681,5 +680,5 @@ public class DecryptedMember implements Parcelable {
                 ", profilePhoto='" + profilePhoto + '\'' +
                 '}';
     }
-    
+
 }
