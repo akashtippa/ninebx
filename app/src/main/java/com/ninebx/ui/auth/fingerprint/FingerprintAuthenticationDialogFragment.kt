@@ -77,7 +77,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
                               container: ViewGroup?,
                               savedInstanceState: Bundle?
     ): View? {
-        dialog.setTitle(getString(R.string.sign_in))
+        //dialog.setTitle(getString(R.string.sign_in))
         return inflater.inflate(R.layout.fingerprint_dialog_container, container, false)
     }
 
