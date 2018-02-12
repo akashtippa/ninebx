@@ -17,20 +17,34 @@ import com.ninebx.utility.decryptFinancial
  */
 class SearchFragment : Fragment(), SearchView {
 
-    override fun onCombineFetchedFinancial(combine: Combine) {
+    override fun onCombineFetched(combine: Combine) {
         //Show in logs
 
-         AppLogger.d("CombinFinancial", "Combine result fetched" + decryptFinancial(combine.financialItems[0]!!))
-         AppLogger.d("CombineFinancial", "Encrypted result fetched" + combine.financialItems[0]!!)
+         if(combine.financialItems.size > 0)
+         AppLogger.d("Combine", "Combine result fetched for Financial" + decryptFinancial(combine.financialItems[0]!!))
+         AppLogger.d("Combine", "Encrypted result fetched for Financial" + combine.financialItems[0]!!)
 
+         if(combine.paymentItems.size > 0)
+         AppLogger.d("CombinePayment", "Encrypted result fetched for Payment" + combine.paymentItems[0]!!)
 
+         if(combine.propertyItems.size > 0)
+         AppLogger.d("CombineProperty", "Encrypted result fetched for Property" + combine.propertyItems[0])
+
+         if(combine.vehicleItems.size > 0)
+             AppLogger.d("CombineProperty", "Encrypted result fetched for Vehicle" + combine.vehicleItems[0])
+
+        if(combine.assetItems.size > 0)
+            AppLogger.d("CombineProperty", "Encrypted result fetched for Asset" + combine.assetItems[0])
+
+        if(combine.insuranceItems.size > 0)
+            AppLogger.d("CombineProperty", "Encrypted result fetched for Insurance" + combine.insuranceItems[0])
+
+        if(combine.taxesItems.size > 0)
+            AppLogger.d("CombineProperty", "Encrypted result fetched for Tax" + combine.taxesItems[0])
+
+        if(combine.listItems.size > 0)
+            AppLogger.d("CombineProperty", "Encrypted result fetched for HomeList" + combine.listItems[0])
     }
-
-    override fun onCombineFetchedPayment(combine: Combine) {
-
-        AppLogger.d("CombinePayment", "Encrypted result fetched" + combine.paymentItems[0]!!)
-    }
-
 
     override fun showProgress(message: Int) {
 

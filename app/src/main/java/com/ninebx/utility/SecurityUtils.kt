@@ -547,10 +547,9 @@ fun decryptFinancial(finance : Financial) : DecryptedFinancial {
     decryptedFinancial.created = finance.created
     decryptedFinancial.modified = finance.modified
     decryptedFinancial.createdUser = finance.createdUser
-    decryptedFinancial.created = finance.created.decryptString()
-    decryptedFinancial.modified = finance.modified.decryptString()
- // decryptedFinancial.isPrivate = finance.isPrivate.decryptString()
-    decryptedFinancial.createdUser = finance.createdUser.decryptString()
+    decryptedFinancial.created = finance.created
+    decryptedFinancial.modified = finance.modified
+    decryptedFinancial.createdUser = finance.createdUser
     decryptedFinancial.notes = finance.notes.decryptString()
     decryptedFinancial.attachmentNames = finance.attachmentNames.decryptString()
 

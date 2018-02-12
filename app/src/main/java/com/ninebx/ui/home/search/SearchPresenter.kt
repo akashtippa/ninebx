@@ -19,8 +19,7 @@ class SearchPresenter( private val searchView: SearchView ) {
                 val combineResult = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "Combined Results : " + combineResult)
                 if( combineResult.size > 0 ) {
-                    searchView.onCombineFetchedFinancial(combineResult[0]!!)
-                    searchView.onCombineFetchedPayment(combineResult[1]!!)
+                    searchView.onCombineFetched(combineResult[0]!!)
                 }
             }
         })
