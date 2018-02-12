@@ -345,6 +345,9 @@ fun String.encryptString( ) : String {
 }
 
 fun String.decryptString( ) : String {
+    if( this.isEmpty() ) {
+        return ""
+    }
     return decryptAESKEY( this.toByteArray(), NineBxApplication.getPreferences().privateKey!! )
 }
 
