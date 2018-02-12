@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_pass_code.*
 
@@ -24,6 +26,8 @@ class PassCodeFragment : BaseAuthFragment() {
         }
         else {
             val currentPassCode = etPassCode.text.toString().trim()
+            passCode = NineBxApplication.getPreferences().passCode!!
+            if( currentPassCode != passCode ) context!!.showToast(R.string.error_passcodes_dont_match)
             return !(currentPassCode.length != 6 || currentPassCode != passCode)
         }
     }
@@ -41,6 +45,8 @@ class PassCodeFragment : BaseAuthFragment() {
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
         setupToolbar()
         setHasOptionsMenu(!isCreatePassCode)
+
+
 
         etPassCode.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
@@ -113,7 +119,7 @@ class PassCodeFragment : BaseAuthFragment() {
 
                         if( isCreatePassCode ) {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
-                            mAuthView.navigateToCreatePassCode(false, passCode)
+                            mAuthView.navigateToCreatePassCode(false, etPassCode.text.toString().trim())
                         }
                         else {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
@@ -157,7 +163,7 @@ class PassCodeFragment : BaseAuthFragment() {
     fun setCreatePassCode(createPassCode: Boolean) {
         this.isCreatePassCode = createPassCode
         if( !isCreatePassCode ) {
-
+            passCode = NineBxApplication.getPreferences().passCode!!
             etPassCode.setText("")
 
             ivOtp1.isSelected = false
@@ -174,7 +180,4 @@ class PassCodeFragment : BaseAuthFragment() {
         }
     }
 
-    fun setPassCode(passCode: String) {
-        this.passCode = passCode
-    }
 }

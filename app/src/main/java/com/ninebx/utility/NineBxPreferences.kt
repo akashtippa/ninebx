@@ -18,6 +18,7 @@ class NineBxPreferences : Preferences() {
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP, NONE_COMPLETE)
     var userEmail by stringPref(Constants.USER_EMAIL, "")
+    var passCode by stringPref(Constants.PASSCODE, "")
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
     var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
