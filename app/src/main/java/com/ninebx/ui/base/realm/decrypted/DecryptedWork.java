@@ -17,37 +17,57 @@ import io.realm.annotations.Required;
  * Created by smrit on 12-02-2018.
  */
 
-public class DecryptedWork implements Parcelable{
+public class DecryptedWork implements Parcelable {
+    public static final Creator<DecryptedWork> CREATOR = new Creator<DecryptedWork>() {
+        @Override
+        public DecryptedWork createFromParcel(Parcel in) {
+            return new DecryptedWork(in);
+        }
+
+        @Override
+        public DecryptedWork[] newArray(int size) {
+            return new DecryptedWork[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
-    @Required private String classType = "Work";
-
-    @Required private String companyName = "";
-    @Required private String position = "";
-
-    @Required private String name = "";
-    @Required private String location = "";
-    @Required private String from = "";
-    @Required private String to = "";
-    @Required private String currentWork = "";
-
-    @Required private Boolean isCurrent = false;
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String notes = "";
-
-    @Required private String attachmentNames = "";
-    @Required private String createdUser = "";
-
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
-
+    @Required
+    private String classType = "Work";
+    @Required
+    private String companyName = "";
+    @Required
+    private String position = "";
+    @Required
+    private String name = "";
+    @Required
+    private String location = "";
+    @Required
+    private String from = "";
+    @Required
+    private String to = "";
+    @Required
+    private String currentWork = "";
+    @Required
+    private Boolean isCurrent = false;
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
 
     protected DecryptedWork(Parcel in) {
         id = in.readInt();
@@ -70,6 +90,31 @@ public class DecryptedWork implements Parcelable{
         attachmentNames = in.readString();
         createdUser = in.readString();
         photosId = in.createStringArrayList();
+    }
+
+    public DecryptedWork() {
+    }
+
+    public DecryptedWork(int id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+        this.id = id;
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.companyName = companyName;
+        this.position = position;
+        this.name = name;
+        this.location = location;
+        this.from = from;
+        this.to = to;
+        this.currentWork = currentWork;
+        this.isCurrent = isCurrent;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
     }
 
     @Override
@@ -99,22 +144,10 @@ public class DecryptedWork implements Parcelable{
         return 0;
     }
 
-    public static final Creator<DecryptedWork> CREATOR = new Creator<DecryptedWork>() {
-        @Override
-        public DecryptedWork createFromParcel(Parcel in) {
-            return new DecryptedWork(in);
-        }
-
-        @Override
-        public DecryptedWork[] newArray(int size) {
-            return new DecryptedWork[size];
-        }
-    };
-
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -122,34 +155,9 @@ public class DecryptedWork implements Parcelable{
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    public DecryptedWork() {
-    }
-
-    public DecryptedWork(int id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
-        this.id = id;
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.companyName = companyName;
-        this.position = position;
-        this.name = name;
-        this.location = location;
-        this.from = from;
-        this.to = to;
-        this.currentWork = currentWork;
-        this.isCurrent = isCurrent;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.createdUser = createdUser;
-        this.backingImages = backingImages;
-        this.photosId = photosId;
     }
 
     public int getId() {

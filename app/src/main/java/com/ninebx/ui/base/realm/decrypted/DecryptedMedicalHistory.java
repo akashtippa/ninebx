@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,48 @@ import io.realm.annotations.Required;
  */
 public class DecryptedMedicalHistory implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedMedicalHistory> CREATOR = new Creator<DecryptedMedicalHistory>() {
+        @Override
+        public DecryptedMedicalHistory createFromParcel(Parcel in) {
+            return new DecryptedMedicalHistory(in);
+        }
 
+        @Override
+        public DecryptedMedicalHistory[] newArray(int size) {
+            return new DecryptedMedicalHistory[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "MedicalHistory";
+    @Required
+    private String history = "";
+    @Required
+    private String treatmentDiscription = "";
+    @Required
+    private String immunizationDiscription = "";
+    @Required
+    private String familyDiscription = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
 
     protected DecryptedMedicalHistory(Parcel in) {
         id = in.readInt();
@@ -47,6 +78,24 @@ public class DecryptedMedicalHistory implements Parcelable {
         notes = in.readString();
         attachmentNames = in.readString();
         createdUser = in.readString();
+    }
+
+    public DecryptedMedicalHistory(String selectionType, String classType, String history, String treatmentDiscription, String immunizationDiscription, String familyDiscription, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.history = history;
+        this.treatmentDiscription = treatmentDiscription;
+        this.immunizationDiscription = immunizationDiscription;
+        this.familyDiscription = familyDiscription;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedMedicalHistory() {
     }
 
     @Override
@@ -72,18 +121,6 @@ public class DecryptedMedicalHistory implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedMedicalHistory> CREATOR = new Creator<DecryptedMedicalHistory>() {
-        @Override
-        public DecryptedMedicalHistory createFromParcel(Parcel in) {
-            return new DecryptedMedicalHistory(in);
-        }
-
-        @Override
-        public DecryptedMedicalHistory[] newArray(int size) {
-            return new DecryptedMedicalHistory[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -102,8 +139,8 @@ public class DecryptedMedicalHistory implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -111,40 +148,9 @@ public class DecryptedMedicalHistory implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String classType = "MedicalHistory";
-
-    @Required private String history = "";
-    @Required private String treatmentDiscription = "";
-    @Required private String immunizationDiscription = "";
-    @Required private String familyDiscription = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-    @Required private String createdUser = "";
-
-    public DecryptedMedicalHistory(String selectionType, String classType, String history, String treatmentDiscription, String immunizationDiscription, String familyDiscription, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.history = history;
-        this.treatmentDiscription = treatmentDiscription;
-        this.immunizationDiscription = immunizationDiscription;
-        this.familyDiscription = familyDiscription;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -241,8 +247,5 @@ public class DecryptedMedicalHistory implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedMedicalHistory() {
     }
 }

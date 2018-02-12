@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -15,25 +13,43 @@ import io.realm.annotations.Required;
  */
 public class DecryptedTravelList implements Parcelable {
 
+    public static final Creator<DecryptedTravelList> CREATOR = new Creator<DecryptedTravelList>() {
+        @Override
+        public DecryptedTravelList createFromParcel(Parcel in) {
+            return new DecryptedTravelList(in);
+        }
+
+        @Override
+        public DecryptedTravelList[] newArray(int size) {
+            return new DecryptedTravelList[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
-    @Required private String selectionType = "";
-    @Required private String classType = "TravelList";
-
-    @Required private String listName = "";
-    @Required private String dueDate = "";
-
-    @Required private Integer detailsId = 0;
-    @Required private Boolean isSelected = false;
-
-    @Required private Date selectedDate = new Date();
-    @Required private Date createdDate = new Date();
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "TravelList";
+    @Required
+    private String listName = "";
+    @Required
+    private String dueDate = "";
+    @Required
+    private Integer detailsId = 0;
+    @Required
+    private Boolean isSelected = false;
+    @Required
+    private Date selectedDate = new Date();
+    @Required
+    private Date createdDate = new Date();
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     public DecryptedTravelList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
@@ -98,18 +114,6 @@ public class DecryptedTravelList implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedTravelList> CREATOR = new Creator<DecryptedTravelList>() {
-        @Override
-        public DecryptedTravelList createFromParcel(Parcel in) {
-            return new DecryptedTravelList(in);
-        }
-
-        @Override
-        public DecryptedTravelList[] newArray(int size) {
-            return new DecryptedTravelList[size];
-        }
-    };
 
     public Integer getId() {
         return id;

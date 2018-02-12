@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,72 @@ import io.realm.annotations.Required;
  */
 public class DecryptedVitalNumbers implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedVitalNumbers> CREATOR = new Creator<DecryptedVitalNumbers>() {
+        @Override
+        public DecryptedVitalNumbers createFromParcel(Parcel in) {
+            return new DecryptedVitalNumbers(in);
+        }
 
+        @Override
+        public DecryptedVitalNumbers[] newArray(int size) {
+            return new DecryptedVitalNumbers[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "VitalNumbers";
+    @Required
+    private String vital_description = "";
+    @Required
+    private String measurementDate = "";
+    @Required
+    private String height = "";
+    @Required
+    private String weight = "";
+    @Required
+    private String waist = "";
+    @Required
+    private String bodyFat = "";
+    @Required
+    private String bodyMassIndex = "";
+    @Required
+    private String bloodPressure = "";
+    @Required
+    private String heartRate = "";
+    @Required
+    private String totalCholesterol = "";
+    @Required
+    private String hdlCholesterol = "";
+    @Required
+    private String ldlCholesterol = "";
+    @Required
+    private String cholesterolRatio = "";
+    @Required
+    private String triglycerides = "";
+    @Required
+    private String bloodGlucose = "";
+    @Required
+    private String hemoglobin = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
 
     protected DecryptedVitalNumbers(Parcel in) {
         id = in.readInt();
@@ -59,6 +114,36 @@ public class DecryptedVitalNumbers implements Parcelable {
         notes = in.readString();
         attachmentNames = in.readString();
         createdUser = in.readString();
+    }
+
+    public DecryptedVitalNumbers(String selectionType, String classType, String vital_description, String measurementDate, String height, String weight, String waist, String bodyFat, String bodyMassIndex, String bloodPressure, String heartRate, String totalCholesterol, String hdlCholesterol, String ldlCholesterol, String cholesterolRatio, String triglycerides, String bloodGlucose, String hemoglobin, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.vital_description = vital_description;
+        this.measurementDate = measurementDate;
+        this.height = height;
+        this.weight = weight;
+        this.waist = waist;
+        this.bodyFat = bodyFat;
+        this.bodyMassIndex = bodyMassIndex;
+        this.bloodPressure = bloodPressure;
+        this.heartRate = heartRate;
+        this.totalCholesterol = totalCholesterol;
+        this.hdlCholesterol = hdlCholesterol;
+        this.ldlCholesterol = ldlCholesterol;
+        this.cholesterolRatio = cholesterolRatio;
+        this.triglycerides = triglycerides;
+        this.bloodGlucose = bloodGlucose;
+        this.hemoglobin = hemoglobin;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedVitalNumbers() {
     }
 
     @Override
@@ -96,18 +181,6 @@ public class DecryptedVitalNumbers implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedVitalNumbers> CREATOR = new Creator<DecryptedVitalNumbers>() {
-        @Override
-        public DecryptedVitalNumbers createFromParcel(Parcel in) {
-            return new DecryptedVitalNumbers(in);
-        }
-
-        @Override
-        public DecryptedVitalNumbers[] newArray(int size) {
-            return new DecryptedVitalNumbers[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -126,8 +199,8 @@ public class DecryptedVitalNumbers implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -135,66 +208,9 @@ public class DecryptedVitalNumbers implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String classType = "VitalNumbers";
-
-    @Required private String vital_description = "";
-    @Required private String measurementDate = "";
-
-    @Required private String height = "";
-    @Required private String weight = "";
-    @Required private String waist = "";
-    @Required private String bodyFat = "";
-    @Required private String bodyMassIndex = "";
-    @Required private String bloodPressure = "";
-    @Required private String heartRate = "";
-    @Required private String totalCholesterol = "";
-    @Required private String hdlCholesterol = "";
-    @Required private String ldlCholesterol = "";
-    @Required private String cholesterolRatio = "";
-    @Required private String triglycerides = "";
-    @Required private String bloodGlucose  = "";
-    @Required private String hemoglobin = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String createdUser = "";
-
-    public DecryptedVitalNumbers(String selectionType, String classType, String vital_description, String measurementDate, String height, String weight, String waist, String bodyFat, String bodyMassIndex, String bloodPressure, String heartRate, String totalCholesterol, String hdlCholesterol, String ldlCholesterol, String cholesterolRatio, String triglycerides, String bloodGlucose, String hemoglobin, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.vital_description = vital_description;
-        this.measurementDate = measurementDate;
-        this.height = height;
-        this.weight = weight;
-        this.waist = waist;
-        this.bodyFat = bodyFat;
-        this.bodyMassIndex = bodyMassIndex;
-        this.bloodPressure = bloodPressure;
-        this.heartRate = heartRate;
-        this.totalCholesterol = totalCholesterol;
-        this.hdlCholesterol = hdlCholesterol;
-        this.ldlCholesterol = ldlCholesterol;
-        this.cholesterolRatio = cholesterolRatio;
-        this.triglycerides = triglycerides;
-        this.bloodGlucose = bloodGlucose;
-        this.hemoglobin = hemoglobin;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -387,8 +403,5 @@ public class DecryptedVitalNumbers implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedVitalNumbers() {
     }
 }

@@ -3,9 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -13,6 +11,17 @@ import io.realm.annotations.Required;
  */
 public class DecryptedSignUp implements Parcelable {
 
+    public static final Creator<DecryptedSignUp> CREATOR = new Creator<DecryptedSignUp>() {
+        @Override
+        public DecryptedSignUp createFromParcel(Parcel in) {
+            return new DecryptedSignUp(in);
+        }
+
+        @Override
+        public DecryptedSignUp[] newArray(int size) {
+            return new DecryptedSignUp[size];
+        }
+    };
     @Required
     private String fullName = "";
     @Required
@@ -56,18 +65,6 @@ public class DecryptedSignUp implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedSignUp> CREATOR = new Creator<DecryptedSignUp>() {
-        @Override
-        public DecryptedSignUp createFromParcel(Parcel in) {
-            return new DecryptedSignUp(in);
-        }
-
-        @Override
-        public DecryptedSignUp[] newArray(int size) {
-            return new DecryptedSignUp[size];
-        }
-    };
 
     public String getFullName() {
         return fullName;

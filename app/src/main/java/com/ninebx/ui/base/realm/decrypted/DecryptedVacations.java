@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,52 @@ import io.realm.annotations.Required;
  */
 public class DecryptedVacations implements Parcelable {
 
+    public static final Creator<DecryptedVacations> CREATOR = new Creator<DecryptedVacations>() {
+        @Override
+        public DecryptedVacations createFromParcel(Parcel in) {
+            return new DecryptedVacations(in);
+        }
+
+        @Override
+        public DecryptedVacations[] newArray(int size) {
+            return new DecryptedVacations[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String vac_description = "";
+    @Required
+    private String startDate = "";
+    @Required
+    private String endDate = "";
+    @Required
+    private String placesToVisit_1 = "";
+    @Required
+    private String placesToVisit_2 = "";
+    @Required
+    private String placesToVisit_3 = "";
+    @Required
+    private Boolean plansConfirmed = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedVacations(Parcel in) {
         id = in.readInt();
@@ -50,6 +85,26 @@ public class DecryptedVacations implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedVacations(String selectionType, String vac_description, String startDate, String endDate, String placesToVisit_1, String placesToVisit_2, String placesToVisit_3, Boolean plansConfirmed, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.vac_description = vac_description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.placesToVisit_1 = placesToVisit_1;
+        this.placesToVisit_2 = placesToVisit_2;
+        this.placesToVisit_3 = placesToVisit_3;
+        this.plansConfirmed = plansConfirmed;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedVacations() {
     }
 
     @Override
@@ -77,18 +132,6 @@ public class DecryptedVacations implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedVacations> CREATOR = new Creator<DecryptedVacations>() {
-        @Override
-        public DecryptedVacations createFromParcel(Parcel in) {
-            return new DecryptedVacations(in);
-        }
-
-        @Override
-        public DecryptedVacations[] newArray(int size) {
-            return new DecryptedVacations[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -107,8 +150,8 @@ public class DecryptedVacations implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -116,45 +159,9 @@ public class DecryptedVacations implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String vac_description = "";
-    @Required private String startDate = "";
-    @Required private String endDate = "";
-    @Required private String placesToVisit_1 = "";
-    @Required private String placesToVisit_2 = "";
-    @Required private String placesToVisit_3 = "";
-
-    @Required private Boolean plansConfirmed = false;
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    public DecryptedVacations(String selectionType, String vac_description, String startDate, String endDate, String placesToVisit_1, String placesToVisit_2, String placesToVisit_3, Boolean plansConfirmed, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.vac_description = vac_description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.placesToVisit_1 = placesToVisit_1;
-        this.placesToVisit_2 = placesToVisit_2;
-        this.placesToVisit_3 = placesToVisit_3;
-        this.plansConfirmed = plansConfirmed;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -267,8 +274,5 @@ public class DecryptedVacations implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedVacations() {
     }
 }

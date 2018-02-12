@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,58 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCertificate implements Parcelable {
 
+    public static final Creator<DecryptedCertificate> CREATOR = new Creator<DecryptedCertificate>() {
+        @Override
+        public DecryptedCertificate createFromParcel(Parcel in) {
+            return new DecryptedCertificate(in);
+        }
+
+        @Override
+        public DecryptedCertificate[] newArray(int size) {
+            return new DecryptedCertificate[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String cer_description = "";
+    @Required
+    private String nameOnCertificate = "";
+    @Required
+    private String gender = "";
+    @Required
+    private String dateOfBirth = "";
+    @Required
+    private String timeOfBirth = "";
+    @Required
+    private String placeOfBirth = "";
+    @Required
+    private String dateOfMarriage = "";
+    @Required
+    private String placeOfMarriage = "";
+    @Required
+    private String nameOneCertificate = "";
+    @Required
+    private String nameTwoCertificate = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
 
     protected DecryptedCertificate(Parcel in) {
         id = in.readInt();
@@ -52,6 +93,29 @@ public class DecryptedCertificate implements Parcelable {
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         attachmentNames = in.readString();
         createdUser = in.readString();
+    }
+
+    public DecryptedCertificate(String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+        this.selectionType = selectionType;
+        this.cer_description = cer_description;
+        this.nameOnCertificate = nameOnCertificate;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.timeOfBirth = timeOfBirth;
+        this.placeOfBirth = placeOfBirth;
+        this.dateOfMarriage = dateOfMarriage;
+        this.placeOfMarriage = placeOfMarriage;
+        this.nameOneCertificate = nameOneCertificate;
+        this.nameTwoCertificate = nameTwoCertificate;
+        this.notes = notes;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedCertificate() {
     }
 
     @Override
@@ -82,18 +146,6 @@ public class DecryptedCertificate implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedCertificate> CREATOR = new Creator<DecryptedCertificate>() {
-        @Override
-        public DecryptedCertificate createFromParcel(Parcel in) {
-            return new DecryptedCertificate(in);
-        }
-
-        @Override
-        public DecryptedCertificate[] newArray(int size) {
-            return new DecryptedCertificate[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -112,8 +164,8 @@ public class DecryptedCertificate implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -121,55 +173,9 @@ public class DecryptedCertificate implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String cer_description = "";
-    @Required private String nameOnCertificate = "";
-
-    @Required private String gender = "";
-    @Required private String dateOfBirth = "";
-    @Required private String timeOfBirth = "";
-    @Required private String placeOfBirth = "";
-
-    @Required private String dateOfMarriage = "";
-    @Required private String placeOfMarriage = "";
-
-    @Required private String nameOneCertificate = "";
-    @Required private String nameTwoCertificate = "";
-
-    @Required private String notes = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String attachmentNames = "";
-
-    @Required private String createdUser = "";
-
-    public DecryptedCertificate(String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
-        this.selectionType = selectionType;
-        this.cer_description = cer_description;
-        this.nameOnCertificate = nameOnCertificate;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.timeOfBirth = timeOfBirth;
-        this.placeOfBirth = placeOfBirth;
-        this.dateOfMarriage = dateOfMarriage;
-        this.placeOfMarriage = placeOfMarriage;
-        this.nameOneCertificate = nameOneCertificate;
-        this.nameTwoCertificate = nameTwoCertificate;
-        this.notes = notes;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.attachmentNames = attachmentNames;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -306,8 +312,5 @@ public class DecryptedCertificate implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedCertificate() {
     }
 }

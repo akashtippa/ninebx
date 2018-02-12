@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -15,21 +13,43 @@ import io.realm.annotations.Required;
  */
 public class DecryptedNotifications implements Parcelable {
 
+    public static final Creator<DecryptedNotifications> CREATOR = new Creator<DecryptedNotifications>() {
+        @Override
+        public DecryptedNotifications createFromParcel(Parcel in) {
+            return new DecryptedNotifications(in);
+        }
+
+        @Override
+        public DecryptedNotifications[] newArray(int size) {
+            return new DecryptedNotifications[size];
+        }
+    };
     @Required
-    private  String message  = "";
-    @Required private  String boxName  = "";
-    @Required private  String category  = "";
-    @Required private  String dueDate  = "";
-    @Required private  Date updatedDate = new Date();
-    @Required private  String subTitle  = "";
-    @Required private  String notifyDate  = "";
-    @Required private  Boolean isPrivate = false;
-    @Required private  String created  = "";
-    @Required private  String modified  = "";
-    @Required private  Boolean read  = true;
-    @Required private  Integer form_id  = 0;
+    private String message = "";
+    @Required
+    private String boxName = "";
+    @Required
+    private String category = "";
+    @Required
+    private String dueDate = "";
+    @Required
+    private Date updatedDate = new Date();
+    @Required
+    private String subTitle = "";
+    @Required
+    private String notifyDate = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean read = true;
+    @Required
+    private Integer form_id = 0;
     @PrimaryKey //@Required
-    private  int id  = 0;
+    private int id = 0;
 
     public DecryptedNotifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, int id) {
         this.message = message;
@@ -96,18 +116,6 @@ public class DecryptedNotifications implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedNotifications> CREATOR = new Creator<DecryptedNotifications>() {
-        @Override
-        public DecryptedNotifications createFromParcel(Parcel in) {
-            return new DecryptedNotifications(in);
-        }
-
-        @Override
-        public DecryptedNotifications[] newArray(int size) {
-            return new DecryptedNotifications[size];
-        }
-    };
 
     public String getMessage() {
         return message;

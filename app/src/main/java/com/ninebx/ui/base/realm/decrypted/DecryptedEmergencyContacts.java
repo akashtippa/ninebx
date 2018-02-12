@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,62 @@ import io.realm.annotations.Required;
  */
 public class DecryptedEmergencyContacts implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedEmergencyContacts> CREATOR = new Creator<DecryptedEmergencyContacts>() {
+        @Override
+        public DecryptedEmergencyContacts createFromParcel(Parcel in) {
+            return new DecryptedEmergencyContacts(in);
+        }
 
+        @Override
+        public DecryptedEmergencyContacts[] newArray(int size) {
+            return new DecryptedEmergencyContacts[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "EmergencyContacts";
+    @Required
+    private String name = "";
+    @Required
+    private String relationShip = "";
+    @Required
+    private String phoneNumberOne = "";
+    @Required
+    private String phoneNumberTwo = "";
+    @Required
+    private String emailAddress = "";
+    @Required
+    private String streetAddressOne = "";
+    @Required
+    private String streetAddressTwo = "";
+    @Required
+    private String city = "";
+    @Required
+    private String state = "";
+    @Required
+    private String zipCode = "";
+    @Required
+    private String country = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
 
     protected DecryptedEmergencyContacts(Parcel in) {
         id = in.readInt();
@@ -54,6 +99,31 @@ public class DecryptedEmergencyContacts implements Parcelable {
         notes = in.readString();
         attachmentNames = in.readString();
         createdUser = in.readString();
+    }
+
+    public DecryptedEmergencyContacts(String selectionType, String classType, String name, String relationShip, String phoneNumberOne, String phoneNumberTwo, String emailAddress, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.name = name;
+        this.relationShip = relationShip;
+        this.phoneNumberOne = phoneNumberOne;
+        this.phoneNumberTwo = phoneNumberTwo;
+        this.emailAddress = emailAddress;
+        this.streetAddressOne = streetAddressOne;
+        this.streetAddressTwo = streetAddressTwo;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.country = country;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedEmergencyContacts() {
     }
 
     @Override
@@ -86,18 +156,6 @@ public class DecryptedEmergencyContacts implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedEmergencyContacts> CREATOR = new Creator<DecryptedEmergencyContacts>() {
-        @Override
-        public DecryptedEmergencyContacts createFromParcel(Parcel in) {
-            return new DecryptedEmergencyContacts(in);
-        }
-
-        @Override
-        public DecryptedEmergencyContacts[] newArray(int size) {
-            return new DecryptedEmergencyContacts[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -116,8 +174,8 @@ public class DecryptedEmergencyContacts implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -125,55 +183,9 @@ public class DecryptedEmergencyContacts implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String classType = "EmergencyContacts";
-
-    @Required private String name = "";
-
-    @Required private String relationShip = "";
-    @Required private String phoneNumberOne = "";
-    @Required private String phoneNumberTwo = "";
-    @Required private String emailAddress = "";
-    @Required private String streetAddressOne = "";
-    @Required private String streetAddressTwo = "";
-    @Required private String city = "";
-    @Required private String state = "";
-    @Required private String zipCode = "";
-    @Required private String country = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-    @Required private String createdUser = "";
-
-    public DecryptedEmergencyContacts(String selectionType, String classType, String name, String relationShip, String phoneNumberOne, String phoneNumberTwo, String emailAddress, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.name = name;
-        this.relationShip = relationShip;
-        this.phoneNumberOne = phoneNumberOne;
-        this.phoneNumberTwo = phoneNumberTwo;
-        this.emailAddress = emailAddress;
-        this.streetAddressOne = streetAddressOne;
-        this.streetAddressTwo = streetAddressTwo;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.country = country;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -326,8 +338,5 @@ public class DecryptedEmergencyContacts implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedEmergencyContacts() {
     }
 }

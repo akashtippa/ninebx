@@ -10,10 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -21,14 +19,48 @@ import io.realm.annotations.Required;
  */
 public class DecryptedMemoryTimeline implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedMemoryTimeline> CREATOR = new Creator<DecryptedMemoryTimeline>() {
+        @Override
+        public DecryptedMemoryTimeline createFromParcel(Parcel in) {
+            return new DecryptedMemoryTimeline(in);
+        }
 
+        @Override
+        public DecryptedMemoryTimeline[] newArray(int size) {
+            return new DecryptedMemoryTimeline[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String title = "";
+    @Required
+    private String date = "";
+    @Required
+    private String place = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private Date selectedDate = new Date();
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedMemoryTimeline(Parcel in) {
         id = in.readInt();
@@ -45,6 +77,24 @@ public class DecryptedMemoryTimeline implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedMemoryTimeline(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.title = title;
+        this.date = date;
+        this.place = place;
+        this.contacts = contacts;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.selectedDate = selectedDate;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedMemoryTimeline() {
     }
 
     @Override
@@ -69,18 +119,6 @@ public class DecryptedMemoryTimeline implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedMemoryTimeline> CREATOR = new Creator<DecryptedMemoryTimeline>() {
-        @Override
-        public DecryptedMemoryTimeline createFromParcel(Parcel in) {
-            return new DecryptedMemoryTimeline(in);
-        }
-
-        @Override
-        public DecryptedMemoryTimeline[] newArray(int size) {
-            return new DecryptedMemoryTimeline[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -99,8 +137,8 @@ public class DecryptedMemoryTimeline implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -108,41 +146,9 @@ public class DecryptedMemoryTimeline implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String title = "";
-    @Required private String date = "";
-    @Required private String place = "";
-    @Required private String contacts = "";
-    @Required private String notes = "";
-
-    @Required private String attachmentNames = "";
-
-    @Required private Date selectedDate = new Date();
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    public DecryptedMemoryTimeline(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.title = title;
-        this.date = date;
-        this.place = place;
-        this.contacts = contacts;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.selectedDate = selectedDate;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -239,8 +245,5 @@ public class DecryptedMemoryTimeline implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedMemoryTimeline() {
     }
 }

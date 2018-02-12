@@ -18,60 +18,68 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedEducation implements Parcelable {
+    public static final Creator<DecryptedEducation> CREATOR = new Creator<DecryptedEducation>() {
+        @Override
+        public DecryptedEducation createFromParcel(Parcel in) {
+            return new DecryptedEducation(in);
+        }
+
+        @Override
+        public DecryptedEducation[] newArray(int size) {
+            return new DecryptedEducation[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
-
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
-
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
-    @Required private String contacts = "";
-
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-    @Required private String paymentMethodOnFile = "";
-
-    @Required private String notes = "";
-
-    @Required private String attachmentNames = "";
-
-    @Required private String title = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
-
+    @Required
+    private String institutionName = "";
+    @Required
+    private String accountName = "";
+    @Required
+    private String accountType = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String location = "";
+    @Required
+    private String swiftCode = "";
+    @Required
+    private String abaRoutingNumber = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String paymentMethodOnFile = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String title = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
+    @Required
+    private List<String> photosId = new ArrayList<>();
 
     public DecryptedEducation() {
     }
@@ -102,6 +110,50 @@ public class DecryptedEducation implements Parcelable {
         this.createdUser = createdUser;
         this.backingImages = backingImages;
         this.photosId = photosId;
+    }
+
+    protected DecryptedEducation(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        institutionName = in.readString();
+        accountName = in.readString();
+        accountType = in.readString();
+        nameOnAccount = in.readString();
+        accountNumber = in.readString();
+        location = in.readString();
+        swiftCode = in.readString();
+        abaRoutingNumber = in.readString();
+        contacts = in.readString();
+        website = in.readString();
+        userName = in.readString();
+        password = in.readString();
+        pin = in.readString();
+        paymentMethodOnFile = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+        title = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public int getId() {
@@ -296,34 +348,6 @@ public class DecryptedEducation implements Parcelable {
         this.backingImages = backingImages;
     }
 
-    protected DecryptedEducation(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        institutionName = in.readString();
-        accountName = in.readString();
-        accountType = in.readString();
-        nameOnAccount = in.readString();
-        accountNumber = in.readString();
-        location = in.readString();
-        swiftCode = in.readString();
-        abaRoutingNumber = in.readString();
-        contacts = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        paymentMethodOnFile = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        title = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        photosId = in.createStringArrayList();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -356,16 +380,4 @@ public class DecryptedEducation implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedEducation> CREATOR = new Creator<DecryptedEducation>() {
-        @Override
-        public DecryptedEducation createFromParcel(Parcel in) {
-            return new DecryptedEducation(in);
-        }
-
-        @Override
-        public DecryptedEducation[] newArray(int size) {
-            return new DecryptedEducation[size];
-        }
-    };
 }

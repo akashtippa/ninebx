@@ -3,8 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.RealmObject;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -12,13 +10,29 @@ import io.realm.annotations.Required;
  */
 public class DecryptedAddress implements Parcelable {
 
+    public static final Creator<DecryptedAddress> CREATOR = new Creator<DecryptedAddress>() {
+        @Override
+        public DecryptedAddress createFromParcel(Parcel in) {
+            return new DecryptedAddress(in);
+        }
+
+        @Override
+        public DecryptedAddress[] newArray(int size) {
+            return new DecryptedAddress[size];
+        }
+    };
     @Required
-    private String street_1             = "";
-    @Required private String street_2             = "";
-    @Required private String city                 = "";
-    @Required private String state                = "";
-    @Required private String zipCode              = "";
-    @Required private String country              = "";
+    private String street_1 = "";
+    @Required
+    private String street_2 = "";
+    @Required
+    private String city = "";
+    @Required
+    private String state = "";
+    @Required
+    private String zipCode = "";
+    @Required
+    private String country = "";
 
     public DecryptedAddress(String street_1, String street_2, String city, String state, String zipCode, String country) {
         this.street_1 = street_1;
@@ -55,18 +69,6 @@ public class DecryptedAddress implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedAddress> CREATOR = new Creator<DecryptedAddress>() {
-        @Override
-        public DecryptedAddress createFromParcel(Parcel in) {
-            return new DecryptedAddress(in);
-        }
-
-        @Override
-        public DecryptedAddress[] newArray(int size) {
-            return new DecryptedAddress[size];
-        }
-    };
 
     public String getStreet_1() {
         return street_1;

@@ -3,9 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -13,29 +11,47 @@ import io.realm.annotations.Required;
  */
 public class DecryptedLicense implements Parcelable {
 
+    public static final Creator<DecryptedLicense> CREATOR = new Creator<DecryptedLicense>() {
+        @Override
+        public DecryptedLicense createFromParcel(Parcel in) {
+            return new DecryptedLicense(in);
+        }
+
+        @Override
+        public DecryptedLicense[] newArray(int size) {
+            return new DecryptedLicense[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
-
-    @Required private String lic_description = "";
-    @Required private String nameOnLicense = "";
-    @Required private String issuingCountry = "";
-    @Required private String issuingState = "";
-    @Required private String licenseNumber = "";
-    @Required private String dateIssued = "";
-    @Required private String expirationDate = "";
-
-    @Required private String notes = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String attachmentNames = "";
-
-    @Required private String createdUser = "";
+    @Required
+    private String lic_description = "";
+    @Required
+    private String nameOnLicense = "";
+    @Required
+    private String issuingCountry = "";
+    @Required
+    private String issuingState = "";
+    @Required
+    private String licenseNumber = "";
+    @Required
+    private String dateIssued = "";
+    @Required
+    private String expirationDate = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
 
     public DecryptedLicense(String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
@@ -73,6 +89,9 @@ public class DecryptedLicense implements Parcelable {
         createdUser = in.readString();
     }
 
+    public DecryptedLicense() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -96,18 +115,6 @@ public class DecryptedLicense implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedLicense> CREATOR = new Creator<DecryptedLicense>() {
-        @Override
-        public DecryptedLicense createFromParcel(Parcel in) {
-            return new DecryptedLicense(in);
-        }
-
-        @Override
-        public DecryptedLicense[] newArray(int size) {
-            return new DecryptedLicense[size];
-        }
-    };
 
     public String getSelectionType() {
         return selectionType;
@@ -219,8 +226,5 @@ public class DecryptedLicense implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedLicense() {
     }
 }

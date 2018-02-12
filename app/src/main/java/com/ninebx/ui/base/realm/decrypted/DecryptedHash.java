@@ -3,9 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -13,11 +11,25 @@ import io.realm.annotations.Required;
  */
 public class DecryptedHash implements Parcelable {
 
+    public static final Creator<DecryptedHash> CREATOR = new Creator<DecryptedHash>() {
+        @Override
+        public DecryptedHash createFromParcel(Parcel in) {
+            return new DecryptedHash(in);
+        }
+
+        @Override
+        public DecryptedHash[] newArray(int size) {
+            return new DecryptedHash[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-    @Required private String  finalPassword = "";
-    @Required private String  passcode = "";
-    @Required private Boolean  isEnabledTouchId = false;
+    @Required
+    private String finalPassword = "";
+    @Required
+    private String passcode = "";
+    @Required
+    private Boolean isEnabledTouchId = false;
 
     public DecryptedHash() {
     }
@@ -49,18 +61,6 @@ public class DecryptedHash implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedHash> CREATOR = new Creator<DecryptedHash>() {
-        @Override
-        public DecryptedHash createFromParcel(Parcel in) {
-            return new DecryptedHash(in);
-        }
-
-        @Override
-        public DecryptedHash[] newArray(int size) {
-            return new DecryptedHash[size];
-        }
-    };
 
     public Integer getId() {
         return id;

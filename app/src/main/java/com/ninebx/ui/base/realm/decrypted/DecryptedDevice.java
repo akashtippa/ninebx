@@ -3,8 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.RealmObject;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -12,10 +10,23 @@ import io.realm.annotations.Required;
  */
 public class DecryptedDevice implements Parcelable {
 
+    public static final Creator<DecryptedDevice> CREATOR = new Creator<DecryptedDevice>() {
+        @Override
+        public DecryptedDevice createFromParcel(Parcel in) {
+            return new DecryptedDevice(in);
+        }
+
+        @Override
+        public DecryptedDevice[] newArray(int size) {
+            return new DecryptedDevice[size];
+        }
+    };
     @Required
-    private String deviceId       = "";
-    @Required private Boolean isTouchIdSet  = false;
-    @Required private String passcode       = "";
+    private String deviceId = "";
+    @Required
+    private Boolean isTouchIdSet = false;
+    @Required
+    private String passcode = "";
 
     public DecryptedDevice(String deviceId, Boolean isTouchIdSet, String passcode) {
         this.deviceId = deviceId;
@@ -44,18 +55,6 @@ public class DecryptedDevice implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedDevice> CREATOR = new Creator<DecryptedDevice>() {
-        @Override
-        public DecryptedDevice createFromParcel(Parcel in) {
-            return new DecryptedDevice(in);
-        }
-
-        @Override
-        public DecryptedDevice[] newArray(int size) {
-            return new DecryptedDevice[size];
-        }
-    };
 
     public String getDeviceId() {
         return deviceId;

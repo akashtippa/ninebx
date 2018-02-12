@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,68 @@ import io.realm.annotations.Required;
  */
 public class DecryptedDocuments implements Parcelable {
 
+    public static final Creator<DecryptedDocuments> CREATOR = new Creator<DecryptedDocuments>() {
+        @Override
+        public DecryptedDocuments createFromParcel(Parcel in) {
+            return new DecryptedDocuments(in);
+        }
+
+        @Override
+        public DecryptedDocuments[] newArray(int size) {
+            return new DecryptedDocuments[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String passportName = "";
+    @Required
+    private String visaName = "";
+    @Required
+    private String nameOnPassport = "";
+    @Required
+    private String nameOnVisa = "";
+    @Required
+    private String visaType = "";
+    @Required
+    private String visaNumber = "";
+    @Required
+    private String travelDocumentTitle = "";
+    @Required
+    private String nameOnTravelDocument = "";
+    @Required
+    private String travelDocumentType = "";
+    @Required
+    private String travelDocumentNumber = "";
+    @Required
+    private String issuingCountry = "";
+    @Required
+    private String passportNumber = "";
+    @Required
+    private String placeIssued = "";
+    @Required
+    private String dateIssued = "";
+    @Required
+    private String expirationDate = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedDocuments(Parcel in) {
         id = in.readInt();
@@ -57,6 +108,34 @@ public class DecryptedDocuments implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedDocuments(String selectionType, String passportName, String visaName, String nameOnPassport, String nameOnVisa, String visaType, String visaNumber, String travelDocumentTitle, String nameOnTravelDocument, String travelDocumentType, String travelDocumentNumber, String issuingCountry, String passportNumber, String placeIssued, String dateIssued, String expirationDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.passportName = passportName;
+        this.visaName = visaName;
+        this.nameOnPassport = nameOnPassport;
+        this.nameOnVisa = nameOnVisa;
+        this.visaType = visaType;
+        this.visaNumber = visaNumber;
+        this.travelDocumentTitle = travelDocumentTitle;
+        this.nameOnTravelDocument = nameOnTravelDocument;
+        this.travelDocumentType = travelDocumentType;
+        this.travelDocumentNumber = travelDocumentNumber;
+        this.issuingCountry = issuingCountry;
+        this.passportNumber = passportNumber;
+        this.placeIssued = placeIssued;
+        this.dateIssued = dateIssued;
+        this.expirationDate = expirationDate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedDocuments() {
     }
 
     @Override
@@ -92,18 +171,6 @@ public class DecryptedDocuments implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedDocuments> CREATOR = new Creator<DecryptedDocuments>() {
-        @Override
-        public DecryptedDocuments createFromParcel(Parcel in) {
-            return new DecryptedDocuments(in);
-        }
-
-        @Override
-        public DecryptedDocuments[] newArray(int size) {
-            return new DecryptedDocuments[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -122,8 +189,8 @@ public class DecryptedDocuments implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -131,64 +198,9 @@ public class DecryptedDocuments implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String passportName = "";
-    @Required private String visaName = "";
-
-    @Required private String nameOnPassport = "";
-
-    @Required private String nameOnVisa = "";
-    @Required private String visaType = "";
-    @Required private String visaNumber = "";
-
-    @Required private String travelDocumentTitle = "";
-    @Required private String nameOnTravelDocument = "";
-    @Required private String travelDocumentType = "";
-    @Required private String travelDocumentNumber = "";
-
-    @Required private String issuingCountry = "";
-    @Required private String passportNumber = "";
-    @Required private String placeIssued = "";
-    @Required private String dateIssued = "";
-    @Required private String expirationDate = "";
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    public DecryptedDocuments(String selectionType, String passportName, String visaName, String nameOnPassport, String nameOnVisa, String visaType, String visaNumber, String travelDocumentTitle, String nameOnTravelDocument, String travelDocumentType, String travelDocumentNumber, String issuingCountry, String passportNumber, String placeIssued, String dateIssued, String expirationDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.passportName = passportName;
-        this.visaName = visaName;
-        this.nameOnPassport = nameOnPassport;
-        this.nameOnVisa = nameOnVisa;
-        this.visaType = visaType;
-        this.visaNumber = visaNumber;
-        this.travelDocumentTitle = travelDocumentTitle;
-        this.nameOnTravelDocument = nameOnTravelDocument;
-        this.travelDocumentType = travelDocumentType;
-        this.travelDocumentNumber = travelDocumentNumber;
-        this.issuingCountry = issuingCountry;
-        this.passportNumber = passportNumber;
-        this.placeIssued = placeIssued;
-        this.dateIssued = dateIssued;
-        this.expirationDate = expirationDate;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -365,8 +377,5 @@ public class DecryptedDocuments implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedDocuments() {
     }
 }
