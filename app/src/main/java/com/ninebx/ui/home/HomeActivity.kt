@@ -22,6 +22,7 @@ import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.account.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
@@ -33,6 +34,7 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 import io.realm.Realm
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
@@ -149,6 +151,13 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                 if( currentUsers != null ) {
                     this@HomeActivity.hideProgressDialog()
                     AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+                    if( NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE ) {
+                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
+                        val fragmentTransaction = supportFragmentManager.beginTransaction()
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.replace(R.id.frameLayout, AddFamilyUsersFragment()).commit()
+                        hideQuickAdd()
+                    }
                 }
             }
 

@@ -157,13 +157,19 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToInvitePeople() {
+
         if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
+
+        val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
+        startActivity(homeIntent)
+        finish()
+        /*
         mCurrentTag = "InvitePeople"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(AddFamilyUsersFragment::class.java.simpleName)
         val addFamilyUsersFragment = AddFamilyUsersFragment()
-        fragmentTransaction.replace(R.id.container, addFamilyUsersFragment).commit()
+        fragmentTransaction.replace(R.id.container, addFamilyUsersFragment).commit()*/
     }
 
     override fun showProgress(message: Int) {
