@@ -21,10 +21,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.BaseAuthFragment
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.NineBxPreferences
+import kotlinx.android.synthetic.main.fragment_finger_print.*
 import java.io.IOException
 import java.security.*
 import java.security.cert.CertificateException
@@ -46,7 +49,8 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
         if( context != null )
             context!!.showToast("Verified successfully")
-        mAuthView.navigateToHome()
+
+        tvSkip.setText(R.string.save)
 
     }
 
@@ -102,7 +106,23 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkPermissions()
+        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
+
+            NineBxApplication.getPreferences().isFingerPrintEnabled = isChecked
+            if( isChecked )
+                checkPermissions()
+
+        }
+        tvSkip.setOnClickListener {
+            if(tvSkip.text.toString() == "Skip") {
+                mAuthView.navigateToHome()
+            }
+            else {
+                mAuthView.navigateToHome()
+            }
+         }
+
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

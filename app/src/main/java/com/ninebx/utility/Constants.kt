@@ -8,6 +8,7 @@ import com.amazonaws.regions.Regions
 
 object Constants {
     val FIRST_RUN = "is_first_run"
+    val FINGER_PRINT = "finger_print"
     val IS_LOGIN = "is_login"
     val IS_PASSWORD_REQUIRED = "is_password_required"
     val IS_MAPS_SHOWN = "IS_MAPS_SHOWN"
