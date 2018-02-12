@@ -41,24 +41,22 @@
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:gravity="bottom"
+        android:gravity="bottom|center"
         style="?android:attr/buttonBarStyle">
 
-        <Space
-            android:id="@+id/spacer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:visibility="invisible" />
         <Button
             android:id="@+id/cancel_button"
+            android:layout_gravity="center"
+            android:gravity="center"
             style="?android:attr/buttonBarNegativeButtonStyle"
+            android:text="@string/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="NewApi" />
 
         <Button
             android:id="@+id/second_dialog_button"
+            android:visibility="gone"
             style="?android:attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

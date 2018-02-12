@@ -339,7 +339,7 @@
     <string name="sign_in">Sign in</string>
     <string name="ok">OK</string>
     <string name="password">Password</string>
-    <string name="fingerprint_description">Confirm fingerprint to continue</string>
+    <string name="fingerprint_description">Please authenticate to proceed as</string>
     <string name="fingerprint_hint">Touch sensor</string>
     <string name="password_description">Enter your store password to continue</string>
     <string name="purchase">Purchase</string>
@@ -958,5 +958,6 @@
     <string name="enable_touch_id">Enable Touch ID</string>
     <string name="skip">Skip</string>
     <string name="allow_quicker_access">Allow Quicker Access - so you don\'t have to type in your personal passcode every time.</string>
+    <string name="touch_id_for_ninebx">Touch ID for \"NineBx\"</string>
 
 </resources>

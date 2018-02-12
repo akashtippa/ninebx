@@ -143,7 +143,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         setupKeyStoreAndKeyGenerator()
         val (defaultCipher: Cipher, cipherNotInvalidated: Cipher) = setupCiphers()
         setUpPurchaseButtons(cipherNotInvalidated, defaultCipher)
-        showAuthDialog(defaultCipher, DEFAULT_KEY_NAME)
+        //showAuthDialog(defaultCipher, DEFAULT_KEY_NAME)
     }
 
     private fun setUpPurchaseButtons(cipherNotInvalidated: Cipher, defaultCipher: Cipher) {
@@ -171,6 +171,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     private fun showAuthDialog(cipher: Cipher, keyName: String) {
         val fragment = FingerprintAuthenticationDialogFragment()
         fragment.setCryptoObject(FingerprintManager.CryptoObject(cipher))
+        fragment.setAuthView( mAuthView )
         fragment.setCallback(this)
 
         // Set up the crypto object for later, which will be authenticated by fingerprint usage.

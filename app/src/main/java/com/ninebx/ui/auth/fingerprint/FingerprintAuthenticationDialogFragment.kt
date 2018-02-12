@@ -4,6 +4,7 @@ package com.ninebx.ui.auth.fingerprint
  * Created by Alok on 15/01/18.
  */
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.hardware.fingerprint.FingerprintManager
@@ -22,7 +23,12 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
+import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.auth.AuthView
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
+import kotlinx.android.synthetic.main.fingerprint_dialog_content.*
 
 /**
  * A dialog which uses fingerprint APIs to authenticate the user, and falls back to password
@@ -70,6 +76,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         return inflater.inflate(R.layout.fingerprint_dialog_container, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -81,7 +88,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         passwordEditText = view.findViewById(R.id.password)
         secondDialogButton = view.findViewById(R.id.second_dialog_button)
         useFingerprintFutureCheckBox = view.findViewById(R.id.use_fingerprint_in_future_check)
-
+        fingerprint_description.text = getString(R.string.fingerprint_description) + " " + NineBxApplication.getPreferences().userEmail
         cancelButton.setOnClickListener { dismiss() }
         passwordEditText.setOnEditorActionListener(this)
         secondDialogButton.setOnClickListener {
@@ -91,7 +98,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         fingerprintUiHelper = FingerprintUiHelper(
                 activity!!.getSystemService(FingerprintManager::class.java),
                 view.findViewById(R.id.fingerprint_icon),
-                view.findViewById(R.id.fingerprint_status),
+                view.findViewById(R.id.fingerprint_description),
                 this
         )
         updateStage()
@@ -192,6 +199,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
             Stage.FINGERPRINT -> {
                 cancelButton.setText(R.string.cancel)
                 secondDialogButton.setText(R.string.use_password)
+                secondDialogButton.hide()
                 fingerprintContainer.visibility = View.VISIBLE
                 backupContent.visibility = View.GONE
             }
@@ -199,6 +207,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
             Stage.PASSWORD -> {
                 cancelButton.setText(R.string.cancel)
                 secondDialogButton.setText(R.string.ok)
+                secondDialogButton.show()
                 fingerprintContainer.visibility = View.GONE
                 backupContent.visibility = View.VISIBLE
                 if (stage == Stage.NEW_FINGERPRINT_ENROLLED) {
@@ -227,6 +236,11 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
     interface Callback {
         fun onPurchased(withFingerprint: Boolean, crypto: FingerprintManager.CryptoObject? = null)
         fun createKey(keyName: String, invalidatedByBiometricEnrollment: Boolean = true)
+    }
+
+    private var authView : AuthView ?= null
+    fun setAuthView(mAuthView: AuthView) {
+        this.authView = mAuthView
     }
 
 
