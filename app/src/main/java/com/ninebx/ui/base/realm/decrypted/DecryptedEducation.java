@@ -1,4 +1,7 @@
-package com.ninebx.ui.base.realm.home.education;
+package com.ninebx.ui.base.realm.decrypted;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
@@ -6,22 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
- * Created by Alok on 24/01/18.
+ * Created by smrit on 12-02-2018.
  */
-@RealmClass
-public class Education extends RealmObject {
 
+public class DecryptedEducation implements Parcelable {
     @PrimaryKey //@Required
     private int id = 0;
 
-    @Required private String selectionType = "";
+    @Required
+    private String selectionType = "";
 
     @Required private String institutionName = "";
     @Required private String accountName = "";
@@ -72,7 +73,10 @@ public class Education extends RealmObject {
         }
     }
 
-    public Education(int id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public DecryptedEducation() {
+    }
+
+    public DecryptedEducation(int id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.institutionName = institutionName;
@@ -100,10 +104,7 @@ public class Education extends RealmObject {
         this.photosId = photosId;
     }
 
-    public Education() {
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -295,4 +296,107 @@ public class Education extends RealmObject {
         this.backingImages = backingImages;
     }
 
+    protected DecryptedEducation(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        institutionName = in.readString();
+        accountName = in.readString();
+        accountType = in.readString();
+        nameOnAccount = in.readString();
+        accountNumber = in.readString();
+        location = in.readString();
+        swiftCode = in.readString();
+        abaRoutingNumber = in.readString();
+        contacts = in.readString();
+        website = in.readString();
+        userName = in.readString();
+        password = in.readString();
+        pin = in.readString();
+        paymentMethodOnFile = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+        title = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(selectionType);
+        dest.writeString(institutionName);
+        dest.writeString(accountName);
+        dest.writeString(accountType);
+        dest.writeString(nameOnAccount);
+        dest.writeString(accountNumber);
+        dest.writeString(location);
+        dest.writeString(swiftCode);
+        dest.writeString(abaRoutingNumber);
+        dest.writeString(contacts);
+        dest.writeString(website);
+        dest.writeString(userName);
+        dest.writeString(password);
+        dest.writeString(pin);
+        dest.writeString(paymentMethodOnFile);
+        dest.writeString(notes);
+        dest.writeString(attachmentNames);
+        dest.writeString(title);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(createdUser);
+        dest.writeStringList(photosId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DecryptedEducation> CREATOR = new Creator<DecryptedEducation>() {
+        @Override
+        public DecryptedEducation createFromParcel(Parcel in) {
+            return new DecryptedEducation(in);
+        }
+
+        @Override
+        public DecryptedEducation[] newArray(int size) {
+            return new DecryptedEducation[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "DecryptedEducation{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", nameOnAccount='" + nameOnAccount + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", swiftCode='" + swiftCode + '\'' +
+                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", paymentMethodOnFile='" + paymentMethodOnFile + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", title='" + title + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }
