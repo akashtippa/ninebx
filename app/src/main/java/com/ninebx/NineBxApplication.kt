@@ -89,7 +89,7 @@ class NineBxApplication : MultiDexApplication() {
             return nineBxPreferences!!
         }
 
-        var autoTestMode = false
+        var autoTestMode = true
 
         private var getUserAPI : NetModule.GetUsersAPI ?= null
         fun getUserAPI( ) : NetModule.GetUsersAPI? {

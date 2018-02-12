@@ -7,18 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.ui.home.HomeActivity
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.prepareRealmConnections
-import com.ninebx.utility.retrieveObject
-import io.realm.Realm
-import io.realm.RealmResults
-import java.util.*
 
 /**
  * Created by Alok on 03/01/18.
  */
 class SearchFragment : Fragment(), SearchView {
+    override fun onCombineResultFetched(combine: Combine) {
+
+    }
 
     override fun showProgress(message: Int) {
 
@@ -38,13 +34,7 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        prepareRealmConnections( context, false, "Combine", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineResult = realm!!.where(Combine::class.java).findAll()
-                AppLogger.d("Combine", "Combined REsults : " + combineResult)
-            }
-        })
+        SearchPresenter( this )
     }
 }
 

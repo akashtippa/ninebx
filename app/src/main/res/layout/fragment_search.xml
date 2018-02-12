@@ -31,8 +31,6 @@
                 android:hint="@string/search"
                 android:padding="@dimen/default_mini_margin"
                 android:textSize="@dimen/text_16" />
-
-
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
