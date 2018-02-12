@@ -48,8 +48,11 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
+        if( NineBxApplication.instance.activityInstance != null ) {
+            NineBxApplication.instance.activityInstance!!.hideBottomView()
+            NineBxApplication.instance.activityInstance!!.showBackIcon()
+        }
 
         mListsAdapter = AddedFamilyMemberAdapter(myList)
         val layoutManager = LinearLayoutManager(context)

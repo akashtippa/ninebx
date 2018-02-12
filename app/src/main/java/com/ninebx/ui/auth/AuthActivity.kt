@@ -18,6 +18,7 @@ import android.support.annotation.RequiresApi
 import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.home.account.AddFamilyUsersFragment
 
 
 /**
@@ -160,9 +161,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
             NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
         mCurrentTag = "InvitePeople"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(InvitePeopleFragment::class.java.simpleName)
-        val invitePeopleFragment = InvitePeopleFragment()
-        fragmentTransaction.replace(R.id.container, invitePeopleFragment).commit()
+        fragmentTransaction.addToBackStack(AddFamilyUsersFragment::class.java.simpleName)
+        val addFamilyUsersFragment = AddFamilyUsersFragment()
+        fragmentTransaction.replace(R.id.container, addFamilyUsersFragment).commit()
     }
 
     override fun showProgress(message: Int) {
@@ -203,8 +204,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 }
             }
             Constants.FINGER_PRINT_COMPLETE ->{
-                //navigateToInvitePeople()
-                navigateToHome()
+                navigateToInvitePeople()
+                //navigateToHome()
             }
             Constants.INVITE_USERS_COMPLETE, Constants.ALL_COMPLETE -> {
                 navigateToHome()
