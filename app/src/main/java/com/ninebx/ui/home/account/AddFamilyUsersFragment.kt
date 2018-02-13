@@ -8,27 +8,39 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.adapter.AddedFamilyMemberAdapter
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
-import com.ninebx.ui.home.account.model.AddedFamilyMembers
+import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.decryptString
 import kotlinx.android.synthetic.main.fragment_family_users.*
+import java.io.File
 import java.util.*
 
 /***
  * Created by TechnoBlogger on 15/01/18.
  */
 
-class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
+class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransferHelper.FileOperationsCompletionListener {
+
+    override fun onSuccess(outputFile: File?) {
+        if( outputFile != null && imgProfilePic != null )
+            Glide.with(context).asBitmap().load(outputFile).into(imgProfilePic)
+    }
 
     override fun memberAdded(profileName: String?, accountHolder: String?, email: String?, role: String?) {
-        val mLog = AddedFamilyMembers()
-        mLog.profileName = profileName
-        mLog.users = accountHolder
+        val mLog = Member()
+        mLog.firstName = profileName!!.split(" ")[0]
+        mLog.lastName = profileName.split(" ")[1]
+        mLog.relationship = accountHolder
         mLog.email = email
         mLog.role = role
         myList.add(mLog)
@@ -40,11 +52,13 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
     }
 
     private var mListsAdapter: AddedFamilyMemberAdapter? = null
-    var myList: ArrayList<AddedFamilyMembers> = ArrayList()
+    var myList: ArrayList<Member> = ArrayList()
     var strAddItem = ""
     var strRelationship = ""
     var strRoles = ""
 
+
+    private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,6 +67,9 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
             NineBxApplication.instance.activityInstance!!.showBackIcon()
         }
+        mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
+        val currentUsers = arguments!!.getParcelableArrayList<Users>(Constants.CURRENT_USER)
+        myList.addAll(currentUsers.get(0).members)
 
         mListsAdapter = AddedFamilyMemberAdapter(myList)
         val layoutManager = LinearLayoutManager(context)
@@ -68,6 +85,20 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
             fragmentTransaction.replace(R.id.frameLayout, AddFamilyMemberOrUsersFragment()).commit()
 //            openStaticLayoutDialog()
         }
+
+        initAdmin( currentUsers[0] )
+    }
+
+    private fun initAdmin(users: Users?) {
+
+        txtProfileName.text = users!!.fullName.decryptString()
+        txtProfileEmail.text = users.emailAddress.decryptString()
+
+        mAWSFileTransferHelper.setFileTransferListener(this)
+        mAWSFileTransferHelper.beginDownload(users.profilePhoto)
+
+
+
     }
 
     override fun onBackPressed(): Boolean {
@@ -151,6 +182,10 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
                 return@setOnClickListener
             }
 
+            if (txtLastName.text.toString().trim().isEmpty()) {
+                Toast.makeText(context, "Please enter 'Last name'", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             if (strRelationship.isEmpty()) {
                 Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
@@ -169,9 +204,10 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded {
 
 
             // Setting Data
-            val mLog = AddedFamilyMembers()
-            mLog.profileName = txtFirstName.text.toString()
-            mLog.users = strRelationship
+            val mLog = Member()
+            mLog.firstName = txtFirstName.text.toString()
+            mLog.lastName = txtLastName.text.toString()
+            mLog.relationship = strRelationship
             mLog.email = edtEmailAddress.text.toString()
             mLog.role = strRoles
             myList.add(mLog)

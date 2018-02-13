@@ -10,12 +10,11 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.home.account.AddFamilyMemberOrUsersFragment
-import com.ninebx.ui.home.account.PermissionFragment
-import com.ninebx.ui.home.account.model.AddedFamilyMembers
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<AddedFamilyMembers>?) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -26,10 +25,11 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<AddedFamil
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
-        holder.txtProfileName.text = myList!![position].profileName
-        holder.txtAccountHolder.text = myList!![position].users
-        holder.txtRole.text = myList!![position].role
-        holder.txtProfileEmail.text = myList!![position].email
+        val member = myList!![position]
+        holder.txtProfileName.text = member.firstName + " " + member.lastName
+        holder.txtAccountHolder.text = member.relationship
+        holder.txtRole.text = member.role
+        holder.txtProfileEmail.text = member.email
 
         holder.imgEdit.setOnClickListener {
             val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
@@ -48,7 +48,7 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<AddedFamil
     }
 
 
-    fun restoreAt(position: Int, iItem: AddedFamilyMembers) {
+    fun restoreAt(position: Int, iItem: Member) {
         myList!!.add(position, iItem)
         notifyItemRemoved(position)
     }
@@ -60,7 +60,7 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<AddedFamil
     }
 
 
-    fun notifyData(myList: ArrayList<AddedFamilyMembers>) {
+    fun notifyData(myList: ArrayList<Member>) {
         this.myList = myList
         notifyDataSetChanged()
     }

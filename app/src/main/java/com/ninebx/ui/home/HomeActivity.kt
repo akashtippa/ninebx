@@ -21,6 +21,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.account.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
@@ -152,10 +153,14 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                     this@HomeActivity.hideProgressDialog()
                     AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
                     if( NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE ) {
-                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
+                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
                         val fragmentTransaction = supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.replace(R.id.frameLayout, AddFamilyUsersFragment()).commit()
+                        val addFamilyUsersFragment = AddFamilyUsersFragment()
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers))
+                        addFamilyUsersFragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
                         hideQuickAdd()
                     }
                 }
