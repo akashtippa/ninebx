@@ -9,13 +9,14 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.homeBanking.Combine.*
 import com.ninebx.ui.base.realm.home.homeBanking.Financial
+import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptFinancial
 
 /**
  * Created by Alok on 03/01/18.
  */
-class SearchFragment : Fragment(), SearchView {
+class SearchFragment : BaseHomeFragment(), SearchView {
     override fun onCombineResultFetched(combine: Combine) {
         //Show in logs
         //  AppLogger.d("Combine", "DecryptedCombine" + decryptFinancial(combine[]!!))

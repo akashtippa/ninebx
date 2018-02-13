@@ -351,6 +351,9 @@ fun String.decryptString( ) : String {
     if( this.isEmpty() ) {
         return ""
     }
+    /*if( !this.endsWith("=", true) ) {
+        return this
+    }*/
     return decryptAESKEY( this.toByteArray(), NineBxApplication.getPreferences().privateKey!! )
 }
 
@@ -381,34 +384,30 @@ fun encryptUsers( currentUser: Users ): Users {
 
 fun encryptMembers( members: RealmList<Member> ): RealmList<Member>? {
     for( i in 0 until members.size ) {
-        var member = members[i]
-        member = encryptMember(member!!)
+        encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName            .encryptString()
-    member. lastName             .encryptString()
-    member. relationship         .encryptString()
-    member. role                 .encryptString()
-    member. email                .encryptString()
+    member.firstName = member.firstName            .encryptString()
+    member.lastName = member. lastName             .encryptString()
+    member.relationship = member. relationship         .encryptString()
+    member.role = member. role.encryptString()
+    member.email = member. email                .encryptString()
 
-    member.dateOfBirth         .encryptString()
-    member.anniversary         .encryptString()
-    member.gender              .encryptString()
-    member.mobileNumber        .encryptString()
-    member.street_1            .encryptString()
-    member.street_2            .encryptString()
-    member.city                .encryptString()
-    member.state               .encryptString()
-    member.zipCode             .encryptString()
-    member.country             .encryptString()
+    member.dateOfBirth = member.dateOfBirth         .encryptString()
+    member.anniversary = member.anniversary         .encryptString()
+    member.gender = member.gender
+    member.mobileNumber = member.mobileNumber        .encryptString()
+    member.street_1 = member.street_1            .encryptString()
+    member.street_2 = member.street_2            .encryptString()
+    member.city = member.city                .encryptString()
+    member.state = member.state               .encryptString()
+    member.zipCode = member.zipCode             .encryptString()
+    member.country = member.country             .encryptString()
 
-    member.userId              .encryptString()
-    
-    member.profilePhoto        .encryptString()
     return member
 }
 

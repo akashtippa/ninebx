@@ -11,7 +11,9 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
 
 
@@ -23,6 +25,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
 
     private lateinit var selectedRelation: String
     private lateinit var selectedRole: String
+    private lateinit var iMemberAdded : IMemberAdded
+    private lateinit var member : Member
 
     private var strFirstName = ""
     private var strLastName = ""
@@ -48,6 +52,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.replace(R.id.frameLayout, PermissionFragment()).commit()
         }
+
+        member = arguments!!.getParcelable(Constants.MEMBER)
 
         selectedRelation = txtRelationship.selectedItem.toString()
         selectedRole = txtsRole.selectedItem.toString()
@@ -95,6 +101,26 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
         txtSave.setOnClickListener {
             checkValidations()
         }
+
+        populateView( member )
+    }
+
+    private fun populateView(member: Member?) {
+
+        if( member!!.firstName.isNotEmpty() )
+            txtFirstName.setText( member.firstName.decryptString() )
+
+        if( member.lastName.isNotEmpty() )
+            txtLastName.setText( member.lastName.decryptString() )
+
+        if( member.relationship.isNotEmpty() )
+            txtRelationship.prompt = member.relationship
+
+        if( member.role.isNotEmpty() )
+            txtsRole.prompt = member.role
+
+        if( member.email.isNotEmpty() )
+            edtEmailAddress.setText( member.email.decryptString() )
     }
 
 
@@ -110,7 +136,13 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
             txtFirstName.requestFocus()
-            return;
+            return
+        }
+
+        if (strLastName.trim().isEmpty()) {
+            Toast.makeText(context, "Please enter 'Last name'", Toast.LENGTH_LONG).show()
+            txtLastName.requestFocus()
+            return
         }
 
         if ((txtRelationship.selectedItem.toString().trim() == "Relationship" || txtRelationship.selectedItem.toString().trim().isEmpty())) {
@@ -128,19 +160,27 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
                 if (edtEmailAddress.text.toString().trim().isEmpty()) {
                     Toast.makeText(context, "Please enter 'Email address'", Toast.LENGTH_LONG).show()
                     edtEmailAddress.requestFocus()
-                    return;
+                    return
                 }
         }
 
+        var member = Member()
+        member.userId = this@AddFamilyMemberOrUsersFragment.member.userId
+        member.firstName = strFirstName.encryptString()
+        member.lastName = strLastName.encryptString()
+        member.relationship = strAccountHolder.encryptString()
+        member.email = strEmail.encryptString()
+        member.role = strRole.encryptString()
+        member.relationship = txtRelationship.selectedItem.toString().encryptString()
+
+        //member.insertOrUpdate( realm!! )
         // Set the data.
-        NineBxApplication.instance.getiMemberAdded()!!.memberAdded(
-                strFirstName + " " + strLastName,
-                strAccountHolder,
-                strEmail,
-                strRole)
+        iMemberAdded.memberAdded( member )
 
         // Add method to add it in a RecyclerView
         NineBxApplication.instance.activityInstance!!.onBackPressed()
+
+
 
     }
 
@@ -148,6 +188,10 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showToolbar()
         return super.onBackPressed()
+    }
+
+    fun setIMemberAdded(iMemberAdded: IMemberAdded) {
+        this.iMemberAdded = iMemberAdded
     }
 
 }

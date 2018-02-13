@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.Member
-import com.ninebx.ui.home.account.AddFamilyMemberOrUsersFragment
+import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.decryptString
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -26,15 +27,14 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?) 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val member = myList!![position]
-        holder.txtProfileName.text = member.firstName + " " + member.lastName
-        holder.txtAccountHolder.text = member.relationship
-        holder.txtRole.text = member.role
-        holder.txtProfileEmail.text = member.email
+        AppLogger.d("Decrypt", "Decrypting : " + member.toString() )
+        holder.txtProfileName.text = member.firstName.decryptString() + " " + member.lastName.decryptString()
+        holder.txtAccountHolder.text = member.relationship.decryptString()
+        holder.txtRole.text = member.role.decryptString()
+        holder.txtProfileEmail.text = member.email.decryptString()
 
         holder.imgEdit.setOnClickListener {
-            val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, AddFamilyMemberOrUsersFragment()).commit()
+           iMemberAdded.onMemberEdit(member)
         }
 
         holder.imgDelete.setOnClickListener {
@@ -47,23 +47,6 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?) 
         return if (null != myList) myList!!.size else 0
     }
 
-
-    fun restoreAt(position: Int, iItem: Member) {
-        myList!!.add(position, iItem)
-        notifyItemRemoved(position)
-    }
-
-
-    fun removeAt(position: Int) {
-        myList!!.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-
-    fun notifyData(myList: ArrayList<Member>) {
-        this.myList = myList
-        notifyDataSetChanged()
-    }
 
     internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
 

@@ -18,7 +18,6 @@ import android.support.annotation.RequiresApi
 import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.ui.home.account.AddFamilyUsersFragment
 
 
 /**

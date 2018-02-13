@@ -121,14 +121,6 @@ class NineBxApplication : MultiDexApplication() {
     }
 
 
-    fun getiMemberAdded(): IMemberAdded? {
-        return this.iMemberAdded
-    }
-
-    fun setiMemberAdded(iMemberAdded: IMemberAdded) {
-        this.iMemberAdded = iMemberAdded
-    }
-
     fun isNetworkAvailable(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo

@@ -1,20 +1,15 @@
 package com.ninebx.ui.base.realm.home.homeBanking;
 
-import android.util.Log;
 
 import com.ninebx.ui.base.realm.lists.HomeList;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
-import static com.ninebx.utility.SecurityUtilsKt.decryptAESKEY;
 /**
  * Created by Alok on 24/01/18.
  */

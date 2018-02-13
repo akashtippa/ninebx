@@ -12,39 +12,55 @@ import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.adapter.AddedFamilyMemberAdapter
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.decryptString
+import com.ninebx.utility.*
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_family_users.*
 import java.io.File
-import java.util.*
+import kotlin.collections.ArrayList
 
 /***
  * Created by TechnoBlogger on 15/01/18.
  */
 
 class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransferHelper.FileOperationsCompletionListener {
+    override fun onMemberEdit(member: Member?) {
+        myList.remove(member)
+        mListsAdapter!!.notifyDataSetChanged()
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
+        addFamilyMemberOrUsersFragment.setIMemberAdded(this)
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.MEMBER, member)
+        addFamilyMemberOrUsersFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, addFamilyMemberOrUsersFragment).commit()
+    }
 
     override fun onSuccess(outputFile: File?) {
         if( outputFile != null && imgProfilePic != null )
             Glide.with(context).asBitmap().load(outputFile).into(imgProfilePic)
     }
 
-    override fun memberAdded(profileName: String?, accountHolder: String?, email: String?, role: String?) {
-        val mLog = Member()
-        mLog.firstName = profileName!!.split(" ")[0]
-        mLog.lastName = profileName.split(" ")[1]
-        mLog.relationship = accountHolder
-        mLog.email = email
-        mLog.role = role
-        myList.add(mLog)
-        mListsAdapter!!.notifyData(myList)
+    override fun memberAdded( member : Member? ) {
+
+        prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val userObject = Users.createUserObject( currentUsers!![0], myList )
+                userObject.insertOrUpdate(realm!!)
+                context!!.hideProgressDialog()
+                myList.clear()
+                myList.addAll(userObject.members)
+                mListsAdapter!!.notifyDataSetChanged()
+            }
+
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,6 +76,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
+    private var currentUsers: ArrayList<Users>? = ArrayList()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -68,25 +86,28 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
             NineBxApplication.instance.activityInstance!!.showBackIcon()
         }
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
-        val currentUsers = arguments!!.getParcelableArrayList<Users>(Constants.CURRENT_USER)
-        myList.addAll(currentUsers.get(0).members)
+        currentUsers = arguments!!.getParcelableArrayList<Users>(Constants.CURRENT_USER)
+        myList.addAll(currentUsers!!.get(0).members)
 
-        mListsAdapter = AddedFamilyMemberAdapter(myList)
+        mListsAdapter = AddedFamilyMemberAdapter(myList, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddFamilyMembers!!.layoutManager = layoutManager
         rvAddFamilyMembers!!.adapter = mListsAdapter
 
-        NineBxApplication.instance.setiMemberAdded(this@AddFamilyUsersFragment)
-
         layAddFamilyMembers.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, AddFamilyMemberOrUsersFragment()).commit()
+            val addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
+            addFamilyMemberOrUsersFragment.setIMemberAdded(this)
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.MEMBER, Member())
+            addFamilyMemberOrUsersFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frameLayout, addFamilyMemberOrUsersFragment).commit()
 //            openStaticLayoutDialog()
         }
 
-        initAdmin( currentUsers[0] )
+        initAdmin( currentUsers!![0] )
     }
 
     private fun initAdmin(users: Users?) {
@@ -210,7 +231,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
             mLog.email = edtEmailAddress.text.toString()
             mLog.role = strRoles
             myList.add(mLog)
-            mListsAdapter!!.notifyData(myList)
+            mListsAdapter!!.notifyDataSetChanged()
             dialog.dismiss()
 
 

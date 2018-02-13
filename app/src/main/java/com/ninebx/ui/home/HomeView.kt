@@ -2,6 +2,9 @@ package com.ninebx.ui.home
 
 import com.ninebx.ui.base.BaseView
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Users
+import io.realm.RealmList
+import io.realm.RealmResults
 import java.util.*
 
 /**
@@ -9,4 +12,5 @@ import java.util.*
  */
 interface HomeView : BaseView {
     fun addEditCalendarEvent(calendarEvent : CalendarEvents?, selectedDate : Date )
+    fun getCurrentUsers() : RealmResults<Users>
 }
