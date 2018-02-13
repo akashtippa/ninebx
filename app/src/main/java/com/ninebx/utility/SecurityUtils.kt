@@ -15,13 +15,17 @@ import com.ninebx.ui.base.realm.home.education.MainEducation
 import com.ninebx.ui.base.realm.home.education.Work
 import com.ninebx.ui.base.realm.home.homeBanking.*
 import com.ninebx.ui.base.realm.home.interests.Interests
-import com.ninebx.ui.base.realm.home.personal.Certificate
-import com.ninebx.ui.base.realm.home.personal.Government
-import com.ninebx.ui.base.realm.home.personal.License
+import com.ninebx.ui.base.realm.home.memories.MainMemories
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.base.realm.home.personal.*
 import com.ninebx.ui.base.realm.home.shopping.ClothingSizes
 import com.ninebx.ui.base.realm.home.shopping.LoyaltyPrograms
+import com.ninebx.ui.base.realm.home.shopping.RecentPurchase
+import com.ninebx.ui.base.realm.home.shopping.Shopping
 import com.ninebx.ui.base.realm.home.travel.Documents
 import com.ninebx.ui.base.realm.home.travel.Loyalty
+import com.ninebx.ui.base.realm.home.travel.Travel
+import com.ninebx.ui.base.realm.home.travel.Vacations
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
@@ -1394,7 +1398,427 @@ fun decryptMainContacts(decryptMainContacts: MainContacts): DecryptedMainContact
 }
 
 
+fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
+    val decrypytMainEducation = DecryptedMainEducation()
+    decrypytMainEducation.selectionType = mainEducation.selectionType.decryptString()
+    decrypytMainEducation.classType = mainEducation.classType.decryptString()
+    decrypytMainEducation.institutionName = mainEducation.institutionName.decryptString()
+    decrypytMainEducation.qualification = mainEducation.qualification.decryptString()
+    decrypytMainEducation.name = mainEducation.name.decryptString()
+    decrypytMainEducation.location = mainEducation.location.decryptString()
+    decrypytMainEducation.major = mainEducation.major.decryptString()
+    decrypytMainEducation.from = mainEducation.from.decryptString()
+    decrypytMainEducation.to = mainEducation.to.decryptString()
+    decrypytMainEducation.currentlyStudying = mainEducation.currentlyStudying.decryptString()
+    decrypytMainEducation.notes = mainEducation.notes.decryptString()
+    decrypytMainEducation.created = mainEducation.created.decryptString()
+    decrypytMainEducation.modified = mainEducation.modified.decryptString()
+    decrypytMainEducation.attachmentNames = mainEducation.attachmentNames.decryptString()
+    decrypytMainEducation.createdUser = mainEducation.createdUser.decryptString()
 
+    return decrypytMainEducation
+}
+
+
+fun decrypytMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
+    val decrypytMainMemories = DecryptedMainMemories()
+    decrypytMainMemories.selectionType = mainMemories.selectionType.decryptString()
+    decrypytMainMemories.accountName = mainMemories.accountName.decryptString()
+    decrypytMainMemories.institutionName = mainMemories.institutionName.decryptString()
+    decrypytMainMemories.accountType = mainMemories.accountType.decryptString()
+    decrypytMainMemories.nameOnAccount = mainMemories.nameOnAccount.decryptString()
+    decrypytMainMemories.location = mainMemories.location.decryptString()
+    decrypytMainMemories.accountNumber = mainMemories.accountNumber.decryptString()
+    decrypytMainMemories.location = mainMemories.location.decryptString()
+    decrypytMainMemories.swiftCode = mainMemories.swiftCode.decryptString()
+    decrypytMainMemories.abaRoutingNumber = mainMemories.abaRoutingNumber.decryptString()
+    decrypytMainMemories.contacts = mainMemories.contacts.decryptString()
+    decrypytMainMemories.website = mainMemories.website.decryptString()
+    decrypytMainMemories.userName = mainMemories.userName.decryptString()
+    decrypytMainMemories.password = mainMemories.password.decryptString()
+    decrypytMainMemories.pin = mainMemories.pin.decryptString()
+    decrypytMainMemories.created = mainMemories.created.decryptString()
+    decrypytMainMemories.modified = mainMemories.modified.decryptString()
+    decrypytMainMemories.notes = mainMemories.notes.decryptString()
+    decrypytMainMemories.attachmentNames = mainMemories.attachmentNames.decryptString()
+    decrypytMainMemories.title = mainMemories.title.decryptString()
+    decrypytMainMemories.createdUser = mainMemories.createdUser.decryptString()
+
+    return decrypytMainMemories
+}
+
+
+fun decryptMedicalConditions(medicalConditions: MedicalConditions): DecryptedMedicalConditions {
+    val decryptMedicalConditions = DecryptedMedicalConditions()
+
+    decryptMedicalConditions.selectionType = medicalConditions.selectionType.decryptString()
+    decryptMedicalConditions.classType = medicalConditions.classType.decryptString()
+    decryptMedicalConditions.condition = medicalConditions.condition.decryptString()
+    decryptMedicalConditions.dateDiagnosed = medicalConditions.dateDiagnosed.decryptString()
+    decryptMedicalConditions.medi_description = medicalConditions.medi_description.decryptString()
+    decryptMedicalConditions.notes = medicalConditions.notes.decryptString()
+    decryptMedicalConditions.attachmentNames = medicalConditions.attachmentNames.decryptString()
+    decryptMedicalConditions.created = medicalConditions.created.decryptString()
+    decryptMedicalConditions.modified = medicalConditions.modified.decryptString()
+    decryptMedicalConditions.createdUser = medicalConditions.createdUser.decryptString()
+
+    return decryptMedicalConditions
+}
+
+
+fun decryptMedicalHistory(medicalHistory: MedicalHistory): DecryptedMedicalHistory {
+    val decryptMedicalHistory = DecryptedMedicalHistory()
+
+    decryptMedicalHistory.selectionType = medicalHistory.selectionType.decryptString()
+    decryptMedicalHistory.classType = medicalHistory.classType.decryptString()
+    decryptMedicalHistory.history = medicalHistory.history.decryptString()
+    decryptMedicalHistory.treatmentDiscription = medicalHistory.treatmentDiscription.decryptString()
+    decryptMedicalHistory.immunizationDiscription = medicalHistory.immunizationDiscription.decryptString()
+    decryptMedicalHistory.familyDiscription = medicalHistory.familyDiscription.decryptString()
+    decryptMedicalHistory.created = medicalHistory.created.decryptString()
+    decryptMedicalHistory.modified = medicalHistory.modified.decryptString()
+    decryptMedicalHistory.notes = medicalHistory.notes.decryptString()
+    decryptMedicalHistory.attachmentNames = medicalHistory.attachmentNames.decryptString()
+    decryptMedicalHistory.createdUser = medicalHistory.createdUser.decryptString()
+
+
+    return decryptMedicalHistory
+}
+
+fun decryptMedications(medications: Medications): DecryptedMedications {
+    val decryptMedications = DecryptedMedications()
+    decryptMedications.selectionType = medications.selectionType.decryptString()
+    decryptMedications.classType = medications.classType.decryptString()
+    decryptMedications.name = medications.name.decryptString()
+    decryptMedications.strength = medications.strength.decryptString()
+    decryptMedications.frequency = medications.frequency.decryptString()
+    decryptMedications.startDate = medications.startDate.decryptString()
+    decryptMedications.endDate = medications.endDate.decryptString()
+    decryptMedications.notes = medications.notes.decryptString()
+    decryptMedications.attachmentNames = medications.attachmentNames.decryptString()
+    decryptMedications.created = medications.created.decryptString()
+    decryptMedications.modified = medications.modified.decryptString()
+    decryptMedications.createdUser = medications.createdUser.decryptString()
+
+    return decryptMedications
+}
+
+
+fun decryptMemoriesList(memoriesList: MemoriesList): DecryptedMemoriesList {
+    val decryptMemoriesList = DecryptedMemoriesList()
+
+    decryptMemoriesList.selectionType = memoriesList.selectionType.decryptString()
+    decryptMemoriesList.classType = memoriesList.classType.decryptString()
+    decryptMemoriesList.listName = memoriesList.listName.decryptString()
+    decryptMemoriesList.dueDate = memoriesList.dueDate.decryptString()
+    decryptMemoriesList.created = memoriesList.created.decryptString()
+    decryptMemoriesList.modified = memoriesList.modified.decryptString()
+    decryptMemoriesList.createdUser = memoriesList.createdUser.decryptString()
+
+    return decryptMemoriesList
+}
+
+fun decryptMemoryTimeLine(memoryTimeline: MemoryTimeline): DecryptedMemoryTimeline {
+    val decryptMemoryTimeLine = DecryptedMemoryTimeline()
+    decryptMemoryTimeLine.selectionType = memoryTimeline.selectionType.decryptString()
+    decryptMemoryTimeLine.title = memoryTimeline.title.decryptString()
+    decryptMemoryTimeLine.date = memoryTimeline.date.decryptString()
+    decryptMemoryTimeLine.place = memoryTimeline.place.decryptString()
+    decryptMemoryTimeLine.contacts = memoryTimeline.contacts.decryptString()
+    decryptMemoryTimeLine.notes = memoryTimeline.notes.decryptString()
+    decryptMemoryTimeLine.attachmentNames = memoryTimeline.attachmentNames.decryptString()
+    decryptMemoryTimeLine.created = memoryTimeline.created.decryptString()
+    decryptMemoryTimeLine.modified = memoryTimeline.modified.decryptString()
+    decryptMemoryTimeLine.createdUser = memoryTimeline.createdUser.decryptString()
+    return decryptMemoryTimeLine
+}
+
+fun decryptNotifications(notifications: Notifications): DecryptedNotifications {
+    val decryptNotifications = DecryptedNotifications()
+    decryptNotifications.message = notifications.message.decryptString()
+    decryptNotifications.boxName = notifications.boxName.decryptString()
+    decryptNotifications.dueDate = notifications.dueDate.decryptString()
+    decryptNotifications.subTitle = notifications.subTitle.decryptString()
+    decryptNotifications.notifyDate = notifications.notifyDate.decryptString()
+    decryptNotifications.created = notifications.created.decryptString()
+    decryptNotifications.modified = notifications.modified.decryptString()
+    return decryptNotifications
+}
+
+fun decryptPersonal(personal: Personal): DecryptedPersonal {
+    val decryptPersonal = DecryptedPersonal()
+    decryptPersonal.selectionType = personal.selectionType.decryptString()
+    decryptPersonal.institutionName = personal.institutionName.decryptString()
+    decryptPersonal.accountName = personal.accountName.decryptString()
+    decryptPersonal.accountType = personal.accountType.decryptString()
+    decryptPersonal.nameOnAccount = personal.nameOnAccount.decryptString()
+    decryptPersonal.accountNumber = personal.accountNumber.decryptString()
+    decryptPersonal.location = personal.location.decryptString()
+    decryptPersonal.swiftCode = personal.swiftCode.decryptString()
+    decryptPersonal.abaRoutingNumber = personal.abaRoutingNumber.decryptString()
+    decryptPersonal.contacts = personal.contacts.decryptString()
+    decryptPersonal.website = personal.website.decryptString()
+    decryptPersonal.userName = personal.userName.decryptString()
+    decryptPersonal.password = personal.password.decryptString()
+    decryptPersonal.pin = personal.pin.decryptString()
+    decryptPersonal.paymentMethodOnFile = personal.paymentMethodOnFile.decryptString()
+    decryptPersonal.notes = personal.notes.decryptString()
+    decryptPersonal.attachmentNames = personal.attachmentNames.decryptString()
+    decryptPersonal.title = personal.title.decryptString()
+    decryptPersonal.created = personal.created.decryptString()
+    decryptPersonal.modified = personal.modified.decryptString()
+    decryptPersonal.createdUser = personal.createdUser.decryptString()
+
+    return decryptPersonal
+}
+
+fun decryptPersonalList(personalList: PersonalList): DecryptedPersonalList {
+    val decryptPersonalList = DecryptedPersonalList()
+    decryptPersonalList.selectionType = personalList.selectionType.decryptString()
+    decryptPersonalList.classType = personalList.classType.decryptString()
+    decryptPersonalList.listName = personalList.listName.decryptString()
+    decryptPersonalList.dueDate = personalList.dueDate.decryptString()
+    decryptPersonalList.created = personalList.created.decryptString()
+    decryptPersonalList.modified = personalList.modified.decryptString()
+    decryptPersonalList.createdUser = personalList.createdUser.decryptString()
+    return decryptPersonalList
+}
+
+
+fun decryptRecentPurchase(recentPurchase: RecentPurchase): DecryptedRecentPurchase {
+    val decryptRecentPurchase = DecryptedRecentPurchase()
+    decryptRecentPurchase.selectionType = recentPurchase.selectionType.decryptString()
+    decryptRecentPurchase.brandName = recentPurchase.brandName.decryptString()
+    decryptRecentPurchase.itemName = recentPurchase.itemName.decryptString()
+    decryptRecentPurchase.purchasedBy = recentPurchase.purchasedBy.decryptString()
+    decryptRecentPurchase.purchasedDate = recentPurchase.purchasedDate.decryptString()
+    decryptRecentPurchase.purchasedPrice = recentPurchase.purchasedPrice.decryptString()
+    decryptRecentPurchase.notes = recentPurchase.notes.decryptString()
+    decryptRecentPurchase.created = recentPurchase.created.decryptString()
+    decryptRecentPurchase.modified = recentPurchase.modified.decryptString()
+    decryptRecentPurchase.attachmentNames = recentPurchase.attachmentNames.decryptString()
+    decryptRecentPurchase.createdUser = recentPurchase.createdUser.decryptString()
+
+    return decryptRecentPurchase
+}
+
+fun decryptRecentSearch(recentSearch: RecentSearch): DecryptedRecentSearch {
+    val decryptRecentSearch = DecryptedRecentSearch()
+    decryptRecentSearch.listName = recentSearch.listName.decryptString()
+    decryptRecentSearch.subCategory = recentSearch.subCategory.decryptString()
+    decryptRecentSearch.mainCategory = recentSearch.mainCategory.decryptString()
+    decryptRecentSearch.classType = recentSearch.classType.decryptString()
+    return decryptRecentSearch
+}
+
+fun decryptShopping(shopping: Shopping): DecryptedShopping {
+    val decryptShopping = DecryptedShopping()
+    decryptShopping.selectionType = shopping.selectionType.decryptString()
+    decryptShopping.institutionName = shopping.institutionName.decryptString()
+    decryptShopping.accountName = shopping.accountName.decryptString()
+    decryptShopping.accountType = shopping.accountType.decryptString()
+    decryptShopping.nameOnAccount = shopping.nameOnAccount.decryptString()
+    decryptShopping.accountNumber = shopping.accountNumber.decryptString()
+    decryptShopping.location = shopping.location.decryptString()
+    decryptShopping.swiftCode = shopping.swiftCode.decryptString()
+    decryptShopping.abaRoutingNumber = shopping.abaRoutingNumber.decryptString()
+    decryptShopping.contacts = shopping.contacts.decryptString()
+    decryptShopping.website = shopping.website.decryptString()
+    decryptShopping.userName = shopping.userName.decryptString()
+    decryptShopping.password = shopping.password.decryptString()
+    decryptShopping.pin = shopping.pin.decryptString()
+    decryptShopping.paymentMethodOnFile = shopping.paymentMethodOnFile.decryptString()
+    decryptShopping.notes = shopping.notes.decryptString()
+    decryptShopping.imageName = shopping.imageName.decryptString()
+    decryptShopping.attachmentNames = shopping.attachmentNames.decryptString()
+    decryptShopping.title = shopping.title.decryptString()
+    decryptShopping.created = shopping.created.decryptString()
+    decryptShopping.modified = shopping.modified.decryptString()
+
+    return decryptShopping
+}
+
+fun decryptShoppingList(shoppingList: ShoppingList): DecryptedShoppingList {
+    val decryptShoppingList = DecryptedShoppingList()
+    decryptShoppingList.selectionType = shoppingList.selectionType.decryptString()
+    decryptShoppingList.classType = shoppingList.classType.decryptString()
+    decryptShoppingList.listName = shoppingList.listName.decryptString()
+    decryptShoppingList.dueDate = shoppingList.dueDate.decryptString()
+    decryptShoppingList.created = shoppingList.created.decryptString()
+    decryptShoppingList.modified = shoppingList.modified.decryptString()
+    decryptShoppingList.createdUser = shoppingList.createdUser.decryptString()
+    return decryptShoppingList
+}
+
+fun decryptSignUp(signUp: SignUp): DecryptedSignUp {
+    val decryptSignUp = DecryptedSignUp()
+    decryptSignUp.fullName = signUp.fullName.decryptString()
+    decryptSignUp.emailAddress = signUp.emailAddress.decryptString()
+    decryptSignUp.password = signUp.password.decryptString()
+    decryptSignUp.user_id = signUp.user_id.decryptString()
+    return decryptSignUp
+}
+
+fun decryptSocial(social: Social): DecryptedSocial {
+    val decryptSocial = DecryptedSocial()
+    decryptSocial.selectionType = social.selectionType.decryptString()
+    decryptSocial.cardName = social.cardName.decryptString()
+    decryptSocial.nameOnCard = social.nameOnCard.decryptString()
+    decryptSocial.socialSecurityNumber = social.socialSecurityNumber.decryptString()
+    decryptSocial.notes = social.notes.decryptString()
+    decryptSocial.created = social.created.decryptString()
+    decryptSocial.modified = social.modified.decryptString()
+    decryptSocial.attachmentNames = social.attachmentNames.decryptString()
+    decryptSocial.createdUser = social.createdUser.decryptString()
+
+    return decryptSocial
+
+}
+
+
+fun decryptTaxID(taxID: TaxID): DecryptedTaxID {
+    val decryptTaxID = DecryptedTaxID()
+    decryptTaxID.selectionType = taxID.selectionType.decryptString()
+    decryptTaxID.taxIdName = taxID.taxIdName.decryptString()
+    decryptTaxID.taxIdNumber = taxID.taxIdNumber.decryptString()
+    decryptTaxID.issuingCountry = taxID.issuingCountry.decryptString()
+    decryptTaxID.name = taxID.name.decryptString()
+    decryptTaxID.notes = taxID.notes.decryptString()
+    decryptTaxID.created = taxID.created.decryptString()
+    decryptTaxID.modified = taxID.modified.decryptString()
+    decryptTaxID.attachmentNames = taxID.attachmentNames.decryptString()
+    return decryptTaxID
+
+}
+
+fun decryptTravel(travel: Travel): DecryptedTravel {
+    val decryptTravel = DecryptedTravel()
+    decryptTravel.selectionType = travel.selectionType.decryptString()
+    decryptTravel.institutionName = travel.institutionName.decryptString()
+    decryptTravel.accountName = travel.accountName.decryptString()
+    decryptTravel.accountType = travel.accountType.decryptString()
+    decryptTravel.nameOnAccount = travel.nameOnAccount.decryptString()
+    decryptTravel.accountNumber = travel.accountNumber.decryptString()
+    decryptTravel.location = travel.location.decryptString()
+    decryptTravel.swiftCode = travel.swiftCode.decryptString()
+    decryptTravel.abaRoutingNumber = travel.abaRoutingNumber.decryptString()
+    decryptTravel.contacts = travel.contacts.decryptString()
+    decryptTravel.website = travel.website.decryptString()
+    decryptTravel.userName = travel.userName.decryptString()
+    decryptTravel.password = travel.password.decryptString()
+    decryptTravel.pin = travel.pin.decryptString()
+    decryptTravel.paymentMethodOnFile = travel.paymentMethodOnFile.decryptString()
+    decryptTravel.notes = travel.notes.decryptString()
+    decryptTravel.imageName = travel.imageName.decryptString()
+    decryptTravel.attachmentNames = travel.attachmentNames.decryptString()
+    decryptTravel.title = travel.title.decryptString()
+    decryptTravel.created = travel.created.decryptString()
+    decryptTravel.modified = travel.modified.decryptString()
+    decryptTravel.createdUser = travel.createdUser.decryptString()
+    return decryptTravel
+
+}
+
+fun decryptTravelList(travelList: TravelList): DecryptedTravelList {
+    val decryptTravelList = DecryptedTravelList()
+    decryptTravelList.selectionType = travelList.selectionType.decryptString()
+    decryptTravelList.classType = travelList.classType.decryptString()
+    decryptTravelList.listName = travelList.listName.decryptString()
+    decryptTravelList.dueDate = travelList.dueDate.decryptString()
+    decryptTravelList.created = travelList.created.decryptString()
+    decryptTravelList.modified = travelList.modified.decryptString()
+    decryptTravelList.createdUser = travelList.createdUser.decryptString()
+    return decryptTravelList
+}
+
+fun decryptVacations(vacations: Vacations): DecryptedVacations {
+    val decryptVacations = DecryptedVacations()
+    decryptVacations.selectionType = vacations.selectionType.decryptString()
+    decryptVacations.vac_description = vacations.vac_description.decryptString()
+    decryptVacations.startDate = vacations.startDate.decryptString()
+    decryptVacations.endDate = vacations.endDate.decryptString()
+    decryptVacations.placesToVisit_1 = vacations.placesToVisit_1.decryptString()
+    decryptVacations.placesToVisit_2 = vacations.placesToVisit_2.decryptString()
+    decryptVacations.placesToVisit_3 = vacations.placesToVisit_3.decryptString()
+    decryptVacations.notes = vacations.notes.decryptString()
+    decryptVacations.attachmentNames = vacations.attachmentNames.decryptString()
+    decryptVacations.created = vacations.created.decryptString()
+    decryptVacations.modified = vacations.modified.decryptString()
+    decryptVacations.createdUser = vacations.createdUser.decryptString()
+
+
+    return decryptVacations
+}
+
+fun decryptVitalNumbers(vitalNumbers: VitalNumbers): DecryptedVitalNumbers {
+    val decryptVitalNumbers = DecryptedVitalNumbers()
+    decryptVitalNumbers.selectionType = vitalNumbers.selectionType.decryptString()
+    decryptVitalNumbers.classType = vitalNumbers.classType.decryptString()
+    decryptVitalNumbers.vital_description = vitalNumbers.vital_description.decryptString()
+    decryptVitalNumbers.measurementDate = vitalNumbers.measurementDate.decryptString()
+    decryptVitalNumbers.height = vitalNumbers.height.decryptString()
+    decryptVitalNumbers.weight = vitalNumbers.weight.decryptString()
+    decryptVitalNumbers.waist = vitalNumbers.waist.decryptString()
+    decryptVitalNumbers.bodyFat = vitalNumbers.bodyFat.decryptString()
+    decryptVitalNumbers.bodyMassIndex = vitalNumbers.bodyMassIndex.decryptString()
+    decryptVitalNumbers.bloodPressure = vitalNumbers.bloodPressure.decryptString()
+    decryptVitalNumbers.heartRate = vitalNumbers.heartRate.decryptString()
+    decryptVitalNumbers.totalCholesterol = vitalNumbers.totalCholesterol.decryptString()
+    decryptVitalNumbers.hdlCholesterol = vitalNumbers.hdlCholesterol.decryptString()
+    decryptVitalNumbers.ldlCholesterol = vitalNumbers.ldlCholesterol.decryptString()
+    decryptVitalNumbers.cholesterolRatio = vitalNumbers.cholesterolRatio.decryptString()
+    decryptVitalNumbers.triglycerides = vitalNumbers.triglycerides.decryptString()
+    decryptVitalNumbers.bloodGlucose = vitalNumbers.bloodGlucose.decryptString()
+    decryptVitalNumbers.hemoglobin = vitalNumbers.hemoglobin.decryptString()
+    decryptVitalNumbers.created = vitalNumbers.created.decryptString()
+    decryptVitalNumbers.modified = vitalNumbers.modified.decryptString()
+    decryptVitalNumbers.notes = vitalNumbers.notes.decryptString()
+    decryptVitalNumbers.attachmentNames = vitalNumbers.attachmentNames.decryptString()
+    decryptVitalNumbers.createdUser = vitalNumbers.createdUser.decryptString()
+
+    return decryptVitalNumbers
+}
+
+fun decryptWellness(wellness: Wellness): DecryptedWellness {
+    val decryptWellness = DecryptedWellness()
+    decryptWellness.selectionType = wellness.selectionType.decryptString()
+    decryptWellness.institutionName = wellness.institutionName.decryptString()
+    decryptWellness.accountName = wellness.accountName.decryptString()
+    decryptWellness.accountType = wellness.accountType.decryptString()
+    decryptWellness.nameOnAccount = wellness.nameOnAccount.decryptString()
+    decryptWellness.accountNumber = wellness.accountNumber.decryptString()
+    decryptWellness.location = wellness.location.decryptString()
+    decryptWellness.swiftCode = wellness.swiftCode.decryptString()
+    decryptWellness.abaRoutingNumber = wellness.abaRoutingNumber.decryptString()
+    decryptWellness.contacts = wellness.contacts.decryptString()
+    decryptWellness.website = wellness.website.decryptString()
+    decryptWellness.userName = wellness.userName.decryptString()
+    decryptWellness.password = wellness.password.decryptString()
+    decryptWellness.pin = wellness.pin.decryptString()
+    decryptWellness.paymentMethodOnFile = wellness.paymentMethodOnFile.decryptString()
+    decryptWellness.notes = wellness.notes.decryptString()
+    decryptWellness.attachmentNames = wellness.attachmentNames.decryptString()
+    decryptWellness.title = wellness.title.decryptString()
+    decryptWellness.created = wellness.created.decryptString()
+    decryptWellness.modified = wellness.modified.decryptString()
+    decryptWellness.createdUser = wellness.createdUser.decryptString()
+
+
+    return decryptWellness
+}
+
+fun decryptWellnessList(wellnessList: WellnessList): DecryptedWellnessList {
+    val decryptWellnessList = DecryptedWellnessList()
+    decryptWellnessList.selectionType = wellnessList.selectionType.decryptString()
+    decryptWellnessList.classType = wellnessList.classType.decryptString()
+    decryptWellnessList.listName = wellnessList.listName.decryptString()
+    decryptWellnessList.dueDate = wellnessList.dueDate.decryptString()
+    decryptWellnessList.created = wellnessList.created.decryptString()
+    decryptWellnessList.modified = wellnessList.modified.decryptString()
+    decryptWellnessList.createdUser = wellnessList.createdUser.decryptString()
+
+    return decryptWellnessList
+}
 
 
 
