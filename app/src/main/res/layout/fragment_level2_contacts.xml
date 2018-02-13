@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:clickable="true"
     android:orientation="vertical">
 
 
@@ -23,7 +24,7 @@
 
 
             <ImageView
-                android:id="@+id/ivBack"
+                android:id="@+id/ivBackContactView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -45,7 +46,7 @@
                 android:textSize="@dimen/text_16" />
 
             <TextView
-                android:id="@+id/txtSave"
+                android:id="@+id/txtSaveContacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

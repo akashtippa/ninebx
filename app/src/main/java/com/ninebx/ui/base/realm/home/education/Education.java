@@ -18,6 +18,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Education extends RealmObject {
 
+
     @PrimaryKey //@Required
     private int id = 0;
 

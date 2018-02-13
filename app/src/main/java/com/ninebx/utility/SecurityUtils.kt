@@ -876,7 +876,6 @@ fun decryptContactList(contactsList: Contacts): DecryptedContacts {
     return decryptedContacts
 }
 
-
 fun decryptRealmString(members: RealmList<RealmString>): RealmList<DecryptedRealmString>? {
     val decryptedMembers = RealmList<DecryptedRealmString>()
     for (i in 0 until members.size) {
@@ -886,7 +885,6 @@ fun decryptRealmString(members: RealmList<RealmString>): RealmList<DecryptedReal
     }
     return decryptedMembers
 }
-
 
 fun decryptRealmString(realmString: RealmString): DecryptedRealmString? {
     val decryptedRealmString = DecryptedRealmString()
@@ -919,7 +917,6 @@ fun encryptContact(contacts: Contacts): Contacts {
     contacts.backingImages = encryptContactBackingImages(contacts.backingImages)
     return contacts
 }
-
 
 fun encryptContactBackingImages(members: RealmList<RealmString>): RealmList<RealmString>? {
     for (i in 0 until members.size) {
@@ -954,7 +951,6 @@ fun decryptCalendarEvents(calendarEvents: CalendarEvents): DecryptedCalendarEven
 
 }
 
-
 fun decryptCertificate(certificate: Certificate): DecryptedCertificate {
     val decryptCertificate = DecryptedCertificate()
     decryptCertificate.selectionType = certificate.selectionType.decryptString()
@@ -978,7 +974,6 @@ fun decryptCertificate(certificate: Certificate): DecryptedCertificate {
     return decryptCertificate
 
 }
-
 
 fun decryptCheckUps(checkups: Checkups): DecryptedCheckups {
     val decryptCheckUps = DecryptedCheckups()
@@ -1058,7 +1053,6 @@ fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineCo
 
 }
 
-
 fun decryptContactsList(contactsList: ContactsList): DecryptedContactsList {
     val decryptContactList = DecryptedContactsList()
 
@@ -1073,7 +1067,6 @@ fun decryptContactsList(contactsList: ContactsList): DecryptedContactsList {
     return decryptContactList
 
 }
-
 
 fun decryptDevice(device: Device): DecryptedDevice {
     val decryptDevice = DecryptedDevice()
@@ -1172,7 +1165,6 @@ fun decryptEyeGlassPrescriptions(eyeglassPrescriptions: EyeglassPrescriptions): 
 
     return decryptEyeGlassPrescriptions
 }
-
 
 fun decryptGovernment(government: Government): DecryptedGovernment {
     val decryptGovernment = DecryptedGovernment()
@@ -1291,7 +1283,6 @@ fun decryptInterests(interest: Interests): DecryptedInterests {
     return decryptInterests
 }
 
-
 fun decryptInterestList(interestsList: InterestsList): DecryptedInterestsList {
     val decryptInterestList = DecryptedInterestsList()
     decryptInterestList.selectionType = interestsList.selectionType.decryptString()
@@ -1397,7 +1388,6 @@ fun decryptMainContacts(decryptMainContacts: MainContacts): DecryptedMainContact
     return decryptMainContacts
 }
 
-
 fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     val decrypytMainEducation = DecryptedMainEducation()
     decrypytMainEducation.selectionType = mainEducation.selectionType.decryptString()
@@ -1418,7 +1408,6 @@ fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation 
 
     return decrypytMainEducation
 }
-
 
 fun decrypytMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
     val decrypytMainMemories = DecryptedMainMemories()
@@ -1447,7 +1436,6 @@ fun decrypytMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
     return decrypytMainMemories
 }
 
-
 fun decryptMedicalConditions(medicalConditions: MedicalConditions): DecryptedMedicalConditions {
     val decryptMedicalConditions = DecryptedMedicalConditions()
 
@@ -1464,7 +1452,6 @@ fun decryptMedicalConditions(medicalConditions: MedicalConditions): DecryptedMed
 
     return decryptMedicalConditions
 }
-
 
 fun decryptMedicalHistory(medicalHistory: MedicalHistory): DecryptedMedicalHistory {
     val decryptMedicalHistory = DecryptedMedicalHistory()
@@ -1502,7 +1489,6 @@ fun decryptMedications(medications: Medications): DecryptedMedications {
 
     return decryptMedications
 }
-
 
 fun decryptMemoriesList(memoriesList: MemoriesList): DecryptedMemoriesList {
     val decryptMemoriesList = DecryptedMemoriesList()
@@ -1583,7 +1569,6 @@ fun decryptPersonalList(personalList: PersonalList): DecryptedPersonalList {
     decryptPersonalList.createdUser = personalList.createdUser.decryptString()
     return decryptPersonalList
 }
-
 
 fun decryptRecentPurchase(recentPurchase: RecentPurchase): DecryptedRecentPurchase {
     val decryptRecentPurchase = DecryptedRecentPurchase()
@@ -1674,7 +1659,6 @@ fun decryptSocial(social: Social): DecryptedSocial {
     return decryptSocial
 
 }
-
 
 fun decryptTaxID(taxID: TaxID): DecryptedTaxID {
     val decryptTaxID = DecryptedTaxID()
@@ -1819,6 +1803,617 @@ fun decryptWellnessList(wellnessList: WellnessList): DecryptedWellnessList {
 
     return decryptWellnessList
 }
+
+
+// Making Encryption Method for Every Normal Class
+
+
+fun encryptEducationList(education: EducationList): EducationList {
+    education.selectionType = education.selectionType.encryptString()
+    education.classType = education.classType.encryptString()
+    education.listName = education.listName.encryptString()
+    education.dueDate = education.dueDate.encryptString()
+    education.created = education.created.encryptString()
+    education.modified = education.modified.encryptString()
+    education.createdUser = education.createdUser.encryptString()
+    return education
+}
+
+fun encryptHomeBankingList(homeBankingList: HomeBankingList): HomeBankingList {
+    homeBankingList.selectionType = homeBankingList.selectionType.encryptString()
+    homeBankingList.listName = homeBankingList.listName.encryptString()
+    homeBankingList.dueDate = homeBankingList.dueDate.encryptString()
+    homeBankingList.created = homeBankingList.created.encryptString()
+    homeBankingList.modified = homeBankingList.modified.encryptString()
+    return homeBankingList
+}
+
+fun encryptHomeList(homeList: HomeList): HomeList {
+    homeList.selectionType = homeList.selectionType.encryptString()
+    homeList.classType = homeList.classType.encryptString()
+    homeList.listName = homeList.listName.encryptString()
+    homeList.dueDate = homeList.dueDate.encryptString()
+    homeList.created = homeList.created.encryptString()
+    homeList.modified = homeList.modified.encryptString()
+    homeList.createdUser = homeList.createdUser.encryptString()
+    return homeList
+}
+
+fun encryptInterestList(interestsList: InterestsList): InterestsList {
+    interestsList.selectionType = interestsList.selectionType.encryptString()
+    interestsList.classType = interestsList.classType.encryptString()
+    interestsList.listName = interestsList.listName.encryptString()
+    interestsList.dueDate = interestsList.dueDate.encryptString()
+    interestsList.created = interestsList.created.encryptString()
+    interestsList.modified = interestsList.modified.encryptString()
+    interestsList.createdUser = interestsList.createdUser.encryptString()
+    return interestsList
+}
+
+fun encryptMemoriesList(memorieslist: MemoriesList): MemoriesList {
+    memorieslist.selectionType = memorieslist.selectionType.encryptString()
+    memorieslist.classType = memorieslist.classType.encryptString()
+    memorieslist.listName = memorieslist.listName.encryptString()
+    memorieslist.dueDate = memorieslist.dueDate.encryptString()
+    memorieslist.created = memorieslist.created.encryptString()
+    memorieslist.modified = memorieslist.modified.encryptString()
+    memorieslist.createdUser = memorieslist.createdUser.encryptString()
+    return memorieslist
+}
+
+fun encryptPersonalLists(personalList: PersonalList): PersonalList {
+    personalList.selectionType = personalList.selectionType.encryptString()
+    personalList.classType = personalList.classType.encryptString()
+    personalList.listName = personalList.listName.encryptString()
+    personalList.dueDate = personalList.dueDate.encryptString()
+    personalList.created = personalList.created.encryptString()
+    personalList.modified = personalList.modified.encryptString()
+    personalList.createdUser = personalList.createdUser.encryptString()
+    return personalList
+}
+
+fun encryptShoppingList(shoppingList: ShoppingList): ShoppingList {
+    shoppingList.selectionType = shoppingList.selectionType.encryptString()
+    shoppingList.classType = shoppingList.classType.encryptString()
+    shoppingList.listName = shoppingList.listName.encryptString()
+    shoppingList.dueDate = shoppingList.dueDate.encryptString()
+    shoppingList.created = shoppingList.created.encryptString()
+    shoppingList.modified = shoppingList.modified.encryptString()
+    shoppingList.createdUser = shoppingList.createdUser.encryptString()
+    return shoppingList
+}
+
+fun encryptTravelList(travelList: TravelList): TravelList {
+    travelList.selectionType = travelList.selectionType.encryptString()
+    travelList.classType = travelList.classType.encryptString()
+    travelList.listName = travelList.listName.encryptString()
+    travelList.dueDate = travelList.dueDate.encryptString()
+    travelList.created = travelList.created.encryptString()
+    travelList.modified = travelList.modified.encryptString()
+    travelList.createdUser = travelList.createdUser.encryptString()
+    return travelList
+}
+
+fun encryptWellnessList(wellnessList: WellnessList): WellnessList {
+    wellnessList.selectionType = wellnessList.selectionType.encryptString()
+    wellnessList.classType = wellnessList.classType.encryptString()
+    wellnessList.listName = wellnessList.listName.encryptString()
+    wellnessList.dueDate = wellnessList.dueDate.encryptString()
+    wellnessList.created = wellnessList.created.encryptString()
+    wellnessList.modified = wellnessList.modified.encryptString()
+    wellnessList.createdUser = wellnessList.createdUser.encryptString()
+    return wellnessList
+}
+
+fun encryptAddress(address: Address): Address {
+    address.street_1 = address.street_1.encryptString()
+    address.street_2 = address.street_2.encryptString()
+    address.city = address.city.encryptString()
+    address.state = address.state.encryptString()
+    address.zipCode = address.zipCode.encryptString()
+    address.country = address.country.encryptString()
+    return address
+}
+
+fun encryptBank(bank: Bank): Bank {
+    bank.institutionName = bank.institutionName.encryptString()
+    bank.accountName = bank.accountName.encryptString()
+    bank.accountType = bank.accountType.encryptString()
+    bank.nameOnAccount = bank.nameOnAccount.encryptString()
+    bank.accountNumber = bank.accountNumber.encryptString()
+    bank.location = bank.location.encryptString()
+    bank.swiftCode = bank.swiftCode.encryptString()
+    bank.abaRoutingNumber = bank.abaRoutingNumber.encryptString()
+    bank.contacts = bank.contacts.encryptString()
+    bank.website = bank.website.encryptString()
+    bank.userName = bank.userName.encryptString()
+    bank.password = bank.password.encryptString()
+    bank.pin = bank.pin.encryptString()
+    return bank
+}
+
+fun encryptCalendarEvents(calendarEvents: CalendarEvents): CalendarEvents {
+    return calendarEvents
+}
+
+fun encryptDevice(device: Device): Device {
+    device.deviceId = device.deviceId.encryptString()
+    device.passcode = device.passcode.encryptString()
+    return device
+}
+
+fun encryptHash(hash: Hash): Hash {
+    hash.finalPassword = hash.finalPassword.encryptString()
+    hash.passcode = hash.passcode.encryptString()
+    return hash
+}
+
+fun encryptNotifications(notifications: Notifications): Notifications {
+    notifications.message = notifications.message.encryptString()
+    notifications.boxName = notifications.boxName.encryptString()
+    notifications.category = notifications.category.encryptString()
+    notifications.dueDate = notifications.dueDate.encryptString()
+    notifications.subTitle = notifications.subTitle.encryptString()
+    notifications.notifyDate = notifications.notifyDate.encryptString()
+    notifications.created = notifications.created.encryptString()
+    notifications.modified = notifications.modified.encryptString()
+    return notifications
+}
+
+fun encryptRecentSearch(recentSearch: RecentSearch): RecentSearch {
+    recentSearch.listName = recentSearch.listName.encryptString()
+    recentSearch.subCategory = recentSearch.subCategory.encryptString()
+    recentSearch.mainCategory = recentSearch.mainCategory.encryptString()
+    recentSearch.classType = recentSearch.classType.encryptString()
+    return recentSearch
+}
+
+fun encryptEducation(education: Education): Education {
+    education.selectionType = education.selectionType.encryptString()
+    education.institutionName = education.institutionName.encryptString()
+    education.accountName = education.accountName.encryptString()
+    education.accountType = education.accountType.encryptString()
+    education.nameOnAccount = education.nameOnAccount.encryptString()
+    education.accountNumber = education.accountNumber.encryptString()
+    education.location = education.location.encryptString()
+    education.swiftCode = education.swiftCode.encryptString()
+    education.abaRoutingNumber = education.abaRoutingNumber.encryptString()
+    education.contacts = education.contacts.encryptString()
+    education.website = education.website.encryptString()
+    education.userName = education.userName.encryptString()
+    education.password = education.password.encryptString()
+    education.pin = education.pin.encryptString()
+    education.paymentMethodOnFile = education.paymentMethodOnFile.encryptString()
+    education.notes = education.notes.encryptString()
+    education.attachmentNames = education.attachmentNames.encryptString()
+    education.title = education.title.encryptString()
+    education.created = education.created.encryptString()
+    education.modified = education.modified.encryptString()
+    education.createdUser = education.createdUser.encryptString()
+    return education
+}
+
+fun encryptMainEducation(mainEducation: MainEducation): MainEducation {
+    mainEducation.selectionType = mainEducation.selectionType.encryptString()
+    mainEducation.classType = mainEducation.classType.encryptString()
+    mainEducation.institutionName = mainEducation.institutionName.encryptString()
+    mainEducation.qualification = mainEducation.qualification.encryptString()
+    mainEducation.name = mainEducation.name.encryptString()
+    mainEducation.location = mainEducation.location.encryptString()
+    mainEducation.major = mainEducation.major.encryptString()
+    mainEducation.from = mainEducation.from.encryptString()
+    mainEducation.to = mainEducation.to.encryptString()
+    mainEducation.currentlyStudying = mainEducation.currentlyStudying.encryptString()
+    mainEducation.notes = mainEducation.notes.encryptString()
+    mainEducation.created = mainEducation.created.encryptString()
+    mainEducation.modified = mainEducation.modified.encryptString()
+    mainEducation.attachmentNames = mainEducation.attachmentNames.encryptString()
+    mainEducation.createdUser = mainEducation.createdUser.encryptString()
+    return mainEducation
+}
+
+fun encryptWork(work: Work): Work {
+    work.selectionType = work.selectionType.encryptString()
+    work.classType = work.classType.encryptString()
+    work.companyName = work.companyName.encryptString()
+    work.position = work.position.encryptString()
+    work.name = work.name.encryptString()
+    work.location = work.location.encryptString()
+    work.from = work.from.encryptString()
+    work.to = work.to.encryptString()
+    work.currentWork = work.currentWork.encryptString()
+    work.created = work.created.encryptString()
+    work.modified = work.modified.encryptString()
+    work.notes = work.notes.encryptString()
+    work.attachmentNames = work.attachmentNames.encryptString()
+    work.createdUser = work.createdUser.encryptString()
+    return work
+}
+
+fun encryptInterests(interest: Interests): Interests {
+    interest.selectionType = interest.selectionType.encryptString()
+    interest.institutionName = interest.institutionName.encryptString()
+    interest.accountName = interest.accountName.encryptString()
+    interest.accountType = interest.accountType.encryptString()
+    interest.nameOnAccount = interest.nameOnAccount.encryptString()
+    interest.accountNumber = interest.accountNumber.encryptString()
+    interest.location = interest.location.encryptString()
+    interest.swiftCode = interest.swiftCode.encryptString()
+    interest.abaRoutingNumber = interest.abaRoutingNumber.encryptString()
+    interest.contacts = interest.contacts.encryptString()
+    interest.website = interest.website.encryptString()
+    interest.userName = interest.userName.encryptString()
+    interest.password = interest.password.encryptString()
+    interest.pin = interest.pin.encryptString()
+    interest.paymentMethodOnFile = interest.paymentMethodOnFile.encryptString()
+    interest.notes = interest.notes.encryptString()
+    interest.attachmentNames = interest.attachmentNames.encryptString()
+    interest.title = interest.title.encryptString()
+    interest.created = interest.created.encryptString()
+    interest.modified = interest.modified.encryptString()
+    interest.createdUser = interest.createdUser.encryptString()
+    return interest
+}
+
+fun encryptMemories(mainMemories: MainMemories): MainMemories {
+    mainMemories.selectionType = mainMemories.selectionType.encryptString()
+    mainMemories.institutionName = mainMemories.institutionName.encryptString()
+    mainMemories.accountName = mainMemories.accountName.encryptString()
+    mainMemories.accountType = mainMemories.accountType.encryptString()
+    mainMemories.nameOnAccount = mainMemories.nameOnAccount.encryptString()
+    mainMemories.accountNumber = mainMemories.accountNumber.encryptString()
+    mainMemories.location = mainMemories.location.encryptString()
+    mainMemories.swiftCode = mainMemories.swiftCode.encryptString()
+    mainMemories.abaRoutingNumber = mainMemories.abaRoutingNumber.encryptString()
+    mainMemories.contacts = mainMemories.contacts.encryptString()
+    mainMemories.website = mainMemories.website.encryptString()
+    mainMemories.userName = mainMemories.userName.encryptString()
+    mainMemories.password = mainMemories.password.encryptString()
+    mainMemories.pin = mainMemories.pin.encryptString()
+    mainMemories.paymentMethodOnFile = mainMemories.paymentMethodOnFile.encryptString()
+    mainMemories.created = mainMemories.created.encryptString()
+    mainMemories.modified = mainMemories.modified.encryptString()
+    mainMemories.notes = mainMemories.notes.encryptString()
+    mainMemories.attachmentNames = mainMemories.attachmentNames.encryptString()
+    mainMemories.title = mainMemories.title.encryptString()
+    mainMemories.createdUser = mainMemories.createdUser.encryptString()
+
+    return mainMemories
+}
+
+fun encryptMemoryTimeLIne(memoryTimeline: MemoryTimeline): MemoryTimeline {
+    memoryTimeline.selectionType = memoryTimeline.selectionType.encryptString()
+    memoryTimeline.title = memoryTimeline.title.encryptString()
+    memoryTimeline.date = memoryTimeline.date.encryptString()
+    memoryTimeline.place = memoryTimeline.place.encryptString()
+    memoryTimeline.contacts = memoryTimeline.contacts.encryptString()
+    memoryTimeline.notes = memoryTimeline.notes.encryptString()
+    memoryTimeline.attachmentNames = memoryTimeline.attachmentNames.encryptString()
+    memoryTimeline.created = memoryTimeline.created.encryptString()
+    memoryTimeline.modified = memoryTimeline.modified.encryptString()
+    memoryTimeline.createdUser = memoryTimeline.createdUser.encryptString()
+
+    return memoryTimeline
+}
+
+
+fun encryptCertificate(certificate: Certificate): Certificate {
+    certificate.selectionType = certificate.selectionType.encryptString()
+    certificate.cer_description = certificate.cer_description.encryptString()
+    certificate.nameOnCertificate = certificate.nameOnCertificate.encryptString()
+    certificate.gender = certificate.gender.encryptString()
+    certificate.dateOfBirth = certificate.dateOfBirth.encryptString()
+    certificate.timeOfBirth = certificate.timeOfBirth.encryptString()
+    certificate.placeOfBirth = certificate.placeOfBirth.encryptString()
+    certificate.dateOfMarriage = certificate.dateOfMarriage.encryptString()
+    certificate.placeOfMarriage = certificate.placeOfMarriage.encryptString()
+    certificate.nameOneCertificate = certificate.nameOneCertificate.encryptString()
+    certificate.nameTwoCertificate = certificate.nameTwoCertificate.encryptString()
+    certificate.notes = certificate.notes.encryptString()
+    certificate.created = certificate.created.encryptString()
+    certificate.modified = certificate.modified.encryptString()
+    certificate.attachmentNames = certificate.attachmentNames.encryptString()
+    certificate.createdUser = certificate.createdUser.encryptString()
+
+    return certificate
+}
+
+fun encryptGovernment(government: Government): Government {
+    government.selectionType = government.selectionType.encryptString()
+    government.idName = government.idName.encryptString()
+    government.name = government.name.encryptString()
+    government.nameOnId = government.nameOnId.encryptString()
+    government.issuingCountry = government.issuingCountry.encryptString()
+    government.issuingState = government.issuingState.encryptString()
+    government.idNumber = government.idNumber.encryptString()
+    government.dateIssued = government.dateIssued.encryptString()
+    government.expirationDate = government.expirationDate.encryptString()
+    government.created = government.created.encryptString()
+    government.modified = government.modified.encryptString()
+    government.notes = government.notes.encryptString()
+    government.attachmentNames = government.attachmentNames.encryptString()
+    government.createdUser = government.createdUser.encryptString()
+    return government
+}
+
+fun encryptLicense(license: License): License {
+    license.selectionType = license.selectionType.encryptString()
+    license.lic_description = license.lic_description.encryptString()
+    license.nameOnLicense = license.nameOnLicense.encryptString()
+    license.issuingCountry = license.issuingCountry.encryptString()
+    license.issuingState = license.issuingState.encryptString()
+    license.licenseNumber = license.licenseNumber.encryptString()
+    license.dateIssued = license.dateIssued.encryptString()
+    license.expirationDate = license.expirationDate.encryptString()
+    license.notes = license.notes.encryptString()
+    license.created = license.created.encryptString()
+    license.modified = license.modified.encryptString()
+    license.attachmentNames = license.attachmentNames.encryptString()
+    license.createdUser = license.createdUser.encryptString()
+    return license
+}
+
+fun encryptPersonal(personal: Personal): Personal {
+    personal.selectionType = personal.selectionType.encryptString()
+    personal.institutionName = personal.institutionName.encryptString()
+    personal.accountName = personal.accountName.encryptString()
+    personal.accountType = personal.accountType.encryptString()
+    personal.nameOnAccount = personal.nameOnAccount.encryptString()
+    personal.accountNumber = personal.accountNumber.encryptString()
+    personal.location = personal.location.encryptString()
+    personal.swiftCode = personal.swiftCode.encryptString()
+    personal.abaRoutingNumber = personal.abaRoutingNumber.encryptString()
+    personal.contacts = personal.contacts.encryptString()
+    personal.website = personal.website.encryptString()
+    personal.userName = personal.userName.encryptString()
+    personal.password = personal.password.encryptString()
+    personal.pin = personal.pin.encryptString()
+    personal.paymentMethodOnFile = personal.paymentMethodOnFile.encryptString()
+    personal.notes = personal.notes.encryptString()
+    personal.attachmentNames = personal.attachmentNames.encryptString()
+    personal.title = personal.title.encryptString()
+    personal.created = personal.created.encryptString()
+    personal.modified = personal.modified.encryptString()
+    personal.createdUser = personal.createdUser.encryptString()
+    return personal
+}
+
+fun encryptSocial(social: Social): Social {
+    social.selectionType = social.selectionType.encryptString()
+    social.cardName = social.cardName.encryptString()
+    social.nameOnCard = social.nameOnCard.encryptString()
+    social.socialSecurityNumber = social.socialSecurityNumber.encryptString()
+    social.notes = social.notes.encryptString()
+    social.created = social.created.encryptString()
+    social.modified = social.modified.encryptString()
+    social.attachmentNames = social.attachmentNames.encryptString()
+    social.createdUser = social.createdUser.encryptString()
+    return social
+}
+
+fun encryptTAXID(taxID: TaxID): TaxID {
+    taxID.selectionType = taxID.selectionType.encryptString()
+    taxID.taxIdName = taxID.taxIdName.encryptString()
+    taxID.taxIdNumber = taxID.taxIdNumber.encryptString()
+    taxID.issuingCountry = taxID.issuingCountry.encryptString()
+    taxID.name = taxID.name.encryptString()
+    taxID.notes = taxID.notes.encryptString()
+    taxID.created = taxID.created.encryptString()
+    taxID.modified = taxID.modified.encryptString()
+    taxID.attachmentNames = taxID.attachmentNames.encryptString()
+    return taxID
+}
+
+fun encryptClothingSizes(clothingSizes: ClothingSizes): ClothingSizes {
+    clothingSizes.selectionType = clothingSizes.selectionType.encryptString()
+    clothingSizes.classType = clothingSizes.classType.encryptString()
+    clothingSizes.personName = clothingSizes.personName.encryptString()
+    clothingSizes.sizeName = clothingSizes.sizeName.encryptString()
+    clothingSizes.sizeCategory = clothingSizes.sizeCategory.encryptString()
+    clothingSizes.topsSize = clothingSizes.topsSize.encryptString()
+    clothingSizes.topsNumericSize = clothingSizes.topsNumericSize.encryptString()
+    clothingSizes.bottomsSize = clothingSizes.bottomsSize.encryptString()
+    clothingSizes.bottomsNumericSize = clothingSizes.bottomsNumericSize.encryptString()
+    clothingSizes.dressesSize = clothingSizes.dressesSize.encryptString()
+    clothingSizes.dressesNumericSize = clothingSizes.dressesNumericSize.encryptString()
+    clothingSizes.outWearSize = clothingSizes.outWearSize.encryptString()
+    clothingSizes.outWearNumericSize = clothingSizes.outWearNumericSize.encryptString()
+    clothingSizes.swimWearSize = clothingSizes.swimWearSize.encryptString()
+    clothingSizes.swimWearNumericSize = clothingSizes.swimWearNumericSize.encryptString()
+    clothingSizes.swimWearBraBandCupSize = clothingSizes.swimWearBraBandCupSize.encryptString()
+    clothingSizes.shoeSize = clothingSizes.shoeSize.encryptString()
+    clothingSizes.shoeWidth = clothingSizes.shoeWidth.encryptString()
+    clothingSizes.hats = clothingSizes.hats.encryptString()
+    clothingSizes.gloves = clothingSizes.gloves.encryptString()
+    clothingSizes.tights = clothingSizes.tights.encryptString()
+    clothingSizes.bust = clothingSizes.bust.encryptString()
+    clothingSizes.waist = clothingSizes.waist.encryptString()
+    clothingSizes.hips = clothingSizes.hips.encryptString()
+    clothingSizes.armLength = clothingSizes.armLength.encryptString()
+    clothingSizes.inseam = clothingSizes.inseam.encryptString()
+    clothingSizes.torso = clothingSizes.torso.encryptString()
+    // Mens
+    clothingSizes.jacketsSize = clothingSizes.jacketsSize.encryptString()
+    clothingSizes.jacketsNumericSize = clothingSizes.jacketsNumericSize.encryptString()
+    clothingSizes.pantsSize = clothingSizes.pantsSize.encryptString()
+    clothingSizes.pantsNumericSize = clothingSizes.pantsNumericSize.encryptString()
+    clothingSizes.toddlerSize = clothingSizes.toddlerSize.encryptString()
+    clothingSizes.kidSize = clothingSizes.kidSize.encryptString()
+    clothingSizes.neck = clothingSizes.neck.encryptString()
+    clothingSizes.chest = clothingSizes.chest.encryptString()
+    // Baby
+    clothingSizes.clothing = clothingSizes.clothing.encryptString()
+    clothingSizes.shoes = clothingSizes.shoes.encryptString()
+    clothingSizes.notes = clothingSizes.notes.encryptString()
+    clothingSizes.attachmentNames = clothingSizes.attachmentNames.encryptString()
+    //  Boys
+    clothingSizes.beltsNumericSize = clothingSizes.beltsNumericSize.encryptString()
+    clothingSizes.socks = clothingSizes.socks.encryptString()
+    clothingSizes.seat = clothingSizes.seat.encryptString()
+    clothingSizes.beltSize = clothingSizes.beltSize.encryptString()
+    clothingSizes.created = clothingSizes.created.encryptString()
+    clothingSizes.modified = clothingSizes.modified.encryptString()
+    clothingSizes.createdUser = clothingSizes.createdUser.encryptString()
+    return clothingSizes
+}
+
+fun encryptLoyaltyProgram(loyalityPrograms: LoyaltyPrograms): LoyaltyPrograms {
+    loyalityPrograms.selectionType = loyalityPrograms.selectionType.encryptString()
+    loyalityPrograms.brandName = loyalityPrograms.brandName.encryptString()
+    loyalityPrograms.accountName = loyalityPrograms.accountName.encryptString()
+    loyalityPrograms.nameOnAccount = loyalityPrograms.nameOnAccount.encryptString()
+    loyalityPrograms.accountNumber = loyalityPrograms.accountNumber.encryptString()
+    loyalityPrograms.website = loyalityPrograms.website.encryptString()
+    loyalityPrograms.userName = loyalityPrograms.userName.encryptString()
+    loyalityPrograms.password = loyalityPrograms.password.encryptString()
+    loyalityPrograms.pin = loyalityPrograms.pin.encryptString()
+    loyalityPrograms.notes = loyalityPrograms.notes.encryptString()
+    loyalityPrograms.attachmentNames = loyalityPrograms.attachmentNames.encryptString()
+    loyalityPrograms.created = loyalityPrograms.created.encryptString()
+    loyalityPrograms.modified = loyalityPrograms.modified.encryptString()
+    loyalityPrograms.createdUser = loyalityPrograms.createdUser.encryptString()
+
+    return loyalityPrograms
+}
+
+fun encryptRecentPurchase(recentPurchase: RecentPurchase): RecentPurchase {
+    recentPurchase.selectionType = recentPurchase.selectionType.encryptString()
+    recentPurchase.brandName = recentPurchase.brandName.encryptString()
+    recentPurchase.itemName = recentPurchase.itemName.encryptString()
+    recentPurchase.purchasedBy = recentPurchase.purchasedBy.encryptString()
+    recentPurchase.purchasedDate = recentPurchase.purchasedDate.encryptString()
+    recentPurchase.purchasedPrice = recentPurchase.purchasedPrice.encryptString()
+    recentPurchase.notes = recentPurchase.notes.encryptString()
+    recentPurchase.created = recentPurchase.created.encryptString()
+    recentPurchase.modified = recentPurchase.modified.encryptString()
+    recentPurchase.attachmentNames = recentPurchase.attachmentNames.encryptString()
+    recentPurchase.createdUser = recentPurchase.createdUser.encryptString()
+    return recentPurchase
+}
+
+fun encryptShopping(shopping: Shopping): Shopping {
+    shopping.selectionType = shopping.selectionType.encryptString()
+    shopping.institutionName = shopping.institutionName.encryptString()
+    shopping.accountName = shopping.accountName.encryptString()
+    shopping.accountType = shopping.accountType.encryptString()
+    shopping.nameOnAccount = shopping.nameOnAccount.encryptString()
+    shopping.accountNumber = shopping.accountNumber.encryptString()
+    shopping.location = shopping.location.encryptString()
+    shopping.swiftCode = shopping.swiftCode.encryptString()
+    shopping.abaRoutingNumber = shopping.abaRoutingNumber.encryptString()
+    shopping.contacts = shopping.contacts.encryptString()
+    shopping.website = shopping.website.encryptString()
+    shopping.userName = shopping.userName.encryptString()
+    shopping.password = shopping.password.encryptString()
+    shopping.pin = shopping.pin.encryptString()
+    shopping.paymentMethodOnFile = shopping.paymentMethodOnFile.encryptString()
+    shopping.notes = shopping.notes.encryptString()
+    shopping.imageName = shopping.imageName.encryptString()
+    shopping.attachmentNames = shopping.attachmentNames.encryptString()
+    shopping.title = shopping.title.encryptString()
+    shopping.created = shopping.created.encryptString()
+    shopping.modified = shopping.modified.encryptString()
+    return shopping
+}
+
+fun encryptDocuments(documents: Documents): Documents {
+    documents.selectionType = documents.selectionType.encryptString()
+    documents.passportName = documents.passportName.encryptString()
+    documents.visaName = documents.visaName.encryptString()
+    documents.nameOnPassport = documents.nameOnPassport.encryptString()
+    documents.nameOnVisa = documents.nameOnVisa.encryptString()
+    documents.visaType = documents.visaType.encryptString()
+    documents.visaNumber = documents.visaNumber.encryptString()
+    documents.travelDocumentTitle = documents.travelDocumentTitle.encryptString()
+    documents.nameOnTravelDocument = documents.nameOnTravelDocument.encryptString()
+    documents.travelDocumentType = documents.travelDocumentType.encryptString()
+    documents.travelDocumentNumber = documents.travelDocumentNumber.encryptString()
+    documents.issuingCountry = documents.issuingCountry.encryptString()
+    documents.passportNumber = documents.passportNumber.encryptString()
+    documents.placeIssued = documents.placeIssued.encryptString()
+    documents.dateIssued = documents.dateIssued.encryptString()
+    documents.expirationDate = documents.expirationDate.encryptString()
+    documents.notes = documents.notes.encryptString()
+    documents.attachmentNames = documents.attachmentNames.encryptString()
+    documents.created = documents.created.encryptString()
+    documents.modified = documents.modified.encryptString()
+    documents.createdUser = documents.createdUser.encryptString()
+
+    return documents
+}
+
+fun encryptLoyalty(loyalty: Loyalty): Loyalty {
+    loyalty.selectionType = loyalty.selectionType.encryptString()
+    loyalty.airLine = loyalty.airLine.encryptString()
+    loyalty.hotel = loyalty.hotel.encryptString()
+    loyalty.carRentalCompany = loyalty.carRentalCompany.encryptString()
+    loyalty.cruiseline = loyalty.cruiseline.encryptString()
+    loyalty.railway = loyalty.railway.encryptString()
+    loyalty.other = loyalty.other.encryptString()
+    loyalty.accountName = loyalty.accountName.encryptString()
+    loyalty.nameOnAccount = loyalty.nameOnAccount.encryptString()
+    loyalty.accountNumber = loyalty.accountNumber.encryptString()
+    loyalty.website = loyalty.website.encryptString()
+    loyalty.userName = loyalty.userName.encryptString()
+    loyalty.password = loyalty.password.encryptString()
+    loyalty.pin = loyalty.pin.encryptString()
+    loyalty.notes = loyalty.notes.encryptString()
+    loyalty.attachmentNames = loyalty.attachmentNames.encryptString()
+    loyalty.created = loyalty.created.encryptString()
+    loyalty.modified = loyalty.modified.encryptString()
+    loyalty.createdUser = loyalty.createdUser.encryptString()
+    return loyalty
+}
+
+fun encryptTravel(travel: Travel): Travel {
+    travel.selectionType = travel.selectionType.encryptString()
+    travel.institutionName = travel.institutionName.encryptString()
+    travel.accountName = travel.accountName.encryptString()
+    travel.accountType = travel.accountType.encryptString()
+    travel.nameOnAccount = travel.nameOnAccount.encryptString()
+    travel.accountNumber = travel.accountNumber.encryptString()
+    travel.location = travel.location.encryptString()
+    travel.swiftCode = travel.swiftCode.encryptString()
+    travel.abaRoutingNumber = travel.abaRoutingNumber.encryptString()
+    travel.contacts = travel.contacts.encryptString()
+    travel.website = travel.website.encryptString()
+    travel.userName = travel.userName.encryptString()
+    travel.password = travel.password.encryptString()
+    travel.pin = travel.pin.encryptString()
+    travel.paymentMethodOnFile = travel.paymentMethodOnFile.encryptString()
+    travel.notes = travel.notes.encryptString()
+    travel.imageName = travel.imageName.encryptString()
+    travel.attachmentNames = travel.attachmentNames.encryptString()
+    travel.title = travel.title.encryptString()
+    travel.created = travel.created.encryptString()
+    travel.modified = travel.modified.encryptString()
+    travel.createdUser = travel.createdUser.encryptString()
+    return travel
+}
+
+fun encryptVacations(vacations: Vacations): Vacations {
+    vacations.selectionType = vacations.selectionType.encryptString()
+    vacations.vac_description = vacations.vac_description.encryptString()
+    vacations.startDate = vacations.startDate.encryptString()
+    vacations.endDate = vacations.endDate.encryptString()
+    vacations.placesToVisit_1 = vacations.placesToVisit_1.encryptString()
+    vacations.placesToVisit_2 = vacations.placesToVisit_2.encryptString()
+    vacations.placesToVisit_3 = vacations.placesToVisit_3.encryptString()
+    vacations.notes = vacations.notes.encryptString()
+    vacations.attachmentNames = vacations.attachmentNames.encryptString()
+    vacations.created = vacations.created.encryptString()
+    vacations.modified = vacations.modified.encryptString()
+    vacations.createdUser = vacations.createdUser.encryptString()
+    return vacations
+}
+
+
+
+
+
+
+
+
 
 
 

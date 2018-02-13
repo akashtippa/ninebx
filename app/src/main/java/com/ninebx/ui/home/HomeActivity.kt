@@ -174,9 +174,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                                 members = RealmList<?>@[]
                             })]*/
 
-                    AppLogger.d("CurrentUser", "Decrypted : " + decryptUsers(currentUsers[0]!!))
-                    AppLogger.d("CurrentUser", "Encrypted : " + encryptUsers(currentUsers[0]!!))
-                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+//                    AppLogger.d("CurrentUser", "Decrypted : " + decryptUsers(currentUsers[0]!!))
+//                    AppLogger.d("CurrentUser", "Encrypted : " + encryptUsers(currentUsers[0]!!))
+//                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
                 }
             }
 

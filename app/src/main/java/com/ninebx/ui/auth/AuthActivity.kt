@@ -24,8 +24,8 @@ import io.realm.SyncUser
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+
     override fun navigateToStart() {
-        supportFragmentManager.popBackStack()
         supportFragmentManager.popBackStack()
     }
 
@@ -39,7 +39,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
         val currentUser = mAuthPresenter.createUser( email, firstName, lastName )
         navigateToAccountPassword( currentUser )
     }
-
 
     override fun onError(error: String) {
         this@AuthActivity.showToast(error)
@@ -99,6 +98,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var accountPasswordFragment: AccountPasswordFragment? = null
+
     override fun navigateToAccountPassword( users : Users ) {
         if (NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE

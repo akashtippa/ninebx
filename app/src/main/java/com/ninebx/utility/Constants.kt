@@ -122,5 +122,8 @@ object Constants {
     // Temporary Private Key
 
     val TEMP_PRIVATE_KEY = "nB8hEnaqppfWOp5L"
+    val BUNDLE_CONTACT_NO = "contactNumber"
+    val BUNDLE_CONTACT_NAME = "contactName"
+
 
 }

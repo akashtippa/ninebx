@@ -24,7 +24,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
         return inflater.inflate(R.layout.fragment_account_password, container, false)
     }
 
-    private lateinit var mCurrentUser : Users
+    private lateinit var mCurrentUser: Users
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,12 +60,12 @@ class AccountPasswordFragment : BaseAuthFragment() {
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
 
-        prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 mCurrentUser.id = getUniqueId()
                 mCurrentUser = encryptUsers(mCurrentUser)
                 AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
-                mCurrentUser.insertOrUpdate( realm!! )
+                mCurrentUser.insertOrUpdate(realm!!)
                 mAuthView.navigateToOTP()
             }
         })
@@ -94,25 +94,25 @@ class AccountPasswordFragment : BaseAuthFragment() {
             return isValid
         }
 
-        if( isValid ) {
-            if( etCreatePassword.text.toString().isNotEmpty() && etCreatePassword.text.toString().trim().length < 8 ) {
+        if (isValid) {
+            if (etCreatePassword.text.toString().isNotEmpty() && etCreatePassword.text.toString().trim().length < 8) {
                 context!!.showToast(R.string.password_length_8)
                 etCreatePassword.requestFocus()
                 isValid = false
             }
 
-            if( etCreatePassword.text.toString().isNotEmpty() && !isValidPassword(etCreatePassword.text.toString().trim()) ) {
+            if (etCreatePassword.text.toString().isNotEmpty() && !isValidPassword(etCreatePassword.text.toString().trim())) {
                 context!!.showToast(R.string.password_rules)
                 etCreatePassword.requestFocus()
                 isValid = false
             }
-            if( etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8 ) {
+            if (etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8) {
                 context!!.showToast(R.string.password_length_8)
                 etConfirmPassword.requestFocus()
                 isValid = false
             }
 
-            if( etConfirmPassword.text.toString().isNotEmpty() && !isValidPassword(etConfirmPassword.text.toString().trim()) ) {
+            if (etConfirmPassword.text.toString().isNotEmpty() && !isValidPassword(etConfirmPassword.text.toString().trim())) {
                 context!!.showToast(R.string.password_rules)
                 etConfirmPassword.requestFocus()
                 isValid = false
