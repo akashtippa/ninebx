@@ -95,9 +95,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         txtProfileEmail.text = users.emailAddress.decryptString()
 
         mAWSFileTransferHelper.setFileTransferListener(this)
-        mAWSFileTransferHelper.beginDownload(users.profilePhoto)
-
-
+        if( users.profilePhoto.isNotEmpty() )
+            mAWSFileTransferHelper.beginDownload( "images/" + users.userId + "/" + users.profilePhoto)
 
     }
 

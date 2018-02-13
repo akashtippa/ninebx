@@ -58,6 +58,9 @@ class OTPFragment : BaseAuthFragment() {
 
             }
         }
+        tvResend.setOnClickListener {
+            mAuthView.getAuthPresenter().requestOTP( mAuthView.getAccountEmail() )
+        }
 
         setupOtp()
     }
