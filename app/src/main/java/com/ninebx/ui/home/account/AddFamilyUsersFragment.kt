@@ -53,6 +53,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         AppLogger.d("Member", "onMemberAdded" + member)
         myList.add( member!! )
         mListsAdapter!!.notifyDataSetChanged()
+        saveUserObject()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -98,6 +99,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         initAdmin( currentUsers!![0] )
     }
 
+    private var usersRealm: Realm? = null
+
     private fun initAdmin(users: Users?) {
 
         txtProfileName.text = users!!.fullName.decryptString()
@@ -109,16 +112,21 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
         prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val userObject = Users.createUserObject( currentUsers!![0], myList )
-                userObject.insertOrUpdate(realm!!)
-                context!!.hideProgressDialog()
-                myList.clear()
-                myList.addAll(userObject.members)
-                mListsAdapter!!.notifyDataSetChanged()
+                usersRealm = realm
+                saveUserObject()
             }
 
         })
 
+    }
+
+    private fun saveUserObject() {
+        val userObject = Users.createUserObject( currentUsers!![0], myList )
+        userObject.insertOrUpdate(usersRealm!!)
+        context!!.hideProgressDialog()
+        myList.clear()
+        myList.addAll(userObject.members)
+        mListsAdapter!!.notifyDataSetChanged()
     }
 
     override fun onBackPressed(): Boolean {
