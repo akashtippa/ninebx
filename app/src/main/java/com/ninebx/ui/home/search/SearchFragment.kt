@@ -83,10 +83,15 @@ class SearchFragment() : Fragment(), SearchView {
 
                 var decryptedCombine = DecryptedCombine()
                 var text = edtSearch.getText().toString()
+
                 var searchFinanceItems = ArrayList<DecryptedFinancial>()
                 var searchPaymentItems = ArrayList<DecryptedPayment>()
                 var searchPropertyItems = ArrayList<DecryptedProperty>()
                 var searchVehicleItems = ArrayList<DecryptedVehicle>()
+                var searchAssetItems = ArrayList<DecryptedAsset>()
+                var searchInsuranceItems = ArrayList<DecryptedInsurance>()
+                var searchTaxItems = ArrayList<DecryptedTax>()
+                var searchHomeList = ArrayList<DecryptedHomeList>()
 
                 for( financeItems in finance ) {
                     if( financeItems.selectionType.contains(text) || financeItems.institutionName.contains(text) || financeItems.accountName.contains(text) ||
@@ -133,6 +138,35 @@ class SearchFragment() : Fragment(), SearchView {
 
                 decryptedCombine.propertyItems.addAll(searchPropertyItems)
                 AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
+
+                for(vehicleItems in vehicle){
+                    if(vehicleItems.selectionType.contains(text) || vehicleItems.vehicleName.contains(text) || vehicleItems.licenseNumber.contains(text) ||
+                            vehicleItems.vinNumber.contains(text) || vehicleItems.make.contains(text) || vehicleItems.model.contains(text) || vehicleItems.modelYear.contains(text) ||
+                            vehicleItems.color.contains(text) || vehicleItems.titleName.contains(text) || vehicleItems.estimatedMarketValue.contains(text) || vehicleItems.registrationExpirydate.contains(text) ||
+                            vehicleItems.purchasedOrLeased.contains(text) || vehicleItems.purchaseDate.contains(text) || vehicleItems.financedThroughLoan.contains(text) ||
+                            vehicleItems.created.contains(text) || vehicleItems.modified.contains(text) || vehicleItems.createdUser.contains(text) || vehicleItems.leaseStartDate.contains(text) ||
+                            vehicleItems.leaseEndDate.contains(text) || vehicleItems.contacts.contains(text) || vehicleItems.maintenanceEvent.contains(text) || vehicleItems.serviceProviderName.contains(text) ||
+                            vehicleItems.dateOfService.contains(text) || vehicleItems.vehicle.contains(text) || vehicleItems.notes.contains(text) || vehicleItems.attachmentNames.contains(text) )
+
+                        searchVehicleItems.add(vehicleItems)
+                }
+                decryptedCombine.vehicleItems.addAll(searchVehicleItems)
+
+                for(assetItems in asset)
+                {
+                    if(assetItems.selectionType.contains(text) || assetItems.test.contains(text) || assetItems.assetName.contains(text) || assetItems.descriptionOrLocation.contains(text)
+                            || assetItems.estimatedMarketValue.contains(text) || assetItems.serialNumber.contains(text) || assetItems.purchaseDate.contains(text)
+                            || assetItems.purchasePrice.contains(text) || assetItems.contacts.contains(text) || assetItems.created.contains(text) || assetItems.modified.contains(text)
+                            || assetItems.createdUser.contains(text) || assetItems.notes.contains(text) || assetItems.imageName.contains(text) || assetItems.attachmentNames.contains(text))
+
+                        searchAssetItems.add(assetItems)
+                }
+
+                for(insuranceItems in insurance){
+                    if(insuranceItems.selectionType.contains(text))
+
+                        searchInsuranceItems.add(insuranceItems)
+                }
 
                 rvRecentSearch.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
                 val adapter = SearchAdapter(searchFinanceItems)
