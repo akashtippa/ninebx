@@ -25,6 +25,7 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
     private lateinit var encryptedPasswordByteArray: ByteArray
     private var mCurrentUser : SyncUser ?= null
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
+    private var mAdminId : String = ""
 
     init {
 
@@ -33,6 +34,8 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
 
 
     fun saveToUserAccount(strEmail: String, password:String ) {
+        mAdminId = SyncUser.currentUser().identity
+        userName = strEmail
         memberView.showProgress(R.string.loading)
         encryptedPasswordByteArray = (encryptKey(password, strEmail))
         encryptedPassword = Arrays.toString( convertToUInt8IntArray(encryptedPasswordByteArray))
@@ -47,7 +50,7 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
 
         //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
         userMap.put("user_id", result!!.identity )
-        userMap.put("admin_id", NineBxApplication.instance.currentUser!!.userId )
+        userMap.put("admin_id", mAdminId )
         userMap.put("email", userName)
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", false)
@@ -65,6 +68,7 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
 
         val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
         AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
+        mCurrentUser = result
 
         NineBxApplication.getUserAPI()!!.postUserDetails(userMap)
                 .subscribeOn(Schedulers.io())

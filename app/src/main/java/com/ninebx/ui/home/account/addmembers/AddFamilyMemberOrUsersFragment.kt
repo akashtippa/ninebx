@@ -348,6 +348,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         member.relationship = txtRelationship.selectedItem.toString().encryptString()
 
         memberView.onNewMember(member)
+
+        user.logout()
     }
 
 
