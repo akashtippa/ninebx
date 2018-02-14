@@ -43,6 +43,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         bundle.putParcelable(Constants.MEMBER, member)
         bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
         startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
+        if( NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE)
+            NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
     }
 
     override fun onSuccess(outputFile: File?) {
@@ -95,6 +97,9 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
             bundle.putParcelable(Constants.MEMBER, Member())
             bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
             startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
+
+            if( NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE)
+                NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
 
         }
 
