@@ -95,6 +95,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private var signInFragment: SignInFragment? = null
     override fun navigateToSignIn() {
+
+        if( SyncUser.currentUser() != null ) SyncUser.currentUser().logout()
+
         mCurrentTag = "SignIn"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(SignInFragment::class.java.simpleName)
