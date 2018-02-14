@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
@@ -14,6 +15,7 @@ import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
 import com.ninebx.utility.Constants
+import com.ninebx.utility.Constants.ALL_COMPLETE
 import io.realm.SyncUser
 
 /**
@@ -64,6 +66,10 @@ class ContainerActivity : AppCompatActivity(), MemberView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
+
+        if( NineBxApplication.getPreferences().currentStep < ALL_COMPLETE )
+            NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
+
         loadMasterPasswordFragment()
     }
 
