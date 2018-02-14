@@ -55,16 +55,11 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", false)
 
-        val privateKey = randomString(16)
-        NineBxApplication.getPreferences().privateKey = privateKey
-
-        val encryptedPrivateKey = encryptAESKeyPassword(privateKey, encryptedPasswordByteArray)
+        val encryptedPrivateKey = encryptAESKeyPassword(NineBxApplication.getPreferences().privateKey!!, encryptedPasswordByteArray)
 
         AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
         userMap.put("secure_key", encryptedPrivateKey)
-        AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
-        AppLogger.d(TAG, "UserMap : " + userMap)
 
         val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
         AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
