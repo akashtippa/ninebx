@@ -78,7 +78,10 @@ class OTPFragment : BaseAuthFragment() {
 
 
     private var handler: Handler = Handler()
-    private var runnable: Runnable = Runnable { tvResend.isEnabled = true }
+    private var runnable: Runnable = Runnable {
+        if( tvResend != null )
+            tvResend.isEnabled = true
+    }
 
     private fun setupOtp() {
 
