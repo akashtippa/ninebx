@@ -364,14 +364,7 @@ fun String.decryptString(): String {
     if (this.isEmpty()) {
         return ""
     }
-<<<<<<< HEAD
-    /*if( !this.endsWith("=", true) ) {
-        return this
-    }*/
-    return decryptAESKEY( this.toByteArray(), NineBxApplication.getPreferences().privateKey!! )
-=======
     return decryptAESKEY(this.toByteArray(), NineBxApplication.getPreferences().privateKey!!)
->>>>>>> 1212c93a8abf09a63554248ed4a73756e0e1f5e0
 }
 
 fun encryptUsers(currentUser: Users): Users {
@@ -399,14 +392,9 @@ fun encryptUsers(currentUser: Users): Users {
 
 }
 
-<<<<<<< HEAD
-fun encryptMembers( members: RealmList<Member> ): RealmList<Member>? {
-    for( i in 0 until members.size ) {
-        encryptMember(members[i]!!)
-=======
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-       encryptMember(member!!)
+       encryptMember(members[i]!!)
     }
     return members
 }
