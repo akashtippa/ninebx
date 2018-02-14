@@ -320,6 +320,7 @@
 
 
             <EditText
+                android:id="@+id/edtEmail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -350,6 +351,7 @@
 
 
             <EditText
+                android:id="@+id/edtEmail2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -445,7 +447,7 @@
 
 
             <EditText
-                android:id="@+id/txtCity"
+                android:id="@+id/edtCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -477,7 +479,7 @@
 
 
             <EditText
-                android:id="@+id/txtState"
+                android:id="@+id/edtState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -509,7 +511,7 @@
 
 
             <EditText
-                android:id="@+id/txtZipCode"
+                android:id="@+id/edtZipCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -542,7 +544,7 @@
 
 
             <EditText
-                android:id="@+id/txtCountry"
+                android:id="@+id/edtCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"

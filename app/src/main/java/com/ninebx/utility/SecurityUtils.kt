@@ -394,34 +394,30 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-        var member = members[i]
-        member = encryptMember(member!!)
+       encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName.encryptString()
-    member.lastName.encryptString()
-    member.relationship.encryptString()
-    member.role.encryptString()
-    member.email.encryptString()
+    member.firstName = member.firstName            .encryptString()
+    member.lastName = member. lastName             .encryptString()
+    member.relationship = member. relationship         .encryptString()
+    member.role = member. role.encryptString()
+    member.email = member. email                .encryptString()
 
-    member.dateOfBirth.encryptString()
-    member.anniversary.encryptString()
-    member.gender.encryptString()
-    member.mobileNumber.encryptString()
-    member.street_1.encryptString()
-    member.street_2.encryptString()
-    member.city.encryptString()
-    member.state.encryptString()
-    member.zipCode.encryptString()
-    member.country.encryptString()
+    member.dateOfBirth = member.dateOfBirth         .encryptString()
+    member.anniversary = member.anniversary         .encryptString()
+    member.gender = member.gender
+    member.mobileNumber = member.mobileNumber        .encryptString()
+    member.street_1 = member.street_1            .encryptString()
+    member.street_2 = member.street_2            .encryptString()
+    member.city = member.city                .encryptString()
+    member.state = member.state               .encryptString()
+    member.zipCode = member.zipCode             .encryptString()
+    member.country = member.country             .encryptString()
 
-    member.userId.encryptString()
-
-    member.profilePhoto.encryptString()
     return member
 }
 
@@ -2408,13 +2404,92 @@ fun encryptVacations(vacations: Vacations): Vacations {
 }
 
 
+fun encryptCheckUps(checkups: Checkups): Checkups {
+    checkups.selectionType = checkups.selectionType.encryptString()
+    checkups.classType = checkups.classType.encryptString()
+    checkups.physicianName = checkups.physicianName.encryptString()
+    checkups.checkup_description = checkups.checkup_description.encryptString()
+    checkups.physicianType = checkups.physicianType.encryptString()
+    checkups.reason = checkups.reason.encryptString()
+    checkups.dateOfVisit = checkups.dateOfVisit.encryptString()
+    checkups.notes = checkups.notes.encryptString()
+    checkups.attachmentNames = checkups.attachmentNames.encryptString()
+    checkups.created = checkups.created.encryptString()
+    checkups.modified = checkups.modified.encryptString()
+    checkups.createdUser = checkups.createdUser.encryptString()
+    return checkups
+}
+
+fun encryptEmergencyContacts(emergencyContacts: EmergencyContacts): EmergencyContacts {
+    emergencyContacts.selectionType = emergencyContacts.selectionType.encryptString()
+    emergencyContacts.classType = emergencyContacts.classType.encryptString()
+    emergencyContacts.name = emergencyContacts.name.encryptString()
+    emergencyContacts.relationShip = emergencyContacts.relationShip.encryptString()
+    emergencyContacts.phoneNumberOne = emergencyContacts.phoneNumberOne.encryptString()
+    emergencyContacts.phoneNumberTwo = emergencyContacts.phoneNumberTwo.encryptString()
+    emergencyContacts.emailAddress = emergencyContacts.emailAddress.encryptString()
+    emergencyContacts.streetAddressOne = emergencyContacts.streetAddressOne.encryptString()
+    emergencyContacts.streetAddressTwo = emergencyContacts.streetAddressTwo.encryptString()
+    emergencyContacts.city = emergencyContacts.city.encryptString()
+    emergencyContacts.state = emergencyContacts.state.encryptString()
+    emergencyContacts.zipCode = emergencyContacts.zipCode.encryptString()
+    emergencyContacts.country = emergencyContacts.country.encryptString()
+    emergencyContacts.created = emergencyContacts.created.encryptString()
+    emergencyContacts.modified = emergencyContacts.modified.encryptString()
+    emergencyContacts.notes = emergencyContacts.notes.encryptString()
+    emergencyContacts.attachmentNames = emergencyContacts.attachmentNames.encryptString()
+    emergencyContacts.createdUser = emergencyContacts.createdUser.encryptString()
+    return emergencyContacts
+}
+
+fun encryptEyeGlassPrescription(eyeglassPrescriptions: EyeglassPrescriptions): EyeglassPrescriptions {
+    eyeglassPrescriptions.selectionType = eyeglassPrescriptions.selectionType.encryptString()
+    eyeglassPrescriptions.classType = eyeglassPrescriptions.classType.encryptString()
+    eyeglassPrescriptions.physicianName = eyeglassPrescriptions.physicianName.encryptString()
+    eyeglassPrescriptions.datePrescribed = eyeglassPrescriptions.datePrescribed.encryptString()
+    eyeglassPrescriptions.odSphereValue = eyeglassPrescriptions.odSphereValue.encryptString()
+    eyeglassPrescriptions.osSphereValue = eyeglassPrescriptions.osSphereValue.encryptString()
+    eyeglassPrescriptions.odCylinderValue = eyeglassPrescriptions.odCylinderValue.encryptString()
+    eyeglassPrescriptions.osCylinderValue = eyeglassPrescriptions.osCylinderValue.encryptString()
+    eyeglassPrescriptions.odAxisValue = eyeglassPrescriptions.odAxisValue.encryptString()
+    eyeglassPrescriptions.osAxisValue = eyeglassPrescriptions.osAxisValue.encryptString()
+    eyeglassPrescriptions.odPrismValue = eyeglassPrescriptions.odPrismValue.encryptString()
+    eyeglassPrescriptions.osPrismValue = eyeglassPrescriptions.osPrismValue.encryptString()
+    eyeglassPrescriptions.odAddValue = eyeglassPrescriptions.odAddValue.encryptString()
+    eyeglassPrescriptions.osAddValue = eyeglassPrescriptions.osAddValue.encryptString()
+    eyeglassPrescriptions.odBaseValue = eyeglassPrescriptions.odBaseValue.encryptString()
+    eyeglassPrescriptions.osBaseValue = eyeglassPrescriptions.osBaseValue.encryptString()
+    eyeglassPrescriptions.notes = eyeglassPrescriptions.notes.encryptString()
+    eyeglassPrescriptions.attachmentNames = eyeglassPrescriptions.attachmentNames.encryptString()
+    eyeglassPrescriptions.created = eyeglassPrescriptions.created.encryptString()
+    eyeglassPrescriptions.modified = eyeglassPrescriptions.modified.encryptString()
+    eyeglassPrescriptions.createdUser = eyeglassPrescriptions.createdUser.encryptString()
+    return eyeglassPrescriptions
+}
 
 
-
-
-
-
-
+fun encryptHealthcareProviders(healthcareProviders: HealthcareProviders): HealthcareProviders {
+    healthcareProviders.selectionType = healthcareProviders.selectionType.encryptString()
+    healthcareProviders.classType = healthcareProviders.classType.encryptString()
+    healthcareProviders.name = healthcareProviders.name.encryptString()
+    healthcareProviders.physicianType = healthcareProviders.physicianType.encryptString()
+    healthcareProviders.practiceName = healthcareProviders.practiceName.encryptString()
+    healthcareProviders.phoneNumberOne = healthcareProviders.phoneNumberOne.encryptString()
+    healthcareProviders.phoneNumberTwo = healthcareProviders.phoneNumberTwo.encryptString()
+    healthcareProviders.emailAddress = healthcareProviders.emailAddress.encryptString()
+    healthcareProviders.streetAddressOne = healthcareProviders.streetAddressOne.encryptString()
+    healthcareProviders.streetAddressTwo = healthcareProviders.streetAddressTwo.encryptString()
+    healthcareProviders.city = healthcareProviders.city.encryptString()
+    healthcareProviders.state = healthcareProviders.state.encryptString()
+    healthcareProviders.zipCode = healthcareProviders.zipCode.encryptString()
+    healthcareProviders.country = healthcareProviders.country.encryptString()
+    healthcareProviders.created = healthcareProviders.created.encryptString()
+    healthcareProviders.modified = healthcareProviders.modified.encryptString()
+    healthcareProviders.notes = healthcareProviders.notes.encryptString()
+    healthcareProviders.attachmentNames = healthcareProviders.attachmentNames.encryptString()
+    healthcareProviders.createdUser = healthcareProviders.createdUser.encryptString()
+    return healthcareProviders
+}
 
 
 

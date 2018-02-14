@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
@@ -682,5 +683,20 @@ public class Member extends RealmObject implements Parcelable {
                 ", isCompleteProfile=" + isCompleteProfile +
                 ", profilePhoto='" + profilePhoto + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Member member = (Member) o;
+
+        return userId.equals(member.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return userId.hashCode();
     }
 }

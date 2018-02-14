@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -133,6 +134,12 @@ public class Users extends RealmObject implements Parcelable {
         users.emailAddress = email;
         return users;
 
+    }
+
+    public static ArrayList<Users> createParcelableList(@NotNull RealmResults<Users> currentUsers) {
+        ArrayList users = new ArrayList();
+        users.addAll(currentUsers);
+        return users;
     }
 
     public String getUserId() {
@@ -357,12 +364,5 @@ public class Users extends RealmObject implements Parcelable {
                 ", profilePhoto='" + profilePhoto + '\'' +
                 ", members=" + decryptedMembers +
                 '}';
-    }
-
-
-    public static ArrayList<Users> createParcelableList(@NotNull RealmResults<Users> currentUsers) {
-        ArrayList users = new ArrayList();
-        users.addAll(currentUsers);
-        return users;
     }
 }

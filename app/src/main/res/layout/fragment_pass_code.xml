@@ -154,10 +154,10 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent_white"
             android:cursorVisible="false"
+            android:focusable="true"
             android:gravity="center"
             android:inputType="number"
             android:maxEms="6"
-            android:focusable="true"
             android:textColor="@color/transparent_white"
             android:visibility="visible" >
             <requestFocus />
@@ -168,8 +168,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/additional_security" />
-
-
 
 
     </LinearLayout>

@@ -1,5 +1,8 @@
 package com.ninebx.ui.base.realm.home.contacts;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ninebx.ui.base.realm.RealmString;
 
 import java.util.ArrayList;
@@ -16,13 +19,22 @@ import io.realm.annotations.Required;
  * Created by Alok on 24/01/18.
  */
 @RealmClass
-public class Contacts extends RealmObject {
+public class Contacts extends RealmObject implements Parcelable {
 
+    public static final Creator<Contacts> CREATOR = new Creator<Contacts>() {
+        @Override
+        public Contacts createFromParcel(Parcel in) {
+            return new Contacts(in);
+        }
+
+        @Override
+        public Contacts[] newArray(int size) {
+            return new Contacts[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required private String selectionType = "";
-
     @Required private String firstName = "";
     @Required private String lastName = "";
     @Required private String dateOfBirth = "";
@@ -37,16 +49,11 @@ public class Contacts extends RealmObject {
     @Required private String state = "";
     @Required private String zipCode = "";
     @Required private String country = "";
-
-
     @Required private String created = "";
     @Required private String modified = "";
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
-
-
     @Required private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
@@ -75,6 +82,61 @@ public class Contacts extends RealmObject {
     }
 
     public Contacts() {
+    }
+
+    protected Contacts(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        dateOfBirth = in.readString();
+        anniversary = in.readString();
+        mobileOne = in.readString();
+        mobileTwo = in.readString();
+        emailOne = in.readString();
+        emailTwo = in.readString();
+        streetAddressOne = in.readString();
+        streetAddressTwo = in.readString();
+        city = in.readString();
+        state = in.readString();
+        zipCode = in.readString();
+        country = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(selectionType);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(dateOfBirth);
+        dest.writeString(anniversary);
+        dest.writeString(mobileOne);
+        dest.writeString(mobileTwo);
+        dest.writeString(emailOne);
+        dest.writeString(emailTwo);
+        dest.writeString(streetAddressOne);
+        dest.writeString(streetAddressTwo);
+        dest.writeString(city);
+        dest.writeString(state);
+        dest.writeString(zipCode);
+        dest.writeString(country);
+        dest.writeString(created);
+        dest.writeString(modified);
+        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
+        dest.writeString(createdUser);
+        dest.writeStringList(photosId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public Integer getId() {

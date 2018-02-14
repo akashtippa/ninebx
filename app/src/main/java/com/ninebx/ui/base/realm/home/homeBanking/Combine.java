@@ -1,11 +1,13 @@
 package com.ninebx.ui.base.realm.home.homeBanking;
 
+import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
+
 import com.ninebx.ui.base.realm.lists.HomeList;
 
+
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 /**
  * Created by Alok on 24/01/18.

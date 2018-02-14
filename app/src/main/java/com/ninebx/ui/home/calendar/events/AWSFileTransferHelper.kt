@@ -10,12 +10,14 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferType
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.utility.*
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.Constants
 import com.ninebx.utility.Util.fillMap
 import com.ninebx.utility.Util.getTransferUtility
+import com.ninebx.utility.decryptFileIOS
+import com.ninebx.utility.encryptFileIOS
 import java.io.File
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 /**
  * Created by Alok on 19/01/18.
@@ -40,15 +42,15 @@ class AWSFileTransferHelper( private val context : Context? ) {
     // Which row in the UI is currently checked (if any)
     private var checkedIndex: Int = Constants.INDEX_NOT_CHECKED
     private var downloadCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
-    private var privateKey : CharArray = NineBxApplication.getPreferences().privateKey!!.toCharArray()
-    private var fileOperationsCompletionListener: FileOperationsCompletionListener ?= null
+    private var privateKey: CharArray = NineBxApplication.getPreferences().privateKey!!.toCharArray()
+    private var fileOperationsCompletionListener: FileOperationsCompletionListener? = null
 
     init {
         initUploadData()
         initDownloadData()
     }
 
-    fun setFileTransferListener( fileTransferListener: FileOperationsCompletionListener ) {
+    fun setFileTransferListener(fileTransferListener: FileOperationsCompletionListener) {
         this.fileOperationsCompletionListener = fileTransferListener
     }
 

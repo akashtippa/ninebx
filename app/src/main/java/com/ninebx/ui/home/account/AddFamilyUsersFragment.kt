@@ -32,7 +32,7 @@ import java.util.*
 class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransferHelper.FileOperationsCompletionListener {
 
     override fun onSuccess(outputFile: File?) {
-        if( outputFile != null && imgProfilePic != null )
+        if (outputFile != null && imgProfilePic != null)
             Glide.with(context).asBitmap().load(outputFile).into(imgProfilePic)
     }
 
@@ -63,7 +63,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if( NineBxApplication.instance.activityInstance != null ) {
+        if (NineBxApplication.instance.activityInstance != null) {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
             NineBxApplication.instance.activityInstance!!.showBackIcon()
         }
@@ -86,7 +86,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 //            openStaticLayoutDialog()
         }
 
-        initAdmin( currentUsers[0] )
+        initAdmin(currentUsers[0])
     }
 
     private fun initAdmin(users: Users?) {
@@ -95,8 +95,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         txtProfileEmail.text = users.emailAddress.decryptString()
 
         mAWSFileTransferHelper.setFileTransferListener(this)
-        if( users.profilePhoto.isNotEmpty() )
-            mAWSFileTransferHelper.beginDownload( "images/" + users.userId + "/" + users.profilePhoto)
+        if (users.profilePhoto.isNotEmpty())
+            mAWSFileTransferHelper.beginDownload("images/" + users.userId + "/" + users.profilePhoto)
 
     }
 

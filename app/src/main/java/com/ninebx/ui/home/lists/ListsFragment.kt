@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.BaseHomeFragment
 import kotlinx.android.synthetic.main.fragment_lists.*
 
 /**
  * Created by Alok on 03/01/18.
  */
-class ListsFragment : Fragment(), ListsCommunicationView {
+class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
     override fun showProgress(message: Int) {
 

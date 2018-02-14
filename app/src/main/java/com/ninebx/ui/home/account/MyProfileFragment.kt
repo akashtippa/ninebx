@@ -94,12 +94,12 @@ class MyProfileFragment : FragmentBackHelper() {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
-        txtCountry.setOnClickListener {
+        edtCountry.setOnClickListener {
             var countrySelected = prefrences.countrySelected
             if (countrySelected.toString().trim().isEmpty()) {
-                txtCountry.hint = "Select Country"
+                edtCountry.hint = "Select Country"
             } else {
-                txtCountry.text = countrySelected
+                edtCountry.text = countrySelected
             }
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -121,7 +121,7 @@ class MyProfileFragment : FragmentBackHelper() {
         txtDOB.isClickable = true
         txtAnniversary.isClickable = true
         txtMobileNumber.isEnabled = true
-        txtCountry.isEnabled = true
+        edtCountry.isEnabled = true
 
     }
 
@@ -237,10 +237,10 @@ class MyProfileFragment : FragmentBackHelper() {
 //        enableEditing()
         var countrySelected = prefrences.countrySelected
         if (countrySelected.toString().trim().isEmpty()) {
-            txtCountry.hint = "Select Country"
+            edtCountry.hint = "Select Country"
         } else {
-            txtCountry.text = countrySelected
-            txtCountry.setTextColor(resources.getColor(R.color.black))
+            edtCountry.text = countrySelected
+            edtCountry.setTextColor(resources.getColor(R.color.black))
         }
 
     }
