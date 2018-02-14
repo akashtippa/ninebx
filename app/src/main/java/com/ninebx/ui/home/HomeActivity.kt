@@ -153,17 +153,17 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
 
 
-        prepareRealmConnections( this, true,"Users", object : Realm.Callback( ) {
+        prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
 
                 currentUsers = getCurrentUsers(realm!!)
-                if( currentUsers != null ) {
+                if (currentUsers != null) {
                     this@HomeActivity.hideProgressDialog()
-                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
                     for (member in currentUsers!![0]!!.members) {
                         AppLogger.d("CurrentUser", "Members : " + member.toString())
                     }
-                    if( NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE ) {
+                    if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
                         val fragmentTransaction = supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
@@ -176,7 +176,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                     }
                 }
             }
-
         })
     }
 

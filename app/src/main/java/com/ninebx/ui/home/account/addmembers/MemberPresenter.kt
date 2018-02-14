@@ -16,14 +16,14 @@ import java.util.*
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
-    private lateinit var userName : String
-    private lateinit var encryptedPassword : String
+    private lateinit var userName: String
+    private lateinit var encryptedPassword: String
     private lateinit var encryptedPasswordByteArray: ByteArray
-    private var mCurrentUser : SyncUser ?= null
+    private var mCurrentUser: SyncUser? = null
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     init {
@@ -31,11 +31,10 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
     }
 
 
-
-    fun saveToUserAccount(strEmail: String, password:String ) {
+    fun saveToUserAccount(strEmail: String, password: String) {
         memberView.showProgress(R.string.loading)
         encryptedPasswordByteArray = (encryptKey(password, strEmail))
-        encryptedPassword = Arrays.toString( convertToUInt8IntArray(encryptedPasswordByteArray))
+        encryptedPassword = Arrays.toString(convertToUInt8IntArray(encryptedPasswordByteArray))
         val credentials = SyncCredentials.usernamePassword(strEmail, encryptedPassword, true)
         SyncUser.loginAsync(credentials, Constants.SERVER_IP, this)
     }
@@ -46,8 +45,8 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
         val userMap = HashMap<String, Any>()
 
         //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
-        userMap.put("user_id", result!!.identity )
-        userMap.put("admin_id", NineBxApplication.instance.currentUser!!.userId )
+        userMap.put("user_id", result!!.identity)
+        userMap.put("admin_id", NineBxApplication.instance.currentUser!!.userId)
         userMap.put("email", userName)
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", false)
@@ -110,8 +109,8 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
         if (error != null) {
             error.printStackTrace()
         }
-        if( error?.message != null ) {
-            memberView.showError( error.errorMessage!! )
+        if (error?.message != null) {
+            memberView.showError(error.errorMessage!!)
         }
     }
 

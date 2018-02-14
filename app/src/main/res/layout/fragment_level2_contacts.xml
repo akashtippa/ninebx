@@ -130,7 +130,7 @@
                 android:textSize="@dimen/_9sdp" />
 
             <EditText
-                android:id="@+id/txtFirstName"
+                android:id="@+id/edtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -162,7 +162,7 @@
 
 
             <EditText
-                android:id="@+id/txtLastName"
+                android:id="@+id/edtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -201,7 +201,6 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:clickable="false"
                 android:hint="Birthday" />
 
             <View
@@ -231,7 +230,6 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:clickable="false"
                 android:hint="Anniversary" />
 
             <View

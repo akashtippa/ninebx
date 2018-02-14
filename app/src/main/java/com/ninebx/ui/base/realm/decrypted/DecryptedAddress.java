@@ -1,5 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -117,6 +118,5 @@ public class DecryptedAddress implements Parcelable {
     public void setCountry(String country) {
         this.country = country;
     }
-
-
 }
+

@@ -1,7 +1,5 @@
 package com.ninebx.ui.home.fragments
 
-import android.annotation.SuppressLint
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +9,11 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.prepareRealmConnections
+import com.ninebx.utility.*
 import io.realm.Realm
-import io.realm.SyncConfiguration
-import io.realm.SyncCredentials
-import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_level2_contacts.*
-import kotlinx.android.synthetic.main.fragment_test_a.*
+import java.util.*
+
 
 /***
  * Created by TechnoBlogger on 24/01/18.
@@ -60,10 +54,10 @@ class SingleContactViewFragment : FragmentBackHelper() {
         strContactName = arguments!!.getString(Constants.BUNDLE_CONTACT_NAME)
         strContactNumber = arguments!!.getString(Constants.BUNDLE_CONTACT_NO)
 
-        mContacts = arguments!!.getParcelable(Constants.CONTACTS)
+//        mContacts = arguments!!.getParcelable(Constants.CONTACTS)
 
 
-        txtFirstName.setText(strContactName)
+        edtFirstName.setText(strContactName)
         txtMobileNumber.setText(strContactNumber)
 
         ivBackContactView.setOnClickListener {
@@ -74,11 +68,35 @@ class SingleContactViewFragment : FragmentBackHelper() {
             enableEditing()
         }
 
-        SyncTheDb().execute()
+        txtDOB.setOnClickListener {
+            getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
+                override fun onDateTimeSelected(selectedDate: Calendar) {
+                    txtDOB.text = (getDateMonthYearFormat(selectedDate.time))
+                }
+            })
+        }
+
+        txtAnniversary.setOnClickListener {
+            getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
+                override fun onDateTimeSelected(selectedDate: Calendar) {
+                    txtAnniversary.text = (getDateMonthYearFormat(selectedDate.time))
+                }
+            })
+        }
 
         txtSaveContacts.setOnClickListener {
             saveTheEditedContacts()
         }
+
+        prepareRealmConnections(context, false, "Contacts", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val contacts = realm!!.where(Contacts::class.java).equalTo("firstName", "ngMqmgOdOBoeqg+IsvVFJQ==")
+
+                AppLogger.d("Combine", "Combined Results : " + contacts)
+
+
+            }
+        })
 
 
     }
@@ -110,28 +128,69 @@ class SingleContactViewFragment : FragmentBackHelper() {
             return
         }
 
-        sendDataToServer()
+        var contacts = Contacts()
+        contacts.id = getUniqueId()
+        contacts.firstName = strFirstName.encryptString()
+        contacts.lastName = strLastName.encryptString()
+        contacts.dateOfBirth = strBirthday.encryptString()
+        contacts.anniversary = strAnniversary.encryptString()
+        contacts.mobileOne = strPhone1.encryptString()
+        contacts.mobileTwo = strPhone2.encryptString()
+        contacts.emailOne = strEmail1.encryptString()
+        contacts.emailTwo = strEmail2.encryptString()
+        contacts.streetAddressOne = strStreetAddress1.encryptString()
+        contacts.streetAddressTwo = strStreetAddress2.encryptString()
+        contacts.city = strCity.encryptString()
+        contacts.state = strState.encryptString()
+        contacts.zipCode = strZipCode.encryptString()
+        contacts.country = strCountry.encryptString()
 
-        prepareRealmConnections(context, false, "Contacts", object : Realm.Callback() {
+//        contacts.firstName = strFirstName
+//        contacts.lastName = strLastName
+//        contacts.dateOfBirth = strBirthday
+//        contacts.anniversary = strAnniversary
+//        contacts.mobileOne = strPhone1
+//        contacts.mobileTwo = strPhone2
+//        contacts.emailOne = strEmail1
+//        contacts.emailTwo = strEmail2
+//        contacts.streetAddressOne = strStreetAddress1
+//        contacts.streetAddressTwo = strStreetAddress2
+//        contacts.city = strCity
+//        contacts.state = strState
+//        contacts.zipCode = strZipCode
+//        contacts.country = strCountry
+
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CONTACTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
 
+//                contacts = encryptContact(contacts)
+                contacts.insertOrUpdate(realm!!)
+                NineBxApplication.instance.activityInstance!!.onBackPressed()
             }
-
         })
     }
-
 
     private fun enableEditing() {
         NineBxApplication.instance.activityInstance!!.hideToolbar()
         toolbarContacts.show()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
-        txtFirstName.isEnabled = true
-        txtLastName.isEnabled = true
+        edtFirstName.isEnabled = true
+        edtLastName.isEnabled = true
         txtDOB.isClickable = true
         txtAnniversary.isClickable = true
         txtMobileNumber.isEnabled = true
+        txtMobileNumber2.isEnabled = true
+
+        edtEmail1.isEnabled = true
+        edtEmail2.isEnabled = true
+        txtAddress1.isEnabled = true
+        txtAddress2.isEnabled = true
+        edtCity.isEnabled = true
+        edtState.isEnabled = true
+        edtZipCode.isEnabled = true
         edtCountry.isEnabled = true
+
 
     }
 
@@ -139,71 +198,4 @@ class SingleContactViewFragment : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         return super.onBackPressed()
     }
-
-
-    @SuppressLint("StaticFieldLeak")
-    inner class SyncTheDb : AsyncTask<String, String, String>() {
-
-        override fun doInBackground(vararg p0: String?): String {
-            var Result: String = ""
-            try {
-                syncNow()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return Result
-        }
-
-
-    }
-
-
-    var strUsername: String = "aman.shekhar@cognitiveclouds.com"
-    var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
-
-    var myCredentials: SyncCredentials? = null
-    var user: SyncUser? = null
-    var config: SyncConfiguration? = null
-    lateinit var realm: Realm
-
-
-    private fun syncNow() {
-        myCredentials = SyncCredentials.usernamePassword(strUsername, strPassword, false)
-        user = SyncUser.login(myCredentials, Constants.SERVER_IP)
-        config = SyncConfiguration.Builder(user, Constants.SERVER_URL + "Contacts")
-                .waitForInitialRemoteData()
-                .build()
-
-        realm = Realm.getInstance(config)
-    }
-
-    private fun sendDataToServer() {
-        realm = Realm.getInstance(config)
-
-        realm.executeTransactionAsync({ bgRealm ->
-            val contacts = bgRealm.createObject(Contacts::class.java)
-            contacts.firstName = mContacts.firstName
-            contacts.lastName = mContacts.lastName
-            contacts.dateOfBirth = mContacts.dateOfBirth
-            contacts.anniversary = mContacts.anniversary
-            contacts.mobileOne = mContacts.mobileOne
-            contacts.mobileTwo = mContacts.mobileTwo
-            contacts.emailOne = mContacts.emailOne
-            contacts.emailTwo = mContacts.emailTwo
-            contacts.streetAddressOne = mContacts.streetAddressOne
-            contacts.streetAddressTwo = mContacts.streetAddressTwo
-            contacts.city = mContacts.city
-            contacts.state = mContacts.state
-            contacts.zipCode = mContacts.zipCode
-            contacts.country = mContacts.country
-
-        }, {
-            Toast.makeText(context, "Contacts Added Successfully'", Toast.LENGTH_LONG).show()
-        }, {
-            Toast.makeText(context, "Contacts Not Added'", Toast.LENGTH_LONG).show()
-        })
-
-    }
-
-
 }

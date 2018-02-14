@@ -130,6 +130,7 @@ object Constants {
     val IS_NEW_ACCOUNT: String = "is_new_account"
 
     val CONTACTS = "contacts"
+    val REALM_END_POINT_CONTACTS = "contacts"
 
 
 }

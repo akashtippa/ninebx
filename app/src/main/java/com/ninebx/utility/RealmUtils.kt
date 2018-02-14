@@ -6,6 +6,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.home.contacts.Contacts
 import io.realm.*
 import java.util.*
 
@@ -39,6 +40,11 @@ fun closeConnection(realmConnection: Realm) {
 fun getCurrentUsers(realmInstance: Realm): RealmResults<Users>? {
     return realmInstance.where(Users::class.java).findAll()
 }
+
+fun getCurrentContactList(realmInstance: Realm): RealmResults<Contacts>? {
+    return realmInstance.where(Contacts::class.java).findAll()
+}
+
 
 private val TAG = "RealmUtils"
 

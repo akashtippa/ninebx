@@ -366,4 +366,35 @@ public class DecryptedProperty implements Parcelable {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "DecryptedProperty{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", propertyName='" + propertyName + '\'' +
+                ", streetAddressOne='" + streetAddressOne + '\'' +
+                ", streetAddressTwo='" + streetAddressTwo + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", titleName='" + titleName + '\'' +
+                ", purchaseDate='" + purchaseDate + '\'' +
+                ", purchasePrice='" + purchasePrice + '\'' +
+                ", estimatedMarketValue='" + estimatedMarketValue + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", currentlyRented=" + currentlyRented +
+                ", tenantName='" + tenantName + '\'' +
+                ", leaseStartDate='" + leaseStartDate + '\'' +
+                ", leaseEndDate='" + leaseEndDate + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                '}';
+    }
 }

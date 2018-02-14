@@ -5,11 +5,14 @@ import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -34,28 +37,49 @@ public class Contacts extends RealmObject implements Parcelable {
     };
     @PrimaryKey //@Required
     private int id = 0;
-    @Required private String selectionType = "";
-    @Required private String firstName = "";
-    @Required private String lastName = "";
-    @Required private String dateOfBirth = "";
-    @Required private String anniversary = "";
-    @Required private String mobileOne = "";
-    @Required private String mobileTwo = "";
-    @Required private String emailOne = "";
-    @Required private String emailTwo = "";
-    @Required private String streetAddressOne = "";
-    @Required private String streetAddressTwo = "";
-    @Required private String city = "";
-    @Required private String state = "";
-    @Required private String zipCode = "";
-    @Required private String country = "";
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String firstName = "";
+    @Required
+    private String lastName = "";
+    @Required
+    private String dateOfBirth = "";
+    @Required
+    private String anniversary = "";
+    @Required
+    private String mobileOne = "";
+    @Required
+    private String mobileTwo = "";
+    @Required
+    private String emailOne = "";
+    @Required
+    private String emailTwo = "";
+    @Required
+    private String streetAddressOne = "";
+    @Required
+    private String streetAddressTwo = "";
+    @Required
+    private String city = "";
+    @Required
+    private String state = "";
+    @Required
+    private String zipCode = "";
+    @Required
+    private String country = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
 
     public Contacts(int id, String selectionType, String firstName, String lastName, String dateOfBirth, String anniversary, String mobileOne, String mobileTwo, String emailOne, String emailTwo, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages) {
         this.id = id;
@@ -107,6 +131,12 @@ public class Contacts extends RealmObject implements Parcelable {
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
         photosId = in.createStringArrayList();
+    }
+
+    public static ArrayList<Contacts> createParcelableList(@NotNull RealmResults<Contacts> currentUsers) {
+        ArrayList contacts = new ArrayList();
+        contacts.addAll(currentUsers);
+        return contacts;
     }
 
     @Override
@@ -307,11 +337,10 @@ public class Contacts extends RealmObject implements Parcelable {
         this.backingImages = backingImages;
     }
 
-
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -319,8 +348,8 @@ public class Contacts extends RealmObject implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
     }
 }

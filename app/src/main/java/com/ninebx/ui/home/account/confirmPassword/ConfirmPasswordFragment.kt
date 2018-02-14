@@ -17,11 +17,11 @@ import kotlinx.android.synthetic.main.fragment_confirm_password.*
  */
 class ConfirmPasswordFragment : Fragment() {
 
-    private lateinit var memberView : MemberView
-    private var password : String = ""
+    private lateinit var memberView: MemberView
+    private var password: String = ""
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if( context is MemberView ) {
+        if (context is MemberView) {
             memberView = context
         }
     }
@@ -33,7 +33,7 @@ class ConfirmPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnSubmit.setOnClickListener {
-            if( validate() ) {
+            if (validate()) {
                 memberView.onConfirmPassword(password)
             }
         }
@@ -42,6 +42,6 @@ class ConfirmPasswordFragment : Fragment() {
     private fun validate(): Boolean {
         password = etConfirmPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
-        return !password.isEmpty() && preferences.userPassword!!.equals( encryptKey(password, preferences.userEmail!!))
+        return !password.isEmpty() && preferences.userPassword!!.equals(encryptKey(password, preferences.userEmail!!))
     }
 }
