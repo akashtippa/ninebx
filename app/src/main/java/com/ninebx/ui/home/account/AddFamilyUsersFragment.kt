@@ -41,6 +41,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         mListsAdapter!!.notifyDataSetChanged()
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
+        bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
         startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
     }
 
@@ -92,6 +93,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMBER, Member())
+            bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
             startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
 
         }

@@ -1,7 +1,8 @@
-package com.ninebx.ui.home.account
+package com.ninebx.ui.home.account.addmembers
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -19,9 +20,10 @@ import com.bumptech.glide.Glide
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
-import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.ui.home.account.PermissionFragment
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
+import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
 import java.util.ArrayList
 
@@ -31,12 +33,13 @@ import java.util.ArrayList
  */
 
 class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
-    
 
     private lateinit var selectedRelation: String
     private lateinit var selectedRole: String
-    private lateinit var iMemberAdded : IMemberAdded
     private lateinit var member : Member
+    private var isNewAccount : Boolean = false
+    private lateinit var memberPresenter : MemberPresenter
+    private lateinit var memberView : MemberView
 
     private var strFirstName = ""
     private var strLastName = ""
@@ -49,9 +52,18 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         return inflater.inflate(R.layout.fragment_add_family_member, container, false)
     }
 
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if( context is MemberView ) {
+            memberView = context
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        memberPresenter = MemberPresenter(memberView)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
         
@@ -66,7 +78,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         }
 
         member = arguments!!.getParcelable(Constants.MEMBER)
-
+        isNewAccount = arguments!!.getBoolean(Constants.IS_NEW_ACCOUNT, false)
         selectedRelation = txtRelationship.selectedItem.toString()
         selectedRole = txtsRole.selectedItem.toString()
 
@@ -115,7 +127,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         }
 
         txtAddEditPhoto.setOnClickListener {
-
+            startCameraIntent()
         }
 
         populateView( member )
@@ -291,18 +303,24 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                 }
         }
 
-        var member = Member()
-        member.userId = this@AddFamilyMemberOrUsersFragment.member.userId
-        member.firstName = strFirstName.encryptString()
-        member.lastName = strLastName.encryptString()
-        member.relationship = strAccountHolder.encryptString()
-        member.email = strEmail.encryptString()
-        member.role = strRole.encryptString()
-        member.relationship = txtRelationship.selectedItem.toString().encryptString()
+        if( isNewAccount )
+            memberPresenter.saveToUserAccount( strEmail, arguments!!.getString(Constants.USER_PASSWORD) )
+        else {
+            var member = Member()
+            member.userId = this@AddFamilyMemberOrUsersFragment.member.userId
+            member.firstName = strFirstName.encryptString()
+            member.lastName = strLastName.encryptString()
+            member.relationship = strAccountHolder.encryptString()
+            member.email = strEmail.encryptString()
+            member.role = strRole.encryptString()
+            member.relationship = txtRelationship.selectedItem.toString().encryptString()
 
-        //member.insertOrUpdate( realm!! )
-        // Set the data.
-        iMemberAdded.memberAdded( member )
+            //member.insertOrUpdate( realm!! )
+            // Set the data.
+            memberView.onNewMember(member)
+
+        }
+
 
         // Add method to add it in a RecyclerView
         //NineBxApplication.instance.activityInstance!!.onBackPressed()
@@ -317,8 +335,20 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         return true
     }
 
-    fun setIMemberAdded(iMemberAdded: IMemberAdded) {
-        this.iMemberAdded = iMemberAdded
+    fun onAccountCreated(user: SyncUser) {
+
+        var member = Member()
+
+        member.userId = user.identity
+        member.firstName = strFirstName.encryptString()
+        member.lastName = strLastName.encryptString()
+        member.relationship = strAccountHolder.encryptString()
+        member.email = strEmail.encryptString()
+        member.role = strRole.encryptString()
+        member.relationship = txtRelationship.selectedItem.toString().encryptString()
+
+        memberView.onNewMember(member)
     }
+
 
 }

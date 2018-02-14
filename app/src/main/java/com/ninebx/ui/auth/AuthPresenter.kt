@@ -3,12 +3,14 @@ package com.ninebx.ui.auth
 import android.os.AsyncTask
 import com.ninebx.ui.auth.email.SendEmailTask
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.utility.generateRandomOTP
+import com.ninebx.utility.*
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AuthPresenter(private val authView: AuthView) {
+class AuthPresenter(private val authView: AuthView){
+
+    private var TAG = AuthPresenter::class.java.simpleName
 
     init {
         authView.navigateToSignIn()

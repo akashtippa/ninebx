@@ -190,6 +190,7 @@ class LoginSignupTask(private var userName: String,
 
         encryptedPasswordByteArray = (encryptKey(password, userName))
         encryptedPassword = convertToUInt8IntArray(encryptedPasswordByteArray)
+        NineBxApplication.getPreferences().userPassword = Arrays.toString(encryptedPasswordByteArray)
 
         AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
         AppLogger.d(TAG, "Encrypted iOS : " + strPassword)

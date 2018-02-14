@@ -127,6 +127,7 @@ object Constants {
     val MEMBER: String = "member"
     val BUNDLE_CONTACT_NO = "contactNumber"
     val BUNDLE_CONTACT_NAME = "contactName"
+    val IS_NEW_ACCOUNT: String = "is_new_account"
 
 
 }

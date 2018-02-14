@@ -49,6 +49,7 @@ import java.util.*
 class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
 
     override fun getCurrentUsers(): RealmResults<Users> {
+        NineBxApplication.instance.currentUser = currentUsers!![0]
         return currentUsers!!
     }
 
