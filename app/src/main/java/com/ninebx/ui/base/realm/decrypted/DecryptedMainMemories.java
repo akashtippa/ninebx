@@ -3,9 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -13,36 +11,63 @@ import io.realm.annotations.Required;
  */
 public class DecryptedMainMemories implements Parcelable {
 
+    public static final Creator<DecryptedMainMemories> CREATOR = new Creator<DecryptedMainMemories>() {
+        @Override
+        public DecryptedMainMemories createFromParcel(Parcel in) {
+            return new DecryptedMainMemories(in);
+        }
+
+        @Override
+        public DecryptedMainMemories[] newArray(int size) {
+            return new DecryptedMainMemories[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
-
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
-    @Required private String contacts = "";
-
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-    @Required private String paymentMethodOnFile = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-    @Required private String title = "";
-    @Required private String createdUser = "";
+    @Required
+    private String institutionName = "";
+    @Required
+    private String accountName = "";
+    @Required
+    private String accountType = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String location = "";
+    @Required
+    private String swiftCode = "";
+    @Required
+    private String abaRoutingNumber = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String paymentMethodOnFile = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String title = "";
+    @Required
+    private String createdUser = "";
 
     public DecryptedMainMemories(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
         this.selectionType = selectionType;
@@ -96,6 +121,9 @@ public class DecryptedMainMemories implements Parcelable {
         createdUser = in.readString();
     }
 
+    public DecryptedMainMemories() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -127,18 +155,6 @@ public class DecryptedMainMemories implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedMainMemories> CREATOR = new Creator<DecryptedMainMemories>() {
-        @Override
-        public DecryptedMainMemories createFromParcel(Parcel in) {
-            return new DecryptedMainMemories(in);
-        }
-
-        @Override
-        public DecryptedMainMemories[] newArray(int size) {
-            return new DecryptedMainMemories[size];
-        }
-    };
 
     public String getSelectionType() {
         return selectionType;
@@ -314,8 +330,5 @@ public class DecryptedMainMemories implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedMainMemories() {
     }
 }

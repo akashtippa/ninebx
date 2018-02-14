@@ -2,22 +2,21 @@ package com.ninebx.ui.auth
 
 import android.content.Context
 import android.content.Intent
+import android.hardware.fingerprint.FingerprintManager
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
+import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.Constants
 import io.realm.SyncUser
-import android.hardware.fingerprint.FingerprintManager
-import android.os.Build
-import android.support.annotation.RequiresApi
-import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
-import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.ui.base.realm.Users
 
 
 /**
@@ -25,12 +24,13 @@ import com.ninebx.ui.base.realm.Users
  */
 
 class AuthActivity : AppCompatActivity(), AuthView {
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun fingerPrintCancelled() {
         if( fingerPrintFragment != null ) fingerPrintFragment!!.fingerPrintCancelled()
     }
 
     override fun navigateToStart() {
-        supportFragmentManager.popBackStack()
         supportFragmentManager.popBackStack()
     }
 
@@ -44,7 +44,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
         val currentUser = mAuthPresenter.createUser( email, firstName, lastName )
         navigateToAccountPassword( currentUser )
     }
-
 
     override fun onError(error: String) {
         this@AuthActivity.showToast(error)
@@ -104,6 +103,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var accountPasswordFragment: AccountPasswordFragment? = null
+
     override fun navigateToAccountPassword( users : Users ) {
         if (NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE
@@ -154,13 +154,19 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun navigateToInvitePeople() {
+
         if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
+
+        val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
+        startActivity(homeIntent)
+        finish()
+        /*
         mCurrentTag = "InvitePeople"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(InvitePeopleFragment::class.java.simpleName)
-        val invitePeopleFragment = InvitePeopleFragment()
-        fragmentTransaction.replace(R.id.container, invitePeopleFragment).commit()
+        fragmentTransaction.addToBackStack(AddFamilyUsersFragment::class.java.simpleName)
+        val addFamilyUsersFragment = AddFamilyUsersFragment()
+        fragmentTransaction.replace(R.id.container, addFamilyUsersFragment).commit()*/
     }
 
     override fun showProgress(message: Int) {
@@ -201,8 +207,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 }
             }
             Constants.FINGER_PRINT_COMPLETE ->{
-                //navigateToInvitePeople()
-                navigateToHome()
+                navigateToInvitePeople()
+                //navigateToHome()
             }
             Constants.INVITE_USERS_COMPLETE, Constants.ALL_COMPLETE -> {
                 navigateToHome()
@@ -243,7 +249,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP" ) {
+        if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP") {
             supportFragmentManager.popBackStack()
         } else {
             finish()

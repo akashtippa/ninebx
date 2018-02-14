@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -15,23 +13,39 @@ import io.realm.annotations.Required;
  */
 public class DecryptedHomeBankingList implements Parcelable {
 
+    public static final Creator<DecryptedHomeBankingList> CREATOR = new Creator<DecryptedHomeBankingList>() {
+        @Override
+        public DecryptedHomeBankingList createFromParcel(Parcel in) {
+            return new DecryptedHomeBankingList(in);
+        }
+
+        @Override
+        public DecryptedHomeBankingList[] newArray(int size) {
+            return new DecryptedHomeBankingList[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
-    @Required private String selectionType = "";
-
-    @Required private String listName = "";
-    @Required private String dueDate = "";
-
-    @Required private Integer detailsId = 0;
-    @Required private Boolean isSelected = false;
-
-    @Required private Date selectedDate = new Date();
-    @Required private Date createdDate = new Date();
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
+    @Required
+    private String selectionType = "";
+    @Required
+    private String listName = "";
+    @Required
+    private String dueDate = "";
+    @Required
+    private Integer detailsId = 0;
+    @Required
+    private Boolean isSelected = false;
+    @Required
+    private Date selectedDate = new Date();
+    @Required
+    private Date createdDate = new Date();
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
 
     public DecryptedHomeBankingList(int id, String selectionType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate) {
         this.id = id;
@@ -65,6 +79,9 @@ public class DecryptedHomeBankingList implements Parcelable {
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
     }
 
+    public DecryptedHomeBankingList() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -87,18 +104,6 @@ public class DecryptedHomeBankingList implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedHomeBankingList> CREATOR = new Creator<DecryptedHomeBankingList>() {
-        @Override
-        public DecryptedHomeBankingList createFromParcel(Parcel in) {
-            return new DecryptedHomeBankingList(in);
-        }
-
-        @Override
-        public DecryptedHomeBankingList[] newArray(int size) {
-            return new DecryptedHomeBankingList[size];
-        }
-    };
 
     public Integer getId() {
         return id;
@@ -186,8 +191,5 @@ public class DecryptedHomeBankingList implements Parcelable {
 
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
-    }
-
-    public DecryptedHomeBankingList() {
     }
 }

@@ -959,5 +959,6 @@
     <string name="skip">Skip</string>
     <string name="allow_quicker_access"><b>Allow Quicker Access</b> - so you don\'t have to type in your personal passcode every time.</string>
     <string name="touch_id_for_ninebx">Touch ID for \"NineBx\"</string>
+    <string name="confirm_account_password">Confirm account password</string>
 
 </resources>

@@ -14,26 +14,37 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/txtContacts"
+        <LinearLayout
+            android:id="@+id/layoutContacts"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.7"
-            android:text="@string/contacts"
-            android:textColor="@color/black"
-            android:visibility="visible" />
+            android:layout_weight="0.9"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/imgEditContact"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.2"
-            android:contentDescription="@string/edit_the_contact"
-            android:padding="@dimen/default_margin"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_icon_edit" />
+
+            <TextView
+                android:id="@+id/txtContacts"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.8"
+                android:text="@string/contacts"
+                android:textColor="@color/black"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/imgEditContact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.2"
+                android:contentDescription="@string/edit_the_contact"
+                android:padding="@dimen/default_margin"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_icon_edit" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imgDeleteContact"

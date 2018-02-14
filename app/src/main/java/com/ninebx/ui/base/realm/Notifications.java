@@ -14,20 +14,31 @@ import io.realm.annotations.Required;
 public class Notifications extends RealmObject {
 
     @Required
-    private  String message  = "";
-    @Required private  String boxName  = "";
-    @Required private  String category  = "";
-    @Required private  String dueDate  = "";
-    @Required private  Date updatedDate = new Date();
-    @Required private  String subTitle  = "";
-    @Required private  String notifyDate  = "";
-    @Required private  Boolean isPrivate = false;
-    @Required private  String created  = "";
-    @Required private  String modified  = "";
-    @Required private  Boolean read  = true;
-    @Required private  Integer form_id  = 0;
+    private String message = "";
+    @Required
+    private String boxName = "";
+    @Required
+    private String category = "";
+    @Required
+    private String dueDate = "";
+    @Required
+    private Date updatedDate = new Date();
+    @Required
+    private String subTitle = "";
+    @Required
+    private String notifyDate = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean read = true;
+    @Required
+    private Integer form_id = 0;
     @PrimaryKey //@Required
-    private  int id  = 0;
+    private int id = 0;
 
     public Notifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, int id) {
         this.message = message;

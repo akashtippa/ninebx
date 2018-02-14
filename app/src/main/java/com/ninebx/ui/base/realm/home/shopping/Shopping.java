@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.home.shopping;
 
 
-
 import com.ninebx.ui.base.realm.RealmString;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import io.realm.annotations.Required;
  * Created by Alok on 29/01/18.
  */
 @RealmClass
-public class Shopping extends RealmObject{
+public class Shopping extends RealmObject {
 
     @PrimaryKey //@Required
     private int id = 0;
@@ -27,69 +26,52 @@ public class Shopping extends RealmObject{
     private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public RealmList<RealmString> getBackingImages() {
-        return backingImages;
-    }
-
-    public void setBackingImages(RealmList<RealmString> backingImages) {
-        this.backingImages = backingImages;
-    }
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
-
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
-    @Required private String contacts = "";
-
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-    @Required private String paymentMethodOnFile = "";
-
-    @Required private String notes = "";
-
-    @Required private String imageName = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String title = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String institutionName = "";
+    @Required
+    private String accountName = "";
+    @Required
+    private String accountType = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String location = "";
+    @Required
+    private String swiftCode = "";
+    @Required
+    private String abaRoutingNumber = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String paymentMethodOnFile = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String imageName = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String title = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
 
     public Shopping(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String imageName, String attachmentNames, String title, String created, String modified, Boolean isPrivate) {
         this.selectionType = selectionType;
@@ -114,6 +96,41 @@ public class Shopping extends RealmObject{
         this.created = created;
         this.modified = modified;
         this.isPrivate = isPrivate;
+    }
+
+    public Shopping() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public RealmList<RealmString> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(RealmList<RealmString> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public String getSelectionType() {
@@ -290,8 +307,5 @@ public class Shopping extends RealmObject{
 
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
-    }
-
-    public Shopping() {
     }
 }

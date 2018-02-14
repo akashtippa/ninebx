@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.HomeView
 import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_calendar.*
@@ -18,7 +19,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by Alok on 03/01/18.
  */
-class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
+class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListener {
 
 
     override fun showProgress(message: Int) {
@@ -37,13 +38,6 @@ class CalendarFragment : Fragment(), CalendarView, DaysAdapterClickListener {
         return inflater!!.inflate(R.layout.fragment_calendar, container, false)
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if( context is HomeView )
-            mHomeView = context
-    }
-
-    private lateinit var mHomeView : HomeView
     private lateinit var mMonthFormat: SimpleDateFormat
     private lateinit var mPrevMonth : String
     private var mCalendar = Calendar.getInstance()

@@ -13,26 +13,34 @@ import com.ninebx.ui.base.realm.home.personal.TaxID;
 import com.ninebx.ui.base.realm.lists.PersonalList;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 
 /**
  * Created by Alok on 24/01/18.
  */
 public class DecryptedCombinePersonal implements Parcelable {
 
+    public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
+        @Override
+        public DecryptedCombinePersonal createFromParcel(Parcel in) {
+            return new DecryptedCombinePersonal(in);
+        }
+
+        @Override
+        public DecryptedCombinePersonal[] newArray(int size) {
+            return new DecryptedCombinePersonal[size];
+        }
+    };
+    RealmList<Certificate> certificateItems = new RealmList<Certificate>();
+    RealmList<Government> governmentItems = new RealmList<Government>();
+    RealmList<License> licenseItems = new RealmList<License>();
+    RealmList<Personal> personalItems = new RealmList<Personal>();
+    RealmList<Social> socialItems = new RealmList<Social>();
+    RealmList<TaxID> taxIDItems = new RealmList<TaxID>();
+
+    RealmList<PersonalList> listItems = new RealmList<PersonalList>();
     @PrimaryKey //@Required
     private int id = 0;
-
-    RealmList<Certificate> certificateItems        = new RealmList<Certificate>();
-    RealmList<Government> governmentItems         = new RealmList<Government>();
-    RealmList<License> licenseItems            = new RealmList<License>();
-    RealmList<Personal> personalItems           = new RealmList<Personal>();
-    RealmList<Social> socialItems             = new RealmList<Social>();
-    RealmList<TaxID> taxIDItems              = new RealmList<TaxID>();
-
-    RealmList<PersonalList> listItems               = new RealmList<PersonalList>();
 
     public DecryptedCombinePersonal(int id, RealmList certificateItems, RealmList governmentItems, RealmList licenseItems, RealmList personalItems, RealmList socialItems, RealmList taxIDItems, RealmList listItems) {
         this.id = id;
@@ -49,6 +57,9 @@ public class DecryptedCombinePersonal implements Parcelable {
         id = in.readInt();
     }
 
+    public DecryptedCombinePersonal() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -58,18 +69,6 @@ public class DecryptedCombinePersonal implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
-        @Override
-        public DecryptedCombinePersonal createFromParcel(Parcel in) {
-            return new DecryptedCombinePersonal(in);
-        }
-
-        @Override
-        public DecryptedCombinePersonal[] newArray(int size) {
-            return new DecryptedCombinePersonal[size];
-        }
-    };
 
     public Integer getId() {
         return id;
@@ -133,8 +132,5 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     public void setListItems(RealmList listItems) {
         this.listItems = listItems;
-    }
-
-    public DecryptedCombinePersonal() {
     }
 }

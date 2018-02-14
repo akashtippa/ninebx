@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,68 @@ import io.realm.annotations.Required;
  */
 public class DecryptedWellness implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedWellness> CREATOR = new Creator<DecryptedWellness>() {
+        @Override
+        public DecryptedWellness createFromParcel(Parcel in) {
+            return new DecryptedWellness(in);
+        }
 
+        @Override
+        public DecryptedWellness[] newArray(int size) {
+            return new DecryptedWellness[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String institutionName = "";
+    @Required
+    private String accountName = "";
+    @Required
+    private String accountType = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String location = "";
+    @Required
+    private String swiftCode = "";
+    @Required
+    private String abaRoutingNumber = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String paymentMethodOnFile = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String title = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedWellness(Parcel in) {
         id = in.readInt();
@@ -57,6 +108,34 @@ public class DecryptedWellness implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedWellness(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.institutionName = institutionName;
+        this.accountName = accountName;
+        this.accountType = accountType;
+        this.nameOnAccount = nameOnAccount;
+        this.accountNumber = accountNumber;
+        this.location = location;
+        this.swiftCode = swiftCode;
+        this.abaRoutingNumber = abaRoutingNumber;
+        this.contacts = contacts;
+        this.website = website;
+        this.userName = userName;
+        this.password = password;
+        this.pin = pin;
+        this.paymentMethodOnFile = paymentMethodOnFile;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.title = title;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedWellness() {
     }
 
     @Override
@@ -92,18 +171,6 @@ public class DecryptedWellness implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedWellness> CREATOR = new Creator<DecryptedWellness>() {
-        @Override
-        public DecryptedWellness createFromParcel(Parcel in) {
-            return new DecryptedWellness(in);
-        }
-
-        @Override
-        public DecryptedWellness[] newArray(int size) {
-            return new DecryptedWellness[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -122,8 +189,8 @@ public class DecryptedWellness implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -131,61 +198,9 @@ public class DecryptedWellness implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-    @Required private String selectionType = "";
-
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
-
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
-    @Required private String contacts = "";
-
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-    @Required private String paymentMethodOnFile = "";
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-    @Required private String title = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    public DecryptedWellness(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.institutionName = institutionName;
-        this.accountName = accountName;
-        this.accountType = accountType;
-        this.nameOnAccount = nameOnAccount;
-        this.accountNumber = accountNumber;
-        this.location = location;
-        this.swiftCode = swiftCode;
-        this.abaRoutingNumber = abaRoutingNumber;
-        this.contacts = contacts;
-        this.website = website;
-        this.userName = userName;
-        this.password = password;
-        this.pin = pin;
-        this.paymentMethodOnFile = paymentMethodOnFile;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.title = title;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -362,8 +377,5 @@ public class DecryptedWellness implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedWellness() {
     }
 }

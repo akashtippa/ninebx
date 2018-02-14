@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -15,6 +13,17 @@ import io.realm.annotations.Required;
  */
 public class DecryptedRecentSearch implements Parcelable {
 
+    public static final Creator<DecryptedRecentSearch> CREATOR = new Creator<DecryptedRecentSearch>() {
+        @Override
+        public DecryptedRecentSearch createFromParcel(Parcel in) {
+            return new DecryptedRecentSearch(in);
+        }
+
+        @Override
+        public DecryptedRecentSearch[] newArray(int size) {
+            return new DecryptedRecentSearch[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
     @Required
@@ -89,18 +98,6 @@ public class DecryptedRecentSearch implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedRecentSearch> CREATOR = new Creator<DecryptedRecentSearch>() {
-        @Override
-        public DecryptedRecentSearch createFromParcel(Parcel in) {
-            return new DecryptedRecentSearch(in);
-        }
-
-        @Override
-        public DecryptedRecentSearch[] newArray(int size) {
-            return new DecryptedRecentSearch[size];
-        }
-    };
 
     public Integer getId() {
         return id;

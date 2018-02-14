@@ -4,9 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -353,9 +357,42 @@ public class Users extends RealmObject implements Parcelable {
                 ", id=" + id +
                 ", isCompleteProfile=" + isCompleteProfile +
                 ", profilePhoto='" + profilePhoto + '\'' +
-                ", members=" + decryptedMembers +
+                ", members=" + members +
                 '}';
     }
 
 
+    public static ArrayList<Users> createParcelableList(@NotNull RealmResults<Users> currentUsers) {
+        ArrayList users = new ArrayList();
+        users.addAll(currentUsers);
+        return users;
+    }
+
+    @NotNull
+    public static Users createUserObject(@NotNull Users users, ArrayList<Member> members) {
+
+        Users newUser = new Users();
+        newUser.setAnniversary(users.anniversary);
+        newUser.setCity(users.city);
+        newUser.setCompleteProfile(users.isCompleteProfile);
+        newUser.setCountry(users.country);
+        newUser.setUserId(users.userId);
+        newUser.setId(users.id);
+        newUser.setDateOfBirth(users.dateOfBirth);
+        newUser.setZipCode(users.zipCode);
+        newUser.setEmailAddress(users.emailAddress);
+        newUser.setFirstName(users.firstName);
+        newUser.setFullName(users.fullName);
+        newUser.setLastName(users.lastName);
+        newUser.setGender(users.gender);
+        newUser.setStreet_1(users.street_1);
+        newUser.setStreet_2(users.street_2);
+        newUser.setState(users.state);
+        newUser.setMobileNumber(users.mobileNumber);
+        newUser.setProfilePhoto(users.profilePhoto);
+        newUser.members.addAll(members);
+        newUser.setRelationship(users.relationship);
+        return newUser;
+
+    }
 }

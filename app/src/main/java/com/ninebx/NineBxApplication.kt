@@ -9,6 +9,7 @@ import com.amazonaws.auth.CognitoCachingCredentialsProvider
 import com.amazonaws.regions.Regions
 import com.evernote.android.job.JobManager
 import com.ninebx.ui.base.network.NetModule
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.utility.FragmentOrganiser
@@ -121,17 +122,11 @@ class NineBxApplication : MultiDexApplication() {
     }
 
 
-    fun getiMemberAdded(): IMemberAdded? {
-        return this.iMemberAdded
-    }
-
-    fun setiMemberAdded(iMemberAdded: IMemberAdded) {
-        this.iMemberAdded = iMemberAdded
-    }
-
     fun isNetworkAvailable(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
+
+    var currentUser: Users? = null
 }

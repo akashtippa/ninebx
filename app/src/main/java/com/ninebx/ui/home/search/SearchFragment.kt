@@ -1,25 +1,27 @@
 package com.ninebx.ui.home.search
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+
+import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.LinearLayout
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.utility.AppLogger
 import io.realm.RealmList
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class SearchFragment() : Fragment(), SearchView {
+
+class SearchFragment() : BaseHomeFragment(), SearchView {
 
     private lateinit var finance : RealmList<DecryptedFinancial>
     private lateinit var pay : RealmList<DecryptedPayment>

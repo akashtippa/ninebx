@@ -18,6 +18,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Education extends RealmObject {
 
+
     @PrimaryKey //@Required
     private int id = 0;
 
@@ -56,22 +57,6 @@ public class Education extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
     public Education(int id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
@@ -101,6 +86,22 @@ public class Education extends RealmObject {
     }
 
     public Education() {
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public Integer getId() {

@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,64 @@ import io.realm.annotations.Required;
  */
 public class DecryptedLoyalty implements Parcelable {
 
+    public static final Creator<DecryptedLoyalty> CREATOR = new Creator<DecryptedLoyalty>() {
+        @Override
+        public DecryptedLoyalty createFromParcel(Parcel in) {
+            return new DecryptedLoyalty(in);
+        }
+
+        @Override
+        public DecryptedLoyalty[] newArray(int size) {
+            return new DecryptedLoyalty[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String airLine = "";
+    @Required
+    private String hotel = "";
+    @Required
+    private String carRentalCompany = "";
+    @Required
+    private String cruiseline = "";
+    @Required
+    private String railway = "";
+    @Required
+    private String other = "";
+    @Required
+    private String accountName = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedLoyalty(Parcel in) {
         id = in.readInt();
@@ -55,6 +102,32 @@ public class DecryptedLoyalty implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedLoyalty(String selectionType, String airLine, String hotel, String carRentalCompany, String cruiseline, String railway, String other, String accountName, String nameOnAccount, String accountNumber, String website, String userName, String password, String pin, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.airLine = airLine;
+        this.hotel = hotel;
+        this.carRentalCompany = carRentalCompany;
+        this.cruiseline = cruiseline;
+        this.railway = railway;
+        this.other = other;
+        this.accountName = accountName;
+        this.nameOnAccount = nameOnAccount;
+        this.accountNumber = accountNumber;
+        this.website = website;
+        this.userName = userName;
+        this.password = password;
+        this.pin = pin;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedLoyalty() {
     }
 
     @Override
@@ -88,18 +161,6 @@ public class DecryptedLoyalty implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedLoyalty> CREATOR = new Creator<DecryptedLoyalty>() {
-        @Override
-        public DecryptedLoyalty createFromParcel(Parcel in) {
-            return new DecryptedLoyalty(in);
-        }
-
-        @Override
-        public DecryptedLoyalty[] newArray(int size) {
-            return new DecryptedLoyalty[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -118,8 +179,8 @@ public class DecryptedLoyalty implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -127,58 +188,9 @@ public class DecryptedLoyalty implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String airLine = "";
-    @Required private String hotel = "";
-    @Required private String carRentalCompany = "";
-    @Required private String cruiseline = "";
-    @Required private String railway = "";
-    @Required private String other = "";
-
-    @Required private String accountName = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
-
-    public DecryptedLoyalty(String selectionType, String airLine, String hotel, String carRentalCompany, String cruiseline, String railway, String other, String accountName, String nameOnAccount, String accountNumber, String website, String userName, String password, String pin, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.airLine = airLine;
-        this.hotel = hotel;
-        this.carRentalCompany = carRentalCompany;
-        this.cruiseline = cruiseline;
-        this.railway = railway;
-        this.other = other;
-        this.accountName = accountName;
-        this.nameOnAccount = nameOnAccount;
-        this.accountNumber = accountNumber;
-        this.website = website;
-        this.userName = userName;
-        this.password = password;
-        this.pin = pin;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -339,8 +351,5 @@ public class DecryptedLoyalty implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedLoyalty() {
     }
 }

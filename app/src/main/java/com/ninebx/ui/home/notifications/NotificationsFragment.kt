@@ -1,16 +1,16 @@
 package com.ninebx.ui.home.notifications
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.ui.home.BaseHomeFragment
 
 /**
  * Created by Alok on 03/01/18.
  */
-class NotificationsFragment : Fragment(), NotificationsView {
+class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     override fun showProgress(message: Int) {
 

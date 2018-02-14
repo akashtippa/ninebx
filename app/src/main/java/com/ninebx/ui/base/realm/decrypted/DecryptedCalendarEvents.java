@@ -7,10 +7,8 @@ import android.os.Parcelable;
 import com.ninebx.ui.base.realm.RealmString;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -18,40 +16,59 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCalendarEvents implements Parcelable {
 
+    public static final Creator<DecryptedCalendarEvents> CREATOR = new Creator<DecryptedCalendarEvents>() {
+        @Override
+        public DecryptedCalendarEvents createFromParcel(Parcel in) {
+            return new DecryptedCalendarEvents(in);
+        }
+
+        @Override
+        public DecryptedCalendarEvents[] newArray(int size) {
+            return new DecryptedCalendarEvents[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<String> eventID = new RealmList<>();
-    @Required private String classType = "Calendar";
-
-    @Required private RealmList<String> title = new RealmList<>();
-    @Required private RealmList<String> location = new RealmList<>();
-
-    @Required private RealmList<Boolean> isAllDay = new RealmList<>();
-
-    @Required private RealmList<String> notes = new RealmList<>();
-    @Required private RealmList<String> startsDate = new RealmList<>();
-    @Required private RealmList<String> endsDate = new RealmList<>();
-
-    @Required private RealmList<String> repeats = new RealmList<>();
-    @Required private RealmList<String> endRepeat = new RealmList<>();
-    @Required private RealmList<String> reminder = new RealmList<>();
-    @Required private RealmList<String> travelTime = new RealmList<>();
+    @Required
+    private String classType = "Calendar";
+    @Required
+    private RealmList<String> title = new RealmList<>();
+    @Required
+    private RealmList<String> location = new RealmList<>();
+    @Required
+    private RealmList<Boolean> isAllDay = new RealmList<>();
+    @Required
+    private RealmList<String> notes = new RealmList<>();
+    @Required
+    private RealmList<String> startsDate = new RealmList<>();
+    @Required
+    private RealmList<String> endsDate = new RealmList<>();
+    @Required
+    private RealmList<String> repeats = new RealmList<>();
+    @Required
+    private RealmList<String> endRepeat = new RealmList<>();
+    @Required
+    private RealmList<String> reminder = new RealmList<>();
+    @Required
+    private RealmList<String> travelTime = new RealmList<>();
     //dynamic var invites = RLMArray
-    @Required private RealmList<String> alert = new RealmList<>();
-    @Required private RealmList<String> showAs = new RealmList<>();
-    @Required private RealmList<String> url = new RealmList<>();
-
-    @Required private RealmList<String> isReminderSet = new RealmList<>();
-
-    @Required private String attachmentNames = "";
-
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
-
+    @Required
+    private RealmList<String> alert = new RealmList<>();
+    @Required
+    private RealmList<String> showAs = new RealmList<>();
+    @Required
+    private RealmList<String> url = new RealmList<>();
+    @Required
+    private RealmList<String> isReminderSet = new RealmList<>();
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
-    @Required private RealmList<String> photosId = new RealmList<>();
-
+    @Required
+    private RealmList<String> photosId = new RealmList<>();
 
     public DecryptedCalendarEvents() {
     }
@@ -73,18 +90,6 @@ public class DecryptedCalendarEvents implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCalendarEvents> CREATOR = new Creator<DecryptedCalendarEvents>() {
-        @Override
-        public DecryptedCalendarEvents createFromParcel(Parcel in) {
-            return new DecryptedCalendarEvents(in);
-        }
-
-        @Override
-        public DecryptedCalendarEvents[] newArray(int size) {
-            return new DecryptedCalendarEvents[size];
-        }
-    };
 
     public Integer getId() {
         return id;

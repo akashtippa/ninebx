@@ -119,7 +119,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
                 mAuthView.navigateToHome()
             }
             else {
-                mAuthView.navigateToHome()
+                mAuthView.navigateToInvitePeople()
             }
          }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -159,6 +159,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         if (!keyguardManager.isKeyguardSecure) {
             // Show a message that the user hasn't set up a fingerprint or lock screen.
             mAuthView.onError(getString(R.string.setup_lock_screen))
+            switchTouchId.isChecked = false
             return
         }
 
@@ -166,6 +167,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         if (!fingerprintManager.hasEnrolledFingerprints()) {
             // This happens when no fingerprints are registered.
             mAuthView.onError(getString(R.string.register_fingerprint))
+            switchTouchId.isChecked = false
             return
         }
 

@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,131 @@ import io.realm.annotations.Required;
  */
 public class DecryptedClothingSizes implements Parcelable {
 
+    public static final Creator<DecryptedClothingSizes> CREATOR = new Creator<DecryptedClothingSizes>() {
+        @Override
+        public DecryptedClothingSizes createFromParcel(Parcel in) {
+            return new DecryptedClothingSizes(in);
+        }
+
+        @Override
+        public DecryptedClothingSizes[] newArray(int size) {
+            return new DecryptedClothingSizes[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "";
+    @Required
+    private String personName = "";
+    @Required
+    private String sizeName = "";
+    @Required
+    private String sizeCategory = "";
+    @Required
+    private String topsSize = "";
+    @Required
+    private String topsNumericSize = "";
+    @Required
+    private String bottomsSize = "";
+    @Required
+    private String bottomsNumericSize = "";
+    @Required
+    private String dressesSize = "";
+    @Required
+    private String dressesNumericSize = "";
+    @Required
+    private String outWearSize = "";
+    @Required
+    private String outWearNumericSize = "";
+    @Required
+    private String swimWearSize = "";
+    @Required
+    private String swimWearNumericSize = "";
+    @Required
+    private String swimWearBraBandCupSize = "";
+    @Required
+    private String shoeSize = "";
+    @Required
+    private String shoeWidth = "";
+    @Required
+    private String hats = "";
+    @Required
+    private String gloves = "";
+    @Required
+    private String tights = "";
+    @Required
+    private String bust = "";
+    @Required
+    private String waist = "";
+    @Required
+    private String hips = "";
+    @Required
+    private String armLength = "";
+    @Required
+    private String inseam = "";
+    @Required
+    private String torso = "";
+    // MEN
+    @Required
+    private String jacketsSize = "";
+    @Required
+    private String jacketsNumericSize = "";
+    @Required
+    private String pantsSize = "";
+    @Required
+    private String pantsNumericSize = "";
+    @Required
+    private String toddlerSize = "";
+    @Required
+    private String kidSize = "";
+    @Required
+    private String neck = "";
+    @Required
+    private String chest = "";
+    // BABY
+    @Required
+    private String clothing = "";
+    @Required
+    private String shoes = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private Boolean isBaby = false;
+    @Required
+    private Boolean isWomen = false;
+    @Required
+    private Boolean isGirl = false;
+    @Required
+    private Boolean isMen = false;
+    @Required
+    private Boolean isBoy = false;
+    // BOYS
+    @Required
+    private String beltsNumericSize = "";
+    @Required
+    private String socks = "";
+    @Required
+    private String seat = "";
+    @Required
+    private String beltSize = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedClothingSizes(Parcel in) {
         id = in.readInt();
@@ -92,6 +206,64 @@ public class DecryptedClothingSizes implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedClothingSizes(String selectionType, String classType, String personName, String sizeName, String sizeCategory, String topsSize, String topsNumericSize, String bottomsSize, String bottomsNumericSize, String dressesSize, String dressesNumericSize, String outWearSize, String outWearNumericSize, String swimWearSize, String swimWearNumericSize, String swimWearBraBandCupSize, String shoeSize, String shoeWidth, String hats, String gloves, String tights, String bust, String waist, String hips, String armLength, String inseam, String torso, String jacketsSize, String jacketsNumericSize, String pantsSize, String pantsNumericSize, String toddlerSize, String kidSize, String neck, String chest, String clothing, String shoes, String notes, String attachmentNames, Boolean isBaby, Boolean isWomen, Boolean isGirl, Boolean isMen, Boolean isBoy, String beltsNumericSize, String socks, String seat, String beltSize, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.personName = personName;
+        this.sizeName = sizeName;
+        this.sizeCategory = sizeCategory;
+        this.topsSize = topsSize;
+        this.topsNumericSize = topsNumericSize;
+        this.bottomsSize = bottomsSize;
+        this.bottomsNumericSize = bottomsNumericSize;
+        this.dressesSize = dressesSize;
+        this.dressesNumericSize = dressesNumericSize;
+        this.outWearSize = outWearSize;
+        this.outWearNumericSize = outWearNumericSize;
+        this.swimWearSize = swimWearSize;
+        this.swimWearNumericSize = swimWearNumericSize;
+        this.swimWearBraBandCupSize = swimWearBraBandCupSize;
+        this.shoeSize = shoeSize;
+        this.shoeWidth = shoeWidth;
+        this.hats = hats;
+        this.gloves = gloves;
+        this.tights = tights;
+        this.bust = bust;
+        this.waist = waist;
+        this.hips = hips;
+        this.armLength = armLength;
+        this.inseam = inseam;
+        this.torso = torso;
+        this.jacketsSize = jacketsSize;
+        this.jacketsNumericSize = jacketsNumericSize;
+        this.pantsSize = pantsSize;
+        this.pantsNumericSize = pantsNumericSize;
+        this.toddlerSize = toddlerSize;
+        this.kidSize = kidSize;
+        this.neck = neck;
+        this.chest = chest;
+        this.clothing = clothing;
+        this.shoes = shoes;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.isBaby = isBaby;
+        this.isWomen = isWomen;
+        this.isGirl = isGirl;
+        this.isMen = isMen;
+        this.isBoy = isBoy;
+        this.beltsNumericSize = beltsNumericSize;
+        this.socks = socks;
+        this.seat = seat;
+        this.beltSize = beltSize;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedClothingSizes() {
     }
 
     @Override
@@ -157,18 +329,6 @@ public class DecryptedClothingSizes implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedClothingSizes> CREATOR = new Creator<DecryptedClothingSizes>() {
-        @Override
-        public DecryptedClothingSizes createFromParcel(Parcel in) {
-            return new DecryptedClothingSizes(in);
-        }
-
-        @Override
-        public DecryptedClothingSizes[] newArray(int size) {
-            return new DecryptedClothingSizes[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -187,8 +347,8 @@ public class DecryptedClothingSizes implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -196,144 +356,9 @@ public class DecryptedClothingSizes implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-    @Required private String selectionType = "";
-    @Required private String classType = "";
-
-    @Required private String personName = "";
-    @Required private String sizeName = "";
-
-    @Required private String sizeCategory = "";
-
-    @Required private String topsSize = "";
-    @Required private String topsNumericSize = "";
-
-    @Required private String bottomsSize = "";
-    @Required private String bottomsNumericSize = "";
-
-    @Required private String dressesSize = "";
-    @Required private String dressesNumericSize = "";
-
-    @Required private String outWearSize = "";
-    @Required private String outWearNumericSize = "";
-
-    @Required private String swimWearSize = "";
-    @Required private String swimWearNumericSize = "";
-    @Required private String swimWearBraBandCupSize = "";
-
-    @Required private String shoeSize = "";
-    @Required private String shoeWidth = "";
-
-    @Required private String hats = "";
-    @Required private String gloves = "";
-    @Required private String tights = "";
-
-    @Required private String bust = "";
-
-    @Required private String waist = "";
-
-    @Required private String hips = "";
-    @Required private String armLength = "";
-
-    @Required private String inseam = "";
-    @Required private String torso = "";
-
-    // MEN
-    @Required private String jacketsSize = "";
-    @Required private String jacketsNumericSize = "";
-
-    @Required private String pantsSize = "";
-    @Required private String pantsNumericSize = "";
-
-    @Required private String toddlerSize = "";
-    @Required private String kidSize = "";
-
-    @Required private String neck = "";
-    @Required private String chest = "";
-
-    // BABY
-    @Required private String clothing = "";
-    @Required private String shoes = "";
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private Boolean isBaby = false;
-    @Required private Boolean isWomen = false;
-    @Required private Boolean isGirl = false;
-    @Required private Boolean isMen = false;
-    @Required private Boolean isBoy = false;
-
-    // BOYS
-    @Required private String beltsNumericSize = "";
-    @Required private String socks = "";
-
-    @Required private String seat = "";
-
-    @Required private String beltSize = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String createdUser = "";
-
-    public DecryptedClothingSizes(String selectionType, String classType, String personName, String sizeName, String sizeCategory, String topsSize, String topsNumericSize, String bottomsSize, String bottomsNumericSize, String dressesSize, String dressesNumericSize, String outWearSize, String outWearNumericSize, String swimWearSize, String swimWearNumericSize, String swimWearBraBandCupSize, String shoeSize, String shoeWidth, String hats, String gloves, String tights, String bust, String waist, String hips, String armLength, String inseam, String torso, String jacketsSize, String jacketsNumericSize, String pantsSize, String pantsNumericSize, String toddlerSize, String kidSize, String neck, String chest, String clothing, String shoes, String notes, String attachmentNames, Boolean isBaby, Boolean isWomen, Boolean isGirl, Boolean isMen, Boolean isBoy, String beltsNumericSize, String socks, String seat, String beltSize, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.personName = personName;
-        this.sizeName = sizeName;
-        this.sizeCategory = sizeCategory;
-        this.topsSize = topsSize;
-        this.topsNumericSize = topsNumericSize;
-        this.bottomsSize = bottomsSize;
-        this.bottomsNumericSize = bottomsNumericSize;
-        this.dressesSize = dressesSize;
-        this.dressesNumericSize = dressesNumericSize;
-        this.outWearSize = outWearSize;
-        this.outWearNumericSize = outWearNumericSize;
-        this.swimWearSize = swimWearSize;
-        this.swimWearNumericSize = swimWearNumericSize;
-        this.swimWearBraBandCupSize = swimWearBraBandCupSize;
-        this.shoeSize = shoeSize;
-        this.shoeWidth = shoeWidth;
-        this.hats = hats;
-        this.gloves = gloves;
-        this.tights = tights;
-        this.bust = bust;
-        this.waist = waist;
-        this.hips = hips;
-        this.armLength = armLength;
-        this.inseam = inseam;
-        this.torso = torso;
-        this.jacketsSize = jacketsSize;
-        this.jacketsNumericSize = jacketsNumericSize;
-        this.pantsSize = pantsSize;
-        this.pantsNumericSize = pantsNumericSize;
-        this.toddlerSize = toddlerSize;
-        this.kidSize = kidSize;
-        this.neck = neck;
-        this.chest = chest;
-        this.clothing = clothing;
-        this.shoes = shoes;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.isBaby = isBaby;
-        this.isWomen = isWomen;
-        this.isGirl = isGirl;
-        this.isMen = isMen;
-        this.isBoy = isBoy;
-        this.beltsNumericSize = beltsNumericSize;
-        this.socks = socks;
-        this.seat = seat;
-        this.beltSize = beltSize;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -750,8 +775,5 @@ public class DecryptedClothingSizes implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedClothingSizes() {
     }
 }

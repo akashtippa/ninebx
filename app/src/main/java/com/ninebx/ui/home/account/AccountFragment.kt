@@ -9,15 +9,20 @@ import android.view.*
 import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.auth.AuthActivity
+import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
+import com.ninebx.utility.Constants
+import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account.*
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AccountFragment : Fragment(), AccountView, View.OnClickListener {
+class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
 
 
     override fun onClick(v: View?) {
@@ -157,7 +162,11 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.replace(R.id.frameLayout, AddFamilyUsersFragment()).commit()
+        val addFamilyUsersFragment = AddFamilyUsersFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
+        addFamilyUsersFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
     }
 
     override fun showProgress(message: Int) {
@@ -193,8 +202,10 @@ class AccountFragment : Fragment(), AccountView, View.OnClickListener {
         }
 
         layoutLogOut.setOnClickListener {
-//            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
-
+            NineBxApplication.getPreferences().clearPreferences()
+            SyncUser.currentUser().logout()
+            startActivity(Intent( context, AuthActivity::class.java ))
+            activity!!.finish()
         }
 
 

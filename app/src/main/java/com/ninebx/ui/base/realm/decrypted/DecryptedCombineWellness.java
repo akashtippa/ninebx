@@ -16,9 +16,7 @@ import com.ninebx.ui.base.realm.home.wellness.Wellness;
 import com.ninebx.ui.base.realm.lists.WellnessList;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -26,22 +24,41 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineWellness implements Parcelable {
 
+    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
+        @Override
+        public DecryptedCombineWellness createFromParcel(Parcel in) {
+            return new DecryptedCombineWellness(in);
+        }
+
+        @Override
+        public DecryptedCombineWellness[] newArray(int size) {
+            return new DecryptedCombineWellness[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
-    @Required private RealmList<Checkups> checkupsItems                   = new RealmList<Checkups>();
-    @Required private RealmList<EmergencyContacts> emergencyContactsItems          = new RealmList<EmergencyContacts>();
-    @Required private RealmList<EyeglassPrescriptions> eyeglassPrescriptionsItems      = new RealmList<EyeglassPrescriptions>();
-    @Required private RealmList<HealthcareProviders> healthcareProvidersItems        = new RealmList<HealthcareProviders>();
-    @Required private RealmList<Identification> identificationItems             = new RealmList<Identification>();
-    @Required private RealmList<MedicalConditions> medicalConditionsItems          = new RealmList<MedicalConditions>();
-    @Required private RealmList<MedicalHistory> medicalHistoryItems             = new RealmList<MedicalHistory>();
-    @Required private RealmList<Medications> medicationsItems                = new RealmList<Medications>();
-    @Required private RealmList<VitalNumbers> vitalNumbersItems               = new RealmList<VitalNumbers>();
-    @Required private RealmList<Wellness> wellnessItems                   = new RealmList<Wellness>();
-
-
-    @Required private RealmList<WellnessList> listItems                       = new RealmList<WellnessList>();
+    @Required
+    private RealmList<Checkups> checkupsItems = new RealmList<Checkups>();
+    @Required
+    private RealmList<EmergencyContacts> emergencyContactsItems = new RealmList<EmergencyContacts>();
+    @Required
+    private RealmList<EyeglassPrescriptions> eyeglassPrescriptionsItems = new RealmList<EyeglassPrescriptions>();
+    @Required
+    private RealmList<HealthcareProviders> healthcareProvidersItems = new RealmList<HealthcareProviders>();
+    @Required
+    private RealmList<Identification> identificationItems = new RealmList<Identification>();
+    @Required
+    private RealmList<MedicalConditions> medicalConditionsItems = new RealmList<MedicalConditions>();
+    @Required
+    private RealmList<MedicalHistory> medicalHistoryItems = new RealmList<MedicalHistory>();
+    @Required
+    private RealmList<Medications> medicationsItems = new RealmList<Medications>();
+    @Required
+    private RealmList<VitalNumbers> vitalNumbersItems = new RealmList<VitalNumbers>();
+    @Required
+    private RealmList<Wellness> wellnessItems = new RealmList<Wellness>();
+    @Required
+    private RealmList<WellnessList> listItems = new RealmList<WellnessList>();
 
     public DecryptedCombineWellness(int id, RealmList checkupsItems, RealmList emergencyContactsItems, RealmList eyeglassPrescriptionsItems, RealmList healthcareProvidersItems, RealmList identificationItems, RealmList medicalConditionsItems, RealmList medicalHistoryItems, RealmList medicationsItems, RealmList vitalNumbersItems, RealmList wellnessItems, RealmList listItems) {
         this.id = id;
@@ -62,6 +79,9 @@ public class DecryptedCombineWellness implements Parcelable {
         id = in.readInt();
     }
 
+    public DecryptedCombineWellness() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -71,18 +91,6 @@ public class DecryptedCombineWellness implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
-        @Override
-        public DecryptedCombineWellness createFromParcel(Parcel in) {
-            return new DecryptedCombineWellness(in);
-        }
-
-        @Override
-        public DecryptedCombineWellness[] newArray(int size) {
-            return new DecryptedCombineWellness[size];
-        }
-    };
 
     public Integer getId() {
         return id;
@@ -178,8 +186,5 @@ public class DecryptedCombineWellness implements Parcelable {
 
     public void setListItems(RealmList listItems) {
         this.listItems = listItems;
-    }
-
-    public DecryptedCombineWellness() {
     }
 }

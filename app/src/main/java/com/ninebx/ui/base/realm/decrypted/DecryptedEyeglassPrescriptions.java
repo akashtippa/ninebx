@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,68 @@ import io.realm.annotations.Required;
  */
 public class DecryptedEyeglassPrescriptions implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedEyeglassPrescriptions> CREATOR = new Creator<DecryptedEyeglassPrescriptions>() {
+        @Override
+        public DecryptedEyeglassPrescriptions createFromParcel(Parcel in) {
+            return new DecryptedEyeglassPrescriptions(in);
+        }
 
+        @Override
+        public DecryptedEyeglassPrescriptions[] newArray(int size) {
+            return new DecryptedEyeglassPrescriptions[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "EyeglassPrescriptions";
+    @Required
+    private String physicianName = "";
+    @Required
+    private String datePrescribed = "";
+    @Required
+    private String odSphereValue = "";
+    @Required
+    private String osSphereValue = "";
+    @Required
+    private String odCylinderValue = "";
+    @Required
+    private String osCylinderValue = "";
+    @Required
+    private String odAxisValue = "";
+    @Required
+    private String osAxisValue = "";
+    @Required
+    private String odPrismValue = "";
+    @Required
+    private String osPrismValue = "";
+    @Required
+    private String odAddValue = "";
+    @Required
+    private String osAddValue = "";
+    @Required
+    private String odBaseValue = "";
+    @Required
+    private String osBaseValue = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedEyeglassPrescriptions(Parcel in) {
         id = in.readInt();
@@ -57,6 +108,34 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedEyeglassPrescriptions(String selectionType, String classType, String physicianName, String datePrescribed, String odSphereValue, String osSphereValue, String odCylinderValue, String osCylinderValue, String odAxisValue, String osAxisValue, String odPrismValue, String osPrismValue, String odAddValue, String osAddValue, String odBaseValue, String osBaseValue, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.physicianName = physicianName;
+        this.datePrescribed = datePrescribed;
+        this.odSphereValue = odSphereValue;
+        this.osSphereValue = osSphereValue;
+        this.odCylinderValue = odCylinderValue;
+        this.osCylinderValue = osCylinderValue;
+        this.odAxisValue = odAxisValue;
+        this.osAxisValue = osAxisValue;
+        this.odPrismValue = odPrismValue;
+        this.osPrismValue = osPrismValue;
+        this.odAddValue = odAddValue;
+        this.osAddValue = osAddValue;
+        this.odBaseValue = odBaseValue;
+        this.osBaseValue = osBaseValue;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedEyeglassPrescriptions() {
     }
 
     @Override
@@ -92,18 +171,6 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedEyeglassPrescriptions> CREATOR = new Creator<DecryptedEyeglassPrescriptions>() {
-        @Override
-        public DecryptedEyeglassPrescriptions createFromParcel(Parcel in) {
-            return new DecryptedEyeglassPrescriptions(in);
-        }
-
-        @Override
-        public DecryptedEyeglassPrescriptions[] newArray(int size) {
-            return new DecryptedEyeglassPrescriptions[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -122,8 +189,8 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -131,67 +198,9 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String classType = "EyeglassPrescriptions";
-
-    @Required private String physicianName = "";
-    @Required private String datePrescribed = "";
-
-    @Required private String odSphereValue = "";
-    @Required private String osSphereValue = "";
-
-    @Required private String odCylinderValue = "";
-    @Required private String osCylinderValue = "";
-
-    @Required private String odAxisValue = "";
-    @Required private String osAxisValue = "";
-
-    @Required private String odPrismValue = "";
-    @Required private String osPrismValue = "";
-
-    @Required private String odAddValue = "";
-    @Required private String osAddValue = "";
-
-    @Required private String odBaseValue = "";
-    @Required private String osBaseValue = "";
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String createdUser = "";
-
-    public DecryptedEyeglassPrescriptions(String selectionType, String classType, String physicianName, String datePrescribed, String odSphereValue, String osSphereValue, String odCylinderValue, String osCylinderValue, String odAxisValue, String osAxisValue, String odPrismValue, String osPrismValue, String odAddValue, String osAddValue, String odBaseValue, String osBaseValue, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.physicianName = physicianName;
-        this.datePrescribed = datePrescribed;
-        this.odSphereValue = odSphereValue;
-        this.osSphereValue = osSphereValue;
-        this.odCylinderValue = odCylinderValue;
-        this.osCylinderValue = osCylinderValue;
-        this.odAxisValue = odAxisValue;
-        this.osAxisValue = osAxisValue;
-        this.odPrismValue = odPrismValue;
-        this.osPrismValue = osPrismValue;
-        this.odAddValue = odAddValue;
-        this.osAddValue = osAddValue;
-        this.odBaseValue = odBaseValue;
-        this.osBaseValue = osBaseValue;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -368,8 +377,5 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedEyeglassPrescriptions() {
     }
 }

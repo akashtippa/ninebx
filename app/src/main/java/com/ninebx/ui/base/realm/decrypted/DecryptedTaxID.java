@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,44 @@ import io.realm.annotations.Required;
  */
 public class DecryptedTaxID implements Parcelable {
 
+    public static final Creator<DecryptedTaxID> CREATOR = new Creator<DecryptedTaxID>() {
+        @Override
+        public DecryptedTaxID createFromParcel(Parcel in) {
+            return new DecryptedTaxID(in);
+        }
+
+        @Override
+        public DecryptedTaxID[] newArray(int size) {
+            return new DecryptedTaxID[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String taxIdName = "";
+    @Required
+    private String taxIdNumber = "";
+    @Required
+    private String issuingCountry = "";
+    @Required
+    private String name = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String attachmentNames = "";
 
     protected DecryptedTaxID(Parcel in) {
         id = in.readInt();
@@ -45,6 +72,22 @@ public class DecryptedTaxID implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         attachmentNames = in.readString();
+    }
+
+    public DecryptedTaxID(String selectionType, String taxIdName, String taxIdNumber, String issuingCountry, String name, String notes, String created, String modified, Boolean isPrivate, String attachmentNames) {
+        this.selectionType = selectionType;
+        this.taxIdName = taxIdName;
+        this.taxIdNumber = taxIdNumber;
+        this.issuingCountry = issuingCountry;
+        this.name = name;
+        this.notes = notes;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.attachmentNames = attachmentNames;
+    }
+
+    public DecryptedTaxID() {
     }
 
     @Override
@@ -68,18 +111,6 @@ public class DecryptedTaxID implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedTaxID> CREATOR = new Creator<DecryptedTaxID>() {
-        @Override
-        public DecryptedTaxID createFromParcel(Parcel in) {
-            return new DecryptedTaxID(in);
-        }
-
-        @Override
-        public DecryptedTaxID[] newArray(int size) {
-            return new DecryptedTaxID[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -98,8 +129,8 @@ public class DecryptedTaxID implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -107,38 +138,9 @@ public class DecryptedTaxID implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String taxIdName = "";
-    @Required private String taxIdNumber = "";
-    @Required private String issuingCountry = "";
-
-    @Required private String name = "";
-
-    @Required private String notes = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String attachmentNames = "";
-
-    public DecryptedTaxID(String selectionType, String taxIdName, String taxIdNumber, String issuingCountry, String name, String notes, String created, String modified, Boolean isPrivate, String attachmentNames) {
-        this.selectionType = selectionType;
-        this.taxIdName = taxIdName;
-        this.taxIdNumber = taxIdNumber;
-        this.issuingCountry = issuingCountry;
-        this.name = name;
-        this.notes = notes;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.attachmentNames = attachmentNames;
     }
 
     public String getSelectionType() {
@@ -219,8 +221,5 @@ public class DecryptedTaxID implements Parcelable {
 
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
-    }
-
-    public DecryptedTaxID() {
     }
 }

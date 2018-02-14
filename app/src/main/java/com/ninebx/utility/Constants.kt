@@ -124,4 +124,10 @@ object Constants {
 
     val TEMP_PRIVATE_KEY = "nB8hEnaqppfWOp5L"
 
+    val MEMBER: String = "member"
+    val BUNDLE_CONTACT_NO = "contactNumber"
+    val BUNDLE_CONTACT_NAME = "contactName"
+    val IS_NEW_ACCOUNT: String = "is_new_account"
+
+
 }

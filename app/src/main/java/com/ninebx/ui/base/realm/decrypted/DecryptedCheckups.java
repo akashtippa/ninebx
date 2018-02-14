@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,50 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCheckups implements Parcelable {
 
+    public static final Creator<DecryptedCheckups> CREATOR = new Creator<DecryptedCheckups>() {
+        @Override
+        public DecryptedCheckups createFromParcel(Parcel in) {
+            return new DecryptedCheckups(in);
+        }
+
+        @Override
+        public DecryptedCheckups[] newArray(int size) {
+            return new DecryptedCheckups[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "Checkups";
+    @Required
+    private String physicianName = "";
+    @Required
+    private String checkup_description = "";
+    @Required
+    private String physicianType = "";
+    @Required
+    private String reason = "";
+    @Required
+    private String dateOfVisit = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     protected DecryptedCheckups(Parcel in) {
         id = in.readInt();
@@ -48,6 +81,25 @@ public class DecryptedCheckups implements Parcelable {
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
         createdUser = in.readString();
+    }
+
+    public DecryptedCheckups(String selectionType, String classType, String physicianName, String checkup_description, String physicianType, String reason, String dateOfVisit, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.physicianName = physicianName;
+        this.checkup_description = checkup_description;
+        this.physicianType = physicianType;
+        this.reason = reason;
+        this.dateOfVisit = dateOfVisit;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedCheckups() {
     }
 
     @Override
@@ -74,18 +126,6 @@ public class DecryptedCheckups implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedCheckups> CREATOR = new Creator<DecryptedCheckups>() {
-        @Override
-        public DecryptedCheckups createFromParcel(Parcel in) {
-            return new DecryptedCheckups(in);
-        }
-
-        @Override
-        public DecryptedCheckups[] newArray(int size) {
-            return new DecryptedCheckups[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -104,8 +144,8 @@ public class DecryptedCheckups implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -113,43 +153,9 @@ public class DecryptedCheckups implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String classType = "Checkups";
-
-    @Required private String physicianName = "";
-    @Required private String checkup_description = "";
-
-    @Required private String physicianType = "";
-    @Required private String reason = "";
-    @Required private String dateOfVisit = "";
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String createdUser = "";
-
-    public DecryptedCheckups(String selectionType, String classType, String physicianName, String checkup_description, String physicianType, String reason, String dateOfVisit, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.physicianName = physicianName;
-        this.checkup_description = checkup_description;
-        this.physicianType = physicianType;
-        this.reason = reason;
-        this.dateOfVisit = dateOfVisit;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -254,8 +260,5 @@ public class DecryptedCheckups implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedCheckups() {
     }
 }

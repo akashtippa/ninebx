@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,25 +10,77 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 29/01/18.
  */
-public class DecryptedShopping implements Parcelable{
+public class DecryptedShopping implements Parcelable {
 
+    public static final Creator<DecryptedShopping> CREATOR = new Creator<DecryptedShopping>() {
+        @Override
+        public DecryptedShopping createFromParcel(Parcel in) {
+            return new DecryptedShopping(in);
+        }
+
+        @Override
+        public DecryptedShopping[] newArray(int size) {
+            return new DecryptedShopping[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String institutionName = "";
+    @Required
+    private String accountName = "";
+    @Required
+    private String accountType = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String location = "";
+    @Required
+    private String swiftCode = "";
+    @Required
+    private String abaRoutingNumber = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String paymentMethodOnFile = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String imageName = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String title = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
 
     protected DecryptedShopping(Parcel in) {
         id = in.readInt();
@@ -57,6 +108,34 @@ public class DecryptedShopping implements Parcelable{
         modified = in.readString();
         byte tmpIsPrivate = in.readByte();
         isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+    }
+
+    public DecryptedShopping(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String imageName, String attachmentNames, String title, String created, String modified, Boolean isPrivate) {
+        this.selectionType = selectionType;
+        this.institutionName = institutionName;
+        this.accountName = accountName;
+        this.accountType = accountType;
+        this.nameOnAccount = nameOnAccount;
+        this.accountNumber = accountNumber;
+        this.location = location;
+        this.swiftCode = swiftCode;
+        this.abaRoutingNumber = abaRoutingNumber;
+        this.contacts = contacts;
+        this.website = website;
+        this.userName = userName;
+        this.password = password;
+        this.pin = pin;
+        this.paymentMethodOnFile = paymentMethodOnFile;
+        this.notes = notes;
+        this.imageName = imageName;
+        this.attachmentNames = attachmentNames;
+        this.title = title;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+    }
+
+    public DecryptedShopping() {
     }
 
     @Override
@@ -92,18 +171,6 @@ public class DecryptedShopping implements Parcelable{
         return 0;
     }
 
-    public static final Creator<DecryptedShopping> CREATOR = new Creator<DecryptedShopping>() {
-        @Override
-        public DecryptedShopping createFromParcel(Parcel in) {
-            return new DecryptedShopping(in);
-        }
-
-        @Override
-        public DecryptedShopping[] newArray(int size) {
-            return new DecryptedShopping[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -122,8 +189,8 @@ public class DecryptedShopping implements Parcelable{
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -131,64 +198,9 @@ public class DecryptedShopping implements Parcelable{
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
-
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
-    @Required private String contacts = "";
-
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-    @Required private String paymentMethodOnFile = "";
-
-    @Required private String notes = "";
-
-    @Required private String imageName = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String title = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    public DecryptedShopping(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String imageName, String attachmentNames, String title, String created, String modified, Boolean isPrivate) {
-        this.selectionType = selectionType;
-        this.institutionName = institutionName;
-        this.accountName = accountName;
-        this.accountType = accountType;
-        this.nameOnAccount = nameOnAccount;
-        this.accountNumber = accountNumber;
-        this.location = location;
-        this.swiftCode = swiftCode;
-        this.abaRoutingNumber = abaRoutingNumber;
-        this.contacts = contacts;
-        this.website = website;
-        this.userName = userName;
-        this.password = password;
-        this.pin = pin;
-        this.paymentMethodOnFile = paymentMethodOnFile;
-        this.notes = notes;
-        this.imageName = imageName;
-        this.attachmentNames = attachmentNames;
-        this.title = title;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
     }
 
     public String getSelectionType() {
@@ -365,8 +377,5 @@ public class DecryptedShopping implements Parcelable{
 
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
-    }
-
-    public DecryptedShopping() {
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_level2_contacts.*
 
@@ -14,6 +15,9 @@ import kotlinx.android.synthetic.main.fragment_level2_contacts.*
  * Created by TechnoBlogger on 24/01/18.
  */
 class SingleContactViewFragment : FragmentBackHelper() {
+
+    var strContactName = ""
+    var strContactNumber = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_level2_contacts, container, false)
@@ -25,11 +29,29 @@ class SingleContactViewFragment : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.showToolbar()
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
 
+        strContactName = arguments!!.getString(Constants.BUNDLE_CONTACT_NAME)
+        strContactNumber = arguments!!.getString(Constants.BUNDLE_CONTACT_NO)
+
+
+        txtFirstName.setText(strContactName)
+        txtMobileNumber.setText(strContactNumber)
+
+        ivBackContactView.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+        }
 
         imgEdit.setOnClickListener {
             enableEditing()
         }
 
+        txtSaveContacts.setOnClickListener {
+            saveTheEditedContacts()
+        }
+
+
+    }
+
+    private fun saveTheEditedContacts() {
 
     }
 
@@ -49,8 +71,7 @@ class SingleContactViewFragment : FragmentBackHelper() {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.showBottomView()
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
         return super.onBackPressed()
     }
 }

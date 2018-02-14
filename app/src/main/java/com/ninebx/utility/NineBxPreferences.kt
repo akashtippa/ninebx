@@ -21,10 +21,22 @@ class NineBxPreferences : Preferences() {
     var currentBox by stringPref(Constants.CURRENT_BOX)
 
     var userEmailID by stringPref(Constants.USER_EMAIL_ID)
-    var userPassword by stringPref(Constants.USER_PASSWORD)
+    var userPassword by stringPref(Constants.USER_PASSWORD, "")
 
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
     var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)
+    fun clearPreferences() {
+        firstRun = false
+        isPasswordRequired = false
+        isPasswordEnabled = false
+        currentStep = NONE_COMPLETE
+        userEmail = ""
+        passCode = ""
+        privateKey = ""
+        currentBox = ""
+        countrySelected = ""
+        isFingerPrintEnabled = false
+    }
 
 
 }

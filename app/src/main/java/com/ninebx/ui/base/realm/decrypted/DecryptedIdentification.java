@@ -1,7 +1,6 @@
 package com.ninebx.ui.base.realm.decrypted;
 
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -22,14 +19,62 @@ import io.realm.annotations.Required;
  */
 public class DecryptedIdentification implements Parcelable {
 
-    @PrimaryKey //@Required
-    int id = 0;
+    public static final Creator<DecryptedIdentification> CREATOR = new Creator<DecryptedIdentification>() {
+        @Override
+        public DecryptedIdentification createFromParcel(Parcel in) {
+            return new DecryptedIdentification(in);
+        }
 
+        @Override
+        public DecryptedIdentification[] newArray(int size) {
+            return new DecryptedIdentification[size];
+        }
+    };
+    @PrimaryKey //@Required
+            int id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
-
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "Identification";
+    @Required
+    private String name = "";
+    @Required
+    private String gender = "";
+    @Required
+    private String dateofBirth = "";
+    @Required
+    private String age = "";
+    @Required
+    private String height = "";
+    @Required
+    private String weight = "";
+    @Required
+    private String hairColor = "";
+    @Required
+    private String eyeColor = "";
+    @Required
+    private String visibleMarks = "";
+    @Required
+    private String bloodType = "";
+    @Required
+    private String orgonDonor = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
 
     protected DecryptedIdentification(Parcel in) {
         id = in.readInt();
@@ -54,6 +99,31 @@ public class DecryptedIdentification implements Parcelable {
         notes = in.readString();
         attachmentNames = in.readString();
         createdUser = in.readString();
+    }
+
+    public DecryptedIdentification(String selectionType, String classType, String name, String gender, String dateofBirth, String age, String height, String weight, String hairColor, String eyeColor, String visibleMarks, String bloodType, String orgonDonor, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.name = name;
+        this.gender = gender;
+        this.dateofBirth = dateofBirth;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+        this.hairColor = hairColor;
+        this.eyeColor = eyeColor;
+        this.visibleMarks = visibleMarks;
+        this.bloodType = bloodType;
+        this.orgonDonor = orgonDonor;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+    }
+
+    public DecryptedIdentification() {
     }
 
     @Override
@@ -86,18 +156,6 @@ public class DecryptedIdentification implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DecryptedIdentification> CREATOR = new Creator<DecryptedIdentification>() {
-        @Override
-        public DecryptedIdentification createFromParcel(Parcel in) {
-            return new DecryptedIdentification(in);
-        }
-
-        @Override
-        public DecryptedIdentification[] newArray(int size) {
-            return new DecryptedIdentification[size];
-        }
-    };
-
     public Integer getId() {
         return id;
     }
@@ -116,8 +174,8 @@ public class DecryptedIdentification implements Parcelable {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -125,56 +183,9 @@ public class DecryptedIdentification implements Parcelable {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
-    }
-
-    @Required private String selectionType = "";
-    @Required private String classType = "Identification";
-
-    @Required private String name = "";
-
-    @Required private String gender = "";
-    @Required private String dateofBirth = "";
-    @Required private String age = "";
-    @Required private String height = "";
-    @Required private String weight = "";
-    @Required private String hairColor = "";
-    @Required private String eyeColor = "";
-    @Required private String visibleMarks = "";
-    @Required private String bloodType = "";
-    @Required private String orgonDonor = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String notes = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String createdUser = "";
-
-    public DecryptedIdentification(String selectionType, String classType, String name, String gender, String dateofBirth, String age, String height, String weight, String hairColor, String eyeColor, String visibleMarks, String bloodType, String orgonDonor, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
-        this.selectionType = selectionType;
-        this.classType = classType;
-        this.name = name;
-        this.gender = gender;
-        this.dateofBirth = dateofBirth;
-        this.age = age;
-        this.height = height;
-        this.weight = weight;
-        this.hairColor = hairColor;
-        this.eyeColor = eyeColor;
-        this.visibleMarks = visibleMarks;
-        this.bloodType = bloodType;
-        this.orgonDonor = orgonDonor;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
-        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {
@@ -327,8 +338,5 @@ public class DecryptedIdentification implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public DecryptedIdentification() {
     }
 }

@@ -9,7 +9,6 @@ import com.ninebx.ui.base.realm.lists.ContactsList;
 
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**

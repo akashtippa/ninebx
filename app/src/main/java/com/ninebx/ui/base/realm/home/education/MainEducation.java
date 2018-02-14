@@ -51,22 +51,6 @@ public class MainEducation extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
     public MainEducation(int id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
@@ -89,6 +73,22 @@ public class MainEducation extends RealmObject {
     }
 
     public MainEducation() {
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public Integer getId() {
