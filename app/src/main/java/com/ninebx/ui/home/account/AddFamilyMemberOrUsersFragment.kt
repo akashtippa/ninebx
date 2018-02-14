@@ -1,27 +1,37 @@
 package com.ninebx.ui.home.account
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
-import com.ninebx.NineBxApplication
+import com.bumptech.glide.Glide
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
+import java.util.ArrayList
 
 
 /***
  * Created by TechnoBlogger on 18/01/18.
  */
 
-class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
+class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+    
 
     private lateinit var selectedRelation: String
     private lateinit var selectedRole: String
@@ -42,8 +52,11 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
+        bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
+        
         ivBackAddOthers.setOnClickListener {
-            //NineBxApplication.instance.activityInstance!!.onBackPressed()
+            onBackPressed()
         }
 
         txtPermissions.setOnClickListener {
@@ -101,7 +114,122 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
             checkValidations()
         }
 
+        txtAddEditPhoto.setOnClickListener {
+
+        }
+
         populateView( member )
+    }
+
+    lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
+    private val PICK_IMAGE_REQUEST = 238
+    private val CAMERA_REQUEST_CODE = 239
+    private val PERMISSIONS_REQUEST_CODE_CAMERA = 115
+    private val PERMISSIONS_REQUEST_CODE_GALLERY = 116
+
+    private fun startCameraIntent() {
+        bottomSheetDialogFragment.show( childFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    override fun onOptionSelected(position: Int) {
+        bottomSheetDialogFragment.dismiss()
+        if (position == 1) {
+            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission(context!!, permissionList)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA)
+                } else {
+                    beginCameraAttachmentFlow()
+                }
+            } else {
+                beginCameraAttachmentFlow()
+            }
+
+        } else {
+            val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission(context!!, permissionList)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
+                } else {
+                    beginGalleryAttachmentFlow()
+                }
+            } else {
+                beginGalleryAttachmentFlow()
+            }
+        }
+    }
+
+    private fun beginGalleryAttachmentFlow() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    private fun beginCameraAttachmentFlow() {
+
+        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        if (callCameraIntent.resolveActivity(context!!.packageManager) != null) {
+            startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        if (requestCode == PERMISSIONS_REQUEST_CODE_CAMERA) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                beginCameraAttachmentFlow()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        } else if (requestCode == PERMISSIONS_REQUEST_CODE_GALLERY) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                beginGalleryAttachmentFlow()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
+
+    //a Uri object to store file path
+    private var filePath: Uri? = null
+    private var mImagesList: ArrayList<Uri> = ArrayList()
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            if (data.clipData != null) {
+                val count = data.clipData.itemCount
+                var currentItem = 0
+                while (currentItem < count) {
+                    val imageUri = data.clipData.getItemAt(currentItem).uri
+                    mImagesList.add(imageUri)
+                    setProfileImage(imageUri)
+                    currentItem += 1
+                }
+
+
+            } else if (data.data != null) {
+                mImagesList.add(data.data)
+                setProfileImage(data.data)
+            }
+        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            saveImage(data.extras.get("data") as Bitmap)
+            filePath = activity!!.getImageUri(data.extras.get("data") as Bitmap)
+            mImagesList.add(filePath!!)
+            setProfileImage(filePath!!)
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+    private fun setProfileImage(imageUri: Uri) {
+        Glide.with(context).load(imageUri).into(imgEditProfile)
     }
 
     private fun populateView(member: Member?) {
@@ -185,8 +313,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
 
 
     override fun onBackPressed(): Boolean {
-        //NineBxApplication.instance.activityInstance!!.showToolbar()
-        return super.onBackPressed()
+        activity!!.finish()
+        return true
     }
 
     fun setIMemberAdded(iMemberAdded: IMemberAdded) {
