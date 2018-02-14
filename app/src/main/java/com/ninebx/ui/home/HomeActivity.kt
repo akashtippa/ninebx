@@ -191,11 +191,10 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         bottomSheetDialogFragment.dismiss()
         if (position == 1) {
             val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (!handleMultiplePermission( this@HomeActivity, permissionList)) {
+            if (!handleMultiplePermission(this@HomeActivity, permissionList)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA )
-                }
-                else {
+                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA)
+                } else {
                     beginCameraAttachmentFlow()
                 }
             } else {
@@ -206,9 +205,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
             if (!handleMultiplePermission(this@HomeActivity, permissionList)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
-                }
-                else {
+                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
+                } else {
                     beginGalleryAttachmentFlow()
                 }
             } else {
@@ -244,8 +242,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             } else {
                 Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }
-        }
-        else if( requestCode == PERMISSIONS_REQUEST_CODE_GALLERY ) {
+        } else if (requestCode == PERMISSIONS_REQUEST_CODE_GALLERY) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 beginGalleryAttachmentFlow()
             } else {
@@ -257,11 +254,11 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 
     //a Uri object to store file path
     private var filePath: Uri? = null
-    private var mImagesList : ArrayList<Uri> = ArrayList()
+    private var mImagesList: ArrayList<Uri> = ArrayList()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null ) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             if (data.clipData != null) {
                 val count = data.clipData.itemCount
                 var currentItem = 0
@@ -276,22 +273,20 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                 mImagesList.add(data.data)
                 setImagesAdapter()
             }
-        }
-        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             saveImage(data.extras.get("data") as Bitmap)
             filePath = getImageUri(data.extras.get("data") as Bitmap)
             mImagesList.add(filePath!!)
             setImagesAdapter()
-        }
-        else
+        } else
             super.onActivityResult(requestCode, resultCode, data)
 
     }
 
-    private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter?= null
+    private var attachmentRecyclerAdapter: AttachmentRecyclerViewAdapter? = null
     private fun setImagesAdapter() {
 
-        rvAttachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false )
+        rvAttachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         hideShowAttachments()
 
         attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
@@ -310,16 +305,15 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                     }
                 }
             }
-        }, LinearLayoutManager.HORIZONTAL )
+        }, LinearLayoutManager.HORIZONTAL)
         rvAttachments.adapter = attachmentRecyclerAdapter
     }
 
     private fun hideShowAttachments() {
-        if( mImagesList.size > 0 ) {
+        if (mImagesList.size > 0) {
             layoutQuickAdd.hide()
             cvAttachments.show()
-        }
-        else {
+        } else {
 
             if (imgToolbar.isVisible() && mImagesList.size == 0)
                 layoutQuickAdd.show()

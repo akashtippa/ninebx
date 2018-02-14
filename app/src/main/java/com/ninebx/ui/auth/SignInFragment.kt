@@ -8,11 +8,7 @@ import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.isValidPassword
-import com.ninebx.utility.prepareRealmConnections
-import com.ninebx.utility.retrieveObject
-import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 

@@ -19,20 +19,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedTax implements Parcelable {
 
-    @PrimaryKey //@Required
-            int id = 0;
-
-    @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
-
-    @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public static final Creator<DecryptedTax> CREATOR = new Creator<DecryptedTax>() {
         @Override
         public DecryptedTax createFromParcel(Parcel in) {
@@ -44,56 +30,39 @@ public class DecryptedTax implements Parcelable {
             return new DecryptedTax[size];
         }
     };
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public RealmList<RealmString> getBackingImages() {
-        return backingImages;
-    }
-
-    public void setBackingImages(RealmList<RealmString> backingImages) {
-        this.backingImages = backingImages;
-    }
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String returnName = "";
-    @Required private String taxYear = "";
-    @Required private String taxPayer = "";
-    @Required private String contacts = "";
-
-    @Required private String imageName = "";
-    @Required private String attachmentNames = "";
-
-    @Required private String notes = "";
-    @Required private String title = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
+    @PrimaryKey //@Required
+            int id = 0;
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
+    @Ignore
+    @Required
+    private List<String> photosId = new ArrayList<>();
+    @Required
+    private String selectionType = "";
+    @Required
+    private String returnName = "";
+    @Required
+    private String taxYear = "";
+    @Required
+    private String taxPayer = "";
+    @Required
+    private String contacts = "";
+    @Required
+    private String imageName = "";
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String notes = "";
+    @Required
+    private String title = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     public DecryptedTax() {
     }
@@ -115,6 +84,62 @@ public class DecryptedTax implements Parcelable {
         this.modified = modified;
         this.isPrivate = isPrivate;
         this.createdUser = createdUser;
+    }
+
+    protected DecryptedTax(Parcel in) {
+        id = in.readInt();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        returnName = in.readString();
+        taxYear = in.readString();
+        taxPayer = in.readString();
+        contacts = in.readString();
+        imageName = in.readString();
+        attachmentNames = in.readString();
+        notes = in.readString();
+        title = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public RealmList<RealmString> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(RealmList<RealmString> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public String getSelectionType() {
@@ -219,25 +244,6 @@ public class DecryptedTax implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    protected DecryptedTax(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        returnName = in.readString();
-        taxYear = in.readString();
-        taxPayer = in.readString();
-        contacts = in.readString();
-        imageName = in.readString();
-        attachmentNames = in.readString();
-        notes = in.readString();
-        title = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
     }
 
     @Override

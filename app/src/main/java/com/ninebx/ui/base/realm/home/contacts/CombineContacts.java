@@ -2,7 +2,6 @@ package com.ninebx.ui.base.realm.home.contacts;
 
 import com.ninebx.ui.base.realm.lists.ContactsList;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -18,10 +17,12 @@ public class CombineContacts extends RealmObject {
     @PrimaryKey //@Required
     private int id = 0;
 
-    @Required private RealmList<Contacts> contactsItems               = new RealmList<>();
-    @Required private RealmList<MainContacts> mainContactsItems           = new RealmList<>();
-
-    @Required private RealmList<ContactsList> listItems                   = new RealmList<>();
+    @Required
+    private RealmList<Contacts> contactsItems = new RealmList<>();
+    @Required
+    private RealmList<MainContacts> mainContactsItems = new RealmList<>();
+    @Required
+    private RealmList<ContactsList> listItems = new RealmList<>();
 
     public CombineContacts(int id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
         this.id = id;

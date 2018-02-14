@@ -14,74 +14,74 @@ class SearchPresenter( private val searchView: SearchView ) {
     init {
         val context = getApplicationContext()
 
-        prepareRealmConnections( context, false, "Combine", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineResult = realm!!.where(Combine::class.java!!).findAll()
+                val combineResult = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "Combined Results : " + combineResult)
-                if( combineResult.size > 0 )
+                if (combineResult.size > 0)
                     searchView.onCombineResultFetched(combineResult[0]!!)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineTravel", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineTravel", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineTravel = realm!!.where(Combine::class.java!!).findAll()
+                val combineTravel = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineMemories", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineMemories", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineMemories = realm!!.where(Combine::class.java!!).findAll()
+                val combineMemories = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedMemories : " + combineMemories)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineShopping", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineShopping", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineShopping = realm!!.where(Combine::class.java!!).findAll()
+                val combineShopping = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedMemories : " + combineShopping)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineContacts", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineContacts = realm!!.where(Combine::class.java!!).findAll()
+                val combineContacts = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedContacts : " + combineContacts)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineEducation", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineEducation = realm!!.where(Combine::class.java!!).findAll()
+                val combineEducation = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedEducation : " + combineEducation)
             }
         })
 
-        prepareRealmConnections( context, false, "CombinePersonal", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combinePersonal = realm!!.where(Combine::class.java!!).findAll()
+                val combinePersonal = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedPersonal : " + combinePersonal)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineInterests", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineInterests = realm!!.where(Combine::class.java!!).findAll()
+                val combineInterests = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedInterests : " + combineInterests)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineWellness", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineWellness = realm!!.where(Combine::class.java!!).findAll()
+                val combineWellness = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedWellness : " + combineWellness)
             }
         })
 
-        prepareRealmConnections( context, false, "CombineEvents", object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineEvents", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineEvents = realm!!.where(Combine::class.java!!).findAll()
+                val combineEvents = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "CombinedEvents : " + combineEvents)
             }
         })

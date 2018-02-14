@@ -17,57 +17,60 @@ import io.realm.annotations.Required;
  * Created by smrit on 12-02-2018.
  */
 
-public class DecryptedMainEducation implements Parcelable{
+public class DecryptedMainEducation implements Parcelable {
 
+    public static final Creator<DecryptedMainEducation> CREATOR = new Creator<DecryptedMainEducation>() {
+        @Override
+        public DecryptedMainEducation createFromParcel(Parcel in) {
+            return new DecryptedMainEducation(in);
+        }
+
+        @Override
+        public DecryptedMainEducation[] newArray(int size) {
+            return new DecryptedMainEducation[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
     private String selectionType = "";
-    @Required private String classType = "MainEducation";
-
-    @Required private String institutionName = "";
-    @Required private String qualification = "";
-
-    @Required private String name = "";
-    @Required private String location = "";
-    @Required private String major = "";
-    @Required private String from = "";
-    @Required private String to = "";
-    @Required private String currentlyStudying = "";
-
-    @Required private Boolean isCurrent = false;
-
-    @Required private String notes = "";
-
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-
-    @Required private String attachmentNames = "";
-
-    @Required private String createdUser = "";
-
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
-
+    @Required
+    private String classType = "MainEducation";
+    @Required
+    private String institutionName = "";
+    @Required
+    private String qualification = "";
+    @Required
+    private String name = "";
+    @Required
+    private String location = "";
+    @Required
+    private String major = "";
+    @Required
+    private String from = "";
+    @Required
+    private String to = "";
+    @Required
+    private String currentlyStudying = "";
+    @Required
+    private Boolean isCurrent = false;
+    @Required
+    private String notes = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String attachmentNames = "";
+    @Required
+    private String createdUser = "";
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
+    @Required
+    private List<String> photosId = new ArrayList<>();
 
     public DecryptedMainEducation() {
     }
@@ -93,6 +96,46 @@ public class DecryptedMainEducation implements Parcelable{
         this.createdUser = createdUser;
         this.backingImages = backingImages;
         this.photosId = photosId;
+    }
+
+    protected DecryptedMainEducation(Parcel in) {
+        id = in.readInt();
+        selectionType = in.readString();
+        classType = in.readString();
+        institutionName = in.readString();
+        qualification = in.readString();
+        name = in.readString();
+        location = in.readString();
+        major = in.readString();
+        from = in.readString();
+        to = in.readString();
+        currentlyStudying = in.readString();
+        byte tmpIsCurrent = in.readByte();
+        isCurrent = tmpIsCurrent == 0 ? null : tmpIsCurrent == 1;
+        notes = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        attachmentNames = in.readString();
+        createdUser = in.readString();
+        photosId = in.createStringArrayList();
+    }
+
+    public List<String> getPhotosId() {
+        photosId = new ArrayList<>();
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
+        }
+        return photosId;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+        backingImages.clear();
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
+        }
     }
 
     public int getId() {
@@ -247,30 +290,6 @@ public class DecryptedMainEducation implements Parcelable{
         this.backingImages = backingImages;
     }
 
-    protected DecryptedMainEducation(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        classType = in.readString();
-        institutionName = in.readString();
-        qualification = in.readString();
-        name = in.readString();
-        location = in.readString();
-        major = in.readString();
-        from = in.readString();
-        to = in.readString();
-        currentlyStudying = in.readString();
-        byte tmpIsCurrent = in.readByte();
-        isCurrent = tmpIsCurrent == 0 ? null : tmpIsCurrent == 1;
-        notes = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-        photosId = in.createStringArrayList();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -298,18 +317,6 @@ public class DecryptedMainEducation implements Parcelable{
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedMainEducation> CREATOR = new Creator<DecryptedMainEducation>() {
-        @Override
-        public DecryptedMainEducation createFromParcel(Parcel in) {
-            return new DecryptedMainEducation(in);
-        }
-
-        @Override
-        public DecryptedMainEducation[] newArray(int size) {
-            return new DecryptedMainEducation[size];
-        }
-    };
 
     @Override
     public String toString() {

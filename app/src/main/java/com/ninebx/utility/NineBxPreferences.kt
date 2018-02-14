@@ -1,7 +1,5 @@
 package com.ninebx.utility
 
-import com.google.gson.Gson
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.Constants.NONE_COMPLETE
 
 
@@ -21,8 +19,9 @@ class NineBxPreferences : Preferences() {
     var passCode by stringPref(Constants.PASSCODE, "")
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
-    var testinFragmentA by stringPref(Constants.TEST_FRAGMENT_A)
-    var testinFragmentB by stringPref(Constants.TEST_FRAGMENT_B)
+
+    var userEmailID by stringPref(Constants.USER_EMAIL_ID)
+    var userPassword by stringPref(Constants.USER_PASSWORD)
 
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
     var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)

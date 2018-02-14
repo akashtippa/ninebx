@@ -63,8 +63,8 @@ object Constants {
     val CURRENT_BOX = "valCurrentBox"
 
     // Just for Testing
-    val TEST_FRAGMENT_A: String = "test_fragment_a"
-    val TEST_FRAGMENT_B: String = "test_fragment_b"
+    val USER_EMAIL_ID: String = "user_email"
+    val USER_PASSWORD: String = "user_password"
 
     val COUNTRY_SELECTED: String = "country_selected"
 
@@ -123,6 +123,10 @@ object Constants {
     // Temporary Private Key
 
     val TEMP_PRIVATE_KEY = "nB8hEnaqppfWOp5L"
+
     val MEMBER: String = "member"
+    val BUNDLE_CONTACT_NO = "contactNumber"
+    val BUNDLE_CONTACT_NAME = "contactName"
+
 
 }

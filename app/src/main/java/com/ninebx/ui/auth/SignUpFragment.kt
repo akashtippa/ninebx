@@ -27,9 +27,9 @@ class SignUpFragment : BaseAuthFragment() {
             if (validate()) {
                 mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
                 mAuthView.createUser( edtFirstName.text.toString().trim(), edtLastName.text.toString().trim(), edtEmailAddress.text.toString().trim() )
-
             }
         }
+
         if (NineBxApplication.autoTestMode) {
             edtFirstName.setText("Aman")
             edtLastName.setText("Shekhar")
@@ -39,6 +39,7 @@ class SignUpFragment : BaseAuthFragment() {
         txtTermsOfUse.setOnClickListener {
             openStaticLayoutDialog(getString(R.string.terms_of_use))
         }
+
         txtPrivacyPolicy.setOnClickListener {
             openStaticLayoutDialog(getString(R.string.privacy_policy))
         }

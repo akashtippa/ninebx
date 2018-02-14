@@ -7,12 +7,12 @@ import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import io.realm.*
-import io.realm.kotlin.where
 import java.util.*
 
 /**
  * Created by Alok on 18/01/18.
  */
+
 
 fun RealmObject.insertOrUpdate(realmInstance: Realm) {
     realmInstance.executeTransaction { realm -> realm.insertOrUpdate(this) }
@@ -36,7 +36,7 @@ fun closeConnection(realmConnection: Realm) {
     realmConnection.close()
 }
 
-fun getCurrentUsers(realmInstance: Realm ) : RealmResults<Users>? {
+fun getCurrentUsers(realmInstance: Realm): RealmResults<Users>? {
     return realmInstance.where(Users::class.java).findAll()
 }
 
@@ -101,7 +101,8 @@ private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
 
 }
 
-fun getRealmServerConnection( realmEndPoint: String, callback: Realm.Callback ) {
+
+fun getRealmServerConnection(realmEndPoint: String, callback: Realm.Callback) {
     val user = SyncUser.currentUser()
     AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_ADDRESS + realmEndPoint)
     val config = SyncConfiguration.Builder(user, Constants.SERVER_ADDRESS + realmEndPoint)
@@ -130,7 +131,7 @@ fun getUniqueId(): Int {
     return UUID.randomUUID().hashCode()
 }
 
-fun generateAttachmentFileName() : String {
+fun generateAttachmentFileName(): String {
     return UUID.randomUUID().toString()
 }
 
@@ -147,61 +148,4 @@ fun generateRandomOTP(): String {
     return otp
 }
 
-/*
 
-
-@SuppressLint("StaticFieldLeak")
-class SyncTheDb : AsyncTask<String, String, String>() {
-    override fun onPreExecute() {
-        super.onPreExecute()
-    }
-
-    override fun doInBackground(vararg p0: String?): String {
-        var Result: String = "";
-        try {
-            syncNow()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return Result
-    }
-
-    override fun onPostExecute(result: String?) {
-        super.onPostExecute(result)
-    }
-}
-
-
-var strUsername: String = "aman.shekhar@cognitiveclouds.com"
-var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
-
-var myCredentials: SyncCredentials? = null
-var user: SyncUser? = null
-var config: SyncConfiguration? = null
-lateinit var realm: Realm
-
-
-private fun syncNow(realmEndPoint: String) {
-    myCredentials = SyncCredentials.usernamePassword(strUsername, strPassword, false)
-    user = SyncUser.login(myCredentials, Constants.SERVER_IP)
-    config = SyncConfiguration.Builder(user, Constants.SERVER_URL + realmEndPoint)
-            .waitForInitialRemoteData()
-            .build()
-
-    realm = Realm.getInstance(config)
-}
-
-private fun sendDataToServer() {
-    realm = Realm.getInstance(config)
-
-    realm.executeTransactionAsync({ bgRealm ->
-        val user = bgRealm.createObject(TestDemo::class.java)
-
-    }, {
-        // Transaction was a success.
-    }, {
-        // Transaction was a failure.
-    })
-
-}
-*/

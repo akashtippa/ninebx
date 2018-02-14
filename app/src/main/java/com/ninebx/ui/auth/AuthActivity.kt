@@ -2,22 +2,21 @@ package com.ninebx.ui.auth
 
 import android.content.Context
 import android.content.Intent
+import android.hardware.fingerprint.FingerprintManager
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
+import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.Constants
 import io.realm.SyncUser
-import android.hardware.fingerprint.FingerprintManager
-import android.os.Build
-import android.support.annotation.RequiresApi
-import com.ninebx.ui.auth.fingerprint.FingerPrintFragment
-import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.ui.base.realm.Users
 
 
 /**
@@ -33,7 +32,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun navigateToStart() {
         supportFragmentManager.popBackStack()
-        supportFragmentManager.popBackStack()
     }
 
     override fun validateEmailOTP(emailOtp: String) {
@@ -46,7 +44,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
         val currentUser = mAuthPresenter.createUser( email, firstName, lastName )
         navigateToAccountPassword( currentUser )
     }
-
 
     override fun onError(error: String) {
         this@AuthActivity.showToast(error)
@@ -106,6 +103,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var accountPasswordFragment: AccountPasswordFragment? = null
+
     override fun navigateToAccountPassword( users : Users ) {
         if (NineBxApplication.getPreferences().currentStep < Constants.SIGN_UP_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.SIGN_UP_COMPLETE
@@ -251,7 +249,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP" ) {
+        if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP") {
             supportFragmentManager.popBackStack()
         } else {
             finish()
