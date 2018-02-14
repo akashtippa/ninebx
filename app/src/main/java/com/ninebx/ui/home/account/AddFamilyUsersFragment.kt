@@ -26,6 +26,7 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_family_users.*
 import java.io.File
+import kotlin.collections.ArrayList
 
 /***
  * Created by TechnoBlogger on 15/01/18.
@@ -40,7 +41,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         mListsAdapter!!.notifyDataSetChanged()
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
-        startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
+        bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
+        startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
     }
 
     override fun onSuccess(outputFile: File?) {
@@ -48,10 +50,11 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
             Glide.with(context).asBitmap().load(outputFile).into(imgProfilePic)
     }
 
-    override fun memberAdded(member: Member?) {
+    override fun memberAdded( member : Member? ) {
         AppLogger.d("Member", "onMemberAdded" + member)
-        myList.add(member!!)
+        myList.add( member!! )
         mListsAdapter!!.notifyDataSetChanged()
+        saveUserObject()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,12 +93,15 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMBER, Member())
-            startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
+            bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
+            startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
 
         }
 
-        initAdmin(currentUsers!![0])
+        initAdmin( currentUsers!![0] )
     }
+
+    private var usersRealm: Realm? = null
 
     private fun initAdmin(users: Users?) {
 
@@ -106,18 +112,23 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         if( users.profilePhoto.isNotEmpty() )
             mAWSFileTransferHelper.beginDownload( "images/" + users.userId + "/" + users.profilePhoto)
 
-        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val userObject = Users.createUserObject(currentUsers!![0], myList)
-                userObject.insertOrUpdate(realm!!)
-                context!!.hideProgressDialog()
-                myList.clear()
-                myList.addAll(userObject.members)
-                mListsAdapter!!.notifyDataSetChanged()
+                usersRealm = realm
+                saveUserObject()
             }
 
         })
 
+    }
+
+    private fun saveUserObject() {
+        val userObject = Users.createUserObject( currentUsers!![0], myList )
+        userObject.insertOrUpdate(usersRealm!!)
+        context!!.hideProgressDialog()
+        myList.clear()
+        myList.addAll(userObject.members)
+        mListsAdapter!!.notifyDataSetChanged()
     }
 
     override fun onBackPressed(): Boolean {
@@ -240,9 +251,10 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK) {
-            memberAdded(data!!.getParcelableExtra(Constants.MEMBER))
-        } else
+        if( requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK ) {
+            memberAdded( data!!.getParcelableExtra( Constants.MEMBER ))
+        }
+        else
             super.onActivityResult(requestCode, resultCode, data)
 
     }
