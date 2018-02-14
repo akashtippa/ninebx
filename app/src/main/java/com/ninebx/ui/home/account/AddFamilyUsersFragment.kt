@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.account
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.adapter.AddedFamilyMemberAdapter
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
@@ -30,17 +32,15 @@ import kotlin.collections.ArrayList
  */
 
 class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransferHelper.FileOperationsCompletionListener {
+
+    private val ADD_EDIT_MEMBER = 4324
+
     override fun onMemberEdit(member: Member?) {
         myList.remove(member)
         mListsAdapter!!.notifyDataSetChanged()
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
-        addFamilyMemberOrUsersFragment.setIMemberAdded(this)
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
-        addFamilyMemberOrUsersFragment.arguments = bundle
-        fragmentTransaction.replace(R.id.frameLayout, addFamilyMemberOrUsersFragment).commit()
+        activity!!.startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
     }
 
     override fun onSuccess(outputFile: File?) {
@@ -240,4 +240,12 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if( requestCode == ADD_EDIT_MEMBER ) {
+
+        }
+        else
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
 }
