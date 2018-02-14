@@ -42,9 +42,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
         ivBackAddOthers.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            //NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
         txtPermissions.setOnClickListener {
@@ -178,7 +177,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
         iMemberAdded.memberAdded( member )
 
         // Add method to add it in a RecyclerView
-        NineBxApplication.instance.activityInstance!!.onBackPressed()
+        //NineBxApplication.instance.activityInstance!!.onBackPressed()
 
 
 
@@ -186,7 +185,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper() {
 
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+        //NineBxApplication.instance.activityInstance!!.showToolbar()
         return super.onBackPressed()
     }
 

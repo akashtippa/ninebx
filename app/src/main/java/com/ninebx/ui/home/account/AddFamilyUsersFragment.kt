@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.account
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -96,15 +97,11 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         rvAddFamilyMembers!!.adapter = mListsAdapter
 
         layAddFamilyMembers.setOnClickListener {
-            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-            val addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
-            addFamilyMemberOrUsersFragment.setIMemberAdded(this)
+
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMBER, Member())
-            addFamilyMemberOrUsersFragment.arguments = bundle
-            fragmentTransaction.replace(R.id.frameLayout, addFamilyMemberOrUsersFragment).commit()
-//            openStaticLayoutDialog()
+            activity!!.startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
+
         }
 
         initAdmin( currentUsers!![0] )
@@ -241,11 +238,11 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if( requestCode == ADD_EDIT_MEMBER ) {
-
+        if( requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK ) {
+            memberAdded( data!!.getParcelableExtra( Constants.MEMBER ))
         }
         else
-        super.onActivityResult(requestCode, resultCode, data)
+            super.onActivityResult(requestCode, resultCode, data)
 
     }
 }
