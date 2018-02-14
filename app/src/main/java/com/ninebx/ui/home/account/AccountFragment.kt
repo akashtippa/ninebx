@@ -3,7 +3,6 @@ package com.ninebx.ui.home.account
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.*
 import android.widget.ImageView
@@ -146,7 +145,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
                 startActivity(Intent.createChooser(email, "Choose an Email client :"))
             }
             getString(R.string.auto_lock_device_setting) -> {
-                startActivityForResult(Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                startActivityForResult(Intent(android.provider.Settings.ACTION_SETTINGS), 0)
             }
         }
     }
@@ -204,7 +203,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
             SyncUser.currentUser().logout()
-            startActivity(Intent( context, AuthActivity::class.java ))
+            startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }
 

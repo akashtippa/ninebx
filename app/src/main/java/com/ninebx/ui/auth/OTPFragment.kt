@@ -31,8 +31,9 @@ class OTPFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
-        setHasOptionsMenu(true)
+//        setupToolbar()
+//        toolbar.title = ""
+//        setHasOptionsMenu(true)
         tvEmail.text = arguments!!.getString("email", "")
         btnSubmit.setOnClickListener {
             if( validate() ) {
@@ -42,7 +43,7 @@ class OTPFragment : BaseAuthFragment() {
 
                         val currentUsers = getCurrentUsers( realm!! )
 
-                        if( currentUsers != null && currentUsers.size > 0 ) {
+                        if (currentUsers != null && currentUsers.size > 0) {
                             NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
                             context!!.hideProgressDialog()
                             AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
@@ -59,7 +60,7 @@ class OTPFragment : BaseAuthFragment() {
             }
         }
         tvResend.setOnClickListener {
-            mAuthView.getAuthPresenter().requestOTP( mAuthView.getAccountEmail() )
+            mAuthView.getAuthPresenter().requestOTP(mAuthView.getAccountEmail())
         }
 
         setupOtp()

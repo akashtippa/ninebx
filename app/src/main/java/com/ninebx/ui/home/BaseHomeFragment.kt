@@ -8,11 +8,11 @@ import android.support.v4.app.Fragment
  */
 abstract class BaseHomeFragment : Fragment() {
 
-    lateinit var mHomeView : HomeView
+    lateinit var mHomeView: HomeView
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if( context is HomeView )
+        if (context is HomeView)
             mHomeView = context
     }
 }

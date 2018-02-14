@@ -6,6 +6,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.home.contacts.Contacts
 import io.realm.*
 import java.util.*
 
@@ -39,6 +40,11 @@ fun closeConnection(realmConnection: Realm) {
 fun getCurrentUsers(realmInstance: Realm): RealmResults<Users>? {
     return realmInstance.where(Users::class.java).findAll()
 }
+
+fun getCurrentContactList(realmInstance: Realm): RealmResults<Contacts>? {
+    return realmInstance.where(Contacts::class.java).findAll()
+}
+
 
 private val TAG = "RealmUtils"
 
@@ -148,4 +154,63 @@ fun generateRandomOTP(): String {
     return otp
 }
 
+
+/*
+
+
+@SuppressLint("StaticFieldLeak")
+class SyncTheDb : AsyncTask<String, String, String>() {
+    override fun onPreExecute() {
+        super.onPreExecute()
+    }
+
+    override fun doInBackground(vararg p0: String?): String {
+        var Result: String = "";
+        try {
+            syncNow()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return Result
+    }
+
+    override fun onPostExecute(result: String?) {
+        super.onPostExecute(result)
+    }
+}
+
+
+var strUsername: String = "aman.shekhar@cognitiveclouds.com"
+var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
+
+var myCredentials: SyncCredentials? = null
+var user: SyncUser? = null
+var config: SyncConfiguration? = null
+lateinit var realm: Realm
+
+
+private fun syncNow(realmEndPoint: String) {
+    myCredentials = SyncCredentials.usernamePassword(strUsername, strPassword, false)
+    user = SyncUser.login(myCredentials, Constants.SERVER_IP)
+    config = SyncConfiguration.Builder(user, Constants.SERVER_URL + realmEndPoint)
+            .waitForInitialRemoteData()
+            .build()
+
+    realm = Realm.getInstance(config)
+}
+
+private fun sendDataToServer() {
+    realm = Realm.getInstance(config)
+
+    realm.executeTransactionAsync({ bgRealm ->
+        val user = bgRealm.createObject(TestDemo::class.java)
+
+    }, {
+        // Transaction was a success.
+    }, {
+        // Transaction was a failure.
+    })
+
+}
+*/
 

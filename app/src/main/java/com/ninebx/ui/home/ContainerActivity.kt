@@ -10,7 +10,6 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Member
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
@@ -34,8 +33,8 @@ class ContainerActivity : AppCompatActivity(), MemberView {
     }
 
     override fun onMemberSignup(user: SyncUser) {
-        if( addFamilyMemberOrUsersFragment != null )
-            addFamilyMemberOrUsersFragment!!.onAccountCreated( user )
+        if (addFamilyMemberOrUsersFragment != null)
+            addFamilyMemberOrUsersFragment!!.onAccountCreated(user)
     }
 
     override fun showProgress(message: Int) {
@@ -50,7 +49,7 @@ class ContainerActivity : AppCompatActivity(), MemberView {
         this.showToast(error)
     }
 
-    private var addFamilyMemberOrUsersFragment: AddFamilyMemberOrUsersFragment ?= null
+    private var addFamilyMemberOrUsersFragment: AddFamilyMemberOrUsersFragment? = null
 
     override fun onConfirmPassword(password: String) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()

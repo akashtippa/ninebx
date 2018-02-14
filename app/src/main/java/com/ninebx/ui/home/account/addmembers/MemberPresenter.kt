@@ -16,29 +16,25 @@ import java.util.*
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
-    private lateinit var userName : String
-    private lateinit var encryptedPassword : String
+    private lateinit var userName: String
+    private lateinit var encryptedPassword: String
     private lateinit var encryptedPasswordByteArray: ByteArray
-    private var mCurrentUser : SyncUser ?= null
+    private var mCurrentUser: SyncUser? = null
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
-    private var mAdminId : String = ""
 
     init {
 
     }
 
 
-
-    fun saveToUserAccount(strEmail: String, password:String ) {
-        mAdminId = SyncUser.currentUser().identity
-        userName = strEmail
+    fun saveToUserAccount(strEmail: String, password: String) {
         memberView.showProgress(R.string.loading)
         encryptedPasswordByteArray = (encryptKey(password, strEmail))
-        encryptedPassword = Arrays.toString( convertToUInt8IntArray(encryptedPasswordByteArray))
+        encryptedPassword = Arrays.toString(convertToUInt8IntArray(encryptedPasswordByteArray))
         val credentials = SyncCredentials.usernamePassword(strEmail, encryptedPassword, true)
         SyncUser.loginAsync(credentials, Constants.SERVER_IP, this)
     }
@@ -49,21 +45,25 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
         val userMap = HashMap<String, Any>()
 
         //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
-        userMap.put("user_id", result!!.identity )
-        userMap.put("admin_id", mAdminId )
+        userMap.put("user_id", result!!.identity)
+        userMap.put("admin_id", NineBxApplication.instance.currentUser!!.userId)
         userMap.put("email", userName)
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", false)
 
-        val encryptedPrivateKey = encryptAESKeyPassword(NineBxApplication.getPreferences().privateKey!!, encryptedPasswordByteArray)
+        val privateKey = randomString(16)
+        NineBxApplication.getPreferences().privateKey = privateKey
+
+        val encryptedPrivateKey = encryptAESKeyPassword(privateKey, encryptedPasswordByteArray)
 
         AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
         userMap.put("secure_key", encryptedPrivateKey)
+        AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
+        AppLogger.d(TAG, "UserMap : " + userMap)
 
         val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
         AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
-        mCurrentUser = result
 
         NineBxApplication.getUserAPI()!!.postUserDetails(userMap)
                 .subscribeOn(Schedulers.io())
@@ -109,8 +109,8 @@ class MemberPresenter( private val memberView: MemberView ) : SyncUser.Callback<
         if (error != null) {
             error.printStackTrace()
         }
-        if( error?.message != null ) {
-            memberView.showError( error.errorMessage!! )
+        if (error?.message != null) {
+            memberView.showError(error.errorMessage!!)
         }
     }
 

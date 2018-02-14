@@ -27,12 +27,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthView
 import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.getCurrentUsers
-import com.ninebx.utility.prepareRealmConnections
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fingerprint_dialog_content.*
 
 /**
@@ -97,7 +92,8 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         fingerprint_description.text = getString(R.string.fingerprint_description) + " " + NineBxApplication.getPreferences().userEmail
         cancelButton.setOnClickListener {
             authView!!.fingerPrintCancelled()
-            dismiss() }
+            dismiss()
+        }
         passwordEditText.setOnEditorActionListener(this)
         secondDialogButton.setOnClickListener {
             if (stage == Stage.FINGERPRINT) goToBackup() else verifyPassword()
@@ -247,7 +243,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         fun createKey(keyName: String, invalidatedByBiometricEnrollment: Boolean = true)
     }
 
-    private var authView : AuthView ?= null
+    private var authView: AuthView? = null
     fun setAuthView(mAuthView: AuthView) {
         this.authView = mAuthView
     }

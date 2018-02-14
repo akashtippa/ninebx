@@ -43,7 +43,7 @@ class PassCodeFragment : BaseAuthFragment() {
 
         super.onViewCreated(view, savedInstanceState)
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
-        setupToolbar()
+//        setupToolbar()
         setHasOptionsMenu(!isCreatePassCode)
 
 
@@ -175,7 +175,7 @@ class PassCodeFragment : BaseAuthFragment() {
             ivOtp6.isSelected = false
 
             tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
-            setupToolbar()
+//            setupToolbar()
             setHasOptionsMenu(!isCreatePassCode)
 
         }

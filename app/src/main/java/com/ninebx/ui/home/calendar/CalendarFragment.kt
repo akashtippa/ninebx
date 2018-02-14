@@ -1,15 +1,12 @@
 package com.ninebx.ui.home.calendar
 
-import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
 import com.ninebx.ui.home.BaseHomeFragment
-import com.ninebx.ui.home.HomeView
 import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
@@ -35,7 +32,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_calendar, container, false)
+        return inflater.inflate(R.layout.fragment_calendar, container, false)
     }
 
     private lateinit var mMonthFormat: SimpleDateFormat

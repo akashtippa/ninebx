@@ -130,7 +130,7 @@
                 android:textSize="@dimen/_9sdp" />
 
             <EditText
-                android:id="@+id/txtFirstName"
+                android:id="@+id/edtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -162,7 +162,7 @@
 
 
             <EditText
-                android:id="@+id/txtLastName"
+                android:id="@+id/edtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -201,7 +201,6 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:clickable="false"
                 android:hint="Birthday" />
 
             <View
@@ -231,7 +230,6 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:clickable="false"
                 android:hint="Anniversary" />
 
             <View
@@ -320,6 +318,7 @@
 
 
             <EditText
+                android:id="@+id/edtEmail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -350,6 +349,7 @@
 
 
             <EditText
+                android:id="@+id/edtEmail2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -445,7 +445,7 @@
 
 
             <EditText
-                android:id="@+id/txtCity"
+                android:id="@+id/edtCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -477,7 +477,7 @@
 
 
             <EditText
-                android:id="@+id/txtState"
+                android:id="@+id/edtState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -509,7 +509,7 @@
 
 
             <EditText
-                android:id="@+id/txtZipCode"
+                android:id="@+id/edtZipCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -542,7 +542,7 @@
 
 
             <EditText
-                android:id="@+id/txtCountry"
+                android:id="@+id/edtCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"

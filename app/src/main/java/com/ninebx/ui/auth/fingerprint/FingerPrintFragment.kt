@@ -27,7 +27,6 @@ import com.ninebx.R
 import com.ninebx.ui.auth.BaseAuthFragment
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_finger_print.*
 import java.io.IOException
 import java.security.*
@@ -110,23 +109,21 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         switchTouchId.setOnCheckedChangeListener { _, isChecked ->
 
             NineBxApplication.getPreferences().isFingerPrintEnabled = isChecked
-            if( isChecked )
+            if (isChecked)
                 checkPermissions()
 
         }
         tvSkip.setOnClickListener {
-            if(tvSkip.text.toString() == "Skip") {
+            if (tvSkip.text.toString() == "Skip") {
                 mAuthView.navigateToHome()
-            }
-            else {
+            } else {
                 mAuthView.navigateToInvitePeople()
             }
-         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvQuickAccess.text = Html.fromHtml( getString(R.string.allow_quicker_access), Html.FROM_HTML_MODE_LEGACY )
         }
-        else {
-            tvQuickAccess.text = Html.fromHtml( getString(R.string.allow_quicker_access))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvQuickAccess.text = Html.fromHtml(getString(R.string.allow_quicker_access), Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            tvQuickAccess.text = Html.fromHtml(getString(R.string.allow_quicker_access))
         }
 
 
@@ -180,7 +177,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     private fun showAuthDialog(cipher: Cipher, keyName: String) {
         val fragment = FingerprintAuthenticationDialogFragment()
         fragment.setCryptoObject(FingerprintManager.CryptoObject(cipher))
-        fragment.setAuthView( mAuthView )
+        fragment.setAuthView(mAuthView)
         fragment.setCallback(this)
 
         // Set up the crypto object for later, which will be authenticated by fingerprint usage.
@@ -288,9 +285,9 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         dialogBuilder.setMessage("Allow app to access finger print?")
         dialogBuilder.setPositiveButton("Open App Permission") { dialog, whichButton ->
             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.fromParts("package", context!!.packageName, null));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+                    Uri.fromParts("package", context!!.packageName, null))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
         dialogBuilder.setNegativeButton("Cancel") { dialog, whichButton ->
             Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
@@ -308,6 +305,6 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     }
 
     fun fingerPrintCancelled() {
-        if( switchTouchId != null ) switchTouchId.isChecked = false
+        if (switchTouchId != null) switchTouchId.isChecked = false
     }
 }

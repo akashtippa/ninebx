@@ -63,31 +63,9 @@ internal class ContactsAdapter(private var myList: ArrayList<Contact>?) : Recycl
                         val singleContactViewFragment = SingleContactViewFragment()
                         singleContactViewFragment.arguments = bundle
                         fragmentTransaction.add(R.id.frameLayout, singleContactViewFragment).commit()
+
+                        // Will Check if the new Contact is added then send some value, otherwise open the existing one.
                     }
-                /* R.id.txtContacts -> {
-                     val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-                     fragmentTransaction.addToBackStack(null)
-
-                     val bundle = Bundle()
-                     bundle.putString(Constants.BUNDLE_CONTACT_NO, contactNumber)
-                     bundle.putString(Constants.BUNDLE_CONTACT_NAME, contactName)
-
-                     val singleContactViewFragment = SingleContactViewFragment()
-                     singleContactViewFragment.arguments = bundle
-                     fragmentTransaction.add(R.id.frameLayout, singleContactViewFragment).commit()
-                 }
-                 R.id.imgEditContact -> {
-                     val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-                     fragmentTransaction.addToBackStack(null)
-
-                     val bundle = Bundle()
-                     bundle.putString(Constants.BUNDLE_CONTACT_NO, contactNumber)
-                     bundle.putString(Constants.BUNDLE_CONTACT_NAME, contactName)
-
-                     val singleContactViewFragment = SingleContactViewFragment()
-                     singleContactViewFragment.arguments = bundle
-                     fragmentTransaction.add(R.id.frameLayout, singleContactViewFragment).commit()
-                 }*/
                     R.id.imgDeleteContact -> {
                         removeAt(position, contactPosition)
                     }

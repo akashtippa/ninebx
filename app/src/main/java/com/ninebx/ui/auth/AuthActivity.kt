@@ -27,7 +27,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun fingerPrintCancelled() {
-        if( fingerPrintFragment != null ) fingerPrintFragment!!.fingerPrintCancelled()
+        if (fingerPrintFragment != null) fingerPrintFragment!!.fingerPrintCancelled()
     }
 
     override fun navigateToStart() {
@@ -230,7 +230,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         else return false
     }
 
-    private var fingerPrintFragment: FingerPrintFragment ?= null
+    private var fingerPrintFragment: FingerPrintFragment? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun navigateToFingerPrint() {

@@ -155,7 +155,7 @@ class LoginSignupTask(private var userName: String,
             authView.hideProgress()
             if (error != null) {
                 error.printStackTrace()
-                authView.onError(error.errorMessage!!)
+//                authView.onError(error.errorMessage!!)
             }
         }
 

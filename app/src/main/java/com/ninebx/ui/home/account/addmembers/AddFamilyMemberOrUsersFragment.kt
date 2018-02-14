@@ -22,10 +22,13 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.home.account.PermissionFragment
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
-import com.ninebx.utility.*
+import com.ninebx.utility.Constants
+import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.decryptString
+import com.ninebx.utility.encryptString
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
-import java.util.ArrayList
+import java.util.*
 
 
 /***
@@ -36,10 +39,10 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     private lateinit var selectedRelation: String
     private lateinit var selectedRole: String
-    private lateinit var member : Member
-    private var isNewAccount : Boolean = false
-    private lateinit var memberPresenter : MemberPresenter
-    private lateinit var memberView : MemberView
+    private lateinit var member: Member
+    private var isNewAccount: Boolean = false
+    private lateinit var memberPresenter: MemberPresenter
+    private lateinit var memberView: MemberView
 
     private var strFirstName = ""
     private var strLastName = ""
@@ -55,7 +58,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if( context is MemberView ) {
+        if (context is MemberView) {
             memberView = context
         }
     }
@@ -100,7 +103,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                 Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
             }
 
-        };
+        }
 
         txtsRole.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
@@ -119,7 +122,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
             }
 
-        };
+        }
 
 
         txtSave.setOnClickListener {
@@ -130,7 +133,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             startCameraIntent()
         }
 
-        populateView( member )
+        populateView(member)
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
@@ -140,7 +143,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     private val PERMISSIONS_REQUEST_CODE_GALLERY = 116
 
     private fun startCameraIntent() {
-        bottomSheetDialogFragment.show( childFragmentManager, bottomSheetDialogFragment.tag)
+        bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
 
     override fun onOptionSelected(position: Int) {
@@ -246,20 +249,20 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     private fun populateView(member: Member?) {
 
-        if( member!!.firstName.isNotEmpty() )
-            txtFirstName.setText( member.firstName.decryptString() )
+        if (member!!.firstName.isNotEmpty())
+            txtFirstName.setText(member.firstName.decryptString())
 
-        if( member.lastName.isNotEmpty() )
-            txtLastName.setText( member.lastName.decryptString() )
+        if (member.lastName.isNotEmpty())
+            txtLastName.setText(member.lastName.decryptString())
 
-        if( member.relationship.isNotEmpty() )
+        if (member.relationship.isNotEmpty())
             txtRelationship.prompt = member.relationship
 
-        if( member.role.isNotEmpty() )
+        if (member.role.isNotEmpty())
             txtsRole.prompt = member.role
 
-        if( member.email.isNotEmpty() )
-            edtEmailAddress.setText( member.email.decryptString() )
+        if (member.email.isNotEmpty())
+            edtEmailAddress.setText(member.email.decryptString())
     }
 
 
@@ -303,8 +306,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                 }
         }
 
-        if( isNewAccount )
-            memberPresenter.saveToUserAccount( strEmail, arguments!!.getString(Constants.USER_PASSWORD) )
+        if (isNewAccount)
+            memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
         else {
             var member = Member()
             member.userId = this@AddFamilyMemberOrUsersFragment.member.userId

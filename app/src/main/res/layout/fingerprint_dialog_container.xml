@@ -34,32 +34,32 @@
 
     <LinearLayout
         android:id="@+id/buttonPanel"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         android:gravity="bottom|center"
-        style="?android:attr/buttonBarStyle">
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp">
 
         <Button
             android:id="@+id/cancel_button"
-            android:layout_gravity="center"
-            android:gravity="center"
             style="?android:attr/buttonBarNegativeButtonStyle"
-            android:text="@string/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/cancel"
             tools:ignore="NewApi" />
 
         <Button
             android:id="@+id/second_dialog_button"
-            android:visibility="gone"
             style="?android:attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             tools:ignore="NewApi" />
     </LinearLayout>
 

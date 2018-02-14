@@ -26,14 +26,12 @@
 
             <TextView
                 android:id="@+id/titleTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:text="@string/create_personal_passcode"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_22" />
+                android:textSize="@dimen/text_16" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -154,12 +152,13 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent_white"
             android:cursorVisible="false"
+            android:focusable="true"
             android:gravity="center"
             android:inputType="number"
             android:maxEms="6"
-            android:focusable="true"
             android:textColor="@color/transparent_white"
-            android:visibility="visible" >
+            android:visibility="visible">
+
             <requestFocus />
         </EditText>
 
@@ -168,8 +167,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/additional_security" />
-
-
 
 
     </LinearLayout>

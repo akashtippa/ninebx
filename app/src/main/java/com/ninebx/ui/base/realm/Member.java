@@ -3,7 +3,6 @@ package com.ninebx.ui.base.realm;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
@@ -14,13 +13,23 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Member extends RealmObject implements Parcelable {
 
+    public static final Parcelable.Creator<Member> CREATOR = new Parcelable.Creator<Member>() {
+        @Override
+        public Member createFromParcel(Parcel source) {
+            return new Member(source);
+        }
+
+        @Override
+        public Member[] newArray(int size) {
+            return new Member[size];
+        }
+    };
     @Required
     private String  firstName            = "";
     @Required private String  lastName             = "";
     @Required private String  relationship         = "";
     @Required private String  role                 = "";
     @Required private String  email                = "";
-
     @Required private String dateOfBirth         = "";
     @Required private String anniversary         = "";
     @Required private String gender              = "";
@@ -31,48 +40,37 @@ public class Member extends RealmObject implements Parcelable {
     @Required private String state               = "";
     @Required private String zipCode             = "";
     @Required private String country             = "";
-
     @Required private String userId              = "";
     ///For permissions
     @Required private Boolean homeAdd                = true;
     @Required private Boolean homeEdit               = false;
     @Required private Boolean homeView               = true;
-
     @Required private Boolean travelAdd              = true;
     @Required private Boolean travelEdit             = false;
     @Required private Boolean travelView             = true;
-
     @Required private Boolean contactsAdd              = true;
     @Required private Boolean contactsEdit             = false;
     @Required private Boolean contactsView             = true;
-
     @Required private Boolean educationlAdd              = true;
     @Required private Boolean educationlEdit             = false;
     @Required private Boolean educationlView             = true;
-
     @Required private Boolean personalAdd              = true;
     @Required private Boolean personalEdit             = false;
     @Required private Boolean personalView             = true;
-
     @Required private Boolean interestsAdd              = true;
     @Required private Boolean interestsEdit             = false;
     @Required private Boolean interestsView             = true;
-
     @Required private Boolean wellnessAdd              = true;
     @Required private Boolean wellnessEdit             = false;
     @Required private Boolean wellnessView             = true;
-
     @Required private Boolean memoriesAdd              = true;
     @Required private Boolean memoriesEdit             = false;
     @Required private Boolean memoriesView             = true;
-
     @Required private Boolean shoppingAdd              = true;
     @Required private Boolean shoppingEdit             = false;
     @Required private Boolean shoppingView             = true;
-
     @Required private Boolean addingRemovingMember    = false;
     @Required private Boolean changingMasterPassword  = false;
-
     @Required private Boolean isCompleteProfile     = false;
     @Required private String profilePhoto        = "";
 
@@ -135,6 +133,56 @@ public class Member extends RealmObject implements Parcelable {
         this.changingMasterPassword = changingMasterPassword;
         this.isCompleteProfile = isCompleteProfile;
         this.profilePhoto = profilePhoto;
+    }
+
+    protected Member(Parcel in) {
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.relationship = in.readString();
+        this.role = in.readString();
+        this.email = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.gender = in.readString();
+        this.mobileNumber = in.readString();
+        this.street_1 = in.readString();
+        this.street_2 = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.userId = in.readString();
+        this.homeAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.homeEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.homeView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.travelAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.travelEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.travelView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.contactsAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.contactsEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.contactsView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.educationlAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.educationlEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.educationlView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.personalAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.personalEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.personalView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.interestsAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.interestsEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.interestsView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.wellnessAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.wellnessEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.wellnessView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.memoriesAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.memoriesEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.memoriesView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.shoppingAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.shoppingEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.shoppingView = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.addingRemovingMember = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.changingMasterPassword = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.profilePhoto = in.readString();
     }
 
     public String getFirstName() {
@@ -513,7 +561,6 @@ public class Member extends RealmObject implements Parcelable {
         this.profilePhoto = profilePhoto;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -569,68 +616,6 @@ public class Member extends RealmObject implements Parcelable {
         dest.writeValue(this.isCompleteProfile);
         dest.writeString(this.profilePhoto);
     }
-
-    protected Member(Parcel in) {
-        this.firstName = in.readString();
-        this.lastName = in.readString();
-        this.relationship = in.readString();
-        this.role = in.readString();
-        this.email = in.readString();
-        this.dateOfBirth = in.readString();
-        this.anniversary = in.readString();
-        this.gender = in.readString();
-        this.mobileNumber = in.readString();
-        this.street_1 = in.readString();
-        this.street_2 = in.readString();
-        this.city = in.readString();
-        this.state = in.readString();
-        this.zipCode = in.readString();
-        this.country = in.readString();
-        this.userId = in.readString();
-        this.homeAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.homeEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.homeView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.travelAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.travelEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.travelView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.contactsAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.contactsEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.contactsView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.educationlAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.educationlEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.educationlView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.personalAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.personalEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.personalView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.interestsAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.interestsEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.interestsView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.wellnessAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.wellnessEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.wellnessView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.memoriesAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.memoriesEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.memoriesView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.shoppingAdd = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.shoppingEdit = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.shoppingView = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.addingRemovingMember = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.changingMasterPassword = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.profilePhoto = in.readString();
-    }
-
-    public static final Parcelable.Creator<Member> CREATOR = new Parcelable.Creator<Member>() {
-        @Override
-        public Member createFromParcel(Parcel source) {
-            return new Member(source);
-        }
-
-        @Override
-        public Member[] newArray(int size) {
-            return new Member[size];
-        }
-    };
 
     @Override
     public String toString() {
