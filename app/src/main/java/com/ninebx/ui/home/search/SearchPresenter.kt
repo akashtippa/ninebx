@@ -1,7 +1,10 @@
 package com.ninebx.ui.home.search
 
+import android.content.Intent
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.utility.AppLogger
+import com.ninebx.utility.decryptCombine
 import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
@@ -11,7 +14,9 @@ import io.realm.internal.SyncObjectServerFacade.getApplicationContext
  */
 class SearchPresenter( private val searchView: SearchView ) {
 
-    init {
+
+    init
+   {
         val context = getApplicationContext()
 
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
@@ -19,7 +24,11 @@ class SearchPresenter( private val searchView: SearchView ) {
                 val combineResult = realm!!.where(Combine::class.java).findAll()
                 AppLogger.d("Combine", "Combined Results : " + combineResult)
                 if( combineResult.size > 0 ) {
-                    searchView.onCombineFetched(combineResult[0]!!)
+                    for(i in 0 until combineResult.size ){
+                        val decryptedCombine = decryptCombine(combineResult[i]!!)
+                        AppLogger.d("COmbineDecrypted", "Decrypted combine financial" + decryptedCombine)
+                        searchView.onCombineFetched(decryptedCombine)
+                    }
                 }
             }
         })

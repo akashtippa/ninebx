@@ -2,6 +2,8 @@ package com.ninebx.ui.base.realm.home.homeBanking;
 
 import com.ninebx.ui.base.realm.lists.HomeList;
 
+import org.jetbrains.annotations.Nullable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -38,6 +40,10 @@ public class Combine extends RealmObject {
     }
 
     public Combine() {
+    }
+
+    public Combine(@Nullable Combine combine) {
+
     }
 
     public Integer getId() {

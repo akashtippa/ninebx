@@ -246,5 +246,6 @@ public class DecryptedCalendarEvents implements Parcelable {
         this.photosId = photosId;
     }
 
-
 }
+
+
