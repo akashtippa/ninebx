@@ -17,7 +17,7 @@ class ContainerActivity : AppCompatActivity(), IMemberAdded {
     override fun memberAdded(member: Member?) {
         val intent = Intent()
         intent.putExtra(Constants.MEMBER, member)
-        setResult(Activity.RESULT_OK)
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 

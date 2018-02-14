@@ -41,7 +41,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         mListsAdapter!!.notifyDataSetChanged()
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
-        activity!!.startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
+        startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
     }
 
     override fun onSuccess(outputFile: File?) {
@@ -50,18 +50,9 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     }
 
     override fun memberAdded( member : Member? ) {
-
-        prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val userObject = Users.createUserObject( currentUsers!![0], myList )
-                userObject.insertOrUpdate(realm!!)
-                context!!.hideProgressDialog()
-                myList.clear()
-                myList.addAll(userObject.members)
-                mListsAdapter!!.notifyDataSetChanged()
-            }
-
-        })
+        AppLogger.d("Member", "onMemberAdded" + member)
+        myList.add( member!! )
+        mListsAdapter!!.notifyDataSetChanged()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -100,7 +91,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMBER, Member())
-            activity!!.startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
+            startActivityForResult( Intent( context, ContainerActivity::class.java).putExtras( bundle ), ADD_EDIT_MEMBER )
 
         }
 
@@ -115,6 +106,18 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         mAWSFileTransferHelper.setFileTransferListener(this)
         if( users.profilePhoto.isNotEmpty() )
             mAWSFileTransferHelper.beginDownload( "images/" + users.userId + "/" + users.profilePhoto)
+
+        prepareRealmConnections( context, true, "Users", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val userObject = Users.createUserObject( currentUsers!![0], myList )
+                userObject.insertOrUpdate(realm!!)
+                context!!.hideProgressDialog()
+                myList.clear()
+                myList.addAll(userObject.members)
+                mListsAdapter!!.notifyDataSetChanged()
+            }
+
+        })
 
     }
 
