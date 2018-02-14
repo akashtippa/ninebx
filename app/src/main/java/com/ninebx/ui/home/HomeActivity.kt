@@ -21,7 +21,9 @@ import com.ninebx.R
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.account.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
@@ -33,6 +35,7 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 import io.realm.Realm
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
@@ -142,41 +145,24 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
 
 
-        prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections( this, true,"Users", object : Realm.Callback( ) {
             override fun onSuccess(realm: Realm?) {
 
-                val currentUsers = getCurrentUsers(realm!!)
-                if (currentUsers != null) {
+                val currentUsers = getCurrentUsers( realm!! )
+                if( currentUsers != null ) {
                     this@HomeActivity.hideProgressDialog()
-                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
-
-                    /*     [(Users
-                            {
-                                fullName = '',
-                                firstName = 'IlknmnuBmU7zIssTPV2H0g==',
-                                lastName = 'eQ9xbxOvk7QAuJ/irrh7RA==',
-                                emailAddress = 'USnk9kHqDQgrTxKtjhzMleTaVdiPc2EKa9R/lvZy8yaQ+1Pt1Bex9AqTkXcceL2X',
-                                relationship = 'WAKmiU6q/6cJffKmTwBxIg==',
-                                dateOfBirth = 'Nt81ULb3/q1WlDnxA0S+Uw==',
-                                anniversary = '',
-                                gender = '+ALF7jhRFBzMIVVcXDWSAw==',
-                                mobileNumber = 'jSjQqGEsTRNa9sLHQV/oaJD7U+3UF7H0CpORdxx4vZc=',
-                                street_1 = 'ZpFNGh36F3nrC9o4IMmS6bxXM9EMHSZUXFo3JilQzAU=',
-                                street_2 = '9QkLLqpfKnDrA+chPfQrPw==',
-                                city = 'MvIAtZ7Zn/Q4ZQXIdIm2wA==',
-                                state = 'q0D6DfJ1RRCOcMzWuEPhjA==',
-                                zipCode = 'XnSFgr2I17R7UjWj0JNW8Q==',
-                                country = 'meye3+tDd0KoAzpq4s1UBg==',
-                                userId = 'ef65d95a015e9235a81a5dc030ded645',
-                                id = 1604651164,
-                                isCompleteProfile = true,
-                                profilePhoto = '',
-                                members = RealmList<?>@[]
-                            })]*/
-
-//                    AppLogger.d("CurrentUser", "Decrypted : " + decryptUsers(currentUsers[0]!!))
-//                    AppLogger.d("CurrentUser", "Encrypted : " + encryptUsers(currentUsers[0]!!))
-//                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+                    if( NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE ) {
+                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
+                        val fragmentTransaction = supportFragmentManager.beginTransaction()
+                        fragmentTransaction.addToBackStack(null)
+                        val addFamilyUsersFragment = AddFamilyUsersFragment()
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers))
+                        addFamilyUsersFragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+                        hideQuickAdd()
+                    }
                 }
             }
 
@@ -197,10 +183,11 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         bottomSheetDialogFragment.dismiss()
         if (position == 1) {
             val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (!handleMultiplePermission(this@HomeActivity, permissionList)) {
+            if (!handleMultiplePermission( this@HomeActivity, permissionList)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA)
-                } else {
+                    requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CAMERA )
+                }
+                else {
                     beginCameraAttachmentFlow()
                 }
             } else {
@@ -211,8 +198,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             val permissionList = arrayListOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
             if (!handleMultiplePermission(this@HomeActivity, permissionList)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
-                } else {
+                    requestPermissions( permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_GALLERY)
+                }
+                else {
                     beginGalleryAttachmentFlow()
                 }
             } else {
@@ -248,7 +236,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             } else {
                 Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }
-        } else if (requestCode == PERMISSIONS_REQUEST_CODE_GALLERY) {
+        }
+        else if( requestCode == PERMISSIONS_REQUEST_CODE_GALLERY ) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 beginGalleryAttachmentFlow()
             } else {
@@ -260,11 +249,11 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 
     //a Uri object to store file path
     private var filePath: Uri? = null
-    private var mImagesList: ArrayList<Uri> = ArrayList()
+    private var mImagesList : ArrayList<Uri> = ArrayList()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null ) {
             if (data.clipData != null) {
                 val count = data.clipData.itemCount
                 var currentItem = 0
@@ -279,20 +268,22 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                 mImagesList.add(data.data)
                 setImagesAdapter()
             }
-        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        }
+        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             saveImage(data.extras.get("data") as Bitmap)
             filePath = getImageUri(data.extras.get("data") as Bitmap)
             mImagesList.add(filePath!!)
             setImagesAdapter()
-        } else
+        }
+        else
             super.onActivityResult(requestCode, resultCode, data)
 
     }
 
-    private var attachmentRecyclerAdapter: AttachmentRecyclerViewAdapter? = null
+    private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter?= null
     private fun setImagesAdapter() {
 
-        rvAttachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvAttachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false )
         hideShowAttachments()
 
         attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
@@ -311,15 +302,16 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                     }
                 }
             }
-        }, LinearLayoutManager.HORIZONTAL)
+        }, LinearLayoutManager.HORIZONTAL )
         rvAttachments.adapter = attachmentRecyclerAdapter
     }
 
     private fun hideShowAttachments() {
-        if (mImagesList.size > 0) {
+        if( mImagesList.size > 0 ) {
             layoutQuickAdd.hide()
             cvAttachments.show()
-        } else {
+        }
+        else {
 
             if (imgToolbar.isVisible() && mImagesList.size == 0)
                 layoutQuickAdd.show()

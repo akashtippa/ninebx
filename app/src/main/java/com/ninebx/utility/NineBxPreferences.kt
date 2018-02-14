@@ -24,6 +24,19 @@ class NineBxPreferences : Preferences() {
     var userPassword by stringPref(Constants.USER_PASSWORD)
 
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
+    var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)
+    fun clearPreferences() {
+        firstRun = false
+        isPasswordRequired = false
+        isPasswordEnabled = false
+        currentStep = NONE_COMPLETE
+        userEmail = ""
+        passCode = ""
+        privateKey = ""
+        currentBox = ""
+        countrySelected = ""
+        isFingerPrintEnabled = false
+    }
 
 
 }

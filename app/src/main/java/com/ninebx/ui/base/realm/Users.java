@@ -4,9 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -358,4 +360,9 @@ public class Users extends RealmObject implements Parcelable {
     }
 
 
+    public static ArrayList<Users> createParcelableList(@NotNull RealmResults<Users> currentUsers) {
+        ArrayList users = new ArrayList();
+        users.addAll(currentUsers);
+        return users;
+    }
 }

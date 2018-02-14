@@ -124,6 +124,7 @@ class PassCodeFragment : BaseAuthFragment() {
                         else {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
                             if( validate() ) {
+                                KeyboardUtil.hideKeyboard(etPassCode)
                                 mAuthView.navigateToFingerPrint()
                             }
 

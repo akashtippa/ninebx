@@ -1,8 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/enable_touch_id"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:id="@+id/tvSkip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:textColor="@color/colorPrimary"
+                android:padding="@dimen/default_mini_padding"
+                android:layout_marginEnd="@dimen/default_mini_padding"
+                android:layout_marginRight="@dimen/default_mini_padding"
+                android:text="@string/skip" />
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_22"
+        android:gravity="center"
+        android:padding="@dimen/default_double_margin"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/toolbarLayout"
+        android:text="@string/enable_touch_id"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/ivFingerPrint"
+        app:srcCompat="@drawable/ic_icon_touchid"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvQuickAccess"
+        android:padding="@dimen/default_margin"
+        android:layout_below="@+id/ivFingerPrint"
+        android:text="@string/allow_quicker_access"/>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/switchTouchId"
+        android:switchPadding="@dimen/default_mini_margin"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/default_margin"
+        android:text="@string/enable_touch_id"
+        android:layout_below="@+id/tvQuickAccess"
+         />
+
+
+</RelativeLayout>

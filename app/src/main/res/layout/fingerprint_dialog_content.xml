@@ -15,49 +15,51 @@
   ~ limitations under the License
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fingerprint_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="8dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:paddingTop="16dp">
-
-    <TextView
-        android:id="@+id/fingerprint_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/fingerprint_description"
-        android:textAppearance="@android:style/TextAppearance.SearchResult.Subtitle"
-        android:textColor="?android:attr/textColorSecondary"
-        android:layout_alignParentLeft="true" />
-
+    >
 
     <ImageView
         android:id="@+id/fingerprint_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/fingerprint_description"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/ic_fp_40px"
+        app:srcCompat="@drawable/ic_icon_touchid"
         android:contentDescription="@string/description_fingerprint_icon"
-        android:layout_alignParentLeft="true" />
+        />
 
     <TextView
-        android:id="@+id/fingerprint_status"
-        style="@android:style/TextAppearance.SearchResult.Subtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/fingerprint_icon"
-        android:layout_alignTop="@+id/fingerprint_icon"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@+id/fingerprint_icon"
-        android:gravity="center_vertical"
-        android:text="@string/fingerprint_hint"
-        android:textColor="@color/hint_color"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/fingerprint_icon" />
+        android:layout_below="@+id/fingerprint_icon"
+        android:textColor="@color/black"
+        android:id="@+id/mainTitleTextView"
+        android:gravity="center"
+        android:text="@string/touch_id_for_ninebx"/>
+
+    <TextView
+        android:id="@+id/fingerprint_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@+id/mainTitleTextView"
+        android:layout_alignParentStart="true"
+        android:text="@string/fingerprint_description"
+        android:textAppearance="@android:style/TextAppearance.SearchResult.Subtitle"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_alignParentLeft="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginTop="@dimen/default_mini_margin"
+        android:layout_below="@+id/fingerprint_description"
+        android:background="@color/divider_color" />
+
+
+
+
 </RelativeLayout>
