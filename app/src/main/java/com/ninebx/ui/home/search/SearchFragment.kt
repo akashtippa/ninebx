@@ -153,6 +153,7 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
                         searchVehicleItems.add(vehicleItems)
                 }
                 decryptedCombine.vehicleItems.addAll(searchVehicleItems)
+                AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
 
                 for(assetItems in asset)
                 {
@@ -163,12 +164,39 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
 
                         searchAssetItems.add(assetItems)
                 }
+                decryptedCombine.assetItems.addAll(searchAssetItems)
+                AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
                 for(insuranceItems in insurance){
-                    if(insuranceItems.selectionType.contains(text))
+                    if(insuranceItems.selectionType.contains(text) || insuranceItems.insuranceCompany.contains(text) || insuranceItems.insuredProperty.contains(text) || insuranceItems.insuredVehicle.contains(text)
+                            || insuranceItems.insuredPerson.contains(text) || insuranceItems.policyNumber.contains(text) ||  insuranceItems.policyEffectiveDate.contains(text) || insuranceItems.policyExpirationDate.contains(text)
+                            || insuranceItems.contacts.contains(text) || insuranceItems.website.contains(text) || insuranceItems.userName.contains(text) || insuranceItems.password.contains(text) || insuranceItems.pin.contains(text)
+                            || insuranceItems.created.contains(text) || insuranceItems.modified.contains(text)|| insuranceItems.createdUser.contains(text) || insuranceItems.notes.contains(text) || insuranceItems.attachmentNames.contains(text))
 
                         searchInsuranceItems.add(insuranceItems)
                 }
+                decryptedCombine.insuranceItems.addAll(searchInsuranceItems)
+                AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
+
+                for (taxItems in tax)
+                {
+                    if (taxItems.selectionType.contains(text) || taxItems.returnName.contains(text) || taxItems.taxYear.contains(text) || taxItems.taxPayer.contains(text) || taxItems.contacts.contains(text)
+                            || taxItems.imageName.contains(text) || taxItems.attachmentNames.contains(text) || taxItems.notes.contains(text) || taxItems.title.contains(text) || taxItems.created.contains(text)
+                            || taxItems.modified.contains(text) || taxItems.createdUser.contains(text))
+
+                        searchTaxItems.add(taxItems)
+                }
+                decryptedCombine.taxesItems.addAll(searchTaxItems)
+                AppLogger.d("Search", "SearchTax" + searchTaxItems)
+
+                for(listItems in homelist){
+                    if (listItems.selectionType.contains(text) || listItems.classType.contains(text) || listItems.listName.contains(text) || listItems.dueDate.contains(text)
+                            || listItems.created.contains(text) || listItems.modified.contains(text) || listItems.createdUser.contains(text))
+
+                        searchHomeList.add(listItems)
+                }
+                decryptedCombine.listItems.addAll(searchHomeList)
+                AppLogger.d("Search", "SearchHomeList" + searchHomeList)
 
                 rvRecentSearch.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
                 val adapter = SearchAdapter(searchFinanceItems)

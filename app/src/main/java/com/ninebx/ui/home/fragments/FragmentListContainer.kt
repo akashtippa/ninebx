@@ -118,7 +118,7 @@ class FragmentListContainer : FragmentBackHelper() {
             override fun onSuccess(realm: Realm?) {
 
                 contactList = getCurrentContactList(realm!!)
-                contacts.addAll(contactList)
+                /*contacts.addAll(contactList)*/
                 AppLogger.e("Contacts", "Contacts Results : " + contactList)
 
                 val resultArray = contactList!!.toArray() as Array<Contacts>
