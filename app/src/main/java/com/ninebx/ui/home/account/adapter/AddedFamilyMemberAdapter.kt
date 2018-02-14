@@ -27,14 +27,14 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?, 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val member = myList!![position]
-        AppLogger.d("Decrypt", "Decrypting : " + member.toString() )
+        AppLogger.d("Decrypt", "Decrypting : " + member.toString())
         holder.txtProfileName.text = member.firstName.decryptString() + " " + member.lastName.decryptString()
         holder.txtAccountHolder.text = member.relationship.decryptString()
         holder.txtRole.text = member.role.decryptString()
         holder.txtProfileEmail.text = member.email.decryptString()
 
         holder.imgEdit.setOnClickListener {
-           iMemberAdded.onMemberEdit(member)
+            iMemberAdded.onMemberEdit(member)
         }
 
         holder.imgDelete.setOnClickListener {

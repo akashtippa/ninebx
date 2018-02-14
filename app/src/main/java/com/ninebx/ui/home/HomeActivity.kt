@@ -37,6 +37,7 @@ import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 import io.realm.Realm
+import io.realm.RealmResults
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -45,6 +46,10 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
+    override fun getCurrentUsers(): RealmResults<Users> {
+        return currentUsers!!
+    }
 
 
     override fun showProgress(message: Int) {
@@ -81,6 +86,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     var backBtnCount = 0
 
     val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
+
+    private var currentUsers: RealmResults<Users>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,20 +152,23 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
 
 
-        prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections( this, true,"Users", object : Realm.Callback( ) {
             override fun onSuccess(realm: Realm?) {
 
-                val currentUsers = getCurrentUsers(realm!!)
-                if (currentUsers != null) {
+                currentUsers = getCurrentUsers(realm!!)
+                if( currentUsers != null ) {
                     this@HomeActivity.hideProgressDialog()
-                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
-                    if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+                    for (member in currentUsers!![0]!!.members) {
+                        AppLogger.d("CurrentUser", "Members : " + member.toString())
+                    }
+                    if( NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE ) {
                         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
                         val fragmentTransaction = supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
                         val addFamilyUsersFragment = AddFamilyUsersFragment()
                         val bundle = Bundle()
-                        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers))
+                        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
                         addFamilyUsersFragment.arguments = bundle
                         fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
                         hideQuickAdd()

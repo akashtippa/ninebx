@@ -394,29 +394,29 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-       encryptMember(members[i]!!)
+        encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName = member.firstName            .encryptString()
-    member.lastName = member. lastName             .encryptString()
-    member.relationship = member. relationship         .encryptString()
-    member.role = member. role.encryptString()
-    member.email = member. email                .encryptString()
+    member.firstName = member.firstName.encryptString()
+    member.lastName = member.lastName.encryptString()
+    member.relationship = member.relationship.encryptString()
+    member.role = member.role.encryptString()
+    member.email = member.email.encryptString()
 
-    member.dateOfBirth = member.dateOfBirth         .encryptString()
-    member.anniversary = member.anniversary         .encryptString()
+    member.dateOfBirth = member.dateOfBirth.encryptString()
+    member.anniversary = member.anniversary.encryptString()
     member.gender = member.gender
-    member.mobileNumber = member.mobileNumber        .encryptString()
-    member.street_1 = member.street_1            .encryptString()
-    member.street_2 = member.street_2            .encryptString()
-    member.city = member.city                .encryptString()
-    member.state = member.state               .encryptString()
-    member.zipCode = member.zipCode             .encryptString()
-    member.country = member.country             .encryptString()
+    member.mobileNumber = member.mobileNumber.encryptString()
+    member.street_1 = member.street_1.encryptString()
+    member.street_2 = member.street_2.encryptString()
+    member.city = member.city.encryptString()
+    member.state = member.state.encryptString()
+    member.zipCode = member.zipCode.encryptString()
+    member.country = member.country.encryptString()
 
     return member
 }

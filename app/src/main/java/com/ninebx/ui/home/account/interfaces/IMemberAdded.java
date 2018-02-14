@@ -8,5 +8,6 @@ import com.ninebx.ui.base.realm.Member;
 
 public interface IMemberAdded {
     void memberAdded(Member member);
+
     void onMemberEdit(Member member);
 }

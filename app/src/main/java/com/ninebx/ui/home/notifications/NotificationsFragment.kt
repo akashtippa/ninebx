@@ -28,9 +28,4 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         return inflater.inflate(R.layout.fragment_notifications, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
 }
