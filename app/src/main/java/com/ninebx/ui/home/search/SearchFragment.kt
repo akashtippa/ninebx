@@ -2,6 +2,7 @@ package com.ninebx.ui.home.search
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,10 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.LinearLayout
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
-import io.realm.RealmList
 
 
 /**
@@ -23,41 +26,10 @@ import io.realm.RealmList
 
 class SearchFragment() : BaseHomeFragment(), SearchView {
 
-    private lateinit var finance : RealmList<DecryptedFinancial>
-    private lateinit var pay : RealmList<DecryptedPayment>
-    private lateinit var property : RealmList<DecryptedProperty>
-    private lateinit var vehicle : RealmList<DecryptedVehicle>
-    private lateinit var asset : RealmList<DecryptedAsset>
-    private lateinit var insurance : RealmList<DecryptedInsurance>
-    private lateinit var tax : RealmList<DecryptedTax>
-    private lateinit var homelist : RealmList<DecryptedHomeList>
-
+    private var mDecryptCombine : DecryptedCombine ?= null
 
     override fun onCombineFetched(combine: DecryptedCombine) {
-
-        if(combine.financialItems.size > 0)
-            finance = combine.financialItems
-
-        if(combine.paymentItems.size > 0)
-            pay = combine.paymentItems
-
-        if(combine.propertyItems.size > 0)
-            property = combine.propertyItems
-
-        if (combine.vehicleItems.size > 0)
-            vehicle = combine.vehicleItems
-
-        if (combine.assetItems.size > 0)
-            asset = combine.assetItems
-
-        if (combine.insuranceItems.size > 0)
-            insurance = combine.insuranceItems
-
-        if (combine.taxesItems.size > 0)
-            tax = combine.taxesItems
-
-        if (combine.listItems.size > 0)
-            homelist = combine.listItems
+        this.mDecryptCombine = combine
     }
     override fun showProgress(message: Int) {
 
@@ -75,14 +47,19 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
+    private lateinit var searchDecryptCombine: DecryptedCombine
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        hideAllLayouts()
+
         SearchPresenter(this)
 
-        var editSearch = edtSearch.addTextChangedListener(object : TextWatcher{
+        edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
 
-                var decryptedCombine = DecryptedCombine()
+                searchDecryptCombine = DecryptedCombine()
                 var text = edtSearch.getText().toString()
 
                 var searchFinanceItems = ArrayList<DecryptedFinancial>()
@@ -94,22 +71,23 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
                 var searchTaxItems = ArrayList<DecryptedTax>()
                 var searchHomeList = ArrayList<DecryptedHomeList>()
 
-                for( financeItems in finance ) {
+                for( financeItems in mDecryptCombine!!.financialItems ) {
                     if( financeItems.selectionType.contains(text) || financeItems.institutionName.contains(text) || financeItems.accountName.contains(text) ||
                             financeItems.accountType.contains(text) || financeItems.nameOnAccount.contains(text) || financeItems.accountNumber.contains(text) ||
                             financeItems.location.contains(text) || financeItems.swiftCode.contains(text) || financeItems.abaRoutingNumber.contains(text) ||
                             financeItems.contacts.contains(text) || financeItems.website.contains(text) || financeItems.userName.contains(text) ||
                             financeItems.password.contains(text) ||  financeItems.pin.contains(text) || financeItems.created.contains(text) ||
-                            financeItems.modified.contains(text) || financeItems.createdUser.contains(text) || financeItems.notes.contains(text) || financeItems.attachmentNames.contains(text))
+                            financeItems.modified.contains(text) || financeItems.createdUser.contains(text) || financeItems.notes.contains(text) 
+                            || financeItems.attachmentNames.contains(text))
 
                         searchFinanceItems.add(financeItems)
                 }
 
-                decryptedCombine.financialItems.addAll(searchFinanceItems)
+                searchDecryptCombine.financialItems.addAll(searchFinanceItems)
                 AppLogger.d("Search", "SearchItems : " + searchFinanceItems)
-                AppLogger.d("Search", "DecryptedCombine : " + decryptedCombine)
+                AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
 
-                for( paymentItems in pay){
+                for( paymentItems in mDecryptCombine!!.paymentItems){
 
                     if (paymentItems.selectionType.contains(text) || paymentItems.insuranceCompany.contains(text) || paymentItems.insuredProperty.contains(text) ||
                             paymentItems.insuredVehicle.contains(text) || paymentItems.insuredPerson.contains(text) || paymentItems.policyNumber.contains(text) ||
@@ -122,10 +100,10 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
                         searchPaymentItems.add(paymentItems)
                 }
 
-                decryptedCombine.paymentItems.addAll(searchPaymentItems)
+                searchDecryptCombine.paymentItems.addAll(searchPaymentItems)
                 AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
 
-                for( propertyItems in property) {
+                for( propertyItems in mDecryptCombine!!.propertyItems) {
                     if(propertyItems.selectionType.contains(text) || propertyItems.propertyName.contains(text) || propertyItems.streetAddressOne.contains(text) ||
                             propertyItems.streetAddressTwo.contains(text) || propertyItems.city.contains(text) || propertyItems.state.contains(text) ||
                             propertyItems.zipCode.contains(text) || propertyItems.country.contains(text) || propertyItems.titleName.contains(text) ||
@@ -137,10 +115,10 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
                         searchPropertyItems.add(propertyItems)
                 }
 
-                decryptedCombine.propertyItems.addAll(searchPropertyItems)
+                searchDecryptCombine.propertyItems.addAll(searchPropertyItems)
                 AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
 
-                for(vehicleItems in vehicle){
+                for(vehicleItems in mDecryptCombine!!.vehicleItems){
                     if(vehicleItems.selectionType.contains(text) || vehicleItems.vehicleName.contains(text) || vehicleItems.licenseNumber.contains(text) ||
                             vehicleItems.vinNumber.contains(text) || vehicleItems.make.contains(text) || vehicleItems.model.contains(text) || vehicleItems.modelYear.contains(text) ||
                             vehicleItems.color.contains(text) || vehicleItems.titleName.contains(text) || vehicleItems.estimatedMarketValue.contains(text) || vehicleItems.registrationExpirydate.contains(text) ||
@@ -151,10 +129,10 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
 
                         searchVehicleItems.add(vehicleItems)
                 }
-                decryptedCombine.vehicleItems.addAll(searchVehicleItems)
+                searchDecryptCombine.vehicleItems.addAll(searchVehicleItems)
                 AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
 
-                for(assetItems in asset)
+                for(assetItems in mDecryptCombine!!.assetItems)
                 {
                     if(assetItems.selectionType.contains(text) || assetItems.test.contains(text) || assetItems.assetName.contains(text) || assetItems.descriptionOrLocation.contains(text)
                             || assetItems.estimatedMarketValue.contains(text) || assetItems.serialNumber.contains(text) || assetItems.purchaseDate.contains(text)
@@ -163,10 +141,10 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
 
                         searchAssetItems.add(assetItems)
                 }
-                decryptedCombine.assetItems.addAll(searchAssetItems)
+                searchDecryptCombine.assetItems.addAll(searchAssetItems)
                 AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
-                for(insuranceItems in insurance){
+                for(insuranceItems in mDecryptCombine!!.insuranceItems){
                     if(insuranceItems.selectionType.contains(text) || insuranceItems.insuranceCompany.contains(text) || insuranceItems.insuredProperty.contains(text) || insuranceItems.insuredVehicle.contains(text)
                             || insuranceItems.insuredPerson.contains(text) || insuranceItems.policyNumber.contains(text) ||  insuranceItems.policyEffectiveDate.contains(text) || insuranceItems.policyExpirationDate.contains(text)
                             || insuranceItems.contacts.contains(text) || insuranceItems.website.contains(text) || insuranceItems.userName.contains(text) || insuranceItems.password.contains(text) || insuranceItems.pin.contains(text)
@@ -174,10 +152,10 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
 
                         searchInsuranceItems.add(insuranceItems)
                 }
-                decryptedCombine.insuranceItems.addAll(searchInsuranceItems)
+                searchDecryptCombine.insuranceItems.addAll(searchInsuranceItems)
                 AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
 
-                for (taxItems in tax)
+                for (taxItems in mDecryptCombine!!.taxesItems)
                 {
                     if (taxItems.selectionType.contains(text) || taxItems.returnName.contains(text) || taxItems.taxYear.contains(text) || taxItems.taxPayer.contains(text) || taxItems.contacts.contains(text)
                             || taxItems.imageName.contains(text) || taxItems.attachmentNames.contains(text) || taxItems.notes.contains(text) || taxItems.title.contains(text) || taxItems.created.contains(text)
@@ -185,21 +163,21 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
 
                         searchTaxItems.add(taxItems)
                 }
-                decryptedCombine.taxesItems.addAll(searchTaxItems)
+                searchDecryptCombine.taxesItems.addAll(searchTaxItems)
                 AppLogger.d("Search", "SearchTax" + searchTaxItems)
 
-                for(listItems in homelist){
+                for(listItems in mDecryptCombine!!.listItems){
                     if (listItems.selectionType.contains(text) || listItems.classType.contains(text) || listItems.listName.contains(text) || listItems.dueDate.contains(text)
                             || listItems.created.contains(text) || listItems.modified.contains(text) || listItems.createdUser.contains(text))
 
                         searchHomeList.add(listItems)
                 }
-                decryptedCombine.listItems.addAll(searchHomeList)
+                searchDecryptCombine.listItems.addAll(searchHomeList)
                 AppLogger.d("Search", "SearchHomeList" + searchHomeList)
 
-                rvRecentSearch.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-                val adapter = SearchAdapter(decryptedCombine)
-                rvRecentSearch.setAdapter(adapter)
+                setAdapter()
+
+
 
             }
 
@@ -212,5 +190,219 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
             }
         })
     }
+
+    private fun hideAllLayouts() {
+        homeLayout.hide()
+        travelLayout.hide()
+        contactsLayout.hide()
+        educationLayout.hide()
+        personalLayout.hide()
+        interestsLayout.hide()
+        wellnessLayout.hide()
+        memoriesLayout.hide()
+        shoppingLayout.hide()
+    }
+
+    var mSearchTravelItems = ArrayList<Level3SearchItem>()
+    var mSearchContactsItems = ArrayList<Level3SearchItem>()
+    var mSearchEducationItems = ArrayList<Level3SearchItem>()
+    var mSearchPersonalItems = ArrayList<Level3SearchItem>()
+    var mSearchInterestsItems = ArrayList<Level3SearchItem>()
+    var mSearchWellnessItems = ArrayList<Level3SearchItem>()
+    var mSearchMemoriesItems = ArrayList<Level3SearchItem>()
+    var mSearchShoppingItems = ArrayList<Level3SearchItem>()
+    var mSearchHomeList = ArrayList<Level3SearchItem>()
+
+    private fun setAdapter() {
+
+        hideAllLayouts()
+
+        mSearchTravelItems.clear()
+        mSearchContactsItems.clear()
+        mSearchEducationItems.clear()
+        mSearchPersonalItems.clear()
+        mSearchInterestsItems.clear()
+        mSearchWellnessItems.clear()
+        mSearchMemoriesItems.clear()
+        mSearchHomeList.clear()
+        mSearchShoppingItems.clear()
+
+        setupHomeItems()
+        setupTravelItems()
+        setupContactsItems()
+        setupEducationItems()
+        setupPersonalItems()
+        setupInterestsItems()
+        setupWellnessItems()
+        setupMemoriesItems()
+        setupShoppingItems()
+
+        //TODO - Do for all boxes
+
+    }
+
+    private fun setupTravelItems() {
+        //TODO
+    }
+
+    private fun setupContactsItems() {
+        //TODO
+    }
+
+    private fun setupEducationItems() {
+        //TODO
+    }
+
+    private fun setupPersonalItems() {
+        //TODO
+    }
+
+    private fun setupInterestsItems() {
+        //TODO
+    }
+
+    private fun setupWellnessItems() {
+        //TODO
+    }
+
+    private fun setupMemoriesItems() {
+        //TODO
+    }
+
+    private fun setupShoppingItems() {
+        //TODO
+    }
+
+    private fun setupHomeItems() {
+        for( finance in searchDecryptCombine.financialItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance" ))
+        }
+        for( payment in searchDecryptCombine.paymentItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.userName, "payment" ))
+        }
+        for( asset in searchDecryptCombine.assetItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset" ))
+        }
+        for( insurance in searchDecryptCombine.insuranceItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  insurance.insuranceCompany, "insurance" ))
+        }
+        for( tax in searchDecryptCombine.taxesItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  tax.taxPayer, "tax" ))
+        }
+        for( vehicle in searchDecryptCombine.vehicleItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.titleName, "vehicle" ))
+        }
+        for( property in searchDecryptCombine.propertyItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  property.propertyName, "property" ))
+        }
+        for( home in searchDecryptCombine.listItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  home.listName, "home" ))
+        }
+        if( mSearchHomeList.size > 0 ) //Pass the right recyclerview and layout to be shown with searchlist to be populated
+            setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
+    }
+
+    private fun setupAdapter( searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
+
+        searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
+        searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
+            override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
+                when( searchItem.searchCategory ) {
+                    R.string.home_amp_money -> {
+                        switchHomeItems( position, searchItem )
+                    }
+                    (R.string.travel) -> {
+                        switchTravelItems( position, searchItem )
+                    }
+                    (R.string.contacts) -> {
+                        switchContactsItems( position, searchItem )
+                    }
+                    (R.string.education_work) -> {
+                        switchEducationItems( position, searchItem )
+                    }
+                    (R.string.personal) -> {
+                        switchPersonalItems( position, searchItem )
+                    }
+                    (R.string.interests) -> {
+                        switchInterestsItems( position, searchItem )
+                    }
+                    (R.string.wellness) -> {
+                        switchWellnessItems( position, searchItem )
+                    }
+                    (R.string.memories) -> {
+                        switchMemoriesItems( position, searchItem )
+                    }
+                    (R.string.shopping) -> {
+                        switchShoppingItems( position, searchItem )
+                    }
+                }
+            }
+        })
+        layout.show()
+
+    }
+
+    private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchMemoriesItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchWellnessItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchInterestsItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchPersonalItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchEducationItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchContactsItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO
+    }
+
+    private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun switchHomeItems(position: Int, searchItem: Level3SearchItem) {
+        when( searchItem.categoryName ) {
+            "finance" -> {
+                val selectedDocument = searchDecryptCombine.financialItems[position]
+            }
+            "payment" -> {
+                val selectedDocument = searchDecryptCombine.paymentItems[position]
+            }
+            "asset" -> {
+                val selectedDocument = searchDecryptCombine.assetItems[position]
+            }
+            "insurance" -> {
+                val selectedDocument = searchDecryptCombine.insuranceItems[position]
+            }
+            "tax" -> {
+                val selectedDocument = searchDecryptCombine.taxesItems[position]
+            }
+            "vehicle" -> {
+                val selectedDocument = searchDecryptCombine.vehicleItems[position]
+            }
+            "property" -> {
+                val selectedDocument = searchDecryptCombine.propertyItems[position]
+            }
+            "home" -> {
+                val selectedDocument = searchDecryptCombine.listItems[position]
+            }
+        }
+    }
+
+
 }
 
