@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -35,11 +36,379 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvRecentSearch"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchLayout"
-        />
+        android:id="@+id/progressLayout"
+        android:background="@color/white"
+        android:layout_below="@+id/searchLayout">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvProgress"
+            android:gravity="center"
+            android:layout_below="@+id/progressBar"
+            android:text="@string/loading"/>
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="gone"
+        android:layout_below="@+id/searchLayout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/searchLayout"
+            android:orientation="vertical"
+            android:id="@+id/itemsLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/homeLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_home_money_up"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_home"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_n_money"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvHomeMoney"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/travelLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_travel"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_travell"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/travel"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvTravel"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/contactsLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_contacts"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_contacts"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contacts"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvContacts"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/educationLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_education_work"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_education"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/education_work"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvEducationWork"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/personalLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_personal"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_personal"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personal"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvPersonal"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/interestsLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_home_money_up"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_home"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/interests"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvInterests"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/wellnessLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_interests"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_interests"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wellness"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvWellness"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/memoriesLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_memories"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_memories"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/memories"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvMemories"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/shoppingLayout">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_100"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="@dimen/margin_48"
+                        android:layout_height="@dimen/margin_48"
+                        android:padding="@dimen/default_mini_padding"
+                        app:srcCompat="@drawable/ic_home_icon_shopping"
+                        android:layout_margin="@dimen/default_micro_padding"
+                        android:background="@drawable/bg_shopping"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopping"
+                        android:padding="@dimen/default_mini_padding"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvShopping"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
 
 </RelativeLayout>

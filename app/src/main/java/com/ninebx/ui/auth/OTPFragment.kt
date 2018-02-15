@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -60,13 +61,27 @@ class OTPFragment : BaseAuthFragment() {
             }
         }
         tvResend.setOnClickListener {
+            etOtp1.setText("")
+            etOtp2.setText("")
+            etOtp3.setText("")
+            etOtp4.setText("")
+            etOtp5.setText("")
+            etOtp6.setText("")
+            tvResend.isEnabled = false
+            handler.postDelayed( runnable, 60000)
             mAuthView.getAuthPresenter().requestOTP(mAuthView.getAccountEmail())
-        }
 
+        }
+        tvResend.isEnabled = false
         setupOtp()
     }
 
 
+    private var handler: Handler = Handler()
+    private var runnable: Runnable = Runnable {
+        if( tvResend != null )
+            tvResend.isEnabled = true
+    }
 
     private fun setupOtp() {
 
@@ -191,16 +206,11 @@ class OTPFragment : BaseAuthFragment() {
 
             }
         })
-        if( NineBxApplication.autoTestMode ) {
-            etOtp1.setText("1")
-            etOtp2.setText("1")
-            etOtp3.setText("1")
-            etOtp4.setText("1")
-            etOtp5.setText("1")
-            etOtp6.setText("1")
-        }
 
         mAuthView.getAuthPresenter().requestOTP( mAuthView.getAccountEmail() )
+
+
+        handler.postDelayed( runnable, 60000)
 
     }
 

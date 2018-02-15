@@ -66,7 +66,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 mCurrentUser = encryptUsers(mCurrentUser)
                 AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
                 mCurrentUser.insertOrUpdate(realm!!)
-                mAuthView.navigateToOTP()
+                mAuthView.navigateToOTP(false)
             }
         })
     }
