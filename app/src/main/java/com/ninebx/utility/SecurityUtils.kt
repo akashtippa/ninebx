@@ -1,7 +1,6 @@
 package com.ninebx.utility
 
 import android.util.Base64
-import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
 import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
@@ -16,6 +15,7 @@ import com.ninebx.ui.base.realm.home.education.MainEducation
 import com.ninebx.ui.base.realm.home.education.Work
 import com.ninebx.ui.base.realm.home.homeBanking.*
 import com.ninebx.ui.base.realm.home.interests.Interests
+import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MainMemories
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.base.realm.home.personal.*
@@ -1072,6 +1072,7 @@ fun decryptDevice(device: Device): DecryptedDevice {
 
 fun decryptDocuments(documents: Documents): DecryptedDocuments {
     val decryptDocuments = DecryptedDocuments()
+    decryptDocuments.id = documents.id
     decryptDocuments.selectionType = documents.selectionType.decryptString()
     decryptDocuments.passportName = documents.passportName.decryptString()
     decryptDocuments.visaName = documents.visaName.decryptString()
@@ -1404,7 +1405,7 @@ fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation 
     return decrypytMainEducation
 }
 
-fun decrypytMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
+fun decryptMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
     val decrypytMainMemories = DecryptedMainMemories()
     decrypytMainMemories.selectionType = mainMemories.selectionType.decryptString()
     decrypytMainMemories.accountName = mainMemories.accountName.decryptString()
@@ -2404,8 +2405,7 @@ fun encryptVacations(vacations: Vacations): Vacations {
 
 
 fun decryptCombine(combine: Combine) : DecryptedCombine
-{
-    val decryptedCombine = DecryptedCombine()
+{    val decryptedCombine = DecryptedCombine()
 
     for ( financialItems in combine.financialItems ) {
         val decryptedItem = decryptFinancial(financialItems)
@@ -2441,4 +2441,28 @@ fun decryptCombine(combine: Combine) : DecryptedCombine
         decryptedCombine.listItems.add(decryptHomeList(listItems))
     }
     return decryptedCombine
+}
+
+/*
+fun decryptCombineTravel(combineTravel: CombineTravel) : DecryptedCombineTravel{
+    val decryptedCombineTravel = DecryptedCombineTravel()
+    for (documentsItems in combineTravel.documentsItems) {
+        decryptedCombineTravel.documentsItems.add(decryptDocuments(documentsItems))
+    }
+    return decryptedCombineTravel
+}
+*/
+fun decryptCombineMemories(combineMemories : CombineMemories) : DecryptedCombineMemories{
+    val decryptedCombineMemories = DecryptedCombineMemories()
+
+    for(mainMemoryItems in combineMemories.mainMemoriesItems)  {
+        decryptedCombineMemories.mainMemoriesItems.add(decryptMainMemories(mainMemoryItems))
+    }
+    for(memoryTimelineItems in combineMemories.memoryTimelineItems){
+        decryptedCombineMemories.memoryTimelineItems.add(decryptMemoryTimeLine(memoryTimelineItems))
+    }
+    for(listItems in combineMemories.listItems){
+        decryptedCombineMemories.listItems.add(decryptMemoriesList(listItems))
+    }
+    return decryptedCombineMemories
 }
