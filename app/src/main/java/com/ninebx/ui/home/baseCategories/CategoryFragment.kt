@@ -121,8 +121,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                         }
                     }
-
-
                 }
             })
 

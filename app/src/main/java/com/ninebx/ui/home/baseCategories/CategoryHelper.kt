@@ -57,7 +57,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryIndex += 1003
         category_id = "wellness_" + categoryIndex
         category = Category(category_id)
@@ -97,7 +96,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryIndex += 1005
         category_id = "personal" + categoryIndex
         category = Category(category_id)
@@ -114,7 +112,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryIndex += 1005
         category_id = "personal" + categoryIndex
         category = Category(category_id)
@@ -122,7 +119,6 @@ class CategoryHelper(
         category.drawableString = "ic_icon_birth_certificate"
 
         categoryList.add(category)
-
 
         categoryIndex += 1005
         category_id = "personal" + categoryIndex
@@ -139,7 +135,6 @@ class CategoryHelper(
         category.drawableString = "ic_icon_lists_contacts"
 
         categoryList.add(category)
-
 
         categoryIndex += 1005
         category_id = "personal" + categoryIndex
@@ -180,9 +175,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
-
-
         categoryIndex += 1003
         category_id = "contacts_" + categoryIndex
         category = Category(category_id)
@@ -207,7 +199,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryView.onSuccess(categoryList)
     }
 
@@ -227,7 +218,6 @@ class CategoryHelper(
         category.subCategories.add(SubCategory("Railway", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
         category.subCategories.add(SubCategory("Other", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
 
-
         categoryList.add(category)
 
         categoryIndex += 1000
@@ -242,7 +232,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryIndex += 1000
         category_id = "travel_" + categoryIndex
         category = Category(category_id)
@@ -250,7 +239,6 @@ class CategoryHelper(
         category.drawableString = "ic_icon_calender_selected"
 
         categoryList.add(category)
-
 
         categoryIndex += 1000
         category_id = "travel_" + categoryIndex
@@ -275,8 +263,6 @@ class CategoryHelper(
         category.drawableString = "ic_icon_lists"
 
         categoryList.add(category)
-
-
         categoryView.onSuccess(categoryList)
     }
 
@@ -576,9 +562,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryView.onSuccess(categoryList)
     }
-
-
 }
