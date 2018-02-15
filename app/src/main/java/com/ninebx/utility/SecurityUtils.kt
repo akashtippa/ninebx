@@ -23,10 +23,7 @@ import com.ninebx.ui.base.realm.home.shopping.ClothingSizes
 import com.ninebx.ui.base.realm.home.shopping.LoyaltyPrograms
 import com.ninebx.ui.base.realm.home.shopping.RecentPurchase
 import com.ninebx.ui.base.realm.home.shopping.Shopping
-import com.ninebx.ui.base.realm.home.travel.Documents
-import com.ninebx.ui.base.realm.home.travel.Loyalty
-import com.ninebx.ui.base.realm.home.travel.Travel
-import com.ninebx.ui.base.realm.home.travel.Vacations
+import com.ninebx.ui.base.realm.home.travel.*
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
@@ -2413,13 +2410,11 @@ fun decryptCombine(combine: Combine) : DecryptedCombine
     for ( financialItems in combine.financialItems ) {
         val decryptedItem = decryptFinancial(financialItems)
         decryptedCombine.financialItems.add( decryptedItem )
-        AppLogger.d("SecurityUtil", "DecryptedFinance" + decryptedItem)
     }
 
     for (paymentItems in combine.paymentItems ) {
         val decryptedItem = decryptPayment(paymentItems)
         decryptedCombine.paymentItems.add(decryptedItem)
-        AppLogger.d("SecurityUtil", "DecryptedPayment" + decryptedItem)
     }
 
     for (propertyItems in combine.propertyItems){

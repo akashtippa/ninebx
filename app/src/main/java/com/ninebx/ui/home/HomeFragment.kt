@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
+import com.ninebx.ui.home.baseCategories.CategoryPresenter
 import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_home_updated.*
 
@@ -74,6 +75,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         bundle.putInt("category", option)
         val categoryFragment = CategoryFragment()
         categoryFragment.arguments = bundle
+
         NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
 
         when (option) {
@@ -85,7 +87,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             (R.string.travel) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
                 prefrences.currentBox = getString(R.string.travel)
-
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.contacts) -> {
@@ -132,6 +133,4 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
     }
-
-
 }

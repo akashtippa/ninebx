@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.home.shopping;
 import com.ninebx.ui.base.realm.lists.ShoppingList;
 
 import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
@@ -10,9 +12,11 @@ import io.realm.annotations.Required;
  * Created by Alok on 29/01/18.
  */
 
-public class CombineShopping {
+@RealmClass
+public class CombineShopping extends RealmObject {
 
-    @Required
+   /* @Required*/
+    @PrimaryKey
     private int id = 0;
 
     @Required private RealmList<LoyaltyPrograms> loyaltyProgramsItems            = new RealmList<LoyaltyPrograms>();
@@ -21,6 +25,8 @@ public class CombineShopping {
     @Required private RealmList<ClothingSizes> clothingSizesItems              = new RealmList<ClothingSizes>();
 
     @Required private RealmList<ShoppingList> listItems                       = new RealmList<ShoppingList>();
+
+    public CombineShopping(){}
 
     public CombineShopping(int id, RealmList loyaltyProgramsItems, RealmList recentPurchaseItems, RealmList shoppingItems, RealmList clothingSizesItems, RealmList listItems) {
         this.id = id;
