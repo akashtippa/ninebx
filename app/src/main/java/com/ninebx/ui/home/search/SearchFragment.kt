@@ -72,8 +72,7 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var v = inflater.inflate(R.layout.fragment_search, container, false)
-        return v
+       return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -199,7 +198,7 @@ class SearchFragment() : BaseHomeFragment(), SearchView {
                 AppLogger.d("Search", "SearchHomeList" + searchHomeList)
 
                 rvRecentSearch.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-                val adapter = SearchAdapter(searchFinanceItems)
+                val adapter = SearchAdapter(decryptedCombine)
                 rvRecentSearch.setAdapter(adapter)
 
             }
