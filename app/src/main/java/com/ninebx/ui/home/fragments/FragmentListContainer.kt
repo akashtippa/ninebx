@@ -44,6 +44,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class FragmentListContainer : FragmentBackHelper() {
 
     var fragmentValue = ""
+    var fragmentCategoryId = ""
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
@@ -78,7 +79,7 @@ class FragmentListContainer : FragmentBackHelper() {
 
         val bundle = Bundle()
         fragmentValue = arguments!!.getString("categoryName")
-
+        fragmentCategoryId = arguments!!.getString("categoryId")
         changeToolbarTitleAndAddInfo(fragmentValue)
 
 

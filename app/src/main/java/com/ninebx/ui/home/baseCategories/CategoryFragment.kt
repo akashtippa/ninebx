@@ -85,6 +85,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         fragmentTransaction.addToBackStack(null)
                         val bundle = Bundle()
                         bundle.putString("categoryName", category.title)
+                        bundle.putString("categoryId", category.category_id)
                         val categoryFragment = FragmentListContainer()
                         categoryFragment.arguments = bundle
                         fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
