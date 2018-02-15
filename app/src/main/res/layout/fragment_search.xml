@@ -100,6 +100,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvHomeMoney"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -136,6 +137,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvTravel"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -172,6 +174,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvContacts"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -208,6 +211,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvEducationWork"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -244,6 +248,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvPersonal"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -280,6 +285,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvInterests"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -316,6 +322,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvWellness"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -352,6 +359,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvMemories"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -388,6 +396,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvShopping"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
