@@ -56,8 +56,10 @@ object Constants {
     val KEYBOARD_SEARCH = "search"
     val KEYBOARD_PICKER = "picker"
     val CURRENT_USER: String = "current_user"
+    val REALM_MEMORY_VIEW: String = "memory_view"
+    val REALM_CONTACTS: String = "realm_contacts"
     val USER_EMAIL: String = "user_email"
-    val PASSCODE : String = "passCode"
+    val PASSCODE: String = "passCode"
     val PRIVATE_KEY: String = "private_key"
 
     val CURRENT_BOX = "valCurrentBox"
@@ -125,12 +127,53 @@ object Constants {
     val TEMP_PRIVATE_KEY = "nB8hEnaqppfWOp5L"
 
     val MEMBER: String = "member"
+    val MEMORY_TIMELINE: String = "memoryTimeLine"
+    val FROM_CLASS = "fromClass"
     val BUNDLE_CONTACT_NO = "contactNumber"
     val BUNDLE_CONTACT_NAME = "contactName"
     val IS_NEW_ACCOUNT: String = "is_new_account"
 
     val CONTACTS = "contacts"
-    val REALM_END_POINT_CONTACTS = "contacts"
+
+    /*
+    * List of Objects to be stored in Realm
+    *
+    /~/RecentSearch
+    /~/Notifications
+    /~/CalendarEvents
+    /~/Users
+    /~/__perm
+    /~/__permission
+    /~/__management
+    /~/CombineWellness
+    /~/CombineMemories
+    /~/CombineShopping
+    /~/Combine
+    /~/CombineTravel
+    /~/CombineContacts
+    /~/CombineEducation
+    /~/CombineInterests
+    /~/CombinePersonal
+    * */
+
+
+    val REALM_END_POINT_CONTACTS = "Contacts"
+    val REALM_END_POINT_RECENT_SEARCH = "RecentSearch"
+    val REALM_END_POINT_NOTIFICATIONS = "Notifications"
+    val REALM_END_POINT_CALENDAR_EVENTS = "CalendarEvents"
+    val REALM_END_POINT_USERS = "Users"
+    val REALM_END_POINT_PERM = "__perm"
+    val REALM_END_POINT_PERMISSION = "__permission"
+    val REALM_END_POINT_MANAGEMENT = "__management"
+    val REALM_END_POINT_COMBINE_WELLNESS = "CombineWellness"
+    val REALM_END_POINT_COMBINE_MEMORIES = "CombineMemories"
+    val REALM_END_POINT_COMBINE_SHOPPING = "CombineShopping"
+    val REALM_END_POINT_COMBINE = "Combine"
+    val REALM_END_POINT_COMBINE_TRAVEL = "CombineTravel"
+    val REALM_END_POINT_COMBINE_CONTACTS = "CombineContacts"
+    val REALM_END_POINT_COMBINE_EDUCATION = "CombineEducation"
+    val REALM_END_POINT_COMBINE_INTERESTS = "CombineInterests"
+    val REALM_END_POINT_COMBINE_PERSONAL = "CombinePersonal"
 
 
 }

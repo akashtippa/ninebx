@@ -1,6 +1,5 @@
 package com.ninebx.ui.base.realm.decrypted;
 
-import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 

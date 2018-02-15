@@ -26,14 +26,13 @@ class SearchAdapter(private val decryptedFinance: ArrayList<DecryptedFinancial>)
     }
 
 
+    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    class ViewHolder(private val view : View) : RecyclerView.ViewHolder(view){
-
-        val textView : TextView = view.findViewById<View>(R.id.txtListSearch) as TextView
+        val textView: TextView = view.findViewById<View>(R.id.txtListSearch) as TextView
 
         fun bindItems(decryptedFinance: DecryptedFinancial) {
 
-            textView.setText(decryptedFinance.accountName)
+            textView.text = decryptedFinance.accountName
 
         }
     }

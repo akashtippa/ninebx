@@ -7,6 +7,7 @@ import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import io.realm.*
 import java.util.*
 
@@ -45,6 +46,9 @@ fun getCurrentContactList(realmInstance: Realm): RealmResults<Contacts>? {
     return realmInstance.where(Contacts::class.java).findAll()
 }
 
+fun getAllMemoryTimeLine(realmInstance: Realm): RealmResults<MemoryTimeline>? {
+    return realmInstance.where(MemoryTimeline::class.java).findAll()
+}
 
 private val TAG = "RealmUtils"
 

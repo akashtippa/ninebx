@@ -11,7 +11,7 @@ import com.evernote.android.job.JobManager
 import com.ninebx.ui.base.network.NetModule
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.ui.home.account.interfaces.IMemoryAdded
 import com.ninebx.utility.FragmentOrganiser
 import com.ninebx.utility.NineBxJobCreator
 import com.ninebx.utility.NineBxPreferences
@@ -59,7 +59,7 @@ class NineBxApplication : MultiDexApplication() {
 
     private var fragmentOrganiser: FragmentOrganiser? = null
 
-    private var iMemberAdded: IMemberAdded? = null
+    private var iMemoryAdded: IMemoryAdded? = null
 
     val fragmentOpener: FragmentOrganiser
         get() {
@@ -92,9 +92,9 @@ class NineBxApplication : MultiDexApplication() {
 
         var autoTestMode = false
 
-        private var getUserAPI : NetModule.GetUsersAPI ?= null
-        fun getUserAPI( ) : NetModule.GetUsersAPI? {
-            if( getUserAPI == null ) getUserAPI = NetModule( instance ).retrofit.create( NetModule.GetUsersAPI::class.java )
+        private var getUserAPI: NetModule.GetUsersAPI? = null
+        fun getUserAPI(): NetModule.GetUsersAPI? {
+            if (getUserAPI == null) getUserAPI = NetModule(instance).retrofit.create(NetModule.GetUsersAPI::class.java)
             return getUserAPI
         }
 
@@ -105,8 +105,6 @@ class NineBxApplication : MultiDexApplication() {
     fun init(_homeActivity: HomeActivity) {
         this.activityInstance = _homeActivity
     }
-
-
 
     fun getKey(): ByteArray {
         val key = ByteArray(64)
@@ -129,4 +127,12 @@ class NineBxApplication : MultiDexApplication() {
     }
 
     var currentUser: Users? = null
+
+    fun getiMemoryAdded(): IMemoryAdded? {
+        return this.iMemoryAdded
+    }
+
+    fun setiMemoryAdded(iMemberAdded: IMemoryAdded) {
+        this.iMemoryAdded = iMemoryAdded
+    }
 }

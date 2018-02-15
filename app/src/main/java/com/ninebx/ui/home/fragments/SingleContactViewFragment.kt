@@ -11,6 +11,7 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_level2_contacts.*
 import java.util.*
 
@@ -88,22 +89,97 @@ class SingleContactViewFragment : FragmentBackHelper() {
             saveTheEditedContacts()
         }
 
-        prepareRealmConnections(context, false, "Contacts", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val contacts = realm!!.where(Contacts::class.java).equalTo("firstName", "ngMqmgOdOBoeqg+IsvVFJQ==")
-
-                AppLogger.d("Combine", "Combined Results : " + contacts)
-
-
-            }
-        })
-
+        fetchTheContactListFromRealm()
 
     }
 
+
+    private var contactList: RealmResults<Contacts>? = null
+    private var contacts: ArrayList<Contacts>? = ArrayList()
+
+
+    private fun fetchTheContactListFromRealm() {
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CONTACTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                contactList = getCurrentContactList(realm!!)
+                contacts!!.clear()
+                for (contact in contactList!!.iterator()) {
+                    contacts!!.add(contact)
+                    strFirstName = contact.firstName.decryptString()
+                    strLastName = contact.lastName.decryptString()
+                    strBirthday = contact.dateOfBirth.decryptString()
+                    strAnniversary = contact.anniversary.decryptString()
+                    strPhone1 = contact.mobileOne.decryptString()
+                    strPhone2 = contact.mobileTwo.decryptString()
+                    strEmail1 = contact.emailOne.decryptString()
+                    strEmail2 = contact.emailTwo.decryptString()
+                    strStreetAddress1 = contact.streetAddressOne.decryptString()
+                    strStreetAddress2 = contact.streetAddressTwo.decryptString()
+                    strCity = contact.city.decryptString()
+                    strState = contact.state.decryptString()
+                    strZipCode = contact.zipCode.decryptString()
+                    strCountry = contact.country.decryptString()
+
+                    AppLogger.e("Contacts", "First Name : " + strFirstName)
+                    AppLogger.e("Contacts", "Last Name : " + strLastName)
+                    AppLogger.e("Contacts", "DOB : " + strBirthday)
+                    AppLogger.e("Contacts", "Anniversary : " + strAnniversary)
+                    AppLogger.e("Contacts", "Phone 1 : " + strPhone1)
+                    AppLogger.e("Contacts", "Phone 2 : " + strPhone2)
+                    AppLogger.e("Contacts", "Email 1 : " + strEmail1)
+                    AppLogger.e("Contacts", "Email 2 : " + strEmail2)
+                    AppLogger.e("Contacts", "Address 1 : " + strStreetAddress1)
+                    AppLogger.e("Contacts", "Address 2 : " + strStreetAddress2)
+                    AppLogger.e("Contacts", "City : " + strCity)
+                    AppLogger.e("Contacts", "State : " + strState)
+                    AppLogger.e("Contacts", "Zip Code : " + strZipCode)
+                    AppLogger.e("Contacts", "Country : " + strCountry)
+
+                }
+
+                setContactDetails(contactList!![0])
+
+//                edtFirstName.setText(strFirstName)
+//                edtLastName.setText(strFirstName)
+//                txtDOB.setText(strBirthday)
+//                txtAnniversary.setText(strAnniversary)
+//                txtMobileNumber.setText(strPhone1)
+//                txtMobileNumber2.setText(strPhone2)
+//                edtEmail1.setText(strEmail1)
+//                edtEmail2.setText(strEmail2)
+//                txtAddress1.setText(strStreetAddress1)
+//                txtAddress2.setText(strStreetAddress2)
+//                edtCity.setText(strCity)
+//                edtState.setText(strState)
+//                edtZipCode.setText(strZipCode)
+//                edtCountry.setText(strCountry)
+//                AppLogger.e("Contacts", "Contacts Results : " + contactList)
+            }
+        })
+    }
+
+    private fun setContactDetails(contacts: Contacts?) {
+        edtFirstName.setText(contacts!!.firstName.decryptString())
+        edtLastName.setText(contacts.lastName.decryptString())
+        txtDOB.text = contacts.dateOfBirth.decryptString()
+        txtAnniversary.text = contacts.anniversary.decryptString()
+        txtMobileNumber.setText(contacts.mobileOne.decryptString())
+        txtMobileNumber2.setText(contacts.mobileTwo.decryptString())
+        edtEmail1.setText(contacts.emailOne.decryptString())
+        edtEmail2.setText(contacts.emailTwo.decryptString())
+        txtAddress1.setText(contacts.streetAddressOne.decryptString())
+        txtAddress2.setText(contacts.streetAddressTwo.decryptString())
+        edtCity.setText(contacts.city.decryptString())
+        edtState.setText(contacts.state.decryptString())
+        edtZipCode.setText(contacts.zipCode.decryptString())
+        edtCountry.setText(contacts.country.decryptString())
+
+    }
+
+
     private fun saveTheEditedContacts() {
         strFirstName = edtFirstName.text.toString()
-        strLastName = edtFirstName.text.toString()
+        strLastName = edtLastName.text.toString()
         strFullName = strFirstName + strLastName
         strBirthday = txtDOB.text.toString()
         strAnniversary = txtAnniversary.text.toString()

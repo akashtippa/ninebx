@@ -18,11 +18,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
-import com.ninebx.utility.*
+import com.ninebx.utility.Constants
+import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -30,11 +30,9 @@ import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
-import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list_container.*
 import java.io.Serializable
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -54,7 +52,7 @@ class FragmentListContainer : FragmentBackHelper() {
     private val REQUEST_CONTACT = 0
 
     private var mDarkTheme: Boolean = false
-    private var mContacts: ArrayList<Contact>? = null
+    private var mContacts: ArrayList<Contact>? = ArrayList()
     private var mGroups: List<Group>? = null
     private val PARAM_REQUEST_IN_PROCESS = "requestPermissionsInProcess"
 
@@ -92,10 +90,6 @@ class FragmentListContainer : FragmentBackHelper() {
             if (fragmentValue == "Shared Contacts") {
                 checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
                 callForContact()
-            } else if (fragmentValue == "Memory Timeline") {
-                val categoryFragment = MemoryTimeLineFragment()
-                categoryFragment.arguments = bundle
-                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
             } else {
                 val categoryFragment = Level2CategoryFragment()
                 categoryFragment.arguments = bundle
@@ -110,20 +104,15 @@ class FragmentListContainer : FragmentBackHelper() {
                 txtAdd.text = "Add Shared Contact"
                 fetchTheContactListFromRealm()
             }
+
         }
     }
 
     private fun fetchTheContactListFromRealm() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-                contactList = getCurrentContactList(realm!!)
-                contacts.addAll(contactList)
-                AppLogger.e("Contacts", "Contacts Results : " + contactList)
-
-                val resultArray = contactList!!.toArray() as Array<Contacts>
-            }
-        })
+        var contactList: ArrayList<Contacts>? = ArrayList()
+        contactList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
+        contacts!!.addAll(contactList!!)
+        setContactsList()
     }
 
     override fun onBackPressed(): Boolean {
@@ -292,7 +281,7 @@ class FragmentListContainer : FragmentBackHelper() {
     }
 
     private fun setContactsList() {
-        mListsAdapter = ContactsAdapter(mContacts)
+        mListsAdapter = ContactsAdapter(contacts)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvCommonList!!.layoutManager = layoutManager

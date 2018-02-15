@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm.decrypted;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -12,18 +13,35 @@ import io.realm.annotations.Required;
 
 public class DecryptedCombine implements Parcelable {
 
+    public static final Creator<DecryptedCombine> CREATOR = new Creator<DecryptedCombine>() {
+        @Override
+        public DecryptedCombine createFromParcel(Parcel in) {
+            return new DecryptedCombine(in);
+        }
+
+        @Override
+        public DecryptedCombine[] newArray(int size) {
+            return new DecryptedCombine[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
-    private RealmList<DecryptedFinancial> financialItems      = new RealmList<DecryptedFinancial>();
-    @Required private RealmList<DecryptedPayment> paymentItems        = new RealmList<DecryptedPayment>();
-    @Required private RealmList<DecryptedProperty> propertyItems       = new RealmList<DecryptedProperty>();
-    @Required private RealmList<DecryptedVehicle> vehicleItems        = new RealmList<DecryptedVehicle>();
-    @Required private RealmList<DecryptedAsset> assetItems          = new RealmList<DecryptedAsset>();
-    @Required private RealmList<DecryptedInsurance> insuranceItems      = new RealmList<DecryptedInsurance>();
-    @Required private RealmList<DecryptedTax> taxesItems          = new RealmList<DecryptedTax>();
-    @Required private RealmList<DecryptedHomeList> listItems           = new RealmList<DecryptedHomeList>();
+    private RealmList<DecryptedFinancial> financialItems = new RealmList<DecryptedFinancial>();
+    @Required
+    private RealmList<DecryptedPayment> paymentItems = new RealmList<DecryptedPayment>();
+    @Required
+    private RealmList<DecryptedProperty> propertyItems = new RealmList<DecryptedProperty>();
+    @Required
+    private RealmList<DecryptedVehicle> vehicleItems = new RealmList<DecryptedVehicle>();
+    @Required
+    private RealmList<DecryptedAsset> assetItems = new RealmList<DecryptedAsset>();
+    @Required
+    private RealmList<DecryptedInsurance> insuranceItems = new RealmList<DecryptedInsurance>();
+    @Required
+    private RealmList<DecryptedTax> taxesItems = new RealmList<DecryptedTax>();
+    @Required
+    private RealmList<DecryptedHomeList> listItems = new RealmList<DecryptedHomeList>();
 
     public DecryptedCombine() {
     }
@@ -38,6 +56,14 @@ public class DecryptedCombine implements Parcelable {
         this.insuranceItems = insuranceItems;
         this.taxesItems = taxesItems;
         this.listItems = listItems;
+    }
+
+    protected DecryptedCombine(Parcel in) {
+        id = in.readInt();
+    }
+
+    public static Creator<DecryptedCombine> getCREATOR() {
+        return CREATOR;
     }
 
     public int getId() {
@@ -112,14 +138,6 @@ public class DecryptedCombine implements Parcelable {
         this.listItems = listItems;
     }
 
-    public static Creator<DecryptedCombine> getCREATOR() {
-        return CREATOR;
-    }
-
-    protected DecryptedCombine(Parcel in) {
-        id = in.readInt();
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -129,18 +147,6 @@ public class DecryptedCombine implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombine> CREATOR = new Creator<DecryptedCombine>() {
-        @Override
-        public DecryptedCombine createFromParcel(Parcel in) {
-            return new DecryptedCombine(in);
-        }
-
-        @Override
-        public DecryptedCombine[] newArray(int size) {
-            return new DecryptedCombine[size];
-        }
-    };
 
     @Override
     public String toString() {

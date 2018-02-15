@@ -11,11 +11,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.utility.Constants
-import com.onegravity.contactpicker.contact.Contact
 
-internal class ContactsAdapter(private var myList: ArrayList<Contact>?) : RecyclerView.Adapter<ContactsAdapter.RecyclerItemViewHolder>() {
+internal class ContactsAdapter(private var myList: ArrayList<Contacts>?) : RecyclerView.Adapter<ContactsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -32,12 +32,12 @@ internal class ContactsAdapter(private var myList: ArrayList<Contact>?) : Recycl
         return myList!!.size
     }
 
-    fun removeAt(position: Int, contactPosition: Contact) {
+    fun removeAt(position: Int, contactPosition: Contacts) {
         myList!!.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    fun notifyData(myList: ArrayList<Contact>) {
+    fun notifyData(myList: ArrayList<Contacts>) {
         this.myList = myList
         notifyDataSetChanged()
     }
@@ -48,7 +48,7 @@ internal class ContactsAdapter(private var myList: ArrayList<Contact>?) : Recycl
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 val contactPosition = myList!![position]
-                val contactNumber = myList!![position].getPhone(position)
+                val contactNumber = myList!![position].mobileOne
                 val contactName = myList!![position].firstName
 
                 when (v!!.id) {

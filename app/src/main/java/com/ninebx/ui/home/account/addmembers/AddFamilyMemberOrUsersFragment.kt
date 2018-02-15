@@ -55,7 +55,6 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         return inflater.inflate(R.layout.fragment_add_family_member, container, false)
     }
 
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is MemberView) {

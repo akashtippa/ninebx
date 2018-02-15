@@ -10,9 +10,12 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
+import com.ninebx.ui.home.account.memoryView.MemoryView
+import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Constants.ALL_COMPLETE
 import io.realm.SyncUser
@@ -20,7 +23,15 @@ import io.realm.SyncUser
 /**
  * Created by Alok on 14/02/18.
  */
-class ContainerActivity : AppCompatActivity(), MemberView {
+class ContainerActivity : AppCompatActivity(), MemberView, MemoryView {
+
+    override fun onMemoryTimeLine(memoryTimeLine: MemoryTimeline) {
+        val intent = Intent()
+        intent.putExtra(Constants.MEMORY_TIMELINE, memoryTimeLine)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
     override fun showError(error: String) {
         this.showToast(error)
     }
@@ -66,10 +77,23 @@ class ContainerActivity : AppCompatActivity(), MemberView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
 
-        if( NineBxApplication.getPreferences().currentStep < ALL_COMPLETE )
+        if (NineBxApplication.getPreferences().currentStep < ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
+        var fromWhichClass = ""
 
-        loadMasterPasswordFragment()
+        val intent = intent
+        fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
+
+        when (fromWhichClass) {
+            "MemoryView" -> {
+                loadMemoryTimeLine()
+            }
+            "AddMember" -> {
+                loadMasterPasswordFragment()
+            }
+        }
+
+
     }
 
     private fun loadMasterPasswordFragment() {
@@ -77,6 +101,14 @@ class ContainerActivity : AppCompatActivity(), MemberView {
         fragmentTransaction.addToBackStack(null)
         val confirmPasswordFragment = ConfirmPasswordFragment()
         fragmentTransaction.replace(R.id.fragmentContainer, confirmPasswordFragment).commit()
+    }
+
+    private fun loadMemoryTimeLine() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val memoryTimeLine = MemoryTimeLineFragment()
+        memoryTimeLine.arguments = intent.extras
+        fragmentTransaction.replace(R.id.fragmentContainer, memoryTimeLine).commit()
     }
 
 
