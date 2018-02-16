@@ -1,6 +1,7 @@
 package com.ninebx.utility
 
 import android.content.Context
+import android.util.Log
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
@@ -154,6 +155,39 @@ fun generateRandomOTP(): String {
     return otp
 }
 
+fun pojo2Map(obj: Any): Map<String, Any> {
+    val hashMap = HashMap<String, Any>()
+    try {
+        val c = obj.javaClass
+        val m = c.methods
+        for (i in m.indices) {
+            if (m[i].name.indexOf("get") == 0) {
+                val name = m[i].name.toLowerCase().substring(3, 4) + m[i].name.substring(4)
+                hashMap.put(name, m[i].invoke(obj, arrayOfNulls<Any>(0)))
+            }
+        }
+    } catch (e: Throwable) {
+        //log error
+    }
+
+    return hashMap
+}
+
+fun performSearch(classObject: Any, searchText: String): Boolean? {
+
+    val objectHashMap = pojo2Map(classObject)
+    var isSearchFound = false
+    if (objectHashMap.isNotEmpty()) {
+        Log.d(classObject.javaClass.simpleName, "Search Map " + objectHashMap)
+        for (`object` in objectHashMap.values) {
+            if (`object` is String && `object`.toLowerCase().contains(searchText.toLowerCase())) {
+                isSearchFound = true
+                break
+            }
+        }
+    }
+    return isSearchFound
+}
 
 /*
 

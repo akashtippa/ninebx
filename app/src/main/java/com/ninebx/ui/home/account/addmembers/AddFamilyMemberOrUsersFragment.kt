@@ -82,18 +82,19 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                 context!!.showToast("To be done")
                 return@setOnClickListener
             }
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            val permissionsFragment = PermissionFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.MEMBER, member)
+            permissionsFragment.arguments = bundle
+
+            fragmentTransaction.replace(R.id.frameLayout, permissionsFragment).commit()
             if( checkValidations() ) {
 
-                memberPresenter.setPermissionsForMember( updateMember!!, strRole )
 
-                val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                fragmentTransaction.addToBackStack(null)
-                val permissionsFragment = PermissionFragment()
-                val bundle = Bundle()
-                bundle.putParcelable(Constants.MEMBER, member)
-                permissionsFragment.arguments = bundle
 
-                fragmentTransaction.replace(R.id.frameLayout, permissionsFragment).commit()
+
             }
 
         }

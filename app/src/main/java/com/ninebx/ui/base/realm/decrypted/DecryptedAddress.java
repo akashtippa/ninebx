@@ -3,6 +3,18 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.ninebx.utility.AppLogger;
+import com.ninebx.utility.RealmUtilsKt;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.realm.annotations.Required;
 
@@ -118,5 +130,7 @@ public class DecryptedAddress implements Parcelable {
     public void setCountry(String country) {
         this.country = country;
     }
+
+
 }
 
