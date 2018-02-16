@@ -22,16 +22,16 @@ public class CombinePersonal extends RealmObject {
     @PrimaryKey //@Required
     private int id = 0;
 
-    RealmList<Certificate> certificateItems        = new RealmList<Certificate>();
-    RealmList<Government> governmentItems         = new RealmList<Government>();
-    RealmList<License> licenseItems            = new RealmList<License>();
-    RealmList<Personal> personalItems           = new RealmList<Personal>();
-    RealmList<Social> socialItems             = new RealmList<Social>();
-    RealmList<TaxID> taxIDItems              = new RealmList<TaxID>();
+    RealmList<Certificate> certificateItems        = new RealmList<>();
+    RealmList<Government> governmentItems         = new RealmList<>();
+    RealmList<License> licenseItems            = new RealmList<>();
+    RealmList<Personal> personalItems           = new RealmList<>();
+    RealmList<Social> socialItems             = new RealmList<>();
+    RealmList<TaxID> taxIDItems              = new RealmList<>();
     
-    RealmList<PersonalList> listItems               = new RealmList<PersonalList>();
+    RealmList<PersonalList> listItems               = new RealmList<>();
 
-    public CombinePersonal(int id, RealmList certificateItems, RealmList governmentItems, RealmList licenseItems, RealmList personalItems, RealmList socialItems, RealmList taxIDItems, RealmList listItems) {
+    public CombinePersonal(int id, RealmList<Certificate> certificateItems, RealmList<Government> governmentItems, RealmList<License> licenseItems, RealmList<Personal> personalItems, RealmList<Social> socialItems, RealmList<TaxID> taxIDItems, RealmList<PersonalList> listItems) {
         this.id = id;
         this.certificateItems = certificateItems;
         this.governmentItems = governmentItems;
