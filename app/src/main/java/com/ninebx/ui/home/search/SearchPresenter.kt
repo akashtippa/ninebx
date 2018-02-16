@@ -543,7 +543,7 @@ class SearchPresenter( private val searchView: SearchView ) {
         val searchMedicalHistory = ArrayList<DecryptedMedicalHistory>()
         val searchVitalNumbers = ArrayList<DecryptedVitalNumbers>()
         val searchWellness = ArrayList<DecryptedWellness>()
-        for(checkupItems in mDecryptCombineWellness.checkupsItems){
+      /*  for(checkupItems in mDecryptCombineWellness.checkupsItems){
             if(checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
                     || checkupItems.checkup_description.contains(text, true) || checkupItems.physicianType.contains(text, true) || checkupItems.classType.contains(text, true)
                     || checkupItems.reason.contains(text, true) || checkupItems.dateOfVisit.contains(text, true) || checkupItems.notes.contains(text, true) || checkupItems.attachmentNames.contains(text, true)
@@ -573,8 +573,43 @@ class SearchPresenter( private val searchView: SearchView ) {
                     || eyeglassPrescriptionsItems.created.contains(text, true) || eyeglassPrescriptionsItems.modified.contains(text, true) || eyeglassPrescriptionsItems.createdUser.contains(text, true))
                 searchEyeglassPrescriptions.add(eyeglassPrescriptionsItems)
         }
-        searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
+        searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)*/
 
+        for(checkupItems in mDecryptCombineWellness.checkupsItems){
+            if(performSearch(checkupItems, text)!!)
+                searchCheckupItems.add(checkupItems)
+        }
+        searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
+
+        for(emergencyContactItems in mDecryptCombineWellness.emergencyContactsItems){
+           if( performSearch(emergencyContactItems,text)!!)
+               searchEmergencyContacts.add(emergencyContactItems)
+        }
+        searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
+
+        for(eyeglassPrescriptionItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
+            if(performSearch(eyeglassPrescriptionItems, text)!!)
+                searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
+        }
+      //  searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEyeglassPrescriptions)
+
+        for(healthCareProviderItems in mDecryptCombineWellness.healthcareProvidersItems){
+           if( performSearch(healthCareProviderItems, text)!!)
+               searchhealthcareProviders.add(healthCareProviderItems)
+        }
+        searchDecryptCombineWellness.healthcareProvidersItems.addAll(searchhealthcareProviders)
+
+        for(identificationItems in mDecryptCombineWellness.identificationItems){
+            if(performSearch(identificationItems, text)!!)
+                searchIdentification.add(identificationItems)
+        }
+        searchDecryptCombineWellness.identificationItems.addAll(searchIdentification)
+
+        for(medicalConditionItems in mDecryptCombineWellness.medicationsItems){
+            if(performSearch(medicalConditionItems, text)!!){
+
+            }
+        }
         return searchDecryptCombineWellness
     }
 }
