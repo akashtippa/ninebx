@@ -151,7 +151,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 
         callHomeFragment()
         toggleCheck(false)
-
+        SearchUtils.search()
 
         prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
