@@ -11,6 +11,7 @@ import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
 import com.ninebx.utility.Constants

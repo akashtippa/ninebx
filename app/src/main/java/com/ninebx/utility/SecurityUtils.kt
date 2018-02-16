@@ -10,11 +10,14 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
+import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.home.education.Education
 import com.ninebx.ui.base.realm.home.education.MainEducation
 import com.ninebx.ui.base.realm.home.education.Work
 import com.ninebx.ui.base.realm.home.homeBanking.*
+import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.interests.Interests
+import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MainMemories
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.base.realm.home.personal.*
@@ -22,10 +25,7 @@ import com.ninebx.ui.base.realm.home.shopping.ClothingSizes
 import com.ninebx.ui.base.realm.home.shopping.LoyaltyPrograms
 import com.ninebx.ui.base.realm.home.shopping.RecentPurchase
 import com.ninebx.ui.base.realm.home.shopping.Shopping
-import com.ninebx.ui.base.realm.home.travel.Documents
-import com.ninebx.ui.base.realm.home.travel.Loyalty
-import com.ninebx.ui.base.realm.home.travel.Travel
-import com.ninebx.ui.base.realm.home.travel.Vacations
+import com.ninebx.ui.base.realm.home.travel.*
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
@@ -36,6 +36,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
+import javax.crypto.IllegalBlockSizeException
 import javax.crypto.spec.SecretKeySpec
 
 /**
@@ -140,28 +141,40 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
 
 fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String {
 
-    val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
-    val key = SecretKeySpec(keyBytes, "AES")
-    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+    try {
 
-    AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
-    val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+        val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
+        val key = SecretKeySpec(keyBytes, "AES")
+        val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
-    // decryption pass
-    cipher.init(Cipher.DECRYPT_MODE, key)
-    val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
-    val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
+        AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
+        val convertedCipher = convertToUInt8(cipherTextBase64)
+        AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
+        AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
 
-    var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
-    ptLength += cipher.doFinal(plainText, ptLength)
+        // decryption pass
+        cipher.init(Cipher.DECRYPT_MODE, key)
+        val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
+        val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
 
-    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
-    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
-    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+        var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
+        ptLength += cipher.doFinal(plainText, ptLength)
 
-    return String(plainText).substring(0, ptLength)
+        AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+        AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+        AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+
+        return String(plainText).substring(0, ptLength)
+
+    } catch ( e : IllegalBlockSizeException ) {
+        //To catch exception while decrypting non decrypted string.
+        e.printStackTrace()
+        return Arrays.toString(cipherTextBase64)
+    } catch (e : IllegalArgumentException){
+        e.printStackTrace()
+        return Arrays.toString(cipherTextBase64)
+    }
+
 }
 
 fun encryptDecryptAESKey(masterPassword: String): String {
@@ -394,29 +407,29 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-        encryptMember(members[i]!!)
+       encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName = member.firstName.encryptString()
-    member.lastName = member.lastName.encryptString()
-    member.relationship = member.relationship.encryptString()
-    member.role = member.role.encryptString()
-    member.email = member.email.encryptString()
+    member.firstName = member.firstName            .encryptString()
+    member.lastName = member. lastName             .encryptString()
+    member.relationship = member. relationship         .encryptString()
+    member.role = member. role.encryptString()
+    member.email = member. email                .encryptString()
 
-    member.dateOfBirth = member.dateOfBirth.encryptString()
-    member.anniversary = member.anniversary.encryptString()
+    member.dateOfBirth = member.dateOfBirth         .encryptString()
+    member.anniversary = member.anniversary         .encryptString()
     member.gender = member.gender
-    member.mobileNumber = member.mobileNumber.encryptString()
-    member.street_1 = member.street_1.encryptString()
-    member.street_2 = member.street_2.encryptString()
-    member.city = member.city.encryptString()
-    member.state = member.state.encryptString()
-    member.zipCode = member.zipCode.encryptString()
-    member.country = member.country.encryptString()
+    member.mobileNumber = member.mobileNumber        .encryptString()
+    member.street_1 = member.street_1            .encryptString()
+    member.street_2 = member.street_2            .encryptString()
+    member.city = member.city                .encryptString()
+    member.state = member.state               .encryptString()
+    member.zipCode = member.zipCode             .encryptString()
+    member.country = member.country             .encryptString()
 
     return member
 }
@@ -622,7 +635,7 @@ fun decryptProperty(property: Property): DecryptedProperty {
     decryptedProperty.leaseEndDate = property.leaseEndDate.decryptString()
     decryptedProperty.created = property.created
     decryptedProperty.modified = property.modified
-    // decryptedProperty.isPrivate = property.isPrivate.decryptString()
+   // decryptedProperty.isPrivate = property.isPrivate.decryptString()
     decryptedProperty.createdUser = property.createdUser
     decryptedProperty.notes = property.notes
     decryptedProperty.attachmentNames = property.attachmentNames
@@ -653,7 +666,7 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
     decryptedVehicle.financedThroughLoan = vehicle.financedThroughLoan.decryptString()
     decryptedVehicle.created = vehicle.created
     decryptedVehicle.modified = vehicle.modified
-    // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
+   // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
     decryptedVehicle.createdUser = vehicle.createdUser
     decryptedVehicle.leaseStartDate = vehicle.leaseStartDate
     decryptedVehicle.leaseEndDate = vehicle.leaseEndDate
@@ -747,9 +760,9 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
     decryptedTax.title = taxes.title.decryptString()
     decryptedTax.created = taxes.created
     decryptedTax.modified = taxes.modified
-    // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
+   // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
     decryptedTax.createdUser = taxes.createdUser
-    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
+    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax )
     return decryptedTax
 }
 
@@ -803,8 +816,8 @@ fun decryptEducation(education: Education): DecryptedEducation {
 
 fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     val decryptedMainEducation = DecryptedMainEducation()
-    decryptedMainEducation.selectionType = mainEducation.selectionType.decryptString()
-    decryptedMainEducation.classType = mainEducation.classType.decryptString()
+    decryptedMainEducation.selectionType = mainEducation.selectionType
+    decryptedMainEducation.classType = mainEducation.classType
     decryptedMainEducation.institutionName = mainEducation.institutionName.decryptString()
     decryptedMainEducation.qualification = mainEducation.qualification.decryptString()
     decryptedMainEducation.name = mainEducation.name.decryptString()
@@ -823,7 +836,7 @@ fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     return decryptedMainEducation
 }
 
-fun decryptWork(work: Work): DecryptedWork {
+fun decryptWork(work: Work) : DecryptedWork{
     val decryptedWork = DecryptedWork()
     decryptedWork.selectionType = work.selectionType.decryptString()
     decryptedWork.classType = work.classType.decryptString()
@@ -1074,6 +1087,7 @@ fun decryptDevice(device: Device): DecryptedDevice {
 
 fun decryptDocuments(documents: Documents): DecryptedDocuments {
     val decryptDocuments = DecryptedDocuments()
+    decryptDocuments.id = documents.id
     decryptDocuments.selectionType = documents.selectionType.decryptString()
     decryptDocuments.passportName = documents.passportName.decryptString()
     decryptDocuments.visaName = documents.visaName.decryptString()
@@ -1406,7 +1420,7 @@ fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation 
     return decrypytMainEducation
 }
 
-fun decrypytMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
+fun decryptMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
     val decrypytMainMemories = DecryptedMainMemories()
     decrypytMainMemories.selectionType = mainMemories.selectionType.decryptString()
     decrypytMainMemories.accountName = mainMemories.accountName.decryptString()
@@ -2405,41 +2419,110 @@ fun encryptVacations(vacations: Vacations): Vacations {
 }
 
 
-fun decryptCombine(combine: Combine): DecryptedCombine {
-    val decryptedCombine = DecryptedCombine()
+fun decryptCombine(combine: Combine) : DecryptedCombine
+{    val decryptedCombine = DecryptedCombine()
 
-    for (financialItems in combine.financialItems) {
+    for ( financialItems in combine.financialItems ) {
         val decryptedItem = decryptFinancial(financialItems)
-        decryptedCombine.financialItems.add(decryptedItem)
+        decryptedCombine.financialItems.add( decryptedItem )
     }
 
-    for (paymentItems in combine.paymentItems) {
+    for (paymentItems in combine.paymentItems ) {
         val decryptedItem = decryptPayment(paymentItems)
         decryptedCombine.paymentItems.add(decryptedItem)
     }
 
-    for (propertyItems in combine.propertyItems) {
+    for (propertyItems in combine.propertyItems){
         decryptedCombine.propertyItems.add(decryptProperty(propertyItems))
     }
 
-    for (vehicleItems in combine.vehicleItems) {
+    for (vehicleItems in combine.vehicleItems){
         decryptedCombine.vehicleItems.add(decryptVehicle(vehicleItems))
     }
 
-    for (assetItems in combine.assetItems) {
+    for (assetItems in combine.assetItems){
         decryptedCombine.assetItems.add(decryptAsset(assetItems))
     }
 
-    for (insuranceItems in combine.insuranceItems) {
+    for (insuranceItems in combine.insuranceItems){
         decryptedCombine.insuranceItems.add(decryptInsurance(insuranceItems))
     }
 
-    for (taxesItems in combine.taxesItems) {
+    for (taxesItems in combine.taxesItems){
         decryptedCombine.taxesItems.add(decryptTaxes(taxesItems))
     }
 
-    for (listItems in combine.listItems) {
+    for (listItems in combine.listItems){
         decryptedCombine.listItems.add(decryptHomeList(listItems))
     }
     return decryptedCombine
+}
+
+fun decryptCombineTravel(combineTravel: CombineTravel) : DecryptedCombineTravel{
+    val decryptedCombineTravel = DecryptedCombineTravel()
+    for (documentsItems in combineTravel.documentsItems) {
+        decryptedCombineTravel.documentsItems.add(decryptDocuments(documentsItems))
+    }
+    for (loyaltyItems in combineTravel.loyaltyItems) {
+        decryptedCombineTravel.loyaltyItems.add(decryptLoyality(loyaltyItems))
+    }
+    for (travelItems in combineTravel.travelItems) {
+        decryptedCombineTravel.travelItems.add(decryptTravel(travelItems))
+    }
+    for (vacationItems in combineTravel.vacationsItems) {
+        decryptedCombineTravel.vacationsItems.add(decryptVacations(vacationItems))
+    }
+    for (listItems in combineTravel.listItems) {
+        decryptedCombineTravel.listItems.add(decryptTravelList(listItems))
+    }
+    return decryptedCombineTravel
+}
+
+fun decryptCombineMemories(combineMemories : CombineMemories) : DecryptedCombineMemories{
+    val decryptedCombineMemories = DecryptedCombineMemories()
+
+    for(mainMemoryItems in combineMemories.mainMemoriesItems)  {
+        decryptedCombineMemories.mainMemoriesItems.add(decryptMainMemories(mainMemoryItems))
+    }
+    for(memoryTimelineItems in combineMemories.memoryTimelineItems){
+        decryptedCombineMemories.memoryTimelineItems.add(decryptMemoryTimeLine(memoryTimelineItems))
+    }
+    for(listItems in combineMemories.listItems){
+        decryptedCombineMemories.listItems.add(decryptMemoriesList(listItems))
+    }
+    return decryptedCombineMemories
+}
+
+fun decryptCombineEducation(combineEducation: CombineEducation) : DecryptedCombineEducation{
+    val decryptedCombineEducation = DecryptedCombineEducation()
+
+    for(educationItems in combineEducation.educationItems){
+        decryptedCombineEducation.educationItems.add(decryptEducation(educationItems))
+    }
+
+    for(mainEducationItems in combineEducation.mainEducationItems){
+        decryptedCombineEducation.mainEducationItems.add(decryptMainEducation(mainEducationItems))
+    }
+
+    for(workItems in combineEducation.workItems){
+        decryptedCombineEducation.workItems.add(decryptWork(workItems))
+    }
+
+    for(listItems in combineEducation.listItems){
+        decryptedCombineEducation.listItems.add(decryptEducationList(listItems))
+    }
+    return decryptedCombineEducation
+}
+
+fun decryptCombineInterests(combineInterest : CombineInterests) : DecryptedCombineInterests {
+    val decryptedCombineInterests = DecryptedCombineInterests()
+
+    for(interestItems  in combineInterest.interestItems){
+        decryptedCombineInterests.interestItems.add(decryptInterests(interestItems))
+    }
+
+    for(listItems in combineInterest.listItems){
+        decryptedCombineInterests.listItems.add(decryptInterestList(listItems))
+    }
+    return decryptedCombineInterests
 }

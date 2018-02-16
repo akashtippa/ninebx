@@ -31,6 +31,12 @@ public class DecryptedCombineTravel implements Parcelable {
     };
     @PrimaryKey //@Required
     private int id = 0;
+
+    @Required private RealmList<DecryptedDocuments> documentsItems      = new RealmList<DecryptedDocuments>();
+    @Required private RealmList<DecryptedLoyalty> loyaltyItems        = new RealmList<DecryptedLoyalty>();
+    @Required private RealmList<DecryptedTravel> travelItems         = new RealmList<DecryptedTravel>();
+    @Required private RealmList<DecryptedVacations> vacationsItems      = new RealmList<DecryptedVacations>();
+    @Required private RealmList<DecryptedTravelList> listItems           = new RealmList<DecryptedTravelList>();
     @Required
     private RealmList<Documents> documentsItems = new RealmList<Documents>();
     @Required
@@ -45,7 +51,7 @@ public class DecryptedCombineTravel implements Parcelable {
     public DecryptedCombineTravel() {
     }
 
-    public DecryptedCombineTravel(int id, RealmList<Documents> documentsItems, RealmList<Loyalty> loyaltyItems, RealmList<Travel> travelItems, RealmList<Vacations> vacationsItems, RealmList<TravelList> listItems) {
+    public DecryptedCombineTravel(int id, RealmList<DecryptedDocuments> documentsItems, RealmList<DecryptedLoyalty> loyaltyItems, RealmList<DecryptedTravel> travelItems, RealmList<DecryptedVacations> vacationsItems, RealmList<DecryptedTravelList> listItems) {
         this.id = id;
         this.documentsItems = documentsItems;
         this.loyaltyItems = loyaltyItems;
@@ -76,43 +82,43 @@ public class DecryptedCombineTravel implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<Documents> getDocumentsItems() {
+    public RealmList<DecryptedDocuments> getDocumentsItems() {
         return documentsItems;
     }
 
-    public void setDocumentsItems(RealmList<Documents> documentsItems) {
+    public void setDocumentsItems(RealmList<DecryptedDocuments> documentsItems) {
         this.documentsItems = documentsItems;
     }
 
-    public RealmList<Loyalty> getLoyaltyItems() {
+    public RealmList<DecryptedLoyalty> getLoyaltyItems() {
         return loyaltyItems;
     }
 
-    public void setLoyaltyItems(RealmList<Loyalty> loyaltyItems) {
+    public void setLoyaltyItems(RealmList<DecryptedLoyalty> loyaltyItems) {
         this.loyaltyItems = loyaltyItems;
     }
 
-    public RealmList<Travel> getTravelItems() {
+    public RealmList<DecryptedTravel> getTravelItems() {
         return travelItems;
     }
 
-    public void setTravelItems(RealmList<Travel> travelItems) {
+    public void setTravelItems(RealmList<DecryptedTravel> travelItems) {
         this.travelItems = travelItems;
     }
 
-    public RealmList<Vacations> getVacationsItems() {
+    public RealmList<DecryptedVacations> getVacationsItems() {
         return vacationsItems;
     }
 
-    public void setVacationsItems(RealmList<Vacations> vacationsItems) {
+    public void setVacationsItems(RealmList<DecryptedVacations> vacationsItems) {
         this.vacationsItems = vacationsItems;
     }
 
-    public RealmList<TravelList> getListItems() {
+    public RealmList<DecryptedTravelList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<TravelList> listItems) {
+    public void setListItems(RealmList<DecryptedTravelList> listItems) {
         this.listItems = listItems;
     }
 

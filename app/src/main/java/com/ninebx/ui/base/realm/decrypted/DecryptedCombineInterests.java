@@ -15,6 +15,26 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineInterests implements Parcelable {
 
+    @PrimaryKey //@Required
+    private int id = 0;
+    @Required
+    private RealmList<DecryptedInterests> interestItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedInterestsList> listItems = new RealmList<>();
+
+    public DecryptedCombineInterests() {
+    }
+
+    public DecryptedCombineInterests(int id, RealmList<DecryptedInterests> interestItems, RealmList<DecryptedInterestsList> listItems) {
+        this.id = id;
+        this.interestItems = interestItems;
+        this.listItems = listItems;
+    }
+
+    protected DecryptedCombineInterests(Parcel in) {
+        id = in.readInt();
+    }
+
     public static final Creator<DecryptedCombineInterests> CREATOR = new Creator<DecryptedCombineInterests>() {
         @Override
         public DecryptedCombineInterests createFromParcel(Parcel in) {
@@ -26,37 +46,8 @@ public class DecryptedCombineInterests implements Parcelable {
             return new DecryptedCombineInterests[size];
         }
     };
-    @PrimaryKey //@Required
-    private int id = 0;
-    @Required
-    private RealmList<Interests> interestItems = new RealmList<>();
-    @Required
-    private RealmList<InterestsList> listItems = new RealmList<>();
 
-    public DecryptedCombineInterests(int id, RealmList<Interests> interestItems, RealmList<InterestsList> listItems) {
-        this.id = id;
-        this.interestItems = interestItems;
-        this.listItems = listItems;
-    }
-
-    protected DecryptedCombineInterests(Parcel in) {
-        id = in.readInt();
-    }
-
-    public DecryptedCombineInterests() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -64,19 +55,29 @@ public class DecryptedCombineInterests implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<Interests> getInterestItems() {
+    public RealmList<DecryptedInterests> getInterestItems() {
         return interestItems;
     }
 
-    public void setInterestItems(RealmList<Interests> interestItems) {
+    public void setInterestItems(RealmList<DecryptedInterests> interestItems) {
         this.interestItems = interestItems;
     }
 
-    public RealmList<InterestsList> getListItems() {
+    public RealmList<DecryptedInterestsList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<InterestsList> listItems) {
+    public void setListItems(RealmList<DecryptedInterestsList> listItems) {
         this.listItems = listItems;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
     }
 }

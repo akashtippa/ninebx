@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.account
+package com.ninebx.ui.home.account.addmembers
 
 import android.app.Activity
 import android.content.Intent
@@ -14,8 +14,8 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.ContainerActivity
-import com.ninebx.ui.home.account.adapter.AddedFamilyMemberAdapter
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
+import com.ninebx.ui.home.account.permissions.PermissionFragment
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
 import com.ninebx.utility.*
 import io.realm.Realm

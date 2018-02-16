@@ -23,7 +23,7 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.account.AddFamilyUsersFragment
+import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
@@ -164,6 +164,11 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                         AppLogger.d("CurrentUser", "Members : " + member.toString())
                     }
                     if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+
+                        toggleCheck(true)
+                        bottomNavigationView.menu.getItem(4).isChecked = true
+                        callBottomViewFragment(getString(R.string.account))
+
                         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
                         val fragmentTransaction = supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)

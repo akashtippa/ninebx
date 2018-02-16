@@ -960,6 +960,10 @@
     <string name="allow_quicker_access"><b>Allow Quicker Access</b> - so you don\'t have to type in your personal passcode every time.</string>
     <string name="touch_id_for_ninebx">Touch ID for \"NineBx\"</string>
     <string name="confirm_account_password">Confirm account password</string>
+
+    <string name="travel_list">travelList</string>
+
     <string name="check_password">Check your password again</string>
+    <string name="error_permissions">Error setting permissions for member</string>
 
 </resources>

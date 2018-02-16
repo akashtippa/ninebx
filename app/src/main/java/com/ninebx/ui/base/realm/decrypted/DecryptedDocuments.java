@@ -378,4 +378,35 @@ public class DecryptedDocuments implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedDocuments{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", passportName='" + passportName + '\'' +
+                ", visaName='" + visaName + '\'' +
+                ", nameOnPassport='" + nameOnPassport + '\'' +
+                ", nameOnVisa='" + nameOnVisa + '\'' +
+                ", visaType='" + visaType + '\'' +
+                ", visaNumber='" + visaNumber + '\'' +
+                ", travelDocumentTitle='" + travelDocumentTitle + '\'' +
+                ", nameOnTravelDocument='" + nameOnTravelDocument + '\'' +
+                ", travelDocumentType='" + travelDocumentType + '\'' +
+                ", travelDocumentNumber='" + travelDocumentNumber + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", placeIssued='" + placeIssued + '\'' +
+                ", dateIssued='" + dateIssued + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

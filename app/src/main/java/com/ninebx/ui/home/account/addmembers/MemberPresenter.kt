@@ -7,16 +7,22 @@ import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.realm.ObjectServerError
-import io.realm.SyncCredentials
-import io.realm.SyncUser
+import io.realm.*
+import io.realm.permissions.Permission
 import okhttp3.ResponseBody
 import java.util.*
+import io.realm.ObjectServerError
+import io.realm.PermissionManager
+import io.realm.permissions.AccessLevel
+import io.realm.permissions.PermissionRequest
+import io.realm.permissions.UserCondition
+
+
 
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter(private val memberView: MemberView, private val adminId: String) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView, private val adminUser : SyncUser, private val adminId : String ) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
@@ -102,6 +108,29 @@ class MemberPresenter(private val memberView: MemberView, private val adminId: S
         }
     }
 
+    private fun setUserPermissions() {
+        val permissionManager = adminUser.permissionManager
+        // Create request
+        val condition = UserCondition.userId(mCurrentUser!!.identity)
+        val accessLevel = AccessLevel.WRITE
+        val request = PermissionRequest(condition, "/~/Users", accessLevel)
+
+        permissionManager.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
+            override fun onSuccess() {
+                memberView.onMemberSignup(mCurrentUser!!)
+                memberView.hideProgress()
+            }
+
+            override fun onError(error: ObjectServerError) {
+                error.printStackTrace()
+                memberView.hideProgress()
+                memberView.onError(R.string.error_permissions)
+            }
+        })
+
+    }
+
+
     override fun onError(error: ObjectServerError?) {
         memberView.hideProgress()
         if (error != null) {
@@ -110,6 +139,49 @@ class MemberPresenter(private val memberView: MemberView, private val adminId: S
         if (error?.message != null) {
             memberView.showError(error.errorMessage!!)
         }
+    }
+
+    fun setPermissionsForMember( updateMember: Member, memberRole: String ) {
+
+        updateMember.homeAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.homeEdit = memberRole == "Co-administrator"
+        updateMember.homeView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.travelAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.travelEdit = memberRole == "Co-administrator"
+        updateMember.travelView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.contactsAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.contactsEdit = memberRole == "Co-administrator"
+        updateMember.contactsView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.educationlAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.educationlEdit = memberRole == "Co-administrator"
+        updateMember.educationlView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.personalAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.personalEdit = memberRole == "Co-administrator"
+        updateMember.personalView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.interestsAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.interestsEdit = memberRole == "Co-administrator"
+        updateMember.interestsView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.wellnessAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.wellnessEdit = memberRole == "Co-administrator"
+        updateMember.wellnessView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.memoriesAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.memoriesEdit = memberRole == "Co-administrator"
+        updateMember.memoriesView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.shoppingAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.shoppingEdit = memberRole == "Co-administrator"
+        updateMember.shoppingView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.addingRemovingMember = memberRole == "Co-administrator"
+        updateMember.changingMasterPassword = false
+
     }
 
 }

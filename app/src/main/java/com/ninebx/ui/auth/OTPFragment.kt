@@ -45,9 +45,10 @@ class OTPFragment : BaseAuthFragment() {
                         val currentUsers = getCurrentUsers( realm!! )
 
                         if (currentUsers != null && currentUsers.size > 0) {
+                            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
                             NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
                             context!!.hideProgressDialog()
-                            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+
 
                             mAuthView.navigateToCreatePassCode(true, "")
                         }
@@ -68,7 +69,7 @@ class OTPFragment : BaseAuthFragment() {
             etOtp5.setText("")
             etOtp6.setText("")
             tvResend.isEnabled = false
-            handler.postDelayed(runnable, 60000)
+            handler.postDelayed( runnable, 60000)
             mAuthView.getAuthPresenter().requestOTP(mAuthView.getAccountEmail())
 
         }
@@ -76,10 +77,14 @@ class OTPFragment : BaseAuthFragment() {
         setupOtp()
     }
 
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
+    }
 
     private var handler: Handler = Handler()
     private var runnable: Runnable = Runnable {
-        if (tvResend != null)
+        if( tvResend != null )
             tvResend.isEnabled = true
     }
 
@@ -208,9 +213,7 @@ class OTPFragment : BaseAuthFragment() {
         })
 
         mAuthView.getAuthPresenter().requestOTP( mAuthView.getAccountEmail() )
-
-
-        handler.postDelayed(runnable, 60000)
+        handler.postDelayed( runnable, 60000)
 
     }
 

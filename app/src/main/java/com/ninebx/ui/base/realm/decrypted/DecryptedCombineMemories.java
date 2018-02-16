@@ -16,27 +16,20 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineMemories implements Parcelable {
 
-    public static final Creator<DecryptedCombineMemories> CREATOR = new Creator<DecryptedCombineMemories>() {
-        @Override
-        public DecryptedCombineMemories createFromParcel(Parcel in) {
-            return new DecryptedCombineMemories(in);
-        }
 
-        @Override
-        public DecryptedCombineMemories[] newArray(int size) {
-            return new DecryptedCombineMemories[size];
-        }
-    };
     @PrimaryKey //@Required
     private int id = 0;
     @Required
-    private RealmList<MainMemories> mainMemoriesItems = new RealmList<>();
+    private RealmList<DecryptedMainMemories> mainMemoriesItems = new RealmList<>();
     @Required
-    private RealmList<MemoryTimeline> memoryTimelineItems = new RealmList<>();
+    private RealmList<DecryptedMemoryTimeline> memoryTimelineItems = new RealmList<>();
     @Required
-    private RealmList<MemoriesList> listItems = new RealmList<>();
+    private RealmList<DecryptedMemoriesList> listItems = new RealmList<>();
 
-    public DecryptedCombineMemories(int id, RealmList<MainMemories> mainMemoriesItems, RealmList<MemoryTimeline> memoryTimelineItems, RealmList<MemoriesList> listItems) {
+    public DecryptedCombineMemories() {
+    }
+
+    public DecryptedCombineMemories(int id, RealmList<DecryptedMainMemories> mainMemoriesItems, RealmList<DecryptedMemoryTimeline> memoryTimelineItems, RealmList<DecryptedMemoriesList> listItems) {
         this.id = id;
         this.mainMemoriesItems = mainMemoriesItems;
         this.memoryTimelineItems = memoryTimelineItems;
@@ -45,9 +38,6 @@ public class DecryptedCombineMemories implements Parcelable {
 
     protected DecryptedCombineMemories(Parcel in) {
         id = in.readInt();
-    }
-
-    public DecryptedCombineMemories() {
     }
 
     @Override
@@ -60,7 +50,19 @@ public class DecryptedCombineMemories implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public static final Creator<DecryptedCombineMemories> CREATOR = new Creator<DecryptedCombineMemories>() {
+        @Override
+        public DecryptedCombineMemories createFromParcel(Parcel in) {
+            return new DecryptedCombineMemories(in);
+        }
+
+        @Override
+        public DecryptedCombineMemories[] newArray(int size) {
+            return new DecryptedCombineMemories[size];
+        }
+    };
+
+    public int getId() {
         return id;
     }
 
@@ -68,27 +70,27 @@ public class DecryptedCombineMemories implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<MainMemories> getMainMemoriesItems() {
+    public RealmList<DecryptedMainMemories> getMainMemoriesItems() {
         return mainMemoriesItems;
     }
 
-    public void setMainMemoriesItems(RealmList<MainMemories> mainMemoriesItems) {
+    public void setMainMemoriesItems(RealmList<DecryptedMainMemories> mainMemoriesItems) {
         this.mainMemoriesItems = mainMemoriesItems;
     }
 
-    public RealmList<MemoryTimeline> getMemoryTimelineItems() {
+    public RealmList<DecryptedMemoryTimeline> getMemoryTimelineItems() {
         return memoryTimelineItems;
     }
 
-    public void setMemoryTimelineItems(RealmList<MemoryTimeline> memoryTimelineItems) {
+    public void setMemoryTimelineItems(RealmList<DecryptedMemoryTimeline> memoryTimelineItems) {
         this.memoryTimelineItems = memoryTimelineItems;
     }
 
-    public RealmList<MemoriesList> getListItems() {
+    public RealmList<DecryptedMemoriesList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<MemoriesList> listItems) {
+    public void setListItems(RealmList<DecryptedMemoriesList> listItems) {
         this.listItems = listItems;
     }
 }
