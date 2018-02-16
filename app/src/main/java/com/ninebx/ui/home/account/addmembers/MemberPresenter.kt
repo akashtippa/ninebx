@@ -110,27 +110,12 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
 
     private fun setUserPermissions() {
         val permissionManager = mCurrentUser!!.permissionManager
-        permissionManager.getPermissions( object : PermissionManager.PermissionsCallback {
-            override fun onSuccess(permissions: RealmResults<Permission>?) {
-                grantPermissions( permissionManager )
-            }
-
-            override fun onError(error: ObjectServerError?) {
-                memberView.hideProgress()
-                memberView.onError(R.string.error_permissions)
-            }
-
-        })
-
-    }
-
-    private fun grantPermissions(permissions: PermissionManager) {
         // Create request
         val condition = UserCondition.userId(mCurrentUser!!.identity)
         val accessLevel = AccessLevel.WRITE
         val request = PermissionRequest(condition, Constants.SERVER_URL + "Users", accessLevel)
 
-        permissions.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
+        permissionManager.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
             override fun onSuccess() {
                 memberView.onMemberSignup(mCurrentUser!!)
                 memberView.hideProgress()
@@ -142,7 +127,9 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
                 memberView.onError(R.string.error_permissions)
             }
         })
+
     }
+
 
     override fun onError(error: ObjectServerError?) {
         memberView.hideProgress()
