@@ -1,7 +1,6 @@
 package com.ninebx.utility
 
 import android.util.Base64
-import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.auth.passwordHash.CustomKeyParameter
 import com.ninebx.ui.auth.passwordHash.CustomPBEParametersGenerator
@@ -23,7 +22,10 @@ import com.ninebx.ui.base.realm.home.shopping.ClothingSizes
 import com.ninebx.ui.base.realm.home.shopping.LoyaltyPrograms
 import com.ninebx.ui.base.realm.home.shopping.RecentPurchase
 import com.ninebx.ui.base.realm.home.shopping.Shopping
-import com.ninebx.ui.base.realm.home.travel.*
+import com.ninebx.ui.base.realm.home.travel.Documents
+import com.ninebx.ui.base.realm.home.travel.Loyalty
+import com.ninebx.ui.base.realm.home.travel.Travel
+import com.ninebx.ui.base.realm.home.travel.Vacations
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
@@ -392,29 +394,29 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-       encryptMember(members[i]!!)
+        encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName = member.firstName            .encryptString()
-    member.lastName = member. lastName             .encryptString()
-    member.relationship = member. relationship         .encryptString()
-    member.role = member. role.encryptString()
-    member.email = member. email                .encryptString()
+    member.firstName = member.firstName.encryptString()
+    member.lastName = member.lastName.encryptString()
+    member.relationship = member.relationship.encryptString()
+    member.role = member.role.encryptString()
+    member.email = member.email.encryptString()
 
-    member.dateOfBirth = member.dateOfBirth         .encryptString()
-    member.anniversary = member.anniversary         .encryptString()
+    member.dateOfBirth = member.dateOfBirth.encryptString()
+    member.anniversary = member.anniversary.encryptString()
     member.gender = member.gender
-    member.mobileNumber = member.mobileNumber        .encryptString()
-    member.street_1 = member.street_1            .encryptString()
-    member.street_2 = member.street_2            .encryptString()
-    member.city = member.city                .encryptString()
-    member.state = member.state               .encryptString()
-    member.zipCode = member.zipCode             .encryptString()
-    member.country = member.country             .encryptString()
+    member.mobileNumber = member.mobileNumber.encryptString()
+    member.street_1 = member.street_1.encryptString()
+    member.street_2 = member.street_2.encryptString()
+    member.city = member.city.encryptString()
+    member.state = member.state.encryptString()
+    member.zipCode = member.zipCode.encryptString()
+    member.country = member.country.encryptString()
 
     return member
 }
@@ -620,7 +622,7 @@ fun decryptProperty(property: Property): DecryptedProperty {
     decryptedProperty.leaseEndDate = property.leaseEndDate.decryptString()
     decryptedProperty.created = property.created
     decryptedProperty.modified = property.modified
-   // decryptedProperty.isPrivate = property.isPrivate.decryptString()
+    // decryptedProperty.isPrivate = property.isPrivate.decryptString()
     decryptedProperty.createdUser = property.createdUser
     decryptedProperty.notes = property.notes
     decryptedProperty.attachmentNames = property.attachmentNames
@@ -651,7 +653,7 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
     decryptedVehicle.financedThroughLoan = vehicle.financedThroughLoan.decryptString()
     decryptedVehicle.created = vehicle.created
     decryptedVehicle.modified = vehicle.modified
-   // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
+    // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
     decryptedVehicle.createdUser = vehicle.createdUser
     decryptedVehicle.leaseStartDate = vehicle.leaseStartDate
     decryptedVehicle.leaseEndDate = vehicle.leaseEndDate
@@ -745,9 +747,9 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
     decryptedTax.title = taxes.title.decryptString()
     decryptedTax.created = taxes.created
     decryptedTax.modified = taxes.modified
-   // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
+    // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
     decryptedTax.createdUser = taxes.createdUser
-    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax )
+    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
     return decryptedTax
 }
 
@@ -821,7 +823,7 @@ fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     return decryptedMainEducation
 }
 
-fun decryptWork(work: Work) : DecryptedWork{
+fun decryptWork(work: Work): DecryptedWork {
     val decryptedWork = DecryptedWork()
     decryptedWork.selectionType = work.selectionType.decryptString()
     decryptedWork.classType = work.classType.decryptString()
@@ -2403,41 +2405,40 @@ fun encryptVacations(vacations: Vacations): Vacations {
 }
 
 
-fun decryptCombine(combine: Combine) : DecryptedCombine
-{
+fun decryptCombine(combine: Combine): DecryptedCombine {
     val decryptedCombine = DecryptedCombine()
 
-    for ( financialItems in combine.financialItems ) {
+    for (financialItems in combine.financialItems) {
         val decryptedItem = decryptFinancial(financialItems)
-        decryptedCombine.financialItems.add( decryptedItem )
+        decryptedCombine.financialItems.add(decryptedItem)
     }
 
-    for (paymentItems in combine.paymentItems ) {
+    for (paymentItems in combine.paymentItems) {
         val decryptedItem = decryptPayment(paymentItems)
         decryptedCombine.paymentItems.add(decryptedItem)
     }
 
-    for (propertyItems in combine.propertyItems){
+    for (propertyItems in combine.propertyItems) {
         decryptedCombine.propertyItems.add(decryptProperty(propertyItems))
     }
 
-    for (vehicleItems in combine.vehicleItems){
+    for (vehicleItems in combine.vehicleItems) {
         decryptedCombine.vehicleItems.add(decryptVehicle(vehicleItems))
     }
 
-    for (assetItems in combine.assetItems){
+    for (assetItems in combine.assetItems) {
         decryptedCombine.assetItems.add(decryptAsset(assetItems))
     }
 
-    for (insuranceItems in combine.insuranceItems){
+    for (insuranceItems in combine.insuranceItems) {
         decryptedCombine.insuranceItems.add(decryptInsurance(insuranceItems))
     }
 
-    for (taxesItems in combine.taxesItems){
+    for (taxesItems in combine.taxesItems) {
         decryptedCombine.taxesItems.add(decryptTaxes(taxesItems))
     }
 
-    for (listItems in combine.listItems){
+    for (listItems in combine.listItems) {
         decryptedCombine.listItems.add(decryptHomeList(listItems))
     }
     return decryptedCombine

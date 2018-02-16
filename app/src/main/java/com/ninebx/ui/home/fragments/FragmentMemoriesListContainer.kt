@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.ContainerActivity
@@ -35,6 +34,8 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         bundle.putString(Constants.FROM_CLASS, "MemoryView")
         bundle.putString("ID", memoryTimeLine!!.id.toString())
         bundle.putString("ContactOperation", "Edit")
+        bundle.putString("ID", memoryTimeLine.id.toString())
+
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
     }
 
@@ -90,6 +91,8 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
             bundle.putParcelable(Constants.MEMORY_TIMELINE, MemoryTimeline())
             bundle.putString(Constants.FROM_CLASS, "MemoryView")
             bundle.putString("ContactOperation", "Add")
+            bundle.putString("ID", "0")
+
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
         }
 

@@ -22,12 +22,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.R.string.contacts
-import com.ninebx.R.string.memories
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.getImageUri
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
@@ -40,7 +37,6 @@ import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
 import com.ninebx.ui.home.calendar.events.ImageViewDialog
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
-import com.ninebx.utility.countryPicker.CountryPicker
 import io.realm.Realm
 import kotlinx.android.synthetic.main.add_memory.*
 import java.io.File
@@ -73,8 +69,6 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
     var contactOperation = ""
     var contactID = ""
-
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -175,7 +169,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         var memoryTimeLineData = MemoryTimeline()
 
-        if (contactOperation.trim() == "Add") {
+        if (contactID.trim() == "0") {
             memoryTimeLineData.id = getUniqueId()
         } else {
             memoryTimeLineData.id = contactID.toInt()
@@ -196,11 +190,11 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
     private fun populateView(memoryTimeline: MemoryTimeline?) {
 
-        mAWSFileTransferHelper.setFileTransferListener(this)
-        if (memoryTimeline!!.photosId.isNotEmpty())
-            mAWSFileTransferHelper.beginDownload("images/" + memoryTimeline.id + "/" + memoryTimeline.photosId)
+//        mAWSFileTransferHelper.setFileTransferListener(this)
+//        if (memoryTimeline!!.photosId.isNotEmpty())
+//            mAWSFileTransferHelper.beginDownload("images/" + memoryTimeline.id + "/" + memoryTimeline.photosId)
 
-        if (memoryTimeline.title.decryptString().trim().isEmpty()) {
+        if (memoryTimeline!!.title.decryptString().trim().isEmpty()) {
             titleMemory.text = strToolbarTitle
         } else {
             titleMemory.text = memoryTimeline.title.decryptString()

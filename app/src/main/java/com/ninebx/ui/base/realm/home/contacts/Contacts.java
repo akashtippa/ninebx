@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
-import com.ninebx.ui.base.realm.home.memories.MemoryTimeline;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -138,6 +137,14 @@ public class Contacts extends RealmObject implements Parcelable {
         ArrayList contacts = new ArrayList();
         contacts.addAll(contactsRealmResults);
         return contacts;
+    }
+
+    @NotNull
+    public static Contacts createContacts(@NotNull Contacts memoryTimeline) {
+        Contacts contacts = new Contacts();
+        contacts.setFirstName(memoryTimeline.firstName);
+        return contacts;
+
     }
 
     @Override
@@ -352,13 +359,5 @@ public class Contacts extends RealmObject implements Parcelable {
         for (String string : photosId) {
             backingImages.add(new RealmString(string));
         }
-    }
-
-    @NotNull
-    public static Contacts createContacts(@NotNull Contacts memoryTimeline) {
-        Contacts contacts = new Contacts();
-        contacts.setFirstName(memoryTimeline.firstName);
-        return contacts;
-
     }
 }

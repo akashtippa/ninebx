@@ -17,15 +17,30 @@ import io.realm.annotations.Required;
  * Created by smrit on 15-02-2018.
  */
 
-public class DecryptedCombineTravel implements Parcelable{
+public class DecryptedCombineTravel implements Parcelable {
+    public static final Creator<DecryptedCombineTravel> CREATOR = new Creator<DecryptedCombineTravel>() {
+        @Override
+        public DecryptedCombineTravel createFromParcel(Parcel in) {
+            return new DecryptedCombineTravel(in);
+        }
+
+        @Override
+        public DecryptedCombineTravel[] newArray(int size) {
+            return new DecryptedCombineTravel[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
-    @Required private RealmList<Documents> documentsItems      = new RealmList<Documents>();
-    @Required private RealmList<Loyalty> loyaltyItems        = new RealmList<Loyalty>();
-    @Required private RealmList<Travel> travelItems         = new RealmList<Travel>();
-    @Required private RealmList<Vacations> vacationsItems      = new RealmList<Vacations>();
-    @Required private RealmList<TravelList> listItems           = new RealmList<TravelList>();
+    @Required
+    private RealmList<Documents> documentsItems = new RealmList<Documents>();
+    @Required
+    private RealmList<Loyalty> loyaltyItems = new RealmList<Loyalty>();
+    @Required
+    private RealmList<Travel> travelItems = new RealmList<Travel>();
+    @Required
+    private RealmList<Vacations> vacationsItems = new RealmList<Vacations>();
+    @Required
+    private RealmList<TravelList> listItems = new RealmList<TravelList>();
 
     public DecryptedCombineTravel() {
     }
@@ -52,18 +67,6 @@ public class DecryptedCombineTravel implements Parcelable{
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombineTravel> CREATOR = new Creator<DecryptedCombineTravel>() {
-        @Override
-        public DecryptedCombineTravel createFromParcel(Parcel in) {
-            return new DecryptedCombineTravel(in);
-        }
-
-        @Override
-        public DecryptedCombineTravel[] newArray(int size) {
-            return new DecryptedCombineTravel[size];
-        }
-    };
 
     public int getId() {
         return id;

@@ -15,7 +15,7 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombineShopping extends RealmObject {
 
-   /* @Required*/
+    /* @Required*/
     @PrimaryKey
     private int id = 0;
 
@@ -26,7 +26,8 @@ public class CombineShopping extends RealmObject {
 
     @Required private RealmList<ShoppingList> listItems                       = new RealmList<ShoppingList>();
 
-    public CombineShopping(){}
+    public CombineShopping() {
+    }
 
     public CombineShopping(int id, RealmList loyaltyProgramsItems, RealmList recentPurchaseItems, RealmList shoppingItems, RealmList clothingSizesItems, RealmList listItems) {
         this.id = id;

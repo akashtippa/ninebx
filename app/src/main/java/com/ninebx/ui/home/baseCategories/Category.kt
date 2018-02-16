@@ -6,7 +6,7 @@ import android.os.Parcelable
 /**
  * Created by Alok on 12/01/18.
  */
-class Category (
+class Category(
         var category_id: String = "",
         var title: String = "",
         var drawableString: String = "",

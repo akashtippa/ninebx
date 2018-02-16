@@ -1,7 +1,6 @@
 package com.ninebx.ui.home.adapter
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.account.interfaces.IContactsAdded
-import com.ninebx.ui.home.fragments.SingleContactViewFragment
-import com.ninebx.utility.Constants
 import com.ninebx.utility.decryptString
 
 internal class ContactsAdapter(private var myList: ArrayList<Contacts>?, private val iContactsAdded: IContactsAdded) : RecyclerView.Adapter<ContactsAdapter.RecyclerItemViewHolder>() {

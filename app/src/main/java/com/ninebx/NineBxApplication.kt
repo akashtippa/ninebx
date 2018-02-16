@@ -5,8 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
-import com.amazonaws.auth.CognitoCachingCredentialsProvider
-import com.amazonaws.regions.Regions
 import com.evernote.android.job.JobManager
 import com.ninebx.ui.base.network.NetModule
 import com.ninebx.ui.base.realm.Users

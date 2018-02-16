@@ -11,7 +11,7 @@ interface AuthView : BaseView {
     fun navigateToSignUp()
     fun navigateToSignIn()
     fun navigateToHome()
-    fun navigateToOTP( isSignIn : Boolean )
+    fun navigateToOTP(isSignIn: Boolean)
     fun navigateToAccountPassword( users : Users )
     fun navigateToCreatePassCode(isCreatePassCode: Boolean, passCode: String)
     fun navigateToFingerPrint()

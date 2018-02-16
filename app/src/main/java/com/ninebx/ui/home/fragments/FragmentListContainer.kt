@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,8 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
-import com.ninebx.utility.*
+import com.ninebx.utility.Constants
+import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -29,7 +29,6 @@ import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
-import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list_container.*
 import java.io.Serializable

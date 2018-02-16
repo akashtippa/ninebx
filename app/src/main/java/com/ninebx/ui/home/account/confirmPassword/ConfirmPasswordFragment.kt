@@ -36,12 +36,11 @@ class ConfirmPasswordFragment : Fragment() {
         btnSubmit.setOnClickListener {
             if (validate()) {
                 memberView.onConfirmPassword(password)
-            }
-            else {
+            } else {
                 memberView.showError(getString(R.string.check_password))
             }
         }
-        if( NineBxApplication.autoTestMode ) {
+        if (NineBxApplication.autoTestMode) {
             etConfirmPassword.setText("Password14.")
         }
     }

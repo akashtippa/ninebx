@@ -12,18 +12,13 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IContactsAdded
-import com.ninebx.ui.home.account.interfaces.IMemoryAdded
 import com.ninebx.ui.home.adapter.ContactsAdapter
-import com.ninebx.ui.home.adapter.Date
-import com.ninebx.ui.home.adapter.MemoriesAdapter
-import com.ninebx.ui.home.adapter.MemoriesDateAdapter
 import com.ninebx.utility.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_contact_list.*
-import java.util.ArrayList
+import java.util.*
 
 /***
  * Created by TechnoBlogger on 24/01/18.
@@ -43,7 +38,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         bundle.putString(Constants.FROM_CLASS, "Contacts")
         bundle.putString("ContactOperation", "Edit")
         bundle.putString("ID", contacts!!.id.toString())
-        AppLogger.e("ID ", " is " + contacts!!.id.toString())
+        AppLogger.e("ID ", " is " + contacts.id.toString())
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
     }
 
@@ -79,6 +74,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
             bundle.putParcelable(Constants.CONTACTS_VIEW, Contacts())
             bundle.putString(Constants.FROM_CLASS, "Contacts")
             bundle.putString("ContactOperation", "Add")
+            bundle.putString("ID", "0")
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
         }
 

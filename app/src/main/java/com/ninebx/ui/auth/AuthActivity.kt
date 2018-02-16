@@ -121,7 +121,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var otpFragment : OTPFragment ?= null
-    override fun navigateToOTP( isSignIn : Boolean ) {
+    override fun navigateToOTP(isSignIn: Boolean) {
         if (NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
@@ -195,7 +195,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         mAuthPresenter = AuthPresenter(this)
         when (NineBxApplication.getPreferences().currentStep) {
             Constants.ACCOUNT_PASSWORD_COMPLETE -> {
-                navigateToOTP( false )
+                navigateToOTP(false)
             }
             Constants.OTP_COMPLETE -> {
                 navigateToCreatePassCode(true, "")

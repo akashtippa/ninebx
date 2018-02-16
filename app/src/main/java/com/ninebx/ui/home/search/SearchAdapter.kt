@@ -26,10 +26,10 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
         holder.textView.text = searchItems[position].itemName
     }
 
-    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         override fun onClick(view: View?) {
             val position = adapterPosition
-            if( position != RecyclerView.NO_POSITION ) {
+            if (position != RecyclerView.NO_POSITION) {
                 adapterClickListener.onItemClick(position, searchItems[position])
             }
         }

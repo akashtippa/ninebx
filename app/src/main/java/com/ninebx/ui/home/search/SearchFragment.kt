@@ -3,21 +3,20 @@ package com.ninebx.ui.home.search
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ninebx.R
-
-import com.ninebx.ui.home.BaseHomeFragment
-import kotlinx.android.synthetic.main.fragment_search.*
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.LinearLayout
+import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
-import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
+import com.ninebx.ui.home.BaseHomeFragment
+import kotlinx.android.synthetic.main.fragment_search.*
 
 
 /**
@@ -26,7 +25,7 @@ import com.ninebx.ui.base.realm.decrypted.*
 
 class SearchFragment : BaseHomeFragment(), SearchView {
 
-    private var mDecryptCombine : DecryptedCombine ?= null
+    private var mDecryptCombine: DecryptedCombine? = null
 
     override fun onCombineFetched(combine: DecryptedCombine) {
         this.mDecryptCombine = combine
@@ -48,7 +47,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       return inflater.inflate(R.layout.fragment_search, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     private lateinit var searchDecryptCombine: DecryptedCombine
@@ -62,10 +61,10 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this)
 
-        edtSearch.addTextChangedListener(object : TextWatcher{
+        edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val text = edtSearch.text.toString().trim()
-                searchDecryptCombine = mSearchPresenter.searchHomeItems( text )
+                searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
                 setAdapter()
             }
 
@@ -160,66 +159,66 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun setupHomeItems() {
-        for( finance in searchDecryptCombine.financialItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance" ))
+        for (finance in searchDecryptCombine.financialItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, finance.accountName, "finance"))
         }
-        for( payment in searchDecryptCombine.paymentItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.userName, "payment" ))
+        for (payment in searchDecryptCombine.paymentItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, payment.userName, "payment"))
         }
-        for( asset in searchDecryptCombine.assetItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset" ))
+        for (asset in searchDecryptCombine.assetItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, asset.assetName, "asset"))
         }
-        for( insurance in searchDecryptCombine.insuranceItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  insurance.insuranceCompany, "insurance" ))
+        for (insurance in searchDecryptCombine.insuranceItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, insurance.insuranceCompany, "insurance"))
         }
-        for( tax in searchDecryptCombine.taxesItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  tax.taxPayer, "tax" ))
+        for (tax in searchDecryptCombine.taxesItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, tax.taxPayer, "tax"))
         }
-        for( vehicle in searchDecryptCombine.vehicleItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.titleName, "vehicle" ))
+        for (vehicle in searchDecryptCombine.vehicleItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, vehicle.titleName, "vehicle"))
         }
-        for( property in searchDecryptCombine.propertyItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  property.propertyName, "property" ))
+        for (property in searchDecryptCombine.propertyItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, property.propertyName, "property"))
         }
-        for( home in searchDecryptCombine.listItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  home.listName, "home" ))
+        for (home in searchDecryptCombine.listItems) {
+            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, home.listName, "home"))
         }
-        if( mSearchHomeList.size > 0 ) //Pass the right recyclerview and layout to be shown with searchlist to be populated
-            setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
+        if (mSearchHomeList.size > 0) //Pass the right recyclerview and layout to be shown with searchlist to be populated
+            setupAdapter(rvHomeMoney, homeLayout, mSearchHomeList)
     }
 
-    private fun setupAdapter( searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
+    private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
+        searchRecyclerView.adapter = SearchAdapter(searchList, object : SearchItemClickListener {
             override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
-                when( searchItem.searchCategory ) {
+                when (searchItem.searchCategory) {
                     R.string.home_amp_money -> {
-                        switchHomeItems( position, searchItem )
+                        switchHomeItems(position, searchItem)
                     }
                     (R.string.travel) -> {
-                        switchTravelItems( position, searchItem )
+                        switchTravelItems(position, searchItem)
                     }
                     (R.string.contacts) -> {
-                        switchContactsItems( position, searchItem )
+                        switchContactsItems(position, searchItem)
                     }
                     (R.string.education_work) -> {
-                        switchEducationItems( position, searchItem )
+                        switchEducationItems(position, searchItem)
                     }
                     (R.string.personal) -> {
-                        switchPersonalItems( position, searchItem )
+                        switchPersonalItems(position, searchItem)
                     }
                     (R.string.interests) -> {
-                        switchInterestsItems( position, searchItem )
+                        switchInterestsItems(position, searchItem)
                     }
                     (R.string.wellness) -> {
-                        switchWellnessItems( position, searchItem )
+                        switchWellnessItems(position, searchItem)
                     }
                     (R.string.memories) -> {
-                        switchMemoriesItems( position, searchItem )
+                        switchMemoriesItems(position, searchItem)
                     }
                     (R.string.shopping) -> {
-                        switchShoppingItems( position, searchItem )
+                        switchShoppingItems(position, searchItem)
                     }
                 }
             }
@@ -261,7 +260,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchHomeItems(position: Int, searchItem: Level3SearchItem) {
-        when( searchItem.categoryName ) {
+        when (searchItem.categoryName) {
             "finance" -> {
                 val selectedDocument = searchDecryptCombine.financialItems[position]
             }

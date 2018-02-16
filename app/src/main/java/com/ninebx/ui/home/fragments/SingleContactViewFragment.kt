@@ -1,8 +1,15 @@
 package com.ninebx.ui.home.fragments
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,26 +18,14 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.contactsView.ContactsView
-import com.ninebx.ui.home.account.memoryView.MemoryView
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
 import com.ninebx.utility.*
-import io.realm.Realm
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_level2_contacts.*
-import java.util.*
-import android.content.DialogInterface
-import android.content.pm.PackageManager
-import com.ninebx.utility.Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
-import android.provider.MediaStore
-import android.content.Intent
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
-import android.graphics.Bitmap
-import android.os.Environment
-import android.os.Environment.getExternalStorageDirectory
+import kotlinx.android.synthetic.main.fragment_level2_contacts.*
 import java.io.*
-import android.app.Activity
+import java.util.*
 
 
 /***
@@ -170,7 +165,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
         var contacts = Contacts()
 
-        if (contactOperation.trim() == "Add") {
+        if (contactID.trim() == "0") {
             contacts.id = getUniqueId()
         } else {
             contacts.id = contactID.toInt()
@@ -226,21 +221,21 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
     private fun populateView(contacts: Contacts?) {
 
-        mAWSFileTransferHelper.setFileTransferListener(this)
-        if (contacts!!.photosId.isNotEmpty())
-            mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
+//        mAWSFileTransferHelper.setFileTransferListener(this)
+//        if (contacts!!.photosId.isNotEmpty())
+//            mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
 
-        if (contacts.firstName.isNotEmpty())
+        if (contacts!!.firstName.isNotEmpty())
             edtFirstName.setText(contacts.firstName.decryptString())
 
         if (contacts.lastName.isNotEmpty())
             edtLastName.setText(contacts.lastName.decryptString())
 
         if (contacts.dateOfBirth.isNotEmpty())
-            txtDOB.setText(contacts.dateOfBirth.decryptString())
+            txtDOB.text = contacts.dateOfBirth.decryptString()
 
         if (contacts.anniversary.isNotEmpty())
-            txtAnniversary.setText(contacts.anniversary.decryptString())
+            txtAnniversary.text = contacts.anniversary.decryptString()
 
         if (contacts.mobileOne.isNotEmpty())
             edtMobileOne.setText(contacts.mobileOne.decryptString())
