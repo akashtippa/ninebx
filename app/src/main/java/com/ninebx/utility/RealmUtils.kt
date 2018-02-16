@@ -155,7 +155,7 @@ fun generateRandomOTP(): String {
     return otp
 }
 
-fun pojo2Map(obj: Any): Map<String, Any> {
+private fun pojo2Map(obj: Any): Map<String, Any> {
     val hashMap = HashMap<String, Any>()
     try {
         val c = obj.javaClass
