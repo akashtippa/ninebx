@@ -7,11 +7,17 @@ import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.realm.ObjectServerError
-import io.realm.SyncCredentials
-import io.realm.SyncUser
+import io.realm.*
+import io.realm.permissions.Permission
 import okhttp3.ResponseBody
 import java.util.*
+import io.realm.ObjectServerError
+import io.realm.PermissionManager
+import io.realm.permissions.AccessLevel
+import io.realm.permissions.PermissionRequest
+import io.realm.permissions.UserCondition
+
+
 
 /**
  * Created by Alok on 14/02/18.
@@ -83,7 +89,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
                 AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
-                memberView.onMemberSignup(mCurrentUser!!)
+                setUserPermissions()
             }
 
             override fun onError(e: Throwable) {
@@ -92,7 +98,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
 
             override fun onComplete() {
                 AppLogger.d(TAG, "GetUserAPI : onComplete")
-                memberView.hideProgress()
+                //memberView.hideProgress()
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -100,6 +106,42 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
             }
 
         }
+    }
+
+    private fun setUserPermissions() {
+        val permissionManager = mCurrentUser!!.permissionManager
+        permissionManager.getPermissions( object : PermissionManager.PermissionsCallback {
+            override fun onSuccess(permissions: RealmResults<Permission>?) {
+                grantPermissions( permissionManager )
+            }
+
+            override fun onError(error: ObjectServerError?) {
+                memberView.hideProgress()
+                memberView.onError(R.string.error_permissions)
+            }
+
+        })
+
+    }
+
+    private fun grantPermissions(permissions: PermissionManager) {
+        // Create request
+        val condition = UserCondition.userId(mCurrentUser!!.identity)
+        val accessLevel = AccessLevel.WRITE
+        val request = PermissionRequest(condition, Constants.SERVER_URL + "Users", accessLevel)
+
+        permissions.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
+            override fun onSuccess() {
+                memberView.onMemberSignup(mCurrentUser!!)
+                memberView.hideProgress()
+            }
+
+            override fun onError(error: ObjectServerError) {
+                error.printStackTrace()
+                memberView.hideProgress()
+                memberView.onError(R.string.error_permissions)
+            }
+        })
     }
 
     override fun onError(error: ObjectServerError?) {
