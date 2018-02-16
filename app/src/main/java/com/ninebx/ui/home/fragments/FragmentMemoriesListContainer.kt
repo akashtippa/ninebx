@@ -10,11 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IMemoryAdded
+import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.home.adapter.MemoriesAdapter
+import com.ninebx.ui.home.adapter.MemoriesDateAdapter
 import com.ninebx.utility.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_memories_list_container.*
@@ -30,6 +33,8 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMORY_TIMELINE, memoryTimeLine)
         bundle.putString(Constants.FROM_CLASS, "MemoryView")
+        bundle.putString("ID", memoryTimeLine!!.id.toString())
+        bundle.putString("ContactOperation", "Edit")
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
     }
 
@@ -46,7 +51,12 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     private var mListsAdapter: MemoriesAdapter? = null
     var myList: ArrayList<MemoryTimeline> = ArrayList()
     private var currentMemoriesList: ArrayList<MemoryTimeline>? = ArrayList()
-    private var usersRealm: Realm? = null
+    private var memoryRealm: Realm? = null
+
+
+    private var mListsDateAdapter: MemoriesDateAdapter? = null
+    var myDateList: ArrayList<Date> = ArrayList()
+    private var currentDateList: ArrayList<Date>? = ArrayList()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,6 +71,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
         currentMemoriesList = arguments!!.getParcelableArrayList<MemoryTimeline>(Constants.REALM_MEMORY_VIEW)
         myList.addAll(currentMemoriesList!!)
+        myDateList.addAll(currentDateList!!)
 
         mListsAdapter = MemoriesAdapter(myList, this)
         val layoutManager = LinearLayoutManager(context)
@@ -68,28 +79,34 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         rvMemoryView!!.layoutManager = layoutManager
         rvMemoryView!!.adapter = mListsAdapter
 
+//        mListsDateAdapter = MemoriesDateAdapter(myDateList)
+//        val layoutManagerDate = LinearLayoutManager(context)
+//        layoutManagerDate.orientation = LinearLayoutManager.HORIZONTAL
+//        rvMemoryView!!.layoutManager = layoutManager
+//        rvMemoryView!!.adapter = mListsDateAdapter
+
         layoutAddList.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMORY_TIMELINE, MemoryTimeline())
             bundle.putString(Constants.FROM_CLASS, "MemoryView")
+            bundle.putString("ContactOperation", "Add")
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
         }
 
-        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                usersRealm = realm
+                memoryRealm = realm
                 saveMemoryTimeLine()
             }
         })
-
     }
 
 
     private fun saveMemoryTimeLine() {
         val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
-        memoryObject.insertOrUpdate(usersRealm!!)
+        memoryObject.insertOrUpdate(memoryRealm!!)
         context!!.hideProgressDialog()
-        myList.clear()
+//        myList.clear()
         myList.add(memoryObject)
         mListsAdapter!!.notifyDataSetChanged()
     }

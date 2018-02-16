@@ -16,7 +16,7 @@ import java.util.*
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView, private val adminId : String ) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
@@ -32,6 +32,7 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
 
 
     fun saveToUserAccount(strEmail: String, password: String) {
+        userName = strEmail
         memberView.showProgress(R.string.loading)
         encryptedPasswordByteArray = (encryptKey(password, strEmail))
         encryptedPassword = Arrays.toString(convertToUInt8IntArray(encryptedPasswordByteArray))
@@ -41,25 +42,22 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
 
     override fun onSuccess(result: SyncUser?) {
 
+        mCurrentUser = result
         //Save user data to realm
         val userMap = HashMap<String, Any>()
 
         //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
         userMap.put("user_id", result!!.identity)
-        userMap.put("admin_id", NineBxApplication.instance.currentUser!!.userId)
+        userMap.put("admin_id", adminId)
         userMap.put("email", userName)
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", false)
 
-        val privateKey = randomString(16)
-        NineBxApplication.getPreferences().privateKey = privateKey
-
-        val encryptedPrivateKey = encryptAESKeyPassword(privateKey, encryptedPasswordByteArray)
+        val encryptedPrivateKey = encryptAESKeyPassword(NineBxApplication.getPreferences().privateKey!!, encryptedPasswordByteArray)
 
         AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
         userMap.put("secure_key", encryptedPrivateKey)
-        AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
         AppLogger.d(TAG, "UserMap : " + userMap)
 
         val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)

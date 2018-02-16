@@ -6,34 +6,39 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
+import com.ninebx.ui.base.realm.SearchItemClickListener
+
 
 /**
  * Created by smrit on 14-02-2018.
  */
-class SearchAdapter(private val decryptedFinance: ArrayList<DecryptedFinancial>) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, private val adapterClickListener: SearchItemClickListener) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
         val v = LayoutInflater.from(parent!!.context).inflate(R.layout.row_search, parent, false)
         return ViewHolder(v)
     }
 
     override fun getItemCount(): Int {
-        return decryptedFinance.size
+        return searchItems.size
     }
 
     override fun onBindViewHolder(holder: SearchAdapter.ViewHolder, position: Int) {
-        holder.bindItems(decryptedFinance[position])
+        holder.textView.text = searchItems[position].itemName
     }
 
-
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+        override fun onClick(view: View?) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                adapterClickListener.onItemClick(position, searchItems[position])
+            }
+        }
 
         val textView: TextView = view.findViewById<View>(R.id.txtListSearch) as TextView
 
-        fun bindItems(decryptedFinance: DecryptedFinancial) {
-
-            textView.text = decryptedFinance.accountName
-
+        init {
+            view.setOnClickListener(this)
         }
+
     }
 }

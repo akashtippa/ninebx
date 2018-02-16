@@ -1269,8 +1269,8 @@ class Level2CategoryHelper(
     private fun getPropertyRentedForOwnUse() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2008
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 3002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
@@ -1312,8 +1312,8 @@ class Level2CategoryHelper(
     private fun getPrimaryHomeOwned() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2007
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 3001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
@@ -1356,8 +1356,8 @@ class Level2CategoryHelper(
     private fun getOtherPaymentAccounts() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2006
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 2002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL_NORMAL_SPINNER))
@@ -1398,8 +1398,8 @@ class Level2CategoryHelper(
     private fun getCardDebitCardDetails() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2005
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 2001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Card Details"
         category.subCategories.add(Level2SubCategory("Card number", "Card number", "", Constants.LEVEL2_PASSWORD))
@@ -1441,8 +1441,8 @@ class Level2CategoryHelper(
     private fun getOtherFinancialAccounts() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2004
-        var category_id = "investment_retirement" + categoryIndex
+        var categoryIndex = 1004
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL2_NORMAL))
@@ -1484,8 +1484,8 @@ class Level2CategoryHelper(
     private fun getLoadMortgages() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2003
-        var category_id = "investment_retirement" + categoryIndex
+        var categoryIndex = 1003
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Loan type", "Loan type", "", Constants.LEVEL2_NORMAL))
@@ -1526,8 +1526,8 @@ class Level2CategoryHelper(
     private fun getInvestments() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2002
-        var category_id = "investment_retirement" + categoryIndex
+        var categoryIndex = 1002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL2_NORMAL))
@@ -1568,8 +1568,8 @@ class Level2CategoryHelper(
     private fun getBanking() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2001
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 1001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", "Account type", Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))

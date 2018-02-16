@@ -128,7 +128,9 @@ object Constants {
 
     val MEMBER: String = "member"
     val MEMORY_TIMELINE: String = "memoryTimeLine"
+    val CONTACT: String = "contact"
     val FROM_CLASS = "fromClass"
+    val CONTACTS_VIEW = "contactView"
     val BUNDLE_CONTACT_NO = "contactNumber"
     val BUNDLE_CONTACT_NAME = "contactName"
     val IS_NEW_ACCOUNT: String = "is_new_account"

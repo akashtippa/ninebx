@@ -10,20 +10,33 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
+import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
+import com.ninebx.ui.home.fragments.FragmentMemoriesListContainer
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
+import com.ninebx.ui.home.fragments.SingleContactViewFragment
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Constants.ALL_COMPLETE
+import com.ninebx.utility.decryptString
 import io.realm.SyncUser
 
 /**
  * Created by Alok on 14/02/18.
  */
-class ContainerActivity : AppCompatActivity(), MemberView, MemoryView {
+class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView {
+    override fun onContacts(contacts: Contacts) {
+        val intent = Intent()
+        intent.putExtra(Constants.CONTACTS_VIEW, contacts)
+        AppLogger.e("Contacts ", " is " + contacts.lastName.decryptString())
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
 
     override fun onMemoryTimeLine(memoryTimeLine: MemoryTimeline) {
         val intent = Intent()
@@ -91,6 +104,9 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView {
             "AddMember" -> {
                 loadMasterPasswordFragment()
             }
+            "Contacts" -> {
+                loadSingleContactView()
+            }
         }
 
 
@@ -109,6 +125,14 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView {
         val memoryTimeLine = MemoryTimeLineFragment()
         memoryTimeLine.arguments = intent.extras
         fragmentTransaction.replace(R.id.fragmentContainer, memoryTimeLine).commit()
+    }
+
+    private fun loadSingleContactView() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val contactsFragment = SingleContactViewFragment()
+        contactsFragment.arguments = intent.extras
+        fragmentTransaction.replace(R.id.fragmentContainer, contactsFragment).commit()
     }
 
 

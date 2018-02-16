@@ -11,6 +11,7 @@ import com.ninebx.R
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.utility.encryptKey
 import kotlinx.android.synthetic.main.fragment_confirm_password.*
+import java.util.*
 
 /**
  * Created by Alok on 14/02/18.
@@ -36,12 +37,18 @@ class ConfirmPasswordFragment : Fragment() {
             if (validate()) {
                 memberView.onConfirmPassword(password)
             }
+            else {
+                memberView.showError(getString(R.string.check_password))
+            }
+        }
+        if( NineBxApplication.autoTestMode ) {
+            etConfirmPassword.setText("Password14.")
         }
     }
 
     private fun validate(): Boolean {
         password = etConfirmPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
-        return !password.isEmpty() && preferences.userPassword!!.equals(encryptKey(password, preferences.userEmail!!))
+        return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, preferences.userEmail!!)))
     }
 }

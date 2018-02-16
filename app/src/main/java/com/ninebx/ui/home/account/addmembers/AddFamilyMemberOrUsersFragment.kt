@@ -65,7 +65,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        memberPresenter = MemberPresenter(memberView)
+        memberPresenter = MemberPresenter(memberView, SyncUser.currentUser().identity)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
         
@@ -272,7 +272,6 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         strAccountHolder = txtRelationship.selectedItem.toString()
         strRole = txtsRole.selectedItem.toString()
         strEmail = edtEmailAddress.text.toString()
-
 
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()

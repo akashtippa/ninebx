@@ -41,7 +41,7 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("aman.shekhar@cognitiveclouds.com")
+            edtEmailAddress.setText("alok.g@cognitiveclouds.com")
             edtPassword.setText("Password14.")
         }
 
@@ -90,7 +90,7 @@ class SignInFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        mAuthView.navigateToOTP()
+        mAuthView.navigateToOTP(true)
     }
 
     private fun openStaticLayoutDialog(option: Int) {

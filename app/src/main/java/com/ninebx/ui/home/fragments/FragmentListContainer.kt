@@ -21,8 +21,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.*
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -30,6 +29,7 @@ import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
+import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list_container.*
 import java.io.Serializable
@@ -42,6 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class FragmentListContainer : FragmentBackHelper() {
 
     var fragmentValue = ""
+    var fragmentCategoryId = ""
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
@@ -76,8 +77,8 @@ class FragmentListContainer : FragmentBackHelper() {
 
         val bundle = Bundle()
         fragmentValue = arguments!!.getString("categoryName")
-
-        changeToolbarTitleAndAddInfo(fragmentValue)
+        fragmentCategoryId = arguments!!.getString("categoryId")
+//        changeToolbarTitleAndAddInfo(fragmentValue)
 
 
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(fragmentValue)
@@ -90,6 +91,10 @@ class FragmentListContainer : FragmentBackHelper() {
             if (fragmentValue == "Shared Contacts") {
                 checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
                 callForContact()
+            } else if (fragmentValue == "Memory Timeline") {
+                val categoryFragment = MemoryTimeLineFragment()
+                categoryFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
             } else {
                 val categoryFragment = Level2CategoryFragment()
                 categoryFragment.arguments = bundle
@@ -112,7 +117,7 @@ class FragmentListContainer : FragmentBackHelper() {
         var contactList: ArrayList<Contacts>? = ArrayList()
         contactList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
         contacts!!.addAll(contactList!!)
-        setContactsList()
+//        setContactsList()
     }
 
     override fun onBackPressed(): Boolean {
@@ -264,7 +269,7 @@ class FragmentListContainer : FragmentBackHelper() {
             // we got a result from the contact picker --> show the picked contacts
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
-            setContactsList()
+//            setContactsList()
         }
     }
 
@@ -279,14 +284,14 @@ class FragmentListContainer : FragmentBackHelper() {
             outState.putSerializable(EXTRA_CONTACTS, mContacts as Serializable)
         }
     }
-
+/*
     private fun setContactsList() {
-        mListsAdapter = ContactsAdapter(contacts)
+        mListsAdapter = ContactsAdapter(contacts, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvCommonList!!.layoutManager = layoutManager
         rvCommonList!!.adapter = mListsAdapter
-    }
+    }*/
 
     private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
         //int start = result.length();

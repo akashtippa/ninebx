@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <RelativeLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -22,14 +23,13 @@
 
 
             <ImageView
-                android:id="@+id/ivBack"
+                android:id="@+id/ivBackFromMemory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="start"
-                android:contentDescription="@string/go_back"
                 android:padding="@dimen/default_micro_padding"
                 app:srcCompat="@drawable/ic_icon_arrow_form" />
 
@@ -57,7 +57,7 @@
                 android:textColor="@color/colorPrimary"
                 android:visibility="visible" />
 
-        </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 
 
@@ -106,7 +106,6 @@
                 android:layout_margin="@dimen/default_mini_padding"
                 android:text="Pictures" />
 
-
             <android.support.v7.widget.CardView
                 android:id="@+id/cvAttachment"
                 android:layout_width="@dimen/margin_48"
@@ -118,8 +117,30 @@
                     android:id="@+id/ivAttachment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/take_a_picture"
                     app:srcCompat="@drawable/ic_icon_add_photo_memories_grey" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvAttachments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_mini_padding"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvAttachments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        tools:layout_height="@dimen/margin_72"
+                        tools:listitem="@layout/item_attachment" />
+
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
 

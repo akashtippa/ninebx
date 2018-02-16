@@ -6,10 +6,8 @@
     android:clickable="true">
 
 
-
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvCommonList"
+        android:id="@+id/rvContactList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_41sdp"
@@ -40,7 +38,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:drawableRight="@drawable/ic_icon_add_list"
             android:gravity="center_vertical"
-            android:text="Add Account"
+            android:text="Add Shared COntact"
             android:textAllCaps="true" />
 
     </RelativeLayout>

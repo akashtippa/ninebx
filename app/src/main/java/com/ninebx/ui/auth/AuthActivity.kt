@@ -95,6 +95,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private var signInFragment: SignInFragment? = null
     override fun navigateToSignIn() {
+
+        //if( SyncUser.currentUser() != null ) SyncUser.currentUser().logout()
+
         mCurrentTag = "SignIn"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(SignInFragment::class.java.simpleName)
@@ -118,7 +121,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var otpFragment : OTPFragment ?= null
-    override fun navigateToOTP() {
+    override fun navigateToOTP( isSignIn : Boolean ) {
         if (NineBxApplication.getPreferences().currentStep < Constants.ACCOUNT_PASSWORD_COMPLETE)
             NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
@@ -192,7 +195,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         mAuthPresenter = AuthPresenter(this)
         when (NineBxApplication.getPreferences().currentStep) {
             Constants.ACCOUNT_PASSWORD_COMPLETE -> {
-                navigateToOTP()
+                navigateToOTP( false )
             }
             Constants.OTP_COMPLETE -> {
                 navigateToCreatePassCode(true, "")

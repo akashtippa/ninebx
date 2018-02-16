@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.fragments
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +11,40 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.home.account.contactsView.ContactsView
+import com.ninebx.ui.home.account.memoryView.MemoryView
+import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_level2_contacts.*
 import java.util.*
+import android.content.DialogInterface
+import android.content.pm.PackageManager
+import com.ninebx.utility.Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
+import android.provider.MediaStore
+import android.content.Intent
+import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import android.graphics.Bitmap
+import android.os.Environment
+import android.os.Environment.getExternalStorageDirectory
+import java.io.*
+import android.app.Activity
 
 
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class SingleContactViewFragment : FragmentBackHelper() {
+class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener {
+    override fun onSuccess(outputFile: File?) {
 
+    }
+
+    private var userChoosenTask = ""
+
+    private val REQUEST_CAMERA = 0
+    private val SELECT_FILE = 1
     var strContactName = ""
     var strContactNumber = ""
 
@@ -41,10 +65,25 @@ class SingleContactViewFragment : FragmentBackHelper() {
     var strCountry = ""
 
     private lateinit var mContacts: Contacts
+    private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
+    private lateinit var mContactsView: ContactsView
+
+    var contactOperation = ""
+    var contactID = ""
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_level2_contacts, container, false)
     }
+
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is ContactsView) {
+            mContactsView = context
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,14 +91,14 @@ class SingleContactViewFragment : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.showToolbar()
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
 
-        strContactName = arguments!!.getString(Constants.BUNDLE_CONTACT_NAME)
-        strContactNumber = arguments!!.getString(Constants.BUNDLE_CONTACT_NO)
+        mContacts = arguments!!.getParcelable(Constants.CONTACTS_VIEW)
+        mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
-//        mContacts = arguments!!.getParcelable(Constants.CONTACTS)
-
+        contactOperation = arguments!!.getString("ContactOperation")
+        contactID = arguments!!.getString("ID")
 
         edtFirstName.setText(strContactName)
-        txtMobileNumber.setText(strContactNumber)
+        edtMobileOne.setText(strContactNumber)
 
         ivBackContactView.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
@@ -89,7 +128,11 @@ class SingleContactViewFragment : FragmentBackHelper() {
             saveTheEditedContacts()
         }
 
-        fetchTheContactListFromRealm()
+        imgEditProfile.setOnClickListener {
+            selectImage()
+        }
+
+        populateView(mContacts)
 
     }
 
@@ -98,93 +141,14 @@ class SingleContactViewFragment : FragmentBackHelper() {
     private var contacts: ArrayList<Contacts>? = ArrayList()
 
 
-    private fun fetchTheContactListFromRealm() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                contactList = getCurrentContactList(realm!!)
-                contacts!!.clear()
-                for (contact in contactList!!.iterator()) {
-                    contacts!!.add(contact)
-                    strFirstName = contact.firstName.decryptString()
-                    strLastName = contact.lastName.decryptString()
-                    strBirthday = contact.dateOfBirth.decryptString()
-                    strAnniversary = contact.anniversary.decryptString()
-                    strPhone1 = contact.mobileOne.decryptString()
-                    strPhone2 = contact.mobileTwo.decryptString()
-                    strEmail1 = contact.emailOne.decryptString()
-                    strEmail2 = contact.emailTwo.decryptString()
-                    strStreetAddress1 = contact.streetAddressOne.decryptString()
-                    strStreetAddress2 = contact.streetAddressTwo.decryptString()
-                    strCity = contact.city.decryptString()
-                    strState = contact.state.decryptString()
-                    strZipCode = contact.zipCode.decryptString()
-                    strCountry = contact.country.decryptString()
-
-                    AppLogger.e("Contacts", "First Name : " + strFirstName)
-                    AppLogger.e("Contacts", "Last Name : " + strLastName)
-                    AppLogger.e("Contacts", "DOB : " + strBirthday)
-                    AppLogger.e("Contacts", "Anniversary : " + strAnniversary)
-                    AppLogger.e("Contacts", "Phone 1 : " + strPhone1)
-                    AppLogger.e("Contacts", "Phone 2 : " + strPhone2)
-                    AppLogger.e("Contacts", "Email 1 : " + strEmail1)
-                    AppLogger.e("Contacts", "Email 2 : " + strEmail2)
-                    AppLogger.e("Contacts", "Address 1 : " + strStreetAddress1)
-                    AppLogger.e("Contacts", "Address 2 : " + strStreetAddress2)
-                    AppLogger.e("Contacts", "City : " + strCity)
-                    AppLogger.e("Contacts", "State : " + strState)
-                    AppLogger.e("Contacts", "Zip Code : " + strZipCode)
-                    AppLogger.e("Contacts", "Country : " + strCountry)
-
-                }
-
-                setContactDetails(contactList!![0])
-
-//                edtFirstName.setText(strFirstName)
-//                edtLastName.setText(strFirstName)
-//                txtDOB.setText(strBirthday)
-//                txtAnniversary.setText(strAnniversary)
-//                txtMobileNumber.setText(strPhone1)
-//                txtMobileNumber2.setText(strPhone2)
-//                edtEmail1.setText(strEmail1)
-//                edtEmail2.setText(strEmail2)
-//                txtAddress1.setText(strStreetAddress1)
-//                txtAddress2.setText(strStreetAddress2)
-//                edtCity.setText(strCity)
-//                edtState.setText(strState)
-//                edtZipCode.setText(strZipCode)
-//                edtCountry.setText(strCountry)
-//                AppLogger.e("Contacts", "Contacts Results : " + contactList)
-            }
-        })
-    }
-
-    private fun setContactDetails(contacts: Contacts?) {
-        edtFirstName.setText(contacts!!.firstName.decryptString())
-        edtLastName.setText(contacts.lastName.decryptString())
-        txtDOB.text = contacts.dateOfBirth.decryptString()
-        txtAnniversary.text = contacts.anniversary.decryptString()
-        txtMobileNumber.setText(contacts.mobileOne.decryptString())
-        txtMobileNumber2.setText(contacts.mobileTwo.decryptString())
-        edtEmail1.setText(contacts.emailOne.decryptString())
-        edtEmail2.setText(contacts.emailTwo.decryptString())
-        txtAddress1.setText(contacts.streetAddressOne.decryptString())
-        txtAddress2.setText(contacts.streetAddressTwo.decryptString())
-        edtCity.setText(contacts.city.decryptString())
-        edtState.setText(contacts.state.decryptString())
-        edtZipCode.setText(contacts.zipCode.decryptString())
-        edtCountry.setText(contacts.country.decryptString())
-
-    }
-
-
     private fun saveTheEditedContacts() {
         strFirstName = edtFirstName.text.toString()
         strLastName = edtLastName.text.toString()
         strFullName = strFirstName + strLastName
         strBirthday = txtDOB.text.toString()
         strAnniversary = txtAnniversary.text.toString()
-        strPhone1 = txtMobileNumber.text.toString()
-        strPhone2 = txtMobileNumber2.text.toString()
+        strPhone1 = edtMobileOne.text.toString()
+        strPhone2 = edtMobileTwo.text.toString()
         strEmail1 = edtEmail1.text.toString()
         strEmail2 = edtEmail2.text.toString()
         strStreetAddress1 = txtAddress1.text.toString()
@@ -205,7 +169,13 @@ class SingleContactViewFragment : FragmentBackHelper() {
         }
 
         var contacts = Contacts()
-        contacts.id = getUniqueId()
+
+        if (contactOperation.trim() == "Add") {
+            contacts.id = getUniqueId()
+        } else {
+            contacts.id = contactID.toInt()
+        }
+
         contacts.firstName = strFirstName.encryptString()
         contacts.lastName = strLastName.encryptString()
         contacts.dateOfBirth = strBirthday.encryptString()
@@ -221,29 +191,8 @@ class SingleContactViewFragment : FragmentBackHelper() {
         contacts.zipCode = strZipCode.encryptString()
         contacts.country = strCountry.encryptString()
 
-//        contacts.firstName = strFirstName
-//        contacts.lastName = strLastName
-//        contacts.dateOfBirth = strBirthday
-//        contacts.anniversary = strAnniversary
-//        contacts.mobileOne = strPhone1
-//        contacts.mobileTwo = strPhone2
-//        contacts.emailOne = strEmail1
-//        contacts.emailTwo = strEmail2
-//        contacts.streetAddressOne = strStreetAddress1
-//        contacts.streetAddressTwo = strStreetAddress2
-//        contacts.city = strCity
-//        contacts.state = strState
-//        contacts.zipCode = strZipCode
-//        contacts.country = strCountry
+        mContactsView.onContacts(contacts)
 
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-//                contacts = encryptContact(contacts)
-                contacts.insertOrUpdate(realm!!)
-                NineBxApplication.instance.activityInstance!!.onBackPressed()
-            }
-        })
     }
 
     private fun enableEditing() {
@@ -255,8 +204,8 @@ class SingleContactViewFragment : FragmentBackHelper() {
         edtLastName.isEnabled = true
         txtDOB.isClickable = true
         txtAnniversary.isClickable = true
-        txtMobileNumber.isEnabled = true
-        txtMobileNumber2.isEnabled = true
+        edtMobileOne.isEnabled = true
+        edtMobileTwo.isEnabled = true
 
         edtEmail1.isEnabled = true
         edtEmail2.isEnabled = true
@@ -274,4 +223,151 @@ class SingleContactViewFragment : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         return super.onBackPressed()
     }
+
+    private fun populateView(contacts: Contacts?) {
+
+        mAWSFileTransferHelper.setFileTransferListener(this)
+        if (contacts!!.photosId.isNotEmpty())
+            mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
+
+        if (contacts.firstName.isNotEmpty())
+            edtFirstName.setText(contacts.firstName.decryptString())
+
+        if (contacts.lastName.isNotEmpty())
+            edtLastName.setText(contacts.lastName.decryptString())
+
+        if (contacts.dateOfBirth.isNotEmpty())
+            txtDOB.setText(contacts.dateOfBirth.decryptString())
+
+        if (contacts.anniversary.isNotEmpty())
+            txtAnniversary.setText(contacts.anniversary.decryptString())
+
+        if (contacts.mobileOne.isNotEmpty())
+            edtMobileOne.setText(contacts.mobileOne.decryptString())
+
+        if (contacts.mobileTwo.isNotEmpty())
+            edtMobileTwo.setText(contacts.mobileTwo.decryptString())
+
+        if (contacts.emailOne.isNotEmpty())
+            edtEmail1.setText(contacts.emailOne.decryptString())
+
+        if (contacts.emailTwo.isNotEmpty())
+            edtEmail2.setText(contacts.emailTwo.decryptString())
+
+        if (contacts.streetAddressOne.isNotEmpty())
+            txtAddress1.setText(contacts.streetAddressOne.decryptString())
+
+        if (contacts.streetAddressTwo.isNotEmpty())
+            txtAddress2.setText(contacts.streetAddressTwo.decryptString())
+
+        if (contacts.city.isNotEmpty())
+            edtCity.setText(contacts.city.decryptString())
+
+        if (contacts.state.isNotEmpty())
+            edtState.setText(contacts.state.decryptString())
+
+        if (contacts.zipCode.isNotEmpty())
+            edtZipCode.setText(contacts.zipCode.decryptString())
+
+        if (contacts.country.isNotEmpty())
+            edtCountry.setText(contacts.country.decryptString())
+    }
+
+    private fun selectImage() {
+        val items = arrayOf<CharSequence>("Take Photo", "Choose from Library", "Cancel")
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Add Photo!")
+        builder.setItems(items, DialogInterface.OnClickListener { dialog, item ->
+            val result = Utility.checkPermission(context)
+            if (items[item] == "Take Photo") {
+                userChoosenTask = "Take Photo"
+                if (result)
+                    cameraIntent()
+            } else if (items[item] == "Choose from Library") {
+                userChoosenTask = "Choose from Library"
+                if (result)
+                    galleryIntent()
+            } else if (items[item] == "Cancel") {
+                dialog.dismiss()
+            }
+        })
+        builder.show()
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (userChoosenTask.equals("Take Photo"))
+                    cameraIntent()
+                else if (userChoosenTask.equals("Choose from Library"))
+                    galleryIntent()
+            } else {
+                //code for deny
+            }
+        }
+    }
+
+    private fun galleryIntent() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE)
+    }
+
+    private fun cameraIntent() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_CAMERA)
+    }
+
+
+    private fun onCaptureImageResult(data: Intent) {
+        val thumbnail = data.extras!!.get("data") as Bitmap
+        val bytes = ByteArrayOutputStream()
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+
+        val destination = File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis().toString() + ".jpg")
+
+        val fo: FileOutputStream
+        try {
+            destination.createNewFile()
+            fo = FileOutputStream(destination)
+            fo.write(bytes.toByteArray())
+            fo.close()
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        imgEditProfile.setImageBitmap(thumbnail)
+    }
+
+    private fun onSelectFromGalleryResult(data: Intent?) {
+
+        var bm: Bitmap? = null
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().contentResolver, data.data)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+
+        imgEditProfile.setImageBitmap(bm)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data)
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data!!)
+        }
+    }
+
 }

@@ -47,11 +47,6 @@ class NineBxApplication : MultiDexApplication() {
                 .build()
         )
 
-        val credentialsProvider = CognitoCachingCredentialsProvider(
-                this, /* get the context for the application */
-                "", /* Identity Pool ID */
-                Regions.US_WEST_2           /* Region for your identity pool--US_EAST_1 or EU_WEST_1*/
-        )
     }
 
     var activityInstance: HomeActivity? = null
@@ -90,7 +85,7 @@ class NineBxApplication : MultiDexApplication() {
             return nineBxPreferences!!
         }
 
-        var autoTestMode = false
+        var autoTestMode = true
 
         private var getUserAPI: NetModule.GetUsersAPI? = null
         fun getUserAPI(): NetModule.GetUsersAPI? {
