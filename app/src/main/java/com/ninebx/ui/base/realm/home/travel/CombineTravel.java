@@ -33,7 +33,7 @@ public class CombineTravel extends RealmObject {
         this.listItems = listItems;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -41,43 +41,43 @@ public class CombineTravel extends RealmObject {
         this.id = id;
     }
 
-    public RealmList getDocumentsItems() {
+    public RealmList<Documents> getDocumentsItems() {
         return documentsItems;
     }
 
-    public void setDocumentsItems(RealmList documentsItems) {
+    public void setDocumentsItems(RealmList<Documents> documentsItems) {
         this.documentsItems = documentsItems;
     }
 
-    public RealmList getLoyaltyItems() {
+    public RealmList<Loyalty> getLoyaltyItems() {
         return loyaltyItems;
     }
 
-    public void setLoyaltyItems(RealmList loyaltyItems) {
+    public void setLoyaltyItems(RealmList<Loyalty> loyaltyItems) {
         this.loyaltyItems = loyaltyItems;
     }
 
-    public RealmList getTravelItems() {
+    public RealmList<Travel> getTravelItems() {
         return travelItems;
     }
 
-    public void setTravelItems(RealmList travelItems) {
+    public void setTravelItems(RealmList<Travel> travelItems) {
         this.travelItems = travelItems;
     }
 
-    public RealmList getVacationsItems() {
+    public RealmList<Vacations> getVacationsItems() {
         return vacationsItems;
     }
 
-    public void setVacationsItems(RealmList vacationsItems) {
+    public void setVacationsItems(RealmList<Vacations> vacationsItems) {
         this.vacationsItems = vacationsItems;
     }
 
-    public RealmList getListItems() {
+    public RealmList<TravelList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList listItems) {
+    public void setListItems(RealmList<TravelList> listItems) {
         this.listItems = listItems;
     }
 
