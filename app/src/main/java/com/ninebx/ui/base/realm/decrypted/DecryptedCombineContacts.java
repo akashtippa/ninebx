@@ -2,11 +2,6 @@ package com.ninebx.ui.base.realm.decrypted;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.ninebx.ui.base.realm.home.contacts.Contacts;
-import com.ninebx.ui.base.realm.home.contacts.MainContacts;
-import com.ninebx.ui.base.realm.lists.ContactsList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -30,13 +25,13 @@ public class DecryptedCombineContacts implements Parcelable {
     @PrimaryKey //@Required
     private int id = 0;
     @Required
-    private RealmList<Contacts> contactsItems = new RealmList<>();
+    private RealmList<DecryptedContacts> contactsItems = new RealmList<>();
     @Required
-    private RealmList<MainContacts> mainContactsItems = new RealmList<>();
+    private RealmList<DecryptedMainContacts> mainContactsItems = new RealmList<>();
     @Required
-    private RealmList<ContactsList> listItems = new RealmList<>();
+    private RealmList<DecryptedContactsList> listItems = new RealmList<>();
 
-    public DecryptedCombineContacts(int id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
+    public DecryptedCombineContacts(int id, RealmList<DecryptedContacts> contactsItems, RealmList<DecryptedMainContacts> mainContactsItems, RealmList<DecryptedContactsList> listItems) {
         this.id = id;
         this.contactsItems = contactsItems;
         this.mainContactsItems = mainContactsItems;
@@ -58,27 +53,27 @@ public class DecryptedCombineContacts implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<Contacts> getContactsItems() {
+    public RealmList<DecryptedContacts> getContactsItems() {
         return contactsItems;
     }
 
-    public void setContactsItems(RealmList<Contacts> contactsItems) {
+    public void setContactsItems(RealmList<DecryptedContacts> contactsItems) {
         this.contactsItems = contactsItems;
     }
 
-    public RealmList<MainContacts> getMainContactsItems() {
+    public RealmList<DecryptedMainContacts> getMainContactsItems() {
         return mainContactsItems;
     }
 
-    public void setMainContactsItems(RealmList<MainContacts> mainContactsItems) {
+    public void setMainContactsItems(RealmList<DecryptedMainContacts> mainContactsItems) {
         this.mainContactsItems = mainContactsItems;
     }
 
-    public RealmList<ContactsList> getListItems() {
+    public RealmList<DecryptedContactsList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<ContactsList> listItems) {
+    public void setListItems(RealmList<DecryptedContactsList> listItems) {
         this.listItems = listItems;
     }
 

@@ -20,6 +20,35 @@ import io.realm.annotations.PrimaryKey;
  */
 public class DecryptedCombinePersonal implements Parcelable {
 
+    RealmList<DecryptedCertificate> certificateItems = new RealmList<>();
+    RealmList<DecryptedGovernment> governmentItems = new RealmList<>();
+    RealmList<DecryptedLicense> licenseItems = new RealmList<>();
+    RealmList<DecryptedPersonal> personalItems = new RealmList<>();
+    RealmList<DecryptedSocial> socialItems = new RealmList<>();
+    RealmList<DecryptedTaxID> taxIDItems = new RealmList<>();
+
+    RealmList<DecryptedPersonalList> listItems = new RealmList<>();
+    @PrimaryKey //@Required
+    private int id = 0;
+
+    public DecryptedCombinePersonal() {
+    }
+
+    public DecryptedCombinePersonal(RealmList<DecryptedCertificate> certificateItems, RealmList<DecryptedGovernment> governmentItems, RealmList<DecryptedLicense> licenseItems, RealmList<DecryptedPersonal> personalItems, RealmList<DecryptedSocial> socialItems, RealmList<DecryptedTaxID> taxIDItems, RealmList<DecryptedPersonalList> listItems, int id) {
+        this.certificateItems = certificateItems;
+        this.governmentItems = governmentItems;
+        this.licenseItems = licenseItems;
+        this.personalItems = personalItems;
+        this.socialItems = socialItems;
+        this.taxIDItems = taxIDItems;
+        this.listItems = listItems;
+        this.id = id;
+    }
+
+    protected DecryptedCombinePersonal(Parcel in) {
+        id = in.readInt();
+    }
+
     public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
         @Override
         public DecryptedCombinePersonal createFromParcel(Parcel in) {
@@ -31,46 +60,64 @@ public class DecryptedCombinePersonal implements Parcelable {
             return new DecryptedCombinePersonal[size];
         }
     };
-    RealmList<Certificate> certificateItems = new RealmList<Certificate>();
-    RealmList<Government> governmentItems = new RealmList<Government>();
-    RealmList<License> licenseItems = new RealmList<License>();
-    RealmList<Personal> personalItems = new RealmList<Personal>();
-    RealmList<Social> socialItems = new RealmList<Social>();
-    RealmList<TaxID> taxIDItems = new RealmList<TaxID>();
 
-    RealmList<PersonalList> listItems = new RealmList<PersonalList>();
-    @PrimaryKey //@Required
-    private int id = 0;
+    public RealmList<DecryptedCertificate> getCertificateItems() {
+        return certificateItems;
+    }
 
-    public DecryptedCombinePersonal(int id, RealmList certificateItems, RealmList governmentItems, RealmList licenseItems, RealmList personalItems, RealmList socialItems, RealmList taxIDItems, RealmList listItems) {
-        this.id = id;
+    public void setCertificateItems(RealmList<DecryptedCertificate> certificateItems) {
         this.certificateItems = certificateItems;
+    }
+
+    public RealmList<DecryptedGovernment> getGovernmentItems() {
+        return governmentItems;
+    }
+
+    public void setGovernmentItems(RealmList<DecryptedGovernment> governmentItems) {
         this.governmentItems = governmentItems;
+    }
+
+    public RealmList<DecryptedLicense> getLicenseItems() {
+        return licenseItems;
+    }
+
+    public void setLicenseItems(RealmList<DecryptedLicense> licenseItems) {
         this.licenseItems = licenseItems;
+    }
+
+    public RealmList<DecryptedPersonal> getPersonalItems() {
+        return personalItems;
+    }
+
+    public void setPersonalItems(RealmList<DecryptedPersonal> personalItems) {
         this.personalItems = personalItems;
+    }
+
+    public RealmList<DecryptedSocial> getSocialItems() {
+        return socialItems;
+    }
+
+    public void setSocialItems(RealmList<DecryptedSocial> socialItems) {
         this.socialItems = socialItems;
+    }
+
+    public RealmList<DecryptedTaxID> getTaxIDItems() {
+        return taxIDItems;
+    }
+
+    public void setTaxIDItems(RealmList<DecryptedTaxID> taxIDItems) {
         this.taxIDItems = taxIDItems;
+    }
+
+    public RealmList<DecryptedPersonalList> getListItems() {
+        return listItems;
+    }
+
+    public void setListItems(RealmList<DecryptedPersonalList> listItems) {
         this.listItems = listItems;
     }
 
-    protected DecryptedCombinePersonal(Parcel in) {
-        id = in.readInt();
-    }
-
-    public DecryptedCombinePersonal() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -78,59 +125,13 @@ public class DecryptedCombinePersonal implements Parcelable {
         this.id = id;
     }
 
-    public RealmList getCertificateItems() {
-        return certificateItems;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setCertificateItems(RealmList certificateItems) {
-        this.certificateItems = certificateItems;
-    }
-
-    public RealmList getGovernmentItems() {
-        return governmentItems;
-    }
-
-    public void setGovernmentItems(RealmList governmentItems) {
-        this.governmentItems = governmentItems;
-    }
-
-    public RealmList getLicenseItems() {
-        return licenseItems;
-    }
-
-    public void setLicenseItems(RealmList licenseItems) {
-        this.licenseItems = licenseItems;
-    }
-
-    public RealmList getPersonalItems() {
-        return personalItems;
-    }
-
-    public void setPersonalItems(RealmList personalItems) {
-        this.personalItems = personalItems;
-    }
-
-    public RealmList getSocialItems() {
-        return socialItems;
-    }
-
-    public void setSocialItems(RealmList socialItems) {
-        this.socialItems = socialItems;
-    }
-
-    public RealmList getTaxIDItems() {
-        return taxIDItems;
-    }
-
-    public void setTaxIDItems(RealmList taxIDItems) {
-        this.taxIDItems = taxIDItems;
-    }
-
-    public RealmList getListItems() {
-        return listItems;
-    }
-
-    public void setListItems(RealmList listItems) {
-        this.listItems = listItems;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
     }
 }

@@ -18,9 +18,6 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.base.realm.home.education.CombineEducation
-
-
 /**
  * Created by Alok on 03/01/18.
  */
@@ -32,6 +29,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private var mDecryptedCombineTravel : DecryptedCombineTravel ?= null
     private var mDecryptedCombineEducation : DecryptedCombineEducation ?= null
     private var mDecryptedCombineInterests : DecryptedCombineInterests ?= null
+    private var mDecryptedCombineWellness : DecryptedCombineWellness ?= null
 
     override fun onCombineFetched(combine: DecryptedCombine) {
         this.mDecryptCombine = combine
@@ -58,6 +56,15 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         hideProgress()
     }
 
+    override fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness) {
+        mDecryptedCombineWellness = combineWellness
+        hideProgress()
+    }
+
+    override fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun showProgress(message: Int) {
         edtSearch.isEnabled = false
         progressLayout.show()
@@ -81,6 +88,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private lateinit var searchDecryptCombineTravel: DecryptedCombineTravel
     private lateinit var searchDecryptCombineEducation: DecryptedCombineEducation
     private lateinit var searchDecryptedCombineInterests: DecryptedCombineInterests
+    private lateinit var searchDecryptedCombineWellness: DecryptedCombineWellness
 
     private lateinit var mSearchPresenter: SearchPresenter
 
@@ -99,6 +107,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 searchDecryptCombineMemories = mSearchPresenter.searchMemoryItems(text)
                 searchDecryptCombineEducation = mSearchPresenter.searchEducationItems(text)
                 searchDecryptedCombineInterests = mSearchPresenter.searchInterestItems(text)
+                searchDecryptedCombineWellness = mSearchPresenter.searchWellnessItems(text)
                 setAdapter()
             }
 
@@ -187,14 +196,14 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(interests in searchDecryptedCombineInterests.interestItems){
             mSearchInterestsItems.add(Level3SearchItem(R.id.interests, interests.userName, "interests"))
         }
-
         for(interestList in searchDecryptedCombineInterests.listItems){
             mSearchInterestsItems.add(Level3SearchItem(R.id.interests, interestList.listName, "interestsList"))
         }
+        setupAdapter(rvInterests, interestsLayout, mSearchInterestsItems)
     }
 
     private fun setupWellnessItems() {
-        //TODO
+
     }
 
     private fun setupShoppingItems() {
