@@ -45,9 +45,10 @@ class OTPFragment : BaseAuthFragment() {
                         val currentUsers = getCurrentUsers( realm!! )
 
                         if (currentUsers != null && currentUsers.size > 0) {
+                            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
                             NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
                             context!!.hideProgressDialog()
-                            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString() )
+
 
                             mAuthView.navigateToCreatePassCode(true, "")
                         }

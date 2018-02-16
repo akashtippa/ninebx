@@ -164,6 +164,11 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                         AppLogger.d("CurrentUser", "Members : " + member.toString())
                     }
                     if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+
+                        toggleCheck(true)
+                        bottomNavigationView.menu.getItem(4).isChecked = true
+                        callBottomViewFragment(getString(R.string.account))
+
                         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
                         val fragmentTransaction = supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
