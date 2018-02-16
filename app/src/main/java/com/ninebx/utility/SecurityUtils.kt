@@ -10,10 +10,12 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
+import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.home.education.Education
 import com.ninebx.ui.base.realm.home.education.MainEducation
 import com.ninebx.ui.base.realm.home.education.Work
 import com.ninebx.ui.base.realm.home.homeBanking.*
+import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.interests.Interests
 import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MainMemories
@@ -34,6 +36,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
+import javax.crypto.IllegalBlockSizeException
 import javax.crypto.spec.SecretKeySpec
 
 /**
@@ -138,28 +141,40 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
 
 fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String {
 
-    val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
-    val key = SecretKeySpec(keyBytes, "AES")
-    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+    try {
 
-    AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
-    val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+        val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
+        val key = SecretKeySpec(keyBytes, "AES")
+        val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
-    // decryption pass
-    cipher.init(Cipher.DECRYPT_MODE, key)
-    val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
-    val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
+        AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
+        val convertedCipher = convertToUInt8(cipherTextBase64)
+        AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
+        AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
 
-    var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
-    ptLength += cipher.doFinal(plainText, ptLength)
+        // decryption pass
+        cipher.init(Cipher.DECRYPT_MODE, key)
+        val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
+        val cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)
 
-    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
-    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
-    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+        var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
+        ptLength += cipher.doFinal(plainText, ptLength)
 
-    return String(plainText).substring(0, ptLength)
+        AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+        AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+        AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+
+        return String(plainText).substring(0, ptLength)
+
+    } catch ( e : IllegalBlockSizeException ) {
+        //To catch exception while decrypting non decrypted string.
+        e.printStackTrace()
+        return Arrays.toString(cipherTextBase64)
+    } catch (e : IllegalArgumentException){
+        e.printStackTrace()
+        return Arrays.toString(cipherTextBase64)
+    }
+
 }
 
 fun encryptDecryptAESKey(masterPassword: String): String {
@@ -801,8 +816,8 @@ fun decryptEducation(education: Education): DecryptedEducation {
 
 fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     val decryptedMainEducation = DecryptedMainEducation()
-    decryptedMainEducation.selectionType = mainEducation.selectionType.decryptString()
-    decryptedMainEducation.classType = mainEducation.classType.decryptString()
+    decryptedMainEducation.selectionType = mainEducation.selectionType
+    decryptedMainEducation.classType = mainEducation.classType
     decryptedMainEducation.institutionName = mainEducation.institutionName.decryptString()
     decryptedMainEducation.qualification = mainEducation.qualification.decryptString()
     decryptedMainEducation.name = mainEducation.name.decryptString()
@@ -2443,15 +2458,26 @@ fun decryptCombine(combine: Combine) : DecryptedCombine
     return decryptedCombine
 }
 
-/*
 fun decryptCombineTravel(combineTravel: CombineTravel) : DecryptedCombineTravel{
     val decryptedCombineTravel = DecryptedCombineTravel()
     for (documentsItems in combineTravel.documentsItems) {
         decryptedCombineTravel.documentsItems.add(decryptDocuments(documentsItems))
     }
+    for (loyaltyItems in combineTravel.loyaltyItems) {
+        decryptedCombineTravel.loyaltyItems.add(decryptLoyality(loyaltyItems))
+    }
+    for (travelItems in combineTravel.travelItems) {
+        decryptedCombineTravel.travelItems.add(decryptTravel(travelItems))
+    }
+    for (vacationItems in combineTravel.vacationsItems) {
+        decryptedCombineTravel.vacationsItems.add(decryptVacations(vacationItems))
+    }
+    for (listItems in combineTravel.listItems) {
+        decryptedCombineTravel.listItems.add(decryptTravelList(listItems))
+    }
     return decryptedCombineTravel
 }
-*/
+
 fun decryptCombineMemories(combineMemories : CombineMemories) : DecryptedCombineMemories{
     val decryptedCombineMemories = DecryptedCombineMemories()
 
@@ -2465,4 +2491,38 @@ fun decryptCombineMemories(combineMemories : CombineMemories) : DecryptedCombine
         decryptedCombineMemories.listItems.add(decryptMemoriesList(listItems))
     }
     return decryptedCombineMemories
+}
+
+fun decryptCombineEducation(combineEducation: CombineEducation) : DecryptedCombineEducation{
+    val decryptedCombineEducation = DecryptedCombineEducation()
+
+    for(educationItems in combineEducation.educationItems){
+        decryptedCombineEducation.educationItems.add(decryptEducation(educationItems))
+    }
+
+    for(mainEducationItems in combineEducation.mainEducationItems){
+        decryptedCombineEducation.mainEducationItems.add(decryptMainEducation(mainEducationItems))
+    }
+
+    for(workItems in combineEducation.workItems){
+        decryptedCombineEducation.workItems.add(decryptWork(workItems))
+    }
+
+    for(listItems in combineEducation.listItems){
+        decryptedCombineEducation.listItems.add(decryptEducationList(listItems))
+    }
+    return decryptedCombineEducation
+}
+
+fun decryptCombineInterests(combineInterest : CombineInterests) : DecryptedCombineInterests {
+    val decryptedCombineInterests = DecryptedCombineInterests()
+
+    for(interestItems  in combineInterest.interestItems){
+        decryptedCombineInterests.interestItems.add(decryptInterests(interestItems))
+    }
+
+    for(listItems in combineInterest.listItems){
+        decryptedCombineInterests.listItems.add(decryptInterestList(listItems))
+    }
+    return decryptedCombineInterests
 }
