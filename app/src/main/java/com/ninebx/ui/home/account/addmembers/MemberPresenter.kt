@@ -23,7 +23,7 @@ import io.realm.permissions.UserCondition
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter(private val memberView: MemberView, private val adminId : String ) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView, private val adminUser : SyncUser, private val adminId : String ) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
@@ -110,7 +110,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
     }
 
     private fun setUserPermissions() {
-        val permissionManager = mCurrentUser!!.permissionManager
+        val permissionManager = adminUser.permissionManager
         // Create request
         val condition = UserCondition.userId(mCurrentUser!!.identity)
         val accessLevel = AccessLevel.WRITE

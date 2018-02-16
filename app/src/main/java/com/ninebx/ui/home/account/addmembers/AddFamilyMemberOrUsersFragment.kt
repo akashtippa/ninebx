@@ -68,7 +68,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adminId = SyncUser.currentUser().identity
-        memberPresenter = MemberPresenter(memberView, adminId)
+        memberPresenter = MemberPresenter(memberView, SyncUser.currentUser(), adminId)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
