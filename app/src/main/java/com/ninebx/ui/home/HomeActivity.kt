@@ -23,7 +23,7 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.AccountFragment
-import com.ninebx.ui.home.account.AddFamilyUsersFragment
+import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter

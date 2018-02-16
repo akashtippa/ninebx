@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.account
+package com.ninebx.ui.home.account.permissions
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.account.adapter.AddOrEditPermissionAdapter
+import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.model.AddEditPermissions
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_permissions.*
@@ -17,7 +18,24 @@ import kotlinx.android.synthetic.main.fragment_permissions.*
  * Created by TechnoBlogger on 18/01/18.
  */
 
-class PermissionFragment : FragmentBackHelper() {
+class PermissionFragment : FragmentBackHelper(), PermissionsView {
+
+    private lateinit var userRole : String
+    private lateinit var member: Member
+    private lateinit var memberUser : Users
+    private lateinit var adminId : String
+
+    override fun showProgress(message: Int) {
+
+    }
+
+    override fun hideProgress() {
+
+    }
+
+    override fun onError(error: Int) {
+
+    }
 
     private lateinit var myList: ArrayList<AddEditPermissions>
     private var mListsAdapter: AddOrEditPermissionAdapter? = null

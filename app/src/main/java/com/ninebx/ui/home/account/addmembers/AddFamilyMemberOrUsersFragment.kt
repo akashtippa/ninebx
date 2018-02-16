@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
-import com.ninebx.ui.home.account.PermissionFragment
+import com.ninebx.ui.home.account.permissions.PermissionFragment
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
