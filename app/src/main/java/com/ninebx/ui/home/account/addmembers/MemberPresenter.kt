@@ -2,21 +2,28 @@ package com.ninebx.ui.home.account.addmembers
 
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.utility.*
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.realm.ObjectServerError
-import io.realm.SyncCredentials
-import io.realm.SyncUser
+import io.realm.*
+import io.realm.permissions.Permission
 import okhttp3.ResponseBody
 import java.util.*
+import io.realm.ObjectServerError
+import io.realm.PermissionManager
+import io.realm.permissions.AccessLevel
+import io.realm.permissions.PermissionRequest
+import io.realm.permissions.UserCondition
+
+
 
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView, private val adminId : String ) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
@@ -32,6 +39,7 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
 
 
     fun saveToUserAccount(strEmail: String, password: String) {
+        userName = strEmail
         memberView.showProgress(R.string.loading)
         encryptedPasswordByteArray = (encryptKey(password, strEmail))
         encryptedPassword = Arrays.toString(convertToUInt8IntArray(encryptedPasswordByteArray))
@@ -41,25 +49,22 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
 
     override fun onSuccess(result: SyncUser?) {
 
+        mCurrentUser = result
         //Save user data to realm
         val userMap = HashMap<String, Any>()
 
         //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
         userMap.put("user_id", result!!.identity)
-        userMap.put("admin_id", NineBxApplication.instance.currentUser!!.userId)
+        userMap.put("admin_id", adminId)
         userMap.put("email", userName)
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", false)
 
-        val privateKey = randomString(16)
-        NineBxApplication.getPreferences().privateKey = privateKey
-
-        val encryptedPrivateKey = encryptAESKeyPassword(privateKey, encryptedPasswordByteArray)
+        val encryptedPrivateKey = encryptAESKeyPassword(NineBxApplication.getPreferences().privateKey!!, encryptedPasswordByteArray)
 
         AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
         userMap.put("secure_key", encryptedPrivateKey)
-        AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
         AppLogger.d(TAG, "UserMap : " + userMap)
 
         val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
@@ -85,7 +90,7 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
                 AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
-                memberView.onMemberSignup(mCurrentUser!!)
+                setUserPermissions()
             }
 
             override fun onError(e: Throwable) {
@@ -94,7 +99,7 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
 
             override fun onComplete() {
                 AppLogger.d(TAG, "GetUserAPI : onComplete")
-                memberView.hideProgress()
+                //memberView.hideProgress()
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -104,6 +109,29 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
         }
     }
 
+    private fun setUserPermissions() {
+        val permissionManager = mCurrentUser!!.permissionManager
+        // Create request
+        val condition = UserCondition.userId(mCurrentUser!!.identity)
+        val accessLevel = AccessLevel.WRITE
+        val request = PermissionRequest(condition, Constants.SERVER_URL + "Users", accessLevel)
+
+        permissionManager.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
+            override fun onSuccess() {
+                memberView.onMemberSignup(mCurrentUser!!)
+                memberView.hideProgress()
+            }
+
+            override fun onError(error: ObjectServerError) {
+                error.printStackTrace()
+                memberView.hideProgress()
+                memberView.onError(R.string.error_permissions)
+            }
+        })
+
+    }
+
+
     override fun onError(error: ObjectServerError?) {
         memberView.hideProgress()
         if (error != null) {
@@ -112,6 +140,49 @@ class MemberPresenter(private val memberView: MemberView) : SyncUser.Callback<Sy
         if (error?.message != null) {
             memberView.showError(error.errorMessage!!)
         }
+    }
+
+    fun setPermissionsForMember( updateMember: Member, memberRole: String ) {
+
+        updateMember.homeAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.homeEdit = memberRole == "Co-administrator"
+        updateMember.homeView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.travelAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.travelEdit = memberRole == "Co-administrator"
+        updateMember.travelView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.contactsAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.contactsEdit = memberRole == "Co-administrator"
+        updateMember.contactsView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.educationlAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.educationlEdit = memberRole == "Co-administrator"
+        updateMember.educationlView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.personalAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.personalEdit = memberRole == "Co-administrator"
+        updateMember.personalView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.interestsAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.interestsEdit = memberRole == "Co-administrator"
+        updateMember.interestsView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.wellnessAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.wellnessEdit = memberRole == "Co-administrator"
+        updateMember.wellnessView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.memoriesAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.memoriesEdit = memberRole == "Co-administrator"
+        updateMember.memoriesView = memberRole == "Co-administrator" || memberRole == "User"
+
+        updateMember.shoppingAdd = memberRole == "Co-administrator" || memberRole == "User"
+        updateMember.shoppingEdit = memberRole == "Co-administrator"
+        updateMember.shoppingView = memberRole == "Co-administrator" || memberRole == "User"
+        
+        updateMember.addingRemovingMember = memberRole == "Co-administrator"
+        updateMember.changingMasterPassword = false
+
     }
 
 }

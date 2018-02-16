@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.account.adapter
+package com.ninebx.ui.home.account.permissions
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView

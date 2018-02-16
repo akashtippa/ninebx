@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.account;
+package com.ninebx.ui.home.account.permissions;
 
 import com.ninebx.R;
 

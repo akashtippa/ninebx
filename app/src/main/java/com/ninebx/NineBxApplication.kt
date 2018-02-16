@@ -27,10 +27,6 @@ import java.security.SecureRandom
  */
 class NineBxApplication : MultiDexApplication() {
 
-    fun getApplication(): NineBxApplication {
-        return this
-    }
-
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
@@ -66,15 +62,6 @@ class NineBxApplication : MultiDexApplication() {
 
     companion object {
 
-        @SuppressLint("StaticFieldLeak")
-        var realmDefaultInstance: Realm? = null
-
-        fun getRealmInstance(): Realm {
-            if (realmDefaultInstance == null) {
-                realmDefaultInstance = Realm.getDefaultInstance()
-            }
-            return realmDefaultInstance!!
-        }
 
         @SuppressLint("StaticFieldLeak")
         var nineBxPreferences: NineBxPreferences? = null
@@ -95,23 +82,15 @@ class NineBxApplication : MultiDexApplication() {
 
         lateinit var instance: NineBxApplication
             private set
+        val disabledFeature: Boolean = false
     }
 
     fun init(_homeActivity: HomeActivity) {
         this.activityInstance = _homeActivity
     }
 
-
-
-    fun getKey(): ByteArray {
-        val key = ByteArray(64)
-        SecureRandom().nextBytes(key)
-        return key
-    }
-
     override fun onTerminate() {
         super.onTerminate()
-        realmDefaultInstance!!.close()
         activityInstance = null
         fragmentOrganiser = null
     }
