@@ -76,6 +76,10 @@ class OTPFragment : BaseAuthFragment() {
         setupOtp()
     }
 
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
+    }
 
     private var handler: Handler = Handler()
     private var runnable: Runnable = Runnable {
@@ -208,8 +212,6 @@ class OTPFragment : BaseAuthFragment() {
         })
 
         mAuthView.getAuthPresenter().requestOTP( mAuthView.getAccountEmail() )
-
-
         handler.postDelayed( runnable, 60000)
 
     }

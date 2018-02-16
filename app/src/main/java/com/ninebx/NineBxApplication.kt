@@ -82,7 +82,7 @@ class NineBxApplication : MultiDexApplication() {
 
         lateinit var instance: NineBxApplication
             private set
-        val disabledFeature: Boolean = true
+        val disabledFeature: Boolean = false
     }
 
     fun init(_homeActivity: HomeActivity) {

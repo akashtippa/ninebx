@@ -343,6 +343,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         updateMember!!.role = strRole.encryptString()
         updateMember!!.relationship = txtRelationship.selectedItem.toString().encryptString()
 
+        memberPresenter.setPermissionsForMember( updateMember!!, strRole )
+
         memberView.onNewMember(updateMember!!)
     }
 
@@ -356,6 +358,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     fun onAccountCreated(user: SyncUser) {
         saveUpdatedMember(user.identity)
+        //update user and member permissions
         user.logout()
     }
 
