@@ -7,9 +7,11 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.TestSearch
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import io.realm.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 18/01/18.
@@ -178,7 +180,7 @@ fun performSearch(classObject: Any, searchText: String): Boolean? {
     val objectHashMap = pojo2Map(classObject)
     var isSearchFound = false
     if (objectHashMap.isNotEmpty()) {
-        Log.d(classObject.javaClass.simpleName, "Search Map " + objectHashMap)
+        AppLogger.d("SEarcgub", "Search Map " + objectHashMap)
         for (`object` in objectHashMap.values) {
             if (`object` is String && `object`.toLowerCase().contains(searchText.toLowerCase())) {
                 isSearchFound = true
@@ -187,6 +189,35 @@ fun performSearch(classObject: Any, searchText: String): Boolean? {
         }
     }
     return isSearchFound
+}
+
+fun testSearch() {
+    val TestSearchs = ArrayList<TestSearch>()
+    var category = 0
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+
+    for( levelSearch in TestSearchs ) {
+        performSearch( levelSearch, "level" )
+    }
 }
 
 /*
