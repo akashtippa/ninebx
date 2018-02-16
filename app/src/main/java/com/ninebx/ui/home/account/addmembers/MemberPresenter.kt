@@ -114,7 +114,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminId : 
         // Create request
         val condition = UserCondition.userId(mCurrentUser!!.identity)
         val accessLevel = AccessLevel.WRITE
-        val request = PermissionRequest(condition, Constants.SERVER_URL + "Users", accessLevel)
+        val request = PermissionRequest(condition, "/~/Users", accessLevel)
 
         permissionManager.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
             override fun onSuccess() {
