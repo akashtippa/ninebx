@@ -57,6 +57,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         return inflater.inflate(R.layout.fragment_add_family_member, container, false)
     }
 
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is MemberView) {
@@ -143,7 +144,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
 
         txtSave.setOnClickListener {
-            if (checkValidations()) {
+            if( checkValidations() ) {
                 saveDetails()
             }
         }
@@ -159,7 +160,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         if (isNewAccount)
             memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
         else {
-            saveUpdatedMember(this@AddFamilyMemberOrUsersFragment.member.userId)
+            saveUpdatedMember( this@AddFamilyMemberOrUsersFragment.member.userId )
             memberView.onNewMember(updateMember!!)
         }
     }
@@ -294,13 +295,14 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     }
 
 
-    private fun checkValidations(): Boolean {
+    private fun checkValidations() : Boolean {
 
         strFirstName = txtFirstName.text.toString()
         strLastName = txtLastName.text.toString()
         strAccountHolder = txtRelationship.selectedItem.toString()
         strRole = txtsRole.selectedItem.toString()
         strEmail = edtEmailAddress.text.toString()
+
 
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
@@ -355,7 +357,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         updateMember!!.email = strEmail.encryptString()
         updateMember!!.role = strRole.encryptString()
         updateMember!!.relationship = txtRelationship.selectedItem.toString().encryptString()
-        memberPresenter.setPermissionsForMember(updateMember!!, strRole)
+        memberPresenter.setPermissionsForMember( updateMember!!, strRole )
 
     }
 
@@ -365,7 +367,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         return true
     }
 
-    private var updateMember: Member? = null
+    private var updateMember: Member ?= null
 
     fun onAccountCreated(user: SyncUser) {
         saveUpdatedMember(user.identity)

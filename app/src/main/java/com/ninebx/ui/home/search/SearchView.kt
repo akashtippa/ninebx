@@ -12,4 +12,6 @@ interface SearchView : BaseView {
     fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel)
     fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation)
     fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests)
+    fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness)
+    fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal)
 }
