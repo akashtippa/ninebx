@@ -210,8 +210,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtState.isEnabled = true
         edtZipCode.isEnabled = true
         edtCountry.isEnabled = true
-
-
     }
 
     override fun onBackPressed(): Boolean {

@@ -159,9 +159,10 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                 currentUsers = getCurrentUsers(realm!!)
                 if (currentUsers != null) {
                     this@HomeActivity.hideProgressDialog()
-                    AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+                    AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
                     for (member in currentUsers!![0]!!.members) {
                         AppLogger.d("CurrentUser", "Members : " + member.toString())
+                        AppLogger.e("Name ", "is : " + member.firstName)
                     }
                     if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
 

@@ -3,15 +3,10 @@ package com.ninebx.ui.base.realm.home.personal;
 
 import com.ninebx.ui.base.realm.lists.PersonalList;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
-import io.realm.annotations.Required;
 
 /**
  * Created by Alok on 24/01/18.
@@ -19,17 +14,15 @@ import io.realm.annotations.Required;
 @RealmClass
 public class CombinePersonal extends RealmObject {
 
+    RealmList<Certificate> certificateItems = new RealmList<>();
+    RealmList<Government> governmentItems = new RealmList<>();
+    RealmList<License> licenseItems = new RealmList<>();
+    RealmList<Personal> personalItems = new RealmList<>();
+    RealmList<Social> socialItems = new RealmList<>();
+    RealmList<TaxID> taxIDItems = new RealmList<>();
+    RealmList<PersonalList> listItems = new RealmList<>();
     @PrimaryKey //@Required
     private int id = 0;
-
-    RealmList<Certificate> certificateItems        = new RealmList<>();
-    RealmList<Government> governmentItems         = new RealmList<>();
-    RealmList<License> licenseItems            = new RealmList<>();
-    RealmList<Personal> personalItems           = new RealmList<>();
-    RealmList<Social> socialItems             = new RealmList<>();
-    RealmList<TaxID> taxIDItems              = new RealmList<>();
-    
-    RealmList<PersonalList> listItems               = new RealmList<>();
 
     public CombinePersonal(int id, RealmList<Certificate> certificateItems, RealmList<Government> governmentItems, RealmList<License> licenseItems, RealmList<Personal> personalItems, RealmList<Social> socialItems, RealmList<TaxID> taxIDItems, RealmList<PersonalList> listItems) {
         this.id = id;
@@ -40,6 +33,9 @@ public class CombinePersonal extends RealmObject {
         this.socialItems = socialItems;
         this.taxIDItems = taxIDItems;
         this.listItems = listItems;
+    }
+
+    public CombinePersonal() {
     }
 
     public Integer getId() {
@@ -104,8 +100,5 @@ public class CombinePersonal extends RealmObject {
 
     public void setListItems(RealmList listItems) {
         this.listItems = listItems;
-    }
-
-    public CombinePersonal() {
     }
 }

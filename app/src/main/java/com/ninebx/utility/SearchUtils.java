@@ -13,46 +13,46 @@ import java.util.Map;
 
 public class SearchUtils {
 
-    public static boolean searchString( Object classObject, String search ) {
+    public static boolean searchString(Object classObject, String search) {
         boolean isAvailable = false;
         Gson gson = new GsonBuilder().create();
         String json = gson.toJson(classObject);
-        Map<String,Object> result = new Gson().fromJson(json, Map.class);
+        Map<String, Object> result = new Gson().fromJson(json, Map.class);
         AppLogger.INSTANCE.d("SearchUtils", result.toString());
-        for( Object searchValue : result.values() ) {
-            if( searchValue instanceof String && searchValue.toString().toLowerCase().contains(search.toLowerCase()) ) {
+        for (Object searchValue : result.values()) {
+            if (searchValue instanceof String && searchValue.toString().toLowerCase().contains(search.toLowerCase())) {
                 isAvailable = true;
                 break;
             }
         }
         return isAvailable;
     }
-    
+
     public static void search() {
         ArrayList<TestSearch> TestSearchs = new ArrayList<TestSearch>();
         int category = 0;
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        for( TestSearch testSearch : TestSearchs ) {
-            AppLogger.INSTANCE("Searching", searchString(testSearch, "level");
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        for (TestSearch testSearch : TestSearchs) {
+//            AppLogger.INSTANCE("Searching", searchString(testSearch, "level"));
         }
     }
 }

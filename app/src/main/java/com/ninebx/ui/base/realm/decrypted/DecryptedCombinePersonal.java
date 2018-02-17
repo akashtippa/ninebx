@@ -4,14 +4,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.home.personal.Certificate;
-import com.ninebx.ui.base.realm.home.personal.Government;
-import com.ninebx.ui.base.realm.home.personal.License;
-import com.ninebx.ui.base.realm.home.personal.Personal;
-import com.ninebx.ui.base.realm.home.personal.Social;
-import com.ninebx.ui.base.realm.home.personal.TaxID;
-import com.ninebx.ui.base.realm.lists.PersonalList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 
@@ -20,13 +12,23 @@ import io.realm.annotations.PrimaryKey;
  */
 public class DecryptedCombinePersonal implements Parcelable {
 
+    public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
+        @Override
+        public DecryptedCombinePersonal createFromParcel(Parcel in) {
+            return new DecryptedCombinePersonal(in);
+        }
+
+        @Override
+        public DecryptedCombinePersonal[] newArray(int size) {
+            return new DecryptedCombinePersonal[size];
+        }
+    };
     RealmList<DecryptedCertificate> certificateItems = new RealmList<>();
     RealmList<DecryptedGovernment> governmentItems = new RealmList<>();
     RealmList<DecryptedLicense> licenseItems = new RealmList<>();
     RealmList<DecryptedPersonal> personalItems = new RealmList<>();
     RealmList<DecryptedSocial> socialItems = new RealmList<>();
     RealmList<DecryptedTaxID> taxIDItems = new RealmList<>();
-
     RealmList<DecryptedPersonalList> listItems = new RealmList<>();
     @PrimaryKey //@Required
     private int id = 0;
@@ -48,18 +50,6 @@ public class DecryptedCombinePersonal implements Parcelable {
     protected DecryptedCombinePersonal(Parcel in) {
         id = in.readInt();
     }
-
-    public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
-        @Override
-        public DecryptedCombinePersonal createFromParcel(Parcel in) {
-            return new DecryptedCombinePersonal(in);
-        }
-
-        @Override
-        public DecryptedCombinePersonal[] newArray(int size) {
-            return new DecryptedCombinePersonal[size];
-        }
-    };
 
     public RealmList<DecryptedCertificate> getCertificateItems() {
         return certificateItems;
