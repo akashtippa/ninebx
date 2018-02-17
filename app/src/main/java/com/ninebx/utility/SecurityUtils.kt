@@ -166,11 +166,11 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
 
         return String(plainText).substring(0, ptLength)
 
-    } catch ( e : IllegalBlockSizeException ) {
+    } catch (e: IllegalBlockSizeException) {
         //To catch exception while decrypting non decrypted string.
         e.printStackTrace()
         return Arrays.toString(cipherTextBase64)
-    } catch (e : IllegalArgumentException){
+    } catch (e: IllegalArgumentException) {
         e.printStackTrace()
         return Arrays.toString(cipherTextBase64)
     }
@@ -407,29 +407,29 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-       encryptMember(members[i]!!)
+        encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName = member.firstName            .encryptString()
-    member.lastName = member. lastName             .encryptString()
-    member.relationship = member. relationship         .encryptString()
-    member.role = member. role.encryptString()
-    member.email = member. email                .encryptString()
+    member.firstName = member.firstName.encryptString()
+    member.lastName = member.lastName.encryptString()
+    member.relationship = member.relationship.encryptString()
+    member.role = member.role.encryptString()
+    member.email = member.email.encryptString()
 
-    member.dateOfBirth = member.dateOfBirth         .encryptString()
-    member.anniversary = member.anniversary         .encryptString()
+    member.dateOfBirth = member.dateOfBirth.encryptString()
+    member.anniversary = member.anniversary.encryptString()
     member.gender = member.gender
-    member.mobileNumber = member.mobileNumber        .encryptString()
-    member.street_1 = member.street_1            .encryptString()
-    member.street_2 = member.street_2            .encryptString()
-    member.city = member.city                .encryptString()
-    member.state = member.state               .encryptString()
-    member.zipCode = member.zipCode             .encryptString()
-    member.country = member.country             .encryptString()
+    member.mobileNumber = member.mobileNumber.encryptString()
+    member.street_1 = member.street_1.encryptString()
+    member.street_2 = member.street_2.encryptString()
+    member.city = member.city.encryptString()
+    member.state = member.state.encryptString()
+    member.zipCode = member.zipCode.encryptString()
+    member.country = member.country.encryptString()
 
     return member
 }
@@ -635,7 +635,7 @@ fun decryptProperty(property: Property): DecryptedProperty {
     decryptedProperty.leaseEndDate = property.leaseEndDate.decryptString()
     decryptedProperty.created = property.created
     decryptedProperty.modified = property.modified
-   // decryptedProperty.isPrivate = property.isPrivate.decryptString()
+    // decryptedProperty.isPrivate = property.isPrivate.decryptString()
     decryptedProperty.createdUser = property.createdUser
     decryptedProperty.notes = property.notes
     decryptedProperty.attachmentNames = property.attachmentNames
@@ -666,7 +666,7 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
     decryptedVehicle.financedThroughLoan = vehicle.financedThroughLoan.decryptString()
     decryptedVehicle.created = vehicle.created
     decryptedVehicle.modified = vehicle.modified
-   // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
+    // decryptedVehicle.isPrivate = vehicle.isPrivate.decryptString()
     decryptedVehicle.createdUser = vehicle.createdUser
     decryptedVehicle.leaseStartDate = vehicle.leaseStartDate
     decryptedVehicle.leaseEndDate = vehicle.leaseEndDate
@@ -760,9 +760,9 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
     decryptedTax.title = taxes.title.decryptString()
     decryptedTax.created = taxes.created
     decryptedTax.modified = taxes.modified
-   // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
+    // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
     decryptedTax.createdUser = taxes.createdUser
-    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax )
+    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
     return decryptedTax
 }
 
@@ -836,7 +836,7 @@ fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     return decryptedMainEducation
 }
 
-fun decryptWork(work: Work) : DecryptedWork{
+fun decryptWork(work: Work): DecryptedWork {
     val decryptedWork = DecryptedWork()
     decryptedWork.selectionType = work.selectionType.decryptString()
     decryptedWork.classType = work.classType.decryptString()
@@ -2419,46 +2419,46 @@ fun encryptVacations(vacations: Vacations): Vacations {
 }
 
 
-fun decryptCombine(combine: Combine) : DecryptedCombine
-{    val decryptedCombine = DecryptedCombine()
+fun decryptCombine(combine: Combine): DecryptedCombine {
+    val decryptedCombine = DecryptedCombine()
 
-    for ( financialItems in combine.financialItems ) {
+    for (financialItems in combine.financialItems) {
         val decryptedItem = decryptFinancial(financialItems)
-        decryptedCombine.financialItems.add( decryptedItem )
+        decryptedCombine.financialItems.add(decryptedItem)
     }
 
-    for (paymentItems in combine.paymentItems ) {
+    for (paymentItems in combine.paymentItems) {
         val decryptedItem = decryptPayment(paymentItems)
         decryptedCombine.paymentItems.add(decryptedItem)
     }
 
-    for (propertyItems in combine.propertyItems){
+    for (propertyItems in combine.propertyItems) {
         decryptedCombine.propertyItems.add(decryptProperty(propertyItems))
     }
 
-    for (vehicleItems in combine.vehicleItems){
+    for (vehicleItems in combine.vehicleItems) {
         decryptedCombine.vehicleItems.add(decryptVehicle(vehicleItems))
     }
 
-    for (assetItems in combine.assetItems){
+    for (assetItems in combine.assetItems) {
         decryptedCombine.assetItems.add(decryptAsset(assetItems))
     }
 
-    for (insuranceItems in combine.insuranceItems){
+    for (insuranceItems in combine.insuranceItems) {
         decryptedCombine.insuranceItems.add(decryptInsurance(insuranceItems))
     }
 
-    for (taxesItems in combine.taxesItems){
+    for (taxesItems in combine.taxesItems) {
         decryptedCombine.taxesItems.add(decryptTaxes(taxesItems))
     }
 
-    for (listItems in combine.listItems){
+    for (listItems in combine.listItems) {
         decryptedCombine.listItems.add(decryptHomeList(listItems))
     }
     return decryptedCombine
 }
 
-fun decryptCombineTravel(combineTravel: CombineTravel) : DecryptedCombineTravel{
+fun decryptCombineTravel(combineTravel: CombineTravel): DecryptedCombineTravel {
     val decryptedCombineTravel = DecryptedCombineTravel()
     for (documentsItems in combineTravel.documentsItems) {
         decryptedCombineTravel.documentsItems.add(decryptDocuments(documentsItems))
@@ -2478,50 +2478,50 @@ fun decryptCombineTravel(combineTravel: CombineTravel) : DecryptedCombineTravel{
     return decryptedCombineTravel
 }
 
-fun decryptCombineMemories(combineMemories : CombineMemories) : DecryptedCombineMemories{
+fun decryptCombineMemories(combineMemories: CombineMemories): DecryptedCombineMemories {
     val decryptedCombineMemories = DecryptedCombineMemories()
 
-    for(mainMemoryItems in combineMemories.mainMemoriesItems)  {
+    for (mainMemoryItems in combineMemories.mainMemoriesItems) {
         decryptedCombineMemories.mainMemoriesItems.add(decryptMainMemories(mainMemoryItems))
     }
-    for(memoryTimelineItems in combineMemories.memoryTimelineItems){
+    for (memoryTimelineItems in combineMemories.memoryTimelineItems) {
         decryptedCombineMemories.memoryTimelineItems.add(decryptMemoryTimeLine(memoryTimelineItems))
     }
-    for(listItems in combineMemories.listItems){
+    for (listItems in combineMemories.listItems) {
         decryptedCombineMemories.listItems.add(decryptMemoriesList(listItems))
     }
     return decryptedCombineMemories
 }
 
-fun decryptCombineEducation(combineEducation: CombineEducation) : DecryptedCombineEducation{
+fun decryptCombineEducation(combineEducation: CombineEducation): DecryptedCombineEducation {
     val decryptedCombineEducation = DecryptedCombineEducation()
 
-    for(educationItems in combineEducation.educationItems){
+    for (educationItems in combineEducation.educationItems) {
         decryptedCombineEducation.educationItems.add(decryptEducation(educationItems))
     }
 
-    for(mainEducationItems in combineEducation.mainEducationItems){
+    for (mainEducationItems in combineEducation.mainEducationItems) {
         decryptedCombineEducation.mainEducationItems.add(decryptMainEducation(mainEducationItems))
     }
 
-    for(workItems in combineEducation.workItems){
+    for (workItems in combineEducation.workItems) {
         decryptedCombineEducation.workItems.add(decryptWork(workItems))
     }
 
-    for(listItems in combineEducation.listItems){
+    for (listItems in combineEducation.listItems) {
         decryptedCombineEducation.listItems.add(decryptEducationList(listItems))
     }
     return decryptedCombineEducation
 }
 
-fun decryptCombineInterests(combineInterest : CombineInterests) : DecryptedCombineInterests {
+fun decryptCombineInterests(combineInterest: CombineInterests): DecryptedCombineInterests {
     val decryptedCombineInterests = DecryptedCombineInterests()
 
-    for(interestItems  in combineInterest.interestItems){
+    for (interestItems in combineInterest.interestItems) {
         decryptedCombineInterests.interestItems.add(decryptInterests(interestItems))
     }
 
-    for(listItems in combineInterest.listItems){
+    for (listItems in combineInterest.listItems) {
         decryptedCombineInterests.listItems.add(decryptInterestList(listItems))
     }
     return decryptedCombineInterests

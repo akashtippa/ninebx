@@ -2,27 +2,27 @@ package com.ninebx.ui.home.account.addmembers
 
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.utility.*
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.realm.*
-import io.realm.permissions.Permission
-import okhttp3.ResponseBody
-import java.util.*
 import io.realm.ObjectServerError
 import io.realm.PermissionManager
+import io.realm.SyncCredentials
+import io.realm.SyncUser
 import io.realm.permissions.AccessLevel
 import io.realm.permissions.PermissionRequest
 import io.realm.permissions.UserCondition
-
+import okhttp3.ResponseBody
+import java.util.*
 
 
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter(private val memberView: MemberView, private val adminUser : SyncUser, private val adminId : String ) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView, private val adminUser: SyncUser, private val adminId: String) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
@@ -124,7 +124,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
             override fun onError(error: ObjectServerError) {
                 error.printStackTrace()
                 memberView.hideProgress()
-                memberView.onError(R.string.error_permissions)
+//                memberView.onError(R.string.error_permissions)
             }
         })
 
@@ -141,7 +141,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
         }
     }
 
-    fun setPermissionsForMember( updateMember: Member, memberRole: String ) {
+    fun setPermissionsForMember(updateMember: Member, memberRole: String) {
 
         updateMember.homeAdd = memberRole == "Co-administrator" || memberRole == "User"
         updateMember.homeEdit = memberRole == "Co-administrator"

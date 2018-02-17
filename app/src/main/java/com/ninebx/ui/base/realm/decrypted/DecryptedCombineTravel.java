@@ -3,12 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.home.travel.Documents;
-import com.ninebx.ui.base.realm.home.travel.Loyalty;
-import com.ninebx.ui.base.realm.home.travel.Travel;
-import com.ninebx.ui.base.realm.home.travel.Vacations;
-import com.ninebx.ui.base.realm.lists.TravelList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -31,22 +25,16 @@ public class DecryptedCombineTravel implements Parcelable {
     };
     @PrimaryKey //@Required
     private int id = 0;
-
-    @Required private RealmList<DecryptedDocuments> documentsItems      = new RealmList<DecryptedDocuments>();
-    @Required private RealmList<DecryptedLoyalty> loyaltyItems        = new RealmList<DecryptedLoyalty>();
-    @Required private RealmList<DecryptedTravel> travelItems         = new RealmList<DecryptedTravel>();
-    @Required private RealmList<DecryptedVacations> vacationsItems      = new RealmList<DecryptedVacations>();
-    @Required private RealmList<DecryptedTravelList> listItems           = new RealmList<DecryptedTravelList>();
     @Required
-    private RealmList<Documents> documentsItems = new RealmList<Documents>();
+    private RealmList<DecryptedDocuments> documentsItems = new RealmList<DecryptedDocuments>();
     @Required
-    private RealmList<Loyalty> loyaltyItems = new RealmList<Loyalty>();
+    private RealmList<DecryptedLoyalty> loyaltyItems = new RealmList<DecryptedLoyalty>();
     @Required
-    private RealmList<Travel> travelItems = new RealmList<Travel>();
+    private RealmList<DecryptedTravel> travelItems = new RealmList<DecryptedTravel>();
     @Required
-    private RealmList<Vacations> vacationsItems = new RealmList<Vacations>();
+    private RealmList<DecryptedVacations> vacationsItems = new RealmList<DecryptedVacations>();
     @Required
-    private RealmList<TravelList> listItems = new RealmList<TravelList>();
+    private RealmList<DecryptedTravelList> listItems = new RealmList<DecryptedTravelList>();
 
     public DecryptedCombineTravel() {
     }

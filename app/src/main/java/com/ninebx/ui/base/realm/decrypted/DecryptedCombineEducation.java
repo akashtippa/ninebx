@@ -3,11 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.home.education.Education;
-import com.ninebx.ui.base.realm.home.education.MainEducation;
-import com.ninebx.ui.base.realm.home.education.Work;
-import com.ninebx.ui.base.realm.lists.EducationList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -16,17 +11,29 @@ import io.realm.annotations.Required;
  * Created by smrit on 16-02-2018.
  */
 
-public class DecryptedCombineEducation implements Parcelable{
+public class DecryptedCombineEducation implements Parcelable {
 
+    public static final Creator<DecryptedCombineEducation> CREATOR = new Creator<DecryptedCombineEducation>() {
+        @Override
+        public DecryptedCombineEducation createFromParcel(Parcel in) {
+            return new DecryptedCombineEducation(in);
+        }
+
+        @Override
+        public DecryptedCombineEducation[] newArray(int size) {
+            return new DecryptedCombineEducation[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
-
     @Required
-    private RealmList<DecryptedEducation> educationItems          = new RealmList<>();
-    @Required private RealmList<DecryptedMainEducation> mainEducationItems      = new RealmList<>();
-    @Required private RealmList<DecryptedWork> workItems               = new RealmList<>();
-
-    @Required private RealmList<DecryptedEducationList> listItems               = new RealmList<>();
+    private RealmList<DecryptedEducation> educationItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedMainEducation> mainEducationItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedWork> workItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedEducationList> listItems = new RealmList<>();
 
     public DecryptedCombineEducation() {
     }
@@ -52,18 +59,6 @@ public class DecryptedCombineEducation implements Parcelable{
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombineEducation> CREATOR = new Creator<DecryptedCombineEducation>() {
-        @Override
-        public DecryptedCombineEducation createFromParcel(Parcel in) {
-            return new DecryptedCombineEducation(in);
-        }
-
-        @Override
-        public DecryptedCombineEducation[] newArray(int size) {
-            return new DecryptedCombineEducation[size];
-        }
-    };
 
     public int getId() {
         return id;
