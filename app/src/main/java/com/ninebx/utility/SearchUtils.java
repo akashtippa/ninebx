@@ -51,8 +51,8 @@ public class SearchUtils {
         TestSearchs.add( new TestSearch( category++, "Level3" + category ));
         TestSearchs.add( new TestSearch( category++, "Level3" + category ));
         TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        for( TestSearch testSearch : TestSearchs ) {
-            AppLogger.INSTANCE("Searching", searchString(testSearch, "level");
-        }
+        /*for( TestSearch testSearch : TestSearchs ) {
+            AppLogger.INSTANCE("Searching", searchString(testSearch, "level"));
+        }*/
     }
 }

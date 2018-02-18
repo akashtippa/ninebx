@@ -21,10 +21,7 @@ import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MainMemories
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.base.realm.home.personal.*
-import com.ninebx.ui.base.realm.home.shopping.ClothingSizes
-import com.ninebx.ui.base.realm.home.shopping.LoyaltyPrograms
-import com.ninebx.ui.base.realm.home.shopping.RecentPurchase
-import com.ninebx.ui.base.realm.home.shopping.Shopping
+import com.ninebx.ui.base.realm.home.shopping.*
 import com.ninebx.ui.base.realm.home.travel.*
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
@@ -1054,13 +1051,6 @@ fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes
     decryptClothingSizes.createdUser = clothingSizes.createdUser.decryptString()
 
     return decryptClothingSizes
-}
-
-fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineContacts {
-    val decryptCombineContacts = DecryptedCombineContacts()
-
-    return decryptCombineContacts
-
 }
 
 fun decryptContactsList(contactsList: ContactsList): DecryptedContactsList {
@@ -2527,39 +2517,6 @@ fun decryptCombineInterests(combineInterest : CombineInterests) : DecryptedCombi
     return decryptedCombineInterests
 }
 
-fun decryptCombinePersonal(combinePersonal: CombinePersonal) : DecryptedCombinePersonal{
-    val decryptedCombinePersonal = DecryptedCombinePersonal()
-
-    for(certificateItems in combinePersonal.certificateItems){
-        decryptedCombinePersonal.certificateItems.add(decryptCertificate(certificateItems as Certificate))
-    }
-
-    for(governmentItems in combinePersonal.governmentItems){
-        decryptedCombinePersonal.governmentItems.add(decryptGovernment(governmentItems as Government))
-    }
-
-    for(licenseItems in combinePersonal.licenseItems){
-        decryptedCombinePersonal.licenseItems.add(decryptLicense(licenseItems as License))
-    }
-
-    for(personalItems in combinePersonal.personalItems){
-        decryptedCombinePersonal.personalItems.add(decryptPersonal(personalItems as Personal))
-    }
-
-    for(socialItems in combinePersonal.socialItems){
-        decryptedCombinePersonal.socialItems.add(decryptSocial(socialItems as Social))
-    }
-
-    for(taxIDItems in combinePersonal.taxIDItems){
-        decryptedCombinePersonal.taxIDItems.add(decryptTaxID(taxIDItems as TaxID))
-    }
-
-    for(listItems in combinePersonal.listItems){
-        decryptedCombinePersonal.listItems.add(decryptPersonalList(listItems as PersonalList))
-    }
-    return decryptedCombinePersonal
-}
-
 fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineWellness {
     val decryptedCombineWellness = DecryptedCombineWellness()
     for(checkupsItems in combineWellness.checkupsItems){
@@ -2606,4 +2563,73 @@ fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineW
         decryptedCombineWellness.listItems.add(decryptWellnessList(listItems as WellnessList))
     }
     return decryptedCombineWellness
+}
+
+fun decryptCombinePersonal(combinePersonal: CombinePersonal) : DecryptedCombinePersonal{
+    val decryptedCombinePersonal = DecryptedCombinePersonal()
+
+    for(certificateItems in combinePersonal.certificateItems){
+        decryptedCombinePersonal.certificateItems.add(decryptCertificate(certificateItems as Certificate))
+    }
+
+    for(governmentItems in combinePersonal.governmentItems){
+        decryptedCombinePersonal.governmentItems.add(decryptGovernment(governmentItems as Government))
+    }
+
+    for(licenseItems in combinePersonal.licenseItems){
+        decryptedCombinePersonal.licenseItems.add(decryptLicense(licenseItems as License))
+    }
+
+    for(personalItems in combinePersonal.personalItems){
+        decryptedCombinePersonal.personalItems.add(decryptPersonal(personalItems as Personal))
+    }
+
+    for(socialItems in combinePersonal.socialItems){
+        decryptedCombinePersonal.socialItems.add(decryptSocial(socialItems as Social))
+    }
+
+    for(taxIDItems in combinePersonal.taxIDItems){
+        decryptedCombinePersonal.taxIDItems.add(decryptTaxID(taxIDItems as TaxID))
+    }
+
+    for(listItems in combinePersonal.listItems){
+        decryptedCombinePersonal.listItems.add(decryptPersonalList(listItems as PersonalList))
+    }
+    return decryptedCombinePersonal
+}
+
+fun decryptCombineShopping(combineShopping : CombineShopping) : DecryptedCombineShopping{
+    val decryptedCombineShopping = DecryptedCombineShopping()
+    for(loyaltyProgramItems in combineShopping.loyaltyProgramsItems){
+        decryptedCombineShopping.loyaltyProgramsItems.add(decryptLoyaltyPrograms(loyaltyProgramItems as LoyaltyPrograms))
+    }
+    for(recentPurchaseItems in combineShopping.recentPurchaseItems){
+        decryptedCombineShopping.recentPurchaseItems.add(decryptRecentPurchase(recentPurchaseItems as RecentPurchase))
+    }
+    for(shoppingItems in combineShopping.shoppingItems){
+        decryptedCombineShopping.shoppingItems.add(decryptShopping(shoppingItems as Shopping))
+    }
+
+    for(clothingSizesItems in combineShopping.clothingSizesItems){
+        decryptedCombineShopping.clothingSizesItems.add(decryptedClothingSizes(clothingSizesItems as ClothingSizes))
+    }
+
+    for(listItems in combineShopping.listItems){
+        decryptedCombineShopping.listItems.add(decryptShoppingList(listItems as ShoppingList))
+    }
+    return decryptedCombineShopping
+}
+
+fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineContacts {
+    val decryptedCombineContacts = DecryptedCombineContacts()
+    for(contactItems in combineContacts.contactsItems){
+        decryptedCombineContacts.contactsItems.add(decryptContactList(contactItems))
+    }
+    for(mainContactItems in combineContacts.mainContactsItems){
+        decryptedCombineContacts.mainContactsItems.add(decryptMainContacts(mainContactItems))
+    }
+    for(listItems in combineContacts.listItems){
+        decryptedCombineContacts.listItems.add(decryptContactsList(listItems))
+    }
+    return decryptedCombineContacts
 }
