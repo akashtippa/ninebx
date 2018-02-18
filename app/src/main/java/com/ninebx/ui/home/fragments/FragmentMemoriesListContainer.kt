@@ -110,6 +110,8 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         memoryObject.insertOrUpdate(memoryRealm!!)
         context!!.hideProgressDialog()
 //        myList.clear()
+        val index: Int = myList.size - 1
+//        myList.removeAt(index)
         myList.add(memoryObject)
         mListsAdapter!!.notifyDataSetChanged()
     }

@@ -158,16 +158,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
     }
 
-    private fun getMemoryTimeLine() {
-        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val bundle = Bundle()
-        bundle.putString("categoryName", categoryName)
-        val categoryFragment = FragmentMemoriesListContainer()
-        categoryFragment.arguments = bundle
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-    }
-
     private fun getLists() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)

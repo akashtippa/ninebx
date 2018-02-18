@@ -638,8 +638,8 @@ class Level2CategoryHelper(
     private fun getMaintenance() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2050
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 4002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Service Details"
         category.subCategories.add(Level2SubCategory("Name of service provider", "Name of service provider", "", Constants.LEVEL2_NORMAL))
@@ -676,8 +676,8 @@ class Level2CategoryHelper(
     private fun getUmbrellaInsurance() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2036
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 6005
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
@@ -758,8 +758,8 @@ class Level2CategoryHelper(
     private fun getLifeInsurance() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2036
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 6003
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
@@ -799,8 +799,8 @@ class Level2CategoryHelper(
     private fun getAutoInsurance() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2036
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 6002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
@@ -840,8 +840,8 @@ class Level2CategoryHelper(
     private fun gtHomeOwnerRentersInsurance() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2036
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 6001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Policy Details"
         category.subCategories.add(Level2SubCategory("Policy number", "Policy number", "", Constants.LEVEL2_NORMAL))
@@ -912,8 +912,8 @@ class Level2CategoryHelper(
 
     private fun getReturnsToBeFiled() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2017
-        var category_id = "returns_details" + categoryIndex
+        var categoryIndex = 7002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Tax year", "Tax year", "", Constants.LEVEL2_SPINNER))
@@ -942,8 +942,8 @@ class Level2CategoryHelper(
     private fun getPastReturns() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2017
-        var category_id = "past_details" + categoryIndex
+        var categoryIndex = 7001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Tax year", "Tax year", "", Constants.LEVEL2_SPINNER))
@@ -972,8 +972,8 @@ class Level2CategoryHelper(
     private fun getOtherDetails() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2016
-        var category_id = "other_details" + categoryIndex
+        var categoryIndex = 5005
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
@@ -1004,8 +1004,8 @@ class Level2CategoryHelper(
     private fun getFurnitureDetails() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2015
-        var category_id = "furniture_details" + categoryIndex
+        var categoryIndex = 5004
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
@@ -1036,8 +1036,8 @@ class Level2CategoryHelper(
     private fun getComputerAndElectronics() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2014
-        var category_id = "computer_details" + categoryIndex
+        var categoryIndex = 5003
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
@@ -1068,8 +1068,8 @@ class Level2CategoryHelper(
     private fun getArtsAndCollectibles() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2013
-        var category_id = "art_details" + categoryIndex
+        var categoryIndex = 5002
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
@@ -1100,8 +1100,8 @@ class Level2CategoryHelper(
     private fun getJewelry() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2012
-        var category_id = "jewelry_details" + categoryIndex
+        var categoryIndex = 5001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
         category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
@@ -1132,8 +1132,8 @@ class Level2CategoryHelper(
     private fun getVehicles() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2011
-        var category_id = "vehicle_details" + categoryIndex
+        var categoryIndex = 4001
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Vehicle Details"
         category.subCategories.add(Level2SubCategory("Vehicle identification number (VIN)", "Vehicle identification number (VIN)", "", Constants.LEVEL2_NORMAL))
@@ -1171,8 +1171,8 @@ class Level2CategoryHelper(
     private fun getInvestmentRentalProperty() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2010
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 3004
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
@@ -1225,8 +1225,8 @@ class Level2CategoryHelper(
     private fun getVacationHome() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2009
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 3003
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Property Address"
         category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
@@ -2435,8 +2435,8 @@ class Level2CategoryHelper(
     private fun getHealthCareProviders() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2050
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 6004
+        var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Practice/Group name", "Practice/Group name", "", Constants.LEVEL2_NORMAL))

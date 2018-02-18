@@ -21,6 +21,7 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
 import com.ninebx.utility.*
+import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import kotlinx.android.synthetic.main.fragment_level2_contacts.*
@@ -167,26 +168,59 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
         if (contactID.trim() == "0") {
             contacts.id = getUniqueId()
+            contacts.firstName = strFirstName.encryptString()
+            contacts.lastName = strLastName.encryptString()
+            contacts.dateOfBirth = strBirthday.encryptString()
+            contacts.anniversary = strAnniversary.encryptString()
+            contacts.mobileOne = strPhone1.encryptString()
+            contacts.mobileTwo = strPhone2.encryptString()
+            contacts.emailOne = strEmail1.encryptString()
+            contacts.emailTwo = strEmail2.encryptString()
+            contacts.streetAddressOne = strStreetAddress1.encryptString()
+            contacts.streetAddressTwo = strStreetAddress2.encryptString()
+            contacts.city = strCity.encryptString()
+            contacts.state = strState.encryptString()
+            contacts.zipCode = strZipCode.encryptString()
+            contacts.country = strCountry.encryptString()
+
+            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    contacts.insertOrUpdate(realm!!)
+                    NineBxApplication.instance.activityInstance!!.onBackPressed()
+                }
+
+            })
         } else {
             contacts.id = contactID.toInt()
+            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    val contacts = realm!!.where(Contacts::class.java).equalTo("id", contactID.toInt()).findFirstAsync()
+                    realm.beginTransaction()
+                    AppLogger.e("Id ", " is " + contactID.toInt())
+                    AppLogger.e("First Name ", " is " + strFirstName)
+                    AppLogger.e("First Name ", " Encrypted is " + strFirstName.encryptString())
+                    contacts!!.id = contactID.toInt()
+                    contacts.firstName = strFirstName.encryptString()
+                    contacts.lastName = strLastName.encryptString()
+                    contacts.dateOfBirth = strBirthday.encryptString()
+                    contacts.anniversary = strAnniversary.encryptString()
+                    contacts.mobileOne = strPhone1.encryptString()
+                    contacts.mobileTwo = strPhone2.encryptString()
+                    contacts.emailOne = strEmail1.encryptString()
+                    contacts.emailTwo = strEmail2.encryptString()
+                    contacts.streetAddressOne = strStreetAddress1.encryptString()
+                    contacts.streetAddressTwo = strStreetAddress2.encryptString()
+                    contacts.city = strCity.encryptString()
+                    contacts.state = strState.encryptString()
+                    contacts.zipCode = strZipCode.encryptString()
+                    contacts.country = strCountry.encryptString()
+                    realm.commitTransaction()
+
+                    NineBxApplication.instance.activityInstance!!.onBackPressed()
+                }
+            })
         }
-
-        contacts.firstName = strFirstName.encryptString()
-        contacts.lastName = strLastName.encryptString()
-        contacts.dateOfBirth = strBirthday.encryptString()
-        contacts.anniversary = strAnniversary.encryptString()
-        contacts.mobileOne = strPhone1.encryptString()
-        contacts.mobileTwo = strPhone2.encryptString()
-        contacts.emailOne = strEmail1.encryptString()
-        contacts.emailTwo = strEmail2.encryptString()
-        contacts.streetAddressOne = strStreetAddress1.encryptString()
-        contacts.streetAddressTwo = strStreetAddress2.encryptString()
-        contacts.city = strCity.encryptString()
-        contacts.state = strState.encryptString()
-        contacts.zipCode = strZipCode.encryptString()
-        contacts.country = strCountry.encryptString()
-
-        mContactsView.onContacts(contacts)
+//        mContactsView.onContacts(contacts)
 
     }
 
@@ -223,7 +257,8 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 //        if (contacts!!.photosId.isNotEmpty())
 //            mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
 
-        if (contacts!!.firstName.isNotEmpty())
+        var contactID = contacts!!.id
+        if (contacts.firstName.isNotEmpty())
             edtFirstName.setText(contacts.firstName.decryptString())
 
         if (contacts.lastName.isNotEmpty())

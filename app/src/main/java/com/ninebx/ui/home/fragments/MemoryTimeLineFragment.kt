@@ -171,8 +171,25 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         if (contactID.trim() == "0") {
             memoryTimeLineData.id = getUniqueId()
+
         } else {
             memoryTimeLineData.id = contactID.toInt()
+            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    val updatingUserInfo = realm!!.where(MemoryTimeline::class.java).equalTo("id", contactID.toInt()).findAllAsync()
+                    realm.beginTransaction()
+
+                    memoryTimeLineData.id = this@MemoryTimeLineFragment.memoryTimeLine.id
+                    memoryTimeLineData.title = strMemoryTitle.encryptString()
+                    memoryTimeLineData.date = strDate.encryptString()
+                    memoryTimeLineData.place = strLocation.encryptString()
+                    memoryTimeLineData.contacts = strContacts.encryptString()
+                    memoryTimeLineData.notes = strNotes.encryptString()
+                    realm.commitTransaction()
+
+                    NineBxApplication.instance.activityInstance!!.onBackPressed()
+                }
+            })
         }
 
 
@@ -183,8 +200,8 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         memoryTimeLineData.contacts = strContacts.encryptString()
         memoryTimeLineData.notes = strNotes.encryptString()
 
-        memberView.onMemoryTimeLine(memoryTimeLineData)
-//        sendDataToServer(memoryTimeLineData)
+        sendDataToServer(memoryTimeLineData)
+//        memberView.onMemoryTimeLine(memoryTimeLineData)
     }
 
 
@@ -223,14 +240,6 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     }
 
     private fun sendDataToServer(memoryTimeLineData: MemoryTimeline) {
-//        var memories = MemoryTimeline()
-//        memories.id = getUniqueId()
-//        memories.title = strMemoryTitle.encryptString()
-//        memories.date = strDate.encryptString()
-//        memories.place = strLocation.encryptString()
-//        memories.contacts = strContacts.encryptString()
-//        memories.notes = strNotes.encryptString()
-
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 memoryTimeLineData.insertOrUpdate(realm!!)

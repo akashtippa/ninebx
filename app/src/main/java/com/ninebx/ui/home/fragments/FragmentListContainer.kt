@@ -211,6 +211,7 @@ class FragmentListContainer : FragmentBackHelper() {
         editor.putBoolean(PREFERENCE_PERMISSION_DENIED + permission, true).commit()
     }
 
+
     private fun callForContact() {
         callContactPicker()
 
