@@ -171,14 +171,20 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         if (contactID.trim() == "0") {
             memoryTimeLineData.id = getUniqueId()
+            memoryTimeLineData.title = strMemoryTitle.encryptString()
+            memoryTimeLineData.date = strDate.encryptString()
+            memoryTimeLineData.place = strLocation.encryptString()
+            memoryTimeLineData.contacts = strContacts.encryptString()
+            memoryTimeLineData.notes = strNotes.encryptString()
             sendDataToServer(memoryTimeLineData)
+            memberView.onMemoryTimeLine(memoryTimeLineData)
+
         } else {
             memoryTimeLineData.id = contactID.toInt()
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     val updatingUserInfo = realm!!.where(MemoryTimeline::class.java).equalTo("id", contactID.toInt()).findAllAsync()
                     realm.beginTransaction()
-
                     memoryTimeLineData.id = this@MemoryTimeLineFragment.memoryTimeLine.id
                     memoryTimeLineData.title = strMemoryTitle.encryptString()
                     memoryTimeLineData.date = strDate.encryptString()
@@ -186,21 +192,22 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
                     memoryTimeLineData.contacts = strContacts.encryptString()
                     memoryTimeLineData.notes = strNotes.encryptString()
                     realm.commitTransaction()
+                    memberView.onMemoryTimeLine(memoryTimeLineData)
 
                     NineBxApplication.instance.activityInstance!!.onBackPressed()
                 }
             })
         }
 
+//
+////        memoryTimeLineData.id = this@MemoryTimeLineFragment.memoryTimeLine.id
+//        memoryTimeLineData.title = strMemoryTitle.encryptString()
+//        memoryTimeLineData.date = strDate.encryptString()
+//        memoryTimeLineData.place = strLocation.encryptString()
+//        memoryTimeLineData.contacts = strContacts.encryptString()
+//        memoryTimeLineData.notes = strNotes.encryptString()
 
-//        memoryTimeLineData.id = this@MemoryTimeLineFragment.memoryTimeLine.id
-        memoryTimeLineData.title = strMemoryTitle.encryptString()
-        memoryTimeLineData.date = strDate.encryptString()
-        memoryTimeLineData.place = strLocation.encryptString()
-        memoryTimeLineData.contacts = strContacts.encryptString()
-        memoryTimeLineData.notes = strNotes.encryptString()
-
-//        memberView.onMemoryTimeLine(memoryTimeLineData)
+        memberView.onMemoryTimeLine(memoryTimeLineData)
     }
 
 

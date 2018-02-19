@@ -61,6 +61,8 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     private var contactsList: ArrayList<Contacts>? = ArrayList()
     private var contactsRealm: Realm? = null
 
+    private var firstName = ""
+    private var strMobileNumber = ""
 
     //
 
@@ -143,9 +145,36 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
 
-            for (contact in mContacts!![0].firstName) {
+            for (contact in mContacts!!) {
+                val realmContacts = Contacts()
+                realmContacts.id = getUniqueId()
+                realmContacts.firstName = contact.firstName
+                realmContacts.lastName = contact.lastName
+
+                firstName = contact.firstName
+
+//                realmContacts.mobileOne = contact.getPhone()
+                // have to add mContacts in mList
+                // Issue is, mContacts is <Contact>, and mLisst is <Contacts>
+
+                myList.add(realmContacts)
+                mListsAdapter!!.notifyDataSetChanged()
+
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+//                        contacts.insertOrUpdate(realm!!)
+                        var contacts = Contacts()
+                        contacts.id = getUniqueId()
+                        contacts.firstName = firstName
+                        contacts.insertOrUpdate(realm!!)
+
+                        NineBxApplication.instance.activityInstance!!.onBackPressed()
+                    }
+
+                })
 
             }
+
 //            setContactsList()
 
         } else

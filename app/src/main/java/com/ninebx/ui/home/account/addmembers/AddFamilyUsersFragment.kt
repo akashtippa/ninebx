@@ -105,6 +105,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         if (users.profilePhoto.isNotEmpty())
             mAWSFileTransferHelper.beginDownload("images/" + users.userId + "/" + users.profilePhoto)
 
+        // E/AWSFileTransferHelper: download : Error during upload: 1 : Exception : The object was stored using a form of Server Side Encryption. The correct parameters must be provided to retrieve the object. (Service: Amazon S3; Status Code: 400; Error Code: InvalidRequest; Request ID: 816FA6502DC28C41)
+
         prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 usersRealm = realm

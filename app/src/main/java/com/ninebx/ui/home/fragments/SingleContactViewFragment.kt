@@ -165,9 +165,10 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
             return
         }
 
-        var contacts = Contacts()
 
         if (contactID.trim() == "0") {
+            var contacts = Contacts()
+
             contacts.id = getUniqueId()
             contacts.firstName = strFirstName.encryptString()
             contacts.lastName = strLastName.encryptString()
@@ -192,34 +193,62 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
             })
         } else {
+////            contacts.id = contactID.toInt()
+//            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+//                override fun onSuccess(realm: Realm?) {
+//                    val contacts = realm!!.where(Contacts::class.java).equalTo("id", contactID.toInt()).findFirstAsync()
+//                    realm.beginTransaction()
+//                    AppLogger.e("Id ", " is " + contactID.toInt())
+//                    AppLogger.e("First Name ", " is " + strFirstName)
+//                    AppLogger.e("First Name ", " Encrypted is " + strFirstName.encryptString())
+////                    contacts!!.id = contactID.toInt()
+//                    contacts.firstName = strFirstName.encryptString()
+//                    contacts.lastName = strLastName.encryptString()
+//                    contacts.dateOfBirth = strBirthday.encryptString()
+//                    contacts.anniversary = strAnniversary.encryptString()
+//                    contacts.mobileOne = strPhone1.encryptString()
+//                    contacts.mobileTwo = strPhone2.encryptString()
+//                    contacts.emailOne = strEmail1.encryptString()
+//                    contacts.emailTwo = strEmail2.encryptString()
+//                    contacts.streetAddressOne = strStreetAddress1.encryptString()
+//                    contacts.streetAddressTwo = strStreetAddress2.encryptString()
+//                    contacts.city = strCity.encryptString()
+//                    contacts.state = strState.encryptString()
+//                    contacts.zipCode = strZipCode.encryptString()
+//                    contacts.country = strCountry.encryptString()
+//                    realm.commitTransaction()
+//
+//                    NineBxApplication.instance.activityInstance!!.onBackPressed()
+//                }
+//            })
+
+
+            var contacts = Contacts()
+
             contacts.id = contactID.toInt()
+            contacts.firstName = strFirstName.encryptString()
+            contacts.lastName = strLastName.encryptString()
+            contacts.dateOfBirth = strBirthday.encryptString()
+            contacts.anniversary = strAnniversary.encryptString()
+            contacts.mobileOne = strPhone1.encryptString()
+            contacts.mobileTwo = strPhone2.encryptString()
+            contacts.emailOne = strEmail1.encryptString()
+            contacts.emailTwo = strEmail2.encryptString()
+            contacts.streetAddressOne = strStreetAddress1.encryptString()
+            contacts.streetAddressTwo = strStreetAddress2.encryptString()
+            contacts.city = strCity.encryptString()
+            contacts.state = strState.encryptString()
+            contacts.zipCode = strZipCode.encryptString()
+            contacts.country = strCountry.encryptString()
+
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
-                    val contacts = realm!!.where(Contacts::class.java).equalTo("id", contactID.toInt()).findFirstAsync()
-                    realm.beginTransaction()
-                    AppLogger.e("Id ", " is " + contactID.toInt())
-                    AppLogger.e("First Name ", " is " + strFirstName)
-                    AppLogger.e("First Name ", " Encrypted is " + strFirstName.encryptString())
-                    contacts!!.id = contactID.toInt()
-                    contacts.firstName = strFirstName.encryptString()
-                    contacts.lastName = strLastName.encryptString()
-                    contacts.dateOfBirth = strBirthday.encryptString()
-                    contacts.anniversary = strAnniversary.encryptString()
-                    contacts.mobileOne = strPhone1.encryptString()
-                    contacts.mobileTwo = strPhone2.encryptString()
-                    contacts.emailOne = strEmail1.encryptString()
-                    contacts.emailTwo = strEmail2.encryptString()
-                    contacts.streetAddressOne = strStreetAddress1.encryptString()
-                    contacts.streetAddressTwo = strStreetAddress2.encryptString()
-                    contacts.city = strCity.encryptString()
-                    contacts.state = strState.encryptString()
-                    contacts.zipCode = strZipCode.encryptString()
-                    contacts.country = strCountry.encryptString()
-                    realm.commitTransaction()
-
+                    contacts.insertOrUpdate(realm!!)
                     NineBxApplication.instance.activityInstance!!.onBackPressed()
                 }
+
             })
+
         }
 //        mContactsView.onContacts(contacts)
 

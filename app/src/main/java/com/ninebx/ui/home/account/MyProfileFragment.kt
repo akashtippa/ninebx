@@ -40,6 +40,7 @@ import java.util.*
  * Created by TechnoBlogger on 15/01/18.
  */
 class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgEditProfile != null)
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)

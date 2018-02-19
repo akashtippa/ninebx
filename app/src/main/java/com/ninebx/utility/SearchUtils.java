@@ -31,26 +31,26 @@ public class SearchUtils {
     public static void search() {
         ArrayList<TestSearch> TestSearchs = new ArrayList<TestSearch>();
         int category = 0;
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
-        TestSearchs.add( new TestSearch( category++, "Level3" + category ));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
+        TestSearchs.add(new TestSearch(category++, "Level3" + category));
         /*for( TestSearch testSearch : TestSearchs ) {
             AppLogger.INSTANCE("Searching", searchString(testSearch, "level"));
         }*/

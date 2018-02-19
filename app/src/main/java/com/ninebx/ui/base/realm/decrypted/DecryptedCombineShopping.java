@@ -11,18 +11,31 @@ import io.realm.annotations.Required;
  * Created by smrit on 18-02-2018.
  */
 
-public class DecryptedCombineShopping implements Parcelable{
+public class DecryptedCombineShopping implements Parcelable {
 
+    public static final Creator<DecryptedCombineShopping> CREATOR = new Creator<DecryptedCombineShopping>() {
+        @Override
+        public DecryptedCombineShopping createFromParcel(Parcel in) {
+            return new DecryptedCombineShopping(in);
+        }
+
+        @Override
+        public DecryptedCombineShopping[] newArray(int size) {
+            return new DecryptedCombineShopping[size];
+        }
+    };
     @PrimaryKey
     private int id = 0;
-
     @Required
-    private RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems            = new RealmList<>();
-    @Required private RealmList<DecryptedRecentPurchase> recentPurchaseItems             = new RealmList<>();
-    @Required private RealmList<DecryptedShopping> shoppingItems                         = new RealmList<>();
-    @Required private RealmList<DecryptedClothingSizes> clothingSizesItems               = new RealmList<>();
-
-    @Required private RealmList<DecryptedShoppingList> listItems                         = new RealmList<>();
+    private RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedRecentPurchase> recentPurchaseItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedShopping> shoppingItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedClothingSizes> clothingSizesItems = new RealmList<>();
+    @Required
+    private RealmList<DecryptedShoppingList> listItems = new RealmList<>();
 
     public DecryptedCombineShopping() {
     }
@@ -49,18 +62,6 @@ public class DecryptedCombineShopping implements Parcelable{
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombineShopping> CREATOR = new Creator<DecryptedCombineShopping>() {
-        @Override
-        public DecryptedCombineShopping createFromParcel(Parcel in) {
-            return new DecryptedCombineShopping(in);
-        }
-
-        @Override
-        public DecryptedCombineShopping[] newArray(int size) {
-            return new DecryptedCombineShopping[size];
-        }
-    };
 
     public int getId() {
         return id;
