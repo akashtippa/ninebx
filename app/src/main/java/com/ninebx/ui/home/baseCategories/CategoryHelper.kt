@@ -343,11 +343,11 @@ class CategoryHelper(
         category.title = "Other Assets"
         category.drawableString = "ic_icon_other_assets"
 
-        category.subCategories.add(SubCategory("Jewelry", "", decryptedCombine.getOtherCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-        category.subCategories.add(SubCategory("Art and collectibles", "", decryptedCombine.getOtherCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-        category.subCategories.add(SubCategory("Computers and electronics", "", decryptedCombine.getOtherCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-        category.subCategories.add(SubCategory("Furniture", "", decryptedCombine.getOtherCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-        category.subCategories.add(SubCategory("Others", "", decryptedCombine.getOtherCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Jewelry", "", decryptedCombine.getAssetCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Art and collectibles", "", decryptedCombine.getAssetCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Computers and electronics", "", decryptedCombine.getAssetCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Furniture", "", decryptedCombine.getAssetCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Others", "", decryptedCombine.getAssetCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
 
         categoryList.add(category)
 
