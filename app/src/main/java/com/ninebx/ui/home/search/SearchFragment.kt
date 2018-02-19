@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
-
 import com.ninebx.ui.home.BaseHomeFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
@@ -28,6 +27,7 @@ import com.ninebx.ui.home.baseCategories.CategoryFragment
  */
 
 class SearchFragment : BaseHomeFragment(), SearchView {
+
     private var mDecryptCombine : DecryptedCombine ?= null
     private var mDecryptCombineMemories : DecryptedCombineMemories ?= null
     private var mDecryptedCombineTravel : DecryptedCombineTravel ?= null
@@ -37,10 +37,16 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private var mDecryptedCombineContacts : DecryptedCombineContacts ?= null
     private var mDecryptedCombineShopping : DecryptedCombineShopping ?= null
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
+    private var mRecentSearch = ArrayList<DecryptedRecentSearch>()
 
     override fun onCombineFetched(combine: DecryptedCombine) {
         this.mDecryptCombine = combine
         hideProgress()
+    }
+
+    override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
+        this.mRecentSearch = recentSearch
+         hideProgress()
     }
 
     override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
@@ -119,8 +125,12 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this)
 
+        rvRecentSearch.layoutManager = LinearLayoutManager(context)
+        rvRecentSearch.adapter = RecentSearchAdapter(context, mRecentSearch)
+
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
+                rvRecentSearch.visibility = View.GONE
                 val text = edtSearch.text.toString().trim()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems( text )
                 searchDecryptCombineTravel = mSearchPresenter.searchTravelItems(text)

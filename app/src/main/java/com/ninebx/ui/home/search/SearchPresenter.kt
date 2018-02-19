@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.search
 
 import com.ninebx.R
+import com.ninebx.ui.base.realm.RecentSearch
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -45,6 +46,8 @@ class SearchPresenter {
     private val mDecryptCombineShopping = DecryptedCombineShopping()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
+    private var decryptedRecentSearch = ArrayList<DecryptedRecentSearch>()
+
     init
     {
 
@@ -58,6 +61,7 @@ class SearchPresenter {
             fetchCombinePersonal()
             fetchCombineShopping()
             fetchCombineContacts()
+            fetchRecentSearch()
         }
         else {
             searchView = categoryView
@@ -108,6 +112,20 @@ class SearchPresenter {
                     }
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
+                }
+            }
+        })
+    }
+
+    private fun fetchRecentSearch() {
+        prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+               val recentSearch = realm!!.where(RecentSearch::class.java).findAll()
+                if(recentSearch.size > 0){
+                    for(i in 0 until recentSearch.size){
+                        decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
+                        searchView!!.onRecentSearchFetched(decryptedRecentSearch)
+                    }
                 }
             }
         })

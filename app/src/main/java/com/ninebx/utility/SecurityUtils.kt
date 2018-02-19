@@ -1588,12 +1588,12 @@ fun decryptRecentPurchase(recentPurchase: RecentPurchase): DecryptedRecentPurcha
     return decryptRecentPurchase
 }
 
-fun decryptRecentSearch(recentSearch: RecentSearch): DecryptedRecentSearch {
+fun decryptRecentSearch(recentSearch: RecentSearch?): DecryptedRecentSearch {
     val decryptRecentSearch = DecryptedRecentSearch()
-    decryptRecentSearch.listName = recentSearch.listName.decryptString()
-    decryptRecentSearch.subCategory = recentSearch.subCategory.decryptString()
-    decryptRecentSearch.mainCategory = recentSearch.mainCategory.decryptString()
-    decryptRecentSearch.classType = recentSearch.classType.decryptString()
+    decryptRecentSearch.listName = recentSearch!!.listName.decryptString()
+    decryptRecentSearch.subCategory = recentSearch!!.subCategory.decryptString()
+    decryptRecentSearch.mainCategory = recentSearch!!.mainCategory.decryptString()
+    decryptRecentSearch.classType = recentSearch!!.classType.decryptString()
     return decryptRecentSearch
 }
 

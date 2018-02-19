@@ -30,6 +30,9 @@ import kotlinx.android.synthetic.main.fragment_category.*
  * Created by Alok on 12/01/18.
  */
 class CategoryFragment : FragmentBackHelper(), CategoryView {
+    override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCombineFetched(combine: DecryptedCombine) {
         setupUI()

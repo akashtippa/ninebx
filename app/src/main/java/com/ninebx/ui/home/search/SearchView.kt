@@ -16,4 +16,6 @@ interface SearchView : BaseView {
     fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal)
     fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping)
     fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts)
+
+    fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>)
 }
