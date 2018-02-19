@@ -59,6 +59,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
     var strState = ""
     var strZipCode = ""
     var strCountry = ""
+    val PICK_CONTACT = 1
 
     private lateinit var mContacts: Contacts
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
@@ -395,7 +396,10 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                 onSelectFromGalleryResult(data)
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data!!)
-        }
+        }/* else if(requestCode == PICK_CONTACT && resultCode == Activity.RESULT_OK) {
+            contactPicked(data!!)
+        }*/
     }
+
 
 }

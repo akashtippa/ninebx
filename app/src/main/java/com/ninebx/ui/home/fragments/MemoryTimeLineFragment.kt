@@ -171,7 +171,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         if (contactID.trim() == "0") {
             memoryTimeLineData.id = getUniqueId()
-
+            sendDataToServer(memoryTimeLineData)
         } else {
             memoryTimeLineData.id = contactID.toInt()
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
@@ -200,7 +200,6 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         memoryTimeLineData.contacts = strContacts.encryptString()
         memoryTimeLineData.notes = strNotes.encryptString()
 
-        sendDataToServer(memoryTimeLineData)
 //        memberView.onMemoryTimeLine(memoryTimeLineData)
     }
 

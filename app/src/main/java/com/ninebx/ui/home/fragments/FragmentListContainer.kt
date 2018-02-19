@@ -76,7 +76,8 @@ class FragmentListContainer : FragmentBackHelper() {
 
         val bundle = Bundle()
         fragmentValue = arguments!!.getString("categoryName")
-        fragmentCategoryId = arguments!!.getString("categoryId")
+//        fragmentCategoryId = arguments!!.getString("categoryId")
+
 //        changeToolbarTitleAndAddInfo(fragmentValue)
 
 

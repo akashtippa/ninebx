@@ -3,6 +3,7 @@ package com.ninebx.ui.home.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.widget.LinearLayoutManager
@@ -70,6 +71,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
     private var mDarkTheme: Boolean = false
+    val PICK_CONTACT = 1
 
 
     //
@@ -228,5 +230,27 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 //        rvContactList!!.adapter = mListsAdapter
 //    }
 
+
+    @SuppressLint("Recycle")
+    private fun contactPicked(data: Intent) {
+        var cursor: Cursor? = null
+        try {
+            var name: String? = null
+            val uri = data.data
+            cursor = context!!.contentResolver.query(uri, null, null, null, null)
+            cursor!!.moveToFirst()
+            val nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+            name = cursor.getString(nameIndex)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun pickSingleCOntact() {
+        val intent = Intent(Intent.ACTION_PICK, android.provider.Contacts.People.CONTENT_URI)
+        startActivityForResult(intent, PICK_CONTACT)
+    }
 
 }

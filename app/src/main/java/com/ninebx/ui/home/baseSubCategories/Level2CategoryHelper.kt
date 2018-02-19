@@ -1612,8 +1612,8 @@ class Level2CategoryHelper(
     private fun getServicesOthersAccounts() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 3001
-        var category_id = "service_details" + categoryIndex
+        var categoryIndex = 1001
+        var category_id = "interest_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", "Account type", "", Constants.LEVEL2_NORMAL))
@@ -1656,8 +1656,8 @@ class Level2CategoryHelper(
     // PERSONAL
     private fun getOtherGovernmentIssuedID() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2022
-        var category_id = "other_certificate_details" + categoryIndex
+        var categoryIndex = 6001
+        var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on ID", "Name on ID", "", Constants.LEVEL2_SPINNER))
@@ -1689,8 +1689,8 @@ class Level2CategoryHelper(
 
     private fun getMarriageCertificate() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2021
-        var category_id = "birth_certificate_details" + categoryIndex
+        var categoryIndex = 5001
+        var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name 1 on certificate", "Name 1 on certificate", "", Constants.LEVEL2_NORMAL))
@@ -1719,8 +1719,8 @@ class Level2CategoryHelper(
 
     private fun getBirthCertificate() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2021
-        var category_id = "birth_certificate_details" + categoryIndex
+        var categoryIndex = 4001
+        var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on certificate", "Name on certificate", "", Constants.LEVEL2_SPINNER))
@@ -1750,8 +1750,8 @@ class Level2CategoryHelper(
 
     private fun getTaxID() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2020
-        var category_id = "tax_details" + categoryIndex
+        var categoryIndex = 3001
+        var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on ID", "Name on ID", "", Constants.LEVEL2_SPINNER))
@@ -1771,8 +1771,8 @@ class Level2CategoryHelper(
 
     private fun getSocialSecurityCard() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2019
-        var category_id = "social_security_details" + categoryIndex
+        var categoryIndex = 2001
+        var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on card", "Name on card", "", Constants.LEVEL2_SPINNER))
@@ -1799,8 +1799,8 @@ class Level2CategoryHelper(
 
     private fun getDriversLicense() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2018
-        var category_id = "driver_details" + categoryIndex
+        var categoryIndex = 1001
+        var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on license", "Name on license", "", Constants.LEVEL2_SPINNER))
@@ -1833,8 +1833,8 @@ class Level2CategoryHelper(
 
     private fun getAirline() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2023
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 1001
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
@@ -1871,8 +1871,8 @@ class Level2CategoryHelper(
 
     private fun getHotel() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2024
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 1002
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
@@ -1909,8 +1909,8 @@ class Level2CategoryHelper(
 
     private fun getCarRental() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2025
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 1003
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
@@ -1947,8 +1947,8 @@ class Level2CategoryHelper(
 
     private fun getCruiseline() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2026
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 1004
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
@@ -1985,8 +1985,8 @@ class Level2CategoryHelper(
 
     private fun getRailway() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2027
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 1005
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
@@ -2023,8 +2023,8 @@ class Level2CategoryHelper(
 
     private fun getOther() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2028
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 1006
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
@@ -2061,8 +2061,8 @@ class Level2CategoryHelper(
 
     private fun getPassport() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2029
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 2001
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Passport Details"
         category.subCategories.add(Level2SubCategory("Name on passport", "Name on passport", "", Constants.LEVEL2_SPINNER))
@@ -2092,8 +2092,8 @@ class Level2CategoryHelper(
 
     private fun getVisa() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2030
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 2002
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Visa Details"
         category.subCategories.add(Level2SubCategory("Name on visa", "Name on visa", "", Constants.LEVEL2_SPINNER))
@@ -2124,8 +2124,8 @@ class Level2CategoryHelper(
 
     private fun getOtherTravelDocuments() {
         val categoryList = ArrayList<Level2Category>()
-        var categoryIndex = 2031
-        var category_id = "airline_details" + categoryIndex
+        var categoryIndex = 2003
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Travel Document Details"
         category.subCategories.add(Level2SubCategory("Name on travel document", "Name on travel document", "", Constants.LEVEL2_SPINNER))
@@ -2160,8 +2160,8 @@ class Level2CategoryHelper(
     private fun getEducation() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2032
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 1001
+        var category_id = "edu_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name", "Name", "", Constants.LEVEL2_NORMAL))
@@ -2193,8 +2193,8 @@ class Level2CategoryHelper(
     private fun getWork() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2033
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 2001
+        var category_id = "edu_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name", "Name", "", Constants.LEVEL2_NORMAL))
@@ -2225,8 +2225,8 @@ class Level2CategoryHelper(
     private fun getOtherAttachments() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2034
-        var category_id = "notes" + categoryIndex
+        var categoryIndex = 2001
+        var category_id = "interest_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
@@ -2315,8 +2315,8 @@ class Level2CategoryHelper(
     private fun getTravelDatesAndPlans() {
         val categoryList = ArrayList<Level2Category>()
 
-        var categoryIndex = 2035
-        var category_id = "account_details" + categoryIndex
+        var categoryIndex = 3001
+        var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH))
