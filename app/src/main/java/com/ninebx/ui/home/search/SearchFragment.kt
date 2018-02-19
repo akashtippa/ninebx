@@ -102,7 +102,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+       return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     private lateinit var searchDecryptCombine: DecryptedCombine
@@ -205,7 +205,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(contactList in searchDecryptedCombineContacts.listItems){
             mSearchContactsItems.add(Level3SearchItem(R.string.contacts, contactList.listName, "contactsList"))
         }
-        setupAdapter(rvContacts, contactsLayout, mSearchContactsItems)
+        if( mSearchContactsItems.size > 0 )
+            setupAdapter(rvContacts, contactsLayout, mSearchContactsItems)
     }
 
     private fun setupEducationItems() {
@@ -221,6 +222,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(educationList in searchDecryptCombineEducation.listItems){
             mSearchEducationItems.add(Level3SearchItem(R.string.education, educationList.listName, "educationList"))
         }
+        if( mSearchEducationItems.size > 0 )
         setupAdapter(rvEducationWork, educationLayout, mSearchEducationItems)
     }
 
@@ -246,6 +248,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(personalList in searchDecryptedCombinePersonal.listItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, personalList.listName, "personalList"))
         }
+        if( mSearchPersonalItems.size > 0 )
         setupAdapter(rvPersonal, personalLayout, mSearchPersonalItems)
     }
 
@@ -256,6 +259,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(interestList in searchDecryptedCombineInterests.listItems){
             mSearchInterestsItems.add(Level3SearchItem(R.string.interests, interestList.listName, "interestsList"))
         }
+        if( mSearchInterestsItems.size > 0 )
         setupAdapter(rvInterests, interestsLayout, mSearchInterestsItems)
     }
 
@@ -303,6 +307,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(wellnessList in searchDecryptedCombineWellness.listItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, wellnessList.listName))
         }
+        if( mSearchWellnessItems.size > 0 )
         setupAdapter(rvWellness, wellnessLayout, mSearchWellnessItems)
     }
 
@@ -322,7 +327,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(shoppingList in searchDecryptedCombineShopping.listItems){
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName))
         }
-        setupAdapter(rvShopping, shoppingLayout, mSearchShoppingItems)
+        if( mSearchShoppingItems.size > 0 )
+       setupAdapter(rvShopping, shoppingLayout, mSearchShoppingItems)
     }
 
     private fun setupMemoriesItems() {
@@ -335,13 +341,14 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(memorylist in searchDecryptCombineMemories.listItems){
             mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, memorylist.listName, "memorylist"))
         }
+        if( mSearchMemoriesItems.size > 0 )
         setupAdapter(rvMemories, memoriesLayout, mSearchMemoriesItems)
     }
 
     private fun setupTravelItems() {
-        for(documents in searchDecryptCombineTravel.documentsItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.nameOnTravelDocument, "documents"))
-        }
+       for(documents in searchDecryptCombineTravel.documentsItems){
+           mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.nameOnTravelDocument, "documents"))
+       }
 
         for(loyalty in searchDecryptCombineTravel.loyaltyItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.accountName, "loyalty"))
@@ -358,6 +365,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for(travelList in searchDecryptCombineTravel.listItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.travel_list, travelList.listName, "travelList"))
         }
+        if( mSearchTravelItems.size > 0 )
         setupAdapter(rvTravel, travelLayout, mSearchTravelItems)
     }
 
@@ -390,26 +398,11 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
     }
 
-    private var categoryFragment: CategoryFragment ?= null
-    private var bundle: Bundle ?= null
-
-    private var fragmentTransaction: FragmentTransaction? = null
-
-    private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
+    private fun setupAdapter( searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
             override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
-
-                fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                fragmentTransaction!!.addToBackStack(null)
-
-                bundle = Bundle()
-                bundle!!.putInt("category", R.string.home_amp_money)
-                categoryFragment = CategoryFragment()
-                categoryFragment!!.arguments = bundle
-
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
