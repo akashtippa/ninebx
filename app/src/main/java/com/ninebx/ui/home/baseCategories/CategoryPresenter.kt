@@ -4,7 +4,6 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.utility.AppLogger
-import com.ninebx.utility.decryptCombine
 import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
@@ -25,12 +24,7 @@ class CategoryPresenter( private val categoryId : Int, private val categoryView:
             prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     val result = realm!!.where(Combine::class.java).findAll()
-                    if(result.size > 0){
-                        for(i in 0 until result.size){
-                            val decrypt = decryptCombine(result[i]!!)
-                            AppLogger.d("CategoryPresenter", "Home And Money Box " + decrypt)
-                        }
-                    }
+
                 }
             })
         }

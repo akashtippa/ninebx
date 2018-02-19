@@ -67,10 +67,12 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         mDecryptedCombinePersonal = combinePersonal
         hideProgress()
     }
+
     override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
         mDecryptedCombineShopping = combineShopping
         hideProgress()
     }
+
     override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
         mDecryptedCombineContacts = combineContacts
         hideProgress()

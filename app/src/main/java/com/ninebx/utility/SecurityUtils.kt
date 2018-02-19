@@ -2409,8 +2409,8 @@ fun encryptVacations(vacations: Vacations): Vacations {
 }
 
 
-fun decryptCombine(combine: Combine) : DecryptedCombine
-{    val decryptedCombine = DecryptedCombine()
+fun decryptCombine(combine: Combine) : DecryptedCombine {
+    val decryptedCombine = DecryptedCombine()
 
     for ( financialItems in combine.financialItems ) {
         val decryptedItem = decryptFinancial(financialItems)
