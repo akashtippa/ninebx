@@ -11,6 +11,7 @@ import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
+import com.ninebx.ui.base.realm.home.travel.Loyalty
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -26,8 +27,10 @@ class SearchPresenter( private val searchView: SearchView ) {
     private val mDecryptedCombineTravel = DecryptedCombineTravel()
     private val mDecryptCombineEducation = DecryptedCombineEducation()
     private val mDecryptCombineInterests = DecryptedCombineInterests()
-    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
     private val mDecryptCombineWellness = DecryptedCombineWellness()
+    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
+    private val mDecryptCombineShopping = DecryptedCombineShopping()
+    private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
     init
    {
@@ -133,19 +136,23 @@ class SearchPresenter( private val searchView: SearchView ) {
                else{
                    searchView.onCombineWellnessFetched(mDecryptCombineWellness)
                }
-
            }
        })
 
        prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
            override fun onSuccess(realm: Realm?) {
                val combinePersonal = realm!!.where(CombinePersonal::class.java).findAll()
-            /*   if(combinePersonal.size > 0){
+               if(combinePersonal.size > 0){
                    for(i in 0 until combinePersonal.size){
-
+                       val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
+                       appendToDecryptCombinePersonal(decryptedCombinePersonal)
                    }
-               }*/
-               AppLogger.d("Combine", "CombinedPersonal : " + combinePersonal)
+                   searchView.onCombinePersonalFetched(mDecryptCombinePersonal)
+                   AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
+               }
+               else{
+                   searchView.onCombinePersonalFetched(mDecryptCombinePersonal)
+               }
            }
        })
 
@@ -153,21 +160,31 @@ class SearchPresenter( private val searchView: SearchView ) {
         prepareRealmConnections(context, false, "CombineShopping", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineShopping = realm!!.where(CombineShopping::class.java).findAll()
-                AppLogger.d("Combine", "CombinedShopping : " + combineShopping)
+                if(combineShopping.size > 0){
+                    for(i in 0 until combineShopping.size){
+                        val decryptedCombineShopping = decryptCombineShopping(combineShopping[i]!!)
+                        appendToDecryptCombineShopping(decryptedCombineShopping)
+                    }
+                    searchView.onCombineShoppingFetched(mDecryptCombineShopping)
+                    AppLogger.d("Combine", "CombineShopping : " + mDecryptCombineShopping)
+                }
+                else{
+                    searchView.onCombineShoppingFetched(mDecryptCombineShopping)
+                }
             }
         })
 
         prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineContacts = realm!!.where(CombineContacts::class.java).findAll()
-                AppLogger.d("Combine", "CombinedContacts : " + combineContacts)
-            }
-        })
-
-       prepareRealmConnections(context, false, "CombineEvents", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineEvents = realm!!.where(Combine::class.java).findAll()
-                AppLogger.d("Combine", "CombinedEvents : " + combineEvents)
+                if(combineContacts.size > 0){
+                    for(i in 0 until combineContacts.size){
+                        val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
+                        appendToDecryptCombineContacts(decryptedCombineContacts)
+                    }
+                    searchView.onCombineContactsFetched(mDecryptedCombineContacts)
+                    AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
+                }
             }
         })
     }
@@ -220,6 +237,27 @@ class SearchPresenter( private val searchView: SearchView ) {
         mDecryptCombineWellness.vitalNumbersItems.addAll(decryptedCombineWellness.vitalNumbersItems)
         mDecryptCombineWellness.wellnessItems.addAll(decryptedCombineWellness.wellnessItems)
         mDecryptCombineWellness.listItems.addAll(decryptedCombineWellness.listItems)
+    }
+    private fun appendToDecryptCombinePersonal(decryptedCombinePersonal: DecryptedCombinePersonal){
+        mDecryptCombinePersonal.certificateItems.addAll(decryptedCombinePersonal.certificateItems)
+        mDecryptCombinePersonal.governmentItems.addAll(decryptedCombinePersonal.governmentItems)
+        mDecryptCombinePersonal.licenseItems.addAll(decryptedCombinePersonal.licenseItems)
+        mDecryptCombinePersonal.personalItems.addAll(decryptedCombinePersonal.personalItems)
+        mDecryptCombinePersonal.socialItems.addAll(decryptedCombinePersonal.socialItems)
+        mDecryptCombinePersonal.taxIDItems.addAll(decryptedCombinePersonal.taxIDItems)
+        mDecryptCombinePersonal.listItems.addAll(decryptedCombinePersonal.listItems)
+    }
+    private fun appendToDecryptCombineShopping(decryptedCombineShopping: DecryptedCombineShopping){
+        mDecryptCombineShopping.loyaltyProgramsItems.addAll(decryptedCombineShopping.loyaltyProgramsItems)
+        mDecryptCombineShopping.recentPurchaseItems.addAll(decryptedCombineShopping.recentPurchaseItems)
+        mDecryptCombineShopping.shoppingItems.addAll(decryptedCombineShopping.shoppingItems)
+        mDecryptCombineShopping.clothingSizesItems.addAll(decryptedCombineShopping.clothingSizesItems)
+        mDecryptCombineShopping.listItems.addAll(decryptedCombineShopping.listItems)
+    }
+    private fun appendToDecryptCombineContacts(decryptedCombineContacts: DecryptedCombineContacts){
+        mDecryptedCombineContacts.contactsItems.addAll(decryptedCombineContacts.contactsItems)
+        mDecryptedCombineContacts.mainContactsItems.addAll(decryptedCombineContacts.mainContactsItems)
+        mDecryptedCombineContacts.listItems.addAll(decryptedCombineContacts.listItems)
     }
 
     fun searchHomeItems(text: String) : DecryptedCombine {
@@ -533,17 +571,18 @@ class SearchPresenter( private val searchView: SearchView ) {
             return mDecryptCombineWellness
         }
         val searchDecryptCombineWellness = DecryptedCombineWellness()
-        val searchCheckupItems = ArrayList<DecryptedCheckups>()
-        val searchEmergencyContacts = ArrayList<DecryptedEmergencyContacts>()
-        val searchEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
-        val searchhealthcareProviders = ArrayList<DecryptedHealthcareProviders>()
-        val searchIdentification = ArrayList<DecryptedIdentification>()
-        val searchMedicalConditions = ArrayList<DecryptedMedicalConditions>()
-        val searchMedicalItems = ArrayList<DecryptedMedicalConditions>()
-        val searchMedicalHistory = ArrayList<DecryptedMedicalHistory>()
-        val searchVitalNumbers = ArrayList<DecryptedVitalNumbers>()
-        val searchWellness = ArrayList<DecryptedWellness>()
-        for(checkupItems in mDecryptCombineWellness.checkupsItems){
+        var searchCheckupItems = ArrayList<DecryptedCheckups>()
+        var searchEmergencyContacts = ArrayList<DecryptedEmergencyContacts>()
+        var searchEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
+        var searchhealthcareProviders = ArrayList<DecryptedHealthcareProviders>()
+        var searchIdentification = ArrayList<DecryptedIdentification>()
+        var searchMedicalConditions = ArrayList<DecryptedMedicalConditions>()
+        var searchMedicalHistory = ArrayList<DecryptedMedicalHistory>()
+        var searchMedications = ArrayList<DecryptedMedications>()
+        var searchVitalNumber = ArrayList<DecryptedVitalNumbers>()
+        var searchWellness = ArrayList<DecryptedWellness>()
+        var searchWellnessList = ArrayList<DecryptedWellnessList>()
+      /*  for(checkupItems in mDecryptCombineWellness.checkupsItems){
             if(checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
                     || checkupItems.checkup_description.contains(text, true) || checkupItems.physicianType.contains(text, true) || checkupItems.classType.contains(text, true)
                     || checkupItems.reason.contains(text, true) || checkupItems.dateOfVisit.contains(text, true) || checkupItems.notes.contains(text, true) || checkupItems.attachmentNames.contains(text, true)
@@ -573,9 +612,187 @@ class SearchPresenter( private val searchView: SearchView ) {
                     || eyeglassPrescriptionsItems.created.contains(text, true) || eyeglassPrescriptionsItems.modified.contains(text, true) || eyeglassPrescriptionsItems.createdUser.contains(text, true))
                 searchEyeglassPrescriptions.add(eyeglassPrescriptionsItems)
         }
-        searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
+        searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)*/
+
+        for(checkupItems in mDecryptCombineWellness.checkupsItems){
+            if(performSearch(checkupItems, text)!!)
+                searchCheckupItems.add(checkupItems)
+        }
+        searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
+
+        for(emergencyContactItems in mDecryptCombineWellness.emergencyContactsItems){
+           if( performSearch(emergencyContactItems,text)!!)
+               searchEmergencyContacts.add(emergencyContactItems)
+        }
+        searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
+
+        for(eyeglassPrescriptionItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
+            if(performSearch(eyeglassPrescriptionItems, text)!!)
+                searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
+        }
+       searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
+
+        for(healthCareProviderItems in mDecryptCombineWellness.healthcareProvidersItems){
+           if( performSearch(healthCareProviderItems, text)!!)
+               searchhealthcareProviders.add(healthCareProviderItems)
+        }
+        searchDecryptCombineWellness.healthcareProvidersItems.addAll(searchhealthcareProviders)
+
+        for(identificationItems in mDecryptCombineWellness.identificationItems){
+            if(performSearch(identificationItems, text)!!)
+                searchIdentification.add(identificationItems)
+        }
+        searchDecryptCombineWellness.identificationItems.addAll(searchIdentification)
+
+        for(medicalConditionsItems in mDecryptCombineWellness.medicalConditionsItems){
+            if(performSearch(medicalConditionsItems, text)!!)
+                searchMedicalConditions.add(medicalConditionsItems)
+        }
+        searchDecryptCombineWellness.medicalConditionsItems.addAll(searchMedicalConditions)
+
+        for(medicalHistoryItems in mDecryptCombineWellness.medicalHistoryItems){
+            if(performSearch(medicalHistoryItems, text)!!)
+                searchMedicalHistory.add(medicalHistoryItems)
+        }
+        searchDecryptCombineWellness.medicalHistoryItems.addAll(searchMedicalHistory)
+
+        for(medicationItems in mDecryptCombineWellness.medicationsItems){
+            if(performSearch(medicationItems, text)!!)
+                searchMedications.add(medicationItems)
+        }
+        searchDecryptCombineWellness.medicationsItems.addAll(searchMedications)
+
+        for(vitalNumberItems in mDecryptCombineWellness.vitalNumbersItems){
+            if(performSearch(vitalNumberItems, text)!!)
+                searchVitalNumber.add(vitalNumberItems)
+        }
+        searchDecryptCombineWellness.vitalNumbersItems.addAll(searchVitalNumber)
+
+        for(wellnessItems in mDecryptCombineWellness.wellnessItems){
+            if(performSearch(wellnessItems, text)!!)
+                searchWellness.add(wellnessItems)
+        }
+        searchDecryptCombineWellness.wellnessItems.addAll(searchWellness)
+
+        for(listItems in mDecryptCombineWellness.listItems){
+            if(performSearch(listItems, text)!!)
+                searchWellnessList.add(listItems)
+        }
+        searchDecryptCombineWellness.listItems.addAll(searchWellnessList)
 
         return searchDecryptCombineWellness
+    }
+    fun searchPersonalItems(text : String) : DecryptedCombinePersonal{
+       if(text.contains("Personal", true)){
+            return mDecryptCombinePersonal
+        }
+        val searchDecryptCombinePersonal = DecryptedCombinePersonal()
+        var searchCertifiacate = ArrayList<DecryptedCertificate>()
+        var searchGovernment = ArrayList<DecryptedGovernment>()
+        var searchLicense = ArrayList<DecryptedLicense>()
+        var searchPersonal = ArrayList<DecryptedPersonal>()
+        var searchSocial = ArrayList<DecryptedSocial>()
+        var searchTaxID = ArrayList<DecryptedTaxID>()
+        var searchPersonalList = ArrayList<DecryptedPersonalList>()
+
+        for (certificateItems in mDecryptCombinePersonal.certificateItems){
+            if(performSearch(certificateItems, text)!!)
+                searchCertifiacate.add(certificateItems)
+        }
+        searchDecryptCombinePersonal.certificateItems.addAll(searchCertifiacate)
+        for(governmentItems in mDecryptCombinePersonal.governmentItems){
+            if(performSearch(governmentItems, text)!!)
+                searchGovernment.add(governmentItems)
+        }
+        searchDecryptCombinePersonal.governmentItems.addAll(searchGovernment)
+        for(liceneItems in mDecryptCombinePersonal.licenseItems){
+            if(performSearch(liceneItems, text)!!)
+                searchLicense.add(liceneItems)
+        }
+        searchDecryptCombinePersonal.licenseItems.addAll(searchLicense)
+        for(personalItems in mDecryptCombinePersonal.personalItems){
+            if(performSearch(personalItems, text)!!)
+                searchPersonal.add(personalItems)
+        }
+        searchDecryptCombinePersonal.personalItems.addAll(searchPersonal)
+        for(socialItems in mDecryptCombinePersonal.socialItems){
+            if(performSearch(socialItems, text)!!)
+                searchSocial.add(socialItems)
+        }
+        searchDecryptCombinePersonal.socialItems.addAll(searchSocial)
+        for(taxIDItems in mDecryptCombinePersonal.taxIDItems){
+            if(performSearch(taxIDItems, text)!!)
+                searchTaxID.add(taxIDItems)
+        }
+        searchDecryptCombinePersonal.taxIDItems.addAll(searchTaxID)
+        for(listItems in mDecryptCombinePersonal.listItems){
+            if(performSearch(listItems, text)!!)
+                searchPersonalList.add(listItems)
+        }
+        searchDecryptCombinePersonal.listItems.addAll(searchPersonalList)
+        return searchDecryptCombinePersonal
+    }
+    fun searchContactItems(text : String) : DecryptedCombineContacts{
+        if(text.contains("Contact", true)){
+            return mDecryptedCombineContacts
+        }
+        val searchDecryptCombineContacts = DecryptedCombineContacts()
+        var searchContacts = ArrayList<DecryptedContacts>()
+        var searchMainContacts = ArrayList<DecryptedMainContacts>()
+        var searchContactsList = ArrayList<DecryptedContactsList>()
+        for(contactsItems in mDecryptedCombineContacts.contactsItems){
+            if(performSearch(contactsItems, text)!!)
+                searchContacts.add(contactsItems)
+        }
+        searchDecryptCombineContacts.contactsItems.addAll(searchContacts)
+        for(mainContactItems in mDecryptedCombineContacts.mainContactsItems){
+            if(performSearch(mainContactItems, text)!!)
+                searchMainContacts.add(mainContactItems)
+        }
+        searchDecryptCombineContacts.mainContactsItems.addAll(searchMainContacts)
+        for(listItems in mDecryptedCombineContacts.listItems){
+            if(performSearch(listItems, text)!!)
+                searchContactsList.add(listItems)
+        }
+        searchDecryptCombineContacts.listItems.addAll(searchContactsList)
+        return searchDecryptCombineContacts
+    }
+    fun searchShoppingItems(text : String) : DecryptedCombineShopping{
+        if(text.contains("Shopping", true)){
+            return mDecryptCombineShopping
+        }
+        val searchDecryptCombineShopping = DecryptedCombineShopping()
+        var searchLoyaltyPrograms = ArrayList<DecryptedLoyaltyPrograms>()
+        var searchRecentPurchase = ArrayList<DecryptedRecentPurchase>()
+        var searchShopping = ArrayList<DecryptedShopping>()
+        var searchClothingSize = ArrayList<DecryptedClothingSizes>()
+        var searchShoppingList = ArrayList<DecryptedShoppingList>()
+        for(loyaltyProgramsItems in mDecryptCombineShopping.loyaltyProgramsItems){
+            if(performSearch(loyaltyProgramsItems, text)!!)
+                searchLoyaltyPrograms.add(loyaltyProgramsItems)
+        }
+        searchDecryptCombineShopping.loyaltyProgramsItems.addAll(searchLoyaltyPrograms)
+        for(recentPurchaseItems in mDecryptCombineShopping.recentPurchaseItems){
+            if(performSearch(recentPurchaseItems, text)!!)
+                searchRecentPurchase.add(recentPurchaseItems)
+        }
+        searchDecryptCombineShopping.recentPurchaseItems.addAll(searchRecentPurchase)
+        for(shoppingItems in mDecryptCombineShopping.shoppingItems){
+            if(performSearch(shoppingItems, text)!!)
+                searchShopping.add(shoppingItems)
+        }
+        searchDecryptCombineShopping.shoppingItems.addAll(searchShopping)
+        for(clothingSizeItems in mDecryptCombineShopping.clothingSizesItems){
+            if(performSearch(clothingSizeItems, text)!!)
+                searchClothingSize.add(clothingSizeItems)
+        }
+        searchDecryptCombineShopping.clothingSizesItems.addAll(searchClothingSize)
+        for(listItems in mDecryptCombineShopping.listItems){
+            if(performSearch(listItems, text)!!)
+                searchShoppingList.add(listItems)
+        }
+        searchDecryptCombineShopping.listItems.addAll(searchShoppingList)
+        return searchDecryptCombineShopping
     }
 }
 

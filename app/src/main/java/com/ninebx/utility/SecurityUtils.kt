@@ -21,10 +21,7 @@ import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MainMemories
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.base.realm.home.personal.*
-import com.ninebx.ui.base.realm.home.shopping.ClothingSizes
-import com.ninebx.ui.base.realm.home.shopping.LoyaltyPrograms
-import com.ninebx.ui.base.realm.home.shopping.RecentPurchase
-import com.ninebx.ui.base.realm.home.shopping.Shopping
+import com.ninebx.ui.base.realm.home.shopping.*
 import com.ninebx.ui.base.realm.home.travel.*
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
@@ -1054,13 +1051,6 @@ fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes
     decryptClothingSizes.createdUser = clothingSizes.createdUser.decryptString()
 
     return decryptClothingSizes
-}
-
-fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineContacts {
-    val decryptCombineContacts = DecryptedCombineContacts()
-
-    return decryptCombineContacts
-
 }
 
 fun decryptContactsList(contactsList: ContactsList): DecryptedContactsList {
@@ -2527,6 +2517,54 @@ fun decryptCombineInterests(combineInterest : CombineInterests) : DecryptedCombi
     return decryptedCombineInterests
 }
 
+fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineWellness {
+    val decryptedCombineWellness = DecryptedCombineWellness()
+    for(checkupsItems in combineWellness.checkupsItems){
+        decryptedCombineWellness.checkupsItems.add(decryptCheckUps(checkupsItems as Checkups))
+    }
+
+    for(emergencyContactItems in combineWellness.emergencyContactsItems){
+        decryptedCombineWellness.emergencyContactsItems.add(decryptEmergencyContacts(emergencyContactItems as EmergencyContacts))
+    }
+
+    for(eyeglassPrescriptionsItems in combineWellness.eyeglassPrescriptionsItems){
+        decryptedCombineWellness.eyeglassPrescriptionsItems.add(decryptEyeGlassPrescriptions(eyeglassPrescriptionsItems as EyeglassPrescriptions))
+    }
+
+    for(healthcareProvidersItems  in combineWellness.healthcareProvidersItems){
+        decryptedCombineWellness.healthcareProvidersItems.add(decryptHealthCareProviders(healthcareProvidersItems as HealthcareProviders))
+    }
+
+    for(identificationItems in combineWellness.identificationItems){
+        decryptedCombineWellness.identificationItems.add(decryptIdentification(identificationItems as Identification))
+    }
+
+    for(medicalConditionsItems in combineWellness.medicalConditionsItems){
+        decryptedCombineWellness.medicalConditionsItems.add(decryptMedicalConditions(medicalConditionsItems as MedicalConditions))
+    }
+
+    for(medicalHistoryItems in combineWellness.medicalHistoryItems){
+        decryptedCombineWellness.medicalHistoryItems.add(decryptMedicalHistory(medicalHistoryItems as MedicalHistory))
+    }
+
+    for(medicationsItems in combineWellness.medicationsItems){
+        decryptedCombineWellness.medicationsItems.add(decryptMedications(medicationsItems as Medications))
+    }
+
+    for(vitalNumbersItems in combineWellness.vitalNumbersItems){
+        decryptedCombineWellness.vitalNumbersItems.add(decryptVitalNumbers(vitalNumbersItems as VitalNumbers))
+    }
+
+    for(wellnessItems in combineWellness.wellnessItems){
+        decryptedCombineWellness.wellnessItems.add(decryptWellness(wellnessItems as Wellness))
+    }
+
+    for(listItems in combineWellness.listItems){
+        decryptedCombineWellness.listItems.add(decryptWellnessList(listItems as WellnessList))
+    }
+    return decryptedCombineWellness
+}
+
 fun decryptCombinePersonal(combinePersonal: CombinePersonal) : DecryptedCombinePersonal{
     val decryptedCombinePersonal = DecryptedCombinePersonal()
 
@@ -2560,50 +2598,38 @@ fun decryptCombinePersonal(combinePersonal: CombinePersonal) : DecryptedCombineP
     return decryptedCombinePersonal
 }
 
-fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineWellness {
-    val decryptedCombineWellness = DecryptedCombineWellness()
-    for(checkupsItems in combineWellness.checkupsItems){
-        decryptedCombineWellness.checkupsItems.add(decryptCheckUps(checkupsItems as Checkups))
+fun decryptCombineShopping(combineShopping : CombineShopping) : DecryptedCombineShopping{
+    val decryptedCombineShopping = DecryptedCombineShopping()
+    for(loyaltyProgramItems in combineShopping.loyaltyProgramsItems){
+        decryptedCombineShopping.loyaltyProgramsItems.add(decryptLoyaltyPrograms(loyaltyProgramItems as LoyaltyPrograms))
+    }
+    for(recentPurchaseItems in combineShopping.recentPurchaseItems){
+        decryptedCombineShopping.recentPurchaseItems.add(decryptRecentPurchase(recentPurchaseItems as RecentPurchase))
+    }
+    for(shoppingItems in combineShopping.shoppingItems){
+        decryptedCombineShopping.shoppingItems.add(decryptShopping(shoppingItems as Shopping))
     }
 
-    for(emergencyContactItems in combineWellness.emergencyContactsItems){
-        decryptedCombineWellness.emergencyContactsItems.add(decryptEmergencyContacts(emergencyContactItems as EmergencyContacts))
+    for(clothingSizesItems in combineShopping.clothingSizesItems){
+        decryptedCombineShopping.clothingSizesItems.add(decryptedClothingSizes(clothingSizesItems as ClothingSizes))
     }
 
-    for(eyeglassPrescriptionsItems in combineWellness.eyeglassPrescriptionsItems){
-        decryptedCombineWellness.eyeglassPrescriptionsItems.add(decryptEyeGlassPrescriptions(eyeglassPrescriptionsItems as EyeglassPrescriptions))
+    for(listItems in combineShopping.listItems){
+        decryptedCombineShopping.listItems.add(decryptShoppingList(listItems as ShoppingList))
     }
+    return decryptedCombineShopping
+}
 
-    for(healthcareProvidersItems  in combineWellness.healthcareProvidersItems){
-        decryptedCombineWellness.healthcareProvidersItems.add(decryptHealthCareProviders(healthcareProvidersItems as HealthcareProviders))
+fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineContacts {
+    val decryptedCombineContacts = DecryptedCombineContacts()
+    for(contactItems in combineContacts.contactsItems){
+        decryptedCombineContacts.contactsItems.add(decryptContactList(contactItems))
     }
-
-    for(identificationItems in combineWellness.identificationItems){
-        decryptedCombineWellness.identificationItems.add(decryptIdentification(identificationItems as Identification))
+    for(mainContactItems in combineContacts.mainContactsItems){
+        decryptedCombineContacts.mainContactsItems.add(decryptMainContacts(mainContactItems))
     }
-
-    for(medicalConditionsItems in combineWellness.medicalConditionsItems){
-        decryptedCombineWellness.medicalConditionsItems.add(decryptMedicalConditions(medicalConditionsItems as MedicalConditions))
+    for(listItems in combineContacts.listItems){
+        decryptedCombineContacts.listItems.add(decryptContactsList(listItems))
     }
-
-    for(medicalHistoryItems in combineWellness.medicalHistoryItems){
-        decryptedCombineWellness.medicalConditionsItems.add(decryptMedicalConditions(medicalHistoryItems as MedicalConditions))
-    }
-
-    for(medicationsItems in combineWellness.medicationsItems){
-        decryptedCombineWellness.medicationsItems.add(decryptMedications(medicationsItems as Medications))
-    }
-
-    for(vitalNumbersItems in combineWellness.vitalNumbersItems){
-        decryptedCombineWellness.vitalNumbersItems.add(decryptVitalNumbers(vitalNumbersItems as VitalNumbers))
-    }
-
-    for(wellnessItems in combineWellness.wellnessItems){
-        decryptedCombineWellness.wellnessItems.add(decryptWellness(wellnessItems as Wellness))
-    }
-
-    for(listItems in combineWellness.listItems){
-        decryptedCombineWellness.listItems.add(decryptWellnessList(listItems as WellnessList))
-    }
-    return decryptedCombineWellness
+    return decryptedCombineContacts
 }
