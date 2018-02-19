@@ -52,7 +52,7 @@ public class SearchUtils {
         TestSearchs.add( new TestSearch( category++, "Level3" + category ));
         TestSearchs.add( new TestSearch( category++, "Level3" + category ));
         for( TestSearch testSearch : TestSearchs ) {
-            AppLogger.INSTANCE("Searching", searchString(testSearch, "level");
+            AppLogger.INSTANCE("Searching", "Search result : " + ((searchString(testSearch, "level") ? "Found" : "Not found"));
         }
     }
 }
