@@ -398,11 +398,26 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
     }
 
-    private fun setupAdapter( searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
+    private var categoryFragment: CategoryFragment ?= null
+    private var bundle: Bundle ?= null
+
+    private var fragmentTransaction: FragmentTransaction? = null
+
+    private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
             override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
+
+                fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                fragmentTransaction!!.addToBackStack(null)
+
+                bundle = Bundle()
+                bundle!!.putInt("category", R.string.home_amp_money)
+                categoryFragment = CategoryFragment()
+                categoryFragment!!.arguments = bundle
+
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
