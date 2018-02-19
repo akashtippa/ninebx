@@ -119,7 +119,7 @@ class SearchPresenter {
     private fun fetchCombineContacts() {
         prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineContacts = realm!!.where(CombineContacts::class.java).findAll()
+                val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
                 if(combineContacts.size > 0){
                     for(i in 0 until combineContacts.size){
                         val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
@@ -135,7 +135,7 @@ class SearchPresenter {
     private  fun fetchRecentSearch() {
         prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-               val recentSearch = realm!!.where(RecentSearch::class.java).findAll()
+               val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").findAll()
                 if(recentSearch.size > 0){
                     for(i in 0 until recentSearch.size){
                         decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
@@ -150,7 +150,7 @@ class SearchPresenter {
     private fun fetchCombineShopping() {
         prepareRealmConnections(context, false, "CombineShopping", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineShopping = realm!!.where(CombineShopping::class.java).findAll()
+                val combineShopping = realm!!.where(CombineShopping::class.java).distinctValues("id").findAll()
                 if(combineShopping.size > 0){
                     for(i in 0 until combineShopping.size){
                         val decryptedCombineShopping = decryptCombineShopping(combineShopping[i]!!)
@@ -169,7 +169,7 @@ class SearchPresenter {
     private fun fetchCombinePersonal() {
         prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combinePersonal = realm!!.where(CombinePersonal::class.java).findAll()
+                val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
                 if(combinePersonal.size > 0){
                     for(i in 0 until combinePersonal.size){
                         val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
@@ -188,7 +188,7 @@ class SearchPresenter {
     private fun fetchCombineWellness() {
         prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineWellness = realm!!.where(CombineWellness::class.java).findAll()
+                val combineWellness = realm!!.where(CombineWellness::class.java).distinctValues("id").findAll()
                 if(combineWellness.size > 0 ) {
                     for(i in 0 until combineWellness.size){
                         val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
@@ -207,7 +207,7 @@ class SearchPresenter {
     private fun fetchCombineInterests() {
         prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineInterests = realm!!.where(CombineInterests::class.java).findAll()
+                val combineInterests = realm!!.where(CombineInterests::class.java).distinctValues("id").findAll()
                 if(combineInterests.size > 0 ){
                     for(i in 0 until combineInterests.size){
                         val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
@@ -227,7 +227,7 @@ class SearchPresenter {
     private fun fetchCombineEducation() {
         prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineEducation = realm!!.where(CombineEducation::class.java).findAll()
+                val combineEducation = realm!!.where(CombineEducation::class.java).distinctValues("id").findAll()
                 if (combineEducation.size > 0) {
                     for (i in 0 until combineEducation.size) {
                         val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
@@ -246,7 +246,7 @@ class SearchPresenter {
     private fun fetchCombineMemories() {
         prepareRealmConnections(context, false, "CombineMemories", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineMemories = realm!!.where(CombineMemories::class.java).findAll()
+                val combineMemories = realm!!.where(CombineMemories::class.java).distinctValues("id").findAll()
                 if(combineMemories.size > 0){
                     for(i in 0 until combineMemories.size){
                         val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
@@ -265,7 +265,7 @@ class SearchPresenter {
     private fun fetchCombineTravel() {
         prepareRealmConnections(context, false, "CombineTravel", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineTravel = realm!!.where(CombineTravel::class.java).findAll()
+                val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
                 if (combineTravel.size > 0) {
                     for (i in 0 until combineTravel.size) {
                         val decryptedCombineTravel = decryptCombineTravel(combineTravel[i]!!)
@@ -284,13 +284,17 @@ class SearchPresenter {
     private fun fetchCombine() {
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineResult = realm!!.where(Combine::class.java).findAll()
+                val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
+
                 if( combineResult.size > 0 ) {
                     for(i in 0 until combineResult.size ){
                         val decryptedCombine = decryptCombine(combineResult[i]!!)
                         appendToDecrypt(decryptedCombine)
                     }
                     AppLogger.d("COmbineDecrypted", "Decrypted combine financial" + mDecryptCombine)
+                    for( finance in mDecryptCombine.financialItems ) {
+                        AppLogger.d("REcords", finance.toString())
+                    }
                     searchView!!.onCombineFetched(mDecryptCombine)
                 }
                 else {
