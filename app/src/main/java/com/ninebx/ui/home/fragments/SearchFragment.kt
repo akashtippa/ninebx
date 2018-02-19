@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.utility.FragmentBackHelper
-import kotlinx.android.synthetic.main.add_memory.*
+import kotlinx.android.synthetic.main.fragment_search_location.*
 
 /***
  * Created by TechnoBlogger on 28/01/18.
@@ -23,7 +23,7 @@ class SearchLocationFragment : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
 
-        ivBack.setOnClickListener {
+        ivBackSearch.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>icon</key>
+		<string>walkthrough_1.pdf</string>
+		<key>title</key>
+		<string>Swipe to learn more</string>
+		<key>subtitle</key>
+		<string>subtitle1.png</string>
+		<key>titlebg</key>
+		<string>titlebg1.png</string>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>walkthrough_new.pdf</string>
+		<key>title</key>
+		<string>Gather your family&apos;s information in one place.</string>
+		<key>subtitle</key>
+		<string>subtitle2.png</string>
+		<key>titlebg</key>
+		<string>titlebg2.png</string>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>walkthrough_3.pdf</string>
+		<key>title</key>
+		<string>Involve everyone in building the complete picture.</string>
+		<key>subtitle</key>
+		<string>subtitle3.png</string>
+		<key>titlebg</key>
+		<string>titlebg3.png</string>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>walkthrough_4.pdf</string>
+		<key>title</key>
+		<string>Take better decisions with access to collective information, anywhere, anytime.</string>
+		<key>subtitle</key>
+		<string>subtitle4.png</string>
+		<key>titlebg</key>
+		<string>titlebg4.png</string>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>walkthrough_5.pdf</string>
+		<key>title</key>
+		<string>Feel comfortable knowing you have full control on a secure platform you can trust.</string>
+		<key>subtitle</key>
+		<string>subtitle5.png</string>
+		<key>titlebg</key>
+		<string>titlebg5.png</string>
+	</dict>
+</array>
+</plist>

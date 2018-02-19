@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>recent</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>401k password</string>
+			<key>subtitle</key>
+			<string></string>
+			<key>category</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Birth certificate</string>
+			<key>subtitle</key>
+			<string></string>
+			<key>category</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>United Airlines</string>
+			<key>subtitle</key>
+			<string></string>
+			<key>category</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>2013 taxes</string>
+			<key>subtitle</key>
+			<string></string>
+			<key>category</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Dr. Harris</string>
+			<key>subtitle</key>
+			<string></string>
+			<key>category</key>
+			<string></string>
+		</dict>
+	</array>
+	<key>search</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Wells Fargo</string>
+			<key>subtitle</key>
+			<string>WF Checking</string>
+			<key>category</key>
+			<string>Banking</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Wells Fargo</string>
+			<key>subtitle</key>
+			<string>WF Savings</string>
+			<key>category</key>
+			<string>Banking</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Wells Fargo</string>
+			<key>subtitle</key>
+			<string>Nancy’s IRA</string>
+			<key>category</key>
+			<string>Investments/Retirement</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Wells Fargo</string>
+			<key>subtitle</key>
+			<string>Marshall Drive mortgage</string>
+			<key>category</key>
+			<string>Loans/Mortgages</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Wells Fargo</string>
+			<key>subtitle</key>
+			<string>WF HELOC</string>
+			<key>category</key>
+			<string>Loans/Mortgages</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Wells Fargo</string>
+			<key>subtitle</key>
+			<string>Wells Fargo Visa</string>
+			<key>category</key>
+			<string>Credit/Debit cards</string>
+		</dict>
+	</array>
+</dict>
+</plist>

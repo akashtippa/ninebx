@@ -3,9 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.home.interests.Interests;
-import com.ninebx.ui.base.realm.lists.InterestsList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -15,6 +12,17 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineInterests implements Parcelable {
 
+    public static final Creator<DecryptedCombineInterests> CREATOR = new Creator<DecryptedCombineInterests>() {
+        @Override
+        public DecryptedCombineInterests createFromParcel(Parcel in) {
+            return new DecryptedCombineInterests(in);
+        }
+
+        @Override
+        public DecryptedCombineInterests[] newArray(int size) {
+            return new DecryptedCombineInterests[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
     @Required
@@ -34,18 +42,6 @@ public class DecryptedCombineInterests implements Parcelable {
     protected DecryptedCombineInterests(Parcel in) {
         id = in.readInt();
     }
-
-    public static final Creator<DecryptedCombineInterests> CREATOR = new Creator<DecryptedCombineInterests>() {
-        @Override
-        public DecryptedCombineInterests createFromParcel(Parcel in) {
-            return new DecryptedCombineInterests(in);
-        }
-
-        @Override
-        public DecryptedCombineInterests[] newArray(int size) {
-            return new DecryptedCombineInterests[size];
-        }
-    };
 
     public int getId() {
         return id;

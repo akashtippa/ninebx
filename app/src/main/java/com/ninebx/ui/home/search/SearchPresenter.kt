@@ -1,10 +1,8 @@
 package com.ninebx.ui.home.search
 
-import android.content.Intent
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
-import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.memories.CombineMemories
@@ -32,22 +30,20 @@ class SearchPresenter( private val searchView: SearchView ) {
     private val mDecryptCombineShopping = DecryptedCombineShopping()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
-    init
-   {
+    init {
         val context = getApplicationContext()
 
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineResult = realm!!.where(Combine::class.java).findAll()
-                if( combineResult.size > 0 ) {
-                    for(i in 0 until combineResult.size ){
+                if (combineResult.size > 0) {
+                    for (i in 0 until combineResult.size) {
                         val decryptedCombine = decryptCombine(combineResult[i]!!)
                         appendToDecrypt(decryptedCombine)
                     }
                     AppLogger.d("COmbineDecrypted", "Decrypted combine financial" + mDecryptCombine)
                     searchView.onCombineFetched(mDecryptCombine)
-                }
-                else {
+                } else {
                     searchView.onCombineFetched(mDecryptCombine)
                 }
             }
@@ -73,55 +69,68 @@ class SearchPresenter( private val searchView: SearchView ) {
         prepareRealmConnections(context, false, "CombineMemories", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineMemories = realm!!.where(CombineMemories::class.java).findAll()
-                if(combineMemories.size > 0){
-                    for(i in 0 until combineMemories.size){
+                if (combineMemories.size > 0) {
+                    for (i in 0 until combineMemories.size) {
                         val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
                         appendToDecryptCOmbineMemories(decryptedCombineMemories)
                     }
                     AppLogger.d("DecryptedCOmbineMemories", "Decrypted combine memories" + mDecryptedCombineMemories)
                     searchView.onCombineMemoryFetched(mDecryptedCombineMemories)
-                }
-                else{
+                } else {
                     searchView.onCombineMemoryFetched(mDecryptedCombineMemories)
                 }
             }
         })
 
-       prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
-           override fun onSuccess(realm: Realm?) {
-               val combineEducation = realm!!.where(CombineEducation::class.java).findAll()
-               if (combineEducation.size > 0) {
-                   for (i in 0 until combineEducation.size) {
-                       val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
-                       appendToDecryptCombineEducation(decryptedCombineEducation)
-                   }
-                   searchView.onCombineEducationFetched(mDecryptCombineEducation)
-                   AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
-               }
-               else{
-                   searchView.onCombineEducationFetched(mDecryptCombineEducation)
-               }
-           }
-       })
+        prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineEducation = realm!!.where(CombineEducation::class.java).findAll()
+                if (combineEducation.size > 0) {
+                    for (i in 0 until combineEducation.size) {
+                        val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
+                        appendToDecryptCombineEducation(decryptedCombineEducation)
+                    }
+                    searchView.onCombineEducationFetched(mDecryptCombineEducation)
+                    AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
+                } else {
+                    searchView.onCombineEducationFetched(mDecryptCombineEducation)
+                }
+            }
+        })
 
-       prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
-           override fun onSuccess(realm: Realm?) {
-               val combineInterests = realm!!.where(CombineInterests::class.java).findAll()
-               if(combineInterests.size > 0 ){
-                   for(i in 0 until combineInterests.size){
-                       val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
-                       appendToDecryptCombineInterests(decryptedCombineInterests)
-                   }
-                   searchView.onCombineInterestsFetched(mDecryptCombineInterests)
-                   AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
-               }
-               else{
-                   searchView.onCombineInterestsFetched(mDecryptCombineInterests)
-               }
+        prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineInterests = realm!!.where(CombineInterests::class.java).findAll()
+                if (combineInterests.size > 0) {
+                    for (i in 0 until combineInterests.size) {
+                        val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
+                        appendToDecryptCombineInterests(decryptedCombineInterests)
+                    }
+                    searchView.onCombineInterestsFetched(mDecryptCombineInterests)
+                    AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
+                } else {
+                    searchView.onCombineInterestsFetched(mDecryptCombineInterests)
+                }
 
-           }
-       })
+            }
+        })
 
+        prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineWellness = realm!!.where(CombineWellness::class.java).findAll()
+                if (combineWellness.size > 0) {
+                    for (i in 0 until combineWellness.size) {
+                        val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
+                        appendToDecryptCombineWellness(decryptedCombineWellness)
+                    }
+                    searchView.onCombineWellnessFetched(mDecryptCombineWellness)
+                    AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
+                } else {
+                    searchView.onCombineWellnessFetched(mDecryptCombineWellness)
+                }
+
+            }
+        })
        prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
            override fun onSuccess(realm: Realm?) {
                val combineWellness = realm!!.where(CombineWellness::class.java).findAll()
@@ -139,6 +148,17 @@ class SearchPresenter( private val searchView: SearchView ) {
            }
        })
 
+        prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combinePersonal = realm!!.where(CombinePersonal::class.java).findAll()
+                /*   if(combinePersonal.size > 0){
+                       for(i in 0 until combinePersonal.size){
+
+                       }
+                   }*/
+                AppLogger.d("Combine", "CombinedPersonal : " + combinePersonal)
+            }
+        })
        prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
            override fun onSuccess(realm: Realm?) {
                val combinePersonal = realm!!.where(CombinePersonal::class.java).findAll()
@@ -185,11 +205,19 @@ class SearchPresenter( private val searchView: SearchView ) {
                     searchView.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                 }
+                AppLogger.d("Combine", "CombinedContacts : " + combineContacts)
+            }
+        })
+
+        prepareRealmConnections(context, false, "CombineEvents", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineEvents = realm!!.where(Combine::class.java).findAll()
+                AppLogger.d("Combine", "CombinedEvents : " + combineEvents)
             }
         })
     }
 
-       private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
+    private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
         mDecryptCombine.listItems.addAll(decryptedCombine.listItems)
         mDecryptCombine.propertyItems.addAll(decryptedCombine.propertyItems)
         mDecryptCombine.vehicleItems.addAll(decryptedCombine.vehicleItems)
@@ -208,24 +236,25 @@ class SearchPresenter( private val searchView: SearchView ) {
         mDecryptedCombineTravel.listItems.addAll(decryptedCombineTravel.listItems)
     }
 
-    private fun appendToDecryptCOmbineMemories(decryptedCombineMemories: DecryptedCombineMemories){
+    private fun appendToDecryptCOmbineMemories(decryptedCombineMemories: DecryptedCombineMemories) {
         mDecryptedCombineMemories.listItems.addAll(decryptedCombineMemories.listItems)
         mDecryptedCombineMemories.mainMemoriesItems.addAll(decryptedCombineMemories.mainMemoriesItems)
         mDecryptedCombineMemories.memoryTimelineItems.addAll(decryptedCombineMemories.memoryTimelineItems)
     }
 
-    private fun appendToDecryptCombineEducation(decryptedCombineEducation: DecryptedCombineEducation){
+    private fun appendToDecryptCombineEducation(decryptedCombineEducation: DecryptedCombineEducation) {
         mDecryptCombineEducation.listItems.addAll(decryptedCombineEducation.listItems)
         mDecryptCombineEducation.educationItems.addAll(decryptedCombineEducation.educationItems)
         mDecryptCombineEducation.mainEducationItems.addAll(decryptedCombineEducation.mainEducationItems)
         mDecryptCombineEducation.workItems.addAll(decryptedCombineEducation.workItems)
     }
 
-    private fun appendToDecryptCombineInterests(decryptedCombineInterests: DecryptedCombineInterests){
+    private fun appendToDecryptCombineInterests(decryptedCombineInterests: DecryptedCombineInterests) {
         mDecryptCombineInterests.interestItems.addAll(decryptedCombineInterests.interestItems)
         mDecryptCombineInterests.listItems.addAll(decryptedCombineInterests.listItems)
     }
-    private fun appendToDecryptCombineWellness(decryptedCombineWellness: DecryptedCombineWellness){
+
+    private fun appendToDecryptCombineWellness(decryptedCombineWellness: DecryptedCombineWellness) {
         mDecryptCombineWellness.checkupsItems.addAll(decryptedCombineWellness.checkupsItems)
         mDecryptCombineWellness.emergencyContactsItems.addAll(decryptedCombineWellness.emergencyContactsItems)
         mDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(decryptedCombineWellness.eyeglassPrescriptionsItems)
@@ -260,8 +289,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         mDecryptedCombineContacts.listItems.addAll(decryptedCombineContacts.listItems)
     }
 
-    fun searchHomeItems(text: String) : DecryptedCombine {
-        if( text.contains("Home", ignoreCase = true) ) {
+    fun searchHomeItems(text: String): DecryptedCombine {
+        if (text.contains("Home", ignoreCase = true)) {
             return mDecryptCombine
         }
         val searchDecryptCombine = DecryptedCombine()
@@ -274,12 +303,12 @@ class SearchPresenter( private val searchView: SearchView ) {
         var searchTaxItems = ArrayList<DecryptedTax>()
         var searchHomeList = ArrayList<DecryptedHomeList>()
         AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
-        for( financeItems in mDecryptCombine.financialItems ) {
-            if( financeItems.selectionType.contains(text, true) || financeItems.institutionName.contains(text, true) || financeItems.accountName.contains(text, true) ||
+        for (financeItems in mDecryptCombine.financialItems) {
+            if (financeItems.selectionType.contains(text, true) || financeItems.institutionName.contains(text, true) || financeItems.accountName.contains(text, true) ||
                     financeItems.accountType.contains(text, true) || financeItems.nameOnAccount.contains(text, true) || financeItems.accountNumber.contains(text, true) ||
                     financeItems.location.contains(text, true) || financeItems.swiftCode.contains(text, true) || financeItems.abaRoutingNumber.contains(text, true) ||
                     financeItems.contacts.contains(text, true) || financeItems.website.contains(text, true) || financeItems.userName.contains(text, true) ||
-                    financeItems.password.contains(text, true) ||  financeItems.pin.contains(text, true) || financeItems.created.contains(text, true) ||
+                    financeItems.password.contains(text, true) || financeItems.pin.contains(text, true) || financeItems.created.contains(text, true) ||
                     financeItems.modified.contains(text, true) || financeItems.createdUser.contains(text, true) || financeItems.notes.contains(text, true)
                     || financeItems.attachmentNames.contains(text, true))
 
@@ -290,7 +319,7 @@ class SearchPresenter( private val searchView: SearchView ) {
         AppLogger.d("Search", "SearchItems : " + searchFinanceItems)
         AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
 
-        for( paymentItems in mDecryptCombine.paymentItems){
+        for (paymentItems in mDecryptCombine.paymentItems) {
 
             if (paymentItems.selectionType.contains(text, true) || paymentItems.insuranceCompany.contains(text, true) || paymentItems.insuredProperty.contains(text, true) ||
                     paymentItems.insuredVehicle.contains(text, true) || paymentItems.insuredPerson.contains(text, true) || paymentItems.policyNumber.contains(text, true) ||
@@ -306,8 +335,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         searchDecryptCombine.paymentItems.addAll(searchPaymentItems)
         AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
 
-        for( propertyItems in mDecryptCombine.propertyItems) {
-            if(propertyItems.selectionType.contains(text, true) || propertyItems.propertyName.contains(text, true) || propertyItems.streetAddressOne.contains(text, true) ||
+        for (propertyItems in mDecryptCombine.propertyItems) {
+            if (propertyItems.selectionType.contains(text, true) || propertyItems.propertyName.contains(text, true) || propertyItems.streetAddressOne.contains(text, true) ||
                     propertyItems.streetAddressTwo.contains(text, true) || propertyItems.city.contains(text, true) || propertyItems.state.contains(text, true) ||
                     propertyItems.zipCode.contains(text, true) || propertyItems.country.contains(text, true) || propertyItems.titleName.contains(text, true) ||
                     propertyItems.purchaseDate.contains(text, true) || propertyItems.purchasePrice.contains(text, true) || propertyItems.estimatedMarketValue.contains(text, true) ||
@@ -321,23 +350,22 @@ class SearchPresenter( private val searchView: SearchView ) {
         searchDecryptCombine.propertyItems.addAll(searchPropertyItems)
         AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
 
-        for(vehicleItems in mDecryptCombine.vehicleItems){
-            if(vehicleItems.selectionType.contains(text, true) || vehicleItems.vehicleName.contains(text, true) || vehicleItems.licenseNumber.contains(text, true) ||
+        for (vehicleItems in mDecryptCombine.vehicleItems) {
+            if (vehicleItems.selectionType.contains(text, true) || vehicleItems.vehicleName.contains(text, true) || vehicleItems.licenseNumber.contains(text, true) ||
                     vehicleItems.vinNumber.contains(text, true) || vehicleItems.make.contains(text, true) || vehicleItems.model.contains(text, true) || vehicleItems.modelYear.contains(text, true) ||
                     vehicleItems.color.contains(text, true) || vehicleItems.titleName.contains(text, true) || vehicleItems.estimatedMarketValue.contains(text, true) || vehicleItems.registrationExpirydate.contains(text, true) ||
                     vehicleItems.purchasedOrLeased.contains(text, true) || vehicleItems.purchaseDate.contains(text, true) || vehicleItems.financedThroughLoan.contains(text, true) ||
                     vehicleItems.created.contains(text, true) || vehicleItems.modified.contains(text, true) || vehicleItems.createdUser.contains(text, true) || vehicleItems.leaseStartDate.contains(text, true) ||
                     vehicleItems.leaseEndDate.contains(text, true) || vehicleItems.contacts.contains(text, true) || vehicleItems.maintenanceEvent.contains(text, true) || vehicleItems.serviceProviderName.contains(text, true) ||
-                    vehicleItems.dateOfService.contains(text, true) || vehicleItems.vehicle.contains(text, true) || vehicleItems.notes.contains(text, true) || vehicleItems.attachmentNames.contains(text, true) )
+                    vehicleItems.dateOfService.contains(text, true) || vehicleItems.vehicle.contains(text, true) || vehicleItems.notes.contains(text, true) || vehicleItems.attachmentNames.contains(text, true))
 
                 searchVehicleItems.add(vehicleItems)
         }
         searchDecryptCombine.vehicleItems.addAll(searchVehicleItems)
         AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
 
-        for(assetItems in mDecryptCombine.assetItems)
-        {
-            if(assetItems.selectionType.contains(text, true) || assetItems.test.contains(text, true) || assetItems.assetName.contains(text, true) || assetItems.descriptionOrLocation.contains(text, true)
+        for (assetItems in mDecryptCombine.assetItems) {
+            if (assetItems.selectionType.contains(text, true) || assetItems.test.contains(text, true) || assetItems.assetName.contains(text, true) || assetItems.descriptionOrLocation.contains(text, true)
                     || assetItems.estimatedMarketValue.contains(text, true) || assetItems.serialNumber.contains(text, true) || assetItems.purchaseDate.contains(text, true)
                     || assetItems.purchasePrice.contains(text, true) || assetItems.contacts.contains(text, true) || assetItems.created.contains(text, true) || assetItems.modified.contains(text, true)
                     || assetItems.createdUser.contains(text, true) || assetItems.notes.contains(text, true) || assetItems.imageName.contains(text) || assetItems.attachmentNames.contains(text, true))
@@ -347,21 +375,20 @@ class SearchPresenter( private val searchView: SearchView ) {
         searchDecryptCombine.assetItems.addAll(searchAssetItems)
         AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
-        for(insuranceItems in mDecryptCombine.insuranceItems){
-            if(insuranceItems.selectionType.contains(text, true) || insuranceItems.insuranceCompany.contains(text, true) || insuranceItems.insuredProperty.contains(text, true) || insuranceItems.insuredVehicle.contains(text, true)
-                    || insuranceItems.insuredPerson.contains(text, true) || insuranceItems.policyNumber.contains(text, true) ||  insuranceItems.policyEffectiveDate.contains(text, true) || insuranceItems.policyExpirationDate.contains(text, true)
+        for (insuranceItems in mDecryptCombine.insuranceItems) {
+            if (insuranceItems.selectionType.contains(text, true) || insuranceItems.insuranceCompany.contains(text, true) || insuranceItems.insuredProperty.contains(text, true) || insuranceItems.insuredVehicle.contains(text, true)
+                    || insuranceItems.insuredPerson.contains(text, true) || insuranceItems.policyNumber.contains(text, true) || insuranceItems.policyEffectiveDate.contains(text, true) || insuranceItems.policyExpirationDate.contains(text, true)
                     || insuranceItems.contacts.contains(text, true) || insuranceItems.website.contains(text, true) || insuranceItems.userName.contains(text, true) || insuranceItems.password.contains(text, true) || insuranceItems.pin.contains(text, true)
-                    || insuranceItems.created.contains(text, true) || insuranceItems.modified.contains(text, true)|| insuranceItems.createdUser.contains(text, true) || insuranceItems.notes.contains(text, true) || insuranceItems.attachmentNames.contains(text, true))
+                    || insuranceItems.created.contains(text, true) || insuranceItems.modified.contains(text, true) || insuranceItems.createdUser.contains(text, true) || insuranceItems.notes.contains(text, true) || insuranceItems.attachmentNames.contains(text, true))
 
                 searchInsuranceItems.add(insuranceItems)
         }
         searchDecryptCombine.insuranceItems.addAll(searchInsuranceItems)
         AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
 
-        for (taxItems in mDecryptCombine.taxesItems)
-        {
+        for (taxItems in mDecryptCombine.taxesItems) {
             if (taxItems.selectionType.contains(text, true) || taxItems.returnName.contains(text, true) || taxItems.taxYear.contains(text, true) || taxItems.taxPayer.contains(text, true) || taxItems.contacts.contains(text, true)
-                    || taxItems.imageName.contains(text, true) || taxItems.attachmentNames.contains(text, true) || taxItems.notes.contains(text, true) || taxItems.title.contains(text, true) || taxItems.created.contains(text,true)
+                    || taxItems.imageName.contains(text, true) || taxItems.attachmentNames.contains(text, true) || taxItems.notes.contains(text, true) || taxItems.title.contains(text, true) || taxItems.created.contains(text, true)
                     || taxItems.modified.contains(text, true) || taxItems.createdUser.contains(text, true))
 
                 searchTaxItems.add(taxItems)
@@ -369,9 +396,9 @@ class SearchPresenter( private val searchView: SearchView ) {
         searchDecryptCombine.taxesItems.addAll(searchTaxItems)
         AppLogger.d("Search", "SearchTax" + searchTaxItems)
 
-        for(listItems in mDecryptCombine.listItems){
+        for (listItems in mDecryptCombine.listItems) {
             if (listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
-                    || listItems.created.contains(text,true ) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
+                    || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
 
                 searchHomeList.add(listItems)
         }
@@ -393,8 +420,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         var searchVacationItems = ArrayList<DecryptedVacations>()
         var searchListItems = ArrayList<DecryptedTravelList>()
 
-        for (documentsItems in mDecryptedCombineTravel.documentsItems){
-            if(documentsItems.selectionType.contains(text, true) || documentsItems.passportName.contains(text, true) || documentsItems.visaName.contains(text, true)
+        for (documentsItems in mDecryptedCombineTravel.documentsItems) {
+            if (documentsItems.selectionType.contains(text, true) || documentsItems.passportName.contains(text, true) || documentsItems.visaName.contains(text, true)
                     || documentsItems.nameOnPassport.contains(text, true) || documentsItems.nameOnVisa.contains(text, true) || documentsItems.visaType.contains(text, true)
                     || documentsItems.visaNumber.contains(text, true) || documentsItems.travelDocumentTitle.contains(text, true) || documentsItems.nameOnTravelDocument.contains(text, true)
                     || documentsItems.travelDocumentType.contains(text, true) || documentsItems.travelDocumentNumber.contains(text, true) || documentsItems.issuingCountry.contains(text, true)
@@ -405,7 +432,7 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineTravel.documentsItems.addAll(searchDocumentItems)
 
-        for(loyaltyItems in mDecryptedCombineTravel.loyaltyItems){
+        for (loyaltyItems in mDecryptedCombineTravel.loyaltyItems) {
             if (loyaltyItems.selectionType.contains(text, true) || loyaltyItems.airLine.contains(text, true) || loyaltyItems.hotel.contains(text, true) || loyaltyItems.carRentalCompany.contains(text, true)
                     || loyaltyItems.cruiseline.contains(text, true) || loyaltyItems.railway.contains(text, true) || loyaltyItems.other.contains(text, true) || loyaltyItems.accountName.contains(text, true)
                     || loyaltyItems.nameOnAccount.contains(text, true) || loyaltyItems.accountNumber.contains(text, true) || loyaltyItems.website.contains(text, true) || loyaltyItems.userName.contains(text, true)
@@ -415,8 +442,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineTravel.loyaltyItems.addAll(searchLoyaltyItems)
 
-        for(travelItems in mDecryptedCombineTravel.travelItems){
-            if(travelItems.selectionType.contains(text, true) || travelItems.institutionName.contains(text, true) || travelItems.accountName.contains(text, true) || travelItems.accountType.contains(text, true)
+        for (travelItems in mDecryptedCombineTravel.travelItems) {
+            if (travelItems.selectionType.contains(text, true) || travelItems.institutionName.contains(text, true) || travelItems.accountName.contains(text, true) || travelItems.accountType.contains(text, true)
                     || travelItems.nameOnAccount.contains(text, true) || travelItems.accountNumber.contains(text, true) || travelItems.location.contains(text, true) || travelItems.swiftCode.contains(text, true)
                     || travelItems.abaRoutingNumber.contains(text, true) || travelItems.contacts.contains(text, true) || travelItems.website.contains(text, true) || travelItems.userName.contains(text, true)
                     || travelItems.password.contains(text, true) || travelItems.pin.contains(text, true) || travelItems.paymentMethodOnFile.contains(text, true) || travelItems.notes.contains(text, true)
@@ -426,17 +453,17 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineTravel.travelItems.addAll(searchTravelItems)
 
-        for(vacationItems in mDecryptedCombineTravel.vacationsItems){
-            if(vacationItems.selectionType.contains(text, true) || vacationItems.vac_description.contains(text, true) || vacationItems.startDate.contains(text, true) || vacationItems.endDate.contains(text, true)
+        for (vacationItems in mDecryptedCombineTravel.vacationsItems) {
+            if (vacationItems.selectionType.contains(text, true) || vacationItems.vac_description.contains(text, true) || vacationItems.startDate.contains(text, true) || vacationItems.endDate.contains(text, true)
                     || vacationItems.placesToVisit_1.contains(text, true) || vacationItems.placesToVisit_2.contains(text, true) || vacationItems.placesToVisit_3.contains(text, true)
                     || vacationItems.notes.contains(text, true) || vacationItems.attachmentNames.contains(text, true) || vacationItems.created.contains(text, true)
                     || vacationItems.modified.contains(text, true) || vacationItems.createdUser.contains(text, true))
-                    searchVacationItems.add(vacationItems)
+                searchVacationItems.add(vacationItems)
         }
         searchDecryptCombineTravel.vacationsItems.addAll(searchVacationItems)
 
-        for(listItems in mDecryptedCombineTravel.listItems){
-            if(listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
+        for (listItems in mDecryptedCombineTravel.listItems) {
+            if (listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
                     || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
                 searchListItems.add(listItems)
         }
@@ -486,18 +513,18 @@ class SearchPresenter( private val searchView: SearchView ) {
         return searchDecryptCombineMemories
     }
 
-    fun searchEducationItems(text: String) : DecryptedCombineEducation{
+    fun searchEducationItems(text: String): DecryptedCombineEducation {
         if (text.contains("Education", ignoreCase = true)) {
             return mDecryptCombineEducation
         }
         val searchDecryptCombineEducation = DecryptedCombineEducation()
-        var searchEducationItems = ArrayList<DecryptedEducation> ()
+        var searchEducationItems = ArrayList<DecryptedEducation>()
         var searchMainEduactionItems = ArrayList<DecryptedMainEducation>()
         var searchWorkItems = ArrayList<DecryptedWork>()
         var searchEducationListItems = ArrayList<DecryptedEducationList>()
 
-        for(educationItems in mDecryptCombineEducation.educationItems){
-            if(educationItems.selectionType.contains(text, true) || educationItems.institutionName.contains(text, true) || educationItems.accountName.contains(text, true)
+        for (educationItems in mDecryptCombineEducation.educationItems) {
+            if (educationItems.selectionType.contains(text, true) || educationItems.institutionName.contains(text, true) || educationItems.accountName.contains(text, true)
                     || educationItems.accountType.contains(text, true) || educationItems.nameOnAccount.contains(text, true) || educationItems.accountNumber.contains(text, true)
                     || educationItems.location.contains(text, true) || educationItems.swiftCode.contains(text, true) || educationItems.abaRoutingNumber.contains(text, true)
                     || educationItems.contacts.contains(text, true) || educationItems.website.contains(text, true) || educationItems.userName.contains(text, true) || educationItems.password.contains(text, true)
@@ -507,8 +534,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineEducation.educationItems.addAll(searchEducationItems)
 
-        for(mainEducationItems in mDecryptCombineEducation.mainEducationItems){
-            if(mainEducationItems.selectionType.contains(text, true) || mainEducationItems.classType.contains(text, true) || mainEducationItems.institutionName.contains(text, true)
+        for (mainEducationItems in mDecryptCombineEducation.mainEducationItems) {
+            if (mainEducationItems.selectionType.contains(text, true) || mainEducationItems.classType.contains(text, true) || mainEducationItems.institutionName.contains(text, true)
                     || mainEducationItems.qualification.contains(text, true) || mainEducationItems.name.contains(text, true) || mainEducationItems.location.contains(text, true)
                     || mainEducationItems.major.contains(text, true) || mainEducationItems.from.contains(text, true) || mainEducationItems.to.contains(text, true)
                     || mainEducationItems.currentlyStudying.contains(text, true) || mainEducationItems.notes.contains(text, true) || mainEducationItems.created.contains(text, true)
@@ -517,8 +544,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineEducation.mainEducationItems.addAll(searchMainEduactionItems)
 
-        for(workItems in mDecryptCombineEducation.workItems){
-            if(workItems.selectionType.contains(text, true) || workItems.classType.contains(text, true) || workItems.companyName.contains(text, true)  || workItems.position.contains(text, true)
+        for (workItems in mDecryptCombineEducation.workItems) {
+            if (workItems.selectionType.contains(text, true) || workItems.classType.contains(text, true) || workItems.companyName.contains(text, true) || workItems.position.contains(text, true)
                     || workItems.name.contains(text, true) || workItems.location.contains(text, true) || workItems.from.contains(text, true) || workItems.to.contains(text, true)
                     || workItems.currentWork.contains(text, true) || workItems.created.contains(text, true) || workItems.modified.contains(text, true) || workItems.notes.contains(text, true)
                     || workItems.attachmentNames.contains(text, true) || workItems.createdUser.contains(text, true))
@@ -526,8 +553,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineEducation.workItems.addAll(searchWorkItems)
 
-        for(listItems in mDecryptCombineEducation.listItems){
-            if(listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
+        for (listItems in mDecryptCombineEducation.listItems) {
+            if (listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
                     || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
                 searchEducationListItems.add(listItems)
         }
@@ -536,7 +563,7 @@ class SearchPresenter( private val searchView: SearchView ) {
         return searchDecryptCombineEducation
     }
 
-    fun searchInterestItems(text : String) : DecryptedCombineInterests {
+    fun searchInterestItems(text: String): DecryptedCombineInterests {
         if (text.contains("Education", ignoreCase = true)) {
             return mDecryptCombineInterests
         }
@@ -544,8 +571,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         val searchInterestItems = ArrayList<DecryptedInterests>()
         val searchInterestList = ArrayList<DecryptedInterestsList>()
 
-        for(interestitems in mDecryptCombineInterests.interestItems){
-            if(interestitems.selectionType.contains(text, true) || interestitems.institutionName.contains(text, true) || interestitems.accountName.contains(text, true)
+        for (interestitems in mDecryptCombineInterests.interestItems) {
+            if (interestitems.selectionType.contains(text, true) || interestitems.institutionName.contains(text, true) || interestitems.accountName.contains(text, true)
                     || interestitems.accountType.contains(text, true) || interestitems.nameOnAccount.contains(text, true) || interestitems.accountNumber.contains(text, true)
                     || interestitems.location.contains(text, true) || interestitems.swiftCode.contains(text, true) || interestitems.abaRoutingNumber.contains(text, true)
                     || interestitems.contacts.contains(text, true) || interestitems.website.contains(text, true) || interestitems.userName.contains(text, true) || interestitems.password.contains(text, true)
@@ -556,8 +583,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineInterests.interestItems.addAll(searchInterestItems)
 
-        for(listItems in mDecryptCombineInterests.listItems){
-            if(listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
+        for (listItems in mDecryptCombineInterests.listItems) {
+            if (listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
                     || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
                 searchInterestList.add(listItems)
         }
@@ -566,11 +593,23 @@ class SearchPresenter( private val searchView: SearchView ) {
         return searchDecryptCombineInterests
     }
 
-    fun searchWellnessItems(text : String) : DecryptedCombineWellness {
-        if(text.contains("Wellness", true)){
+    fun searchWellnessItems(text: String): DecryptedCombineWellness {
+        if (text.contains("Wellness", true)) {
             return mDecryptCombineWellness
         }
         val searchDecryptCombineWellness = DecryptedCombineWellness()
+        val searchCheckupItems = ArrayList<DecryptedCheckups>()
+        val searchEmergencyContacts = ArrayList<DecryptedEmergencyContacts>()
+        val searchEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
+        val searchhealthcareProviders = ArrayList<DecryptedHealthcareProviders>()
+        val searchIdentification = ArrayList<DecryptedIdentification>()
+        val searchMedicalConditions = ArrayList<DecryptedMedicalConditions>()
+        val searchMedicalItems = ArrayList<DecryptedMedicalConditions>()
+        val searchMedicalHistory = ArrayList<DecryptedMedicalHistory>()
+        val searchVitalNumbers = ArrayList<DecryptedVitalNumbers>()
+        val searchWellness = ArrayList<DecryptedWellness>()
+        for (checkupItems in mDecryptCombineWellness.checkupsItems) {
+            if (checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
         var searchCheckupItems = ArrayList<DecryptedCheckups>()
         var searchEmergencyContacts = ArrayList<DecryptedEmergencyContacts>()
         var searchEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
@@ -586,13 +625,13 @@ class SearchPresenter( private val searchView: SearchView ) {
             if(checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
                     || checkupItems.checkup_description.contains(text, true) || checkupItems.physicianType.contains(text, true) || checkupItems.classType.contains(text, true)
                     || checkupItems.reason.contains(text, true) || checkupItems.dateOfVisit.contains(text, true) || checkupItems.notes.contains(text, true) || checkupItems.attachmentNames.contains(text, true)
-                    || checkupItems.created.contains(text, true) || checkupItems.modified.contains(text, true)|| checkupItems.createdUser.contains(text, true))
+                    || checkupItems.created.contains(text, true) || checkupItems.modified.contains(text, true) || checkupItems.createdUser.contains(text, true))
                 searchCheckupItems.add(checkupItems)
         }
         searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
 
-        for(emergencyContactsItems in mDecryptCombineWellness.emergencyContactsItems){
-            if(emergencyContactsItems.selectionType.contains(text, true) || emergencyContactsItems.classType.contains(text, true) || emergencyContactsItems.name.contains(text, true)
+        for (emergencyContactsItems in mDecryptCombineWellness.emergencyContactsItems) {
+            if (emergencyContactsItems.selectionType.contains(text, true) || emergencyContactsItems.classType.contains(text, true) || emergencyContactsItems.name.contains(text, true)
                     || emergencyContactsItems.relationShip.contains(text, true) || emergencyContactsItems.phoneNumberOne.contains(text, true) || emergencyContactsItems.phoneNumberTwo.contains(text, true)
                     || emergencyContactsItems.emailAddress.contains(text, true) || emergencyContactsItems.streetAddressOne.contains(text, true) || emergencyContactsItems.streetAddressTwo.contains(text, true)
                     || emergencyContactsItems.city.contains(text, true) || emergencyContactsItems.state.contains(text, true) || emergencyContactsItems.zipCode.contains(text, true)
@@ -602,8 +641,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         }
         searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
 
-        for(eyeglassPrescriptionsItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
-            if(eyeglassPrescriptionsItems.selectionType.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true) || eyeglassPrescriptionsItems.physicianName.contains(text, true)
+        for (eyeglassPrescriptionsItems in mDecryptCombineWellness.eyeglassPrescriptionsItems) {
+            if (eyeglassPrescriptionsItems.selectionType.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true) || eyeglassPrescriptionsItems.physicianName.contains(text, true)
                     || eyeglassPrescriptionsItems.datePrescribed.contains(text, true) || eyeglassPrescriptionsItems.odSphereValue.contains(text, true) || eyeglassPrescriptionsItems.osSphereValue.contains(text, true)
                     || eyeglassPrescriptionsItems.odCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.osCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.odAxisValue.contains(text, true)
                     || eyeglassPrescriptionsItems.osAxisValue.contains(text, true) || eyeglassPrescriptionsItems.odPrismValue.contains(text, true) || eyeglassPrescriptionsItems.osPrismValue.contains(text, true)
@@ -795,9 +834,6 @@ class SearchPresenter( private val searchView: SearchView ) {
         return searchDecryptCombineShopping
     }
 }
-
-
-
 
 
 

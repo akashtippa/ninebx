@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>REMINDERS &amp; ALERTS</string>
+		<key>icon</key>
+		<string>icon_reminder_alerts.pdf</string>
+		<key>category</key>
+		<string>Banking</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>Simon’s soccer game</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Financial Accounts.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Samantha’s passport expiring</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Payment methods.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Mark’s appointment with Dr. Harris</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Property.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Plumber appointment to fix shower</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Property.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>OFFERS</string>
+		<key>icon</key>
+		<string>notif_icon_offers.pdf</string>
+		<key>category</key>
+		<string>Banking</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>Customized Spain vacation package for Summer break</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Financial Accounts.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Tickets available for Pink Floyd concert in San Francisco</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Payment methods.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Polo offer - 30% off</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Property.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>INSIGHTS &amp; SUGGESTIONS</string>
+		<key>icon</key>
+		<string>notif_icon_insights.pdf</string>
+		<key>category</key>
+		<string>Banking</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>Consider setting up a college fund for Simon</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Financial Accounts.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Upload health records to ninebx this weekend</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Payment methods.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Upload pictures from your May 2015 London vacation to ninebx</string>
+				<key>subtitle</key>
+				<string>2</string>
+				<key>icon</key>
+				<string>Property.png</string>
+				<key>isselected</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

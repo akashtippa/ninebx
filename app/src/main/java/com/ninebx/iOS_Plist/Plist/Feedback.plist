@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>header</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>How was it in terms of visual appeal?</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Financial Accounts.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>Significant room for improvement</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Financial Accounts.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Quite ordinary - didn&apos;t grab my attention</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Payment methods.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Loved the look - made me want to engage</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Property.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>How was it to navigate?</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Payment methods.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>It was  a maze - I got lost a number of times</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Financial Accounts.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Took some getting used to</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Payment methods.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Very intuitive - I always knew where I was</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Payment methods.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Overall how useful did you find it?</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Property.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>I see no use for it</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Financial Accounts.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>I might use some of the features</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Payment methods.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Can easily become one of my top 4-5 apps</string>
+					<key>subtitle</key>
+					<string>2</string>
+					<key>icon</key>
+					<string>Payment methods.png</string>
+					<key>isselected</key>
+					<false/>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Other comments and suggestions</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Lists.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array/>
+		</dict>
+	</array>
+</dict>
+</plist>

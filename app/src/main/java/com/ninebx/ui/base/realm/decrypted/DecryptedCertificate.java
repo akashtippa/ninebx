@@ -19,6 +19,17 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCertificate implements Parcelable {
 
+    public static final Creator<DecryptedCertificate> CREATOR = new Creator<DecryptedCertificate>() {
+        @Override
+        public DecryptedCertificate createFromParcel(Parcel in) {
+            return new DecryptedCertificate(in);
+        }
+
+        @Override
+        public DecryptedCertificate[] newArray(int size) {
+            return new DecryptedCertificate[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
     @Required
@@ -137,18 +148,6 @@ public class DecryptedCertificate implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCertificate> CREATOR = new Creator<DecryptedCertificate>() {
-        @Override
-        public DecryptedCertificate createFromParcel(Parcel in) {
-            return new DecryptedCertificate(in);
-        }
-
-        @Override
-        public DecryptedCertificate[] newArray(int size) {
-            return new DecryptedCertificate[size];
-        }
-    };
 
     public int getId() {
         return id;

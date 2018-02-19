@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/grey_100"
-            android:visibility="gone"
+            android:visibility="visible"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
@@ -139,6 +139,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="First Name"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -253,7 +254,7 @@
 
 
             <EditText
-                android:id="@+id/txtMobileNumber"
+                android:id="@+id/edtMobileOne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"
@@ -263,6 +264,7 @@
                 android:enabled="false"
                 android:hint="Phone 1"
                 android:inputType="number"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -286,7 +288,7 @@
 
 
             <EditText
-                android:id="@+id/txtMobileNumber2"
+                android:id="@+id/edtMobileTwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_9sdp"

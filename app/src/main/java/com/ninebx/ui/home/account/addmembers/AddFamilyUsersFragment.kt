@@ -1,26 +1,20 @@
 package com.ninebx.ui.home.account.addmembers
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.*
 import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
-import com.ninebx.ui.home.account.permissions.PermissionFragment
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -40,6 +34,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         mListsAdapter!!.notifyDataSetChanged()
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
+        bundle.putString(Constants.FROM_CLASS, "AddMember")
         bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
     }
@@ -89,12 +84,12 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         rvAddFamilyMembers!!.adapter = mListsAdapter
 
         layAddFamilyMembers.setOnClickListener {
-
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMBER, Member())
             bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
-            startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
+            bundle.putString(Constants.FROM_CLASS, "AddMember")
 
+            startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
         }
 
         initAdmin(currentUsers!![0])

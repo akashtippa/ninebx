@@ -3,10 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.home.memories.MainMemories;
-import com.ninebx.ui.base.realm.home.memories.MemoryTimeline;
-import com.ninebx.ui.base.realm.lists.MemoriesList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -17,6 +13,17 @@ import io.realm.annotations.Required;
 public class DecryptedCombineMemories implements Parcelable {
 
 
+    public static final Creator<DecryptedCombineMemories> CREATOR = new Creator<DecryptedCombineMemories>() {
+        @Override
+        public DecryptedCombineMemories createFromParcel(Parcel in) {
+            return new DecryptedCombineMemories(in);
+        }
+
+        @Override
+        public DecryptedCombineMemories[] newArray(int size) {
+            return new DecryptedCombineMemories[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
     @Required
@@ -49,18 +56,6 @@ public class DecryptedCombineMemories implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<DecryptedCombineMemories> CREATOR = new Creator<DecryptedCombineMemories>() {
-        @Override
-        public DecryptedCombineMemories createFromParcel(Parcel in) {
-            return new DecryptedCombineMemories(in);
-        }
-
-        @Override
-        public DecryptedCombineMemories[] newArray(int size) {
-            return new DecryptedCombineMemories[size];
-        }
-    };
 
     public int getId() {
         return id;

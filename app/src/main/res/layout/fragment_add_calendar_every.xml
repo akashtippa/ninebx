@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -28,8 +28,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/back"
                 android:layout_gravity="start"
+                android:contentDescription="@string/back"
                 android:padding="@dimen/default_micro_padding"
                 app:srcCompat="@drawable/ic_icon_arrow_left" />
 
@@ -38,10 +38,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/add_event"
                 android:layout_gravity="center"
+                android:text="@string/add_event"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/text_16" />
 
             <TextView
                 android:id="@+id/tvSave"
@@ -50,74 +50,73 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"
-                android:textColor="@color/colorPrimary"
-                android:padding="@dimen/default_mini_padding"
                 android:layout_marginEnd="@dimen/default_mini_padding"
                 android:layout_marginRight="@dimen/default_mini_padding"
-                android:text="@string/save" />
+                android:padding="@dimen/default_mini_padding"
+                android:text="@string/save"
+                android:textColor="@color/colorPrimary" />
 
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/titleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/titleLayout"
         android:layout_below="@id/toolbarLayout"
         android:background="@color/grey_100"
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:background="@color/grey_100"
-            android:textColor="@color/grey_400"
-            android:id="@+id/etTitle"
-            android:inputType="textCapWords"
             android:hint="@string/title"
+            android:inputType="textCapWords"
+            android:textColor="@color/grey_400"
             android:textSize="@dimen/_18sdp" />
 
         <EditText
+            android:id="@+id/etLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:id="@+id/etLocation"
-            android:textColor="@color/grey_400"
             android:background="@color/grey_100"
-            android:inputType="textCapWords"
+            android:drawableEnd="@drawable/ic_icon_search_normal"
             android:drawableRight="@drawable/ic_icon_search_normal"
             android:hint="@string/location"
-            android:drawableEnd="@drawable/ic_icon_search_normal" />
+            android:inputType="textCapWords"
+            android:textColor="@color/grey_400" />
 
 
     </LinearLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_below="@id/titleLayout"
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleLayout"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <Switch
+                android:id="@+id/switchAllDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/switchAllDay"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingEnd="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                android:paddingTop="@dimen/default_margin"
                 android:text="@string/all_day"
                 android:textColor="@color/grey_600"
-                android:paddingRight="@dimen/default_margin"
-                android:paddingBottom="@dimen/default_margin"
-                android:paddingTop="@dimen/default_margin"
-                android:paddingEnd="@dimen/default_margin"
                 tools:ignore="RtlSymmetry" />
 
             <View
@@ -137,10 +136,10 @@
                 android:id="@+id/tvStarts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_9sdp"
-                android:paddingBottom="@dimen/default_micro_padding"
                 android:background="@null"
                 android:hint="@string/starts"
+                android:paddingBottom="@dimen/default_micro_padding"
+                android:paddingTop="@dimen/_9sdp"
                 android:textSize="@dimen/_12sdp" />
 
 
@@ -161,10 +160,10 @@
                 android:id="@+id/tvEnds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_9sdp"
-                android:paddingBottom="@dimen/default_micro_padding"
                 android:background="@null"
                 android:hint="@string/ends"
+                android:paddingBottom="@dimen/default_micro_padding"
+                android:paddingTop="@dimen/_9sdp"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -182,22 +181,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_marginBottom="@dimen/_9sdp"
                     android:layout_marginTop="@dimen/_14sdp"
-                    android:text="@string/repeat"
-                    android:layout_alignParentStart="true" />
+                    android:text="@string/repeat" />
 
                 <TextView
+                    android:id="@+id/tvRepeat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
-                    android:id="@+id/tvRepeat"
+                    android:drawableEnd="@drawable/ic_icon_arrow_right"
                     android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="@string/never"
-                    android:layout_alignParentEnd="true"
-                    android:drawableEnd="@drawable/ic_icon_arrow_right" />
+                    android:gravity="center_vertical"
+                    android:text="@string/never" />
 
             </RelativeLayout>
 
@@ -215,22 +214,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_marginBottom="@dimen/_9sdp"
                     android:layout_marginTop="@dimen/_14sdp"
-                    android:text="@string/end_repeat"
-                    android:layout_alignParentStart="true" />
+                    android:text="@string/end_repeat" />
 
                 <TextView
+                    android:id="@+id/tvEndRepeat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/tvEndRepeat"
-                    android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="@string/never"
                     android:layout_alignParentEnd="true"
-                    android:drawableEnd="@drawable/ic_icon_arrow_right" />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableEnd="@drawable/ic_icon_arrow_right"
+                    android:drawableRight="@drawable/ic_icon_arrow_right"
+                    android:gravity="center_vertical"
+                    android:text="@string/never" />
 
             </RelativeLayout>
 
@@ -248,22 +247,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_marginBottom="@dimen/_9sdp"
                     android:layout_marginTop="@dimen/_14sdp"
-                    android:text="@string/reminder"
-                    android:layout_alignParentStart="true" />
+                    android:text="@string/reminder" />
 
                 <TextView
+                    android:id="@+id/tvReminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:id="@+id/tvReminder"
-                    android:gravity="center_vertical"
+                    android:drawableEnd="@drawable/ic_icon_arrow_right"
                     android:drawableRight="@drawable/ic_icon_arrow_right"
-                    android:text="@string/none"
-                    android:layout_alignParentEnd="true"
-                    android:drawableEnd="@drawable/ic_icon_arrow_right" />
+                    android:gravity="center_vertical"
+                    android:text="@string/none" />
 
             </RelativeLayout>
 
@@ -277,9 +276,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_marginRight="@dimen/default_margin"
                 android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
@@ -290,15 +289,15 @@
                     android:textSize="@dimen/_16sdp" />
 
                 <EditText
+                    android:id="@+id/etNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_14sdp"
-                    android:gravity="top"
-                    android:minLines="3"
-                    android:id="@+id/etNotes"
-                    android:textColor="@color/grey_400"
                     android:background="@color/transparent_white"
-                    android:hint="@string/notes" />
+                    android:gravity="top"
+                    android:hint="@string/notes"
+                    android:minLines="3"
+                    android:textColor="@color/grey_400"
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
             <View
@@ -311,51 +310,51 @@
                 android:layout_height="wrap_content">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cvAttachment"
                     android:layout_width="@dimen/margin_48"
                     android:layout_height="@dimen/margin_48"
-                    android:id="@+id/cvAttachment"
                     android:layout_margin="@dimen/default_mini_padding"
                     app:cardCornerRadius="@dimen/default_mini_margin">
+
                     <ImageView
+                        android:id="@+id/ivAttachment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/ic_icon_add_photo_memories_grey"
-                        android:id="@+id/ivAttachment"
-                        />
+                        app:srcCompat="@drawable/ic_icon_add_photo_memories_grey" />
                 </android.support.v7.widget.CardView>
 
 
                 <EditText
+                    android:id="@+id/etAttachment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_toEndOf="@+id/cvAttachment"
+                    android:layout_toRightOf="@+id/cvAttachment"
                     android:background="@color/transparent_white"
                     android:drawablePadding="@dimen/default_mini_padding"
-                    android:id="@+id/etAttachment"
-                    android:text="@string/attachment_name"
-                    android:layout_toRightOf="@+id/cvAttachment"
-                    android:layout_toEndOf="@+id/cvAttachment"
-                    android:paddingRight="@dimen/default_margin"
-                    android:paddingEnd="@dimen/default_margin"
-                    android:paddingTop="@dimen/default_margin"
+                    android:gravity="center_vertical"
                     android:paddingBottom="@dimen/default_margin"
+                    android:paddingEnd="@dimen/default_margin"
+                    android:paddingRight="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_margin"
+                    android:text="@string/attachment_name"
                     android:textSize="@dimen/_14sdp" />
 
                 <View
-                    android:layout_width="match_parent"
                     android:id="@+id/dividerView"
-                    android:layout_marginTop="@dimen/default_mini_margin"
-                    android:layout_below="@+id/etAttachment"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_below="@+id/etAttachment"
+                    android:layout_marginTop="@dimen/default_mini_margin"
                     android:background="@color/grey_100" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_below="@+id/dividerView"
-                    android:nestedScrollingEnabled="false"
+                    android:id="@+id/rvAttachments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_attachment"
-                    android:id="@+id/rvAttachments"/>
+                    android:layout_below="@+id/dividerView"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_attachment" />
 
             </RelativeLayout>
 

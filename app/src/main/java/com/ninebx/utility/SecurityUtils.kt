@@ -163,11 +163,11 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
 
         return String(plainText).substring(0, ptLength)
 
-    } catch ( e : IllegalBlockSizeException ) {
+    } catch (e: IllegalBlockSizeException) {
         //To catch exception while decrypting non decrypted string.
         e.printStackTrace()
         return Arrays.toString(cipherTextBase64)
-    } catch (e : IllegalArgumentException){
+    } catch (e: IllegalArgumentException) {
         e.printStackTrace()
         return Arrays.toString(cipherTextBase64)
     }
@@ -404,29 +404,29 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
     for (i in 0 until members.size) {
-       encryptMember(members[i]!!)
+        encryptMember(members[i]!!)
     }
     return members
 }
 
 fun encryptMember(member: Member): Member? {
 
-    member.firstName = member.firstName            .encryptString()
-    member.lastName = member. lastName             .encryptString()
-    member.relationship = member. relationship         .encryptString()
-    member.role = member. role.encryptString()
-    member.email = member. email                .encryptString()
+    member.firstName = member.firstName.encryptString()
+    member.lastName = member.lastName.encryptString()
+    member.relationship = member.relationship.encryptString()
+    member.role = member.role.encryptString()
+    member.email = member.email.encryptString()
 
-    member.dateOfBirth = member.dateOfBirth         .encryptString()
-    member.anniversary = member.anniversary         .encryptString()
+    member.dateOfBirth = member.dateOfBirth.encryptString()
+    member.anniversary = member.anniversary.encryptString()
     member.gender = member.gender
-    member.mobileNumber = member.mobileNumber        .encryptString()
-    member.street_1 = member.street_1            .encryptString()
-    member.street_2 = member.street_2            .encryptString()
-    member.city = member.city                .encryptString()
-    member.state = member.state               .encryptString()
-    member.zipCode = member.zipCode             .encryptString()
-    member.country = member.country             .encryptString()
+    member.mobileNumber = member.mobileNumber.encryptString()
+    member.street_1 = member.street_1.encryptString()
+    member.street_2 = member.street_2.encryptString()
+    member.city = member.city.encryptString()
+    member.state = member.state.encryptString()
+    member.zipCode = member.zipCode.encryptString()
+    member.country = member.country.encryptString()
 
     return member
 }
@@ -759,7 +759,7 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
     decryptedTax.modified = taxes.modified
    // decryptedTax.isPrivate = taxes.isPrivate.decryptString()
     decryptedTax.createdUser = taxes.createdUser
-    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax )
+    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
     return decryptedTax
 }
 
@@ -833,7 +833,7 @@ fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     return decryptedMainEducation
 }
 
-fun decryptWork(work: Work) : DecryptedWork{
+fun decryptWork(work: Work): DecryptedWork {
     val decryptedWork = DecryptedWork()
     decryptedWork.selectionType = work.selectionType.decryptString()
     decryptedWork.classType = work.classType.decryptString()
@@ -2517,29 +2517,62 @@ fun decryptCombineInterests(combineInterest : CombineInterests) : DecryptedCombi
     return decryptedCombineInterests
 }
 
-fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineWellness {
+fun decryptCombinePersonal(combinePersonal: CombinePersonal): DecryptedCombinePersonal {
+    val decryptedCombinePersonal = DecryptedCombinePersonal()
+
+    for (certificateItems in combinePersonal.certificateItems) {
+        decryptedCombinePersonal.certificateItems.add(decryptCertificate(certificateItems as Certificate))
+    }
+
+    for (governmentItems in combinePersonal.governmentItems) {
+        decryptedCombinePersonal.governmentItems.add(decryptGovernment(governmentItems as Government))
+    }
+
+    for (licenseItems in combinePersonal.licenseItems) {
+        decryptedCombinePersonal.licenseItems.add(decryptLicense(licenseItems as License))
+    }
+
+    for (personalItems in combinePersonal.personalItems) {
+        decryptedCombinePersonal.personalItems.add(decryptPersonal(personalItems as Personal))
+    }
+
+    for (socialItems in combinePersonal.socialItems) {
+        decryptedCombinePersonal.socialItems.add(decryptSocial(socialItems as Social))
+    }
+
+    for (taxIDItems in combinePersonal.taxIDItems) {
+        decryptedCombinePersonal.taxIDItems.add(decryptTaxID(taxIDItems as TaxID))
+    }
+
+    for (listItems in combinePersonal.listItems) {
+        decryptedCombinePersonal.listItems.add(decryptPersonalList(listItems as PersonalList))
+    }
+    return decryptedCombinePersonal
+}
+
+fun decryptCombineWellness(combineWellness: CombineWellness): DecryptedCombineWellness {
     val decryptedCombineWellness = DecryptedCombineWellness()
-    for(checkupsItems in combineWellness.checkupsItems){
+    for (checkupsItems in combineWellness.checkupsItems) {
         decryptedCombineWellness.checkupsItems.add(decryptCheckUps(checkupsItems as Checkups))
     }
 
-    for(emergencyContactItems in combineWellness.emergencyContactsItems){
+    for (emergencyContactItems in combineWellness.emergencyContactsItems) {
         decryptedCombineWellness.emergencyContactsItems.add(decryptEmergencyContacts(emergencyContactItems as EmergencyContacts))
     }
 
-    for(eyeglassPrescriptionsItems in combineWellness.eyeglassPrescriptionsItems){
+    for (eyeglassPrescriptionsItems in combineWellness.eyeglassPrescriptionsItems) {
         decryptedCombineWellness.eyeglassPrescriptionsItems.add(decryptEyeGlassPrescriptions(eyeglassPrescriptionsItems as EyeglassPrescriptions))
     }
 
-    for(healthcareProvidersItems  in combineWellness.healthcareProvidersItems){
+    for (healthcareProvidersItems in combineWellness.healthcareProvidersItems) {
         decryptedCombineWellness.healthcareProvidersItems.add(decryptHealthCareProviders(healthcareProvidersItems as HealthcareProviders))
     }
 
-    for(identificationItems in combineWellness.identificationItems){
+    for (identificationItems in combineWellness.identificationItems) {
         decryptedCombineWellness.identificationItems.add(decryptIdentification(identificationItems as Identification))
     }
 
-    for(medicalConditionsItems in combineWellness.medicalConditionsItems){
+    for (medicalConditionsItems in combineWellness.medicalConditionsItems) {
         decryptedCombineWellness.medicalConditionsItems.add(decryptMedicalConditions(medicalConditionsItems as MedicalConditions))
     }
 
@@ -2547,55 +2580,22 @@ fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineW
         decryptedCombineWellness.medicalHistoryItems.add(decryptMedicalHistory(medicalHistoryItems as MedicalHistory))
     }
 
-    for(medicationsItems in combineWellness.medicationsItems){
+    for (medicationsItems in combineWellness.medicationsItems) {
         decryptedCombineWellness.medicationsItems.add(decryptMedications(medicationsItems as Medications))
     }
 
-    for(vitalNumbersItems in combineWellness.vitalNumbersItems){
+    for (vitalNumbersItems in combineWellness.vitalNumbersItems) {
         decryptedCombineWellness.vitalNumbersItems.add(decryptVitalNumbers(vitalNumbersItems as VitalNumbers))
     }
 
-    for(wellnessItems in combineWellness.wellnessItems){
+    for (wellnessItems in combineWellness.wellnessItems) {
         decryptedCombineWellness.wellnessItems.add(decryptWellness(wellnessItems as Wellness))
     }
 
-    for(listItems in combineWellness.listItems){
+    for (listItems in combineWellness.listItems) {
         decryptedCombineWellness.listItems.add(decryptWellnessList(listItems as WellnessList))
     }
     return decryptedCombineWellness
-}
-
-fun decryptCombinePersonal(combinePersonal: CombinePersonal) : DecryptedCombinePersonal{
-    val decryptedCombinePersonal = DecryptedCombinePersonal()
-
-    for(certificateItems in combinePersonal.certificateItems){
-        decryptedCombinePersonal.certificateItems.add(decryptCertificate(certificateItems as Certificate))
-    }
-
-    for(governmentItems in combinePersonal.governmentItems){
-        decryptedCombinePersonal.governmentItems.add(decryptGovernment(governmentItems as Government))
-    }
-
-    for(licenseItems in combinePersonal.licenseItems){
-        decryptedCombinePersonal.licenseItems.add(decryptLicense(licenseItems as License))
-    }
-
-    for(personalItems in combinePersonal.personalItems){
-        decryptedCombinePersonal.personalItems.add(decryptPersonal(personalItems as Personal))
-    }
-
-    for(socialItems in combinePersonal.socialItems){
-        decryptedCombinePersonal.socialItems.add(decryptSocial(socialItems as Social))
-    }
-
-    for(taxIDItems in combinePersonal.taxIDItems){
-        decryptedCombinePersonal.taxIDItems.add(decryptTaxID(taxIDItems as TaxID))
-    }
-
-    for(listItems in combinePersonal.listItems){
-        decryptedCombinePersonal.listItems.add(decryptPersonalList(listItems as PersonalList))
-    }
-    return decryptedCombinePersonal
 }
 
 fun decryptCombineShopping(combineShopping : CombineShopping) : DecryptedCombineShopping{

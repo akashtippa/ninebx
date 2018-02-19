@@ -3,18 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ninebx.ui.base.realm.home.wellness.Checkups;
-import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts;
-import com.ninebx.ui.base.realm.home.wellness.EyeglassPrescriptions;
-import com.ninebx.ui.base.realm.home.wellness.HealthcareProviders;
-import com.ninebx.ui.base.realm.home.wellness.Identification;
-import com.ninebx.ui.base.realm.home.wellness.MedicalConditions;
-import com.ninebx.ui.base.realm.home.wellness.MedicalHistory;
-import com.ninebx.ui.base.realm.home.wellness.Medications;
-import com.ninebx.ui.base.realm.home.wellness.VitalNumbers;
-import com.ninebx.ui.base.realm.home.wellness.Wellness;
-import com.ninebx.ui.base.realm.lists.WellnessList;
-
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -24,6 +12,17 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineWellness implements Parcelable {
 
+    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
+        @Override
+        public DecryptedCombineWellness createFromParcel(Parcel in) {
+            return new DecryptedCombineWellness(in);
+        }
+
+        @Override
+        public DecryptedCombineWellness[] newArray(int size) {
+            return new DecryptedCombineWellness[size];
+        }
+    };
     @PrimaryKey //@Required
     private int id = 0;
     @Required
@@ -67,18 +66,6 @@ public class DecryptedCombineWellness implements Parcelable {
     protected DecryptedCombineWellness(Parcel in) {
         id = in.readInt();
     }
-
-    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
-        @Override
-        public DecryptedCombineWellness createFromParcel(Parcel in) {
-            return new DecryptedCombineWellness(in);
-        }
-
-        @Override
-        public DecryptedCombineWellness[] newArray(int size) {
-            return new DecryptedCombineWellness[size];
-        }
-    };
 
     public DecryptedCombineWellness() {
 

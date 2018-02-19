@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Nancy Porter</key>
+	<dict>
+		<key>title</key>
+		<string>Nancy Porter</string>
+		<key>subtitle</key>
+		<string>nancy.porter@gmail.com</string>
+		<key>icon</key>
+		<string>Nancy Porter.jpg</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>First name</string>
+				<key>placeholder</key>
+				<string>First name</string>
+				<key>header</key>
+				<string>First name</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Last name</string>
+				<key>placeholder</key>
+				<string>Last name</string>
+				<key>header</key>
+				<string>Last name</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Email address</string>
+				<key>placeholder</key>
+				<string>Email address</string>
+				<key>header</key>
+				<string>Email address</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Self</string>
+				<key>placeholder</key>
+				<string>Self</string>
+				<key>header</key>
+				<string>Relationship to Primary account holder</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Date Of Birth</string>
+				<key>placeholder</key>
+				<string>Date Of Birth</string>
+				<key>header</key>
+				<string>Date of Birth</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Anniversary</string>
+				<key>placeholder</key>
+				<string>Anniversary</string>
+				<key>header</key>
+				<string>Anniversary</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Gender</string>
+				<key>placeholder</key>
+				<string>Gender</string>
+				<key>header</key>
+				<string>Gender</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Mobile Number</string>
+				<key>placeholder</key>
+				<string>Mobile Number</string>
+				<key>header</key>
+				<string>Mobile Number</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Street Address 1</string>
+				<key>placeholder</key>
+				<string>Street Address 1</string>
+				<key>header</key>
+				<string>Street Address 1</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Street Address 2</string>
+				<key>placeholder</key>
+				<string>Street Address 2</string>
+				<key>header</key>
+				<string>Street Address 2</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Cleveland</string>
+				<key>placeholder</key>
+				<string>City</string>
+				<key>header</key>
+				<string>City</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Ohio</string>
+				<key>placeholder</key>
+				<string>State</string>
+				<key>header</key>
+				<string>State</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Zip code</string>
+				<key>placeholder</key>
+				<string>Zip code</string>
+				<key>header</key>
+				<string>Zip code</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Country</string>
+				<key>placeholder</key>
+				<string>Country</string>
+				<key>header</key>
+				<string>Country</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Mark Davis</key>
+	<dict>
+		<key>title</key>
+		<string>Mark Davis</string>
+		<key>subtitle</key>
+		<string>mark.davis@gmail.com</string>
+		<key>icon</key>
+		<string>Mark Davis.jpg</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>Spouse</string>
+				<key>placeholder</key>
+				<string>Spouse</string>
+				<key>header</key>
+				<string>Relationship to Nancy Porter (Primary account holder)</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Feb 15, 1970</string>
+				<key>placeholder</key>
+				<string>Date Of Birth</string>
+				<key>header</key>
+				<string>Date of Birth</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Aug 20, 1997</string>
+				<key>placeholder</key>
+				<string>Date Of Marriage</string>
+				<key>header</key>
+				<string>Anniversary</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Male</string>
+				<key>placeholder</key>
+				<string>Male</string>
+				<key>header</key>
+				<string>Gender</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>+1 432 567 2345</string>
+				<key>placeholder</key>
+				<string>Mobile</string>
+				<key>header</key>
+				<string>Mobile Number</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>#561, A Block</string>
+				<key>placeholder</key>
+				<string>Address Line1</string>
+				<key>header</key>
+				<string>Street Address 1</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Washington Dr.</string>
+				<key>placeholder</key>
+				<string>Address Line2</string>
+				<key>header</key>
+				<string>Street Address 2</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Cleveland</string>
+				<key>placeholder</key>
+				<string>Address Line3</string>
+				<key>header</key>
+				<string>City</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Ohio</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>State</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>44115</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>Zip code</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>United States</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>Country</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Samantha Davis</key>
+	<dict>
+		<key>title</key>
+		<string>Samantha Davis</string>
+		<key>subtitle</key>
+		<string>samantha.davis@gmail.com</string>
+		<key>icon</key>
+		<string>Samantha Davis.jpg</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>Daughter</string>
+				<key>placeholder</key>
+				<string>Daughter</string>
+				<key>header</key>
+				<string>Relationship to Nancy Porter (Primary account holder)</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Jun 6, 1999</string>
+				<key>placeholder</key>
+				<string>Date Of Birth</string>
+				<key>header</key>
+				<string>Date of Birth</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>Date Of Marriage</string>
+				<key>header</key>
+				<string>Anniversary</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Female</string>
+				<key>placeholder</key>
+				<string>Female</string>
+				<key>header</key>
+				<string>Gender</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>+1 203 432 5643</string>
+				<key>placeholder</key>
+				<string>Mobile</string>
+				<key>header</key>
+				<string>Mobile Number</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>#561, A Block</string>
+				<key>placeholder</key>
+				<string>Address Line1</string>
+				<key>header</key>
+				<string>Street Address 1</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Washington Dr.</string>
+				<key>placeholder</key>
+				<string>Address Line2</string>
+				<key>header</key>
+				<string>Street Address 2</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Cleveland</string>
+				<key>placeholder</key>
+				<string>Address Line3</string>
+				<key>header</key>
+				<string>City</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Ohio</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>State</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>44115</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>Zip code</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>United States</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>Country</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Simon Davis</key>
+	<dict>
+		<key>title</key>
+		<string>Simon Davis</string>
+		<key>subtitle</key>
+		<string>simon.davis@gmail.com</string>
+		<key>icon</key>
+		<string>Simon Davis.jpg</string>
+		<key>level1</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>Son</string>
+				<key>placeholder</key>
+				<string>Son</string>
+				<key>header</key>
+				<string>Relationship to Nancy Porter (Primary account holder)</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Oct 4, 2002</string>
+				<key>placeholder</key>
+				<string>Date Of Birth</string>
+				<key>header</key>
+				<string>Date of Birth</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>Date Of Marriage</string>
+				<key>header</key>
+				<string>Anniversary</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Male</string>
+				<key>placeholder</key>
+				<string>Male</string>
+				<key>header</key>
+				<string>Gender</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>+1 213 421 6472</string>
+				<key>placeholder</key>
+				<string>Mobile</string>
+				<key>header</key>
+				<string>Mobile Number</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>#561, A Block</string>
+				<key>placeholder</key>
+				<string>Address Line1</string>
+				<key>header</key>
+				<string>Street Address 1</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Washington Dr.</string>
+				<key>placeholder</key>
+				<string>Address Line2</string>
+				<key>header</key>
+				<string>Street Address 2</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Cleveland</string>
+				<key>placeholder</key>
+				<string>Address Line3</string>
+				<key>header</key>
+				<string>City</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>Ohio</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>State</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>44115</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>Zip code</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>United States</string>
+				<key>placeholder</key>
+				<string>Address Line4</string>
+				<key>header</key>
+				<string>Country</string>
+				<key>identifier</key>
+				<string>NBMyProfileTableViewCell2</string>
+				<key>height</key>
+				<string>44</string>
+			</dict>
+		</array>
+	</dict>
+	<key>users</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Nancy Porter</string>
+			<key>subtitle</key>
+			<string>Primary account holder</string>
+			<key>icon</key>
+			<string>Nancy Porter.jpg</string>
+			<key>key</key>
+			<string>Nancy Porter</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Mark Davis</string>
+			<key>subtitle</key>
+			<string>Spouse (User)</string>
+			<key>icon</key>
+			<string>Mark Davis.jpg</string>
+			<key>key</key>
+			<string>Mark Davis</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Samantha Davis</string>
+			<key>subtitle</key>
+			<string>Daughter (User)</string>
+			<key>icon</key>
+			<string>Samantha Davis.jpg</string>
+			<key>key</key>
+			<string>Samantha Davis</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Simon Davis</string>
+			<key>subtitle</key>
+			<string>Son</string>
+			<key>icon</key>
+			<string>Simon Davis.jpg</string>
+			<key>key</key>
+			<string>Simon Davis</string>
+		</dict>
+	</array>
+</dict>
+</plist>

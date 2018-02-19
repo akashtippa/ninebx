@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>header</key>
+	<array>
+		<dict>
+			<key>category_id</key>
+			<string>memory_1001</string>
+			<key>title</key>
+			<string>Memory Timeline</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>class</key>
+			<string>NBMemoriesViewController</string>
+			<key>icon</key>
+			<string>lists_icon_memories.pdf</string>
+		</dict>
+		<dict>
+			<key>category_id</key>
+			<string>memory_2001</string>
+			<key>title</key>
+			<string>Services/Other accounts</string>
+			<key>subtitle</key>
+			<string> </string>
+			<key>icon</key>
+			<string>icon_services_accounts.pdf</string>
+			<key>class</key>
+			<string>NBHomeLevel2ViewController</string>
+			<key>acclabel</key>
+			<string>ADD ACCOUNT</string>
+			<key>level3</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string></string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Wells Fargo</string>
+							<key>subtitle</key>
+							<string>WF Checking</string>
+							<key>icon</key>
+							<string>Bank1.png</string>
+							<key>height</key>
+							<string>84</string>
+							<key>class</key>
+							<string>NBHomeLevel2TableViewCell</string>
+							<key>titleplaceholder</key>
+							<string>Institution name</string>
+							<key>subtitleplaceholder</key>
+							<string>Account name</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Account Details</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Checking</string>
+							<key>placeholder</key>
+							<string>Account type</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBHomeLevel3TableViewCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>Mark Davis; Nancy Porter</string>
+							<key>placeholder</key>
+							<string>Name(s) on account</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBNameCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>4670046030</string>
+							<key>placeholder</key>
+							<string>Account number</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBHomeLevel3TableViewCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>Santa Clara, CA, USA</string>
+							<key>placeholder</key>
+							<string>Location</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBLocationCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>David Smith</string>
+							<key>placeholder</key>
+							<string>Contacts</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBContactsCell</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Online Access</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>wellsfargo.com</string>
+							<key>placeholder</key>
+							<string>Website</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBHomeLevel3TableViewCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>markdavis</string>
+							<key>placeholder</key>
+							<string>Username/login</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBHomeLevel3TableViewCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>765ab456!</string>
+							<key>placeholder</key>
+							<string>Password</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>passwordCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string>3256</string>
+							<key>placeholder</key>
+							<string>PIN</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>passwordCell</string>
+						</dict>
+						<dict>
+							<key>title</key>
+							<string></string>
+							<key>placeholder</key>
+							<string>Payment method on file</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>60</string>
+							<key>class</key>
+							<string>NBNameCell</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Notes</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Notes</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string>Bank1.png</string>
+							<key>height</key>
+							<string>90</string>
+							<key>class</key>
+							<string>NBHomeNotesTableViewCell</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Attachment</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Attachments</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>120</string>
+							<key>class</key>
+							<string>NBHomeAttachmentTableViewCell</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>category_id</key>
+			<string>memory_3001</string>
+			<key>title</key>
+			<string>Other attachments</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>icon_attachments.pdf</string>
+			<key>class</key>
+			<string>NBHomeLevel2ViewController</string>
+			<key>acclabel</key>
+			<string>ADD ATTACHMENT</string>
+			<key>level3</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string></string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Wells Fargo</string>
+							<key>subtitle</key>
+							<string>WF Checking</string>
+							<key>icon</key>
+							<string>Bank1.png</string>
+							<key>height</key>
+							<string>84</string>
+							<key>class</key>
+							<string>NBHomeLevel2TableViewCell</string>
+							<key>titleplaceholder</key>
+							<string>Title</string>
+							<key>subtitleplaceholder</key>
+							<string></string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Notes</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Notes</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string>Bank1.png</string>
+							<key>height</key>
+							<string>90</string>
+							<key>class</key>
+							<string>NBHomeNotesTableViewCell</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>ATTACHMENTS</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>icon</key>
+					<string></string>
+					<key>views</key>
+					<array>
+						<dict>
+							<key>title</key>
+							<string>Bank Statement 2015-16</string>
+							<key>subtitle</key>
+							<string></string>
+							<key>icon</key>
+							<string></string>
+							<key>height</key>
+							<string>120</string>
+							<key>class</key>
+							<string>NBHomeAttachmentTableViewCell</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>category_id</key>
+			<string>memory_4001</string>
+			<key>title</key>
+			<string>LISTS</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>icon_lists.pdf</string>
+			<key>class</key>
+			<string>NBToDoLevel1ViewController</string>
+			<key>index</key>
+			<string>0</string>
+			<key>header</key>
+			<dict>
+				<key>title</key>
+				<string>Memories</string>
+				<key>subtitle</key>
+				<string>3</string>
+				<key>category</key>
+				<string></string>
+				<key>icon</key>
+				<string>list_memories.png</string>
+				<key>level1</key>
+				<array>
+					<dict>
+						<key>title</key>
+						<string>Memories to organize</string>
+						<key>subtitle</key>
+						<string>3</string>
+						<key>category</key>
+						<string></string>
+						<key>level2</key>
+						<array>
+							<dict>
+								<key>title</key>
+								<string>Upload India trip pics to ninebx</string>
+								<key>subtitle</key>
+								<string>09/31/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+							<dict>
+								<key>title</key>
+								<string>Upload Nancy’s 40th birthday pics to ninebx</string>
+								<key>subtitle</key>
+								<string>10/08/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+							<dict>
+								<key>title</key>
+								<string>Compile memories for Grandpa’s 75th birthday</string>
+								<key>subtitle</key>
+								<string>10/21/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>title</key>
+						<string>Grandma’s classic quotes</string>
+						<key>subtitle</key>
+						<string>3</string>
+						<key>category</key>
+						<string></string>
+						<key>level2</key>
+						<array>
+							<dict>
+								<key>title</key>
+								<string>abc</string>
+								<key>subtitle</key>
+								<string>10/08/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+							<dict>
+								<key>title</key>
+								<string>xyz</string>
+								<key>subtitle</key>
+								<string>10/21/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>title</key>
+						<string>The funny things Sam and Simon said as kids</string>
+						<key>subtitle</key>
+						<string>3</string>
+						<key>category</key>
+						<string></string>
+						<key>level2</key>
+						<array>
+							<dict>
+								<key>title</key>
+								<string>abc</string>
+								<key>subtitle</key>
+								<string>10/08/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+							<dict>
+								<key>title</key>
+								<string>xyz</string>
+								<key>subtitle</key>
+								<string>10/21/2016</string>
+								<key>category</key>
+								<string></string>
+							</dict>
+						</array>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>Memory Timeline</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Grandpa’s 50th anniversary</string>
+			<key>date</key>
+			<string>May 4, 2016</string>
+			<key>palce</key>
+			<string>Portland, Oregon</string>
+			<key>people</key>
+			<string>Charles Davis, Cathy Davis, </string>
+			<key>notes</key>
+			<string></string>
+			<key>icon</key>
+			<array>
+				<string>06 Grandpa&apos;s 50th anniversary.jpg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Family cruise to Alaska</string>
+			<key>date</key>
+			<string>Sep 12, 2014</string>
+			<key>palce</key>
+			<string>Alaska</string>
+			<key>people</key>
+			<string>Mark Davis, Nancy Porter, Samantha Davis, Simon Davis, Charles Davis, Cathy Davis</string>
+			<key>notes</key>
+			<string></string>
+			<key>icon</key>
+			<array>
+				<string>06 Alaska cruise 1.jpg</string>
+				<string>06 Alaska cruise 2.jpg</string>
+				<string>06 Alaska cruise 3.jpg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Samantha&apos;s 13th birthday</string>
+			<key>date</key>
+			<string>June 6, 2012</string>
+			<key>palce</key>
+			<string>Santa Clara, CA</string>
+			<key>people</key>
+			<string></string>
+			<key>notes</key>
+			<string>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+			<key>icon</key>
+			<array>
+				<string>05 Samantha&apos;s 13th birthday 1.jpg</string>
+				<string>05 Samantha&apos;s 13th birthday 2.jpg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Simon loses his first tooth</string>
+			<key>date</key>
+			<string>Aug 11, 2007</string>
+			<key>palce</key>
+			<string>Santa Clara, CA</string>
+			<key>people</key>
+			<string></string>
+			<key>notes</key>
+			<string>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+			<key>icon</key>
+			<array>
+				<string>04 simon first tooth lost.jpg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Simon&apos;s birth</string>
+			<key>date</key>
+			<string>Oct 4, 2002</string>
+			<key>palce</key>
+			<string>Lucile Packard Children&apos;s Hospital - Stanford, Palo Alto, CA</string>
+			<key>people</key>
+			<string>Mark Davis, Nancy Porter, Charles Davis, Cathy Davis, Henry Porter, Darla Porter, Joe Porter</string>
+			<key>notes</key>
+			<string>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+			<key>icon</key>
+			<array>
+				<string>03 Simon birth 1.jpg</string>
+				<string>03 Simon birth 2.jpg</string>
+				<string>03 Simon birth 3.jpg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Nancy&apos;s graduation from Stanford</string>
+			<key>date</key>
+			<string>May 18, 2001</string>
+			<key>palce</key>
+			<string>Stanford University, CA</string>
+			<key>people</key>
+			<string>Mark Davis, Nancy Porter, Charles Davis, Cathy Davis, Henry Porter, Darla Porter, Joe Porter</string>
+			<key>notes</key>
+			<string>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+			<key>icon</key>
+			<array>
+				<string>02 Nancy&apos;s graduation 1.jpg</string>
+				<string>02 Nancy&apos;s graduation 2.jpg</string>
+				<string>02 Nancy&apos;s graduation 3.jpg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Samantha&apos;s birth</string>
+			<key>date</key>
+			<string>June 6, 1999</string>
+			<key>palce</key>
+			<string>Lucile Packard Children&apos;s Hospital - Stanford, Palo Alto, CA</string>
+			<key>people</key>
+			<string>Mark Davis, Nancy Porter, Charles Davis, Cathy Davis, Henry Porter, Darla Porter, Joe Porter</string>
+			<key>notes</key>
+			<string>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+			<key>icon</key>
+			<array>
+				<string>01 Samantha birth 1.jpg</string>
+				<string>01 Samantha birth 2.jpg</string>
+				<string>01 Samantha birth 3.jpeg</string>
+				<string>add_photo_Memories.png</string>
+				<string>add_photo_Memories.png</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
