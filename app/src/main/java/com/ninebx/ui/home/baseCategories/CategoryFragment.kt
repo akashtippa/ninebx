@@ -13,14 +13,15 @@ import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.home.fragments.ClothesFragment
-import com.ninebx.ui.home.fragments.FragmentListContainer
-import com.ninebx.ui.home.fragments.WellnessFragment
+import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.SubListsFragment
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.KeyboardUtil
-import com.ninebx.utility.NineBxPreferences
+import com.ninebx.utility.*
+import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_category.*
 
 /**
@@ -34,6 +35,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     var categoryName = ""
+    private var allMemoryView: RealmResults<MemoryTimeline>? = null
+    private var allContacts: RealmResults<Contacts>? = null
 
     override fun hideProgress() {
         layoutProgress.hide()
@@ -79,6 +82,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 categoryName = category.title
                 when {
                     category.title == "Lists" -> getLists()
+                    category.title == "Memory Timeline" -> gettingMemoryTimeLineView()
+                    category.title == "Shared Contacts" -> gettingContactsList()
 
                     category.subCategories.size == 0 -> {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -91,9 +96,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                     }
                 }
-
-                Toast.makeText(context, "" + category.title, Toast.LENGTH_LONG).show()
-
             }
 
             val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
@@ -141,7 +143,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-
     }
 
     override fun onBackPressed(): Boolean {
@@ -157,26 +158,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
     }
 
-    private fun getContactsList() {
-        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val bundle = Bundle()
-        bundle.putString("categoryName", categoryName)
-        val categoryFragment = FragmentListContainer()
-        categoryFragment.arguments = bundle
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-    }
-
-    private fun getMemoryTimeLine() {
-        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val bundle = Bundle()
-        bundle.putString("categoryName", categoryName)
-        val categoryFragment = FragmentListContainer()
-        categoryFragment.arguments = bundle
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-    }
-
     private fun getLists() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -188,6 +169,49 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         categoryFragment.arguments = bundle
 
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+    }
+
+    private fun gettingMemoryTimeLineView() {
+        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+
+                allMemoryView = getAllMemoryTimeLine(realm!!)
+                if (allMemoryView != null) {
+                    context!!.hideProgressDialog()
+                    AppLogger.e("Memory", "MemoryView from Realm : " + allMemoryView.toString())
+
+                    val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+                    fragmentTransaction.addToBackStack(null)
+                    val addFamilyUsersFragment = FragmentMemoriesListContainer()
+                    val bundle = Bundle()
+                    bundle.putParcelableArrayList(Constants.REALM_MEMORY_VIEW, MemoryTimeline.createParcelableList(allMemoryView!!))
+                    addFamilyUsersFragment.arguments = bundle
+                    fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+                }
+            }
+        })
+    }
+
+
+    private fun gettingContactsList() {
+        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+
+                allContacts = getCurrentContactList(realm!!)
+                if (allContacts != null) {
+//                    context!!.hideProgressDialog()
+                    AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
+
+                    val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+                    fragmentTransaction.addToBackStack(null)
+                    val addFamilyUsersFragment = ContactsListContainerFragment()
+                    val bundle = Bundle()
+                    bundle.putParcelableArrayList(Constants.REALM_CONTACTS, Contacts.createParcelableList(allContacts!!))
+                    addFamilyUsersFragment.arguments = bundle
+                    fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+                }
+            }
+        })
     }
 
 }

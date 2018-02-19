@@ -9,7 +9,7 @@ import android.os.Parcelable
 class Level3SearchItem(
         var searchCategory: Int = 0,
         var itemName: String = "",
-        var categoryName : String = ""
+        var categoryName: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),

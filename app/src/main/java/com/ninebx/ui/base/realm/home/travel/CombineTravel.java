@@ -33,6 +33,9 @@ public class CombineTravel extends RealmObject {
         this.listItems = listItems;
     }
 
+    public CombineTravel() {
+    }
+
     public int getId() {
         return id;
     }
@@ -79,8 +82,5 @@ public class CombineTravel extends RealmObject {
 
     public void setListItems(RealmList<TravelList> listItems) {
         this.listItems = listItems;
-    }
-
-    public CombineTravel() {
     }
 }

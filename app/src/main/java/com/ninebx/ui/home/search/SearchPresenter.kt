@@ -31,7 +31,7 @@ class SearchPresenter( private val searchView: SearchView ) {
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
     init
-   {
+    {
         val context = getApplicationContext()
 
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
@@ -85,74 +85,74 @@ class SearchPresenter( private val searchView: SearchView ) {
             }
         })
 
-       prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
-           override fun onSuccess(realm: Realm?) {
-               val combineEducation = realm!!.where(CombineEducation::class.java).findAll()
-               if (combineEducation.size > 0) {
-                   for (i in 0 until combineEducation.size) {
-                       val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
-                       appendToDecryptCombineEducation(decryptedCombineEducation)
-                   }
-                   searchView.onCombineEducationFetched(mDecryptCombineEducation)
-                   AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
-               }
-               else{
-                   searchView.onCombineEducationFetched(mDecryptCombineEducation)
-               }
-           }
-       })
+        prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineEducation = realm!!.where(CombineEducation::class.java).findAll()
+                if (combineEducation.size > 0) {
+                    for (i in 0 until combineEducation.size) {
+                        val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
+                        appendToDecryptCombineEducation(decryptedCombineEducation)
+                    }
+                    searchView.onCombineEducationFetched(mDecryptCombineEducation)
+                    AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
+                }
+                else{
+                    searchView.onCombineEducationFetched(mDecryptCombineEducation)
+                }
+            }
+        })
 
-       prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
-           override fun onSuccess(realm: Realm?) {
-               val combineInterests = realm!!.where(CombineInterests::class.java).findAll()
-               if(combineInterests.size > 0 ){
-                   for(i in 0 until combineInterests.size){
-                       val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
-                       appendToDecryptCombineInterests(decryptedCombineInterests)
-                   }
-                   searchView.onCombineInterestsFetched(mDecryptCombineInterests)
-                   AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
-               }
-               else{
-                   searchView.onCombineInterestsFetched(mDecryptCombineInterests)
-               }
+        prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineInterests = realm!!.where(CombineInterests::class.java).findAll()
+                if(combineInterests.size > 0 ){
+                    for(i in 0 until combineInterests.size){
+                        val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
+                        appendToDecryptCombineInterests(decryptedCombineInterests)
+                    }
+                    searchView.onCombineInterestsFetched(mDecryptCombineInterests)
+                    AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
+                }
+                else{
+                    searchView.onCombineInterestsFetched(mDecryptCombineInterests)
+                }
 
-           }
-       })
+            }
+        })
 
-       prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
-           override fun onSuccess(realm: Realm?) {
-               val combineWellness = realm!!.where(CombineWellness::class.java).findAll()
-               if(combineWellness.size > 0 ) {
-                   for(i in 0 until combineWellness.size){
-                       val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
-                       appendToDecryptCombineWellness(decryptedCombineWellness)
-                   }
-                   searchView.onCombineWellnessFetched(mDecryptCombineWellness)
-                   AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
-               }
-               else{
-                   searchView.onCombineWellnessFetched(mDecryptCombineWellness)
-               }
-           }
-       })
+        prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineWellness = realm!!.where(CombineWellness::class.java).findAll()
+                if(combineWellness.size > 0 ) {
+                    for(i in 0 until combineWellness.size){
+                        val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
+                        appendToDecryptCombineWellness(decryptedCombineWellness)
+                    }
+                    searchView.onCombineWellnessFetched(mDecryptCombineWellness)
+                    AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
+                }
+                else{
+                    searchView.onCombineWellnessFetched(mDecryptCombineWellness)
+                }
+            }
+        })
 
-       prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
-           override fun onSuccess(realm: Realm?) {
-               val combinePersonal = realm!!.where(CombinePersonal::class.java).findAll()
-               if(combinePersonal.size > 0){
-                   for(i in 0 until combinePersonal.size){
-                       val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
-                       appendToDecryptCombinePersonal(decryptedCombinePersonal)
-                   }
-                   searchView.onCombinePersonalFetched(mDecryptCombinePersonal)
-                   AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
-               }
-               else{
-                   searchView.onCombinePersonalFetched(mDecryptCombinePersonal)
-               }
-           }
-       })
+        prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combinePersonal = realm!!.where(CombinePersonal::class.java).findAll()
+                if(combinePersonal.size > 0){
+                    for(i in 0 until combinePersonal.size){
+                        val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
+                        appendToDecryptCombinePersonal(decryptedCombinePersonal)
+                    }
+                    searchView.onCombinePersonalFetched(mDecryptCombinePersonal)
+                    AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
+                }
+                else{
+                    searchView.onCombinePersonalFetched(mDecryptCombinePersonal)
+                }
+            }
+        })
 
 
         prepareRealmConnections(context, false, "CombineShopping", object : Realm.Callback() {
@@ -187,7 +187,7 @@ class SearchPresenter( private val searchView: SearchView ) {
         })
     }
 
-       private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
+    private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
         mDecryptCombine.listItems.addAll(decryptedCombine.listItems)
         mDecryptCombine.propertyItems.addAll(decryptedCombine.propertyItems)
         mDecryptCombine.vehicleItems.addAll(decryptedCombine.vehicleItems)
@@ -429,7 +429,7 @@ class SearchPresenter( private val searchView: SearchView ) {
                     || vacationItems.placesToVisit_1.contains(text, true) || vacationItems.placesToVisit_2.contains(text, true) || vacationItems.placesToVisit_3.contains(text, true)
                     || vacationItems.notes.contains(text, true) || vacationItems.attachmentNames.contains(text, true) || vacationItems.created.contains(text, true)
                     || vacationItems.modified.contains(text, true) || vacationItems.createdUser.contains(text, true))
-                    searchVacationItems.add(vacationItems)
+                searchVacationItems.add(vacationItems)
         }
         searchDecryptCombineTravel.vacationsItems.addAll(searchVacationItems)
 
@@ -580,37 +580,37 @@ class SearchPresenter( private val searchView: SearchView ) {
         var searchVitalNumber = ArrayList<DecryptedVitalNumbers>()
         var searchWellness = ArrayList<DecryptedWellness>()
         var searchWellnessList = ArrayList<DecryptedWellnessList>()
-      /*  for(checkupItems in mDecryptCombineWellness.checkupsItems){
-            if(checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
-                    || checkupItems.checkup_description.contains(text, true) || checkupItems.physicianType.contains(text, true) || checkupItems.classType.contains(text, true)
-                    || checkupItems.reason.contains(text, true) || checkupItems.dateOfVisit.contains(text, true) || checkupItems.notes.contains(text, true) || checkupItems.attachmentNames.contains(text, true)
-                    || checkupItems.created.contains(text, true) || checkupItems.modified.contains(text, true)|| checkupItems.createdUser.contains(text, true))
-                searchCheckupItems.add(checkupItems)
-        }
-        searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
+        /*  for(checkupItems in mDecryptCombineWellness.checkupsItems){
+              if(checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
+                      || checkupItems.checkup_description.contains(text, true) || checkupItems.physicianType.contains(text, true) || checkupItems.classType.contains(text, true)
+                      || checkupItems.reason.contains(text, true) || checkupItems.dateOfVisit.contains(text, true) || checkupItems.notes.contains(text, true) || checkupItems.attachmentNames.contains(text, true)
+                      || checkupItems.created.contains(text, true) || checkupItems.modified.contains(text, true)|| checkupItems.createdUser.contains(text, true))
+                  searchCheckupItems.add(checkupItems)
+          }
+          searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
 
-        for(emergencyContactsItems in mDecryptCombineWellness.emergencyContactsItems){
-            if(emergencyContactsItems.selectionType.contains(text, true) || emergencyContactsItems.classType.contains(text, true) || emergencyContactsItems.name.contains(text, true)
-                    || emergencyContactsItems.relationShip.contains(text, true) || emergencyContactsItems.phoneNumberOne.contains(text, true) || emergencyContactsItems.phoneNumberTwo.contains(text, true)
-                    || emergencyContactsItems.emailAddress.contains(text, true) || emergencyContactsItems.streetAddressOne.contains(text, true) || emergencyContactsItems.streetAddressTwo.contains(text, true)
-                    || emergencyContactsItems.city.contains(text, true) || emergencyContactsItems.state.contains(text, true) || emergencyContactsItems.zipCode.contains(text, true)
-                    || emergencyContactsItems.country.contains(text, true) || emergencyContactsItems.created.contains(text, true) || emergencyContactsItems.modified.contains(text, true)
-                    || emergencyContactsItems.notes.contains(text, true) || emergencyContactsItems.attachmentNames.contains(text, true) || emergencyContactsItems.createdUser.contains(text, true))
-                searchEmergencyContacts.add(emergencyContactsItems)
-        }
-        searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
+          for(emergencyContactsItems in mDecryptCombineWellness.emergencyContactsItems){
+              if(emergencyContactsItems.selectionType.contains(text, true) || emergencyContactsItems.classType.contains(text, true) || emergencyContactsItems.name.contains(text, true)
+                      || emergencyContactsItems.relationShip.contains(text, true) || emergencyContactsItems.phoneNumberOne.contains(text, true) || emergencyContactsItems.phoneNumberTwo.contains(text, true)
+                      || emergencyContactsItems.emailAddress.contains(text, true) || emergencyContactsItems.streetAddressOne.contains(text, true) || emergencyContactsItems.streetAddressTwo.contains(text, true)
+                      || emergencyContactsItems.city.contains(text, true) || emergencyContactsItems.state.contains(text, true) || emergencyContactsItems.zipCode.contains(text, true)
+                      || emergencyContactsItems.country.contains(text, true) || emergencyContactsItems.created.contains(text, true) || emergencyContactsItems.modified.contains(text, true)
+                      || emergencyContactsItems.notes.contains(text, true) || emergencyContactsItems.attachmentNames.contains(text, true) || emergencyContactsItems.createdUser.contains(text, true))
+                  searchEmergencyContacts.add(emergencyContactsItems)
+          }
+          searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
 
-        for(eyeglassPrescriptionsItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
-            if(eyeglassPrescriptionsItems.selectionType.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true) || eyeglassPrescriptionsItems.physicianName.contains(text, true)
-                    || eyeglassPrescriptionsItems.datePrescribed.contains(text, true) || eyeglassPrescriptionsItems.odSphereValue.contains(text, true) || eyeglassPrescriptionsItems.osSphereValue.contains(text, true)
-                    || eyeglassPrescriptionsItems.odCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.osCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.odAxisValue.contains(text, true)
-                    || eyeglassPrescriptionsItems.osAxisValue.contains(text, true) || eyeglassPrescriptionsItems.odPrismValue.contains(text, true) || eyeglassPrescriptionsItems.osPrismValue.contains(text, true)
-                    || eyeglassPrescriptionsItems.odAddValue.contains(text, true) || eyeglassPrescriptionsItems.osAddValue.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true)
-                    || eyeglassPrescriptionsItems.odBaseValue.contains(text, true) || eyeglassPrescriptionsItems.osBaseValue.contains(text, true) || eyeglassPrescriptionsItems.notes.contains(text, true) || eyeglassPrescriptionsItems.attachmentNames.contains(text, true)
-                    || eyeglassPrescriptionsItems.created.contains(text, true) || eyeglassPrescriptionsItems.modified.contains(text, true) || eyeglassPrescriptionsItems.createdUser.contains(text, true))
-                searchEyeglassPrescriptions.add(eyeglassPrescriptionsItems)
-        }
-        searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)*/
+          for(eyeglassPrescriptionsItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
+              if(eyeglassPrescriptionsItems.selectionType.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true) || eyeglassPrescriptionsItems.physicianName.contains(text, true)
+                      || eyeglassPrescriptionsItems.datePrescribed.contains(text, true) || eyeglassPrescriptionsItems.odSphereValue.contains(text, true) || eyeglassPrescriptionsItems.osSphereValue.contains(text, true)
+                      || eyeglassPrescriptionsItems.odCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.osCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.odAxisValue.contains(text, true)
+                      || eyeglassPrescriptionsItems.osAxisValue.contains(text, true) || eyeglassPrescriptionsItems.odPrismValue.contains(text, true) || eyeglassPrescriptionsItems.osPrismValue.contains(text, true)
+                      || eyeglassPrescriptionsItems.odAddValue.contains(text, true) || eyeglassPrescriptionsItems.osAddValue.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true)
+                      || eyeglassPrescriptionsItems.odBaseValue.contains(text, true) || eyeglassPrescriptionsItems.osBaseValue.contains(text, true) || eyeglassPrescriptionsItems.notes.contains(text, true) || eyeglassPrescriptionsItems.attachmentNames.contains(text, true)
+                      || eyeglassPrescriptionsItems.created.contains(text, true) || eyeglassPrescriptionsItems.modified.contains(text, true) || eyeglassPrescriptionsItems.createdUser.contains(text, true))
+                  searchEyeglassPrescriptions.add(eyeglassPrescriptionsItems)
+          }
+          searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)*/
 
         for(checkupItems in mDecryptCombineWellness.checkupsItems){
             if(performSearch(checkupItems, text)!!)
@@ -619,8 +619,8 @@ class SearchPresenter( private val searchView: SearchView ) {
         searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
 
         for(emergencyContactItems in mDecryptCombineWellness.emergencyContactsItems){
-           if( performSearch(emergencyContactItems,text)!!)
-               searchEmergencyContacts.add(emergencyContactItems)
+            if( performSearch(emergencyContactItems,text)!!)
+                searchEmergencyContacts.add(emergencyContactItems)
         }
         searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
 
@@ -628,11 +628,11 @@ class SearchPresenter( private val searchView: SearchView ) {
             if(performSearch(eyeglassPrescriptionItems, text)!!)
                 searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
         }
-       searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
+        searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
 
         for(healthCareProviderItems in mDecryptCombineWellness.healthcareProvidersItems){
-           if( performSearch(healthCareProviderItems, text)!!)
-               searchhealthcareProviders.add(healthCareProviderItems)
+            if( performSearch(healthCareProviderItems, text)!!)
+                searchhealthcareProviders.add(healthCareProviderItems)
         }
         searchDecryptCombineWellness.healthcareProvidersItems.addAll(searchhealthcareProviders)
 
@@ -681,7 +681,7 @@ class SearchPresenter( private val searchView: SearchView ) {
         return searchDecryptCombineWellness
     }
     fun searchPersonalItems(text : String) : DecryptedCombinePersonal{
-       if(text.contains("Personal", true)){
+        if(text.contains("Personal", true)){
             return mDecryptCombinePersonal
         }
         val searchDecryptCombinePersonal = DecryptedCombinePersonal()

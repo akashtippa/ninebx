@@ -20,10 +20,10 @@ import kotlinx.android.synthetic.main.fragment_permissions.*
 
 class PermissionFragment : FragmentBackHelper(), PermissionsView {
 
-    private lateinit var userRole : String
+    private lateinit var userRole: String
     private lateinit var member: Member
-    private lateinit var memberUser : Users
-    private lateinit var adminId : String
+    private lateinit var memberUser: Users
+    private lateinit var adminId: String
 
     override fun showProgress(message: Int) {
 

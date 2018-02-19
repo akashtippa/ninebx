@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>header</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Account</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Financial Accounts.png</string>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>My profile</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>MyProfileViewController</string>
+					<key>key</key>
+					<string>Nancy Porter</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Family/Users</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>ProfileUsersViewController</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Subscription plan</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>SubscriptionViewController</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Security</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Payment methods.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>Account master password</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>ChangePasswordViewController</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Security overview</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>SecurityOverviewViewController</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Personal passcode</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>CurrentPasscodeViewController</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Touch ID</string>
+					<key>identifier</key>
+					<string>TouchIDCustomCell</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Auto lock (device setting)</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell2</string>
+					<key>class</key>
+					<string>AutoLockViewController</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>About</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Property.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>Terms of use</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>TermsViewController</string>
+				</dict>
+				<dict>
+					<key>class</key>
+					<string>PrivacyViewController</string>
+					<key>title</key>
+					<string>Privacy policy</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Give us feedback</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>FeedbackViewController</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Recommend to friends</string>
+					<key>class</key>
+					<string>RecommendToFriends</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Like us on Facebook</string>
+					<key>class</key>
+					<string>LikeUsOnFacebook</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Support</string>
+					<key>class</key>
+					<string>Support</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+				</dict>
+				<dict>
+					<key>title</key>
+					<string>Version 1.0</string>
+					<key>identifier</key>
+					<string>NBMyAccountTableViewCell</string>
+					<key>class</key>
+					<string>Version</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Lock now</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Lists.png</string>
+			<key>class</key>
+			<string>LockNowViewController</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array/>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Log out</string>
+			<key>subtitle</key>
+			<string>2</string>
+			<key>icon</key>
+			<string>Lists.png</string>
+			<key>index</key>
+			<integer>-1</integer>
+			<key>level1</key>
+			<array>
+				<dict>
+					<key>title</key>
+					<string>Version 1.0</string>
+					<key>identifier</key>
+					<string>Version</string>
+					<key>class</key>
+					<string>Version1.0</string>
+					<key>key</key>
+					<string>Nancy Porter</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

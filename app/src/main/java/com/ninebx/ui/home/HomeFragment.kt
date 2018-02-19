@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
-import com.ninebx.ui.home.baseCategories.CategoryPresenter
 import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_home_updated.*
 

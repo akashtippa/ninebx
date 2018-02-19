@@ -1,7 +1,6 @@
 package com.ninebx.utility
 
 import android.content.Context
-import android.util.Log
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
@@ -9,6 +8,7 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.TestSearch
 import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import io.realm.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -48,6 +48,9 @@ fun getCurrentContactList(realmInstance: Realm): RealmResults<Contacts>? {
     return realmInstance.where(Contacts::class.java).findAll()
 }
 
+fun getAllMemoryTimeLine(realmInstance: Realm): RealmResults<MemoryTimeline>? {
+    return realmInstance.where(MemoryTimeline::class.java).findAll()
+}
 
 private val TAG = "RealmUtils"
 
@@ -194,29 +197,29 @@ fun performSearch(classObject: Any, searchText: String): Boolean? {
 fun testSearch() {
     val TestSearchs = ArrayList<TestSearch>()
     var category = 0
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
-    TestSearchs.add(TestSearch( category++, "Level3" + category ))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
+    TestSearchs.add(TestSearch(category++, "Level3" + category))
 
-    for( levelSearch in TestSearchs ) {
-        performSearch( levelSearch, "level" )
+    for (levelSearch in TestSearchs) {
+        performSearch(levelSearch, "level")
     }
 }
 

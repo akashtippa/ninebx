@@ -133,10 +133,18 @@ public class Contacts extends RealmObject implements Parcelable {
         photosId = in.createStringArrayList();
     }
 
-    public static ArrayList<Contacts> createParcelableList(@NotNull RealmResults<Contacts> currentUsers) {
+    public static ArrayList<Contacts> createParcelableList(@NotNull RealmResults<Contacts> contactsRealmResults) {
         ArrayList contacts = new ArrayList();
-        contacts.addAll(currentUsers);
+        contacts.addAll(contactsRealmResults);
         return contacts;
+    }
+
+    @NotNull
+    public static Contacts createContacts(@NotNull Contacts memoryTimeline) {
+        Contacts contacts = new Contacts();
+        contacts.setFirstName(memoryTimeline.firstName);
+        return contacts;
+
     }
 
     @Override

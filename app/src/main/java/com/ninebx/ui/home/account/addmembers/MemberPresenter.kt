@@ -8,22 +8,21 @@ import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.realm.*
-import io.realm.permissions.Permission
-import okhttp3.ResponseBody
-import java.util.*
 import io.realm.ObjectServerError
 import io.realm.PermissionManager
+import io.realm.SyncCredentials
+import io.realm.SyncUser
 import io.realm.permissions.AccessLevel
 import io.realm.permissions.PermissionRequest
 import io.realm.permissions.UserCondition
-
+import okhttp3.ResponseBody
+import java.util.*
 
 
 /**
  * Created by Alok on 14/02/18.
  */
-class MemberPresenter(private val memberView: MemberView, private val adminUser : SyncUser, private val adminId : String ) : SyncUser.Callback<SyncUser> {
+class MemberPresenter(private val memberView: MemberView, private val adminUser: SyncUser, private val adminId: String) : SyncUser.Callback<SyncUser> {
 
 
     private val TAG = MemberPresenter::class.java.simpleName
@@ -90,7 +89,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
                 AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
-                setUserPermissions()
+                memberView.onMemberSignup(mCurrentUser!!)
             }
 
             override fun onError(e: Throwable) {
@@ -99,7 +98,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
 
             override fun onComplete() {
                 AppLogger.d(TAG, "GetUserAPI : onComplete")
-                //memberView.hideProgress()
+                memberView.hideProgress()
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -125,7 +124,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
             override fun onError(error: ObjectServerError) {
                 error.printStackTrace()
                 memberView.hideProgress()
-                memberView.onError(R.string.error_permissions)
+//                memberView.onError(R.string.error_permissions)
             }
         })
 
@@ -142,7 +141,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
         }
     }
 
-    fun setPermissionsForMember( updateMember: Member, memberRole: String ) {
+    fun setPermissionsForMember(updateMember: Member, memberRole: String) {
 
         updateMember.homeAdd = memberRole == "Co-administrator" || memberRole == "User"
         updateMember.homeEdit = memberRole == "Co-administrator"
@@ -179,7 +178,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser 
         updateMember.shoppingAdd = memberRole == "Co-administrator" || memberRole == "User"
         updateMember.shoppingEdit = memberRole == "Co-administrator"
         updateMember.shoppingView = memberRole == "Co-administrator" || memberRole == "User"
-        
+
         updateMember.addingRemovingMember = memberRole == "Co-administrator"
         updateMember.changingMasterPassword = false
 

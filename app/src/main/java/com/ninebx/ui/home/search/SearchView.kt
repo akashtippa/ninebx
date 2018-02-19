@@ -8,7 +8,7 @@ import com.ninebx.ui.base.realm.decrypted.*
  */
 interface SearchView : BaseView {
     fun onCombineFetched(combine: DecryptedCombine)
-    fun onCombineMemoryFetched(combineMemory : DecryptedCombineMemories)
+    fun onCombineMemoryFetched(combineMemory: DecryptedCombineMemories)
     fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel)
     fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation)
     fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests)

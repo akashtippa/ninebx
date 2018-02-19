@@ -11,18 +11,17 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
-import com.ninebx.utility.*
+import com.ninebx.utility.Constants
+import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -30,11 +29,9 @@ import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
-import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list_container.*
 import java.io.Serializable
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -55,7 +52,7 @@ class FragmentListContainer : FragmentBackHelper() {
     private val REQUEST_CONTACT = 0
 
     private var mDarkTheme: Boolean = false
-    private var mContacts: ArrayList<Contact>? = null
+    private var mContacts: ArrayList<Contact>? = ArrayList()
     private var mGroups: List<Group>? = null
     private val PARAM_REQUEST_IN_PROCESS = "requestPermissionsInProcess"
 
@@ -79,8 +76,9 @@ class FragmentListContainer : FragmentBackHelper() {
 
         val bundle = Bundle()
         fragmentValue = arguments!!.getString("categoryName")
-        fragmentCategoryId = arguments!!.getString("categoryId")
-        changeToolbarTitleAndAddInfo(fragmentValue)
+//        fragmentCategoryId = arguments!!.getString("categoryId")
+
+//        changeToolbarTitleAndAddInfo(fragmentValue)
 
 
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(fragmentValue)
@@ -111,19 +109,15 @@ class FragmentListContainer : FragmentBackHelper() {
                 txtAdd.text = "Add Shared Contact"
                 fetchTheContactListFromRealm()
             }
+
         }
     }
 
     private fun fetchTheContactListFromRealm() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-                contactList = getCurrentContactList(realm!!)
-                AppLogger.e("Contacts", "Contacts Results : " + contactList)
-
-                val resultArray = contactList!!.toArray() as Array<Contacts>
-            }
-        })
+        var contactList: ArrayList<Contacts>? = ArrayList()
+        contactList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
+        contacts!!.addAll(contactList!!)
+//        setContactsList()
     }
 
     override fun onBackPressed(): Boolean {
@@ -218,6 +212,7 @@ class FragmentListContainer : FragmentBackHelper() {
         editor.putBoolean(PREFERENCE_PERMISSION_DENIED + permission, true).commit()
     }
 
+
     private fun callForContact() {
         callContactPicker()
 
@@ -275,7 +270,7 @@ class FragmentListContainer : FragmentBackHelper() {
             // we got a result from the contact picker --> show the picked contacts
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
-            setContactsList()
+//            setContactsList()
         }
     }
 
@@ -290,14 +285,14 @@ class FragmentListContainer : FragmentBackHelper() {
             outState.putSerializable(EXTRA_CONTACTS, mContacts as Serializable)
         }
     }
-
+/*
     private fun setContactsList() {
-        mListsAdapter = ContactsAdapter(mContacts)
+        mListsAdapter = ContactsAdapter(contacts, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvCommonList!!.layoutManager = layoutManager
         rvCommonList!!.adapter = mListsAdapter
-    }
+    }*/
 
     private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
         //int start = result.length();

@@ -155,7 +155,13 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.replace(R.id.frameLayout, MyProfileFragment()).commit()
+        val myProfileFragment = MyProfileFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
+        myProfileFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
+
+
     }
 
     private fun navigateToMyProfileUsers() {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>class</key>
+		<string>NBHomeViewController</string>
+		<key>icon</key>
+		<string>tab_Home.png</string>
+		<key>selicon</key>
+		<string>tab_Home.png</string>
+		<key>title</key>
+		<string>Home</string>
+	</dict>
+	<dict>
+		<key>class</key>
+		<string>NBSearchViewController</string>
+		<key>icon</key>
+		<string>tab_search.png</string>
+		<key>selicon</key>
+		<string>tab_search_sel.png</string>
+		<key>title</key>
+		<string>Search</string>
+	</dict>
+	<dict>
+		<key>class</key>
+		<string>NBCalendarViewController</string>
+		<key>icon</key>
+		<string>tab_calendar.png</string>
+		<key>selicon</key>
+		<string>tab_calendar_sel.png</string>
+		<key>title</key>
+		<string>Calendar</string>
+	</dict>
+	<dict>
+		<key>class</key>
+		<string>NBToDoViewController</string>
+		<key>icon</key>
+		<string>tab_lists.png</string>
+		<key>selicon</key>
+		<string>tab_lists_sel.png</string>
+		<key>title</key>
+		<string>Lists</string>
+	</dict>
+	<dict>
+		<key>class</key>
+		<string>NBNotificationViewController</string>
+		<key>icon</key>
+		<string>tab_notifications.png</string>
+		<key>selicon</key>
+		<string>tab_notifications_sel.png</string>
+		<key>title</key>
+		<string>Notifications</string>
+	</dict>
+	<dict>
+		<key>class</key>
+		<string>NBAccountViewController</string>
+		<key>icon</key>
+		<string>tab_account.png</string>
+		<key>selicon</key>
+		<string>tab_account_sel.png</string>
+		<key>title</key>
+		<string>Account</string>
+	</dict>
+</array>
+</plist>
