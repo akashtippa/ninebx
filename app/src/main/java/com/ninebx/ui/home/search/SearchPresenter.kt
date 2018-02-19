@@ -25,6 +25,7 @@ class SearchPresenter {
     private var searchView: SearchView ?= null
     constructor( searchView: SearchView ) {
         this.searchView = searchView
+        initialize()
     }
 
     private var categoryView : CategoryView ?= null
@@ -32,6 +33,7 @@ class SearchPresenter {
     constructor( categoryView: CategoryView, categoryId : Int  ) {
         this.categoryView = categoryView
         this.categoryId = categoryId
+        initialize()
     }
 
     private val context = getApplicationContext()
@@ -45,7 +47,7 @@ class SearchPresenter {
     private val mDecryptCombineShopping = DecryptedCombineShopping()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
-    init
+    private fun initialize()
     {
 
         if( searchView != null ) {

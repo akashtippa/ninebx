@@ -82,11 +82,17 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     override fun showProgress(message: Int) {
+        if( edtSearch == null ) {
+            return
+        }
         edtSearch.isEnabled = false
         progressLayout.show()
     }
 
     override fun hideProgress() {
+        if( edtSearch == null ) {
+            return
+        }
         edtSearch.isEnabled = true
         progressLayout.hide()
     }
