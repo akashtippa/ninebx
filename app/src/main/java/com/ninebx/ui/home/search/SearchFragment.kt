@@ -3,35 +3,35 @@ package com.ninebx.ui.home.search
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.ninebx.R
+
+import com.ninebx.ui.home.BaseHomeFragment
+import kotlinx.android.synthetic.main.fragment_search.*
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.LinearLayout
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.home.BaseHomeFragment
-import kotlinx.android.synthetic.main.fragment_search.*
-
 /**
  * Created by Alok on 03/01/18.
  */
 
 class SearchFragment : BaseHomeFragment(), SearchView {
-    private var mDecryptCombine: DecryptedCombine? = null
-    private var mDecryptCombineMemories: DecryptedCombineMemories? = null
-    private var mDecryptedCombineTravel: DecryptedCombineTravel? = null
-    private var mDecryptedCombineEducation: DecryptedCombineEducation? = null
-    private var mDecryptedCombineInterests: DecryptedCombineInterests? = null
-    private var mDecryptedCombineWellness: DecryptedCombineWellness? = null
-    private var mDecryptedCombineContacts: DecryptedCombineContacts? = null
-    private var mDecryptedCombineShopping: DecryptedCombineShopping? = null
-    private var mDecryptedCombinePersonal: DecryptedCombinePersonal? = null
+    private var mDecryptCombine : DecryptedCombine ?= null
+    private var mDecryptCombineMemories : DecryptedCombineMemories ?= null
+    private var mDecryptedCombineTravel : DecryptedCombineTravel ?= null
+    private var mDecryptedCombineEducation : DecryptedCombineEducation ?= null
+    private var mDecryptedCombineInterests : DecryptedCombineInterests ?= null
+    private var mDecryptedCombineWellness : DecryptedCombineWellness ?= null
+    private var mDecryptedCombineContacts : DecryptedCombineContacts ?= null
+    private var mDecryptedCombineShopping : DecryptedCombineShopping ?= null
+    private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
 
     override fun onCombineFetched(combine: DecryptedCombine) {
         this.mDecryptCombine = combine
@@ -67,12 +67,10 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         mDecryptedCombinePersonal = combinePersonal
         hideProgress()
     }
-
     override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
         mDecryptedCombineShopping = combineShopping
         hideProgress()
     }
-
     override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
         mDecryptedCombineContacts = combineContacts
         hideProgress()
@@ -97,7 +95,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private lateinit var searchDecryptCombine: DecryptedCombine
-    private lateinit var searchDecryptCombineMemories: DecryptedCombineMemories
+    private lateinit var searchDecryptCombineMemories : DecryptedCombineMemories
     private lateinit var searchDecryptCombineTravel: DecryptedCombineTravel
     private lateinit var searchDecryptCombineEducation: DecryptedCombineEducation
     private lateinit var searchDecryptedCombineInterests: DecryptedCombineInterests
@@ -114,10 +112,10 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this)
 
-        edtSearch.addTextChangedListener(object : TextWatcher {
+        edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 val text = edtSearch.text.toString().trim()
-                searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
+                searchDecryptCombine = mSearchPresenter.searchHomeItems( text )
                 searchDecryptCombineTravel = mSearchPresenter.searchTravelItems(text)
                 searchDecryptCombineMemories = mSearchPresenter.searchMemoryItems(text)
                 searchDecryptCombineEducation = mSearchPresenter.searchEducationItems(text)
@@ -187,232 +185,232 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun setupContactsItems() {
-        for (contacts in searchDecryptedCombineContacts.contactsItems) {
+        for(contacts in searchDecryptedCombineContacts.contactsItems){
             mSearchContactsItems.add(Level3SearchItem(R.string.contacts, contacts.firstName, "contacts"))
         }
-        for (mainContacts in searchDecryptedCombineContacts.mainContactsItems) {
+        for(mainContacts in searchDecryptedCombineContacts.mainContactsItems){
             mSearchContactsItems.add(Level3SearchItem(R.string.contacts, mainContacts.userName, "mainContacts"))
         }
-        for (contactList in searchDecryptedCombineContacts.listItems) {
+        for(contactList in searchDecryptedCombineContacts.listItems){
             mSearchContactsItems.add(Level3SearchItem(R.string.contacts, contactList.listName, "contactsList"))
         }
         setupAdapter(rvContacts, contactsLayout, mSearchContactsItems)
     }
 
     private fun setupEducationItems() {
-        for (education in searchDecryptCombineEducation.educationItems) {
+        for (education in searchDecryptCombineEducation.educationItems){
             mSearchEducationItems.add(Level3SearchItem(R.string.education, education.userName, "education"))
         }
-        for (mainEducation in searchDecryptCombineEducation.mainEducationItems) {
+        for(mainEducation in searchDecryptCombineEducation.mainEducationItems){
             mSearchEducationItems.add(Level3SearchItem(R.string.education, mainEducation.name, "mainEducation"))
         }
-        for (work in searchDecryptCombineEducation.workItems) {
+        for(work in searchDecryptCombineEducation.workItems){
             mSearchEducationItems.add(Level3SearchItem(R.string.education, work.name, "work"))
         }
-        for (educationList in searchDecryptCombineEducation.listItems) {
+        for(educationList in searchDecryptCombineEducation.listItems){
             mSearchEducationItems.add(Level3SearchItem(R.string.education, educationList.listName, "educationList"))
         }
         setupAdapter(rvEducationWork, educationLayout, mSearchEducationItems)
     }
 
     private fun setupPersonalItems() {
-        for (certificate in searchDecryptedCombinePersonal.certificateItems) {
+        for(certificate in searchDecryptedCombinePersonal.certificateItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, certificate.nameOnCertificate, "certificate"))
         }
-        for (government in searchDecryptedCombinePersonal.governmentItems) {
+        for(government in searchDecryptedCombinePersonal.governmentItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, government.name, "government"))
         }
-        for (license in searchDecryptedCombinePersonal.licenseItems) {
+        for(license in searchDecryptedCombinePersonal.licenseItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, license.nameOnLicense, "license"))
         }
-        for (personal in searchDecryptedCombinePersonal.personalItems) {
+        for(personal in searchDecryptedCombinePersonal.personalItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, personal.userName, "personal"))
         }
-        for (social in searchDecryptedCombinePersonal.socialItems) {
+        for(social in searchDecryptedCombinePersonal.socialItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, social.attachmentNames, "social"))
         }
-        for (taxID in searchDecryptedCombinePersonal.taxIDItems) {
+        for(taxID in searchDecryptedCombinePersonal.taxIDItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, taxID.name, "taxID"))
         }
-        for (personalList in searchDecryptedCombinePersonal.listItems) {
+        for(personalList in searchDecryptedCombinePersonal.listItems){
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, personalList.listName, "personalList"))
         }
         setupAdapter(rvPersonal, personalLayout, mSearchPersonalItems)
     }
 
     private fun setupInterestsItems() {
-        for (interests in searchDecryptedCombineInterests.interestItems) {
+        for(interests in searchDecryptedCombineInterests.interestItems){
             mSearchInterestsItems.add(Level3SearchItem(R.string.interests, interests.userName, "interests"))
         }
-        for (interestList in searchDecryptedCombineInterests.listItems) {
+        for(interestList in searchDecryptedCombineInterests.listItems){
             mSearchInterestsItems.add(Level3SearchItem(R.string.interests, interestList.listName, "interestsList"))
         }
         setupAdapter(rvInterests, interestsLayout, mSearchInterestsItems)
     }
 
     private fun setupWellnessItems() {
-        for (checkups in searchDecryptedCombineWellness.checkupsItems) {
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, checkups.attachmentNames, "checkups"))
+        for (checkups in searchDecryptedCombineWellness.checkupsItems){
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, checkups.attachmentNames, "checkups" ))
         }
 
-        for (emergencyContacts in searchDecryptedCombineWellness.emergencyContactsItems) {
+        for(emergencyContacts in searchDecryptedCombineWellness.emergencyContactsItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, emergencyContacts.name))
         }
 
-        for (eyeglassPrescription in searchDecryptedCombineWellness.eyeglassPrescriptionsItems) {
+        for(eyeglassPrescription in searchDecryptedCombineWellness.eyeglassPrescriptionsItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, eyeglassPrescription.attachmentNames))
         }
 
-        for (healthcareProvider in searchDecryptedCombineWellness.healthcareProvidersItems) {
+        for(healthcareProvider in searchDecryptedCombineWellness.healthcareProvidersItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, healthcareProvider.name))
         }
 
-        for (identification in searchDecryptedCombineWellness.identificationItems) {
+        for(identification in searchDecryptedCombineWellness.identificationItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, identification.name))
         }
 
-        for (medicalConditions in searchDecryptedCombineWellness.medicalConditionsItems) {
+        for(medicalConditions in searchDecryptedCombineWellness.medicalConditionsItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicalConditions.attachmentNames))
         }
 
-        for (medicalHistory in searchDecryptedCombineWellness.medicalHistoryItems) {
+        for(medicalHistory in searchDecryptedCombineWellness.medicalHistoryItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicalHistory.attachmentNames))
         }
 
-        for (medicaltion in searchDecryptedCombineWellness.medicationsItems) {
+        for(medicaltion in searchDecryptedCombineWellness.medicationsItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicaltion.name))
         }
 
-        for (vitalNumbers in searchDecryptedCombineWellness.vitalNumbersItems) {
+        for(vitalNumbers in searchDecryptedCombineWellness.vitalNumbersItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, vitalNumbers.attachmentNames))
         }
 
-        for (wellness in searchDecryptedCombineWellness.wellnessItems) {
+        for(wellness in searchDecryptedCombineWellness.wellnessItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, wellness.userName))
         }
 
-        for (wellnessList in searchDecryptedCombineWellness.listItems) {
+        for(wellnessList in searchDecryptedCombineWellness.listItems){
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, wellnessList.listName))
         }
         setupAdapter(rvWellness, wellnessLayout, mSearchWellnessItems)
     }
 
     private fun setupShoppingItems() {
-        for (loyaltyPrograms in searchDecryptedCombineShopping.loyaltyProgramsItems) {
+        for(loyaltyPrograms in searchDecryptedCombineShopping.loyaltyProgramsItems){
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, loyaltyPrograms.userName))
         }
-        for (recentPurchase in searchDecryptedCombineShopping.recentPurchaseItems) {
+        for(recentPurchase in searchDecryptedCombineShopping.recentPurchaseItems){
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, recentPurchase.attachmentNames))
         }
-        for (shopping in searchDecryptedCombineShopping.shoppingItems) {
+        for(shopping in searchDecryptedCombineShopping.shoppingItems){
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shopping.userName))
         }
-        for (clothingSizes in searchDecryptedCombineShopping.clothingSizesItems) {
+        for(clothingSizes in searchDecryptedCombineShopping.clothingSizesItems){
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName))
         }
-        for (shoppingList in searchDecryptedCombineShopping.listItems) {
+        for(shoppingList in searchDecryptedCombineShopping.listItems){
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName))
         }
         setupAdapter(rvShopping, shoppingLayout, mSearchShoppingItems)
     }
 
     private fun setupMemoriesItems() {
-        for (mainMemory in searchDecryptCombineMemories.mainMemoriesItems) {
+        for(mainMemory in searchDecryptCombineMemories.mainMemoriesItems){
             mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, mainMemory.attachmentNames, "mainMemory"))
         }
-        for (memoryTimeline in searchDecryptCombineMemories.memoryTimelineItems) {
+        for(memoryTimeline in searchDecryptCombineMemories.memoryTimelineItems){
             mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, memoryTimeline.attachmentNames, "memoryTimeline"))
         }
-        for (memorylist in searchDecryptCombineMemories.listItems) {
+        for(memorylist in searchDecryptCombineMemories.listItems){
             mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, memorylist.listName, "memorylist"))
         }
         setupAdapter(rvMemories, memoriesLayout, mSearchMemoriesItems)
     }
 
     private fun setupTravelItems() {
-        for (documents in searchDecryptCombineTravel.documentsItems) {
+        for(documents in searchDecryptCombineTravel.documentsItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.nameOnTravelDocument, "documents"))
         }
 
-        for (loyalty in searchDecryptCombineTravel.loyaltyItems) {
+        for(loyalty in searchDecryptCombineTravel.loyaltyItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.accountName, "loyalty"))
         }
 
-        for (travel in searchDecryptCombineTravel.travelItems) {
+        for(travel in searchDecryptCombineTravel.travelItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, travel.accountName, "travel"))
         }
 
-        for (vacation in searchDecryptCombineTravel.vacationsItems) {
+        for(vacation in searchDecryptCombineTravel.vacationsItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.vacation_home, vacation.attachmentNames, "vacation"))
         }
 
-        for (travelList in searchDecryptCombineTravel.listItems) {
+        for(travelList in searchDecryptCombineTravel.listItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.travel_list, travelList.listName, "travelList"))
         }
         setupAdapter(rvTravel, travelLayout, mSearchTravelItems)
     }
 
     private fun setupHomeItems() {
-        for (finance in searchDecryptCombine.financialItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, finance.accountName, "finance"))
+        for( finance in searchDecryptCombine.financialItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance" ))
         }
-        for (payment in searchDecryptCombine.paymentItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, payment.userName, "payment"))
+        for( payment in searchDecryptCombine.paymentItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.userName, "payment" ))
         }
-        for (asset in searchDecryptCombine.assetItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, asset.assetName, "asset"))
+        for( asset in searchDecryptCombine.assetItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset" ))
         }
-        for (insurance in searchDecryptCombine.insuranceItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, insurance.insuranceCompany, "insurance"))
+        for( insurance in searchDecryptCombine.insuranceItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  insurance.insuranceCompany, "insurance" ))
         }
-        for (tax in searchDecryptCombine.taxesItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, tax.taxPayer, "tax"))
+        for( tax in searchDecryptCombine.taxesItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  tax.taxPayer, "tax" ))
         }
-        for (vehicle in searchDecryptCombine.vehicleItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, vehicle.titleName, "vehicle"))
+        for( vehicle in searchDecryptCombine.vehicleItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.titleName, "vehicle" ))
         }
-        for (property in searchDecryptCombine.propertyItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, property.propertyName, "property"))
+        for( property in searchDecryptCombine.propertyItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  property.propertyName, "property" ))
         }
-        for (home in searchDecryptCombine.listItems) {
-            mSearchHomeList.add(Level3SearchItem(R.string.home_amp_money, home.listName, "home"))
+        for( home in searchDecryptCombine.listItems ) {
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  home.listName, "home" ))
         }
-        if (mSearchHomeList.size > 0) //Pass the right recyclerview and layout to be shown with searchlist to be populated
-            setupAdapter(rvHomeMoney, homeLayout, mSearchHomeList)
+        if( mSearchHomeList.size > 0 ) //Pass the right recyclerview and layout to be shown with searchlist to be populated
+            setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
     }
 
-    private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
+    private fun setupAdapter( searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        searchRecyclerView.adapter = SearchAdapter(searchList, object : SearchItemClickListener {
+        searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
             override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
-                when (searchItem.searchCategory) {
+                when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
-                        switchHomeItems(position, searchItem)
+                        switchHomeItems( position, searchItem )
                     }
                     (R.string.travel) -> {
-                        switchTravelItems(position, searchItem)
+                        switchTravelItems( position, searchItem )
                     }
                     (R.string.contacts) -> {
-                        switchContactsItems(position, searchItem)
+                        switchContactsItems( position, searchItem )
                     }
                     (R.string.education_work) -> {
-                        switchEducationItems(position, searchItem)
+                        switchEducationItems( position, searchItem )
                     }
                     (R.string.personal) -> {
-                        switchPersonalItems(position, searchItem)
+                        switchPersonalItems( position, searchItem )
                     }
                     (R.string.interests) -> {
-                        switchInterestsItems(position, searchItem)
+                        switchInterestsItems( position, searchItem )
                     }
                     (R.string.wellness) -> {
-                        switchWellnessItems(position, searchItem)
+                        switchWellnessItems( position, searchItem )
                     }
                     (R.string.memories) -> {
-                        switchMemoriesItems(position, searchItem)
+                        switchMemoriesItems( position, searchItem )
                     }
                     (R.string.shopping) -> {
-                        switchShoppingItems(position, searchItem)
+                        switchShoppingItems( position, searchItem )
                     }
                 }
             }
@@ -422,7 +420,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "loyalty" -> {
                 val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
             }
@@ -442,12 +440,12 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchMemoriesItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "mainMemory" -> {
                 val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems[position]
             }
             "memoryTimeline" -> {
-                val selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
+                val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
             }
             "memorylist" -> {
                 val selectedDocument = searchDecryptCombineMemories.listItems[position]
@@ -456,11 +454,11 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchWellnessItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "checkups" -> {
                 val selectedDocument = searchDecryptedCombineWellness.checkupsItems[position]
             }
-            "emergencyContacts" -> {
+            "emergencyContacts" ->{
                 val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems[position]
             }
             "eyeglassPrescription" -> {
@@ -494,19 +492,20 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchInterestsItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "interests" -> {
                 val selectedDocument = searchDecryptedCombineInterests.interestItems[position]
             }
-            "interestsList" -> {
+            "interestsList" ->
+            {
                 val selectedDocument = searchDecryptedCombineInterests.listItems[position]
             }
         }
     }
 
     private fun switchPersonalItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
-            "certificate" -> {
+        when(searchItem.categoryName){
+            "certificate" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
             }
             "govenment" -> {
@@ -515,7 +514,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
             }
-            "personal" -> {
+            "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
             }
             "social" -> {
@@ -531,7 +530,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchEducationItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "education" -> {
                 val selectedDocument = searchDecryptCombineEducation.educationItems[position]
             }
@@ -548,7 +547,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchContactsItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "contacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.contactsItems[position]
             }
@@ -562,7 +561,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when(searchItem.categoryName){
             "document" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
             }
@@ -582,7 +581,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun switchHomeItems(position: Int, searchItem: Level3SearchItem) {
-        when (searchItem.categoryName) {
+        when( searchItem.categoryName ) {
             "finance" -> {
                 val selectedDocument = searchDecryptCombine.financialItems[position]
             }
@@ -610,3 +609,5 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         }
     }
 }
+
+
