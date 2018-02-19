@@ -1098,7 +1098,7 @@ fun decryptDocuments(documents: Documents): DecryptedDocuments {
     decryptDocuments.attachmentNames = documents.attachmentNames.decryptString()
     decryptDocuments.created = documents.created.decryptString()
     decryptDocuments.modified = documents.modified.decryptString()
-    decryptDocuments.createdUser = documents.createdUser.decryptString()
+    decryptDocuments.createdUser = documents.createdUser
 
     return decryptDocuments
 }
@@ -1593,7 +1593,7 @@ fun decryptRecentSearch(recentSearch: RecentSearch?): DecryptedRecentSearch {
     decryptRecentSearch.listName = recentSearch!!.listName.decryptString()
     decryptRecentSearch.subCategory = recentSearch!!.subCategory.decryptString()
     decryptRecentSearch.mainCategory = recentSearch!!.mainCategory.decryptString()
-    decryptRecentSearch.classType = recentSearch!!.classType.decryptString()
+    decryptRecentSearch.classType = recentSearch!!.classType
     return decryptRecentSearch
 }
 

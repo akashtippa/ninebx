@@ -30,8 +30,7 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
         override fun onClick(view: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                adapterClickListener.onItemClick(position, searchItems[position])
-            }
+                adapterClickListener.onItemClick(position, searchItems[position]) }
         }
 
         val textView: TextView = view.findViewById<View>(R.id.txtListSearch) as TextView

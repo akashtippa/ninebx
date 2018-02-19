@@ -39,6 +39,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
     private var mRecentSearch = ArrayList<DecryptedRecentSearch>()
 
+    private lateinit var mSearchPresenter: SearchPresenter
+
     override fun onCombineFetched(combine: DecryptedCombine) {
         this.mDecryptCombine = combine
         hideProgress()
@@ -122,7 +124,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private lateinit var searchDecryptedCombinePersonal: DecryptedCombinePersonal
     private lateinit var searchDecryptedCombineShopping: DecryptedCombineShopping
     private lateinit var searchDecryptedCombineContacts: DecryptedCombineContacts
-    private lateinit var mSearchPresenter: SearchPresenter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -671,35 +673,43 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when( searchItem.categoryName ) {
             "finance" -> {
                 val selectedDocument = searchDecryptCombine.financialItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment(selectedDocument)
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.accountName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "payment" -> {
                 val selectedDocument = searchDecryptCombine.paymentItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "asset" -> {
                 val selectedDocument = searchDecryptCombine.assetItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.assetName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "insurance" -> {
                 val selectedDocument = searchDecryptCombine.insuranceItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "tax" -> {
                 val selectedDocument = searchDecryptCombine.taxesItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "vehicle" -> {
                 val selectedDocument = searchDecryptCombine.vehicleItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "property" -> {
                 val selectedDocument = searchDecryptCombine.propertyItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
             "home" -> {
                 val selectedDocument = searchDecryptCombine.listItems[position]
                 goToCategoryFragment( selectedDocument )
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
         }
     }

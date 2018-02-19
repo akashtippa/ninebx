@@ -163,5 +163,17 @@ public class DecryptedRecentSearch implements Parcelable {
         this.classType = classType;
     }
 
-
+    @Override
+    public String toString() {
+        return "DecryptedRecentSearch{" +
+                "id=" + id +
+                ", search_id=" + search_id +
+                ", detail_id=" + detail_id +
+                ", listName='" + listName + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", mainCategory='" + mainCategory + '\'' +
+                ", createdDate=" + createdDate +
+                ", classType='" + classType + '\'' +
+                '}';
+    }
 }

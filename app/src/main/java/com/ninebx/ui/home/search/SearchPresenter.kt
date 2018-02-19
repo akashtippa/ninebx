@@ -17,6 +17,7 @@ import com.ninebx.ui.home.baseCategories.CategoryView
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import java.util.*
 
 /**
  * Created by Alok on 03/01/18.
@@ -105,6 +106,16 @@ class SearchPresenter {
         }
     }
 
+    fun updateRecentSearch(listname: String, subCategory: String, mainCategory: String, classType: String) {
+        prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                realm!!.beginTransaction()
+                var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname, subCategory, mainCategory, Date(),  classType)
+                realm.copyToRealm(encryptRecentSearch(updateRecent))
+                AppLogger.d("RecentSearch", "Update successfull " + encryptRecentSearch(updateRecent))
+            }
+        })
+    }
     private fun fetchCombineContacts() {
         prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
@@ -121,7 +132,7 @@ class SearchPresenter {
         })
     }
 
-    private fun fetchRecentSearch() {
+    private  fun fetchRecentSearch() {
         prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                val recentSearch = realm!!.where(RecentSearch::class.java).findAll()
@@ -129,6 +140,7 @@ class SearchPresenter {
                     for(i in 0 until recentSearch.size){
                         decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
                         searchView!!.onRecentSearchFetched(decryptedRecentSearch)
+                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
                     }
                 }
             }
