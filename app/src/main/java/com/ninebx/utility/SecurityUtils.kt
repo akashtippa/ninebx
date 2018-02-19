@@ -2544,7 +2544,7 @@ fun decryptCombineWellness(combineWellness: CombineWellness) : DecryptedCombineW
     }
 
     for(medicalHistoryItems in combineWellness.medicalHistoryItems){
-        decryptedCombineWellness.medicalConditionsItems.add(decryptMedicalConditions(medicalHistoryItems as MedicalConditions))
+        decryptedCombineWellness.medicalHistoryItems.add(decryptMedicalHistory(medicalHistoryItems as MedicalHistory))
     }
 
     for(medicationsItems in combineWellness.medicationsItems){
