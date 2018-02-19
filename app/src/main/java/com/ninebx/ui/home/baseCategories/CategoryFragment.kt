@@ -15,10 +15,12 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.SubListsFragment
+import com.ninebx.ui.home.search.SearchPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
@@ -29,9 +31,50 @@ import kotlinx.android.synthetic.main.fragment_category.*
  */
 class CategoryFragment : FragmentBackHelper(), CategoryView {
 
+    override fun onCombineFetched(combine: DecryptedCombine) {
+        setupUI()
+    }
+
+    override fun onCombineMemoryFetched(combineMemory: DecryptedCombineMemories) {
+        setupUI()
+    }
+
+    override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
+        setupUI()
+    }
+
+    override fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation) {
+        setupUI()
+    }
+
+    override fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests) {
+        setupUI()
+    }
+
+    override fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness) {
+        setupUI()
+    }
+
+    override fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal) {
+        setupUI()
+    }
+
+    override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
+        setupUI()
+    }
+
+    override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
+       setupUI()
+    }
+
     override fun showProgress(message: Int) {
         layoutProgress.show()
         tvProgress.text = getString(message)
+    }
+
+    private fun setupUI() {
+        hideProgress()
+        inflateLayout(categories)
     }
 
     var categoryName = ""
@@ -47,9 +90,10 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
+    private lateinit var categories : ArrayList<Category>
+
     override fun onSuccess(categories: ArrayList<Category>) {
-        hideProgress()
-        inflateLayout(categories)
+        this.categories = categories
     }
 
     val prefrences = NineBxPreferences()
@@ -132,6 +176,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     private lateinit var mCategoryPresenter: CategoryPresenter
+    private lateinit var mSearchPresenter: SearchPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category, container, false)
@@ -141,6 +186,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
+        mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
     }

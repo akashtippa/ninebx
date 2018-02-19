@@ -39,6 +39,5 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
         init {
             view.setOnClickListener(this)
         }
-
     }
 }
