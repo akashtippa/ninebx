@@ -1,6 +1,9 @@
 package com.ninebx.ui.home.baseCategories
 
+import android.os.Parcelable
 import com.ninebx.R
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 
 /**
@@ -8,7 +11,8 @@ import com.ninebx.utility.Constants
  */
 class CategoryHelper(
         val category_id: Int,
-        val categoryView: CategoryView
+        val categoryView: CategoryView,
+        val combineItems: Parcelable
 ) {
 
     init {
@@ -267,6 +271,10 @@ class CategoryHelper(
     }
 
     private fun getHomeAndMoneyCategories() {
+
+        val decryptedCombine : DecryptedCombine = combineItems as DecryptedCombine
+        AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine )
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1001
@@ -275,10 +283,10 @@ class CategoryHelper(
         category.title = "Financial Accounts"
         category.drawableString = "ic_icon_financial_accounts"
 
-        category.subCategories.add(SubCategory("Banking", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Investments/Retirement", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Loans/Mortgages", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Other financial accounts", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Banking", "", decryptedCombine.getFinanceCount("home_1001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Investments/Retirement", "", decryptedCombine.getFinanceCount("home_1002"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Loans/Mortgages", "", decryptedCombine.getFinanceCount("home_1003"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Other financial accounts", "", decryptedCombine.getFinanceCount("home_1004"), Constants.SUB_CATEGORY_ADD_ITEM))
 
 
         categoryList.add(category)
@@ -289,8 +297,8 @@ class CategoryHelper(
         category.title = "Payment Methods"
         category.drawableString = "ic_icon_payment_methods"
 
-        category.subCategories.add(SubCategory("Credit/Debit cards", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Other payment accounts", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Credit/Debit cards", "", decryptedCombine.getPaymentCount("home_2001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Other payment accounts", "", decryptedCombine.getPaymentCount("home_2002"), Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -300,10 +308,10 @@ class CategoryHelper(
         category.title = "Property"
         category.drawableString = "ic_icon_property"
 
-        category.subCategories.add(SubCategory("Primary home (owned)", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Property (rented for own use)", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Vacation home", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Investment/Rental property", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Primary home (owned)", "", decryptedCombine.getPropertyCount("home_3001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Property (rented for own use)", "", decryptedCombine.getPropertyCount("home_3002"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Vacation home", "", decryptedCombine.getPropertyCount("home_3003"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Investment/Rental property", "", decryptedCombine.getPropertyCount("home_3004"), Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -313,8 +321,8 @@ class CategoryHelper(
         category.title = "Auto"
         category.drawableString = "ic_icon_auto"
 
-        category.subCategories.add(SubCategory("Vehicles", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Maintenance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Vehicles", "", decryptedCombine.getAutoCount("home_4001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Maintenance", "", decryptedCombine.getAutoCount("home_4002"), Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -324,11 +332,11 @@ class CategoryHelper(
         category.title = "Other Assets"
         category.drawableString = "ic_icon_other_assets"
 
-        category.subCategories.add(SubCategory("Jewelry", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Art and collectibles", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Computers and electronics", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Furniture", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Others", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Jewelry", "", decryptedCombine.getOtherCount("home_5001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Art and collectibles", "", decryptedCombine.getOtherCount("home_5002"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Computers and electronics", "", decryptedCombine.getOtherCount("home_5003"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Furniture", "", decryptedCombine.getOtherCount("home_5004"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Others", "", decryptedCombine.getOtherCount("home_5005"), Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -338,11 +346,11 @@ class CategoryHelper(
         category.title = "Insurance"
         category.drawableString = "ic_icon_insurance"
 
-        category.subCategories.add(SubCategory("Homeowners/Renters insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Auto insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Life insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Health insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Umbrella insurance", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Homeowners/Renters insurance", "", decryptedCombine.getInsuranceCount("home_6001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Auto insurance", "", decryptedCombine.getInsuranceCount("home_6002"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Life insurance", "", decryptedCombine.getInsuranceCount("home_6003"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Health insurance", "", decryptedCombine.getInsuranceCount("home_6004"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Umbrella insurance", "", decryptedCombine.getInsuranceCount("home_6005"), Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -352,8 +360,8 @@ class CategoryHelper(
         category.title = "Taxes"
         category.drawableString = "ic_icon_tax"
 
-        category.subCategories.add(SubCategory("Past returns", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Returns to be filed", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Past returns", "", decryptedCombine.getTaxesCount("home_7001"), Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Returns to be filed", "", decryptedCombine.getTaxesCount("home_7002"), Constants.SUB_CATEGORY_ADD_ITEM))
 
         categoryList.add(category)
 
@@ -362,6 +370,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.formsCount = decryptedCombine.getFinanceCount("home_8001")
 
         categoryList.add(category)
 
@@ -370,6 +379,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.formsCount = decryptedCombine.getOtherCount("home_9001")
 
         categoryList.add(category)
 
@@ -378,6 +388,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.formsCount = decryptedCombine.getOtherCount("home_9001")
 
         categoryList.add(category)
 

@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.baseCategories
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -34,39 +35,50 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    private var combinedItems : Parcelable?= null
+
     override fun onCombineFetched(combine: DecryptedCombine) {
+        this.combinedItems = combine
         setupUI()
     }
 
     override fun onCombineMemoryFetched(combineMemory: DecryptedCombineMemories) {
+        this.combinedItems = combineMemory
         setupUI()
     }
 
     override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
+        this.combinedItems = combineTravel
         setupUI()
     }
 
     override fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation) {
+        this.combinedItems = combineEducation
         setupUI()
     }
 
     override fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests) {
+        this.combinedItems = combineInterests
         setupUI()
     }
 
     override fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness) {
+        this.combinedItems = combineWellness
         setupUI()
     }
 
     override fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal) {
+        this.combinedItems = combinePersonal
         setupUI()
     }
 
     override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
+        this.combinedItems = combineShopping
         setupUI()
     }
 
     override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
+        this.combinedItems = combineContacts
        setupUI()
     }
 
@@ -76,8 +88,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     private fun setupUI() {
-        hideProgress()
-        inflateLayout(categories)
+        mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), combinedItems!!, this)
     }
 
     var categoryName = ""
@@ -97,6 +108,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     override fun onSuccess(categories: ArrayList<Category>) {
         this.categories = categories
+        hideProgress()
+        inflateLayout(categories)
     }
 
     val prefrences = NineBxPreferences()
@@ -188,7 +201,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
+
         mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
