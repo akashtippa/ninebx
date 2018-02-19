@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.baseCategories
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,10 +16,12 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.SubListsFragment
+import com.ninebx.ui.home.search.SearchPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
@@ -29,9 +32,60 @@ import kotlinx.android.synthetic.main.fragment_category.*
  */
 class CategoryFragment : FragmentBackHelper(), CategoryView {
 
+    private var combinedItems : Parcelable?= null
+
+    override fun onCombineFetched(combine: DecryptedCombine) {
+        this.combinedItems = combine
+        setupUI()
+    }
+
+    override fun onCombineMemoryFetched(combineMemory: DecryptedCombineMemories) {
+        this.combinedItems = combineMemory
+        setupUI()
+    }
+
+    override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
+        this.combinedItems = combineTravel
+        setupUI()
+    }
+
+    override fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation) {
+        this.combinedItems = combineEducation
+        setupUI()
+    }
+
+    override fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests) {
+        this.combinedItems = combineInterests
+        setupUI()
+    }
+
+    override fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness) {
+        this.combinedItems = combineWellness
+        setupUI()
+    }
+
+    override fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal) {
+        this.combinedItems = combinePersonal
+        setupUI()
+    }
+
+    override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
+        this.combinedItems = combineShopping
+        setupUI()
+    }
+
+    override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
+        this.combinedItems = combineContacts
+       setupUI()
+    }
+
     override fun showProgress(message: Int) {
         layoutProgress.show()
         tvProgress.text = getString(message)
+    }
+
+    private fun setupUI() {
+        mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), combinedItems!!, this)
     }
 
     var categoryName = ""
@@ -47,7 +101,10 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
+    private lateinit var categories : ArrayList<Category>
+
     override fun onSuccess(categories: ArrayList<Category>) {
+        this.categories = categories
         hideProgress()
         inflateLayout(categories)
     }
@@ -132,6 +189,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     private lateinit var mCategoryPresenter: CategoryPresenter
+    private lateinit var mSearchPresenter: SearchPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category, container, false)
@@ -140,7 +198,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), this)
+
+        mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
     }

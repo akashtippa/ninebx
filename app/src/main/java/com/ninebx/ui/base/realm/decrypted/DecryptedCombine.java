@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -161,6 +163,70 @@ public class DecryptedCombine implements Parcelable {
                 ", taxesItems=" + taxesItems +
                 ", listItems=" + listItems +
                 '}';
+    }
+
+    public int getFinanceCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedFinancial selectedItem : financialItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getPaymentCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedPayment selectedItem : paymentItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getPropertyCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedProperty selectedItem : propertyItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getAutoCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedVehicle selectedItem : vehicleItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getOtherCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedHomeList selectedItem : listItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getInsuranceCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedInsurance selectedItem : insuranceItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getTaxesCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedTax selectedItem : taxesItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getAssetCount( String selectionType ) {
+        int count = 0;
+        for( DecryptedAsset selectedItem : assetItems ) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
     }
 }
 
