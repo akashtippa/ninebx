@@ -1,6 +1,8 @@
 package com.ninebx.ui.home.search
 
 import android.os.Bundle
+import android.os.Parcelable
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,11 +15,14 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.LinearLayout
+import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.home.baseCategories.CategoryFragment
+
 /**
  * Created by Alok on 03/01/18.
  */
@@ -379,11 +384,26 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
     }
 
-    private fun setupAdapter( searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
+    private var categoryFragment: CategoryFragment ?= null
+    private var bundle: Bundle ?= null
+
+    private var fragmentTransaction: FragmentTransaction? = null
+
+    private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
             override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
+
+                fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                fragmentTransaction!!.addToBackStack(null)
+
+                bundle = Bundle()
+                bundle!!.putInt("category", R.string.home_amp_money)
+                categoryFragment = CategoryFragment()
+                categoryFragment!!.arguments = bundle
+
+                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
@@ -423,18 +443,23 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "loyalty" -> {
                 val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "recentPurchase" -> {
                 val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "shopping" -> {
                 val selectedDocument = searchDecryptedCombineShopping.shoppingItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "clothingSize" -> {
                 val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "shoppingList" -> {
                 val selectedDocument = searchDecryptedCombineShopping.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -443,12 +468,15 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "mainMemory" -> {
                 val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "memoryTimeline" -> {
                 val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "memorylist" -> {
                 val selectedDocument = searchDecryptCombineMemories.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -457,36 +485,47 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "checkups" -> {
                 val selectedDocument = searchDecryptedCombineWellness.checkupsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "emergencyContacts" ->{
                 val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "eyeglassPrescription" -> {
                 val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "healthcareProvider" -> {
                 val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "identification" -> {
                 val selectedDocument = searchDecryptedCombineWellness.identificationItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "medicalCondition" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "medicalHistory" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "medications" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicationsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "vitalNumbers" -> {
                 val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "wellness" -> {
                 val selectedDocument = searchDecryptedCombineWellness.wellnessItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "wellnessList" -> {
                 val selectedDocument = searchDecryptedCombineWellness.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -495,10 +534,12 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "interests" -> {
                 val selectedDocument = searchDecryptedCombineInterests.interestItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "interestsList" ->
             {
                 val selectedDocument = searchDecryptedCombineInterests.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -507,24 +548,31 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "certificate" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "govenment" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "social" -> {
-                val selectedDocuments = searchDecryptedCombinePersonal.socialItems[position]
+                val selectedDocument = searchDecryptedCombinePersonal.socialItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "taxID" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.taxIDItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "personalList" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -533,15 +581,19 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "education" -> {
                 val selectedDocument = searchDecryptCombineEducation.educationItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "mainEducation" -> {
                 val selectedDocument = searchDecryptCombineEducation.mainEducationItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "work" -> {
                 val selectedDocument = searchDecryptCombineEducation.workItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "educationList" -> {
                 val selectedDocument = searchDecryptCombineEducation.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -550,12 +602,15 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "contacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.contactsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "mainContacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.mainContactsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "contactList" -> {
                 val selectedDocument = searchDecryptedCombineContacts.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
     }
@@ -564,49 +619,68 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         when(searchItem.categoryName){
             "document" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "loyalty" -> {
                 val selectedDocument = searchDecryptCombineTravel.loyaltyItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "travel" -> {
                 val selectedItems = searchDecryptCombineTravel.travelItems[position]
+                goToCategoryFragment( selectedItems )
             }
             "vacation" -> {
                 val selectedItems = searchDecryptCombineTravel.vacationsItems[position]
+                goToCategoryFragment( selectedItems )
             }
             "travelList" -> {
                 val selectedItems = searchDecryptCombineTravel.listItems[position]
+                goToCategoryFragment( selectedItems )
             }
         }
     }
 
     private fun switchHomeItems(position: Int, searchItem: Level3SearchItem) {
+
         when( searchItem.categoryName ) {
             "finance" -> {
                 val selectedDocument = searchDecryptCombine.financialItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "payment" -> {
                 val selectedDocument = searchDecryptCombine.paymentItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "asset" -> {
                 val selectedDocument = searchDecryptCombine.assetItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "insurance" -> {
                 val selectedDocument = searchDecryptCombine.insuranceItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "tax" -> {
                 val selectedDocument = searchDecryptCombine.taxesItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "vehicle" -> {
                 val selectedDocument = searchDecryptCombine.vehicleItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "property" -> {
                 val selectedDocument = searchDecryptCombine.propertyItems[position]
+                goToCategoryFragment( selectedDocument )
             }
             "home" -> {
                 val selectedDocument = searchDecryptCombine.listItems[position]
+                goToCategoryFragment( selectedDocument )
             }
         }
+    }
+
+    private fun goToCategoryFragment(selectedDocument: Parcelable?) {
+        bundle!!.putParcelable("selectedDocument", selectedDocument)
+        fragmentTransaction!!.add(R.id.frameLayout, categoryFragment).commit()
     }
 }
 
