@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -167,64 +169,96 @@ public class DecryptedCombine implements Parcelable {
 
     public int getFinanceCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedFinancial selectedItem : financialItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getPaymentCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedPayment selectedItem : paymentItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getPropertyCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedProperty selectedItem : propertyItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getAutoCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedVehicle selectedItem : vehicleItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getOtherCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedHomeList selectedItem : listItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getInsuranceCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedInsurance selectedItem : insuranceItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getTaxesCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedTax selectedItem : taxesItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getAssetCount( String selectionType ) {
         int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedAsset selectedItem : assetItems ) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            if( !ids.contains(selectedItem.getId()) ) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }

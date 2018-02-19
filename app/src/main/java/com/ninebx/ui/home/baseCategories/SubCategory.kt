@@ -10,13 +10,15 @@ class SubCategory(
         var title: String = "",
         var drawableString: String = "",
         var formsCount: Int = 0,
-        var type: Int = 0
+        var type: Int = 0,
+        var subCategoryId : String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
             source.readInt(),
-            source.readInt()
+            source.readInt(),
+            source.readString()
     )
 
     override fun describeContents() = 0
@@ -26,6 +28,7 @@ class SubCategory(
         writeString(drawableString)
         writeInt(formsCount)
         writeInt(type)
+        writeString(subCategoryId)
     }
 
     companion object {
