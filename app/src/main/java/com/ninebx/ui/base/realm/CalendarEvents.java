@@ -212,5 +212,29 @@ public class CalendarEvents extends RealmObject {
         this.photosId = photosId;
     }
 
-
+    @Override
+    public String toString() {
+        return "CalendarEvents{" +
+                "id=" + id +
+                ", eventID=" + eventID +
+                ", classType='" + classType + '\'' +
+                ", title=" + title +
+                ", location=" + location +
+                ", isAllDay=" + isAllDay +
+                ", notes=" + notes +
+                ", startsDate=" + startsDate +
+                ", endsDate=" + endsDate +
+                ", repeats=" + repeats +
+                ", endRepeat=" + endRepeat +
+                ", reminder=" + reminder +
+                ", travelTime=" + travelTime +
+                ", alert=" + alert +
+                ", showAs=" + showAs +
+                ", url=" + url +
+                ", isReminderSet=" + isReminderSet +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }
