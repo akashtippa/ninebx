@@ -226,6 +226,7 @@ class CategoryHelper(
         var subId = 1001
 
         category.subCategories.add(SubCategory("Airline", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Hotel", "", decryptedCombine.getLoyaltyCount("travel_1002"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
         category.subCategories.add(SubCategory("Car Rental", "", decryptedCombine.getLoyaltyCount("travel_1003"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
         category.subCategories.add(SubCategory("Cruiseline", "", decryptedCombine.getLoyaltyCount("travel_1004"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
         category.subCategories.add(SubCategory("Railway", "", decryptedCombine.getLoyaltyCount("travel_1005"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
@@ -320,7 +321,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_payment_methods"
 
         category.subCategories.add(SubCategory("Credit/Debit cards", "", decryptedCombine.getPaymentCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-        category.subCategories.add(SubCategory("Other payment accounts", "", decryptedCombine.getPaymentCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Other payment accounts", "", decryptedCombine.getPaymentCount("home_2002"), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
 
         categoryList.add(category)
         subId = 3001
@@ -414,7 +415,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getOtherCount("home_9001")
+        category.formsCount = decryptedCombine.getListsCount("home_9001")
 
         categoryList.add(category)
 
