@@ -110,7 +110,8 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
         }
 
         val searchHelper = SearchHelper()
-        val searchItems = searchHelper.getLevel3SearchItemsForCategory( fragmentValue, searchHelper.getSearchItems(combinedItems!!) )
+        //TODO - change hard coded value
+        val searchItems = searchHelper.getLevel3SearchItemsForCategory( fragmentCategoryId, searchHelper.getSearchItems(combinedItems!!) )
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         rvCommonList!!.adapter = SearchAdapter(searchItems, this )
     }

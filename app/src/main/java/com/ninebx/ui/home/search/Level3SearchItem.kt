@@ -10,10 +10,12 @@ class Level3SearchItem(
         var searchCategory: Int = 0,
         var itemName: String = "",
         var categoryName: String = "",
+        var categoryId:String = "",
         var itemIndex : Int = 0
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
+            source.readString(),
             source.readString(),
             source.readString(),
             source.readInt()
@@ -25,6 +27,7 @@ class Level3SearchItem(
         writeInt(searchCategory)
         writeString(itemName)
         writeString(categoryName)
+        writeString(categoryId)
         writeInt(itemIndex)
     }
 
@@ -35,4 +38,5 @@ class Level3SearchItem(
             override fun newArray(size: Int): Array<Level3SearchItem?> = arrayOfNulls(size)
         }
     }
+
 }
