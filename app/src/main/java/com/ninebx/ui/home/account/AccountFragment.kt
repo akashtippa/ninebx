@@ -9,20 +9,26 @@ import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
+import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.ui.home.HomeView
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
 import com.ninebx.utility.Constants
+import com.ninebx.utility.decryptString
+import io.realm.RealmResults
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account.*
+import java.util.*
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
+class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
+
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -191,6 +197,9 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName.decryptString()
+        txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress.decryptString()
+
         txtProfile.setOnClickListener(this)
         txtSecurityOverview.setOnClickListener(this)
         txtTermsOfUse.setOnClickListener(this)
