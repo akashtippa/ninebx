@@ -389,13 +389,7 @@ class SearchPresenter {
         var searchHomeList = ArrayList<DecryptedHomeList>()
         AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
         for( financeItems in mDecryptCombine.financialItems ) {
-            if( financeItems.selectionType.contains(text, true) || financeItems.institutionName.contains(text, true) || financeItems.accountName.contains(text, true) ||
-                    financeItems.accountType.contains(text, true) || financeItems.nameOnAccount.contains(text, true) || financeItems.accountNumber.contains(text, true) ||
-                    financeItems.location.contains(text, true) || financeItems.swiftCode.contains(text, true) || financeItems.abaRoutingNumber.contains(text, true) ||
-                    financeItems.contacts.contains(text, true) || financeItems.website.contains(text, true) || financeItems.userName.contains(text, true) ||
-                    financeItems.password.contains(text, true) ||  financeItems.pin.contains(text, true) || financeItems.created.contains(text, true) ||
-                    financeItems.modified.contains(text, true) || financeItems.createdUser.contains(text, true) || financeItems.notes.contains(text, true)
-                    || financeItems.attachmentNames.contains(text, true))
+            if( performSearch(financeItems, text))
 
                 searchFinanceItems.add(financeItems)
         }
@@ -406,12 +400,7 @@ class SearchPresenter {
 
         for( paymentItems in mDecryptCombine.paymentItems){
 
-            if (paymentItems.selectionType.contains(text, true) || paymentItems.insuranceCompany.contains(text, true) || paymentItems.insuredProperty.contains(text, true) ||
-                    paymentItems.insuredVehicle.contains(text, true) || paymentItems.insuredPerson.contains(text, true) || paymentItems.policyNumber.contains(text, true) ||
-                    paymentItems.policyEffectiveDate.contains(text, true) || paymentItems.policyExpirationDate.contains(text, true) || paymentItems.contacts.contains(text, true) ||
-                    paymentItems.website.contains(text, true) || paymentItems.userName.contains(text, true) || paymentItems.password.contains(text, true) ||
-                    paymentItems.pin.contains(text, true) || paymentItems.created.contains(text, true) || paymentItems.modified.contains(text, true) ||
-                    paymentItems.createdUser.contains(text, true) || paymentItems.notes.contains(text, true) || paymentItems.attachmentNames.contains(text, true))
+            if (performSearch(paymentItems, text))
 
 
                 searchPaymentItems.add(paymentItems)
@@ -421,13 +410,7 @@ class SearchPresenter {
         AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
 
         for( propertyItems in mDecryptCombine.propertyItems) {
-            if(propertyItems.selectionType.contains(text, true) || propertyItems.propertyName.contains(text, true) || propertyItems.streetAddressOne.contains(text, true) ||
-                    propertyItems.streetAddressTwo.contains(text, true) || propertyItems.city.contains(text, true) || propertyItems.state.contains(text, true) ||
-                    propertyItems.zipCode.contains(text, true) || propertyItems.country.contains(text, true) || propertyItems.titleName.contains(text, true) ||
-                    propertyItems.purchaseDate.contains(text, true) || propertyItems.purchasePrice.contains(text, true) || propertyItems.estimatedMarketValue.contains(text, true) ||
-                    propertyItems.contacts.contains(text, true) || propertyItems.selectionType.contains(text, true) || propertyItems.tenantName.contains(text, true) ||
-                    propertyItems.leaseEndDate.contains(text, true) || propertyItems.leaseStartDate.contains(text, true) || propertyItems.created.contains(text, true) ||
-                    propertyItems.modified.contains(text, true) || propertyItems.createdUser.contains(text, true) || propertyItems.notes.contains(text, true) || propertyItems.attachmentNames.contains(text, true))
+            if(performSearch(propertyItems, text))
 
                 searchPropertyItems.add(propertyItems)
         }
@@ -436,13 +419,7 @@ class SearchPresenter {
         AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
 
         for(vehicleItems in mDecryptCombine.vehicleItems){
-            if(vehicleItems.selectionType.contains(text, true) || vehicleItems.vehicleName.contains(text, true) || vehicleItems.licenseNumber.contains(text, true) ||
-                    vehicleItems.vinNumber.contains(text, true) || vehicleItems.make.contains(text, true) || vehicleItems.model.contains(text, true) || vehicleItems.modelYear.contains(text, true) ||
-                    vehicleItems.color.contains(text, true) || vehicleItems.titleName.contains(text, true) || vehicleItems.estimatedMarketValue.contains(text, true) || vehicleItems.registrationExpirydate.contains(text, true) ||
-                    vehicleItems.purchasedOrLeased.contains(text, true) || vehicleItems.purchaseDate.contains(text, true) || vehicleItems.financedThroughLoan.contains(text, true) ||
-                    vehicleItems.created.contains(text, true) || vehicleItems.modified.contains(text, true) || vehicleItems.createdUser.contains(text, true) || vehicleItems.leaseStartDate.contains(text, true) ||
-                    vehicleItems.leaseEndDate.contains(text, true) || vehicleItems.contacts.contains(text, true) || vehicleItems.maintenanceEvent.contains(text, true) || vehicleItems.serviceProviderName.contains(text, true) ||
-                    vehicleItems.dateOfService.contains(text, true) || vehicleItems.vehicle.contains(text, true) || vehicleItems.notes.contains(text, true) || vehicleItems.attachmentNames.contains(text, true) )
+            if(performSearch(vehicleItems, text) )
 
                 searchVehicleItems.add(vehicleItems)
         }
@@ -451,10 +428,7 @@ class SearchPresenter {
 
         for(assetItems in mDecryptCombine.assetItems)
         {
-            if(assetItems.selectionType.contains(text, true) || assetItems.test.contains(text, true) || assetItems.assetName.contains(text, true) || assetItems.descriptionOrLocation.contains(text, true)
-                    || assetItems.estimatedMarketValue.contains(text, true) || assetItems.serialNumber.contains(text, true) || assetItems.purchaseDate.contains(text, true)
-                    || assetItems.purchasePrice.contains(text, true) || assetItems.contacts.contains(text, true) || assetItems.created.contains(text, true) || assetItems.modified.contains(text, true)
-                    || assetItems.createdUser.contains(text, true) || assetItems.notes.contains(text, true) || assetItems.imageName.contains(text) || assetItems.attachmentNames.contains(text, true))
+            if(performSearch(assetItems, text))
 
                 searchAssetItems.add(assetItems)
         }
@@ -462,10 +436,7 @@ class SearchPresenter {
         AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
         for(insuranceItems in mDecryptCombine.insuranceItems){
-            if(insuranceItems.selectionType.contains(text, true) || insuranceItems.insuranceCompany.contains(text, true) || insuranceItems.insuredProperty.contains(text, true) || insuranceItems.insuredVehicle.contains(text, true)
-                    || insuranceItems.insuredPerson.contains(text, true) || insuranceItems.policyNumber.contains(text, true) ||  insuranceItems.policyEffectiveDate.contains(text, true) || insuranceItems.policyExpirationDate.contains(text, true)
-                    || insuranceItems.contacts.contains(text, true) || insuranceItems.website.contains(text, true) || insuranceItems.userName.contains(text, true) || insuranceItems.password.contains(text, true) || insuranceItems.pin.contains(text, true)
-                    || insuranceItems.created.contains(text, true) || insuranceItems.modified.contains(text, true)|| insuranceItems.createdUser.contains(text, true) || insuranceItems.notes.contains(text, true) || insuranceItems.attachmentNames.contains(text, true))
+            if(performSearch(insuranceItems, text))
 
                 searchInsuranceItems.add(insuranceItems)
         }
@@ -474,9 +445,7 @@ class SearchPresenter {
 
         for (taxItems in mDecryptCombine.taxesItems)
         {
-            if (taxItems.selectionType.contains(text, true) || taxItems.returnName.contains(text, true) || taxItems.taxYear.contains(text, true) || taxItems.taxPayer.contains(text, true) || taxItems.contacts.contains(text, true)
-                    || taxItems.imageName.contains(text, true) || taxItems.attachmentNames.contains(text, true) || taxItems.notes.contains(text, true) || taxItems.title.contains(text, true) || taxItems.created.contains(text,true)
-                    || taxItems.modified.contains(text, true) || taxItems.createdUser.contains(text, true))
+            if (performSearch(taxItems, text))
 
                 searchTaxItems.add(taxItems)
         }
@@ -484,8 +453,7 @@ class SearchPresenter {
         AppLogger.d("Search", "SearchTax" + searchTaxItems)
 
         for(listItems in mDecryptCombine.listItems){
-            if (listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
-                    || listItems.created.contains(text,true ) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
+            if (performSearch(searchTaxItems, text))
 
                 searchHomeList.add(listItems)
         }
@@ -508,50 +476,31 @@ class SearchPresenter {
         var searchListItems = ArrayList<DecryptedTravelList>()
 
         for (documentsItems in mDecryptedCombineTravel.documentsItems){
-            if(documentsItems.selectionType.contains(text, true) || documentsItems.passportName.contains(text, true) || documentsItems.visaName.contains(text, true)
-                    || documentsItems.nameOnPassport.contains(text, true) || documentsItems.nameOnVisa.contains(text, true) || documentsItems.visaType.contains(text, true)
-                    || documentsItems.visaNumber.contains(text, true) || documentsItems.travelDocumentTitle.contains(text, true) || documentsItems.nameOnTravelDocument.contains(text, true)
-                    || documentsItems.travelDocumentType.contains(text, true) || documentsItems.travelDocumentNumber.contains(text, true) || documentsItems.issuingCountry.contains(text, true)
-                    || documentsItems.passportNumber.contains(text, true) || documentsItems.placeIssued.contains(text, true) || documentsItems.dateIssued.contains(text, true)
-                    || documentsItems.expirationDate.contains(text, true) || documentsItems.notes.contains(text, true) || documentsItems.attachmentNames.contains(text, true)
-                    || documentsItems.created.contains(text, true) || documentsItems.modified.contains(text, true) || documentsItems.createdUser.contains(text, true))
+            if(performSearch(documentsItems, text))
                 searchDocumentItems.add(documentsItems)
         }
         searchDecryptCombineTravel.documentsItems.addAll(searchDocumentItems)
 
         for(loyaltyItems in mDecryptedCombineTravel.loyaltyItems){
-            if (loyaltyItems.selectionType.contains(text, true) || loyaltyItems.airLine.contains(text, true) || loyaltyItems.hotel.contains(text, true) || loyaltyItems.carRentalCompany.contains(text, true)
-                    || loyaltyItems.cruiseline.contains(text, true) || loyaltyItems.railway.contains(text, true) || loyaltyItems.other.contains(text, true) || loyaltyItems.accountName.contains(text, true)
-                    || loyaltyItems.nameOnAccount.contains(text, true) || loyaltyItems.accountNumber.contains(text, true) || loyaltyItems.website.contains(text, true) || loyaltyItems.userName.contains(text, true)
-                    || loyaltyItems.password.contains(text, true) || loyaltyItems.pin.contains(text, true) || loyaltyItems.notes.contains(text, true) || loyaltyItems.attachmentNames.contains(text, true)
-                    || loyaltyItems.created.contains(text, true) || loyaltyItems.modified.contains(text, true) || loyaltyItems.createdUser.contains(text, true))
+            if (performSearch(loyaltyItems, text))
                 searchLoyaltyItems.add(loyaltyItems)
         }
         searchDecryptCombineTravel.loyaltyItems.addAll(searchLoyaltyItems)
 
         for(travelItems in mDecryptedCombineTravel.travelItems){
-            if(travelItems.selectionType.contains(text, true) || travelItems.institutionName.contains(text, true) || travelItems.accountName.contains(text, true) || travelItems.accountType.contains(text, true)
-                    || travelItems.nameOnAccount.contains(text, true) || travelItems.accountNumber.contains(text, true) || travelItems.location.contains(text, true) || travelItems.swiftCode.contains(text, true)
-                    || travelItems.abaRoutingNumber.contains(text, true) || travelItems.contacts.contains(text, true) || travelItems.website.contains(text, true) || travelItems.userName.contains(text, true)
-                    || travelItems.password.contains(text, true) || travelItems.pin.contains(text, true) || travelItems.paymentMethodOnFile.contains(text, true) || travelItems.notes.contains(text, true)
-                    || travelItems.imageName.contains(text, true) || travelItems.attachmentNames.contains(text, true) || travelItems.title.contains(text, true) || travelItems.created.contains(text, true)
-                    || travelItems.modified.contains(text, true) || travelItems.createdUser.contains(text, true))
+            if(performSearch(travelItems, text))
                 searchTravelItems.add(travelItems)
         }
         searchDecryptCombineTravel.travelItems.addAll(searchTravelItems)
 
         for(vacationItems in mDecryptedCombineTravel.vacationsItems){
-            if(vacationItems.selectionType.contains(text, true) || vacationItems.vac_description.contains(text, true) || vacationItems.startDate.contains(text, true) || vacationItems.endDate.contains(text, true)
-                    || vacationItems.placesToVisit_1.contains(text, true) || vacationItems.placesToVisit_2.contains(text, true) || vacationItems.placesToVisit_3.contains(text, true)
-                    || vacationItems.notes.contains(text, true) || vacationItems.attachmentNames.contains(text, true) || vacationItems.created.contains(text, true)
-                    || vacationItems.modified.contains(text, true) || vacationItems.createdUser.contains(text, true))
+            if(performSearch(vacationItems, text))
                 searchVacationItems.add(vacationItems)
         }
         searchDecryptCombineTravel.vacationsItems.addAll(searchVacationItems)
 
         for(listItems in mDecryptedCombineTravel.listItems){
-            if(listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
-                    || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
+            if(performSearch(listItems, text))
                 searchListItems.add(listItems)
         }
         searchDecryptCombineTravel.listItems.addAll(searchListItems)
@@ -569,30 +518,21 @@ class SearchPresenter {
         var searchMemorylistItems = ArrayList<DecryptedMemoriesList>()
 
         for (mainMemoryItems in mDecryptedCombineMemories.mainMemoriesItems) {
-            if (mainMemoryItems.selectionType.contains(text, true) || mainMemoryItems.institutionName.contains(text, true) || mainMemoryItems.accountName.contains(text, true) || mainMemoryItems.accountType.contains(text, true)
-                    || mainMemoryItems.nameOnAccount.contains(text, true) || mainMemoryItems.accountName.contains(text, true) || mainMemoryItems.location.contains(text, true) || mainMemoryItems.swiftCode.contains(text, true)
-                    || mainMemoryItems.abaRoutingNumber.contains(text, true) || mainMemoryItems.contacts.contains(text, true) || mainMemoryItems.website.contains(text, true) || mainMemoryItems.userName.contains(text, true)
-                    || mainMemoryItems.password.contains(text, true) || mainMemoryItems.pin.contains(text, true) || mainMemoryItems.paymentMethodOnFile.contains(text, true) || mainMemoryItems.created.contains(text, true)
-                    || mainMemoryItems.modified.contains(text, true) || mainMemoryItems.notes.contains(text, true) || mainMemoryItems.attachmentNames.contains(text, true) || mainMemoryItems.title.contains(text, true)
-                    || mainMemoryItems.createdUser.contains(text, true))
+            if (performSearch(mainMemoryItems, text))
                 searchMainMemoryItems.add(mainMemoryItems)
         }
         searchDecryptCombineMemories.mainMemoriesItems.addAll(searchMainMemoryItems)
         AppLogger.d("Search", "SearchMainMemoryItems" + searchMainMemoryItems)
 
         for (memoryTimelineItems in mDecryptedCombineMemories.memoryTimelineItems) {
-            if (memoryTimelineItems.selectionType.contains(text, true) || memoryTimelineItems.title.contains(text, true) || memoryTimelineItems.date.contains(text, true)
-                    || memoryTimelineItems.place.contains(text, true) || memoryTimelineItems.contacts.contains(text, true) || memoryTimelineItems.notes.contains(text, true)
-                    || memoryTimelineItems.attachmentNames.contains(text, true) || memoryTimelineItems.created.contains(text, true) || memoryTimelineItems.modified.contains(text, true)
-                    || memoryTimelineItems.created.contains(text, true))
+            if (performSearch(memoryTimelineItems, text))
                 searchMemoryTimelineItems.add(memoryTimelineItems)
         }
         searchDecryptCombineMemories.memoryTimelineItems.addAll(searchMemoryTimelineItems)
         AppLogger.d("Search", "SearchMemoryTimeLineItems" + searchMainMemoryItems)
 
         for (listItems in mDecryptedCombineMemories.listItems) {
-            if (listItems.selectionType.contains(text, true) || listItems.classType.contains(text, false) || listItems.listName.contains(text, false) || listItems.dueDate.contains(text, false)
-                    || listItems.created.contains(text, false) || listItems.modified.contains(text, false) || listItems.createdUser.contains(text, false))
+            if (performSearch(listItems, text))
                 searchMemorylistItems.add(listItems)
         }
         searchDecryptCombineMemories.listItems.addAll(searchMemorylistItems)
@@ -611,38 +551,25 @@ class SearchPresenter {
         var searchEducationListItems = ArrayList<DecryptedEducationList>()
 
         for(educationItems in mDecryptCombineEducation.educationItems){
-            if(educationItems.selectionType.contains(text, true) || educationItems.institutionName.contains(text, true) || educationItems.accountName.contains(text, true)
-                    || educationItems.accountType.contains(text, true) || educationItems.nameOnAccount.contains(text, true) || educationItems.accountNumber.contains(text, true)
-                    || educationItems.location.contains(text, true) || educationItems.swiftCode.contains(text, true) || educationItems.abaRoutingNumber.contains(text, true)
-                    || educationItems.contacts.contains(text, true) || educationItems.website.contains(text, true) || educationItems.userName.contains(text, true) || educationItems.password.contains(text, true)
-                    || educationItems.pin.contains(text, true) || educationItems.paymentMethodOnFile.contains(text, true) || educationItems.notes.contains(text, true) || educationItems.attachmentNames.contains(text, true)
-                    || educationItems.title.contains(text, true) || educationItems.created.contains(text, true) || educationItems.modified.contains(text, true) || educationItems.createdUser.contains(text, true))
+            if(performSearch(educationItems, text))
                 searchEducationItems.add(educationItems)
         }
         searchDecryptCombineEducation.educationItems.addAll(searchEducationItems)
 
         for(mainEducationItems in mDecryptCombineEducation.mainEducationItems){
-            if(mainEducationItems.selectionType.contains(text, true) || mainEducationItems.classType.contains(text, true) || mainEducationItems.institutionName.contains(text, true)
-                    || mainEducationItems.qualification.contains(text, true) || mainEducationItems.name.contains(text, true) || mainEducationItems.location.contains(text, true)
-                    || mainEducationItems.major.contains(text, true) || mainEducationItems.from.contains(text, true) || mainEducationItems.to.contains(text, true)
-                    || mainEducationItems.currentlyStudying.contains(text, true) || mainEducationItems.notes.contains(text, true) || mainEducationItems.created.contains(text, true)
-                    || mainEducationItems.modified.contains(text, true) || mainEducationItems.attachmentNames.contains(text, true) || mainEducationItems.createdUser.contains(text, true))
+            if(performSearch(mainEducationItems, text))
                 searchMainEduactionItems.add(mainEducationItems)
         }
         searchDecryptCombineEducation.mainEducationItems.addAll(searchMainEduactionItems)
 
         for(workItems in mDecryptCombineEducation.workItems){
-            if(workItems.selectionType.contains(text, true) || workItems.classType.contains(text, true) || workItems.companyName.contains(text, true)  || workItems.position.contains(text, true)
-                    || workItems.name.contains(text, true) || workItems.location.contains(text, true) || workItems.from.contains(text, true) || workItems.to.contains(text, true)
-                    || workItems.currentWork.contains(text, true) || workItems.created.contains(text, true) || workItems.modified.contains(text, true) || workItems.notes.contains(text, true)
-                    || workItems.attachmentNames.contains(text, true) || workItems.createdUser.contains(text, true))
+            if(performSearch(workItems, text))
                 searchWorkItems.add(workItems)
         }
         searchDecryptCombineEducation.workItems.addAll(searchWorkItems)
 
         for(listItems in mDecryptCombineEducation.listItems){
-            if(listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
-                    || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
+            if(performSearch(listItems, text))
                 searchEducationListItems.add(listItems)
         }
         searchDecryptCombineEducation.listItems.addAll(searchEducationListItems)
@@ -659,20 +586,13 @@ class SearchPresenter {
         val searchInterestList = ArrayList<DecryptedInterestsList>()
 
         for(interestitems in mDecryptCombineInterests.interestItems){
-            if(interestitems.selectionType.contains(text, true) || interestitems.institutionName.contains(text, true) || interestitems.accountName.contains(text, true)
-                    || interestitems.accountType.contains(text, true) || interestitems.nameOnAccount.contains(text, true) || interestitems.accountNumber.contains(text, true)
-                    || interestitems.location.contains(text, true) || interestitems.swiftCode.contains(text, true) || interestitems.abaRoutingNumber.contains(text, true)
-                    || interestitems.contacts.contains(text, true) || interestitems.website.contains(text, true) || interestitems.userName.contains(text, true) || interestitems.password.contains(text, true)
-                    || interestitems.pin.contains(text, true) || interestitems.paymentMethodOnFile.contains(text, true) || interestitems.notes.contains(text, true)
-                    || interestitems.attachmentNames.contains(text, true) || interestitems.title.contains(text, true) || interestitems.created.contains(text, true)
-                    || interestitems.modified.contains(text, true) || interestitems.createdUser.contains(text, true))
+            if(performSearch(interestitems, text))
                 searchInterestItems.add(interestitems)
         }
         searchDecryptCombineInterests.interestItems.addAll(searchInterestItems)
 
         for(listItems in mDecryptCombineInterests.listItems){
-            if(listItems.selectionType.contains(text, true) || listItems.classType.contains(text, true) || listItems.listName.contains(text, true) || listItems.dueDate.contains(text, true)
-                    || listItems.created.contains(text, true) || listItems.modified.contains(text, true) || listItems.createdUser.contains(text, true))
+            if(performSearch(listItems, text))
                 searchInterestList.add(listItems)
         }
         searchDecryptCombineInterests.listItems.addAll(searchInterestList)
@@ -696,100 +616,69 @@ class SearchPresenter {
         var searchVitalNumber = ArrayList<DecryptedVitalNumbers>()
         var searchWellness = ArrayList<DecryptedWellness>()
         var searchWellnessList = ArrayList<DecryptedWellnessList>()
-        /*  for(checkupItems in mDecryptCombineWellness.checkupsItems){
-              if(checkupItems.selectionType.contains(text, true) || checkupItems.classType.contains(text, true) || checkupItems.physicianName.contains(text, true)
-                      || checkupItems.checkup_description.contains(text, true) || checkupItems.physicianType.contains(text, true) || checkupItems.classType.contains(text, true)
-                      || checkupItems.reason.contains(text, true) || checkupItems.dateOfVisit.contains(text, true) || checkupItems.notes.contains(text, true) || checkupItems.attachmentNames.contains(text, true)
-                      || checkupItems.created.contains(text, true) || checkupItems.modified.contains(text, true)|| checkupItems.createdUser.contains(text, true))
-                  searchCheckupItems.add(checkupItems)
-          }
-          searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
-
-          for(emergencyContactsItems in mDecryptCombineWellness.emergencyContactsItems){
-              if(emergencyContactsItems.selectionType.contains(text, true) || emergencyContactsItems.classType.contains(text, true) || emergencyContactsItems.name.contains(text, true)
-                      || emergencyContactsItems.relationShip.contains(text, true) || emergencyContactsItems.phoneNumberOne.contains(text, true) || emergencyContactsItems.phoneNumberTwo.contains(text, true)
-                      || emergencyContactsItems.emailAddress.contains(text, true) || emergencyContactsItems.streetAddressOne.contains(text, true) || emergencyContactsItems.streetAddressTwo.contains(text, true)
-                      || emergencyContactsItems.city.contains(text, true) || emergencyContactsItems.state.contains(text, true) || emergencyContactsItems.zipCode.contains(text, true)
-                      || emergencyContactsItems.country.contains(text, true) || emergencyContactsItems.created.contains(text, true) || emergencyContactsItems.modified.contains(text, true)
-                      || emergencyContactsItems.notes.contains(text, true) || emergencyContactsItems.attachmentNames.contains(text, true) || emergencyContactsItems.createdUser.contains(text, true))
-                  searchEmergencyContacts.add(emergencyContactsItems)
-          }
-          searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
-
-          for(eyeglassPrescriptionsItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
-              if(eyeglassPrescriptionsItems.selectionType.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true) || eyeglassPrescriptionsItems.physicianName.contains(text, true)
-                      || eyeglassPrescriptionsItems.datePrescribed.contains(text, true) || eyeglassPrescriptionsItems.odSphereValue.contains(text, true) || eyeglassPrescriptionsItems.osSphereValue.contains(text, true)
-                      || eyeglassPrescriptionsItems.odCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.osCylinderValue.contains(text, true) || eyeglassPrescriptionsItems.odAxisValue.contains(text, true)
-                      || eyeglassPrescriptionsItems.osAxisValue.contains(text, true) || eyeglassPrescriptionsItems.odPrismValue.contains(text, true) || eyeglassPrescriptionsItems.osPrismValue.contains(text, true)
-                      || eyeglassPrescriptionsItems.odAddValue.contains(text, true) || eyeglassPrescriptionsItems.osAddValue.contains(text, true) || eyeglassPrescriptionsItems.classType.contains(text, true)
-                      || eyeglassPrescriptionsItems.odBaseValue.contains(text, true) || eyeglassPrescriptionsItems.osBaseValue.contains(text, true) || eyeglassPrescriptionsItems.notes.contains(text, true) || eyeglassPrescriptionsItems.attachmentNames.contains(text, true)
-                      || eyeglassPrescriptionsItems.created.contains(text, true) || eyeglassPrescriptionsItems.modified.contains(text, true) || eyeglassPrescriptionsItems.createdUser.contains(text, true))
-                  searchEyeglassPrescriptions.add(eyeglassPrescriptionsItems)
-          }
-          searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)*/
 
         for(checkupItems in mDecryptCombineWellness.checkupsItems){
-            if(performSearch(checkupItems, text)!!)
+            if(performSearch(checkupItems, text))
                 searchCheckupItems.add(checkupItems)
         }
         searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
 
         for(emergencyContactItems in mDecryptCombineWellness.emergencyContactsItems){
-            if( performSearch(emergencyContactItems,text)!!)
+            if( performSearch(emergencyContactItems,text))
                 searchEmergencyContacts.add(emergencyContactItems)
         }
         searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
 
         for(eyeglassPrescriptionItems in mDecryptCombineWellness.eyeglassPrescriptionsItems){
-            if(performSearch(eyeglassPrescriptionItems, text)!!)
+            if(performSearch(eyeglassPrescriptionItems, text))
                 searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
         }
         searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
 
         for(healthCareProviderItems in mDecryptCombineWellness.healthcareProvidersItems){
-            if( performSearch(healthCareProviderItems, text)!!)
+            if( performSearch(healthCareProviderItems, text))
                 searchhealthcareProviders.add(healthCareProviderItems)
         }
         searchDecryptCombineWellness.healthcareProvidersItems.addAll(searchhealthcareProviders)
 
         for(identificationItems in mDecryptCombineWellness.identificationItems){
-            if(performSearch(identificationItems, text)!!)
+            if(performSearch(identificationItems, text))
                 searchIdentification.add(identificationItems)
         }
         searchDecryptCombineWellness.identificationItems.addAll(searchIdentification)
 
         for(medicalConditionsItems in mDecryptCombineWellness.medicalConditionsItems){
-            if(performSearch(medicalConditionsItems, text)!!)
+            if(performSearch(medicalConditionsItems, text))
                 searchMedicalConditions.add(medicalConditionsItems)
         }
         searchDecryptCombineWellness.medicalConditionsItems.addAll(searchMedicalConditions)
 
         for(medicalHistoryItems in mDecryptCombineWellness.medicalHistoryItems){
-            if(performSearch(medicalHistoryItems, text)!!)
+            if(performSearch(medicalHistoryItems, text))
                 searchMedicalHistory.add(medicalHistoryItems)
         }
         searchDecryptCombineWellness.medicalHistoryItems.addAll(searchMedicalHistory)
 
         for(medicationItems in mDecryptCombineWellness.medicationsItems){
-            if(performSearch(medicationItems, text)!!)
+            if(performSearch(medicationItems, text))
                 searchMedications.add(medicationItems)
         }
         searchDecryptCombineWellness.medicationsItems.addAll(searchMedications)
 
         for(vitalNumberItems in mDecryptCombineWellness.vitalNumbersItems){
-            if(performSearch(vitalNumberItems, text)!!)
+            if(performSearch(vitalNumberItems, text))
                 searchVitalNumber.add(vitalNumberItems)
         }
         searchDecryptCombineWellness.vitalNumbersItems.addAll(searchVitalNumber)
 
         for(wellnessItems in mDecryptCombineWellness.wellnessItems){
-            if(performSearch(wellnessItems, text)!!)
+            if(performSearch(wellnessItems, text))
                 searchWellness.add(wellnessItems)
         }
         searchDecryptCombineWellness.wellnessItems.addAll(searchWellness)
 
         for(listItems in mDecryptCombineWellness.listItems){
-            if(performSearch(listItems, text)!!)
+            if(performSearch(listItems, text))
                 searchWellnessList.add(listItems)
         }
         searchDecryptCombineWellness.listItems.addAll(searchWellnessList)
@@ -810,37 +699,37 @@ class SearchPresenter {
         var searchPersonalList = ArrayList<DecryptedPersonalList>()
 
         for (certificateItems in mDecryptCombinePersonal.certificateItems){
-            if(performSearch(certificateItems, text)!!)
+            if(performSearch(certificateItems, text))
                 searchCertifiacate.add(certificateItems)
         }
         searchDecryptCombinePersonal.certificateItems.addAll(searchCertifiacate)
         for(governmentItems in mDecryptCombinePersonal.governmentItems){
-            if(performSearch(governmentItems, text)!!)
+            if(performSearch(governmentItems, text))
                 searchGovernment.add(governmentItems)
         }
         searchDecryptCombinePersonal.governmentItems.addAll(searchGovernment)
         for(liceneItems in mDecryptCombinePersonal.licenseItems){
-            if(performSearch(liceneItems, text)!!)
+            if(performSearch(liceneItems, text))
                 searchLicense.add(liceneItems)
         }
         searchDecryptCombinePersonal.licenseItems.addAll(searchLicense)
         for(personalItems in mDecryptCombinePersonal.personalItems){
-            if(performSearch(personalItems, text)!!)
+            if(performSearch(personalItems, text))
                 searchPersonal.add(personalItems)
         }
         searchDecryptCombinePersonal.personalItems.addAll(searchPersonal)
         for(socialItems in mDecryptCombinePersonal.socialItems){
-            if(performSearch(socialItems, text)!!)
+            if(performSearch(socialItems, text))
                 searchSocial.add(socialItems)
         }
         searchDecryptCombinePersonal.socialItems.addAll(searchSocial)
         for(taxIDItems in mDecryptCombinePersonal.taxIDItems){
-            if(performSearch(taxIDItems, text)!!)
+            if(performSearch(taxIDItems, text))
                 searchTaxID.add(taxIDItems)
         }
         searchDecryptCombinePersonal.taxIDItems.addAll(searchTaxID)
         for(listItems in mDecryptCombinePersonal.listItems){
-            if(performSearch(listItems, text)!!)
+            if(performSearch(listItems, text))
                 searchPersonalList.add(listItems)
         }
         searchDecryptCombinePersonal.listItems.addAll(searchPersonalList)
@@ -855,17 +744,17 @@ class SearchPresenter {
         var searchMainContacts = ArrayList<DecryptedMainContacts>()
         var searchContactsList = ArrayList<DecryptedContactsList>()
         for(contactsItems in mDecryptedCombineContacts.contactsItems){
-            if(performSearch(contactsItems, text)!!)
+            if(performSearch(contactsItems, text))
                 searchContacts.add(contactsItems)
         }
         searchDecryptCombineContacts.contactsItems.addAll(searchContacts)
         for(mainContactItems in mDecryptedCombineContacts.mainContactsItems){
-            if(performSearch(mainContactItems, text)!!)
+            if(performSearch(mainContactItems, text))
                 searchMainContacts.add(mainContactItems)
         }
         searchDecryptCombineContacts.mainContactsItems.addAll(searchMainContacts)
         for(listItems in mDecryptedCombineContacts.listItems){
-            if(performSearch(listItems, text)!!)
+            if(performSearch(listItems, text))
                 searchContactsList.add(listItems)
         }
         searchDecryptCombineContacts.listItems.addAll(searchContactsList)
@@ -882,27 +771,27 @@ class SearchPresenter {
         var searchClothingSize = ArrayList<DecryptedClothingSizes>()
         var searchShoppingList = ArrayList<DecryptedShoppingList>()
         for(loyaltyProgramsItems in mDecryptCombineShopping.loyaltyProgramsItems){
-            if(performSearch(loyaltyProgramsItems, text)!!)
+            if(performSearch(loyaltyProgramsItems, text))
                 searchLoyaltyPrograms.add(loyaltyProgramsItems)
         }
         searchDecryptCombineShopping.loyaltyProgramsItems.addAll(searchLoyaltyPrograms)
         for(recentPurchaseItems in mDecryptCombineShopping.recentPurchaseItems){
-            if(performSearch(recentPurchaseItems, text)!!)
+            if(performSearch(recentPurchaseItems, text))
                 searchRecentPurchase.add(recentPurchaseItems)
         }
         searchDecryptCombineShopping.recentPurchaseItems.addAll(searchRecentPurchase)
         for(shoppingItems in mDecryptCombineShopping.shoppingItems){
-            if(performSearch(shoppingItems, text)!!)
+            if(performSearch(shoppingItems, text))
                 searchShopping.add(shoppingItems)
         }
         searchDecryptCombineShopping.shoppingItems.addAll(searchShopping)
         for(clothingSizeItems in mDecryptCombineShopping.clothingSizesItems){
-            if(performSearch(clothingSizeItems, text)!!)
+            if(performSearch(clothingSizeItems, text))
                 searchClothingSize.add(clothingSizeItems)
         }
         searchDecryptCombineShopping.clothingSizesItems.addAll(searchClothingSize)
         for(listItems in mDecryptCombineShopping.listItems){
-            if(performSearch(listItems, text)!!)
+            if(performSearch(listItems, text))
                 searchShoppingList.add(listItems)
         }
         searchDecryptCombineShopping.listItems.addAll(searchShoppingList)

@@ -178,7 +178,7 @@ private fun pojo2Map(obj: Any): Map<String, Any> {
     return hashMap
 }
 
-fun performSearch(classObject: Any, searchText: String): Boolean? {
+fun performSearch(classObject: Any, searchText: String): Boolean {
 
     val objectHashMap = pojo2Map(classObject)
     var isSearchFound = false
