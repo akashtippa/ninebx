@@ -75,6 +75,8 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
         return inflater.inflate(R.layout.fragment_list_container, container, false)
     }
 
+    private lateinit var searchHelper: SearchHelper
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,7 +111,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
             }
         }
 
-        val searchHelper = SearchHelper()
+        searchHelper = SearchHelper()
         //TODO - change hard coded value
         val searchItems = searchHelper.getLevel3SearchItemsForCategory( fragmentCategoryId, searchHelper.getSearchItems(combinedItems!!) )
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
@@ -127,7 +129,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
     }
 
     override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
-
+        searchHelper.switchAndSearch(searchItem)
     }
 
     private fun fetchTheContactListFromRealm() {

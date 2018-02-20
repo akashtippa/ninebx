@@ -28,7 +28,7 @@ class SearchHelper() {
     private  var searchDecryptedCombinePersonal: DecryptedCombinePersonal = DecryptedCombinePersonal()
     private  var searchDecryptedCombineShopping: DecryptedCombineShopping = DecryptedCombineShopping()
     private  var searchDecryptedCombineContacts: DecryptedCombineContacts = DecryptedCombineContacts()
-    
+
     fun getSearchItems( combineItems : Parcelable ) : ArrayList<Level3SearchItem> {
 
         return when( combineItems ) {
@@ -319,5 +319,282 @@ class SearchHelper() {
         return mSearchHomeList
     }
 
+    fun switchAndSearch( searchItem: Level3SearchItem ) {
+        val position = searchItem.itemIndex
+        when( searchItem.searchCategory ) {
+            R.string.home_amp_money -> {
+                switchHomeItems( position, searchItem )
+            }
+            (R.string.travel) -> {
+                switchTravelItems( position, searchItem )
+            }
+            (R.string.contacts) -> {
+                switchContactsItems( position, searchItem )
+            }
+            (R.string.education_work) -> {
+                switchEducationItems( position, searchItem )
+            }
+            (R.string.personal) -> {
+                switchPersonalItems( position, searchItem )
+            }
+            (R.string.interests) -> {
+                switchInterestsItems( position, searchItem )
+            }
+            (R.string.wellness) -> {
+                switchWellnessItems( position, searchItem )
+            }
+            (R.string.memories) -> {
+                switchMemoriesItems( position, searchItem )
+            }
+            (R.string.shopping) -> {
+                switchShoppingItems( position, searchItem )
+            }
+        }
+    }
+
+    private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "loyalty" -> {
+                val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "recentPurchase" -> {
+                val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "shopping" -> {
+                val selectedDocument = searchDecryptedCombineShopping.shoppingItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "clothingSize" -> {
+                val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "shoppingList" -> {
+                val selectedDocument = searchDecryptedCombineShopping.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+
+
+    private fun switchMemoriesItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "mainMemory" -> {
+                val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "memoryTimeline" -> {
+                val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "memorylist" -> {
+                val selectedDocument = searchDecryptCombineMemories.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun switchWellnessItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "checkups" -> {
+                val selectedDocument = searchDecryptedCombineWellness.checkupsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "emergencyContacts" ->{
+                val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "eyeglassPrescription" -> {
+                val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "healthcareProvider" -> {
+                val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "identification" -> {
+                val selectedDocument = searchDecryptedCombineWellness.identificationItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "medicalCondition" -> {
+                val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "medicalHistory" -> {
+                val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "medications" -> {
+                val selectedDocument = searchDecryptedCombineWellness.medicationsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "vitalNumbers" -> {
+                val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "wellness" -> {
+                val selectedDocument = searchDecryptedCombineWellness.wellnessItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "wellnessList" -> {
+                val selectedDocument = searchDecryptedCombineWellness.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun switchInterestsItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "interests" -> {
+                val selectedDocument = searchDecryptedCombineInterests.interestItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "interestsList" ->
+            {
+                val selectedDocument = searchDecryptedCombineInterests.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun switchPersonalItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "certificate" ->{
+                val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "govenment" -> {
+                val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "license" -> {
+                val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "personal" ->{
+                val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "social" -> {
+                val selectedDocument = searchDecryptedCombinePersonal.socialItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "taxID" -> {
+                val selectedDocument = searchDecryptedCombinePersonal.taxIDItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "personalList" -> {
+                val selectedDocument = searchDecryptedCombinePersonal.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun switchEducationItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "education" -> {
+                val selectedDocument = searchDecryptCombineEducation.educationItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "mainEducation" -> {
+                val selectedDocument = searchDecryptCombineEducation.mainEducationItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "work" -> {
+                val selectedDocument = searchDecryptCombineEducation.workItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "educationList" -> {
+                val selectedDocument = searchDecryptCombineEducation.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun switchContactsItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "contacts" -> {
+                val selectedDocument = searchDecryptedCombineContacts.contactsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "mainContacts" -> {
+                val selectedDocument = searchDecryptedCombineContacts.mainContactsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "contactList" -> {
+                val selectedDocument = searchDecryptedCombineContacts.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
+        when(searchItem.categoryName){
+            "document" -> {
+                val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "loyalty" -> {
+                val selectedDocument = searchDecryptCombineTravel.loyaltyItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "travel" -> {
+                val selectedItems = searchDecryptCombineTravel.travelItems[position]
+                goToCategoryFragment( selectedItems )
+            }
+            "vacation" -> {
+                val selectedItems = searchDecryptCombineTravel.vacationsItems[position]
+                goToCategoryFragment( selectedItems )
+            }
+            "travelList" -> {
+                val selectedItems = searchDecryptCombineTravel.listItems[position]
+                goToCategoryFragment( selectedItems )
+            }
+        }
+    }
+
+    private fun switchHomeItems(position: Int, searchItem: Level3SearchItem) {
+
+        when( searchItem.categoryName ) {
+            "finance" -> {
+                val selectedDocument = searchDecryptCombine.financialItems[position]
+                goToCategoryFragment(selectedDocument)
+            }
+            "payment" -> {
+                val selectedDocument = searchDecryptCombine.paymentItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "asset" -> {
+                val selectedDocument = searchDecryptCombine.assetItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "insurance" -> {
+                val selectedDocument = searchDecryptCombine.insuranceItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "tax" -> {
+                val selectedDocument = searchDecryptCombine.taxesItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "vehicle" -> {
+                val selectedDocument = searchDecryptCombine.vehicleItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "property" -> {
+                val selectedDocument = searchDecryptCombine.propertyItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+            "home" -> {
+                val selectedDocument = searchDecryptCombine.listItems[position]
+                goToCategoryFragment( selectedDocument )
+            }
+        }
+    }
+
+    private fun goToCategoryFragment(selectedDocument: Parcelable?) {
+
+    }
 
 }
