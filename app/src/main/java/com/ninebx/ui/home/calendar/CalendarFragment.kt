@@ -43,6 +43,8 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        CalendarPresenter(this)
+
         mMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
         ivPreviousMonth.setOnClickListener {
