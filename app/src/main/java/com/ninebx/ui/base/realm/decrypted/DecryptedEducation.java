@@ -380,4 +380,35 @@ public class DecryptedEducation implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedEducation{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", nameOnAccount='" + nameOnAccount + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", swiftCode='" + swiftCode + '\'' +
+                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", paymentMethodOnFile='" + paymentMethodOnFile + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", title='" + title + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }

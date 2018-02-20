@@ -275,4 +275,27 @@ public class DecryptedVacations implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedVacations{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", vac_description='" + vac_description + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", placesToVisit_1='" + placesToVisit_1 + '\'' +
+                ", placesToVisit_2='" + placesToVisit_2 + '\'' +
+                ", placesToVisit_3='" + placesToVisit_3 + '\'' +
+                ", plansConfirmed=" + plansConfirmed +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

@@ -62,6 +62,27 @@ public class DecryptedRecentPurchase implements Parcelable {
     @Required
     private String createdUser = "";
 
+    @Override
+    public String toString() {
+        return "DecryptedRecentPurchase{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", brandName='" + brandName + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", purchasedBy='" + purchasedBy + '\'' +
+                ", purchasedDate='" + purchasedDate + '\'' +
+                ", purchasedPrice='" + purchasedPrice + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
+
     protected DecryptedRecentPurchase(Parcel in) {
         id = in.readInt();
         photosId = in.createStringArrayList();
