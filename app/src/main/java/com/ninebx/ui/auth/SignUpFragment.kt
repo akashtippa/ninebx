@@ -121,5 +121,4 @@ class SignUpFragment : BaseAuthFragment() {
             dialog.cancel()
         }
     }
-
 }

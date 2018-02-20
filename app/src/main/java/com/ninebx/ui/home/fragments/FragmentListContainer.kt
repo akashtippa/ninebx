@@ -80,7 +80,6 @@ class FragmentListContainer : FragmentBackHelper() {
 
 //        changeToolbarTitleAndAddInfo(fragmentValue)
 
-
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(fragmentValue)
 
         layoutAddList.setOnClickListener {

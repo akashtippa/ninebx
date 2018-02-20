@@ -170,11 +170,10 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                         /*
                         * If I'm sending like this,
                         * contacts.firstName = firstName
-                        * Then from Android I'm not able to read, but from iOS it can be read.
-                        * It is showing some decrypted format.
+                        * It is showing some decrypted format in Android, but iOS is readable.
                         * But, if I'm using like this
                         * contacts.firstName = firstName.encryptString()
-                        * then from Android, I'm able to read, but from iOS it is not able to read.
+                        * It is showing some decrypted format in iOS, but Android is readable.
                         * */
 
                         contacts.firstName = firstName.encryptString()

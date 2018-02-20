@@ -34,6 +34,13 @@
                 android:textSize="@dimen/text_16" />
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvRecentSearch"
+            android:background="@color/white"
+            android:visibility="visible"/>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -443,8 +450,4 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
-    android:layout_below="@+id/searchLayout" />
-
 </RelativeLayout>
