@@ -131,8 +131,7 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
     ctLength += cipher.doFinal(cipherText, ctLength)
 
     val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
-
-    return String(cipherTextBase64)
+    return String(cipherTextBase64).trim()
 
 }
 

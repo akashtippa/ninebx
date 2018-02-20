@@ -137,6 +137,16 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
 
+        checkEncryption()
+
+    }
+
+    private fun checkEncryption() {
+        AppLogger.d(TAG, "User Name From Realm : " + currentUsers!![0].firstName)
+        val decryptedName = currentUsers!![0].firstName.decryptString()
+        AppLogger.d(TAG, "User Name From Realm Decrypted : " + decryptedName)
+        val encryptedName = decryptedName.encryptString()
+        AppLogger.d(TAG, "User Name From Realm Encrypted : " + encryptedName)
     }
 
     private fun populateUserInfo(users: Users?) {
@@ -275,55 +285,30 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     }
 
+    private val TAG = "Profile"
     private fun updateTheUserInfo() {
-        /***
-         * If I was going with this, then it was creating a new Object in the realmOS.
-         *
-         */
-
-//
-//        var users = Users()
-////        users.id = idUser
-//        users.userId = idUserID
-//        users.firstName = edtFirstName.text.toString().encryptString()
-//        users.lastName = edtLastName.text.toString().encryptString()
-//        users.fullName = (edtFirstName.text.toString() + edtLastName.text.toString()).encryptString()
-//        users.emailAddress = edtEmail.text.toString().encryptString()
-//        users.relationship = edtRelationship.text.toString().encryptString()
-//        users.dateOfBirth = txtDOB.text.toString().encryptString()
-//        users.anniversary = txtAnniversary.text.toString().encryptString()
-//        users.gender = txtGender.selectedItem.toString().encryptString()
-//        users.mobileNumber = edtMobileNumber.text.toString().encryptString()
-//        users.street_1 = edtAddress1.text.toString().encryptString()
-//        users.street_2 = edtAddress2.text.toString().encryptString()
-//        users.city = edtCity.text.toString().encryptString()
-//        users.state = edtState.text.toString().encryptString()
-//        users.zipCode = edtZipCode.text.toString().encryptString()
-//        users.country = txtCountry.text.toString().encryptString()
-
-//        Private Key : [74, 86, 113, 112, 51, 110, 109, 102, 71, 118, 65, 77, 113, 103, 106, 70]
-
 
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+
                 val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
                 realm.beginTransaction()
 
-                users!!.firstName = edtFirstName.text.toString().encryptString()
-                users.lastName = edtLastName.text.toString().encryptString()
-                users.fullName = (edtFirstName.text.toString() + edtLastName.text.toString()).encryptString()
-                users.emailAddress = edtEmail.text.toString().encryptString()
-                users.relationship = edtRelationship.text.toString().encryptString()
-                users.dateOfBirth = txtDOB.text.toString().encryptString()
-                users.anniversary = txtAnniversary.text.toString().encryptString()
-                users.gender = txtGender.selectedItem.toString().encryptString()
-                users.mobileNumber = edtMobileNumber.text.toString().encryptString()
-                users.street_1 = edtAddress1.text.toString().encryptString()
-                users.street_2 = edtAddress2.text.toString().encryptString()
-                users.city = edtCity.text.toString().encryptString()
-                users.state = edtState.text.toString().encryptString()
-                users.zipCode = edtZipCode.text.toString().encryptString()
-                users.country = txtCountry.text.toString().encryptString()
+                users!!.firstName = strFirstName.encryptString()
+                users.lastName = strLastName.encryptString()
+                users.fullName = (strFirstName + " " + strLastName).encryptString()
+                users.emailAddress = strEmail.encryptString()
+                users.relationship = strRelationship.encryptString()
+                users.dateOfBirth = strDOB.encryptString()
+                users.anniversary = strAnniversary.encryptString()
+                users.gender = strGender.encryptString()
+                users.mobileNumber = strMobileNumber.encryptString()
+                users.street_1 = strStreetAddress1.encryptString()
+                users.street_2 = strStreetAddress2.encryptString()
+                users.city = strCity.encryptString()
+                users.state = strState.encryptString()
+                users.zipCode = strZipCode.encryptString()
+                users.country = strCountry.encryptString()
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
                 realm.commitTransaction()
                 users.insertOrUpdate(realm)
