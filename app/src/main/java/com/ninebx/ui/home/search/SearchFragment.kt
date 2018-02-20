@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.search
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.FragmentTransaction
@@ -449,7 +450,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         for( home in searchDecryptCombine.listItems ) {
             mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  home.listName, "home", itemIndex++))
         }
-        itemIndex = 0
+
         if( mSearchHomeList.size > 0 ) //Pass the right recyclerview and layout to be shown with searchlist to be populated
             setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
     }
@@ -463,6 +464,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
+            @SuppressLint("CommitTransaction")
             override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
 
                 fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
