@@ -2,8 +2,7 @@ package com.ninebx.ui.home.baseCategories
 
 import android.os.Parcelable
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombineTravel
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 
@@ -49,6 +48,9 @@ class CategoryHelper(
     }
 
     private fun getWellness() {
+
+        val decryptedCombine: DecryptedCombineWellness = combineItems as DecryptedCombineWellness
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1007
@@ -67,6 +69,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.formsCount = decryptedCombine.getServices("wellness_2001")
+        category.category_id = "wellness_2001"
 
         categoryList.add(category)
 
@@ -75,6 +79,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.formsCount = decryptedCombine.getLists("WellNess")
+        category.category_id = "wellness_3001"
 
         categoryList.add(category)
 
@@ -83,6 +89,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.formsCount = decryptedCombine.getLists("WellNess")
+        category.category_id = "wellness_4001"
 
         categoryList.add(category)
 
@@ -91,7 +99,7 @@ class CategoryHelper(
     }
 
     private fun getPersonal() {
-//        val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
+        val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
 
         val categoryList = ArrayList<Category>()
 
@@ -99,8 +107,9 @@ class CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Category(category_id)
         category.title = "Drivers License"
-//        category.formsCount = decryptedCombinePersonal.getDriversLicense("personal_1001")
         category.drawableString = "ic_icon_driver_license"
+        category.formsCount = decryptedCombinePersonal.getDriversLicense("personal_1001")
+        category.category_id = "personal_1001"
 
         categoryList.add(category)
 
@@ -109,6 +118,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Social Security Card"
         category.drawableString = "ic_icon_ssn"
+        category.formsCount = decryptedCombinePersonal.getSocialSecurity("personal_2001")
+        category.category_id = "personal_2001"
 
         categoryList.add(category)
 
@@ -117,6 +128,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Tax ID"
         category.drawableString = "ic_icon_tax_id"
+        category.formsCount = decryptedCombinePersonal.getTAXID("personal_3001")
+        category.category_id = "personal_3001"
 
         categoryList.add(category)
 
@@ -125,6 +138,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Birth Certificate"
         category.drawableString = "ic_icon_birth_certificate"
+        category.formsCount = decryptedCombinePersonal.getMarriageCertificate("personal_5001")
+        category.category_id = "personal_4001"
 
         categoryList.add(category)
 
@@ -133,6 +148,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Marriage Certificate"
         category.drawableString = "ic_icon_marriage_certificate"
+        category.formsCount = decryptedCombinePersonal.getMarriageCertificate("personal_5001")
+        category.category_id = "personal_5001"
 
         categoryList.add(category)
 
@@ -141,6 +158,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Government-Issued ID"
         category.drawableString = "ic_icon_lists_contacts"
+        category.formsCount = decryptedCombinePersonal.getOtherGovernment("personal_6001")
+        category.category_id = "personal_6001"
 
         categoryList.add(category)
 
@@ -149,6 +168,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.category_id = "personal_7001"
 
         categoryList.add(category)
 
@@ -157,6 +177,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.category_id = "personal_8001"
 
         categoryList.add(category)
 
@@ -165,6 +186,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.category_id = "personal_9001"
 
         categoryList.add(category)
 
@@ -180,7 +202,7 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Shared Contacts"
         category.drawableString = "ic_icon_lists_contacts"
-
+        category.category_id = "cont_1001"
         categoryList.add(category)
 
         categoryIndex += 1003
@@ -188,6 +210,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.category_id = "cont_2001"
 
         categoryList.add(category)
 
@@ -196,6 +219,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.category_id = "cont_3001"
 
         categoryList.add(category)
 
@@ -204,6 +228,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.category_id = "cont_4001"
 
         categoryList.add(category)
 
@@ -212,9 +237,9 @@ class CategoryHelper(
 
     private fun getTravelCategories() {
 
-
         val decryptedCombine: DecryptedCombineTravel = combineItems as DecryptedCombineTravel
         AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
+        AppLogger.e("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
 
         val categoryList = ArrayList<Category>()
@@ -226,11 +251,11 @@ class CategoryHelper(
         var subId = 1001
 
         category.subCategories.add(SubCategory("Airline", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
-        category.subCategories.add(SubCategory("Hotel", "", decryptedCombine.getLoyaltyCount("travel_1002"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
-        category.subCategories.add(SubCategory("Car Rental", "", decryptedCombine.getLoyaltyCount("travel_1003"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
-        category.subCategories.add(SubCategory("Cruiseline", "", decryptedCombine.getLoyaltyCount("travel_1004"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
-        category.subCategories.add(SubCategory("Railway", "", decryptedCombine.getLoyaltyCount("travel_1005"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
-        category.subCategories.add(SubCategory("Other", "", decryptedCombine.getLoyaltyCount("travel_1006"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Hotel", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Car Rental", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Cruiseline", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Railway", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Other", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
 
         categoryList.add(category)
 
@@ -254,7 +279,7 @@ class CategoryHelper(
         category.title = "Travel Dates And Plans"
         category.drawableString = "ic_icon_calender_selected"
         category.formsCount = decryptedCombine.getTravelDatesAndPlans("travel_3001")
-
+        category.category_id = "travel_3001"
 
         categoryList.add(category)
 
@@ -263,6 +288,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.formsCount = decryptedCombine.getServices("travel_4001")
+        category.category_id = "travel_4001"
 
         categoryList.add(category)
 
@@ -271,6 +298,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.formsCount = decryptedCombine.getTravelDatesAndPlans("travel_5001")
+        category.category_id = "travel_5001"
 
         categoryList.add(category)
 
@@ -279,6 +308,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.formsCount = decryptedCombine.getTravelLists("Travel")
 
         categoryList.add(category)
         categoryView.onSuccess(categoryList)
@@ -298,17 +328,10 @@ class CategoryHelper(
         category.drawableString = "ic_icon_financial_accounts"
         var subId = 1001
 
-        category.subCategories.add(SubCategory("Banking", "",
-                decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-
-        category.subCategories.add(SubCategory("Investments/Retirement", "", decryptedCombine.getFinanceCount("home_" + subId),
-                Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-
-        category.subCategories.add(SubCategory("Loans/Mortgages", "", decryptedCombine.getFinanceCount("home_" + subId),
-                Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-
-        category.subCategories.add(SubCategory("Other financial accounts", "", decryptedCombine.getFinanceCount("home_" + subId),
-                Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Banking", "", decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Investments/Retirement", "", decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Loans/Mortgages", "", decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Other financial accounts", "", decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
 
 
         categoryList.add(category)
@@ -321,7 +344,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_payment_methods"
 
         category.subCategories.add(SubCategory("Credit/Debit cards", "", decryptedCombine.getPaymentCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
-        category.subCategories.add(SubCategory("Other payment accounts", "", decryptedCombine.getPaymentCount("home_2002"), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+        category.subCategories.add(SubCategory("Other payment accounts", "", decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
 
         categoryList.add(category)
         subId = 3001
@@ -398,7 +421,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.formsCount = decryptedCombine.getFinanceCount("home_8001")
-
+        category.category_id = "home_8001"
         categoryList.add(category)
 
         categoryIndex += 1000
@@ -406,7 +429,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
-        category.formsCount = decryptedCombine.getOtherCount("home_9001")
+        category.formsCount = decryptedCombine.getTaxesCount("home_9001")
+        category.category_id = "home_9001"
 
         categoryList.add(category)
 
@@ -415,7 +439,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getListsCount("home_9001")
+        category.formsCount = decryptedCombine.getListsCount("HomeBanking")
 
         categoryList.add(category)
 
@@ -424,6 +448,8 @@ class CategoryHelper(
     }
 
     private fun getShoppingCategories() {
+        val decryptedCombine: DecryptedCombineShopping = combineItems as DecryptedCombineShopping
+        AppLogger.e("CategoryHelper", " DecryptedCombineShopping : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -432,6 +458,8 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Loyalty Programs"
         category.drawableString = "ic_icon_loyalty_program"
+        category.formsCount = decryptedCombine.getLoyaltyPrograms("shopping_1001")
+        category.category_id = "shopping_1001"
 
         categoryList.add(category)
 
@@ -440,7 +468,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Recent Purchases"
         category.drawableString = "ic_icon_recent_purchases"
-
+        category.formsCount = decryptedCombine.getRecentPurchases("shopping_2001")
+        category.category_id = "shopping_2001"
         categoryList.add(category)
 
         categoryIndex += 1000
@@ -450,6 +479,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_clothing_sizes"
 
         category.subCategories.add(SubCategory("Add Person.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+        category.category_id = "shopping_3001"
 
         categoryList.add(category)
 
@@ -458,6 +488,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.formsCount = decryptedCombine.getServices("shopping_4001")
+        category.category_id = "shopping_4001"
 
         categoryList.add(category)
 
@@ -466,6 +498,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.formsCount = decryptedCombine.getServices("shopping_5001")
+        category.category_id = "shopping_5001"
 
         categoryList.add(category)
 
@@ -474,6 +508,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.formsCount = decryptedCombine.getShoppingLists("Shopping")
+        category.category_id = "shopping_6001"
 
         categoryList.add(category)
 
@@ -482,6 +518,9 @@ class CategoryHelper(
     }
 
     private fun getInterests() {
+        val decryptedCombine: DecryptedCombineInterests = combineItems as DecryptedCombineInterests
+        AppLogger.e("CategoryHelper", " DecryptedCombineInterests : " + decryptedCombine)
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1006
@@ -489,7 +528,8 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
-
+        category.formsCount = decryptedCombine.getServicesOrOtherAccounts("interest_1001")
+        category.category_id = "interest_1001"
         categoryList.add(category)
 
         categoryIndex += 1000
@@ -497,6 +537,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.formsCount = decryptedCombine.getAttachments("interest_2001")
+        category.category_id = "interest_2001"
 
         categoryList.add(category)
 
@@ -505,6 +547,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.formsCount = decryptedCombine.getLists("Interests")
+        category.category_id = "interest_3001"
 
         categoryList.add(category)
 
@@ -513,6 +557,8 @@ class CategoryHelper(
     }
 
     private fun getMemories() {
+        val decryptedCombine: DecryptedCombineMemories = combineItems as DecryptedCombineMemories
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1008
@@ -520,7 +566,7 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Memory Timeline"
         category.drawableString = "ic_home_sub_memories"
-
+        category.category_id = "memory_1001"
         categoryList.add(category)
 
 
@@ -529,6 +575,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
+        category.category_id = "memory_2001"
 
         categoryList.add(category)
 
@@ -537,6 +584,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.category_id = "memory_3001"
 
         categoryList.add(category)
 
@@ -545,6 +593,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.category_id = "memory_4001"
 
         categoryList.add(category)
 
@@ -553,6 +602,8 @@ class CategoryHelper(
     }
 
     private fun getEducation() {
+        val decryptedCombine: DecryptedCombineEducation = combineItems as DecryptedCombineEducation
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1004
@@ -560,7 +611,7 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Education"
         category.drawableString = "ic_icon_education"
-
+        category.category_id = "edu_1001"
         category.subCategories.add(SubCategory("Add Person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
         categoryList.add(category)
@@ -570,6 +621,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Work"
         category.drawableString = "ic_icon_work"
+        category.category_id = "edu_2001"
 
         category.subCategories.add(SubCategory("Add person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
@@ -581,7 +633,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
-
+//        category.formsCount = decryptedCombine.getLists("WellNess")
+        category.category_id = "edu_3001"
         categoryList.add(category)
 
         categoryIndex += 1000
@@ -589,6 +642,9 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
+        category.category_id = "edu_4001"
+
+//        category.formsCount = decryptedCombine.getLists("WellNess")
 
         categoryList.add(category)
 
@@ -597,6 +653,8 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
+        category.formsCount = decryptedCombine.getListItemsCount("WellNess")
+        category.category_id = "edu_5001"
 
         categoryList.add(category)
 

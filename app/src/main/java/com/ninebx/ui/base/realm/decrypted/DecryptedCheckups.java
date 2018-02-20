@@ -261,4 +261,26 @@ public class DecryptedCheckups implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedCheckups{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", physicianName='" + physicianName + '\'' +
+                ", checkup_description='" + checkup_description + '\'' +
+                ", physicianType='" + physicianType + '\'' +
+                ", reason='" + reason + '\'' +
+                ", dateOfVisit='" + dateOfVisit + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

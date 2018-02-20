@@ -40,8 +40,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class FragmentListContainer : FragmentBackHelper() {
 
-    var fragmentValue = ""
-    var fragmentCategoryId = ""
+    var categoryName = ""
+    var categoryID = ""
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
@@ -75,27 +75,30 @@ class FragmentListContainer : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val bundle = Bundle()
-        fragmentValue = arguments!!.getString("categoryName")
-        fragmentCategoryId = arguments!!.getString("categoryId")
+        categoryName = arguments!!.getString("categoryName")
+        categoryID = arguments!!.getString("categoryId")
 
 //        changeToolbarTitleAndAddInfo(fragmentValue)
 
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(fragmentValue)
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(categoryName)
 
         layoutAddList.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            bundle.putString("categoryName", fragmentValue)
-            bundle.putString("categoryId", fragmentCategoryId)
+            bundle.putString("categoryName", categoryName)
+            bundle.putString("categoryId", categoryID)
 
-            if (fragmentValue == "Shared Contacts") {
+            if (categoryName == "Shared Contacts") {
                 checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
                 callForContact()
-            } else if (fragmentValue == "Memory Timeline") {
+            } else if (categoryName == "Memory Timeline") {
                 val categoryFragment = MemoryTimeLineFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
             } else {
+                val bundle = Bundle()
+                bundle.putString("categoryName", categoryName)
+                bundle.putString("categoryId", categoryID)
                 val categoryFragment = Level2CategoryFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()

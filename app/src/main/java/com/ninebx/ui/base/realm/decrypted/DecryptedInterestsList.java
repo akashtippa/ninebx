@@ -220,4 +220,23 @@ public class DecryptedInterestsList implements Parcelable {
         this.createdUser = createdUser;
     }
 
+
+    @Override
+    public String toString() {
+        return "DecryptedInterestsList{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", listName='" + listName + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", detailsId=" + detailsId +
+                ", isSelected=" + isSelected +
+                ", selectedDate=" + selectedDate +
+                ", createdDate=" + createdDate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

@@ -27,6 +27,9 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var boxValue = ""
     val prefrences = NineBxPreferences()
 
+    private var categoryName = ""
+    private var categoryID = ""
+
     override fun showProgress(message: Int) {
 
     }
@@ -55,7 +58,10 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mCategoryPresenter = Level2CategoryPresenter(arguments!!.getString("categoryName"), arguments!!.getString("categoryID"), this)
+        categoryName = arguments!!.getString("categoryName")
+        categoryID = arguments!!.getString("categoryId")
+
+        mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, this)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
         NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()

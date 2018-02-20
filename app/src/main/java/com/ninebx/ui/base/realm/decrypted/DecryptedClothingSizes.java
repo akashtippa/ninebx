@@ -776,4 +776,65 @@ public class DecryptedClothingSizes implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedClothingSizes{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", personName='" + personName + '\'' +
+                ", sizeName='" + sizeName + '\'' +
+                ", sizeCategory='" + sizeCategory + '\'' +
+                ", topsSize='" + topsSize + '\'' +
+                ", topsNumericSize='" + topsNumericSize + '\'' +
+                ", bottomsSize='" + bottomsSize + '\'' +
+                ", bottomsNumericSize='" + bottomsNumericSize + '\'' +
+                ", dressesSize='" + dressesSize + '\'' +
+                ", dressesNumericSize='" + dressesNumericSize + '\'' +
+                ", outWearSize='" + outWearSize + '\'' +
+                ", outWearNumericSize='" + outWearNumericSize + '\'' +
+                ", swimWearSize='" + swimWearSize + '\'' +
+                ", swimWearNumericSize='" + swimWearNumericSize + '\'' +
+                ", swimWearBraBandCupSize='" + swimWearBraBandCupSize + '\'' +
+                ", shoeSize='" + shoeSize + '\'' +
+                ", shoeWidth='" + shoeWidth + '\'' +
+                ", hats='" + hats + '\'' +
+                ", gloves='" + gloves + '\'' +
+                ", tights='" + tights + '\'' +
+                ", bust='" + bust + '\'' +
+                ", waist='" + waist + '\'' +
+                ", hips='" + hips + '\'' +
+                ", armLength='" + armLength + '\'' +
+                ", inseam='" + inseam + '\'' +
+                ", torso='" + torso + '\'' +
+                ", jacketsSize='" + jacketsSize + '\'' +
+                ", jacketsNumericSize='" + jacketsNumericSize + '\'' +
+                ", pantsSize='" + pantsSize + '\'' +
+                ", pantsNumericSize='" + pantsNumericSize + '\'' +
+                ", toddlerSize='" + toddlerSize + '\'' +
+                ", kidSize='" + kidSize + '\'' +
+                ", neck='" + neck + '\'' +
+                ", chest='" + chest + '\'' +
+                ", clothing='" + clothing + '\'' +
+                ", shoes='" + shoes + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", isBaby=" + isBaby +
+                ", isWomen=" + isWomen +
+                ", isGirl=" + isGirl +
+                ", isMen=" + isMen +
+                ", isBoy=" + isBoy +
+                ", beltsNumericSize='" + beltsNumericSize + '\'' +
+                ", socks='" + socks + '\'' +
+                ", seat='" + seat + '\'' +
+                ", beltSize='" + beltSize + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

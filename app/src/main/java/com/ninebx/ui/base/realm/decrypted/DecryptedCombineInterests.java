@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -75,5 +77,42 @@ public class DecryptedCombineInterests implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
+    }
+
+    public int getServicesOrOtherAccounts(String selectionType) {
+        int count = 0;
+        for (DecryptedInterests decryptedLicense : interestItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getAttachments(String selectionType) {
+        int count = 0;
+        for (DecryptedInterests decryptedLicense : interestItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getLists(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedInterestsList selectedItem : listItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedCombineInterests{" +
+                "id=" + id +
+                ", interestItems=" + interestItems +
+                ", listItems=" + listItems +
+                '}';
     }
 }

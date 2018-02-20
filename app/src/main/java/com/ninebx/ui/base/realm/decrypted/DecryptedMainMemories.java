@@ -331,4 +331,33 @@ public class DecryptedMainMemories implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedMainMemories{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", nameOnAccount='" + nameOnAccount + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", swiftCode='" + swiftCode + '\'' +
+                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", paymentMethodOnFile='" + paymentMethodOnFile + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", title='" + title + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

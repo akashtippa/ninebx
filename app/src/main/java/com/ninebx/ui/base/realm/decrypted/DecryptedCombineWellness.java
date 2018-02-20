@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -175,5 +177,41 @@ public class DecryptedCombineWellness implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
+    }
+
+    public int getLists(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedWellnessList selectedItem : listItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }
+
+    public int getOtherAttachemnts(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedWellnessList selectedItem : listItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }
+
+    public int getServices(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedWellness selectedItem : wellnessItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
     }
 }

@@ -76,6 +76,34 @@ public class DecryptedEmergencyContacts implements Parcelable {
     @Required
     private String createdUser = "";
 
+    @Override
+    public String toString() {
+        return "DecryptedEmergencyContacts{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", name='" + name + '\'' +
+                ", relationShip='" + relationShip + '\'' +
+                ", phoneNumberOne='" + phoneNumberOne + '\'' +
+                ", phoneNumberTwo='" + phoneNumberTwo + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", streetAddressOne='" + streetAddressOne + '\'' +
+                ", streetAddressTwo='" + streetAddressTwo + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
+
     protected DecryptedEmergencyContacts(Parcel in) {
         id = in.readInt();
         photosId = in.createStringArrayList();
