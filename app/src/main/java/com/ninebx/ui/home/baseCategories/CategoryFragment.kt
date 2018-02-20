@@ -35,7 +35,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private var combinedItems : Parcelable?= null
+    private var combinedItems: Parcelable? = null
 
     override fun onCombineFetched(combine: DecryptedCombine) {
         this.combinedItems = combine
@@ -79,7 +79,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
         this.combinedItems = combineContacts
-       setupUI()
+        setupUI()
     }
 
     override fun showProgress(message: Int) {
@@ -104,7 +104,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
-    private lateinit var categories : ArrayList<Category>
+    private lateinit var categories: ArrayList<Category>
 
     override fun onSuccess(categories: ArrayList<Category>) {
         this.categories = categories

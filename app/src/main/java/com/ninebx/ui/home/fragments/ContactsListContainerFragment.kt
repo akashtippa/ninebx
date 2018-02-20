@@ -3,7 +3,6 @@ package com.ninebx.ui.home.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.widget.LinearLayoutManager
@@ -51,6 +50,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         bundle.putString("ContactOperation", "Edit")
         bundle.putString("ID", contacts!!.id.toString())
         AppLogger.e("ID ", " is " + contacts.id.toString())
+        AppLogger.e("ID ", " is " + contacts.mobileOne)
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
     }
 
@@ -61,6 +61,9 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     private var contactsList: ArrayList<Contacts>? = ArrayList()
     private var contactsRealm: Realm? = null
 
+    private var firstName = ""
+    private var lastName = ""
+    private var strMobileNumber = ""
 
     //
 
@@ -122,8 +125,8 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         context!!.hideProgressDialog()
 //        myList.clear()
         myList.add(memoryObject)
-        val index: Int = myList.size - 1
-        myList.removeAt(index)
+//        val index: Int = myList.size - 1
+//        myList.removeAt(index)
         mListsAdapter!!.notifyDataSetChanged()
     }
 
@@ -143,9 +146,48 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
 
-            for (contact in mContacts!![0].firstName) {
+            for (contact in mContacts!!) {
+                val realmContacts = Contacts()
+                realmContacts.id = getUniqueId()
+                realmContacts.firstName = contact.firstName
+                realmContacts.lastName = contact.lastName
+                realmContacts.mobileOne = contact.getPhone(0)
+
+                firstName = contact.firstName
+                strMobileNumber = contact.getPhone(0)
+                AppLogger.e("First Name ", " is " + contact.firstName)
+                AppLogger.e("Mobile Number ", "0 is " + contact.getPhone(0))
+                AppLogger.e("Mobile Number ", "1 is " + contact.getPhone(1))
+
+                myList.add(realmContacts)
+                mListsAdapter!!.notifyDataSetChanged()
+
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        var contacts = Contacts()
+                        contacts.id = getUniqueId()
+
+                        /*
+                        * If I'm sending like this,
+                        * contacts.firstName = firstName
+                        * It is showing some decrypted format in Android, but iOS is readable.
+                        * But, if I'm using like this
+                        * contacts.firstName = firstName.encryptString()
+                        * It is showing some decrypted format in iOS, but Android is readable.
+                        * */
+
+                        contacts.firstName = firstName.encryptString()
+                        contacts.lastName = lastName.encryptString()
+                        contacts.mobileOne = strMobileNumber.encryptString()
+                        contacts.insertOrUpdate(realm!!)
+
+                        NineBxApplication.instance.activityInstance!!.onBackPressed()
+                    }
+
+                })
 
             }
+
 //            setContactsList()
 
         } else
@@ -229,28 +271,5 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 //        rvContactList!!.layoutManager = layoutManager
 //        rvContactList!!.adapter = mListsAdapter
 //    }
-
-
-    @SuppressLint("Recycle")
-    private fun contactPicked(data: Intent) {
-        var cursor: Cursor? = null
-        try {
-            var name: String? = null
-            val uri = data.data
-            cursor = context!!.contentResolver.query(uri, null, null, null, null)
-            cursor!!.moveToFirst()
-            val nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
-            name = cursor.getString(nameIndex)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-    }
-
-    private fun pickSingleCOntact() {
-        val intent = Intent(Intent.ACTION_PICK, android.provider.Contacts.People.CONTENT_URI)
-        startActivityForResult(intent, PICK_CONTACT)
-    }
 
 }

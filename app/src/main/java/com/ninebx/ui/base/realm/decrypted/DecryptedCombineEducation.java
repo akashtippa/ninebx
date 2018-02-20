@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import io.realm.RealmList;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -102,33 +101,33 @@ public class DecryptedCombineEducation implements Parcelable {
     }
 
 
-    public int getEducationItemsCount( String selectionType ) {
+    public int getEducationItemsCount(String selectionType) {
         int count = 0;
-        for( DecryptedEducation selectedItem : educationItems ) {
+        for (DecryptedEducation selectedItem : educationItems) {
             count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
 
-    public int getMainEducationItemsCount( String selectionType ) {
+    public int getMainEducationItemsCount(String selectionType) {
         int count = 0;
-        for( DecryptedMainEducation selectedItem : mainEducationItems ) {
+        for (DecryptedMainEducation selectedItem : mainEducationItems) {
             count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
 
-    public int getWorkItemsCount( String selectionType ) {
+    public int getWorkItemsCount(String selectionType) {
         int count = 0;
-        for( DecryptedWork selectedItem : workItems ) {
+        for (DecryptedWork selectedItem : workItems) {
             count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
 
-    public int getListItemsCount( String selectionType ) {
+    public int getListItemsCount(String selectionType) {
         int count = 0;
-        for( DecryptedEducationList selectedItem : listItems ) {
+        for (DecryptedEducationList selectedItem : listItems) {
             count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;

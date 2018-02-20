@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseCategories
 import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombinePersonal
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 
@@ -90,12 +91,15 @@ class CategoryHelper(
     }
 
     private fun getPersonal() {
+//        val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1005
-        var category_id = "personal" + categoryIndex
+        var category_id = "personal_" + categoryIndex
         var category = Category(category_id)
         category.title = "Drivers License"
+//        category.formsCount = decryptedCombinePersonal.getDriversLicense("personal_1001")
         category.drawableString = "ic_icon_driver_license"
 
         categoryList.add(category)
@@ -272,8 +276,8 @@ class CategoryHelper(
 
     private fun getHomeAndMoneyCategories() {
 
-        val decryptedCombine : DecryptedCombine = combineItems as DecryptedCombine
-        AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine )
+        val decryptedCombine: DecryptedCombine = combineItems as DecryptedCombine
+        AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 

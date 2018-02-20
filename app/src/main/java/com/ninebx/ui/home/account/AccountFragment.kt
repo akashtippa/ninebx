@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_account.*
  */
 class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
 
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.txtProfile -> {
@@ -204,7 +203,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
         txtFamily.setOnClickListener(this)
         txtMasterPassword.setOnClickListener(this)
         layoutLock.setOnClickListener {
-//            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
+            //            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
         }
 
         layoutLogOut.setOnClickListener {
@@ -213,8 +212,5 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
             startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }
-
-
     }
-
 }

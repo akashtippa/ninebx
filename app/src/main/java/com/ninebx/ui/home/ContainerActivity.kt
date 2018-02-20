@@ -29,6 +29,7 @@ import io.realm.SyncUser
  * Created by Alok on 14/02/18.
  */
 class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView {
+
     override fun onContacts(contacts: Contacts) {
         val intent = Intent()
         intent.putExtra(Constants.CONTACTS_VIEW, contacts)

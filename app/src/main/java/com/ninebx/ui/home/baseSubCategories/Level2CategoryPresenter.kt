@@ -5,10 +5,10 @@ import com.ninebx.R
 /**
  * Created by Alok on 12/01/18.
  */
-class Level2CategoryPresenter(private val categoryName: String, private val categoryView: Level2CategoryView) {
+class Level2CategoryPresenter(private val categoryName: String, private val categoryID: String, private val categoryView: Level2CategoryView) {
 
     init {
         categoryView.showProgress(R.string.loading)
-        Level2CategoryHelper(categoryName, categoryView)
+        Level2CategoryHelper(categoryName, categoryID, categoryView)
     }
 }

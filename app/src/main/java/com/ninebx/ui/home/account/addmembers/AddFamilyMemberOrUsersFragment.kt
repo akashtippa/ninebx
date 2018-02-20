@@ -291,7 +291,6 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             edtEmailAddress.setText(member.email.decryptString())
     }
 
-
     private fun checkValidations(): Boolean {
 
         strFirstName = txtFirstName.text.toString()
