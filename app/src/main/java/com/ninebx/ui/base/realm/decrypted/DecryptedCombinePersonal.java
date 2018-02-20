@@ -129,6 +129,7 @@ public class DecryptedCombinePersonal implements Parcelable {
         int count = 0;
         for (DecryptedLicense decryptedLicense : licenseItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
-        } return count;
+        }
+        return count;
     }
 }

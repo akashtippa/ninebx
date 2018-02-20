@@ -11,7 +11,7 @@ class SubCategory(
         var drawableString: String = "",
         var formsCount: Int = 0,
         var type: Int = 0,
-        var subCategoryId : String = ""
+        var subCategoryId: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
