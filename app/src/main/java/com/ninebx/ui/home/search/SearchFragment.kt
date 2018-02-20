@@ -39,8 +39,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
     private var mRecentSearch = ArrayList<DecryptedRecentSearch>()
 
-    /* private lateinit var recentSearchAdapter: RecentSearchAdapter*/
-
     private lateinit var mSearchPresenter: SearchPresenter
 
     override fun onCombineFetched(combine: DecryptedCombine) {
