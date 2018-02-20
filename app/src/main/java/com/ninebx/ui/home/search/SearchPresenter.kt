@@ -134,7 +134,7 @@ class SearchPresenter {
     private  fun fetchRecentSearch() {
         prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-               val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").findAll()
+                val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").findAll()
                 if(recentSearch.size > 0){
                     for(i in 0 until recentSearch.size){
                         decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))

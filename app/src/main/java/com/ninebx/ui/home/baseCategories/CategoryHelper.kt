@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseCategories
 import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombineTravel
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 
@@ -90,12 +91,15 @@ class CategoryHelper(
     }
 
     private fun getPersonal() {
+//        val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
+
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1005
-        var category_id = "personal" + categoryIndex
+        var category_id = "personal_" + categoryIndex
         var category = Category(category_id)
         category.title = "Drivers License"
+//        category.formsCount = decryptedCombinePersonal.getDriversLicense("personal_1001")
         category.drawableString = "ic_icon_driver_license"
 
         categoryList.add(category)
@@ -207,20 +211,25 @@ class CategoryHelper(
     }
 
     private fun getTravelCategories() {
-        val categoryList = ArrayList<Category>()
 
+
+        val decryptedCombine: DecryptedCombineTravel = combineItems as DecryptedCombineTravel
+        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
+
+
+        val categoryList = ArrayList<Category>()
         var categoryIndex = 1002
         var category_id = "travel_" + categoryIndex
         var category = Category(category_id)
         category.title = "Loyalty Programs"
         category.drawableString = "ic_icon_loyalty_program"
+        var subId = 1001
 
-        category.subCategories.add(SubCategory("Airline", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Hotel", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Car Rental", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Cruiseline", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Railway", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Other", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Airline", "", decryptedCombine.getLoyaltyCount("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Car Rental", "", decryptedCombine.getLoyaltyCount("travel_1003"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Cruiseline", "", decryptedCombine.getLoyaltyCount("travel_1004"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Railway", "", decryptedCombine.getLoyaltyCount("travel_1005"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Other", "", decryptedCombine.getLoyaltyCount("travel_1006"), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
 
         categoryList.add(category)
 
@@ -229,18 +238,22 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Travel Documents"
         category.drawableString = "ic_icon_travel_document"
+        subId = 2001
 
-        category.subCategories.add(SubCategory("Passport", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Visa", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
-        category.subCategories.add(SubCategory("Other travel document", "", 0, Constants.SUB_CATEGORY_ADD_ITEM))
+        category.subCategories.add(SubCategory("Passport", "", decryptedCombine.getTravelDocuments("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Visa", "", decryptedCombine.getTravelDocuments("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
+        category.subCategories.add(SubCategory("Other travel document", "", decryptedCombine.getTravelDocuments("travel_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "travel_" + subId++))
 
         categoryList.add(category)
 
+        subId = 3001
         categoryIndex += 1000
         category_id = "travel_" + categoryIndex
         category = Category(category_id)
         category.title = "Travel Dates And Plans"
         category.drawableString = "ic_icon_calender_selected"
+        category.formsCount = decryptedCombine.getTravelDatesAndPlans("travel_3001")
+
 
         categoryList.add(category)
 
@@ -272,8 +285,8 @@ class CategoryHelper(
 
     private fun getHomeAndMoneyCategories() {
 
-        val decryptedCombine : DecryptedCombine = combineItems as DecryptedCombine
-        AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine )
+        val decryptedCombine: DecryptedCombine = combineItems as DecryptedCombine
+        AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -284,15 +297,15 @@ class CategoryHelper(
         category.drawableString = "ic_icon_financial_accounts"
         var subId = 1001
 
-        category.subCategories.add(SubCategory(
-                "Banking",
-                "",
-                decryptedCombine.getFinanceCount("home_" + subId),
-                Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++  ))
+        category.subCategories.add(SubCategory("Banking", "",
+                decryptedCombine.getFinanceCount("home_" + subId), Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+
         category.subCategories.add(SubCategory("Investments/Retirement", "", decryptedCombine.getFinanceCount("home_" + subId),
                 Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+
         category.subCategories.add(SubCategory("Loans/Mortgages", "", decryptedCombine.getFinanceCount("home_" + subId),
                 Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
+
         category.subCategories.add(SubCategory("Other financial accounts", "", decryptedCombine.getFinanceCount("home_" + subId),
                 Constants.SUB_CATEGORY_ADD_ITEM, "home_" + subId++))
 

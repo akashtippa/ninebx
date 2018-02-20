@@ -76,10 +76,9 @@ class FragmentListContainer : FragmentBackHelper() {
 
         val bundle = Bundle()
         fragmentValue = arguments!!.getString("categoryName")
-//        fragmentCategoryId = arguments!!.getString("categoryId")
+        fragmentCategoryId = arguments!!.getString("categoryId")
 
 //        changeToolbarTitleAndAddInfo(fragmentValue)
-
 
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle(fragmentValue)
 
@@ -87,6 +86,7 @@ class FragmentListContainer : FragmentBackHelper() {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             bundle.putString("categoryName", fragmentValue)
+            bundle.putString("categoryId", fragmentCategoryId)
 
             if (fragmentValue == "Shared Contacts") {
                 checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))

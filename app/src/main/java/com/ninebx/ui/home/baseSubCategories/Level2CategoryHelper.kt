@@ -13,6 +13,7 @@ import com.ninebx.utility.Constants
  */
 class Level2CategoryHelper(
         val category_name: String,
+        val categoryID: String,
         val categoryView: Level2CategoryView
 ) {
 

@@ -128,6 +128,7 @@ object Constants {
 
     val MEMBER: String = "member"
     val MEMORY_TIMELINE: String = "memoryTimeLine"
+    val UPDATING_USER: String = "updatingUser"
     val CONTACT: String = "contact"
     val FROM_CLASS = "fromClass"
     val CONTACTS_VIEW = "contactView"

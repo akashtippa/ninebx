@@ -1,13 +1,11 @@
 package com.ninebx.ui.home.account
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -28,8 +26,6 @@ import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.countryPicker.CountryPicker
 import io.realm.Realm
-import io.realm.SyncConfiguration
-import io.realm.SyncCredentials
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_my_profile.*
 import java.io.File
@@ -39,7 +35,9 @@ import java.util.*
 /***
  * Created by TechnoBlogger on 15/01/18.
  */
+
 class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgEditProfile != null)
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)
@@ -64,12 +62,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     var idUserID = ""
 
     val prefrences = NineBxPreferences()
-    var strUsername: String = "aman.shekhar@cognitiveclouds.com"
-    var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
-
-    var myCredentials: SyncCredentials? = null
     var user: SyncUser? = null
-    var config: SyncConfiguration? = null
     lateinit var realm: Realm
 
     private var currentUsers: ArrayList<Users>? = ArrayList()
@@ -89,7 +82,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         currentUsers = arguments!!.getParcelableArrayList<Users>(Constants.CURRENT_USER)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
-        populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
+        bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
+        bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
+
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -112,7 +107,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         }
 
         txtSave.setOnClickListener {
-            checkValidations()
+            if (checkValidations()) {
+                updateTheUserInfo()
+            }
         }
 
         ivBack.setOnClickListener {
@@ -120,47 +117,77 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         }
 
         txtCountry.setOnClickListener {
-            var countrySelected = prefrences.countrySelected
-            if (countrySelected.toString().trim().isEmpty()) {
-                txtCountry.hint = "Select Country"
-            } else {
-                txtCountry.text = countrySelected
-            }
+            //            var countrySelected = prefrences.countrySelected
+//            if (countrySelected.toString().trim().isEmpty()) {
+//                txtCountry.hint = "Select Country"
+//            } else {
+//                txtCountry.text = countrySelected
+//            }
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.replace(R.id.frameLayout, CountryPicker()).commit()
         }
 
+        imgEditProfile.setOnClickListener {
+            startCameraIntent()
+        }
+
         selectedGender = txtGender.selectedItem.toString()
         txtGender.prompt = "Gender"
+
+        populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
 
     }
 
     private fun populateUserInfo(users: Users?) {
         idUser = users!!.id
         idUserID = users.userId
-        edtFirstName.setText(users.firstName.decryptString())
-        edtLastName.setText(users.lastName.decryptString())
-        edtEmail.setText(users.emailAddress.decryptString())
-        edtRelationship.setText(users.relationship.decryptString())
-        txtDOB.text = users.dateOfBirth.decryptString()
-        txtAnniversary.text = users.anniversary.decryptString()
 
-        txtGender.prompt = users.gender.decryptString()
-        edtMobileNumber.setText(users.mobileNumber.decryptString())
-        edtAddress1.setText(users.street_1.decryptString())
-        edtAddress2.setText(users.street_2.decryptString())
-        edtCity.setText(users.city.decryptString())
-        edtState.setText(users.state.decryptString())
-        edtZipCode.setText(users.zipCode.decryptString())
+        if (users.firstName.isNotEmpty())
+            edtFirstName.setText(users.firstName.decryptString())
 
-        txtCountry.text = users.country.decryptString()
+        if (users.lastName.isNotEmpty())
+            edtLastName.setText(users.lastName.decryptString())
+
+        if (users.emailAddress.isNotEmpty())
+            edtEmail.setText(users.emailAddress.decryptString())
+
+        if (users.relationship.isNotEmpty())
+            edtRelationship.setText(users.relationship.decryptString())
+
+        if (users.gender.isNotEmpty())
+            txtGender.prompt = users.gender.decryptString()
+
+        if (users.dateOfBirth.isNotEmpty())
+            txtDOB.text = users.dateOfBirth.decryptString()
+
+        if (users.anniversary.isNotEmpty())
+            txtAnniversary.text = users.anniversary.decryptString()
+
+        if (users.mobileNumber.isNotEmpty())
+            edtMobileNumber.setText(users.mobileNumber.decryptString())
+
+        if (users.street_1.isNotEmpty())
+            edtAddress1.setText(users.street_1.decryptString())
+
+        if (users.street_2.isNotEmpty())
+            edtAddress2.setText(users.street_2.decryptString())
+
+        if (users.city.isNotEmpty())
+            edtCity.setText(users.city.decryptString())
+
+        if (users.state.isNotEmpty())
+            edtState.setText(users.state.decryptString())
+
+        if (users.zipCode.isNotEmpty())
+            edtZipCode.setText(users.zipCode.decryptString())
+
+        if (users.country.isNotEmpty())
+            txtCountry.text = users.country.decryptString()
 
         mAWSFileTransferHelper.setFileTransferListener(this)
         if (users.profilePhoto.isNotEmpty())
             mAWSFileTransferHelper.beginDownload("images/" + users.id + "/" + users.profilePhoto)
-
-
     }
 
     private fun enableEditing() {
@@ -181,7 +208,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         edtZipCode.isEnabled = true
     }
 
-    private fun checkValidations() {
+    private fun checkValidations(): Boolean {
 
         strFirstName = edtFirstName.text.toString()
         strLastName = edtLastName.text.toString()
@@ -198,134 +225,112 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
             edtFirstName.requestFocus()
-            return
+            return false
         }
 
         if (strDOB.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Date of birth'", Toast.LENGTH_LONG).show()
             txtDOB.requestFocus()
-            return
+            return false
         }
 
         if (!(txtGender != null && txtGender.selectedItem.toString() != null)) {
             Toast.makeText(context, "Please enter 'Gender'", Toast.LENGTH_LONG).show()
             txtGender.requestFocus()
-            return
+            return false
         }
 
         if (strMobileNumber.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Mobile number'", Toast.LENGTH_LONG).show()
             edtMobileNumber.requestFocus()
-            return
+            return false
         }
 
         if (strStreetAddress1.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Street address 1'", Toast.LENGTH_LONG).show()
             edtAddress1.requestFocus()
-            return
+            return false
         }
 
         if (strStreetAddress2.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'City'", Toast.LENGTH_LONG).show()
             edtCity.requestFocus()
-            return
+            return false
         }
 
         if (strState.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'State'", Toast.LENGTH_LONG).show()
             edtState.requestFocus()
-            return
+            return false
         }
 
         if (strZipCode.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'Zip code'", Toast.LENGTH_LONG).show()
             edtZipCode.requestFocus()
-            return
+            return false
         }
 
-        updateTheUserInfo() // Updating the User Info to Realm
+        return true
+//        updateTheUserInfo() // Updating the User Info to Realm
 
     }
 
     private fun updateTheUserInfo() {
+        /***
+         * If I was going with this, then it was creating a new Object in the realmOS.
+         *
+         */
+
+//
 //        var users = Users()
-//        users.id = idUser
+////        users.id = idUser
 //        users.userId = idUserID
-//        users.firstName = edtFirstName.text.toString().decryptString()
-//        users.lastName = edtLastName.text.toString().decryptString()
-//        users.dateOfBirth = txtDOB.text.toString().decryptString()
-//        users.anniversary = txtAnniversary.text.toString().decryptString()
-//        users.mobileNumber = edtMobileNumber.text.toString().decryptString()
-//        users.street_1 = edtAddress1.text.toString().decryptString()
-//        users.street_2 = edtAddress2.text.toString().decryptString()
-//        users.city = edtCity.text.toString().decryptString()
-//        users.state = edtState.text.toString().decryptString()
-//        users.country = txtCountry.text.toString().decryptString()
+//        users.firstName = edtFirstName.text.toString().encryptString()
+//        users.lastName = edtLastName.text.toString().encryptString()
+//        users.fullName = (edtFirstName.text.toString() + edtLastName.text.toString()).encryptString()
+//        users.emailAddress = edtEmail.text.toString().encryptString()
+//        users.relationship = edtRelationship.text.toString().encryptString()
+//        users.dateOfBirth = txtDOB.text.toString().encryptString()
+//        users.anniversary = txtAnniversary.text.toString().encryptString()
+//        users.gender = txtGender.selectedItem.toString().encryptString()
+//        users.mobileNumber = edtMobileNumber.text.toString().encryptString()
+//        users.street_1 = edtAddress1.text.toString().encryptString()
+//        users.street_2 = edtAddress2.text.toString().encryptString()
+//        users.city = edtCity.text.toString().encryptString()
+//        users.state = edtState.text.toString().encryptString()
+//        users.zipCode = edtZipCode.text.toString().encryptString()
+//        users.country = txtCountry.text.toString().encryptString()
+
+//        Private Key : [74, 86, 113, 112, 51, 110, 109, 102, 71, 118, 65, 77, 113, 103, 106, 70]
 
 
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val updatingUserInfo = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
+                val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
                 realm.beginTransaction()
 
-                updatingUserInfo!!.firstName = strFirstName.encryptString()
-                updatingUserInfo.lastName = strLastName.encryptString()
-                updatingUserInfo.dateOfBirth = strDOB.encryptString()
-                updatingUserInfo.anniversary = strAnniversary.encryptString()
-                updatingUserInfo.mobileNumber = strMobileNumber.encryptString()
-                updatingUserInfo.street_1 = strStreetAddress1.encryptString()
-                updatingUserInfo.street_2 = strStreetAddress2.encryptString()
-                updatingUserInfo.city = strCity.encryptString()
-                updatingUserInfo.state = strState.encryptString()
-                updatingUserInfo.country = strCountry.encryptString()
-//                realm.copyToRealmOrUpdate(updatingUserInfo)
+                users!!.firstName = edtFirstName.text.toString().encryptString()
+                users.lastName = edtLastName.text.toString().encryptString()
+                users.fullName = (edtFirstName.text.toString() + edtLastName.text.toString()).encryptString()
+                users.emailAddress = edtEmail.text.toString().encryptString()
+                users.relationship = edtRelationship.text.toString().encryptString()
+                users.dateOfBirth = txtDOB.text.toString().encryptString()
+                users.anniversary = txtAnniversary.text.toString().encryptString()
+                users.gender = txtGender.selectedItem.toString().encryptString()
+                users.mobileNumber = edtMobileNumber.text.toString().encryptString()
+                users.street_1 = edtAddress1.text.toString().encryptString()
+                users.street_2 = edtAddress2.text.toString().encryptString()
+                users.city = edtCity.text.toString().encryptString()
+                users.state = edtState.text.toString().encryptString()
+                users.zipCode = edtZipCode.text.toString().encryptString()
+                users.country = txtCountry.text.toString().encryptString()
+                //                realm.copyToRealmOrUpdate(updatingUserInfo)
                 realm.commitTransaction()
+                users.insertOrUpdate(realm)
 
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
             }
         })
-    }
-
-
-    @SuppressLint("StaticFieldLeak")
-    inner class SyncTheDb : AsyncTask<String, String, String>() {
-
-        override fun doInBackground(vararg p0: String?): String {
-            var Result: String = ""
-            try {
-                syncNow()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return Result
-        }
-
-    }
-
-    private fun syncNow() {
-        myCredentials = SyncCredentials.usernamePassword(strUsername, strPassword, false)
-        user = SyncUser.login(myCredentials, Constants.SERVER_IP)
-        config = SyncConfiguration.Builder(user, Constants.SERVER_URL + "Test")
-                .waitForInitialRemoteData()
-                .build()
-
-        realm = Realm.getInstance(config)
-    }
-
-    private fun sendDataToServer() {
-        realm = Realm.getInstance(config)
-
-        realm.executeTransactionAsync({ bgRealm ->
-            val user = bgRealm.createObject(Users::class.java)
-            user.firstName = strFirstName // Just for testing, LGb5ps0HypDZMGF/llxgbg==
-
-        }, {
-            // Transaction was a success.
-            Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
-        }, {
-            Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show()
-        })
-
     }
 
     override fun onBackPressed(): Boolean {
@@ -446,4 +451,5 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     private fun setProfileImage(imageUri: Uri) {
         Glide.with(context).load(imageUri).into(imgEditProfile)
     }
+
 }

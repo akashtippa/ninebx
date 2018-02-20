@@ -161,6 +161,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                     this@HomeActivity.hideProgressDialog()
                     AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
                     for (member in currentUsers!![0]!!.members) {
+
                         AppLogger.d("CurrentUser", "Members : " + member.toString())
                         AppLogger.e("Name ", "is : " + member.firstName)
                     }

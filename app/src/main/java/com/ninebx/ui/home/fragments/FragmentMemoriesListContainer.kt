@@ -71,6 +71,15 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Memory timeline")
 
         currentMemoriesList = arguments!!.getParcelableArrayList<MemoryTimeline>(Constants.REALM_MEMORY_VIEW)
+
+
+        for (contact in currentMemoriesList!!) {
+            val dates = Date()
+            dates.strDate
+            dates.strDate = contact.date
+            currentDateList!!.add(dates)
+        }
+
         myList.addAll(currentMemoriesList!!)
         myDateList.addAll(currentDateList!!)
 
@@ -80,11 +89,11 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         rvMemoryView!!.layoutManager = layoutManager
         rvMemoryView!!.adapter = mListsAdapter
 
-//        mListsDateAdapter = MemoriesDateAdapter(myDateList)
-//        val layoutManagerDate = LinearLayoutManager(context)
-//        layoutManagerDate.orientation = LinearLayoutManager.HORIZONTAL
-//        rvMemoryView!!.layoutManager = layoutManager
-//        rvMemoryView!!.adapter = mListsDateAdapter
+        mListsDateAdapter = MemoriesDateAdapter(myDateList)
+        val layoutManagerDate = LinearLayoutManager(context)
+        layoutManagerDate.orientation = LinearLayoutManager.HORIZONTAL
+        rvMemoryView!!.layoutManager = layoutManager
+        rvMemoryView!!.adapter = mListsDateAdapter
 
         layoutAddList.setOnClickListener {
             val bundle = Bundle()

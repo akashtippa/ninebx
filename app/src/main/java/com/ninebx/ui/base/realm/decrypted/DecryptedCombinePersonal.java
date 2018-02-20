@@ -124,4 +124,12 @@ public class DecryptedCombinePersonal implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
     }
+
+    public int getDriversLicense(String selectionType) {
+        int count = 0;
+        for (DecryptedLicense decryptedLicense : licenseItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
 }

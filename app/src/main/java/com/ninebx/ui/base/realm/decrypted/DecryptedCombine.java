@@ -3,8 +3,6 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import io.realm.RealmList;
@@ -171,7 +169,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedFinancial selectedItem : financialItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -183,7 +181,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedPayment selectedItem : paymentItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -195,7 +193,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedProperty selectedItem : propertyItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -207,7 +205,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedVehicle selectedItem : vehicleItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -219,7 +217,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedHomeList selectedItem : listItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -231,7 +229,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedInsurance selectedItem : insuranceItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -243,7 +241,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedTax selectedItem : taxesItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
@@ -255,7 +253,7 @@ public class DecryptedCombine implements Parcelable {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for( DecryptedAsset selectedItem : assetItems ) {
-            if( !ids.contains(selectedItem.getId()) ) {
+            if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
