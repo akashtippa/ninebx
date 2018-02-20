@@ -379,18 +379,17 @@ class SearchPresenter {
             return mDecryptCombine
         }
         val searchDecryptCombine = DecryptedCombine()
-        var searchFinanceItems = ArrayList<DecryptedFinancial>()
-        var searchPaymentItems = ArrayList<DecryptedPayment>()
-        var searchPropertyItems = ArrayList<DecryptedProperty>()
-        var searchVehicleItems = ArrayList<DecryptedVehicle>()
-        var searchAssetItems = ArrayList<DecryptedAsset>()
-        var searchInsuranceItems = ArrayList<DecryptedInsurance>()
-        var searchTaxItems = ArrayList<DecryptedTax>()
-        var searchHomeList = ArrayList<DecryptedHomeList>()
+        val searchFinanceItems = ArrayList<DecryptedFinancial>()
+        val searchPaymentItems = ArrayList<DecryptedPayment>()
+        val searchPropertyItems = ArrayList<DecryptedProperty>()
+        val searchVehicleItems = ArrayList<DecryptedVehicle>()
+        val searchAssetItems = ArrayList<DecryptedAsset>()
+        val searchInsuranceItems = ArrayList<DecryptedInsurance>()
+        val searchTaxItems = ArrayList<DecryptedTax>()
+        val searchHomeList = ArrayList<DecryptedHomeList>()
         AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
         for( financeItems in mDecryptCombine.financialItems ) {
             if( performSearch(financeItems, text))
-
                 searchFinanceItems.add(financeItems)
         }
 
@@ -469,11 +468,11 @@ class SearchPresenter {
         }
 
         val searchDecryptCombineTravel = DecryptedCombineTravel()
-        var searchDocumentItems = ArrayList<DecryptedDocuments>()
-        var searchLoyaltyItems = ArrayList<DecryptedLoyalty>()
-        var searchTravelItems = ArrayList<DecryptedTravel>()
-        var searchVacationItems = ArrayList<DecryptedVacations>()
-        var searchListItems = ArrayList<DecryptedTravelList>()
+        val searchDocumentItems = ArrayList<DecryptedDocuments>()
+        val searchLoyaltyItems = ArrayList<DecryptedLoyalty>()
+        val searchTravelItems = ArrayList<DecryptedTravel>()
+        val searchVacationItems = ArrayList<DecryptedVacations>()
+        val searchListItems = ArrayList<DecryptedTravelList>()
 
         for (documentsItems in mDecryptedCombineTravel.documentsItems){
             if(performSearch(documentsItems, text))
@@ -513,9 +512,9 @@ class SearchPresenter {
             return mDecryptedCombineMemories
         }
         val searchDecryptCombineMemories = DecryptedCombineMemories()
-        var searchMainMemoryItems = ArrayList<DecryptedMainMemories>()
-        var searchMemoryTimelineItems = ArrayList<DecryptedMemoryTimeline>()
-        var searchMemorylistItems = ArrayList<DecryptedMemoriesList>()
+        val searchMainMemoryItems = ArrayList<DecryptedMainMemories>()
+        val searchMemoryTimelineItems = ArrayList<DecryptedMemoryTimeline>()
+        val searchMemorylistItems = ArrayList<DecryptedMemoriesList>()
 
         for (mainMemoryItems in mDecryptedCombineMemories.mainMemoriesItems) {
             if (performSearch(mainMemoryItems, text))
@@ -545,10 +544,10 @@ class SearchPresenter {
             return mDecryptCombineEducation
         }
         val searchDecryptCombineEducation = DecryptedCombineEducation()
-        var searchEducationItems = ArrayList<DecryptedEducation> ()
-        var searchMainEduactionItems = ArrayList<DecryptedMainEducation>()
-        var searchWorkItems = ArrayList<DecryptedWork>()
-        var searchEducationListItems = ArrayList<DecryptedEducationList>()
+        val searchEducationItems = ArrayList<DecryptedEducation> ()
+        val searchMainEduactionItems = ArrayList<DecryptedMainEducation>()
+        val searchWorkItems = ArrayList<DecryptedWork>()
+        val searchEducationListItems = ArrayList<DecryptedEducationList>()
 
         for(educationItems in mDecryptCombineEducation.educationItems){
             if(performSearch(educationItems, text))
@@ -605,17 +604,17 @@ class SearchPresenter {
             return mDecryptCombineWellness
         }
         val searchDecryptCombineWellness = DecryptedCombineWellness()
-        var searchCheckupItems = ArrayList<DecryptedCheckups>()
-        var searchEmergencyContacts = ArrayList<DecryptedEmergencyContacts>()
-        var searchEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
-        var searchhealthcareProviders = ArrayList<DecryptedHealthcareProviders>()
-        var searchIdentification = ArrayList<DecryptedIdentification>()
-        var searchMedicalConditions = ArrayList<DecryptedMedicalConditions>()
-        var searchMedicalHistory = ArrayList<DecryptedMedicalHistory>()
-        var searchMedications = ArrayList<DecryptedMedications>()
-        var searchVitalNumber = ArrayList<DecryptedVitalNumbers>()
-        var searchWellness = ArrayList<DecryptedWellness>()
-        var searchWellnessList = ArrayList<DecryptedWellnessList>()
+        val searchCheckupItems = ArrayList<DecryptedCheckups>()
+        val searchEmergencyContacts = ArrayList<DecryptedEmergencyContacts>()
+        val searchEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
+        val searchhealthcareProviders = ArrayList<DecryptedHealthcareProviders>()
+        val searchIdentification = ArrayList<DecryptedIdentification>()
+        val searchMedicalConditions = ArrayList<DecryptedMedicalConditions>()
+        val searchMedicalHistory = ArrayList<DecryptedMedicalHistory>()
+        val searchMedications = ArrayList<DecryptedMedications>()
+        val searchVitalNumber = ArrayList<DecryptedVitalNumbers>()
+        val searchWellness = ArrayList<DecryptedWellness>()
+        val searchWellnessList = ArrayList<DecryptedWellnessList>()
 
         for(checkupItems in mDecryptCombineWellness.checkupsItems){
             if(performSearch(checkupItems, text))
@@ -690,13 +689,13 @@ class SearchPresenter {
             return mDecryptCombinePersonal
         }
         val searchDecryptCombinePersonal = DecryptedCombinePersonal()
-        var searchCertifiacate = ArrayList<DecryptedCertificate>()
-        var searchGovernment = ArrayList<DecryptedGovernment>()
-        var searchLicense = ArrayList<DecryptedLicense>()
-        var searchPersonal = ArrayList<DecryptedPersonal>()
-        var searchSocial = ArrayList<DecryptedSocial>()
-        var searchTaxID = ArrayList<DecryptedTaxID>()
-        var searchPersonalList = ArrayList<DecryptedPersonalList>()
+        val searchCertifiacate = ArrayList<DecryptedCertificate>()
+        val searchGovernment = ArrayList<DecryptedGovernment>()
+        val searchLicense = ArrayList<DecryptedLicense>()
+        val searchPersonal = ArrayList<DecryptedPersonal>()
+        val searchSocial = ArrayList<DecryptedSocial>()
+        val searchTaxID = ArrayList<DecryptedTaxID>()
+        val searchPersonalList = ArrayList<DecryptedPersonalList>()
 
         for (certificateItems in mDecryptCombinePersonal.certificateItems){
             if(performSearch(certificateItems, text))
@@ -740,9 +739,9 @@ class SearchPresenter {
             return mDecryptedCombineContacts
         }
         val searchDecryptCombineContacts = DecryptedCombineContacts()
-        var searchContacts = ArrayList<DecryptedContacts>()
-        var searchMainContacts = ArrayList<DecryptedMainContacts>()
-        var searchContactsList = ArrayList<DecryptedContactsList>()
+        val searchContacts = ArrayList<DecryptedContacts>()
+        val searchMainContacts = ArrayList<DecryptedMainContacts>()
+        val searchContactsList = ArrayList<DecryptedContactsList>()
         for(contactsItems in mDecryptedCombineContacts.contactsItems){
             if(performSearch(contactsItems, text))
                 searchContacts.add(contactsItems)
@@ -765,11 +764,11 @@ class SearchPresenter {
             return mDecryptCombineShopping
         }
         val searchDecryptCombineShopping = DecryptedCombineShopping()
-        var searchLoyaltyPrograms = ArrayList<DecryptedLoyaltyPrograms>()
-        var searchRecentPurchase = ArrayList<DecryptedRecentPurchase>()
-        var searchShopping = ArrayList<DecryptedShopping>()
-        var searchClothingSize = ArrayList<DecryptedClothingSizes>()
-        var searchShoppingList = ArrayList<DecryptedShoppingList>()
+        val searchLoyaltyPrograms = ArrayList<DecryptedLoyaltyPrograms>()
+        val searchRecentPurchase = ArrayList<DecryptedRecentPurchase>()
+        val searchShopping = ArrayList<DecryptedShopping>()
+        val searchClothingSize = ArrayList<DecryptedClothingSizes>()
+        val searchShoppingList = ArrayList<DecryptedShoppingList>()
         for(loyaltyProgramsItems in mDecryptCombineShopping.loyaltyProgramsItems){
             if(performSearch(loyaltyProgramsItems, text))
                 searchLoyaltyPrograms.add(loyaltyProgramsItems)
