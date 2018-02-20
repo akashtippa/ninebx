@@ -1523,11 +1523,11 @@ fun decryptNotifications(notifications: Notifications): DecryptedNotifications {
     val decryptNotifications = DecryptedNotifications()
     decryptNotifications.message = notifications.message.decryptString()
     decryptNotifications.boxName = notifications.boxName.decryptString()
-    decryptNotifications.dueDate = notifications.dueDate.decryptString()
+    decryptNotifications.dueDate = notifications.dueDate
     decryptNotifications.subTitle = notifications.subTitle.decryptString()
-    decryptNotifications.notifyDate = notifications.notifyDate.decryptString()
-    decryptNotifications.created = notifications.created.decryptString()
-    decryptNotifications.modified = notifications.modified.decryptString()
+    decryptNotifications.notifyDate = notifications.notifyDate
+    decryptNotifications.created = notifications.created
+    decryptNotifications.modified = notifications.modified
     return decryptNotifications
 }
 
