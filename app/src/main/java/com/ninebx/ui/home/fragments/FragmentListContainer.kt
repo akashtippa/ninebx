@@ -9,17 +9,23 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.ui.home.search.Level3SearchItem
+import com.ninebx.ui.home.search.SearchAdapter
+import com.ninebx.ui.home.search.SearchHelper
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
@@ -38,15 +44,15 @@ import java.util.concurrent.atomic.AtomicBoolean
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class FragmentListContainer : FragmentBackHelper() {
+class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
 
-    var fragmentValue = ""
-    var fragmentCategoryId = ""
+
+    var categoryName = ""
+    var categoryID = ""
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
 
-    private var mListsAdapter: ContactsAdapter? = null
     var myList: ArrayList<Contacts> = ArrayList()
 
     private val REQUEST_CONTACT = 0
@@ -61,7 +67,7 @@ class FragmentListContainer : FragmentBackHelper() {
 
     private var contactList: RealmResults<Contacts>? = null
     private var contacts: ArrayList<Contacts>? = ArrayList()
-
+    private var combinedItems: Parcelable? = null
 
     private val mRequestPermissionsInProcess = AtomicBoolean()
 
@@ -69,38 +75,50 @@ class FragmentListContainer : FragmentBackHelper() {
         return inflater.inflate(R.layout.fragment_list_container, container, false)
     }
 
+    private lateinit var searchHelper: SearchHelper
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val bundle = Bundle()
-        fragmentValue = arguments!!.getString("categoryName")
-        fragmentCategoryId = arguments!!.getString("categoryId")
+        combinedItems = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
+        categoryName = arguments!!.getString("categoryName")
+        categoryID = arguments!!.getString("categoryId")
 
 //        changeToolbarTitleAndAddInfo(fragmentValue)
 
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(fragmentValue)
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(categoryName)
 
         layoutAddList.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            bundle.putString("categoryName", fragmentValue)
-            bundle.putString("categoryId", fragmentCategoryId)
+            bundle.putString("categoryName", categoryName)
+            bundle.putString("categoryId", categoryID)
 
-            if (fragmentValue == "Shared Contacts") {
+            if (categoryName == "Shared Contacts") {
                 checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
                 callForContact()
-            } else if (fragmentValue == "Memory Timeline") {
+            } else if (categoryName == "Memory Timeline") {
                 val categoryFragment = MemoryTimeLineFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
             } else {
+                val bundle = Bundle()
+                bundle.putString("categoryName", categoryName)
+                bundle.putString("categoryId", categoryID)
                 val categoryFragment = Level2CategoryFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
             }
         }
+
+        searchHelper = SearchHelper()
+        //TODO - change hard coded value
+        val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!) )
+        rvCommonList!!.layoutManager = LinearLayoutManager(context)
+        rvCommonList!!.adapter = SearchAdapter(searchItems, this )
     }
 
     private fun changeToolbarTitleAndAddInfo(fragmentValue: String?) {
@@ -111,6 +129,10 @@ class FragmentListContainer : FragmentBackHelper() {
             }
 
         }
+    }
+
+    override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
+        searchHelper.switchAndSearch(searchItem)
     }
 
     private fun fetchTheContactListFromRealm() {

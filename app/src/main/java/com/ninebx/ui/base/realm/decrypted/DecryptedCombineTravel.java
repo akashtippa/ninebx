@@ -164,8 +164,31 @@ public class DecryptedCombineTravel implements Parcelable {
         }
         return count;
     }
+ // Travel Dates And Plans
+    public int getServices(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedTravel selectedItem : travelItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }
 
-
+    // Travel Lists
+    public int getTravelLists(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedTravelList selectedItem : listItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }
 
 
 }

@@ -352,4 +352,33 @@ public class DecryptedLoyalty implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedLoyalty{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", airLine='" + airLine + '\'' +
+                ", hotel='" + hotel + '\'' +
+                ", carRentalCompany='" + carRentalCompany + '\'' +
+                ", cruiseline='" + cruiseline + '\'' +
+                ", railway='" + railway + '\'' +
+                ", other='" + other + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", nameOnAccount='" + nameOnAccount + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

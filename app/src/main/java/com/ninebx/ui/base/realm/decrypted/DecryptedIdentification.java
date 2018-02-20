@@ -339,4 +339,32 @@ public class DecryptedIdentification implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedIdentification{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateofBirth='" + dateofBirth + '\'' +
+                ", age='" + age + '\'' +
+                ", height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", hairColor='" + hairColor + '\'' +
+                ", eyeColor='" + eyeColor + '\'' +
+                ", visibleMarks='" + visibleMarks + '\'' +
+                ", bloodType='" + bloodType + '\'' +
+                ", orgonDonor='" + orgonDonor + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

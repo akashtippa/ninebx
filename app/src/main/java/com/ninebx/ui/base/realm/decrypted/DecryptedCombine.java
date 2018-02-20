@@ -165,10 +165,10 @@ public class DecryptedCombine implements Parcelable {
                 '}';
     }
 
-    public int getFinanceCount( String selectionType ) {
+    public int getFinanceCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedFinancial selectedItem : financialItems ) {
+        for (DecryptedFinancial selectedItem : financialItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -177,10 +177,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getPaymentCount( String selectionType ) {
+    public int getPaymentCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedPayment selectedItem : paymentItems ) {
+        for (DecryptedPayment selectedItem : paymentItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -189,10 +189,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getPropertyCount( String selectionType ) {
+    public int getPropertyCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedProperty selectedItem : propertyItems ) {
+        for (DecryptedProperty selectedItem : propertyItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -201,10 +201,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getAutoCount( String selectionType ) {
+    public int getAutoCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedVehicle selectedItem : vehicleItems ) {
+        for (DecryptedVehicle selectedItem : vehicleItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -213,10 +213,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getOtherCount( String selectionType ) {
+    public int getOtherCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedHomeList selectedItem : listItems ) {
+        for (DecryptedHomeList selectedItem : listItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -225,10 +225,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getInsuranceCount( String selectionType ) {
+    public int getInsuranceCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedInsurance selectedItem : insuranceItems ) {
+        for (DecryptedInsurance selectedItem : insuranceItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -237,10 +237,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getTaxesCount( String selectionType ) {
+    public int getTaxesCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedTax selectedItem : taxesItems ) {
+        for (DecryptedTax selectedItem : taxesItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -249,10 +249,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getAssetCount( String selectionType ) {
+    public int getAssetCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedAsset selectedItem : assetItems ) {
+        for (DecryptedAsset selectedItem : assetItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
@@ -261,10 +261,10 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getListsCount( String selectionType ) {
+    public int getListsCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for( DecryptedHomeList selectedItem : listItems ) {
+        for (DecryptedHomeList selectedItem : listItems) {
             if (!ids.contains(selectedItem.getId())) {
                 count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());

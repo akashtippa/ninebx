@@ -132,4 +132,38 @@ public class DecryptedCombinePersonal implements Parcelable {
         }
         return count;
     }
+
+    public int getSocialSecurity(String selectionType) {
+        int count = 0;
+        for (DecryptedSocial decryptedLicense : socialItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getTAXID(String selectionType) {
+        int count = 0;
+        for (DecryptedTaxID decryptedLicense : taxIDItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getOtherGovernment(String selectionType) {
+        int count = 0;
+        for (DecryptedTaxID decryptedLicense : taxIDItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getMarriageCertificate(String selectionType) {
+        int count = 0;
+        for (DecryptedCertificate decryptedLicense : certificateItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+
 }

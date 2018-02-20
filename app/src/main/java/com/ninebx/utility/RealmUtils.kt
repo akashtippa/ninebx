@@ -178,12 +178,27 @@ private fun pojo2Map(obj: Any): Map<String, Any> {
     return hashMap
 }
 
-fun performSearch(classObject: Any, searchText: String): Boolean? {
+fun performSearchForString(classObject: Any, searchText: String): String {
+    val objectHashMap = pojo2Map(classObject)
+    var isSearchFound = false
+    var searchString = ""
+    if (objectHashMap.isNotEmpty()) {
+        for (`object` in objectHashMap.values) {
+            if (`object` is String && `object`.toLowerCase().contains(searchText.toLowerCase())) {
+                searchString = `object`
+                isSearchFound = true
+                break
+            }
+        }
+    }
+    return searchString
+}
+
+fun performSearch(classObject: Any, searchText: String): Boolean {
 
     val objectHashMap = pojo2Map(classObject)
     var isSearchFound = false
     if (objectHashMap.isNotEmpty()) {
-        AppLogger.d("SEarcgub", "Search Map " + objectHashMap)
         for (`object` in objectHashMap.values) {
             if (`object` is String && `object`.toLowerCase().contains(searchText.toLowerCase())) {
                 isSearchFound = true
@@ -192,35 +207,6 @@ fun performSearch(classObject: Any, searchText: String): Boolean? {
         }
     }
     return isSearchFound
-}
-
-fun testSearch() {
-    val TestSearchs = ArrayList<TestSearch>()
-    var category = 0
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-    TestSearchs.add(TestSearch(category++, "Level3" + category))
-
-    for (levelSearch in TestSearchs) {
-        performSearch(levelSearch, "level")
-    }
 }
 
 /*

@@ -246,4 +246,25 @@ public class DecryptedMemoryTimeline implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedMemoryTimeline{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", place='" + place + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", selectedDate=" + selectedDate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

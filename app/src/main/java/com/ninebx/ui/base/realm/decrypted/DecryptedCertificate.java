@@ -308,4 +308,30 @@ public class DecryptedCertificate implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedCertificate{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", cer_description='" + cer_description + '\'' +
+                ", nameOnCertificate='" + nameOnCertificate + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", timeOfBirth='" + timeOfBirth + '\'' +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", dateOfMarriage='" + dateOfMarriage + '\'' +
+                ", placeOfMarriage='" + placeOfMarriage + '\'' +
+                ", nameOneCertificate='" + nameOneCertificate + '\'' +
+                ", nameTwoCertificate='" + nameTwoCertificate + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

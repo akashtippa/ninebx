@@ -404,4 +404,37 @@ public class DecryptedVitalNumbers implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedVitalNumbers{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", vital_description='" + vital_description + '\'' +
+                ", measurementDate='" + measurementDate + '\'' +
+                ", height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", waist='" + waist + '\'' +
+                ", bodyFat='" + bodyFat + '\'' +
+                ", bodyMassIndex='" + bodyMassIndex + '\'' +
+                ", bloodPressure='" + bloodPressure + '\'' +
+                ", heartRate='" + heartRate + '\'' +
+                ", totalCholesterol='" + totalCholesterol + '\'' +
+                ", hdlCholesterol='" + hdlCholesterol + '\'' +
+                ", ldlCholesterol='" + ldlCholesterol + '\'' +
+                ", cholesterolRatio='" + cholesterolRatio + '\'' +
+                ", triglycerides='" + triglycerides + '\'' +
+                ", bloodGlucose='" + bloodGlucose + '\'' +
+                ", hemoglobin='" + hemoglobin + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

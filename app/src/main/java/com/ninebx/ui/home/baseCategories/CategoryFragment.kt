@@ -92,6 +92,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     var categoryName = ""
+    var categoryID = ""
     private var allMemoryView: RealmResults<MemoryTimeline>? = null
     private var allContacts: RealmResults<Contacts>? = null
 
@@ -140,6 +141,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
             tvCategory.setOnClickListener {
                 categoryName = category.title
+                categoryID = category.category_id
                 when {
                     category.title == "Lists" -> getLists()
                     category.title == "Memory Timeline" -> gettingMemoryTimeLineView()
@@ -149,11 +151,13 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
                         val bundle = Bundle()
-                        bundle.putString("categoryName", category.title)
-                        bundle.putString("categoryId", category.category_id)
+                        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                        bundle.putString("categoryName", categoryName)
+                        bundle.putString("categoryId", categoryID)
                         val categoryFragment = FragmentListContainer()
                         categoryFragment.arguments = bundle
                         fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                        Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -164,8 +168,11 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
                     val bundle = Bundle()
-                    bundle.putString("categoryName", category.title)
+                    categoryName = category.title
+                    categoryID = category.subCategoryId
 
+                    bundle.putString("categoryName", categoryName)
+                    bundle.putString("categoryId", categoryID)
                     when {
                         category.title == "Add Persons." -> {
                             val categoryFragment = WellnessFragment()
@@ -178,9 +185,13 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                         }
                         else -> {
+
                             val categoryFragment = FragmentListContainer()
+                            bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                             categoryFragment.arguments = bundle
                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                            Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
+
                         }
                     }
                 }
@@ -246,6 +257,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     fragmentTransaction.addToBackStack(null)
                     val addFamilyUsersFragment = FragmentMemoriesListContainer()
                     val bundle = Bundle()
+                    bundle.putString("categoryName", categoryName)
+                    bundle.putString("categoryId", categoryID)
                     bundle.putParcelableArrayList(Constants.REALM_MEMORY_VIEW, MemoryTimeline.createParcelableList(allMemoryView!!))
                     addFamilyUsersFragment.arguments = bundle
                     fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
@@ -268,6 +281,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                     fragmentTransaction.addToBackStack(null)
                     val addFamilyUsersFragment = ContactsListContainerFragment()
                     val bundle = Bundle()
+                    bundle.putString("categoryName", categoryName)
+                    bundle.putString("categoryId", categoryID)
                     bundle.putParcelableArrayList(Constants.REALM_CONTACTS, Contacts.createParcelableList(allContacts!!))
                     addFamilyUsersFragment.arguments = bundle
                     fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()

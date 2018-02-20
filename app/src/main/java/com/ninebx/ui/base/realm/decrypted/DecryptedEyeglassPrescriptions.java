@@ -167,6 +167,37 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "DecryptedEyeglassPrescriptions{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", physicianName='" + physicianName + '\'' +
+                ", datePrescribed='" + datePrescribed + '\'' +
+                ", odSphereValue='" + odSphereValue + '\'' +
+                ", osSphereValue='" + osSphereValue + '\'' +
+                ", odCylinderValue='" + odCylinderValue + '\'' +
+                ", osCylinderValue='" + osCylinderValue + '\'' +
+                ", odAxisValue='" + odAxisValue + '\'' +
+                ", osAxisValue='" + osAxisValue + '\'' +
+                ", odPrismValue='" + odPrismValue + '\'' +
+                ", osPrismValue='" + osPrismValue + '\'' +
+                ", odAddValue='" + odAddValue + '\'' +
+                ", osAddValue='" + osAddValue + '\'' +
+                ", odBaseValue='" + odBaseValue + '\'' +
+                ", osBaseValue='" + osBaseValue + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

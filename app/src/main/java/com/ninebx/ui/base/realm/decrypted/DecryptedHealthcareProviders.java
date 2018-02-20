@@ -352,4 +352,33 @@ public class DecryptedHealthcareProviders implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedHealthcareProviders{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", name='" + name + '\'' +
+                ", physicianType='" + physicianType + '\'' +
+                ", practiceName='" + practiceName + '\'' +
+                ", phoneNumberOne='" + phoneNumberOne + '\'' +
+                ", phoneNumberTwo='" + phoneNumberTwo + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", streetAddressOne='" + streetAddressOne + '\'' +
+                ", streetAddressTwo='" + streetAddressTwo + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }
