@@ -39,6 +39,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
     private var mRecentSearch = ArrayList<DecryptedRecentSearch>()
 
+   /* private lateinit var recentSearchAdapter: RecentSearchAdapter*/
+
     private lateinit var mSearchPresenter: SearchPresenter
 
     override fun onCombineFetched(combine: DecryptedCombine) {
@@ -48,7 +50,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
         this.mRecentSearch = recentSearch
-        recentSearchAdapter.notifyDataSetChanged()
+       /* recentSearchAdapter.notifyDataSetChanged()*/
          hideProgress()
     }
 
@@ -127,7 +129,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private lateinit var searchDecryptedCombineContacts: DecryptedCombineContacts
 
 
-    private lateinit var recentSearchAdapter: RecentSearchAdapter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -136,8 +138,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         showProgress(R.string.loading)
 
         rvRecentSearch.layoutManager = LinearLayoutManager(context)
-        recentSearchAdapter = RecentSearchAdapter(context, mRecentSearch)
+        var recentSearchAdapter  = RecentSearchAdapter(context, mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
+
         mSearchPresenter = SearchPresenter(this)
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {

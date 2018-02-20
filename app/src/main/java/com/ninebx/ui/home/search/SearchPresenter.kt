@@ -109,9 +109,8 @@ class SearchPresenter {
     fun updateRecentSearch(listname: String, subCategory: String, mainCategory: String, classType: String) {
         prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                realm!!.beginTransaction()
-                var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname, subCategory, mainCategory, Date(),  classType)
-                realm.copyToRealm(encryptRecentSearch(updateRecent))
+                var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname.encryptString(), subCategory.encryptString(), mainCategory.encryptString(), Date(),  classType.encryptString())
+                updateRecent.insertOrUpdate(realm!!)
                 AppLogger.d("RecentSearch", "Update successfull " + encryptRecentSearch(updateRecent))
             }
         })
