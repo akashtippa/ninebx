@@ -151,6 +151,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         val bundle = Bundle()
                         bundle.putString("categoryName", category.title)
                         bundle.putString("categoryId", category.category_id)
+                        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         val categoryFragment = FragmentListContainer()
                         categoryFragment.arguments = bundle
                         fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
@@ -179,6 +180,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         }
                         else -> {
                             val categoryFragment = FragmentListContainer()
+                            bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                             categoryFragment.arguments = bundle
                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                         }

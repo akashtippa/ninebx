@@ -177,6 +177,7 @@ object Constants {
     val REALM_END_POINT_COMBINE_EDUCATION = "CombineEducation"
     val REALM_END_POINT_COMBINE_INTERESTS = "CombineInterests"
     val REALM_END_POINT_COMBINE_PERSONAL = "CombinePersonal"
+    val COMBINE_ITEMS: String = "combine_items"
 
 
 }
