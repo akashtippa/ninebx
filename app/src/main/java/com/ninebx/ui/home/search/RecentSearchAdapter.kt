@@ -12,21 +12,21 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedRecentSearch
 /**
  * Created by smrit on 19-02-2018.
  */
-class RecentSearchAdapter(context: Context?, val mRecentSearch: ArrayList<DecryptedRecentSearch>) : RecyclerView.Adapter<RecentSearchAdapter.Viewholder>(){
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): Viewholder? {
+class RecentSearchAdapter(private val mRecentSearch: ArrayList<DecryptedRecentSearch>) : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
         val v = LayoutInflater.from(parent!!.context).inflate(R.layout.row_recentsearch, parent, false)
-        return Viewholder(v)
+        return ViewHolder(v)
     }
 
     override fun getItemCount(): Int {
         return if( mRecentSearch.size > 5 ) 5 else mRecentSearch.size
     }
 
-    override fun onBindViewHolder(holder: RecentSearchAdapter.Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: RecentSearchAdapter.ViewHolder, position: Int) {
         holder.tvRecentSearch.text = mRecentSearch[position].listName
     }
 
-    class Viewholder(view : View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val tvRecentSearch : TextView = view.findViewById<View>(R.id.txtRecentSearch) as TextView
     }
 }

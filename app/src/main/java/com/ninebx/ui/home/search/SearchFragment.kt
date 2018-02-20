@@ -39,7 +39,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
     private var mRecentSearch = ArrayList<DecryptedRecentSearch>()
 
-   /* private lateinit var recentSearchAdapter: RecentSearchAdapter*/
+    /* private lateinit var recentSearchAdapter: RecentSearchAdapter*/
 
     private lateinit var mSearchPresenter: SearchPresenter
 
@@ -50,8 +50,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
         this.mRecentSearch = recentSearch
-       /* recentSearchAdapter.notifyDataSetChanged()*/
-         hideProgress()
+        setRecentSearchAdapter()
+        hideProgress()
     }
 
     override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
@@ -115,7 +115,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       return inflater.inflate(R.layout.fragment_search, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     private lateinit var searchDecryptCombine: DecryptedCombine
@@ -136,10 +136,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         hideAllLayouts()
         showProgress(R.string.loading)
-
-        rvRecentSearch.layoutManager = LinearLayoutManager(context)
-        var recentSearchAdapter  = RecentSearchAdapter(context, mRecentSearch)
-        rvRecentSearch.adapter = recentSearchAdapter
 
         mSearchPresenter = SearchPresenter(this)
         edtSearch.addTextChangedListener(object : TextWatcher{
@@ -166,6 +162,12 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
             }
         })
+    }
+
+    private fun setRecentSearchAdapter() {
+        rvRecentSearch.layoutManager = LinearLayoutManager(context)
+        val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
+        rvRecentSearch.adapter = recentSearchAdapter
     }
 
     private fun hideAllLayouts() {
@@ -243,7 +245,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchEducationItems.add(Level3SearchItem(R.string.education, educationList.listName, "educationList"))
         }
         if( mSearchEducationItems.size > 0 )
-        setupAdapter(rvEducationWork, educationLayout, mSearchEducationItems)
+            setupAdapter(rvEducationWork, educationLayout, mSearchEducationItems)
     }
 
     private fun setupPersonalItems() {
@@ -269,7 +271,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchPersonalItems.add(Level3SearchItem(R.string.personal, personalList.listName, "personalList"))
         }
         if( mSearchPersonalItems.size > 0 )
-        setupAdapter(rvPersonal, personalLayout, mSearchPersonalItems)
+            setupAdapter(rvPersonal, personalLayout, mSearchPersonalItems)
     }
 
     private fun setupInterestsItems() {
@@ -280,7 +282,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchInterestsItems.add(Level3SearchItem(R.string.interests, interestList.listName, "interestsList"))
         }
         if( mSearchInterestsItems.size > 0 )
-        setupAdapter(rvInterests, interestsLayout, mSearchInterestsItems)
+            setupAdapter(rvInterests, interestsLayout, mSearchInterestsItems)
     }
 
     private fun setupWellnessItems() {
@@ -328,7 +330,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, wellnessList.listName))
         }
         if( mSearchWellnessItems.size > 0 )
-        setupAdapter(rvWellness, wellnessLayout, mSearchWellnessItems)
+            setupAdapter(rvWellness, wellnessLayout, mSearchWellnessItems)
     }
 
     private fun setupShoppingItems() {
@@ -348,7 +350,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName))
         }
         if( mSearchShoppingItems.size > 0 )
-       setupAdapter(rvShopping, shoppingLayout, mSearchShoppingItems)
+            setupAdapter(rvShopping, shoppingLayout, mSearchShoppingItems)
     }
 
     private fun setupMemoriesItems() {
@@ -362,13 +364,13 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, memorylist.listName, "memorylist"))
         }
         if( mSearchMemoriesItems.size > 0 )
-        setupAdapter(rvMemories, memoriesLayout, mSearchMemoriesItems)
+            setupAdapter(rvMemories, memoriesLayout, mSearchMemoriesItems)
     }
 
     private fun setupTravelItems() {
-       for(documents in searchDecryptCombineTravel.documentsItems){
-           mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.nameOnTravelDocument, "documents"))
-       }
+        for(documents in searchDecryptCombineTravel.documentsItems){
+            mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.nameOnTravelDocument, "documents"))
+        }
 
         for(loyalty in searchDecryptCombineTravel.loyaltyItems){
             mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.accountName, "loyalty"))
@@ -386,7 +388,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             mSearchTravelItems.add(Level3SearchItem(R.string.travel_list, travelList.listName, "travelList"))
         }
         if( mSearchTravelItems.size > 0 )
-        setupAdapter(rvTravel, travelLayout, mSearchTravelItems)
+            setupAdapter(rvTravel, travelLayout, mSearchTravelItems)
     }
 
     private fun setupHomeItems() {
