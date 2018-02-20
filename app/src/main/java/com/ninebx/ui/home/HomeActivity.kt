@@ -244,7 +244,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-
         if (requestCode == PERMISSIONS_REQUEST_CODE_CAMERA) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 beginCameraAttachmentFlow()
