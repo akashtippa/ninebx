@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IMemoryAdded
