@@ -227,4 +227,25 @@ public class DecryptedLicense implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedLicense{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", lic_description='" + lic_description + '\'' +
+                ", nameOnLicense='" + nameOnLicense + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", issuingState='" + issuingState + '\'' +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", dateIssued='" + dateIssued + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

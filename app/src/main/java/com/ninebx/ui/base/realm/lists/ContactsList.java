@@ -16,22 +16,34 @@ public class ContactsList extends RealmObject {
     @PrimaryKey //@Required
     private int id = 0;
 
-    @Required private String selectionType = "";
-    @Required private String classType = "ContactsList";
+    @Required
+    private String selectionType = "";
+    @Required
+    private String classType = "ContactsList";
 
-    @Required private String listName = "";
-    @Required private String dueDate = "";
+    @Required
+    private String listName = "";
+    @Required
+    private String dueDate = "";
 
-    @Required private Integer detailsId = 0;
-    @Required private Boolean isSelected = false;
+    @Required
+    private Integer detailsId = 0;
+    @Required
+    private Boolean isSelected = false;
 
-    @Required private Date selectedDate = new Date();
-    @Required private Date createdDate = new Date();
+    @Required
+    private Date selectedDate = new Date();
+    @Required
+    private Date createdDate = new Date();
 
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
     public ContactsList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
@@ -154,5 +166,24 @@ public class ContactsList extends RealmObject {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactsList{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", listName='" + listName + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", detailsId=" + detailsId +
+                ", isSelected=" + isSelected +
+                ", selectedDate=" + selectedDate +
+                ", createdDate=" + createdDate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

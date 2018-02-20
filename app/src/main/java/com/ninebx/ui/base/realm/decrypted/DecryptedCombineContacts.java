@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -87,4 +89,39 @@ public class DecryptedCombineContacts implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
     }
+
+
+    public int getListsCount(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedContactsList selectedItem : listItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }
+
+  /*  public int getAllContacts(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedContacts selectedItem : contactsItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
+        }
+        return count;
+    }*/
+
+    public int getAllContacts(String selectionType) {
+        int count = 0;
+        for (DecryptedContacts decryptedLicense : contactsItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+
 }

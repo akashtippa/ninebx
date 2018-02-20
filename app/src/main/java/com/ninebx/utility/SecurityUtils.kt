@@ -2622,13 +2622,13 @@ fun decryptCombineShopping(combineShopping : CombineShopping) : DecryptedCombine
 fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineContacts {
     val decryptedCombineContacts = DecryptedCombineContacts()
     for(contactItems in combineContacts.contactsItems){
-        decryptedCombineContacts.contactsItems.add(decryptContactList(contactItems))
+        decryptedCombineContacts.contactsItems.add(decryptContactList(contactItems as Contacts))
     }
     for(mainContactItems in combineContacts.mainContactsItems){
         decryptedCombineContacts.mainContactsItems.add(decryptMainContacts(mainContactItems))
     }
     for(listItems in combineContacts.listItems){
-        decryptedCombineContacts.listItems.add(decryptContactsList(listItems))
+        decryptedCombineContacts.listItems.add(decryptContactsList(listItems as ContactsList))
     }
     return decryptedCombineContacts
 }

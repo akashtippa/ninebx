@@ -93,6 +93,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     var categoryName = ""
     var categoryID = ""
+
     private var allMemoryView: RealmResults<MemoryTimeline>? = null
     private var allContacts: RealmResults<Contacts>? = null
 

@@ -222,4 +222,23 @@ public class DecryptedSocial implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedSocial{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", cardName='" + cardName + '\'' +
+                ", nameOnCard='" + nameOnCard + '\'' +
+                ", socialSecurityNumber='" + socialSecurityNumber + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }
