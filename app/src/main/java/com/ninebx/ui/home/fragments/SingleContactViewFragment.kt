@@ -168,7 +168,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
         if (contactID.trim() == "0") {
             var contactsNew = Contacts()
-
             contactsNew.id = getUniqueId()
             contactsNew.firstName = strFirstName.encryptString()
             contactsNew.lastName = strLastName.encryptString()
@@ -189,13 +188,12 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                 override fun onSuccess(realm: Realm?) {
                     contactsNew.insertOrUpdate(realm!!)
                     NineBxApplication.instance.activityInstance!!.onBackPressed()
+                    mContactsView.onContacts(contactsNew)
                 }
-
             })
         } else {
 
             var contactsUpdate = Contacts()
-
             contactsUpdate.id = contactID.toInt()
             contactsUpdate.firstName = strFirstName.encryptString()
             contactsUpdate.lastName = strLastName.encryptString()
@@ -216,18 +214,19 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                 override fun onSuccess(realm: Realm?) {
                     contactsUpdate.insertOrUpdate(realm!!)
                     NineBxApplication.instance.activityInstance!!.onBackPressed()
+                    mContactsView.onContacts(contactsUpdate)
                 }
-
             })
-////            contacts.id = contactID.toInt()
+
+//            contacts.id = contactID.toInt()
 //            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
 //                override fun onSuccess(realm: Realm?) {
-//                    val contacts = realm!!.where(Contacts::class.java).equalTo("id", contactID.toInt()).findFirstAsync()
+//                    val contacts = realm!!.where(Contacts::class.java).equalTo("id", contactID.toInt()).findFirst()
 //                    realm.beginTransaction()
 //                    AppLogger.e("Id ", " is " + contactID.toInt())
 //                    AppLogger.e("First Name ", " is " + strFirstName)
 //                    AppLogger.e("First Name ", " Encrypted is " + strFirstName.encryptString())
-////                    contacts!!.id = contactID.toInt()
+//                    contacts!!.id = contactID.toInt()
 //                    contacts.firstName = strFirstName.encryptString()
 //                    contacts.lastName = strLastName.encryptString()
 //                    contacts.dateOfBirth = strBirthday.encryptString()
@@ -248,36 +247,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 //                }
 //            })
 
-
-            var contacts = Contacts()
-
-            contacts.id = contactID.toInt()
-            contacts.firstName = strFirstName.encryptString()
-            contacts.lastName = strLastName.encryptString()
-            contacts.dateOfBirth = strBirthday.encryptString()
-            contacts.anniversary = strAnniversary.encryptString()
-            contacts.mobileOne = strPhone1.encryptString()
-            contacts.mobileTwo = strPhone2.encryptString()
-            contacts.emailOne = strEmail1.encryptString()
-            contacts.emailTwo = strEmail2.encryptString()
-            contacts.streetAddressOne = strStreetAddress1.encryptString()
-            contacts.streetAddressTwo = strStreetAddress2.encryptString()
-            contacts.city = strCity.encryptString()
-            contacts.state = strState.encryptString()
-            contacts.zipCode = strZipCode.encryptString()
-            contacts.country = strCountry.encryptString()
-
-            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    contacts.insertOrUpdate(realm!!)
-                    NineBxApplication.instance.activityInstance!!.onBackPressed()
-                }
-
-            })
-
         }
-//        mContactsView.onContacts(contacts)
-
     }
 
     private fun enableEditing() {

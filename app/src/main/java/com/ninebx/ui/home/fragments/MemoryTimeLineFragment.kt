@@ -68,7 +68,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
     var contactOperation = ""
-    var contactID = ""
+    var memoryID = ""
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -93,7 +93,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
         contactOperation = arguments!!.getString("ContactOperation")
-        contactID = arguments!!.getString("ID")
+        memoryID = arguments!!.getString("ID")
 
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
@@ -169,7 +169,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         var memoryTimeLineData = MemoryTimeline()
 
-        if (contactID.trim() == "0") {
+        if (memoryID.trim() == "0") {
             memoryTimeLineData.id = getUniqueId()
             memoryTimeLineData.title = strMemoryTitle.encryptString()
             memoryTimeLineData.date = strDate.encryptString()
@@ -179,7 +179,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             sendDataToServer(memoryTimeLineData)
 //            NineBxApplication.instance.activityInstance!!.onBackPressed()
 
-//            memberView.onMemoryTimeLine(memoryTimeLineData)
+            memberView.onMemoryTimeLine(memoryTimeLineData)
 
         } else {
 //            memoryTimeLineData.id = contactID.toInt()
@@ -199,26 +199,17 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 //                    NineBxApplication.instance.activityInstance!!.onBackPressed()
 //                }
 //            })
-            memoryTimeLineData.id = contactID.toInt()
+            memoryTimeLineData.id = memoryID.toInt()
             memoryTimeLineData.title = strMemoryTitle.encryptString()
             memoryTimeLineData.date = strDate.encryptString()
             memoryTimeLineData.place = strLocation.encryptString()
             memoryTimeLineData.contacts = strContacts.encryptString()
             memoryTimeLineData.notes = strNotes.encryptString()
             sendDataToServer(memoryTimeLineData)
+            memberView.onMemoryTimeLine(memoryTimeLineData)
 
 //            NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
-
-//
-////        memoryTimeLineData.id = this@MemoryTimeLineFragment.memoryTimeLine.id
-//        memoryTimeLineData.title = strMemoryTitle.encryptString()
-//        memoryTimeLineData.date = strDate.encryptString()
-//        memoryTimeLineData.place = strLocation.encryptString()
-//        memoryTimeLineData.contacts = strContacts.encryptString()
-//        memoryTimeLineData.notes = strNotes.encryptString()
-
-//        memberView.onMemoryTimeLine(memoryTimeLineData)
     }
 
 

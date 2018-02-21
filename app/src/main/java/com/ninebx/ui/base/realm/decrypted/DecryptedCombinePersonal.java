@@ -4,6 +4,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 
@@ -160,6 +162,16 @@ public class DecryptedCombinePersonal implements Parcelable {
     public int getMarriageCertificate(String selectionType) {
         int count = 0;
         for (DecryptedCertificate decryptedLicense : certificateItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+
+    public int getListsCount(String selectionType) {
+        int count = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DecryptedPersonalList decryptedLicense : listItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;

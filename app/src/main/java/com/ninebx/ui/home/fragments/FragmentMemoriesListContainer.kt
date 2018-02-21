@@ -92,8 +92,8 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         mListsDateAdapter = MemoriesDateAdapter(myDateList)
         val layoutManagerDate = LinearLayoutManager(context)
         layoutManagerDate.orientation = LinearLayoutManager.HORIZONTAL
-        rvMemoryView!!.layoutManager = layoutManager
-        rvMemoryView!!.adapter = mListsDateAdapter
+        rvDate!!.layoutManager = layoutManagerDate
+        rvDate!!.adapter = mListsDateAdapter
 
         layoutAddList.setOnClickListener {
             val bundle = Bundle()

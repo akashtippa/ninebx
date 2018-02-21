@@ -287,4 +287,28 @@ public class DecryptedGovernment implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedGovernment{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", idName='" + idName + '\'' +
+                ", name='" + name + '\'' +
+                ", nameOnId='" + nameOnId + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", issuingState='" + issuingState + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", dateIssued='" + dateIssued + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

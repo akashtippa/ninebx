@@ -222,4 +222,23 @@ public class DecryptedTaxID implements Parcelable {
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
     }
+
+    @Override
+    public String toString() {
+        return "DecryptedTaxID{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", taxIdName='" + taxIdName + '\'' +
+                ", taxIdNumber='" + taxIdNumber + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", name='" + name + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                '}';
+    }
 }

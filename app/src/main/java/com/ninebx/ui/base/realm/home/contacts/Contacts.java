@@ -360,4 +360,32 @@ public class Contacts extends RealmObject implements Parcelable {
             backingImages.add(new RealmString(string));
         }
     }
+
+    @Override
+    public String toString() {
+        return "Contacts{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", anniversary='" + anniversary + '\'' +
+                ", mobileOne='" + mobileOne + '\'' +
+                ", mobileTwo='" + mobileTwo + '\'' +
+                ", emailOne='" + emailOne + '\'' +
+                ", emailTwo='" + emailTwo + '\'' +
+                ", streetAddressOne='" + streetAddressOne + '\'' +
+                ", streetAddressTwo='" + streetAddressTwo + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }

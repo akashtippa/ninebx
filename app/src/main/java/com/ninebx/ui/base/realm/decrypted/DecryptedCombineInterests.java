@@ -97,12 +97,8 @@ public class DecryptedCombineInterests implements Parcelable {
 
     public int getLists(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedInterestsList selectedItem : listItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedInterestsList decryptedLicense : listItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }

@@ -24,8 +24,13 @@ internal class MemoriesDateAdapter(private var myList: ArrayList<Date>) : Recycl
 
         val member = myList[position]
         AppLogger.d("Decrypt", "Decrypting : " + member.toString())
-        holder.txtDate.text = member.strDate.decryptString()
-        AppLogger.e("Date ", " is " + member.strDate.decryptString())
+        var date = member.strDate.decryptString()
+
+        val separated = date.split(",")
+        separated[0]
+        separated[1]
+
+        holder.txtDate.text = separated[1]
     }
 
     override fun getItemCount(): Int {

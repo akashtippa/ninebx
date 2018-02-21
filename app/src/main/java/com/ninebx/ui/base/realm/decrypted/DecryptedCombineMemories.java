@@ -88,4 +88,12 @@ public class DecryptedCombineMemories implements Parcelable {
     public void setListItems(RealmList<DecryptedMemoriesList> listItems) {
         this.listItems = listItems;
     }
+
+    public int getLists(String selectionType) {
+        int count = 0;
+        for (DecryptedMemoriesList decryptedLicense : listItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
 }

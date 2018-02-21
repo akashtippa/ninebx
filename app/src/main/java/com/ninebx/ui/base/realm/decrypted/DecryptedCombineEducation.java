@@ -132,4 +132,12 @@ public class DecryptedCombineEducation implements Parcelable {
         }
         return count;
     }
+
+    public int getServices(String selectionType) {
+        int count = 0;
+        for (DecryptedEducation selectedItem : educationItems) {
+            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
 }
