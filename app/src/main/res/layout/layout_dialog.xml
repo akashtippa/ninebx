@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:padding="@dimen/default_mini_padding"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/ivDeleteNotification"
+        android:background="@color/grid_9"
+        app:srcCompat="@drawable/ic_delete"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_mini_padding"
+        android:layout_weight="1"
+        android:id="@+id/ivShareNotification"
+        android:background="@color/grid_1"
+        app:srcCompat="@drawable/ic_share"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_mini_padding"
+        android:id="@+id/ivFlagNotification"
+        android:layout_weight="1"
+        android:background="@color/grid_4"
+        app:srcCompat="@drawable/ic_flag"/>
+
+</LinearLayout>
