@@ -181,36 +181,24 @@ public class DecryptedCombineWellness implements Parcelable {
 
     public int getLists(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedWellnessList selectedItem : listItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedWellnessList decryptedLicense : listItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
 
     public int getOtherAttachemnts(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedWellnessList selectedItem : listItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedWellnessList decryptedLicense : listItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
 
     public int getServices(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedWellness selectedItem : wellnessItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedWellness decryptedLicense : wellnessItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }

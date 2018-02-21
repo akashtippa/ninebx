@@ -129,11 +129,9 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getLoyaltyCount(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedLoyalty selectedItem : loyaltyItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+
+        for (DecryptedLoyalty decryptedLicense : loyaltyItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
@@ -143,11 +141,8 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getTravelDocuments(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedDocuments selectedItem : documentsItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedDocuments decryptedLicense : documentsItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
@@ -156,23 +151,18 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getTravelDatesAndPlans(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedVacations selectedItem : vacationsItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedVacations decryptedLicense : vacationsItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
- // Travel Dates And Plans
+
+    // Travel Dates And Plans
     public int getServices(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedTravel selectedItem : travelItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedTravel decryptedLicense : travelItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }
@@ -181,11 +171,8 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getTravelLists(String selectionType) {
         int count = 0;
         ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedTravelList selectedItem : listItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
+        for (DecryptedTravelList decryptedLicense : listItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
     }

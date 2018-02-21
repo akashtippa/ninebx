@@ -603,7 +603,7 @@ class CategoryHelper(
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
         category.category_id = "memory_4001"
-
+        category.formsCount = decryptedCombine.getLists("Memories")
         categoryList.add(category)
 
 

@@ -108,8 +108,8 @@ class SearchPresenter {
                 fetchCombineWellness()
             }
             R.string.memories -> {
-                //fetchCombineMemories()
-                gettingMemoryTimeLineView()
+                fetchCombineMemories()
+//                gettingMemoryTimeLineView()
             }
             R.string.shopping -> {
                 fetchCombineShopping()
@@ -136,9 +136,7 @@ class SearchPresenter {
                         val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
                         appendToDecryptCombineContacts(decryptedCombineContacts)
                     }
-                    for (finance in mDecryptedCombineContacts.listItems) {
-                        AppLogger.d("Records", finance.toString())
-                    }
+
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                 }
@@ -188,7 +186,6 @@ class SearchPresenter {
                         val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
                         appendToDecryptCombinePersonal(decryptedCombinePersonal)
                     }
-
                     searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
                     AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
                 } else {
@@ -264,6 +261,10 @@ class SearchPresenter {
                     for (i in 0 until combineMemories.size) {
                         val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
                         appendToDecryptCOmbineMemories(decryptedCombineMemories)
+                    }
+
+                    for (finance in mDecryptedCombineMemories.listItems) {
+                        AppLogger.d("Records", finance.toString())
                     }
                     AppLogger.d("DecryptedCOmbineMemories", "Decrypted combine memories" + mDecryptedCombineMemories)
                     searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)

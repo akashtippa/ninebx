@@ -211,7 +211,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     private fun callContactPicker() {
         val intent = Intent(context, ContactPickerActivity::class.java)
-
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE,
                         ContactPictureType.ROUND.name)
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
@@ -263,13 +262,4 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
             outState.putSerializable(EXTRA_CONTACTS, mContacts as Serializable)
         }
     }
-
-//    private fun setContactsList() {
-//        mListsAdapter = ContactsAdapter(contacts, this)
-//        val layoutManager = LinearLayoutManager(context)
-//        layoutManager.orientation = LinearLayoutManager.VERTICAL
-//        rvContactList!!.layoutManager = layoutManager
-//        rvContactList!!.adapter = mListsAdapter
-//    }
-
 }
