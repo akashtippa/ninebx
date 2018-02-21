@@ -4,17 +4,59 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.ui.home.search.SearchView
+
 import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_lists.*
 
 /**
  * Created by Alok on 03/01/18.
  */
-class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
+class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
+    override fun onCombineFetched(combine: DecryptedCombine) {
+        txtHomeNumber.text = combine.listItems.count().toString()
+    }
+
+    override fun onCombineMemoryFetched(combineMemory: DecryptedCombineMemories) {
+        txtMemoriesNumber.text = combineMemory.listItems.count().toString()
+    }
+
+    override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
+        txtTravelNumber.text = combineTravel.listItems.count().toString()
+    }
+
+    override fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation) {
+        txtEducationNumber.text = combineEducation.listItems.count().toString()
+    }
+
+    override fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests) {
+        txtInterestsNumber.text = combineInterests.listItems.count().toString()
+    }
+
+    override fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness) {
+        txtWellnessNumber.text = combineWellness.listItems.count().toString()
+    }
+
+    override fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal) {
+        txtPersonalNumber.text = combinePersonal.listItems.count().toString()
+    }
+
+    override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
+        txtShoppingNumber.text = combineShopping.listItems.count().toString()
+    }
+
+    override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
+        txtContactNumber.text = combineContacts.listItems.count().toString()
+    }
+
+    override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
+        TODO()
+    }
 
     override fun showProgress(message: Int) {
 

@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_calendar.*
@@ -20,15 +23,16 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
 
     override fun showProgress(message: Int) {
-
+        progressLayout.show()
     }
 
     override fun hideProgress() {
-
+        progressLayout.hide()
     }
 
     override fun onError(error: Int) {
-
+        hideProgress()
+        context!!.showToast(error)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,13 +41,14 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
     private lateinit var mMonthFormat: SimpleDateFormat
     private lateinit var mPrevMonth : String
+    private lateinit var mCalendarPresenter : CalendarPresenter
     private var mCalendar = Calendar.getInstance()
     private var isWeekView = false
     private var isYearChange = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CalendarPresenter(this)
+        mCalendarPresenter = CalendarPresenter(this)
 
         mMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
@@ -143,8 +148,6 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             else
                 weekCalendar.set(Calendar.WEEK_OF_YEAR, mCalendar.get(Calendar.WEEK_OF_YEAR))
             weekCalendar.set(Calendar.YEAR, mCalendar.get(Calendar.YEAR))
-
-
 
             val weekDates = ArrayList<Int>()
             val minDate = weekCalendar.get(Calendar.DATE)
