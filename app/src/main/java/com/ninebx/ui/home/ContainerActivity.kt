@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
@@ -16,19 +17,28 @@ import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
 import com.ninebx.ui.home.account.contactsView.ContactsView
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.ui.home.account.memoryView.MemoryView
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Constants.ALL_COMPLETE
+import com.ninebx.utility.countryPicker.CountryPicker
 import com.ninebx.utility.decryptString
 import io.realm.SyncUser
 
 /**
  * Created by Alok on 14/02/18.
  */
-class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView {
+class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView, ICountrySelected {
+    override fun onCountrySelected(strCountry: String?) {
+        var country = strCountry
+        val intent = Intent()
+        intent.putExtra(Constants.PROFILE_VIEW, country)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
 
     override fun onContacts(contacts: Contacts) {
         val intent = Intent()

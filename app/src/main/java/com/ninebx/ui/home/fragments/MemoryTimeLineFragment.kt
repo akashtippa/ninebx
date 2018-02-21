@@ -106,7 +106,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         txtDate.setOnClickListener {
             getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
                 override fun onDateTimeSelected(selectedDate: Calendar) {
-                    txtDate.text = (getDateMonthYearFormat(selectedDate.time))
+                    txtDate.text = (parseDateForMemory(selectedDate.time))
                 }
             })
         }

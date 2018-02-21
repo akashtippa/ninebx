@@ -21,10 +21,12 @@ import java.util.*
 /**
  * Created by mukesh on 25/04/16.
  */
-class CountryPicker : FragmentBackHelper(), ICountrySelected {
+class CountryPicker() : FragmentBackHelper(), ICountrySelected {
+
     override fun onCountrySelected(strCountry: String?) {
-        AppLogger.e("Country ", "Name " + strCountry)
+        strSelectedCountry = strCountry!!
     }
+
 
     private var searchEditText: EditText? = null
     private var countryListView: ListView? = null
@@ -32,7 +34,8 @@ class CountryPicker : FragmentBackHelper(), ICountrySelected {
     private val countriesList = ArrayList<Country>()
     private var selectedCountriesList: MutableList<Country> = ArrayList()
     private var listener: CountryPickerListener? = null
-
+    private var strSelectedCountry = ""
+    private var iCountrySelected: ICountrySelected? = null
 
     init {
         setCountriesList(Country.getAllCountries())
@@ -67,8 +70,6 @@ class CountryPicker : FragmentBackHelper(), ICountrySelected {
                         country.flag)
             }
         }
-
-
 
         searchEditText!!.addTextChangedListener(object : TextWatcher {
 
@@ -116,7 +117,6 @@ class CountryPicker : FragmentBackHelper(), ICountrySelected {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
-
         return super.onBackPressed()
     }
 

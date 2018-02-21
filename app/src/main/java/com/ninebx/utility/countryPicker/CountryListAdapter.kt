@@ -8,7 +8,6 @@ import android.widget.*
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
-import com.ninebx.utility.AppLogger
 import com.ninebx.utility.NineBxPreferences
 
 /**
@@ -51,15 +50,14 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
 
         cell.layoutCountry.setOnClickListener {
             Toast.makeText(mContext, "Selected Country is " + country.name, Toast.LENGTH_LONG).show()
-//            prefrences.countrySelected = country.name
-//            NineBxApplication.instance.activityInstance!!.onBackPressed()
-
             iCountrySelected.onCountrySelected(country.name)
+//            NineBxApplication.instance.getCountrySelected(country.name)
             NineBxApplication.instance.activityInstance!!.onBackPressed()
 
         }
         return view
     }
+
 
     internal class Cell {
         lateinit var textView: TextView

@@ -116,26 +116,14 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         }
 
         var countHome = mDecryptCombine.getListsCount("HomeBanking")
-        var countTravel = mDecryptCombine.getListsCount("Travel")
-        var countContact = mDecryptCombine.getListsCount("Contacts")
-        var countEducation = mDecryptCombine.getListsCount("Education")
-        var countInterests = mDecryptCombine.getListsCount("HomeBanking")
-        var countPersonal = mDecryptCombine.getListsCount("Interests")
-        var countWellness = mDecryptCombine.getListsCount("WellNess")
-        var countMemories = mDecryptedCombineMemories.getLists("Memories")
+        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
+        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
+        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
+        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
+        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
+        var countWellness = mDecryptCombinePersonal.getListsCount("WellNess")
+        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
         var countShopping = mDecryptedCombineContacts.getListsCount("Shopping")
-
-
-//        txtHomeNumber.setText(mDecryptCombine.getListsCount("HomeBanking"))
-//        txtTravelNumber.setText(mDecryptedCombineTravel.getTravelLists("Travel"))
-//        txtContactNumber.setText(mDecryptedCombineContacts.getListsCount("Contacts"))
-//        txtEducationNumber.setText(mDecryptCombineEducation.getListItemsCount("Education"))
-//        txtInterestsNumber.setText(mDecryptCombineInterests.getLists("Interests"))
-//        txtPersonalNumber.setText(mDecryptCombinePersonal.getListsCount("Personal"))
-//        txtWellnessNumber.setText(mDecryptCombineWellness.getLists("WellNess"))
-//        txtMemoriesNumber.setText(mDecryptedCombineMemories.getLists("Memories"))
-//        txtShoppingNumber.setText(mDecryptCombineShopping.getShoppingLists("Shopping"))
-
 
     }
 

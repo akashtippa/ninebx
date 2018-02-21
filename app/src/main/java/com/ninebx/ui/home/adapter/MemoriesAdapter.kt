@@ -44,7 +44,7 @@ internal class MemoriesAdapter(private var myList: ArrayList<MemoryTimeline>?, p
         }
 
         holder.imgDelete.setOnClickListener {
-            myList!!.removeAt(holder.position)
+            iMemoryAdded.onMemoryDeleted(member)
         }
 
     }

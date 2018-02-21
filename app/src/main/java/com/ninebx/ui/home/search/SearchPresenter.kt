@@ -136,7 +136,6 @@ class SearchPresenter {
                         val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
                         appendToDecryptCombineContacts(decryptedCombineContacts)
                     }
-
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                 }
@@ -311,29 +310,6 @@ class SearchPresenter {
                     searchView!!.onCombineFetched(mDecryptCombine)
                 } else {
                     searchView!!.onCombineFetched(mDecryptCombine)
-                }
-            }
-        })
-    }
-
-
-    private fun fetchContacts() {
-        prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
-                if (combinePersonal.size > 0) {
-                    for (i in 0 until combinePersonal.size) {
-                        val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
-                        appendToDecryptCombinePersonal(decryptedCombinePersonal)
-                    }
-                    for (finance in mDecryptCombinePersonal.governmentItems) {
-                        AppLogger.d("Records", finance.toString())
-                    }
-
-                    searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
-                    AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
-                } else {
-                    searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
                 }
             }
         })
@@ -838,60 +814,6 @@ class SearchPresenter {
         return searchDecryptCombineShopping
     }
 
-
-    var categoryName = ""
-    var categoryID = ""
-
-    private var allMemoryView: RealmResults<MemoryTimeline>? = null
-    private var allContacts: RealmResults<Contacts>? = null
-
-
-    private fun gettingContactsList() {
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-                allContacts = getCurrentContactList(realm!!)
-                if (allContacts != null) {
-//                    context!!.hideProgressDialog()
-                    AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
-
-                    val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-                    fragmentTransaction.addToBackStack(null)
-                    val addFamilyUsersFragment = ContactsListContainerFragment()
-                    val bundle = Bundle()
-                    bundle.putString("categoryName", categoryName)
-                    bundle.putString("categoryId", categoryID)
-                    bundle.putParcelableArrayList(Constants.REALM_CONTACTS, Contacts.createParcelableList(allContacts!!))
-                    addFamilyUsersFragment.arguments = bundle
-                    fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
-                }
-            }
-        })
-    }
-
-
-    private fun gettingMemoryTimeLineView() {
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-                allMemoryView = getAllMemoryTimeLine(realm!!)
-                if (allMemoryView != null) {
-                    context!!.hideProgressDialog()
-                    AppLogger.e("Memory", "MemoryView from Realm : " + allMemoryView.toString())
-
-                    val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-                    fragmentTransaction.addToBackStack(null)
-                    val addFamilyUsersFragment = FragmentMemoriesListContainer()
-                    val bundle = Bundle()
-                    bundle.putString("categoryName", categoryName)
-                    bundle.putString("categoryId", categoryID)
-                    bundle.putParcelableArrayList(Constants.REALM_MEMORY_VIEW, MemoryTimeline.createParcelableList(allMemoryView!!))
-                    addFamilyUsersFragment.arguments = bundle
-                    fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
-                }
-            }
-        })
-    }
 }
 
 

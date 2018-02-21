@@ -388,4 +388,19 @@ public class Contacts extends RealmObject implements Parcelable {
                 ", photosId=" + photosId +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contacts contacts = (Contacts) o;
+
+        return id == contacts.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

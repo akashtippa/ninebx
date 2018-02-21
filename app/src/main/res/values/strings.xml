@@ -428,7 +428,7 @@
     <string name="unable_to_find_user">Unable to find user</string>
 
     <string-array name="gender">
-        <item></item>
+        <item>Gender</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>

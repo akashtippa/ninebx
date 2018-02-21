@@ -23,11 +23,17 @@ internal class ContactsAdapter(private var myList: ArrayList<Contacts>?, private
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val contacts = myList!![position]
-        holder.txtContacts.text = contacts.firstName.decryptString()
+        holder.txtContacts.text = contacts.firstName.decryptString() + " " + contacts.lastName.decryptString()
         mLastPosition = position
 
         holder.layoutContacts.setOnClickListener {
             iContactsAdded.contactsEdited(contacts)
+        }
+
+        holder.imgDeleteContact.setOnClickListener {
+            iContactsAdded.contactsDeleted(contacts)
+            myList!!.remove(contacts)
+            notifyDataSetChanged()
         }
     }
 

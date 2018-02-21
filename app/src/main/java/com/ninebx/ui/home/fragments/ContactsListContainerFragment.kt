@@ -1,18 +1,26 @@
 package com.ninebx.ui.home.fragments
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IContactsAdded
@@ -34,6 +42,11 @@ import java.util.*
  * Created by TechnoBlogger on 24/01/18.
  */
 class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
+    override fun contactsDeleted(contacts: Contacts?) {
+        contactsRealm!!.beginTransaction()
+        contacts!!.deleteFromRealm()
+        contactsRealm!!.commitTransaction()
+    }
 
     override fun contactsAdded(contacts: Contacts?) {
         AppLogger.d("Contacts", "are" + contacts)
@@ -65,7 +78,8 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     private var lastName = ""
     private var strMobileNumber = ""
 
-    //
+    private val PERMISSIONS_REQUEST_CODE_CONTACTS = 111
+
 
     private val REQUEST_CONTACT = 0
     private var mContacts: ArrayList<Contact>? = ArrayList()
@@ -99,14 +113,17 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         rvContactList!!.adapter = mListsAdapter
 
         layoutAddList.setOnClickListener {
-            //            val bundle = Bundle()
-//            bundle.putParcelable(Constants.CONTACTS_VIEW, Contacts())
-//            bundle.putString(Constants.FROM_CLASS, "Contacts")
-//            bundle.putString("ContactOperation", "Add")
-//            bundle.putString("ID", "0")
-//            startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
-//
-            callForContact()
+
+            val permissionList = arrayListOf<String>(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission(context!!, permissionList)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CONTACTS)
+                } else {
+                    callForContact()
+                }
+            } else {
+                callForContact()
+            }
         }
 
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
@@ -155,9 +172,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
                 firstName = contact.firstName
                 strMobileNumber = contact.getPhone(0)
-                AppLogger.e("First Name ", " is " + contact.firstName)
-                AppLogger.e("Mobile Number ", "0 is " + contact.getPhone(0))
-                AppLogger.e("Mobile Number ", "1 is " + contact.getPhone(1))
 
                 myList.add(realmContacts)
                 mListsAdapter!!.notifyDataSetChanged()
@@ -166,16 +180,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                     override fun onSuccess(realm: Realm?) {
                         var contacts = Contacts()
                         contacts.id = getUniqueId()
-
-                        /*
-                        * If I'm sending like this,
-                        * contacts.firstName = firstName
-                        * It is showing some decrypted format in Android, but iOS is readable.
-                        * But, if I'm using like this
-                        * contacts.firstName = firstName.encryptString()
-                        * It is showing some decrypted format in iOS, but Android is readable.
-                        * */
-
                         contacts.firstName = firstName.encryptString()
                         contacts.lastName = lastName.encryptString()
                         contacts.mobileOne = strMobileNumber.encryptString()
@@ -264,7 +268,23 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     }
 
     //
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 
+        if (requestCode == PERMISSIONS_REQUEST_CODE_CONTACTS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                callForContact()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        } else if (requestCode == PERMISSIONS_REQUEST_CODE_CONTACTS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                callForContact()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
 
 
     //

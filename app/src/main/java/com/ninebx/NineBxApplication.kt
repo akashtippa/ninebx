@@ -9,7 +9,7 @@ import com.evernote.android.job.JobManager
 import com.ninebx.ui.base.network.NetModule
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.account.interfaces.IMemoryAdded
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.FragmentOrganiser
 import com.ninebx.utility.NineBxJobCreator
 import com.ninebx.utility.NineBxPreferences
@@ -48,7 +48,7 @@ class NineBxApplication : MultiDexApplication() {
 
     private var fragmentOrganiser: FragmentOrganiser? = null
 
-    private var iMemoryAdded: IMemoryAdded? = null
+    private var iCountryselected: ICountrySelected? = null
 
     val fragmentOpener: FragmentOrganiser
         get() {
@@ -99,7 +99,6 @@ class NineBxApplication : MultiDexApplication() {
         fragmentOrganiser = null
     }
 
-
     fun isNetworkAvailable(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
@@ -108,11 +107,13 @@ class NineBxApplication : MultiDexApplication() {
 
     var currentUser: Users? = null
 
-    fun getiMemoryAdded(): IMemoryAdded? {
-        return this.iMemoryAdded
-    }
+//
+//    fun setCountrySelected(iCountrySelected: ICountrySelected) {
+//        this.iCountryselected = iCountrySelected
+//    }
+//
+//    fun getCountrySelected(name: String): ICountrySelected? {
+//        return iCountryselected
+//    }
 
-    fun setiMemoryAdded(iMemberAdded: IMemoryAdded) {
-        this.iMemoryAdded = iMemoryAdded
-    }
 }

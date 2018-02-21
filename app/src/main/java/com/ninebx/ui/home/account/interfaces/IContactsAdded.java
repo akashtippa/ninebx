@@ -11,4 +11,6 @@ public interface IContactsAdded {
 
     void contactsEdited(Contacts contacts);
 
+    void contactsDeleted(Contacts contacts);
+
 }

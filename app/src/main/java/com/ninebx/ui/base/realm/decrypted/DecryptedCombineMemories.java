@@ -96,4 +96,12 @@ public class DecryptedCombineMemories implements Parcelable {
         }
         return count;
     }
+
+    public int getMemory(String selectionType) {
+        int count = 0;
+        for (DecryptedMemoryTimeline decryptedLicense : memoryTimelineItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
 }

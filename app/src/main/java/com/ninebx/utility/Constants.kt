@@ -132,6 +132,7 @@ object Constants {
     val CONTACT: String = "contact"
     val FROM_CLASS = "fromClass"
     val CONTACTS_VIEW = "contactView"
+    val PROFILE_VIEW = "profileView"
     val BUNDLE_CONTACT_NO = "contactNumber"
     val BUNDLE_CONTACT_NAME = "contactName"
     val IS_NEW_ACCOUNT: String = "is_new_account"

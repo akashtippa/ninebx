@@ -279,9 +279,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
     private fun populateView(contacts: Contacts?) {
 
-//        mAWSFileTransferHelper.setFileTransferListener(this)
-//        if (contacts!!.photosId.isNotEmpty())
-//            mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
 
         var contactID = contacts!!.id
         if (contacts.firstName.isNotEmpty())
@@ -325,6 +322,11 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
         if (contacts.country.isNotEmpty())
             edtCountry.setText(contacts.country.decryptString())
+
+        mAWSFileTransferHelper.setFileTransferListener(this)
+        if (contacts!!.photosId.isNotEmpty())
+            mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
+
     }
 
     private fun selectImage() {

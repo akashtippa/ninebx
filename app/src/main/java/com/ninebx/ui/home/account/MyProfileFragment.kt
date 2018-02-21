@@ -9,23 +9,32 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat.requestPermissions
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.id.*
 import com.ninebx.ui.base.kotlin.getImageUri
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.saveImage
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
+import com.ninebx.ui.home.account.interfaces.IMemoryAdded
 import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.countryPicker.Country
 import com.ninebx.utility.countryPicker.CountryPicker
+import com.ninebx.utility.countryPicker.CountryPickerListener
 import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_my_profile.*
@@ -38,10 +47,11 @@ import java.util.*
  */
 
 class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, ICountrySelected {
+
     override fun onCountrySelected(strCountry: String?) {
         txtCountry.setText(strCountry)
-        AppLogger.e("Country ", "MyProfileFragment " + strCountry)
     }
+
 
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgEditProfile != null)
@@ -73,6 +83,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     private var currentUsers: ArrayList<Users>? = ArrayList()
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
+    private var iCountrySelected: ICountrySelected? = null
+    private val countriesList = ArrayList<Country>()
+    private var selectedCountriesList: MutableList<Country> = ArrayList()
 
     private lateinit var selectedGender: String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -121,12 +134,21 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
+
         txtCountry.setOnClickListener {
+//            val bundle = Bundle()
+//            bundle.putString(Constants.PROFILE_VIEW, "")
+//            bundle.putString(Constants.FROM_CLASS, "Profile")
+//            bundle.putString("ContactOperation", "Add")
+//            bundle.putString("ID", "0")
+//            startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), MY_PROFILE)
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, CountryPicker()).commit()
+            val countryPicker = CountryPicker()
+            fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
+
 
         imgEditProfile.setOnClickListener {
             startCameraIntent()
@@ -197,7 +219,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         mAWSFileTransferHelper.setFileTransferListener(this)
         if (users.profilePhoto.isNotEmpty())
-            mAWSFileTransferHelper.beginDownload("images/" + users.id + "/" + users.profilePhoto)
+            mAWSFileTransferHelper.beginDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
+        AppLogger.e("URL ", " is " + "images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
     }
 
     private fun enableEditing() {
@@ -332,6 +355,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     private val PERMISSIONS_REQUEST_CODE_CAMERA = 115
     private val PERMISSIONS_REQUEST_CODE_GALLERY = 116
 
+    private val MY_PROFILE = 999
+
     private fun startCameraIntent() {
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
@@ -428,7 +453,11 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             filePath = activity!!.getImageUri(data.extras.get("data") as Bitmap)
             mImagesList.add(filePath!!)
             setProfileImage(filePath!!)
-        } else
+        } /*else if(requestCode == MY_PROFILE && resultCode == Activity.RESULT_OK) {
+//            memoryAdded(data!!.extras(Constants.MEMORY_TIMELINE))
+            onCountrySelected(data!!.getStringExtra(Constants.PROFILE_VIEW))
+            txtCountry.setText(strCountry)
+        }*/ else
             super.onActivityResult(requestCode, resultCode, data)
 
     }
