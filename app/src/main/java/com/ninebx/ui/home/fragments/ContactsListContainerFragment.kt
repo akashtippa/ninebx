@@ -262,4 +262,12 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
             outState.putSerializable(EXTRA_CONTACTS, mContacts as Serializable)
         }
     }
+
+    //
+
+
+
+    //
+
+
 }

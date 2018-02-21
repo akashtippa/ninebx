@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_lists.*
 
 /**
@@ -29,6 +31,16 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lists, container, false)
     }
+
+    private val mDecryptCombine: DecryptedCombine = DecryptedCombine()
+    private val mDecryptedCombineMemories = DecryptedCombineMemories()
+    private val mDecryptedCombineTravel = DecryptedCombineTravel()
+    private val mDecryptCombineEducation = DecryptedCombineEducation()
+    private val mDecryptCombineInterests = DecryptedCombineInterests()
+    private val mDecryptCombineWellness = DecryptedCombineWellness()
+    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
+    private val mDecryptCombineShopping = DecryptedCombineShopping()
+    private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,6 +72,28 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         layShopping.setOnClickListener {
             callSubListFragment(getString(R.string.shopping))
         }
+
+        var countHome = mDecryptCombine.getListsCount("HomeBanking")
+        var countTravel = mDecryptCombine.getListsCount("Travel")
+        var countContact = mDecryptCombine.getListsCount("Contacts")
+        var countEducation = mDecryptCombine.getListsCount("Education")
+        var countInterests = mDecryptCombine.getListsCount("HomeBanking")
+        var countPersonal = mDecryptCombine.getListsCount("Interests")
+        var countWellness = mDecryptCombine.getListsCount("WellNess")
+        var countMemories = mDecryptedCombineMemories.getLists("Memories")
+        var countShopping = mDecryptedCombineContacts.getListsCount("Shopping")
+
+
+//        txtHomeNumber.setText(mDecryptCombine.getListsCount("HomeBanking"))
+//        txtTravelNumber.setText(mDecryptedCombineTravel.getTravelLists("Travel"))
+//        txtContactNumber.setText(mDecryptedCombineContacts.getListsCount("Contacts"))
+//        txtEducationNumber.setText(mDecryptCombineEducation.getListItemsCount("Education"))
+//        txtInterestsNumber.setText(mDecryptCombineInterests.getLists("Interests"))
+//        txtPersonalNumber.setText(mDecryptCombinePersonal.getListsCount("Personal"))
+//        txtWellnessNumber.setText(mDecryptCombineWellness.getLists("WellNess"))
+//        txtMemoriesNumber.setText(mDecryptedCombineMemories.getLists("Memories"))
+//        txtShoppingNumber.setText(mDecryptCombineShopping.getShoppingLists("Shopping"))
+
 
     }
 

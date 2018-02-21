@@ -452,7 +452,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryView.onSuccess(categoryList)
     }
 

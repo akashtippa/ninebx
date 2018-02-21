@@ -12,6 +12,8 @@ import android.widget.EditText
 import android.widget.ListView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.country_picker.*
 import java.util.*
@@ -19,7 +21,10 @@ import java.util.*
 /**
  * Created by mukesh on 25/04/16.
  */
-class CountryPicker : FragmentBackHelper() {
+class CountryPicker : FragmentBackHelper(), ICountrySelected {
+    override fun onCountrySelected(strCountry: String?) {
+        AppLogger.e("Country ", "Name " + strCountry)
+    }
 
     private var searchEditText: EditText? = null
     private var countryListView: ListView? = null
@@ -52,7 +57,7 @@ class CountryPicker : FragmentBackHelper() {
         selectedCountriesList = ArrayList(countriesList.size)
         selectedCountriesList.addAll(countriesList)
 
-        adapter = CountryListAdapter(context!!, selectedCountriesList)
+        adapter = CountryListAdapter(context!!, selectedCountriesList, this)
         countryListView!!.adapter = adapter
 
         countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
