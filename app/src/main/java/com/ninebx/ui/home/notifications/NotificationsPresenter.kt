@@ -9,6 +9,7 @@ import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import java.lang.StrictMath.abs
 
 /**
  * Created by Alok on 03/01/18.
@@ -24,7 +25,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 mNotificationsRealm = realm!!
-                getNotification = realm!!.where(Notifications::class.java).findAll()
+                getNotification = realm.where(Notifications::class.java).findAll()
                 if(getNotification!!.size > 0){
                     getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
                     notificationsView.onNotificationsFetched(mDecryptNotifications)
@@ -33,6 +34,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                 }
                 else
                     AppLogger.d("Notification", "No data" )
+                notificationsView.hideProgress()
             }
         })
     }
@@ -45,8 +47,18 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
     fun markAsUnread(position: Int) {
         mDecryptNotifications[position].read = false
         mNotificationsRealm.beginTransaction()
+        AppLogger.d("SearchFor", "Notification : " + abs(getNotification!![position]!!.id))
+        //AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
+        AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
+
+        val id = ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id)
+        AppLogger.d("SearchFor", "Notification : " + id)
+        val notification = mNotificationsRealm.where(Notifications::class.java)
+                .equalTo("id", (id))
+                .findAll()
         getNotification!![position]!!.read = false
-        mNotificationsRealm.insertOrUpdate(getNotification!![position]!!)
+        notification[0]!!.read = false
+        mNotificationsRealm.insertOrUpdate(notification)
         mNotificationsRealm.commitTransaction()
     }
 }
