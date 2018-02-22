@@ -21,7 +21,7 @@ import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.saveImage
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.countryPicker.CountryPicker
@@ -196,8 +196,12 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             txtCountry.text = users.country.decryptString()
 
         mAWSFileTransferHelper.setFileTransferListener(this)
-        if (users.profilePhoto.isNotEmpty())
-            mAWSFileTransferHelper.beginDownload("images/" + users.id + "/" + users.profilePhoto)
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        if (users.profilePhoto.isNotEmpty()) {
+            awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
+        }
+            //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
     }
 
     private fun enableEditing() {

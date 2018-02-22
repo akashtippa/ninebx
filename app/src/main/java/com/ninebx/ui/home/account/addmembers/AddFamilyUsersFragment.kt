@@ -15,7 +15,7 @@ import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
-import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.utility.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_family_users.*

@@ -27,6 +27,7 @@ import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
 import org.spongycastle.crypto.digests.SHA256Digest
+import java.security.MessageDigest
 import java.security.SecureRandom
 import java.security.Security
 import java.util.*

@@ -12,7 +12,7 @@ import com.ninebx.R
 import com.ninebx.R.id.imgProfilePic
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.interfaces.IMemoryAdded
-import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptString
 import java.io.File

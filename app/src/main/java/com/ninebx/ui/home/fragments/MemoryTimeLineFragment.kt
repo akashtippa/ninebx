@@ -32,7 +32,7 @@ import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.saveImage
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.memoryView.MemoryView
-import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
 import com.ninebx.ui.home.calendar.events.ImageViewDialog
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment

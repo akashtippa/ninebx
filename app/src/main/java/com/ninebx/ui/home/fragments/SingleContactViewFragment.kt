@@ -19,7 +19,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.account.contactsView.ContactsView
-import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
