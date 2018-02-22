@@ -38,7 +38,6 @@ class MasterPasswordFragment : FragmentBackHelper() {
     }
 
     private fun updatePassword() {
-
         onBackPressed()
     }
 

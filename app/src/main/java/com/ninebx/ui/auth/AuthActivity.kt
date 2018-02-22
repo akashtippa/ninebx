@@ -221,7 +221,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 Constants.PASS_CODE_COMPLETE -> {
                     if( checkForFingerPrint() )
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            navigateToFingerPrint()
+                            navigateToFingerPrint(false)
                         }
                         else {
                             navigateToInvitePeople()
@@ -243,6 +243,11 @@ class AuthActivity : AppCompatActivity(), AuthView {
             if( bundle.getBoolean(Constants.RESET_PASSCODE)) {
                 navigateToCreateNewPassCode(NineBxApplication.getPreferences().passCode!!)
             }
+            else if( bundle.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    navigateToFingerPrint( true )
+                }
+            }
         }
 
     }
@@ -260,7 +265,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private var fingerPrintFragment: FingerPrintFragment? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun navigateToFingerPrint() {
+    override fun navigateToFingerPrint(b: Boolean) {
         if( checkForFingerPrint() ) {
             if (NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE

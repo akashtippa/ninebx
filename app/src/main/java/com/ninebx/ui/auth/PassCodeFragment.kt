@@ -145,7 +145,7 @@ class PassCodeFragment : BaseAuthFragment() {
                                     activity!!.finish()
                                 }
                                 else
-                                    mAuthView.navigateToFingerPrint()
+                                    mAuthView.navigateToFingerPrint(false)
                             }
 
                         }

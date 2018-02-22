@@ -179,6 +179,7 @@ object Constants {
     val REALM_END_POINT_COMBINE_PERSONAL = "CombinePersonal"
     val COMBINE_ITEMS: String = "combine_items"
     val RESET_PASSCODE: String = "reset_passcode"
+    val RESET_FINGER_PRINT: String = "reset_fingerprint"
 
 
 }

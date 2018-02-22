@@ -2,6 +2,7 @@ package com.ninebx.ui.home.account
 
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.*
@@ -223,6 +224,10 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
             startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }
+        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
+            startActivity(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true))
+        }
         switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+        switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
     }
 }
