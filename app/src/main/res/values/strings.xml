@@ -967,5 +967,8 @@
     <string name="error_permissions">Error setting permissions for member</string>
     <string name="enter_your_current_passcode">Enter your current Personal Passcode</string>
     <string name="passcode_changed">Passcode changed</string>
+    <string name="error_resetting_password">Error resetting the password</string>
+    <string name="password_reset_success">Master Password has been reset</string>
+    <string name="error_change_password_members">Error changing password for members</string>
 
 </resources>

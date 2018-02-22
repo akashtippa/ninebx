@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.account
+package com.ninebx.ui.home.account.changePassword
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,22 +6,57 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Users
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.encryptKey
 import com.ninebx.utility.isValidPassword
 import kotlinx.android.synthetic.main.fragment_master_account_password.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /***
  * Created by TechnoBlogger on 15/01/18.
  */
-class MasterPasswordFragment : FragmentBackHelper() {
+class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
+    override fun getCurrentUsers(): ArrayList<Users> {
+        return mCurrentUsers
+    }
+
+    override fun getCurrentPassword(): String {
+        return etCurrentPassword.text.toString().trim()
+    }
+
+    override fun getNewPassword(): String {
+        return etConfirmPassword.text.toString().trim()
+    }
+
+    override fun showProgress(message: Int) {
+        context!!.showProgressDialog(getString(message))
+    }
+
+    override fun hideProgress() {
+        context!!.hideProgressDialog()
+    }
+
+    override fun onError(error: Int) {
+        hideProgress()
+        context!!.showToast(error)
+    }
+
+    override fun onPasswordReset(message: Int) {
+        onError(message)
+        onBackPressed()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_master_account_password, container, false)
     }
 
+    private lateinit var mMasterPasswordPresenter : MasterPasswordPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
@@ -34,16 +69,18 @@ class MasterPasswordFragment : FragmentBackHelper() {
                 updatePassword()
             }
         }
+        mCurrentUsers = arguments!!.getParcelableArrayList(Constants.CURRENT_USER)
+        mMasterPasswordPresenter = MasterPasswordPresenter(this)
 
     }
 
     private fun updatePassword() {
-        onBackPressed()
+        mMasterPasswordPresenter.changePassword()
     }
 
     private lateinit var newPassword: String
     private lateinit var confirmPassword: String
-
+    private lateinit var  mCurrentUsers : ArrayList<Users>
     private fun validate(): Boolean {
 
         if( etCurrentPassword.text.toString().isEmpty() ) {
@@ -84,6 +121,7 @@ class MasterPasswordFragment : FragmentBackHelper() {
             etNewPassword.requestFocus()
             return false
         }
+
         if (etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8) {
             context!!.showToast(R.string.password_length_8)
             etConfirmPassword.requestFocus()
@@ -96,14 +134,13 @@ class MasterPasswordFragment : FragmentBackHelper() {
             return false
         }
 
-        if( validateMasterPassword() ) {
-
-            return true
+        return if( validateMasterPassword() ) {
+            true
         }
         else {
             context!!.showToast(R.string.check_password)
             etCurrentPassword.requestFocus()
-            return false
+            false
         }
 
     }

@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -124,6 +125,9 @@ public class NetModule {
 
         @GET("users")
         Observable<ArrayList<SignInResponse>> getUserDetails(@Query("user_id") String userId );
+
+        @PUT("users")
+        Observable<ResponseBody> putUserDetails( @Query("user_id") String userId, @Body HashMap<String, Object> paramsMap );
 
     }
 
