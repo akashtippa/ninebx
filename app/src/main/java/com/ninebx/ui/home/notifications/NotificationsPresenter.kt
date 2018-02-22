@@ -4,6 +4,7 @@ import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptNotifications
+import com.ninebx.utility.insertOrUpdate
 import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import io.realm.RealmResults
@@ -38,6 +39,14 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
     fun deleteNotification(position: Int) {
         mNotificationsRealm.beginTransaction()
         getNotification!![position]!!.deleteFromRealm()
+        mNotificationsRealm.commitTransaction()
+    }
+
+    fun markAsUnread(position: Int) {
+        mDecryptNotifications[position].read = false
+        mNotificationsRealm.beginTransaction()
+        getNotification!![position]!!.read = false
+        mNotificationsRealm.insertOrUpdate(getNotification!![position]!!)
         mNotificationsRealm.commitTransaction()
     }
 }

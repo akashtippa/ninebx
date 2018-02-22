@@ -1,6 +1,9 @@
 package com.ninebx.ui.home.notifications
 
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
@@ -26,15 +30,15 @@ import kotlinx.android.synthetic.main.fragment_notifications.*
 class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     var encryptedNotifications : RealmResults<Notifications> ?= null
-    override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {
-        encryptedNotifications = notifications
-    }
-
     private var decryptedNotifications = ArrayList<DecryptedNotifications>()
     lateinit var mNotificationsPresenter : NotificationsPresenter
 
     override fun showProgress(message: Int) {
         progressLayout.show()
+    }
+
+    override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {
+        encryptedNotifications = notifications
     }
 
     override fun hideProgress() {
@@ -54,9 +58,10 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         rvNotification.adapter = mAdapter
 
         mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
+
             override fun onItemClick(position: Int, v: View, id: Int) {
             }
-            override fun onItemLongClick(position: Int, v: View) {
+            override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
                 var dialog =  Dialog(context)
                 dialog.setContentView(R.layout.layout_dialog)
                 dialog.window.setGravity(Gravity.CENTER)
@@ -71,19 +76,46 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
                     AppLogger.d("NotificationFragment", "Delete Button clicked")
                     mNotificationsPresenter.deleteNotification(position)
                     mAdapter.delete(position)
-                    AppLogger.d("NotificationFragment", "Delete Button clicked " + position)
-                    AppLogger.d("NotificationFragment", "Delete Button clicked " + id)
+                    dialog.dismiss()
                 })
                 val ivShare : ImageView = dialog.findViewById(R.id.ivShareNotification)
                 ivShare.setOnClickListener(View.OnClickListener {
                     AppLogger.d("NotificationFragment", "Share Button clicked")
+                    sendEmail(decryptedNotifications[position].boxName, decryptedNotifications[position].message, decryptedNotifications[position].subTitle, decryptedNotifications[position].dueDate)
                 })
                 val ivFlag : ImageView = dialog.findViewById(R.id.ivFlagNotification)
                 ivFlag.setOnClickListener(View.OnClickListener {
                     AppLogger.d("NotificationFragment", "Flag button clicked")
+
+                    mNotificationsPresenter.markAsUnread( position )
+                    mAdapter.notifyDataSetChanged()
+                    dialog.dismiss()
                 })
             }
         })
+    }
+
+    private fun sendEmail(boxName: String, message: String, subTitle: String, dueDate: String) {
+        val TO = arrayOf("")
+        val CC = arrayOf("")
+        val emailIntent = Intent(Intent.ACTION_SEND)
+
+        var emailBody : String = boxName + "\n" + message + "\n" + subTitle + "\t" + dueDate
+        emailIntent.data = Uri.parse("mailto:")
+        emailIntent.type = "text/plain"
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO)
+        emailIntent.putExtra(Intent.EXTRA_CC, CC)
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "NineBx Notifications & Alerts")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody)
+
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+            AppLogger.d("SendingEmail","Finished sending email")
+        } catch (ex: android.content.ActivityNotFoundException) {
+            AppLogger.d("SendingEmail", "There is no email client installed.")
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
