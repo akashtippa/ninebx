@@ -25,6 +25,7 @@ import io.realm.SyncUser
 
 class AuthActivity : AppCompatActivity(), AuthView {
 
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun fingerPrintCancelled() {
         if (fingerPrintFragment != null) fingerPrintFragment!!.fingerPrintCancelled()
@@ -151,9 +152,24 @@ class AuthActivity : AppCompatActivity(), AuthView {
             passCodeFragment = PassCodeFragment()
             fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
         }
-        NineBxApplication.getPreferences().passCode = passCode
+
+        if( passCode.isNotEmpty() )
+            NineBxApplication.getPreferences().passCode = passCode
+
         passCodeFragment!!.setCreatePassCode( isCreatePassCode )
 
+    }
+
+    override fun navigateToCreateNewPassCode(currentPassCode: String) {
+        mCurrentTag = "PassCode"
+        if( passCodeFragment == null ) {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(PassCodeFragment::class.java.simpleName)
+            passCodeFragment = PassCodeFragment()
+            fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
+        }
+        NineBxApplication.getPreferences().passCode = currentPassCode
+        passCodeFragment!!.setCreateNewPasscode( true )
     }
 
     override fun navigateToInvitePeople() {
@@ -193,31 +209,39 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     private fun navigateToScreen() {
         mAuthPresenter = AuthPresenter(this)
-        when (NineBxApplication.getPreferences().currentStep) {
-            Constants.ACCOUNT_PASSWORD_COMPLETE -> {
-                navigateToOTP(false)
-            }
-            Constants.OTP_COMPLETE -> {
-                navigateToCreatePassCode(true, "")
-            }
-            Constants.PASS_CODE_COMPLETE -> {
-                if( checkForFingerPrint() )
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        navigateToFingerPrint()
-                    }
-                else {
+        val bundle = intent.extras
+        if( bundle == null ) {
+            when (NineBxApplication.getPreferences().currentStep) {
+                Constants.ACCOUNT_PASSWORD_COMPLETE -> {
+                    navigateToOTP(false)
+                }
+                Constants.OTP_COMPLETE -> {
+                    navigateToCreatePassCode(true, "")
+                }
+                Constants.PASS_CODE_COMPLETE -> {
+                    if( checkForFingerPrint() )
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            navigateToFingerPrint()
+                        }
+                        else {
+                            navigateToInvitePeople()
+                        }
+                }
+                Constants.FINGER_PRINT_COMPLETE ->{
                     navigateToInvitePeople()
+                    //navigateToHome()
+                }
+                Constants.INVITE_USERS_COMPLETE, Constants.ALL_COMPLETE -> {
+                    navigateToHome()
+                }
+                Constants.SIGN_UP_COMPLETE -> {
+                    navigateToSignUp()
                 }
             }
-            Constants.FINGER_PRINT_COMPLETE ->{
-                navigateToInvitePeople()
-                //navigateToHome()
-            }
-            Constants.INVITE_USERS_COMPLETE, Constants.ALL_COMPLETE -> {
-                navigateToHome()
-            }
-            Constants.SIGN_UP_COMPLETE -> {
-                navigateToSignUp()
+        }
+        else {
+            if( bundle.getBoolean(Constants.RESET_PASSCODE)) {
+                navigateToCreateNewPassCode(NineBxApplication.getPreferences().passCode!!)
             }
         }
 

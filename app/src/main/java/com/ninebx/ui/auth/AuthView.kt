@@ -14,6 +14,7 @@ interface AuthView : BaseView {
     fun navigateToOTP(isSignIn: Boolean)
     fun navigateToAccountPassword( users : Users )
     fun navigateToCreatePassCode(isCreatePassCode: Boolean, passCode: String)
+    fun navigateToCreateNewPassCode( currentPassCode: String )
     fun navigateToFingerPrint()
     fun navigateToInvitePeople()
     fun getAuthPresenter() : AuthPresenter

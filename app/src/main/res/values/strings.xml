@@ -965,5 +965,7 @@
 
     <string name="check_password">Check your password again</string>
     <string name="error_permissions">Error setting permissions for member</string>
+    <string name="enter_your_current_passcode">Enter your current Personal Passcode</string>
+    <string name="passcode_changed">Passcode changed</string>
 
 </resources>

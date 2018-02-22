@@ -214,12 +214,15 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
         layoutLock.setOnClickListener {
             //            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
         }
-
+        txtPersonalPassCode.setOnClickListener {
+            startActivity( Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
+        }
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
             SyncUser.currentUser().logout()
             startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }
+        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
     }
 }
