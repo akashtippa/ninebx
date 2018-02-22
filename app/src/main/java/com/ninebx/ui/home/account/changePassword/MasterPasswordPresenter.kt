@@ -71,6 +71,7 @@ class MasterPasswordPresenter(private val masterPasswordView: MasterPasswordView
                         .subscribeOn(Schedulers.io())
                         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
                         .subscribe(getSignUpResponse())
+                result.logout()
             }
 
             override fun onError(error: ObjectServerError?) {
