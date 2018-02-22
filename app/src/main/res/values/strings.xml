@@ -971,4 +971,6 @@
     <string name="password_reset_success">Password changed successfully</string>
     <string name="error_change_password_members">Error changing password for members</string>
 
+    <string name="alert_notification">\t REMAINDERS &amp; ALERTS</string>
+
 </resources>
