@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.*
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
@@ -16,16 +17,23 @@ import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
+import com.ninebx.utility.AWSFileTransferHelper
+import com.ninebx.utility.AWSSecureFileTransfer
 import com.ninebx.utility.Constants
 import com.ninebx.utility.decryptString
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account.*
+import java.io.File
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
+class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, AWSFileTransferHelper.FileOperationsCompletionListener {
+    override fun onSuccess(outputFile: File?) {
+        if (outputFile != null && imgProfile != null)
+            Glide.with(context).asBitmap().load(outputFile).into(imgProfile)
+    }
 
 
     override fun onClick(v: View?) {
@@ -230,6 +238,14 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
         }
         switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
         switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        val profilePhoto = mHomeView.getCurrentUsers()[0]!!.profilePhoto
+        if (profilePhoto.isNotEmpty()) {
+            awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + profilePhoto)
+        }
     }
 
     override fun onResume() {
