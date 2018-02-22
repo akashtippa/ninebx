@@ -30,7 +30,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                     getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
                     notificationsView.onNotificationsFetched(mDecryptNotifications)
                     notificationsView.onEncryptedNotifications(getNotification!!)
-                    AppLogger.d("Notification", "Notification Decrypted" )
+                    AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
                 }
                 else
                     AppLogger.d("Notification", "No data" )
