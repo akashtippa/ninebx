@@ -61,8 +61,8 @@ fun prepareRealmConnections(context: Context?,
                             realmEndPoint: String,
                             callback: Realm.Callback) {
 
-    if (isForeground)
-        context!!.showProgressDialog(context.getString(R.string.connecting))
+    if ( isForeground && context != null )
+        context.showProgressDialog(context.getString(R.string.connecting))
 
     if (connectionsMap.containsKey(realmEndPoint)) {
         AppLogger.d(TAG, "Connection Found : " + realmEndPoint)

@@ -25,8 +25,8 @@ class SignUpFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
         btnSubmit.setOnClickListener {
             if (validate()) {
-                mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
-                mAuthView.createUser( edtFirstName.text.toString().trim(), edtLastName.text.toString().trim(), edtEmailAddress.text.toString().trim() )
+                mAuthView.setAccountEmail(edtEmailAddress.text.toString().toLowerCase().trim())
+                mAuthView.createUser( edtFirstName.text.toString().trim(), edtLastName.text.toString().trim(), edtEmailAddress.text.toString().toLowerCase().trim() )
             }
         }
 
