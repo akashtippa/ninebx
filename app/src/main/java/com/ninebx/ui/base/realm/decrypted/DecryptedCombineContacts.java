@@ -99,18 +99,6 @@ public class DecryptedCombineContacts implements Parcelable {
         return count;
     }
 
-  /*  public int getAllContacts(String selectionType) {
-        int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (DecryptedContacts selectedItem : contactsItems) {
-            if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
-                ids.add(selectedItem.getId());
-            }
-        }
-        return count;
-    }*/
-
     public int getAllContacts(String selectionType) {
         int count = 0;
         for (DecryptedContacts decryptedLicense : contactsItems) {

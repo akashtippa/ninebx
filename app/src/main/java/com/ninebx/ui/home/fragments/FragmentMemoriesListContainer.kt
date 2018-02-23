@@ -8,8 +8,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
+import com.ninebx.R.string.date
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.ContainerActivity
@@ -26,6 +29,20 @@ import java.util.*
  * Created by TechnoBlogger on 24/01/18.
  */
 class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
+
+    override fun onDateClicked(strDate: String?) {
+        AppLogger.e("The Selected Date ", " is " + strDate)
+        Toast.makeText(context, " Date " + strDate, Toast.LENGTH_LONG).show()
+        var position: Int = 0
+        rvMemoryView.scrollToPosition(position)
+
+    }
+
+    override fun onMemoryDeleted(memoryTimeline: MemoryTimeline?) {
+        memoryRealm!!.beginTransaction()
+        memoryTimeline!!.deleteFromRealm()
+        memoryRealm!!.commitTransaction()
+    }
 
     override fun onMemoryEdit(memoryTimeLine: MemoryTimeline?) {
         mListsAdapter!!.notifyDataSetChanged()
@@ -57,6 +74,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
     private var mListsDateAdapter: MemoriesDateAdapter? = null
     var myDateList: ArrayList<Date> = ArrayList()
+    var test: ArrayList<Any> = ArrayList()
     private var currentDateList: ArrayList<Date>? = ArrayList()
 
 
@@ -77,6 +95,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
             val dates = Date()
             dates.strDate
             dates.strDate = contact.date
+
             currentDateList!!.add(dates)
         }
 
@@ -89,7 +108,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         rvMemoryView!!.layoutManager = layoutManager
         rvMemoryView!!.adapter = mListsAdapter
 
-        mListsDateAdapter = MemoriesDateAdapter(myDateList)
+        mListsDateAdapter = MemoriesDateAdapter(myDateList, this)
         val layoutManagerDate = LinearLayoutManager(context)
         layoutManagerDate.orientation = LinearLayoutManager.HORIZONTAL
         rvDate!!.layoutManager = layoutManagerDate
@@ -114,15 +133,26 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     }
 
 
+    private fun getCategoryPos(category: MemoryTimeline): Int {
+        return currentMemoriesList!!.indexOf(category)
+    }
+
     private fun saveMemoryTimeLine() {
-        val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
-        memoryObject.insertOrUpdate(memoryRealm!!)
-        context!!.hideProgressDialog()
-//        myList.clear()
-        val index: Int = myList.size - 1
-//        myList.removeAt(index)
-        myList.add(memoryObject)
-        mListsAdapter!!.notifyDataSetChanged()
+        if (currentMemoriesList!!.size != 0) {
+            val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
+            if (memoryObject.id.toString().trim() != "0") {
+                memoryObject.insertOrUpdate(memoryRealm!!)
+                context!!.hideProgressDialog()
+                val index: Int = myList.size - 1
+                myList.removeAt(index)
+                myList.add(memoryObject)
+                mListsAdapter!!.notifyDataSetChanged()
+            } else {
+                context!!.hideProgressDialog()
+            }
+        } else {
+            context!!.hideProgressDialog()
+        }
     }
 
 

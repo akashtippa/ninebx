@@ -11,4 +11,8 @@ public interface IMemoryAdded {
 
     void onMemoryEdit(MemoryTimeline memoryTimeLine);
 
+    void onMemoryDeleted(MemoryTimeline memoryTimeline);
+
+    void onDateClicked(String strDate);
+
 }

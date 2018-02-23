@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ListView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.country_picker.*
 import java.util.*
@@ -19,7 +20,12 @@ import java.util.*
 /**
  * Created by mukesh on 25/04/16.
  */
-class CountryPicker : FragmentBackHelper() {
+class CountryPicker() : FragmentBackHelper(), ICountrySelected {
+
+    override fun onCountrySelected(strCountry: String?) {
+        strSelectedCountry = strCountry!!
+    }
+
 
     private var searchEditText: EditText? = null
     private var countryListView: ListView? = null
@@ -27,7 +33,8 @@ class CountryPicker : FragmentBackHelper() {
     private val countriesList = ArrayList<Country>()
     private var selectedCountriesList: MutableList<Country> = ArrayList()
     private var listener: CountryPickerListener? = null
-
+    private var strSelectedCountry = ""
+    private var iCountrySelected: ICountrySelected? = null
 
     init {
         setCountriesList(Country.getAllCountries())
@@ -52,7 +59,7 @@ class CountryPicker : FragmentBackHelper() {
         selectedCountriesList = ArrayList(countriesList.size)
         selectedCountriesList.addAll(countriesList)
 
-        adapter = CountryListAdapter(context!!, selectedCountriesList)
+        adapter = CountryListAdapter(context!!, selectedCountriesList, this)
         countryListView!!.adapter = adapter
 
         countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -62,8 +69,6 @@ class CountryPicker : FragmentBackHelper() {
                         country.flag)
             }
         }
-
-
 
         searchEditText!!.addTextChangedListener(object : TextWatcher {
 
@@ -77,6 +82,11 @@ class CountryPicker : FragmentBackHelper() {
         })
 
     }
+//
+//    public fun onSelectedCountry(selectedCountry: String) {
+//        NineBxApplication.instance.getCountrySelected(selectedCountry)
+//        NineBxApplication.instance.activityInstance!!.onBackPressed()
+//    }
 
     fun setListener(listener: CountryPickerListener) {
         this.listener = listener
@@ -111,7 +121,6 @@ class CountryPicker : FragmentBackHelper() {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.showToolbar()
-
         return super.onBackPressed()
     }
 

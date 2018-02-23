@@ -377,8 +377,6 @@ class SearchHelper() {
         }
     }
 
-
-
     private fun switchMemoriesItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "mainMemory" -> {

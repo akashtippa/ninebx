@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.realm.SearchItemClickListener
+import com.ninebx.utility.AppLogger
 
 
 /**

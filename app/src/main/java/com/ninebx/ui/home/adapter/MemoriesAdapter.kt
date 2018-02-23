@@ -37,14 +37,15 @@ internal class MemoriesAdapter(private var myList: ArrayList<MemoryTimeline>?, p
         AppLogger.d("Decrypt", "Decrypting : " + member.toString())
         holder.txtMemoryTitle.text = member.title.decryptString()
         holder.txtMemoryDate.text = member.date.decryptString()
-//        AppLogger.e("Image ", " is " + member.backingImages[0].toString())
 
         holder.layoutMemoryHolder.setOnClickListener {
             iMemoryAdded.onMemoryEdit(member)
         }
 
         holder.imgDelete.setOnClickListener {
-            myList!!.removeAt(holder.position)
+            iMemoryAdded.onMemoryDeleted(member)
+            myList!!.remove(member)
+            notifyDataSetChanged()
         }
 
     }

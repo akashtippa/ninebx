@@ -37,7 +37,7 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
@@ -121,11 +121,11 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -256,7 +256,7 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(title);

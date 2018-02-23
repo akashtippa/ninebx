@@ -50,6 +50,8 @@ import java.util.*
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
 
+    val prefrences = NineBxPreferences()
+
     override fun getCurrentUsers(): RealmResults<Users> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
         return currentUsers!!
@@ -143,6 +145,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             callHomeFragment()
             showBottomView()
             ivBack.hide()
+            prefrences.currentBox = getString(R.string.home_amp_money)
         }
 
         ivBack.setOnClickListener {

@@ -175,8 +175,6 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
-
-
     }
 
     private fun navigateToMyProfileUsers() {

@@ -20,6 +20,7 @@ class ConfirmPasswordFragment : Fragment() {
 
     private lateinit var memberView: MemberView
     private var password: String = ""
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is MemberView) {
