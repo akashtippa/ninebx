@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +17,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.home.account.permissions.PermissionDialog
-import com.ninebx.ui.home.account.permissions.PermissionFragment
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
