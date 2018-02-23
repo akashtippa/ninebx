@@ -171,7 +171,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         linearLayoutManager.setReverseLayout(true)
         linearLayoutManager.setStackFromEnd(true)
         rvRecentSearch.layoutManager = linearLayoutManager
-        val recentSearchAdapter  = RecentSearchAdapter(Collections.reverse(mRecentSearch) as ArrayList<DecryptedRecentSearch>)
+        val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
 
     }
