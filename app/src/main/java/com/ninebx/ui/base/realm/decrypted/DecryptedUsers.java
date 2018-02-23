@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -73,8 +75,10 @@ public class DecryptedUsers implements Parcelable {
     }
 
 
-    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, long id, RealmList<DecryptedMember> members) {
+    public DecryptedUsers(String fullName, String firstName, String lastName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, long id, Boolean isCompleteProfile, String profilePhoto, RealmList<DecryptedMember> members, RealmList<DecryptedMember> decryptedMembers) {
         this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
         this.dateOfBirth = dateOfBirth;
@@ -89,7 +93,10 @@ public class DecryptedUsers implements Parcelable {
         this.country = country;
         this.userId = userId;
         this.id = id;
+        this.isCompleteProfile = isCompleteProfile;
+        this.profilePhoto = profilePhoto;
         this.members = members;
+        this.decryptedMembers = decryptedMembers;
     }
 
     protected DecryptedUsers(Parcel in) {

@@ -33,7 +33,7 @@ public class DecryptedTax implements Parcelable {
     @PrimaryKey //@Required
             long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -67,7 +67,7 @@ public class DecryptedTax implements Parcelable {
     public DecryptedTax() {
     }
 
-    public DecryptedTax(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
+    public DecryptedTax(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -118,11 +118,11 @@ public class DecryptedTax implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 

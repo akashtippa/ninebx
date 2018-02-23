@@ -28,29 +28,29 @@ public class DecryptedCombineWellness implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
     @Required
-    private RealmList<DecryptedCheckups> checkupsItems = new RealmList<>();
+    private ArrayList<DecryptedCheckups> checkupsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedEmergencyContacts> emergencyContactsItems = new RealmList<>();
+    private ArrayList<DecryptedEmergencyContacts> emergencyContactsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems = new RealmList<>();
+    private ArrayList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedHealthcareProviders> healthcareProvidersItems = new RealmList<>();
+    private ArrayList<DecryptedHealthcareProviders> healthcareProvidersItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedIdentification> identificationItems = new RealmList<>();
+    private ArrayList<DecryptedIdentification> identificationItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMedicalConditions> medicalConditionsItems = new RealmList<>();
+    private ArrayList<DecryptedMedicalConditions> medicalConditionsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMedicalHistory> medicalHistoryItems = new RealmList<>();
+    private ArrayList<DecryptedMedicalHistory> medicalHistoryItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMedications> medicationsItems = new RealmList<>();
+    private ArrayList<DecryptedMedications> medicationsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedVitalNumbers> vitalNumbersItems = new RealmList<>();
+    private ArrayList<DecryptedVitalNumbers> vitalNumbersItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedWellness> wellnessItems = new RealmList<>();
+    private ArrayList<DecryptedWellness> wellnessItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedWellnessList> listItems = new RealmList<>();
+    private ArrayList<DecryptedWellnessList> listItems = new ArrayList<>();
 
-    public DecryptedCombineWellness(long id, RealmList<DecryptedCheckups> checkupsItems, RealmList<DecryptedEmergencyContacts> emergencyContactsItems, RealmList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems, RealmList<DecryptedHealthcareProviders> healthcareProvidersItems, RealmList<DecryptedIdentification> identificationItems, RealmList<DecryptedMedicalConditions> medicalConditionsItems, RealmList<DecryptedMedicalHistory> medicalHistoryItems, RealmList<DecryptedMedications> medicationsItems, RealmList<DecryptedVitalNumbers> vitalNumbersItems, RealmList<DecryptedWellness> wellnessItems, RealmList<DecryptedWellnessList> listItems) {
+    public DecryptedCombineWellness(long id, ArrayList<DecryptedCheckups> checkupsItems, ArrayList<DecryptedEmergencyContacts> emergencyContactsItems, ArrayList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems, ArrayList<DecryptedHealthcareProviders> healthcareProvidersItems, ArrayList<DecryptedIdentification> identificationItems, ArrayList<DecryptedMedicalConditions> medicalConditionsItems, ArrayList<DecryptedMedicalHistory> medicalHistoryItems, ArrayList<DecryptedMedications> medicationsItems, ArrayList<DecryptedVitalNumbers> vitalNumbersItems, ArrayList<DecryptedWellness> wellnessItems, ArrayList<DecryptedWellnessList> listItems) {
         this.id = id;
         this.checkupsItems = checkupsItems;
         this.emergencyContactsItems = emergencyContactsItems;
@@ -81,91 +81,91 @@ public class DecryptedCombineWellness implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<DecryptedCheckups> getCheckupsItems() {
+    public ArrayList<DecryptedCheckups> getCheckupsItems() {
         return checkupsItems;
     }
 
-    public void setCheckupsItems(RealmList<DecryptedCheckups> checkupsItems) {
+    public void setCheckupsItems(ArrayList<DecryptedCheckups> checkupsItems) {
         this.checkupsItems = checkupsItems;
     }
 
-    public RealmList<DecryptedEmergencyContacts> getEmergencyContactsItems() {
+    public ArrayList<DecryptedEmergencyContacts> getEmergencyContactsItems() {
         return emergencyContactsItems;
     }
 
-    public void setEmergencyContactsItems(RealmList<DecryptedEmergencyContacts> emergencyContactsItems) {
+    public void setEmergencyContactsItems(ArrayList<DecryptedEmergencyContacts> emergencyContactsItems) {
         this.emergencyContactsItems = emergencyContactsItems;
     }
 
-    public RealmList<DecryptedEyeglassPrescriptions> getEyeglassPrescriptionsItems() {
+    public ArrayList<DecryptedEyeglassPrescriptions> getEyeglassPrescriptionsItems() {
         return eyeglassPrescriptionsItems;
     }
 
-    public void setEyeglassPrescriptionsItems(RealmList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems) {
+    public void setEyeglassPrescriptionsItems(ArrayList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems) {
         this.eyeglassPrescriptionsItems = eyeglassPrescriptionsItems;
     }
 
-    public RealmList<DecryptedHealthcareProviders> getHealthcareProvidersItems() {
+    public ArrayList<DecryptedHealthcareProviders> getHealthcareProvidersItems() {
         return healthcareProvidersItems;
     }
 
-    public void setHealthcareProvidersItems(RealmList<DecryptedHealthcareProviders> healthcareProvidersItems) {
+    public void setHealthcareProvidersItems(ArrayList<DecryptedHealthcareProviders> healthcareProvidersItems) {
         this.healthcareProvidersItems = healthcareProvidersItems;
     }
 
-    public RealmList<DecryptedIdentification> getIdentificationItems() {
+    public ArrayList<DecryptedIdentification> getIdentificationItems() {
         return identificationItems;
     }
 
-    public void setIdentificationItems(RealmList<DecryptedIdentification> identificationItems) {
+    public void setIdentificationItems(ArrayList<DecryptedIdentification> identificationItems) {
         this.identificationItems = identificationItems;
     }
 
-    public RealmList<DecryptedMedicalConditions> getMedicalConditionsItems() {
+    public ArrayList<DecryptedMedicalConditions> getMedicalConditionsItems() {
         return medicalConditionsItems;
     }
 
-    public void setMedicalConditionsItems(RealmList<DecryptedMedicalConditions> medicalConditionsItems) {
+    public void setMedicalConditionsItems(ArrayList<DecryptedMedicalConditions> medicalConditionsItems) {
         this.medicalConditionsItems = medicalConditionsItems;
     }
 
-    public RealmList<DecryptedMedicalHistory> getMedicalHistoryItems() {
+    public ArrayList<DecryptedMedicalHistory> getMedicalHistoryItems() {
         return medicalHistoryItems;
     }
 
-    public void setMedicalHistoryItems(RealmList<DecryptedMedicalHistory> medicalHistoryItems) {
+    public void setMedicalHistoryItems(ArrayList<DecryptedMedicalHistory> medicalHistoryItems) {
         this.medicalHistoryItems = medicalHistoryItems;
     }
 
-    public RealmList<DecryptedMedications> getMedicationsItems() {
+    public ArrayList<DecryptedMedications> getMedicationsItems() {
         return medicationsItems;
     }
 
-    public void setMedicationsItems(RealmList<DecryptedMedications> medicationsItems) {
+    public void setMedicationsItems(ArrayList<DecryptedMedications> medicationsItems) {
         this.medicationsItems = medicationsItems;
     }
 
-    public RealmList<DecryptedVitalNumbers> getVitalNumbersItems() {
+    public ArrayList<DecryptedVitalNumbers> getVitalNumbersItems() {
         return vitalNumbersItems;
     }
 
-    public void setVitalNumbersItems(RealmList<DecryptedVitalNumbers> vitalNumbersItems) {
+    public void setVitalNumbersItems(ArrayList<DecryptedVitalNumbers> vitalNumbersItems) {
         this.vitalNumbersItems = vitalNumbersItems;
     }
 
-    public RealmList<DecryptedWellness> getWellnessItems() {
+    public ArrayList<DecryptedWellness> getWellnessItems() {
         return wellnessItems;
     }
 
-    public void setWellnessItems(RealmList<DecryptedWellness> wellnessItems) {
+    public void setWellnessItems(ArrayList<DecryptedWellness> wellnessItems) {
         this.wellnessItems = wellnessItems;
     }
 
-    public RealmList<DecryptedWellnessList> getListItems() {
+    public ArrayList<DecryptedWellnessList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedWellnessList> listItems) {
+    public void setListItems(ArrayList<DecryptedWellnessList> listItems) {
         this.listItems = listItems;
     }
 

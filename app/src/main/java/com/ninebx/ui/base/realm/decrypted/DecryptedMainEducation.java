@@ -67,7 +67,7 @@ public class DecryptedMainEducation implements Parcelable {
     @Required
     private String createdUser = "";
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -75,7 +75,7 @@ public class DecryptedMainEducation implements Parcelable {
     public DecryptedMainEducation() {
     }
 
-    public DecryptedMainEducation(long id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public DecryptedMainEducation(long id, String selectionType, String classType, String institutionName, String qualification, String name, String location, String major, String from, String to, String currentlyStudying, Boolean isCurrent, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, ArrayList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -282,11 +282,11 @@ public class DecryptedMainEducation implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 

@@ -76,7 +76,7 @@ public class DecryptedEducation implements Parcelable {
     @Required
     private String createdUser = "";
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -84,7 +84,7 @@ public class DecryptedEducation implements Parcelable {
     public DecryptedEducation() {
     }
 
-    public DecryptedEducation(long id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public DecryptedEducation(long id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, ArrayList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.institutionName = institutionName;
@@ -341,11 +341,11 @@ public class DecryptedEducation implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 

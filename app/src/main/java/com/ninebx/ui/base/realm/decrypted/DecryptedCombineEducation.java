@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -27,18 +29,18 @@ public class DecryptedCombineEducation implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
     @Required
-    private RealmList<DecryptedEducation> educationItems = new RealmList<>();
+    private ArrayList<DecryptedEducation> educationItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMainEducation> mainEducationItems = new RealmList<>();
+    private ArrayList<DecryptedMainEducation> mainEducationItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedWork> workItems = new RealmList<>();
+    private ArrayList<DecryptedWork> workItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedEducationList> listItems = new RealmList<>();
+    private ArrayList<DecryptedEducationList> listItems = new ArrayList<>();
 
     public DecryptedCombineEducation() {
     }
 
-    public DecryptedCombineEducation(long id, RealmList<DecryptedEducation> educationItems, RealmList<DecryptedMainEducation> mainEducationItems, RealmList<DecryptedWork> workItems, RealmList<DecryptedEducationList> listItems) {
+    public DecryptedCombineEducation(long id, ArrayList<DecryptedEducation> educationItems, ArrayList<DecryptedMainEducation> mainEducationItems, ArrayList<DecryptedWork> workItems, ArrayList<DecryptedEducationList> listItems) {
         this.id = id;
         this.educationItems = educationItems;
         this.mainEducationItems = mainEducationItems;
@@ -68,35 +70,35 @@ public class DecryptedCombineEducation implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<DecryptedEducation> getEducationItems() {
+    public ArrayList<DecryptedEducation> getEducationItems() {
         return educationItems;
     }
 
-    public void setEducationItems(RealmList<DecryptedEducation> educationItems) {
+    public void setEducationItems(ArrayList<DecryptedEducation> educationItems) {
         this.educationItems = educationItems;
     }
 
-    public RealmList<DecryptedMainEducation> getMainEducationItems() {
+    public ArrayList<DecryptedMainEducation> getMainEducationItems() {
         return mainEducationItems;
     }
 
-    public void setMainEducationItems(RealmList<DecryptedMainEducation> mainEducationItems) {
+    public void setMainEducationItems(ArrayList<DecryptedMainEducation> mainEducationItems) {
         this.mainEducationItems = mainEducationItems;
     }
 
-    public RealmList<DecryptedWork> getWorkItems() {
+    public ArrayList<DecryptedWork> getWorkItems() {
         return workItems;
     }
 
-    public void setWorkItems(RealmList<DecryptedWork> workItems) {
+    public void setWorkItems(ArrayList<DecryptedWork> workItems) {
         this.workItems = workItems;
     }
 
-    public RealmList<DecryptedEducationList> getListItems() {
+    public ArrayList<DecryptedEducationList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedEducationList> listItems) {
+    public void setListItems(ArrayList<DecryptedEducationList> listItems) {
         this.listItems = listItems;
     }
 

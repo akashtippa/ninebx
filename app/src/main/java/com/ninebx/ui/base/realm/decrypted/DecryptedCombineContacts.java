@@ -28,13 +28,13 @@ public class DecryptedCombineContacts implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
     @Required
-    private RealmList<DecryptedContacts> contactsItems = new RealmList<>();
+    private ArrayList<DecryptedContacts> contactsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMainContacts> mainContactsItems = new RealmList<>();
+    private ArrayList<DecryptedMainContacts> mainContactsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedContactsList> listItems = new RealmList<>();
+    private ArrayList<DecryptedContactsList> listItems = new ArrayList<>();
 
-    public DecryptedCombineContacts(long id, RealmList<DecryptedContacts> contactsItems, RealmList<DecryptedMainContacts> mainContactsItems, RealmList<DecryptedContactsList> listItems) {
+    public DecryptedCombineContacts(long id, ArrayList<DecryptedContacts> contactsItems, ArrayList<DecryptedMainContacts> mainContactsItems, ArrayList<DecryptedContactsList> listItems) {
         this.id = id;
         this.contactsItems = contactsItems;
         this.mainContactsItems = mainContactsItems;
@@ -56,27 +56,27 @@ public class DecryptedCombineContacts implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<DecryptedContacts> getContactsItems() {
+    public ArrayList<DecryptedContacts> getContactsItems() {
         return contactsItems;
     }
 
-    public void setContactsItems(RealmList<DecryptedContacts> contactsItems) {
+    public void setContactsItems(ArrayList<DecryptedContacts> contactsItems) {
         this.contactsItems = contactsItems;
     }
 
-    public RealmList<DecryptedMainContacts> getMainContactsItems() {
+    public ArrayList<DecryptedMainContacts> getMainContactsItems() {
         return mainContactsItems;
     }
 
-    public void setMainContactsItems(RealmList<DecryptedMainContacts> mainContactsItems) {
+    public void setMainContactsItems(ArrayList<DecryptedMainContacts> mainContactsItems) {
         this.mainContactsItems = mainContactsItems;
     }
 
-    public RealmList<DecryptedContactsList> getListItems() {
+    public ArrayList<DecryptedContactsList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedContactsList> listItems) {
+    public void setListItems(ArrayList<DecryptedContactsList> listItems) {
         this.listItems = listItems;
     }
 

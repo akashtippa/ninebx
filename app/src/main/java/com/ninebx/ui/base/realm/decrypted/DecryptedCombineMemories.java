@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -27,16 +29,16 @@ public class DecryptedCombineMemories implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
     @Required
-    private RealmList<DecryptedMainMemories> mainMemoriesItems = new RealmList<>();
+    private ArrayList<DecryptedMainMemories> mainMemoriesItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMemoryTimeline> memoryTimelineItems = new RealmList<>();
+    private ArrayList<DecryptedMemoryTimeline> memoryTimelineItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedMemoriesList> listItems = new RealmList<>();
+    private ArrayList<DecryptedMemoriesList> listItems = new ArrayList<>();
 
     public DecryptedCombineMemories() {
     }
 
-    public DecryptedCombineMemories(long id, RealmList<DecryptedMainMemories> mainMemoriesItems, RealmList<DecryptedMemoryTimeline> memoryTimelineItems, RealmList<DecryptedMemoriesList> listItems) {
+    public DecryptedCombineMemories(long id, ArrayList<DecryptedMainMemories> mainMemoriesItems, ArrayList<DecryptedMemoryTimeline> memoryTimelineItems, ArrayList<DecryptedMemoriesList> listItems) {
         this.id = id;
         this.mainMemoriesItems = mainMemoriesItems;
         this.memoryTimelineItems = memoryTimelineItems;
@@ -65,27 +67,27 @@ public class DecryptedCombineMemories implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<DecryptedMainMemories> getMainMemoriesItems() {
+    public ArrayList<DecryptedMainMemories> getMainMemoriesItems() {
         return mainMemoriesItems;
     }
 
-    public void setMainMemoriesItems(RealmList<DecryptedMainMemories> mainMemoriesItems) {
+    public void setMainMemoriesItems(ArrayList<DecryptedMainMemories> mainMemoriesItems) {
         this.mainMemoriesItems = mainMemoriesItems;
     }
 
-    public RealmList<DecryptedMemoryTimeline> getMemoryTimelineItems() {
+    public ArrayList<DecryptedMemoryTimeline> getMemoryTimelineItems() {
         return memoryTimelineItems;
     }
 
-    public void setMemoryTimelineItems(RealmList<DecryptedMemoryTimeline> memoryTimelineItems) {
+    public void setMemoryTimelineItems(ArrayList<DecryptedMemoryTimeline> memoryTimelineItems) {
         this.memoryTimelineItems = memoryTimelineItems;
     }
 
-    public RealmList<DecryptedMemoriesList> getListItems() {
+    public ArrayList<DecryptedMemoriesList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedMemoriesList> listItems) {
+    public void setListItems(ArrayList<DecryptedMemoriesList> listItems) {
         this.listItems = listItems;
     }
 

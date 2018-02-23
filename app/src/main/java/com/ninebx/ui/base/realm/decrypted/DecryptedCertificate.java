@@ -33,7 +33,7 @@ public class DecryptedCertificate implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -75,7 +75,7 @@ public class DecryptedCertificate implements Parcelable {
     public DecryptedCertificate() {
     }
 
-    public DecryptedCertificate(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public DecryptedCertificate(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -157,11 +157,11 @@ public class DecryptedCertificate implements Parcelable {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 

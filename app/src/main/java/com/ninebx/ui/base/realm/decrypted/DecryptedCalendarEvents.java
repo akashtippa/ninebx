@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -15,18 +17,6 @@ import io.realm.annotations.Required;
  * Created by Alok on 11/01/18.
  */
 public class DecryptedCalendarEvents implements Parcelable {
-
-    public static final Creator<DecryptedCalendarEvents> CREATOR = new Creator<DecryptedCalendarEvents>() {
-        @Override
-        public DecryptedCalendarEvents createFromParcel(Parcel in) {
-            return new DecryptedCalendarEvents(in);
-        }
-
-        @Override
-        public DecryptedCalendarEvents[] newArray(int size) {
-            return new DecryptedCalendarEvents[size];
-        }
-    };
     @PrimaryKey //@Required
     private long id = 0;
     @Required
@@ -97,7 +87,7 @@ public class DecryptedCalendarEvents implements Parcelable {
     }
 
     protected DecryptedCalendarEvents(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         classType = in.readString();
         attachmentNames = in.readString();
     }
@@ -114,11 +104,23 @@ public class DecryptedCalendarEvents implements Parcelable {
         return 0;
     }
 
+    public static final Creator<DecryptedCalendarEvents> CREATOR = new Creator<DecryptedCalendarEvents>() {
+        @Override
+        public DecryptedCalendarEvents createFromParcel(Parcel in) {
+            return new DecryptedCalendarEvents(in);
+        }
+
+        @Override
+        public DecryptedCalendarEvents[] newArray(int size) {
+            return new DecryptedCalendarEvents[size];
+        }
+    };
+
     public long getId() {
         return id;
     }
 
-    public void setId( long id ) {
+    public void setId(long id) {
         this.id = id;
     }
 

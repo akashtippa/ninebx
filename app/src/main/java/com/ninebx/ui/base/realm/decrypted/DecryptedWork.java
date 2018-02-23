@@ -64,7 +64,7 @@ public class DecryptedWork implements Parcelable {
     @Required
     private String createdUser = "";
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -95,7 +95,7 @@ public class DecryptedWork implements Parcelable {
     public DecryptedWork() {
     }
 
-    public DecryptedWork(long id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public DecryptedWork(long id, String selectionType, String classType, String companyName, String position, String name, String location, String from, String to, String currentWork, Boolean isCurrent, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser, ArrayList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -296,11 +296,11 @@ public class DecryptedWork implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 

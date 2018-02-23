@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -45,12 +47,12 @@ public class DecryptedLicense implements Parcelable {
     @Required
     private String createdUser = "";
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
 
     public DecryptedLicense() {
     }
 
-    public DecryptedLicense(long id, String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, RealmList<RealmString> backingImages) {
+    public DecryptedLicense(long id, String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, ArrayList<RealmString> backingImages) {
         this.id = id;
         this.selectionType = selectionType;
         this.lic_description = lic_description;
@@ -128,11 +130,11 @@ public class DecryptedLicense implements Parcelable {
         return id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
