@@ -84,12 +84,11 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         txtPermissions.setOnClickListener {
             if ((txtRelationship.selectedItem.toString().trim() == "Relationship" || txtRelationship.selectedItem.toString().trim().isEmpty())) {
                 Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
-
             }
             else {
 
                 var tempMember = Member()
-                memberPresenter.setPermissionsForMember(tempMember, strRole)
+                memberPresenter.setPermissionsForMember(tempMember, txtRelationship.selectedItem.toString().trim())
                 if( permissionsMember != null ) {
                     tempMember = permissionsMember!!
                 }
@@ -361,6 +360,59 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         updateMember!!.relationship = txtRelationship.selectedItem.toString().encryptString()
         memberPresenter.setPermissionsForMember(updateMember!!, strRole)
 
+        /***
+         * "Home & Money",
+        "Travel",
+        "Contacts",
+        "Education & Work",
+        "Personal",
+        "Interests",
+        "Wellness",
+        "Memories",
+        "Shopping"
+         */
+        
+        if( permissionsMember != null ) {
+
+            updateMember!!.homeAdd = permissionsMember!!.homeAdd
+            updateMember!!.homeEdit = permissionsMember!!.homeEdit
+            updateMember!!.homeView = permissionsMember!!.homeView
+
+            updateMember!!.travelAdd = permissionsMember!!.travelAdd
+            updateMember!!.travelEdit = permissionsMember!!.travelEdit
+            updateMember!!.travelView = permissionsMember!!.travelView
+
+            updateMember!!.educationlAdd = permissionsMember!!.educationlAdd
+            updateMember!!.educationlEdit = permissionsMember!!.educationlEdit
+            updateMember!!.educationlView = permissionsMember!!.educationlView
+
+            updateMember!!.personalAdd = permissionsMember!!.personalAdd
+            updateMember!!.personalEdit = permissionsMember!!.personalEdit
+            updateMember!!.personalView = permissionsMember!!.personalView
+
+            updateMember!!.interestsAdd = permissionsMember!!.interestsAdd
+            updateMember!!.interestsEdit = permissionsMember!!.interestsEdit
+            updateMember!!.interestsView = permissionsMember!!.interestsView
+
+            updateMember!!.wellnessAdd = permissionsMember!!.wellnessAdd
+            updateMember!!.wellnessEdit = permissionsMember!!.wellnessEdit
+            updateMember!!.wellnessView = permissionsMember!!.wellnessView
+
+            updateMember!!.memoriesAdd = permissionsMember!!.memoriesAdd
+            updateMember!!.memoriesEdit = permissionsMember!!.memoriesEdit
+            updateMember!!.memoriesView = permissionsMember!!.memoriesView
+
+            updateMember!!.shoppingAdd = permissionsMember!!.shoppingAdd
+            updateMember!!.shoppingEdit = permissionsMember!!.shoppingEdit
+            updateMember!!.shoppingView = permissionsMember!!.shoppingView
+
+            updateMember!!.contactsAdd = permissionsMember!!.contactsAdd
+            updateMember!!.contactsEdit = permissionsMember!!.contactsEdit
+            updateMember!!.contactsView = permissionsMember!!.contactsView
+            
+            updateMember!!.addingRemovingMember = permissionsMember!!.addingRemovingMember
+        }
+         
     }
 
 

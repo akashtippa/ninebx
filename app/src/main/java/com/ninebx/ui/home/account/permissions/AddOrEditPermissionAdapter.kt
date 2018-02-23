@@ -81,7 +81,6 @@ internal class AddOrEditPermissionAdapter(private val myList: ArrayList<AddEditP
             chkAdd.isChecked = addEditPermissions.isAdd
             chkEdit.isChecked = addEditPermissions.isEdit
             chkView.isChecked = addEditPermissions.isView
-
         }
 
         val layoutMenu: LinearLayout = parent.findViewById<View>(R.id.layoutMenu) as LinearLayout
