@@ -98,6 +98,7 @@ class LoginSignupTask(private var userName: String,
 
             override fun onError(e: Throwable) {
                 authView.hideProgress()
+                authView.onError(R.string.error_login)
             }
 
             override fun onComplete() {
