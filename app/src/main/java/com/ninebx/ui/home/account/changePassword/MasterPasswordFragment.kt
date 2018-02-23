@@ -49,7 +49,7 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
 
     override fun onPasswordReset(message: Int) {
         onError(message)
-        onBackPressed()
+        NineBxApplication.instance.activityInstance!!.onBackPressed()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
