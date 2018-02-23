@@ -143,5 +143,7 @@ dependencies {
 
     implementation 'com.github.vipulasri:timelineview:1.0.5'
 
+    //BadgeView
+    implementation 'q.rorbin:badgeview:1.1.0'
 
 }
