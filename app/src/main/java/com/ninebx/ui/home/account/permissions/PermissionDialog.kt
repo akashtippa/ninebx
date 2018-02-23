@@ -1,64 +1,64 @@
 package com.ninebx.ui.home.account.permissions
 
-import android.os.Bundle
+
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.ninebx.NineBxApplication
+import android.view.Window
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.home.account.model.AddEditPermissions
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
-import kotlinx.android.synthetic.main.fragment_permissions.*
 
-
-/***
- * Created by TechnoBlogger on 18/01/18.
+/**
+ * Created by Alok on 23/02/18.
  */
+@SuppressLint("InflateParams")
+class PermissionDialog(val context : Context, private var tempMember: Member  ) : PermissionsView {
 
-class PermissionFragment : FragmentBackHelper(), PermissionsView {
 
-    override fun showProgress(message: Int) {
+    private var dialog: Dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
 
-    }
-
-    override fun hideProgress() {
-
-    }
-
-    override fun onError(error: Int) {
-
-    }
 
     interface PermissionEdited {
-        fun onPermissionEdited( member : Member )
+        fun onPermissionEdited( member : Member)
     }
 
     private lateinit var mPermissionEdited : PermissionEdited
     private lateinit var myList: ArrayList<AddEditPermissions>
     private var mListsAdapter: AddOrEditPermissionAdapter? = null
+    private lateinit var chkAddOrRemoveUsers : CheckBox
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_permissions, container, false)
+
+    init {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.fragment_permissions, null)
+        dialog.setContentView(dialogView)
+        initView( dialogView )
+        showDialog()
     }
 
-    private lateinit var tempMember: Member
+    private fun showDialog() {
+        dialog.show()
+    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        tempMember = arguments!!.getParcelable<Member>(Constants.MEMBER)
-        ivBackPermissions.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+    private fun initView(dialogView: View) {
+        dialogView.findViewById<ImageView>(R.id.ivBackPermissions).setOnClickListener {
+            dialog.dismiss()
         }
+        chkAddOrRemoveUsers = dialogView.findViewById(R.id.chkAddOrRemoveUsers)
 
-        txtSave.setOnClickListener {
+        dialogView.findViewById<TextView>(R.id.txtSave).setOnClickListener {
             mListsAdapter!!.getPermissions( tempMember )
             tempMember.addingRemovingMember = chkAddOrRemoveUsers.isChecked
             mPermissionEdited.onPermissionEdited(tempMember)
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            dialog.dismiss()
         }
 
         /***
@@ -155,16 +155,30 @@ class PermissionFragment : FragmentBackHelper(), PermissionsView {
                 tempMember.shoppingEdit
         ))
 
+        val rvPermissions = dialogView.findViewById<RecyclerView>(R.id.rvPermissions)
         mListsAdapter = AddOrEditPermissionAdapter(myList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvPermissions!!.layoutManager = layoutManager
-        rvPermissions!!.adapter = mListsAdapter
+        rvPermissions.adapter = mListsAdapter
 
         chkAddOrRemoveUsers.isChecked = tempMember.addingRemovingMember
     }
 
-    fun setPermissionsEdited( permissionEdited: PermissionEdited ) {
+
+    override fun showProgress(message: Int) {
+
+    }
+
+    override fun hideProgress() {
+
+    }
+
+    override fun onError(error: Int) {
+
+    }
+
+    fun setPermissionsEdited( permissionEdited: PermissionDialog.PermissionEdited) {
         this.mPermissionEdited = permissionEdited
     }
 }

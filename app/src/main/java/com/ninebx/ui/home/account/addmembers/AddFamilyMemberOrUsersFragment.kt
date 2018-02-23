@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.home.account.permissions.PermissionDialog
 import com.ninebx.ui.home.account.permissions.PermissionFragment
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.Constants
@@ -36,11 +38,12 @@ import java.util.*
  * Created by TechnoBlogger on 18/01/18.
  */
 
-class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, PermissionFragment.PermissionEdited {
+class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, PermissionDialog.PermissionEdited {
 
     private var permissionsMember : Member ?= null
     override fun onPermissionEdited(member: Member) {
          this.permissionsMember = member
+        childContainer.hide()
     }
 
     private lateinit var selectedRelation: String
@@ -82,26 +85,18 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         }
 
         txtPermissions.setOnClickListener {
-            if ((txtRelationship.selectedItem.toString().trim() == "Relationship" || txtRelationship.selectedItem.toString().trim().isEmpty())) {
-                Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
+            if ((txtsRole.selectedItem.toString().trim() == "Role" || txtsRole.selectedItem.toString().trim().isEmpty())) {
+                Toast.makeText(context, "Please enter 'Role'", Toast.LENGTH_LONG).show()
             }
             else {
 
                 var tempMember = Member()
-                memberPresenter.setPermissionsForMember(tempMember, txtRelationship.selectedItem.toString().trim())
+                memberPresenter.setPermissionsForMember(tempMember, txtsRole.selectedItem.toString().trim())
                 if( permissionsMember != null ) {
                     tempMember = permissionsMember!!
                 }
-
-                val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                fragmentTransaction.addToBackStack(null)
-                val permissionsFragment = PermissionFragment()
-                val bundle = Bundle()
-                bundle.putParcelable(Constants.MEMBER, tempMember)
-                permissionsFragment.arguments = bundle
-
-                fragmentTransaction.replace(R.id.frameLayout, permissionsFragment).commit()
-                permissionsFragment.setPermissionsEdited(this)
+                val permissionDialog = PermissionDialog( context!!, tempMember )
+                permissionDialog.setPermissionsEdited(this)
             }
 
         }
@@ -290,10 +285,10 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             txtLastName.setText(member.lastName.decryptString())
 
         if (member.relationship.isNotEmpty())
-            txtRelationship.prompt = member.relationship
+            txtRelationship.setSelection(context!!.resources.getStringArray(R.array.relationship).indexOf(member.relationship.decryptString()))
 
         if (member.role.isNotEmpty())
-            txtsRole.prompt = member.role
+            txtsRole.setSelection(context!!.resources.getStringArray(R.array.role).indexOf(member.role.decryptString()))
 
         if (member.email.isNotEmpty())
             edtEmailAddress.setText(member.email.decryptString())
