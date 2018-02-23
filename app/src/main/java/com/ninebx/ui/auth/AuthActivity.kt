@@ -16,6 +16,7 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.Constants
+import com.ninebx.utility.Constants.PASSCODE_CREATE
 import io.realm.SyncUser
 
 
@@ -140,8 +141,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     private var passCodeFragment: PassCodeFragment ?= null
-    override fun navigateToCreatePassCode(isCreatePassCode: Boolean, passCode: String) {
-        if (!isCreatePassCode) {
+    override fun navigateToCreatePassCode(isCreatePassCode: Int, passCode: String) {
+        if (!(isCreatePassCode == PASSCODE_CREATE)) {
             if (NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         }
@@ -162,14 +163,15 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun navigateToCreateNewPassCode(currentPassCode: String) {
         mCurrentTag = "PassCode"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
         if( passCodeFragment == null ) {
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(PassCodeFragment::class.java.simpleName)
             passCodeFragment = PassCodeFragment()
-            fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
         }
         NineBxApplication.getPreferences().passCode = currentPassCode
-        passCodeFragment!!.setCreateNewPasscode( true )
+        passCodeFragment!!.setCreatePassCode( Constants.PASSCODE_RESET )
+        fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
+
     }
 
     override fun navigateToInvitePeople() {
@@ -216,7 +218,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                     navigateToOTP(false)
                 }
                 Constants.OTP_COMPLETE -> {
-                    navigateToCreatePassCode(true, "")
+                    navigateToCreatePassCode(PASSCODE_CREATE, "")
                 }
                 Constants.PASS_CODE_COMPLETE -> {
                     if( checkForFingerPrint() )
@@ -236,6 +238,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 }
                 Constants.SIGN_UP_COMPLETE -> {
                     navigateToSignUp()
+                }
+                else -> {
+                    navigateToSignIn()
                 }
             }
         }
@@ -265,7 +270,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private var fingerPrintFragment: FingerPrintFragment? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun navigateToFingerPrint(b: Boolean) {
+    override fun navigateToFingerPrint( resetFingerPrint: Boolean) {
         if( checkForFingerPrint() ) {
             if (NineBxApplication.getPreferences().currentStep < Constants.PASS_CODE_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.PASS_CODE_COMPLETE
@@ -273,6 +278,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(FingerPrintFragment::class.java.simpleName)
             fingerPrintFragment = FingerPrintFragment()
+            if( resetFingerPrint ) {
+                fingerPrintFragment!!.arguments = intent.extras
+            }
             fragmentTransaction.replace(R.id.container, fingerPrintFragment).commit()
         }
         else {

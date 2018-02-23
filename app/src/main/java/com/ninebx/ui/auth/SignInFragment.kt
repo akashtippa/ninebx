@@ -26,8 +26,8 @@ class SignInFragment : BaseAuthFragment() {
 
         btnLogin.setOnClickListener {
             if (validate()) {
-                mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
-                mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
+                mAuthView.setAccountEmail(edtEmailAddress.text.toString().toLowerCase().trim())
+                mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().toLowerCase().trim(), edtPassword.text.toString())
             }
         }
         btnSignUp.setOnClickListener {
@@ -41,8 +41,8 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("Android@yopmail.com")
-            edtPassword.setText("Android.24")
+            edtEmailAddress.setText("alok.g@cognitiveclouds.com")
+            edtPassword.setText("Password14.")
         }
 
     }

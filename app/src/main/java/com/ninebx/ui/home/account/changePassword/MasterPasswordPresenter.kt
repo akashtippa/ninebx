@@ -31,8 +31,8 @@ class MasterPasswordPresenter(private val masterPasswordView: MasterPasswordView
         if( members.size > 0 ) {
             for( familyUser in members ) {
                 val userEmail = familyUser.email.decryptString()
-                val newPassword = Arrays.toString(convertToUInt8IntArray((encryptKey(masterPasswordView.getNewPassword(), userEmail))))
                 if( userEmail != NineBxApplication.getPreferences().userEmail ) {
+                    val newPassword = Arrays.toString(convertToUInt8IntArray((encryptKey(masterPasswordView.getNewPassword(), userEmail))))
                     val userPassword = masterPasswordView.getCurrentPassword()
                     val encryptedPasswordByteArray = (encryptKey(userPassword, userEmail))
                     val encryptedPassword = convertToUInt8IntArray(encryptedPasswordByteArray)

@@ -37,6 +37,7 @@ import com.ninebx.ui.home.notifications.NotificationsFragment
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.ALL_COMPLETE
 import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 import io.realm.Realm
 import io.realm.RealmResults
@@ -174,6 +175,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
                         AppLogger.e("Name ", "is : " + member.firstName)
                     }
                     if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+
+                        NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
 
                         toggleCheck(true)
                         bottomNavigationView.menu.getItem(4).isChecked = true

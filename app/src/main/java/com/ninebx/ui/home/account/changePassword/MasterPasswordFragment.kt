@@ -35,10 +35,12 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
     }
 
     override fun showProgress(message: Int) {
+        if( context != null )
         context!!.showProgressDialog(getString(message))
     }
 
     override fun hideProgress() {
+        if( context != null )
         context!!.hideProgressDialog()
     }
 
@@ -49,7 +51,7 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
 
     override fun onPasswordReset(message: Int) {
         onError(message)
-        onBackPressed()
+        NineBxApplication.instance.activityInstance!!.onBackPressed()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

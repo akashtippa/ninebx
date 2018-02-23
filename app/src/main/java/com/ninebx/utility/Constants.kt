@@ -29,6 +29,10 @@ object Constants {
     val FINGER_PRINT_COMPLETE = 5
     val INVITE_USERS_COMPLETE = 6
 
+    val PASSCODE_RESET = -1
+    val PASSCODE_CREATE = 0
+    val PASSCODE_CONFIRM = 1
+
 
     val SUB_CATEGORY_ADD_PERSON = 0
     val SUB_CATEGORY_ADD_ITEM = 1

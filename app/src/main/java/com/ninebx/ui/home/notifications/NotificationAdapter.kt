@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.R.layout.row_notification
@@ -60,7 +62,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
                 AppLogger.d("Date", "Exception thrown while converting string to date 2nd try-catch " + e.message)
             }
         }
-        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
@@ -70,20 +72,20 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         return ViewHolder(rvView)
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), ClickListener, View.OnClickListener, View.OnLongClickListener {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), ClickListener, View.OnClickListener {
 
-        override fun onLongClick(v: View?): Boolean {
+        /*override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
             if( position != RecyclerView.NO_POSITION ) {
                 onItemLongClick(position, v!!, txtMessage)
             }
             return true
-        }
+        }*/
 
         override fun onClick(v: View?) {
             val position = adapterPosition
             if( position != RecyclerView.NO_POSITION ) {
-                onItemClick(position, v!!, data[position].id)
+                onItemClick(position, v!!, data[position].id, optionsLayout)
             }
         }
 
@@ -91,32 +93,45 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         val txtMessage: TextView = view.findViewById<View>(R.id.tvMessage) as TextView
         val txtDueDate: TextView = view.findViewById<View>(R.id.tvDueDate) as TextView
         val txtSubTitle: TextView = view.findViewById<View>(R.id.tvSubTitle) as TextView
+        val ivMore : ImageView = view.findViewById<ImageView>(R.id.ivMore)
+        val ivDeleteNotification : ImageView = view.findViewById<ImageView>(R.id.ivDeleteNotification)
+        val ivShareNotification : ImageView = view.findViewById<ImageView>(R.id.ivShareNotification)
+        val ivFlagNotification : ImageView = view.findViewById<ImageView>(R.id.ivFlagNotification)
+        val optionsLayout : LinearLayout = view.findViewById<LinearLayout>(R.id.optionsLayout)
 
         init {
-            view.setOnClickListener(this)
-            view.setOnLongClickListener(this)
+            txtBoxName.setOnClickListener(this)
+            txtMessage.setOnClickListener(this)
+            txtDueDate.setOnClickListener(this)
+            txtSubTitle.setOnClickListener(this)
+            ivMore.setOnClickListener(this)
+            ivDeleteNotification.setOnClickListener(this)
+            ivShareNotification.setOnClickListener(this)
+            ivFlagNotification.setOnClickListener(this)
         }
 
-        override fun onItemClick(position: Int, v: View, id: Long) {
-            clickListener.onItemClick(getAdapterPosition(), v, data[position].id)
+        override fun onItemClick(position: Int, v: View, id: Long, optionsLayout: View) {
+           clickListener.onItemClick(position, v, id, optionsLayout)
+
         }
 
         override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
-            clickListener.onItemLongClick(getAdapterPosition(), v, txtMessage)
+            clickListener.onItemLongClick(position, v, txtMessage)
         }
     }
 
-     fun onClickListener(clickListener: ClickListener) {
+    fun onClickListener(clickListener: ClickListener) {
         this.clickListener = clickListener
     }
 
-     interface ClickListener {
-        fun onItemClick(position: Int, v: View, id: Long)
+    interface ClickListener {
+        fun onItemClick(position: Int, v: View, id: Long, optionsLayout:View)
         fun onItemLongClick(position: Int, v: View, txtMessage: TextView)
-     }
+    }
 
     fun delete(position: Int) {
         data.removeAt(position)
         notifyDataSetChanged()
     }
+
 }

@@ -98,6 +98,7 @@ class LoginSignupTask(private var userName: String,
 
             override fun onError(e: Throwable) {
                 authView.hideProgress()
+                authView.onError(R.string.error_login)
             }
 
             override fun onComplete() {
@@ -153,6 +154,7 @@ class LoginSignupTask(private var userName: String,
             //onPostExecute(SyncCredentials.usernamePassword( userName, Arrays.toString(encryptedPassword), false ))
         } else {
             authView.hideProgress()
+            authView.onError(R.string.error_login)
             if (error != null) {
                 error.printStackTrace()
 //                authView.onError(error.errorMessage!!)

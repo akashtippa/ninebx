@@ -23,16 +23,19 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
 
     override fun showProgress(message: Int) {
-        progressLayout.show()
+        if( progressLayout != null )
+            progressLayout.show()
     }
 
     override fun hideProgress() {
-        progressLayout.hide()
+        if( progressLayout != null )
+            progressLayout.hide()
     }
 
     override fun onError(error: Int) {
         hideProgress()
-        context!!.showToast(error)
+        if( context != null )
+            context!!.showToast(error)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
