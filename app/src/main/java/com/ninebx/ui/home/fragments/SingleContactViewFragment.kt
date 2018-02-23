@@ -9,19 +9,31 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
+import android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY
 import android.provider.MediaStore
 import android.service.autofill.Validators.and
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.contactsView.ContactsView
+import com.ninebx.ui.home.account.interfaces.IContactsAdded
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.utility.*
+import com.ninebx.utility.countryPicker.Country
+import com.ninebx.utility.countryPicker.CountryPicker
+import com.onegravity.contactpicker.contact.Contact
+import com.onegravity.contactpicker.core.ContactPickerActivity
+import com.onegravity.contactpicker.group.Group
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
@@ -33,7 +45,12 @@ import java.util.*
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener {
+class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, ICountrySelected {
+
+    override fun onCountrySelected(strCountry: String?) {
+        edtCountry.setText(strCountry)
+    }
+
     override fun onSuccess(outputFile: File?) {
 
     }
@@ -65,15 +82,15 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
     private lateinit var mContacts: Contacts
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
     private lateinit var mContactsView: ContactsView
+    private var contactsRealm: Realm? = null
 
-    var contactOperation = ""
     var contactID: Long? = null
 
+    private val COUNTRY = 3000
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_level2_contacts, container, false)
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -81,7 +98,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
             mContactsView = context
         }
     }
-//    8532333429429661766
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -92,7 +108,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         mContacts = arguments!!.getParcelable(Constants.CONTACTS_VIEW)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
-        contactOperation = arguments!!.getString("ContactOperation")
         contactID = arguments!!.getLong("ID")
 
         edtFirstName.setText(strContactName)
@@ -130,10 +145,39 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
             selectImage()
         }
 
+        ivHome.setOnClickListener {
+            startActivity(Intent(context, HomeActivity::class.java))
+            activity!!.finish()
+        }
+
+        imgDelete.setOnClickListener {
+            prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    val contactDeleting = realm!!
+                            .where(Contacts::class.java)
+                            .equalTo("id", mContacts.id)
+                            .findAll()
+                    if (contactDeleting.isValid) {
+                        realm.beginTransaction()
+                        contactDeleting.deleteAllFromRealm()
+                        realm.commitTransaction()
+                        activity!!.onBackPressed()
+                    }
+                }
+            })
+        }
+
+        NineBxApplication.instance.setCountrySelected(this)
+
+        edtCountry.setOnClickListener {
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.replace(R.id.fragmentContainer, CountryPicker()).commit()
+        }
+
         populateView(mContacts)
 
     }
-
 
     private var contactList: RealmResults<Contacts>? = null
     private var contacts: ArrayList<Contacts>? = ArrayList()
@@ -157,7 +201,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         strCountry = edtCountry.text.toString()
 
         if (strFirstName.trim().isEmpty()) {
-            Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please enter First name", Toast.LENGTH_LONG).show()
             return
         }
 
@@ -184,6 +228,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
             contactsNew.state = strState.encryptString()
             contactsNew.zipCode = strZipCode.encryptString()
             contactsNew.country = strCountry.encryptString()
+            contactsNew.selectionType = "Contacts".encryptString()
 
             contactsNew.id = UUID.randomUUID().hashCode().toLong()
 
@@ -217,8 +262,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                         realm.executeTransaction({
                             var contactsUpdate = Contacts()
                             contactsUpdate.id = contactID
-                            AppLogger.e("ID contactID", "is " + contactID)
-                            AppLogger.e("ID contactID", "is " + mContacts.id)
 
                             contactsUpdate.firstName = strFirstName.encryptString()
                             contactsUpdate.lastName = strLastName.encryptString()
@@ -234,6 +277,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                             contactsUpdate.state = strState.encryptString()
                             contactsUpdate.zipCode = strZipCode.encryptString()
                             contactsUpdate.country = strCountry.encryptString()
+                            contactsUpdate.selectionType = "Contacts".encryptString()
                             realm.copyToRealmOrUpdate(contactsUpdate)
                             activity!!.onBackPressed()
                         })
@@ -246,7 +290,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
     private fun enableEditing() {
         NineBxApplication.instance.activityInstance!!.hideToolbar()
-        toolbarContacts.show()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
@@ -264,6 +307,8 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtState.isEnabled = true
         edtZipCode.isEnabled = true
         edtCountry.isEnabled = true
+        ivHome.hide()
+        txtSaveContacts.show()
     }
 
     override fun onBackPressed(): Boolean {
@@ -430,10 +475,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                 onSelectFromGalleryResult(data)
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data!!)
-        }/* else if(requestCode == PICK_CONTACT && resultCode == Activity.RESULT_OK) {
-            contactPicked(data!!)
-        }*/
+        }
     }
-
-
 }

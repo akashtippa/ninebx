@@ -136,7 +136,10 @@ class SearchPresenter {
                     for (i in 0 until combineContacts.size) {
                         val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
                         appendToDecryptCombineContacts(decryptedCombineContacts)
+                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
+
                     }
+
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                 }
@@ -261,10 +264,6 @@ class SearchPresenter {
                     for (i in 0 until combineMemories.size) {
                         val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
                         appendToDecryptCOmbineMemories(decryptedCombineMemories)
-                    }
-
-                    for (finance in mDecryptedCombineMemories.listItems) {
-                        AppLogger.d("Records", finance.toString())
                     }
                     AppLogger.d("DecryptedCOmbineMemories", "Decrypted combine memories" + mDecryptedCombineMemories)
                     searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)

@@ -153,7 +153,23 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     public int getOtherGovernment(String selectionType) {
         int count = 0;
-        for (DecryptedTaxID decryptedLicense : taxIDItems) {
+        for (DecryptedGovernment decryptedLicense : governmentItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getServicesAttachments(String selectionType) {
+        int count = 0;
+        for (DecryptedPersonal decryptedLicense : personalItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getOtherAttach(String selectionType) {
+        int count = 0;
+        for (DecryptedPersonalList decryptedLicense : listItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
         return count;
@@ -177,5 +193,17 @@ public class DecryptedCombinePersonal implements Parcelable {
         return count;
     }
 
-
+    @Override
+    public String toString() {
+        return "DecryptedCombinePersonal{" +
+                "certificateItems=" + certificateItems +
+                ", governmentItems=" + governmentItems +
+                ", licenseItems=" + licenseItems +
+                ", personalItems=" + personalItems +
+                ", socialItems=" + socialItems +
+                ", taxIDItems=" + taxIDItems +
+                ", listItems=" + listItems +
+                ", id=" + id +
+                '}';
+    }
 }

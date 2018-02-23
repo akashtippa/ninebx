@@ -50,6 +50,7 @@ class CategoryHelper(
     private fun getWellness() {
 
         val decryptedCombine: DecryptedCombineWellness = combineItems as DecryptedCombineWellness
+        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -100,6 +101,7 @@ class CategoryHelper(
 
     private fun getPersonal() {
         val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
+        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
 
         val categoryList = ArrayList<Category>()
 
@@ -169,6 +171,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.category_id = "personal_7001"
+        category.formsCount = decryptedCombinePersonal.getServicesAttachments("personal_7001")
 
         categoryList.add(category)
 
@@ -178,6 +181,7 @@ class CategoryHelper(
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
         category.category_id = "personal_8001"
+        category.formsCount = decryptedCombinePersonal.getOtherAttach("Personal")
 
         categoryList.add(category)
 
@@ -197,6 +201,7 @@ class CategoryHelper(
 
     private fun getContacts() {
         val decryptedCombinePersonal: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
+        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
 
         val categoryList = ArrayList<Category>()
 
@@ -206,7 +211,7 @@ class CategoryHelper(
         category.title = "Shared Contacts"
         category.drawableString = "ic_icon_lists_contacts"
         category.category_id = "cont_1001"
-        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_1001")
+        category.formsCount = decryptedCombinePersonal.getAllContacts("Contacts")
 
         categoryList.add(category)
 
@@ -216,7 +221,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.category_id = "cont_2001"
-//        category.formsCount = decryptedCombinePersonal.getAllContactsN("cont_1001")
+        category.formsCount = decryptedCombinePersonal.getAllContactsTest("cont_2001")
 
         categoryList.add(category)
 
@@ -227,6 +232,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_attachments"
         category.category_id = "cont_3001"
 //        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_3001")
+        category.formsCount = decryptedCombinePersonal.getAllContactsTest("Contacts")
 
         categoryList.add(category)
 
@@ -247,8 +253,6 @@ class CategoryHelper(
 
         val decryptedCombine: DecryptedCombineTravel = combineItems as DecryptedCombineTravel
         AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
-        AppLogger.e("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
-
 
         val categoryList = ArrayList<Category>()
         var categoryIndex = 1002
@@ -286,7 +290,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Travel Dates And Plans"
         category.drawableString = "ic_icon_calender_selected"
-        category.formsCount = decryptedCombine.getTravelDatesAndPlans("travel_3001")
+        category.formsCount = decryptedCombine.getTravelDatesPlans("travel_3001")
         category.category_id = "travel_3001"
 
         categoryList.add(category)
@@ -565,6 +569,7 @@ class CategoryHelper(
 
     private fun getMemories() {
         val decryptedCombine: DecryptedCombineMemories = combineItems as DecryptedCombineMemories
+        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -574,7 +579,7 @@ class CategoryHelper(
         category.title = "Memory Timeline"
         category.drawableString = "ic_home_sub_memories"
         category.category_id = "memory_1001"
-        category.formsCount = decryptedCombine.getMemory("memory_1001")
+        category.formsCount = decryptedCombine.getMemory("Memories")
 
         categoryList.add(category)
 
@@ -584,6 +589,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.category_id = "memory_2001"
+        category.formsCount = decryptedCombine.getOther("memory_2001")
 
         categoryList.add(category)
 
@@ -593,6 +599,7 @@ class CategoryHelper(
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
         category.category_id = "memory_3001"
+        category.formsCount = decryptedCombine.getOther("memory_3001")
 
         categoryList.add(category)
 
@@ -605,12 +612,12 @@ class CategoryHelper(
         category.formsCount = decryptedCombine.getLists("Memories")
         categoryList.add(category)
 
-
         categoryView.onSuccess(categoryList)
     }
 
     private fun getEducation() {
         val decryptedCombine: DecryptedCombineEducation = combineItems as DecryptedCombineEducation
+        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -651,6 +658,7 @@ class CategoryHelper(
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
         category.category_id = "edu_4001"
+        category.formsCount = decryptedCombine.getServices("edu_4001")
 
 //        category.formsCount = decryptedCombine.getLists("WellNess")
 

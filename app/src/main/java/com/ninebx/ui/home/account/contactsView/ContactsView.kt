@@ -10,4 +10,5 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts
 internal interface ContactsView : BaseView {
     fun onContacts(contacts: Contacts)
     fun showError(error: String)
+    fun onContactsDelete(contacts: Contacts)
 }

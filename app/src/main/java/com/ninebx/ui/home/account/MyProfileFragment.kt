@@ -21,6 +21,7 @@ import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.saveImage
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
@@ -36,7 +37,11 @@ import java.util.*
  * Created by TechnoBlogger on 15/01/18.
  */
 
-class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, ICountrySelected {
+    override fun onCountrySelected(strCountry: String?) {
+        Toast.makeText(context, "Selected Country is " + strCountry, Toast.LENGTH_LONG).show()
+        txtCountry.setText(strCountry)
+    }
 
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgEditProfile != null)
@@ -116,16 +121,12 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
+        NineBxApplication.instance.setCountrySelected(this)
+
         txtCountry.setOnClickListener {
-            //            var countrySelected = prefrences.countrySelected
-//            if (countrySelected.toString().trim().isEmpty()) {
-//                txtCountry.hint = "Select Country"
-//            } else {
-//                txtCountry.text = countrySelected
-//            }
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, CountryPicker()).commit()
+            fragmentTransaction.add(R.id.frameLayout, CountryPicker()).commit()
         }
 
         imgEditProfile.setOnClickListener {

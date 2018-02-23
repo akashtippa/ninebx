@@ -26,11 +26,10 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.ActionClickListener
-import com.ninebx.ui.base.kotlin.getImageUri
-import com.ninebx.ui.base.kotlin.handleMultiplePermission
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.saveImage
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.memoryView.MemoryView
 import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
@@ -67,14 +66,12 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     private lateinit var memberView: MemoryView
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
-    var contactOperation = ""
-    var memoryID = ""
+    var addOrEdit = ""
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.add_memory, container, false)
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -86,21 +83,18 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         memoryTimeLine = arguments!!.getParcelable(Constants.MEMORY_TIMELINE)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
-        contactOperation = arguments!!.getString("ContactOperation")
-        memoryID = arguments!!.getString("ID")
+        addOrEdit = arguments!!.getString("Operation")
 
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
         ivBackFromMemory.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            activity!!.onBackPressed()
         }
 
         txtDate.setOnClickListener {
@@ -146,8 +140,49 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             startCameraIntent()
         }
 
+        imgEdit.setOnClickListener {
+            enableEditing()
+        }
+
+        ivHome.setOnClickListener {
+            startActivity(Intent(context, HomeActivity::class.java))
+            activity!!.finish()
+        }
+
+        imgDelete.setOnClickListener {
+            imgDelete.setOnClickListener {
+                prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val memoryDeleting = realm!!
+                                .where(MemoryTimeline::class.java)
+                                .equalTo("id", memoryTimeLine.id)
+                                .findAll()
+                        if (memoryDeleting.isValid) {
+                            realm.beginTransaction()
+                            memoryDeleting.deleteAllFromRealm()
+                            realm.commitTransaction()
+                            activity!!.onBackPressed()
+                        }
+                    }
+                })
+            }
+        }
+
         populateView(memoryTimeLine)
 
+    }
+
+    private fun enableEditing() {
+        edtTitle.isEnabled = true
+        txtDate.isEnabled = true
+        cvAttachment.isClickable = true
+        edtLocation.isEnabled = true
+        edtContacts.isEnabled = true
+        edtNotes.isEnabled = true
+        NineBxApplication.instance.activityInstance!!.hideToolbar()
+        toolbar.show()
+        ivHome.hide()
+        txtSaveMemory.show()
     }
 
     private fun checkValidation() {
@@ -167,15 +202,16 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         }
 
 
-        var memoryTimeLineData = MemoryTimeline()
-/*
-        if (memoryID.trim() == "0") {
-            memoryTimeLineData.id = getUniqueId()
+
+        if (addOrEdit == "Add") {
+            var memoryTimeLineData = MemoryTimeline()
+            memoryTimeLineData.id = UUID.randomUUID().hashCode().toLong()
             memoryTimeLineData.title = strMemoryTitle.encryptString()
             memoryTimeLineData.date = strDate.encryptString()
             memoryTimeLineData.place = strLocation.encryptString()
             memoryTimeLineData.contacts = strContacts.encryptString()
             memoryTimeLineData.notes = strNotes.encryptString()
+            memoryTimeLineData.selectionType = "Memories".encryptString()
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     memoryTimeLineData.insertOrUpdate(realm!!)
@@ -184,34 +220,30 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             })
 
         } else {
-            memoryTimeLineData.id = memoryID.toInt()
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
-                    val updatingUserInfo = realm!!.where(MemoryTimeline::class.java).equalTo("id", memoryID.toInt()).findAll()
+                    val updatingUserInfo = realm!!
+                            .where(MemoryTimeline::class.java)
+                            .equalTo("id", memoryTimeLine.id)
+                            .findAll()
 
                     if (updatingUserInfo!!.isValid) {
                         realm.executeTransaction {
                             var memoryTimeLineData = MemoryTimeline()
-                            memoryTimeLineData.id = memoryID.toInt()
+                            memoryTimeLineData.id = memoryTimeLine.id
                             memoryTimeLineData.title = strMemoryTitle.encryptString()
                             memoryTimeLineData.date = strDate.encryptString()
                             memoryTimeLineData.place = strLocation.encryptString()
                             memoryTimeLineData.contacts = strContacts.encryptString()
                             memoryTimeLineData.notes = strNotes.encryptString()
+                            memoryTimeLineData.selectionType = "Memories".encryptString()
                             realm.copyToRealmOrUpdate(memoryTimeLineData)
                             activity!!.onBackPressed()
-
                         }
                     }
-
                 }
             })
-
-            sendDataToServer(memoryTimeLineData)
-            memberView.onMemoryTimeLine(memoryTimeLineData)
-
-//            NineBxApplication.instance.activityInstance!!.onBackPressed()
-        }*/
+        }
     }
 
 
@@ -246,10 +278,6 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 //
 //        if (memoryTimeline.modified.isNotEmpty())
 //            txtModified.text = memoryTimeline.modified.decryptString()
-
-    }
-
-    private fun sendDataToServer(memoryTimeLineData: MemoryTimeline) {
 
     }
 
