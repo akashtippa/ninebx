@@ -130,7 +130,10 @@ class PassCodeFragment : BaseAuthFragment() {
                         ivOtp6.isSelected = true
 
                         if( isCreateNewPassCode ) {
-                            mAuthView.navigateToCreatePassCode(true, "")
+                            if( validate() ) {
+                                mAuthView.navigateToCreatePassCode(true, "")
+                            }
+
                         }
                         else if( isCreatePassCode ) {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
