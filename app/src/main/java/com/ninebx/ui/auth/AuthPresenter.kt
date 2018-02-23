@@ -12,10 +12,6 @@ class AuthPresenter(private val authView: AuthView) {
 
     private var TAG = AuthPresenter::class.java.simpleName
 
-    init {
-        //authView.navigateToSignIn()
-    }
-
     fun signUp(userName: String, password: String) {
         LoginSignupTask(userName, password, authView, "Signup").executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
     }

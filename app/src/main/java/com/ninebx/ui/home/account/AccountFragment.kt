@@ -256,6 +256,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             fromFingerPrint = true
             switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
             switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            fromFingerPrint = false
         }
         else
             super.onActivityResult(requestCode, resultCode, data)
