@@ -1,17 +1,13 @@
 package com.ninebx.ui.home.notifications
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
@@ -31,10 +27,11 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     var encryptedNotifications : RealmResults<Notifications> ?= null
     private var decryptedNotifications = ArrayList<DecryptedNotifications>()
-    lateinit var mNotificationsPresenter : NotificationsPresenter
+    private var mNotificationsPresenter : NotificationsPresenter = NotificationsPresenter(this)
 
     override fun showProgress(message: Int) {
-        progressLayout.show()
+        if( progressLayout != null )
+            progressLayout.show()
     }
 
     override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {
@@ -42,7 +39,8 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     }
 
     override fun hideProgress() {
-        progressLayout.hide()
+        if( progressLayout != null )
+            progressLayout.hide()
     }
 
     override fun onError(error: Int) {
@@ -51,48 +49,23 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     }
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
-        hideProgress()
-        this.decryptedNotifications = notifications
-        rvNotification.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
-        val mAdapter = NotificationAdapter(decryptedNotifications)
-        rvNotification.adapter = mAdapter
+        if( rvNotification != null ) {
+            hideProgress()
+            this.decryptedNotifications = notifications
+            rvNotification.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
+            val mAdapter = NotificationAdapter(decryptedNotifications)
+            rvNotification.adapter = mAdapter
+            mAdapter.setPresenter( mNotificationsPresenter )
+            mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
 
-        mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
-
-            override fun onItemClick(position: Int, v: View, id: Int) {
-            }
-            override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
-                var dialog =  Dialog(context)
-                dialog.setContentView(R.layout.layout_dialog)
-                dialog.window.setGravity(Gravity.CENTER)
-                if(! dialog.isShowing) {
-                    dialog.show()
-                } else{
-                    dialog.dismiss()
-                }
-
-                val ivDelete : ImageView = dialog.findViewById(R.id.ivDeleteNotification)
-                ivDelete.setOnClickListener(View.OnClickListener {
-                    AppLogger.d("NotificationFragment", "Delete Button clicked")
-                    mNotificationsPresenter.deleteNotification(position)
-                    mAdapter.delete(position)
-                    dialog.dismiss()
-                })
-                val ivShare : ImageView = dialog.findViewById(R.id.ivShareNotification)
-                ivShare.setOnClickListener(View.OnClickListener {
-                    AppLogger.d("NotificationFragment", "Share Button clicked")
+                override fun onItemClick(position: Int, v: View, id: Int) {
                     sendEmail(decryptedNotifications[position].boxName, decryptedNotifications[position].message, decryptedNotifications[position].subTitle, decryptedNotifications[position].dueDate)
-                })
-                val ivFlag : ImageView = dialog.findViewById(R.id.ivFlagNotification)
-                ivFlag.setOnClickListener(View.OnClickListener {
-                    AppLogger.d("NotificationFragment", "Flag button clicked")
+                }
+                override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
 
-                    mNotificationsPresenter.markAsUnread( position )
-                    mAdapter.notifyDataSetChanged()
-                    dialog.dismiss()
-                })
-            }
-        })
+                }
+            })
+        }
     }
 
     private fun sendEmail(boxName: String, message: String, subTitle: String, dueDate: String) {
@@ -124,6 +97,5 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mNotificationsPresenter = NotificationsPresenter(this)
     }
 }

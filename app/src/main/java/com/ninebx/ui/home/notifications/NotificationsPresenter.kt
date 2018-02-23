@@ -4,12 +4,10 @@ import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptNotifications
-import com.ninebx.utility.insertOrUpdate
 import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
-import java.lang.StrictMath.abs
 
 /**
  * Created by Alok on 03/01/18.
@@ -58,6 +56,24 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                 .findFirst()
         getNotification!![position]!!.read = false
         notification!!.read = false
+        mNotificationsRealm.copyToRealmOrUpdate(notification)
+        mNotificationsRealm.commitTransaction()
+    }
+
+    fun markAsRead(position: Int) {
+        mDecryptNotifications[position].read = true
+        mNotificationsRealm.beginTransaction()
+        //AppLogger.d("SearchFor", "Notification : " + abs(getNotification!![position]!!.id))
+        //AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
+        //AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
+
+        val id = getNotification!![position]!!.id//((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id)
+        AppLogger.d("SearchFor", "Notification : " + id)
+        val notification = mNotificationsRealm.where(Notifications::class.java)
+                .equalTo("id", (id))
+                .findFirst()
+        getNotification!![position]!!.read = true
+        notification!!.read = true
         mNotificationsRealm.copyToRealmOrUpdate(notification)
         mNotificationsRealm.commitTransaction()
     }

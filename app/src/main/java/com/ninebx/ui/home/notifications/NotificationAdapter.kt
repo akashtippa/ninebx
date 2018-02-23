@@ -7,9 +7,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.R.layout.row_notification
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.isVisible
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.AppLogger
 import java.text.SimpleDateFormat
@@ -60,7 +65,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
                 AppLogger.d("Date", "Exception thrown while converting string to date 2nd try-catch " + e.message)
             }
         }
-        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
@@ -70,15 +75,15 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         return ViewHolder(rvView)
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), ClickListener, View.OnClickListener, View.OnLongClickListener {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), ClickListener, View.OnClickListener {
 
-        override fun onLongClick(v: View?): Boolean {
+        /*override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
             if( position != RecyclerView.NO_POSITION ) {
                 onItemLongClick(position, v!!, txtMessage)
             }
             return true
-        }
+        }*/
 
         override fun onClick(v: View?) {
             val position = adapterPosition
@@ -91,32 +96,81 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         val txtMessage: TextView = view.findViewById<View>(R.id.tvMessage) as TextView
         val txtDueDate: TextView = view.findViewById<View>(R.id.tvDueDate) as TextView
         val txtSubTitle: TextView = view.findViewById<View>(R.id.tvSubTitle) as TextView
+        val ivMore : ImageView = view.findViewById<ImageView>(R.id.ivMore)
+        val ivDeleteNotification : ImageView = view.findViewById<ImageView>(R.id.ivDeleteNotification)
+        val ivShareNotification : ImageView = view.findViewById<ImageView>(R.id.ivShareNotification)
+        val ivFlagNotification : ImageView = view.findViewById<ImageView>(R.id.ivFlagNotification)
+        val optionsLayout : LinearLayout = view.findViewById<LinearLayout>(R.id.optionsLayout)
 
         init {
-            view.setOnClickListener(this)
-            view.setOnLongClickListener(this)
+            txtBoxName.setOnClickListener(this)
+            txtMessage.setOnClickListener(this)
+            txtDueDate.setOnClickListener(this)
+            txtSubTitle.setOnClickListener(this)
+            ivMore.setOnClickListener(this)
+            ivDeleteNotification.setOnClickListener(this)
+            ivShareNotification.setOnClickListener(this)
+            ivFlagNotification.setOnClickListener(this)
         }
 
         override fun onItemClick(position: Int, v: View, id: Int) {
-            clickListener.onItemClick(getAdapterPosition(), v, data[position].id)
+            when( v.id ) {
+                R.id.tvBoxName,
+                R.id.tvMessage,
+                R.id.tvDueDate,
+                R.id.tvSubTitle -> {
+                    data[position].read = true
+                    optionsLayout.hide()
+                    mNotificationPresenter.markAsRead(position)
+                    notifyDataSetChanged()
+                }
+                R.id.ivMore -> {
+                    if (optionsLayout.isVisible()) {
+                        optionsLayout.hide()
+                    } else optionsLayout.show()
+                }
+                R.id.ivDeleteNotification -> {
+                    optionsLayout.hide()
+                    data.removeAt(position)
+                    mNotificationPresenter.deleteNotification(position)
+                    notifyDataSetChanged()
+                }
+                R.id.ivShareNotification -> {
+                    optionsLayout.hide()
+                    clickListener.onItemClick(position, v, id)
+                }
+                R.id.ivFlagNotification -> {
+                    optionsLayout.hide()
+                    data[position].read = false
+                    mNotificationPresenter.markAsUnread(position)
+                    notifyDataSetChanged()
+                }
+
+            }
+
         }
 
         override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
-            clickListener.onItemLongClick(getAdapterPosition(), v, txtMessage)
+            clickListener.onItemLongClick(position, v, txtMessage)
         }
     }
 
-     fun onClickListener(clickListener: ClickListener) {
+    fun onClickListener(clickListener: ClickListener) {
         this.clickListener = clickListener
     }
 
-     interface ClickListener {
+    interface ClickListener {
         fun onItemClick(position: Int, v: View, id: Int)
         fun onItemLongClick(position: Int, v: View, txtMessage: TextView)
-     }
+    }
 
     fun delete(position: Int) {
         data.removeAt(position)
         notifyDataSetChanged()
+    }
+
+    private lateinit var mNotificationPresenter : NotificationsPresenter
+    fun setPresenter(notificationsPresenter: NotificationsPresenter) {
+        this.mNotificationPresenter = notificationsPresenter
     }
 }
