@@ -1527,6 +1527,7 @@ fun decryptNotifications(notifications: Notifications): DecryptedNotifications {
     decryptNotifications.dueDate = notifications.dueDate
     decryptNotifications.subTitle = notifications.subTitle.decryptString()
     decryptNotifications.notifyDate = notifications.notifyDate
+    decryptNotifications.read = notifications.read
     decryptNotifications.created = notifications.created
     decryptNotifications.modified = notifications.modified
     return decryptNotifications

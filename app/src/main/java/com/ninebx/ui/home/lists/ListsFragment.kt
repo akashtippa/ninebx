@@ -10,12 +10,14 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.search.SearchView
+
+import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_lists.*
 
 /**
  * Created by Alok on 03/01/18.
  */
-class ListsFragment : BaseHomeFragment(), ListsCommunicationView,  SearchView{
+class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
     override fun onCombineFetched(combine: DecryptedCombine) {
         txtHomeNumber.text = combine.listItems.count().toString()
     }
@@ -72,6 +74,16 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView,  SearchView{
         return inflater.inflate(R.layout.fragment_lists, container, false)
     }
 
+    private val mDecryptCombine: DecryptedCombine = DecryptedCombine()
+    private val mDecryptedCombineMemories = DecryptedCombineMemories()
+    private val mDecryptedCombineTravel = DecryptedCombineTravel()
+    private val mDecryptCombineEducation = DecryptedCombineEducation()
+    private val mDecryptCombineInterests = DecryptedCombineInterests()
+    private val mDecryptCombineWellness = DecryptedCombineWellness()
+    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
+    private val mDecryptCombineShopping = DecryptedCombineShopping()
+    private val mDecryptedCombineContacts = DecryptedCombineContacts()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -102,6 +114,16 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView,  SearchView{
         layShopping.setOnClickListener {
             callSubListFragment(getString(R.string.shopping))
         }
+
+        var countHome = mDecryptCombine.getListsCount("HomeBanking")
+        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
+        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
+        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
+        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
+        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
+        var countWellness = mDecryptCombinePersonal.getListsCount("WellNess")
+        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
+        var countShopping = mDecryptedCombineContacts.getListsCount("Shopping")
 
     }
 

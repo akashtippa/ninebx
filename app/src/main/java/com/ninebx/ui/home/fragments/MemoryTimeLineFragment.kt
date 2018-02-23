@@ -106,7 +106,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         txtDate.setOnClickListener {
             getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
                 override fun onDateTimeSelected(selectedDate: Calendar) {
-                    txtDate.text = (getDateMonthYearFormat(selectedDate.time))
+                    txtDate.text = (parseDateForMemory(selectedDate.time))
                 }
             })
         }
@@ -168,7 +168,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
 
         var memoryTimeLineData = MemoryTimeline()
-
+/*
         if (memoryID.trim() == "0") {
             memoryTimeLineData.id = getUniqueId()
             memoryTimeLineData.title = strMemoryTitle.encryptString()
@@ -176,40 +176,42 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             memoryTimeLineData.place = strLocation.encryptString()
             memoryTimeLineData.contacts = strContacts.encryptString()
             memoryTimeLineData.notes = strNotes.encryptString()
-            sendDataToServer(memoryTimeLineData)
-//            NineBxApplication.instance.activityInstance!!.onBackPressed()
-
-            memberView.onMemoryTimeLine(memoryTimeLineData)
+            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    memoryTimeLineData.insertOrUpdate(realm!!)
+                    memberView.onMemoryTimeLine(memoryTimeLineData)
+                }
+            })
 
         } else {
-//            memoryTimeLineData.id = contactID.toInt()
-//            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
-//                override fun onSuccess(realm: Realm?) {
-//                    val updatingUserInfo = realm!!.where(MemoryTimeline::class.java).equalTo("id", contactID.toInt()).findAllAsync()
-//                    realm.beginTransaction()
-//                    memoryTimeLineData.id = this@MemoryTimeLineFragment.memoryTimeLine.id
-//                    memoryTimeLineData.title = strMemoryTitle.encryptString()
-//                    memoryTimeLineData.date = strDate.encryptString()
-//                    memoryTimeLineData.place = strLocation.encryptString()
-//                    memoryTimeLineData.contacts = strContacts.encryptString()
-//                    memoryTimeLineData.notes = strNotes.encryptString()
-//                    realm.commitTransaction()
-//                    memberView.onMemoryTimeLine(memoryTimeLineData)
-//
-//                    NineBxApplication.instance.activityInstance!!.onBackPressed()
-//                }
-//            })
             memoryTimeLineData.id = memoryID.toInt()
-            memoryTimeLineData.title = strMemoryTitle.encryptString()
-            memoryTimeLineData.date = strDate.encryptString()
-            memoryTimeLineData.place = strLocation.encryptString()
-            memoryTimeLineData.contacts = strContacts.encryptString()
-            memoryTimeLineData.notes = strNotes.encryptString()
+            prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    val updatingUserInfo = realm!!.where(MemoryTimeline::class.java).equalTo("id", memoryID.toInt()).findAll()
+
+                    if (updatingUserInfo!!.isValid) {
+                        realm.executeTransaction {
+                            var memoryTimeLineData = MemoryTimeline()
+                            memoryTimeLineData.id = memoryID.toInt()
+                            memoryTimeLineData.title = strMemoryTitle.encryptString()
+                            memoryTimeLineData.date = strDate.encryptString()
+                            memoryTimeLineData.place = strLocation.encryptString()
+                            memoryTimeLineData.contacts = strContacts.encryptString()
+                            memoryTimeLineData.notes = strNotes.encryptString()
+                            realm.copyToRealmOrUpdate(memoryTimeLineData)
+                            activity!!.onBackPressed()
+
+                        }
+                    }
+
+                }
+            })
+
             sendDataToServer(memoryTimeLineData)
             memberView.onMemoryTimeLine(memoryTimeLineData)
 
 //            NineBxApplication.instance.activityInstance!!.onBackPressed()
-        }
+        }*/
     }
 
 
@@ -248,14 +250,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     }
 
     private fun sendDataToServer(memoryTimeLineData: MemoryTimeline) {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                memoryTimeLineData.insertOrUpdate(realm!!)
-                NineBxApplication.instance.activityInstance!!.onBackPressed()
-//                memberView.onMemoryTimeLine(memoryTimeLineData)
 
-            }
-        })
     }
 
     @SuppressLint("Recycle")

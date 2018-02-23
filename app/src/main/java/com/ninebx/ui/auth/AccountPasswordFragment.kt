@@ -106,6 +106,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 etCreatePassword.requestFocus()
                 isValid = false
             }
+            
             if (etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8) {
                 context!!.showToast(R.string.password_length_8)
                 etConfirmPassword.requestFocus()

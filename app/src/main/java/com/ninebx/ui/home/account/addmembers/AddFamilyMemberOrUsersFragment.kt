@@ -77,7 +77,6 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         }
 
         txtPermissions.setOnClickListener {
-
             if (NineBxApplication.disabledFeature) {
                 context!!.showToast("To be done")
                 return@setOnClickListener
@@ -95,7 +94,6 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
                 fragmentTransaction.replace(R.id.frameLayout, permissionsFragment).commit()
             }
-
         }
 
         member = arguments!!.getParcelable(Constants.MEMBER)

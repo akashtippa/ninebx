@@ -198,7 +198,6 @@ class CategoryHelper(
     private fun getContacts() {
         val decryptedCombinePersonal: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
 
-
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1003
@@ -217,7 +216,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.category_id = "cont_2001"
-        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_2001")
+//        category.formsCount = decryptedCombinePersonal.getAllContactsN("cont_1001")
 
         categoryList.add(category)
 
@@ -227,7 +226,7 @@ class CategoryHelper(
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
         category.category_id = "cont_3001"
-        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_3001")
+//        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_3001")
 
         categoryList.add(category)
 
@@ -452,7 +451,6 @@ class CategoryHelper(
 
         categoryList.add(category)
 
-
         categoryView.onSuccess(categoryList)
     }
 
@@ -576,8 +574,9 @@ class CategoryHelper(
         category.title = "Memory Timeline"
         category.drawableString = "ic_home_sub_memories"
         category.category_id = "memory_1001"
-        categoryList.add(category)
+        category.formsCount = decryptedCombine.getMemory("memory_1001")
 
+        categoryList.add(category)
 
         categoryIndex += 1003
         category_id = "memories_" + categoryIndex
