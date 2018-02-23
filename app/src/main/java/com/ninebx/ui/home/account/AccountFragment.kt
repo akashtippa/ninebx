@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.account
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Build
@@ -17,10 +18,7 @@ import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
-import com.ninebx.utility.AWSFileTransferHelper
-import com.ninebx.utility.AWSSecureFileTransfer
-import com.ninebx.utility.Constants
-import com.ninebx.utility.decryptString
+import com.ninebx.utility.*
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account.*
 import java.io.File
@@ -223,19 +221,25 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             //            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
         }
         txtPersonalPassCode.setOnClickListener {
+            AppLogger.d("Auth", "From AccountFragment")
             startActivity( Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
         }
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
             SyncUser.currentUser().logout()
+            AppLogger.d("Auth", "From AccountFragment")
             startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }
-        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
-            startActivity(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true))
-        }
         switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
         switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
+            if( !fromFingerPrint ) {
+                startActivityForResult(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true), Constants.FINGER_PRINT_COMPLETE)
+            }
+            else fromFingerPrint = false
+        }
+
 
         val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
         awsSecureFileTransfer.setFileTransferListener(this)
@@ -246,9 +250,20 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
     }
 
+    private var fromFingerPrint = false
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if( requestCode == Constants.FINGER_PRINT_COMPLETE && resultCode == Activity.RESULT_OK ) {
+            fromFingerPrint = true
+            switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+            switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        }
+        else
+            super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
     override fun onResume() {
         super.onResume()
-        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
-        switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+
     }
 }

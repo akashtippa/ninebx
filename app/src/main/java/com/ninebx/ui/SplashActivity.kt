@@ -49,7 +49,6 @@ class SplashActivity : AppCompatActivity() {
 
                         !prefrences.isLogin -> {
                             val homeIntent = Intent(this@SplashActivity, AuthActivity::class.java)
-//                            val homeIntent = Intent(this@SplashActivity, HomeActivity::class.java)
                             startActivity(homeIntent)
                             disposables.clear()
                             finish()
