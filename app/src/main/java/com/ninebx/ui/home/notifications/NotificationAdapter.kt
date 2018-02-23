@@ -88,7 +88,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         override fun onClick(v: View?) {
             val position = adapterPosition
             if( position != RecyclerView.NO_POSITION ) {
-                onItemClick(position, v!!, data[position].id)
+                onItemClick(position, v!!, data[position].id, optionsLayout)
             }
         }
 
@@ -113,40 +113,8 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
             ivFlagNotification.setOnClickListener(this)
         }
 
-        override fun onItemClick(position: Int, v: View, id: Int) {
-            when( v.id ) {
-                R.id.tvBoxName,
-                R.id.tvMessage,
-                R.id.tvDueDate,
-                R.id.tvSubTitle -> {
-                    data[position].read = true
-                    optionsLayout.hide()
-                    mNotificationPresenter.markAsRead(position)
-                    notifyDataSetChanged()
-                }
-                R.id.ivMore -> {
-                    if (optionsLayout.isVisible()) {
-                        optionsLayout.hide()
-                    } else optionsLayout.show()
-                }
-                R.id.ivDeleteNotification -> {
-                    optionsLayout.hide()
-                    data.removeAt(position)
-                    mNotificationPresenter.deleteNotification(position)
-                    notifyDataSetChanged()
-                }
-                R.id.ivShareNotification -> {
-                    optionsLayout.hide()
-                    clickListener.onItemClick(position, v, id)
-                }
-                R.id.ivFlagNotification -> {
-                    optionsLayout.hide()
-                    data[position].read = false
-                    mNotificationPresenter.markAsUnread(position)
-                    notifyDataSetChanged()
-                }
-
-            }
+        override fun onItemClick(position: Int, v: View, id: Int, optionsLayout: View) {
+           clickListener.onItemClick(position, v, id, optionsLayout)
 
         }
 
@@ -160,7 +128,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
     }
 
     interface ClickListener {
-        fun onItemClick(position: Int, v: View, id: Int)
+        fun onItemClick(position: Int, v: View, id: Int, optionsLayout:View)
         fun onItemLongClick(position: Int, v: View, txtMessage: TextView)
     }
 
@@ -169,8 +137,4 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         notifyDataSetChanged()
     }
 
-    private lateinit var mNotificationPresenter : NotificationsPresenter
-    fun setPresenter(notificationsPresenter: NotificationsPresenter) {
-        this.mNotificationPresenter = notificationsPresenter
-    }
 }

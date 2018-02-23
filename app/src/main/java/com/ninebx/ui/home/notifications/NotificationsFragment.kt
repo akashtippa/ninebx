@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.isVisible
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Notifications
@@ -27,7 +28,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     var encryptedNotifications : RealmResults<Notifications> ?= null
     private var decryptedNotifications = ArrayList<DecryptedNotifications>()
-    private var mNotificationsPresenter : NotificationsPresenter = NotificationsPresenter(this)
+    private var mNotificationsPresenter : NotificationsPresenter ?= null
 
     override fun showProgress(message: Int) {
         if( progressLayout != null )
@@ -49,22 +50,57 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     }
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
+        hideProgress()
         if( rvNotification != null ) {
-            hideProgress()
             this.decryptedNotifications = notifications
             rvNotification.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
             val mAdapter = NotificationAdapter(decryptedNotifications)
-            rvNotification.adapter = mAdapter
-            mAdapter.setPresenter( mNotificationsPresenter )
             mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
 
-                override fun onItemClick(position: Int, v: View, id: Int) {
-                    sendEmail(decryptedNotifications[position].boxName, decryptedNotifications[position].message, decryptedNotifications[position].subTitle, decryptedNotifications[position].dueDate)
+                override fun onItemClick(position: Int, v: View, id: Int, optionsLayout : View) {
+
+                    when( v.id ) {
+                        R.id.tvBoxName,
+                        R.id.tvMessage,
+                        R.id.tvDueDate,
+                        R.id.tvSubTitle -> {
+                            decryptedNotifications[position].read = true
+                            optionsLayout.hide()
+                            mNotificationsPresenter!!.markAsRead(position)
+                            mAdapter.notifyDataSetChanged()
+                        }
+                        R.id.ivMore -> {
+                            if (optionsLayout.isVisible()) {
+                                optionsLayout.hide()
+                            } else optionsLayout.show()
+                        }
+                        R.id.ivDeleteNotification -> {
+                            optionsLayout.hide()
+                            decryptedNotifications.removeAt(position)
+                            mNotificationsPresenter!!.deleteNotification(position)
+                            mAdapter.notifyDataSetChanged()
+                        }
+                        R.id.ivShareNotification -> {
+                            optionsLayout.hide()
+                            sendEmail(decryptedNotifications[position].boxName, decryptedNotifications[position].message, decryptedNotifications[position].subTitle, decryptedNotifications[position].dueDate)
+                        }
+                        R.id.ivFlagNotification -> {
+                            optionsLayout.hide()
+                            decryptedNotifications[position].read = false
+                            mNotificationsPresenter!!.markAsUnread(position)
+                            mAdapter.notifyDataSetChanged()
+                        }
+
+                    }
+
+
                 }
                 override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
 
                 }
             })
+            rvNotification.adapter = mAdapter
+
         }
     }
 
@@ -97,5 +133,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mNotificationsPresenter = NotificationsPresenter(this)
     }
 }
