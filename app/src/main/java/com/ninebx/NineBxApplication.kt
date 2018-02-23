@@ -60,7 +60,6 @@ class NineBxApplication : MultiDexApplication() {
 
     companion object {
 
-
         @SuppressLint("StaticFieldLeak")
         var nineBxPreferences: NineBxPreferences? = null
 

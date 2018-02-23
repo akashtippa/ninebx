@@ -35,7 +35,6 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         Toast.makeText(context, " Date " + strDate, Toast.LENGTH_LONG).show()
         var position: Int = 0
         rvMemoryView.scrollToPosition(position)
-
     }
 
     override fun onMemoryDeleted(memoryTimeline: MemoryTimeline?) {
@@ -49,17 +48,14 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMORY_TIMELINE, memoryTimeLine)
         bundle.putString(Constants.FROM_CLASS, "MemoryView")
-        bundle.putString("ID", memoryTimeLine!!.id.toString())
-        bundle.putString("ContactOperation", "Edit")
-        bundle.putString("ID", memoryTimeLine.id.toString())
-
+        bundle.putString("Operation", "Edit")
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
     }
 
     override fun memoryAdded(memoryTimeLine: MemoryTimeline?) {
-        AppLogger.d("Memory", "memoryTimeLine" + memoryTimeLine)
         myList.add(memoryTimeLine!!)
         mListsAdapter!!.notifyDataSetChanged()
+        mListsDateAdapter!!.notifyDataSetChanged()
         saveMemoryTimeLine()
     }
 
@@ -118,9 +114,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMORY_TIMELINE, MemoryTimeline())
             bundle.putString(Constants.FROM_CLASS, "MemoryView")
-            bundle.putString("ContactOperation", "Add")
-            bundle.putString("ID", "0")
-
+            bundle.putString("Operation", "Add")
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
         }
 

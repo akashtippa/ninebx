@@ -61,11 +61,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         val bundle = Bundle()
         bundle.putParcelable(Constants.CONTACTS_VIEW, contacts)
         bundle.putString(Constants.FROM_CLASS, "Contacts")
-        bundle.putString("ContactOperation", "Edit")
         bundle.putLong("ID", contacts!!.id)
-        AppLogger.e("Check New ID ", " is " + contacts.id)
-        AppLogger.e("ID contactID", "is " + contacts.id)
-
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
     }
 
@@ -202,7 +198,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         } else
             super.onActivityResult(requestCode, resultCode, data)
     }
-
 
     private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
         //int start = result.length();
