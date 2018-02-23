@@ -31,19 +31,12 @@ import io.realm.SyncUser
 /**
  * Created by Alok on 14/02/18.
  */
-class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView, ICountrySelected {
-    override fun onCountrySelected(strCountry: String?) {
-        var country = strCountry
-        val intent = Intent()
-        intent.putExtra(Constants.PROFILE_VIEW, country)
-        setResult(Activity.RESULT_OK, intent)
-        finish()
-    }
+class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView {
 
     override fun onContacts(contacts: Contacts) {
         val intent = Intent()
         intent.putExtra(Constants.CONTACTS_VIEW, contacts)
-        AppLogger.e("Contacts ", " is " + contacts.lastName.decryptString())
+        AppLogger.e("Contacts ", " is " + contacts.id)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

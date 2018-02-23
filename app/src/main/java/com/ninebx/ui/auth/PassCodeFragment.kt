@@ -21,7 +21,13 @@ import kotlinx.android.synthetic.main.fragment_pass_code.*
 class PassCodeFragment : BaseAuthFragment() {
 
     override fun validate(): Boolean {
-        if( isCreatePassCode ) {
+        if( isCreateNewPassCode ) {
+            val currentPassCode = etPassCode.text.toString().trim()
+            passCode = NineBxApplication.getPreferences().passCode!!
+            if( currentPassCode != passCode ) context!!.showToast(R.string.error_passcodes_dont_match)
+            return !(currentPassCode.length != 6 || currentPassCode != passCode)
+        }
+        else if( isCreatePassCode ) {
             return etPassCode.text.toString().trim().length == 6
         }
         else {
@@ -43,6 +49,12 @@ class PassCodeFragment : BaseAuthFragment() {
 
         super.onViewCreated(view, savedInstanceState)
         tvTitle.text = if( isCreatePassCode ) getString(R.string.create_your_pass_code) else getString(R.string.confirm_your_passcode)
+
+        if( isCreateNewPassCode ) {
+            tvTitle.text = getString(R.string.enter_your_current_passcode)
+            titleTextView.text = getString(R.string.personal_passcode)
+        }
+
 //        setupToolbar()
         setHasOptionsMenu(!isCreatePassCode)
 
@@ -117,7 +129,10 @@ class PassCodeFragment : BaseAuthFragment() {
                         ivOtp5.isSelected = true
                         ivOtp6.isSelected = true
 
-                        if( isCreatePassCode ) {
+                        if( isCreateNewPassCode ) {
+                            mAuthView.navigateToCreatePassCode(true, "")
+                        }
+                        else if( isCreatePassCode ) {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
                             mAuthView.navigateToCreatePassCode(false, etPassCode.text.toString().trim())
                         }
@@ -125,7 +140,12 @@ class PassCodeFragment : BaseAuthFragment() {
                             //KeyboardUtil.hideSoftKeyboard(activity!!)
                             if( validate() ) {
                                 KeyboardUtil.hideKeyboard(etPassCode)
-                                mAuthView.navigateToFingerPrint()
+                                if( isCreateNewPassCode ) {
+                                    context!!.showToast(R.string.passcode_changed)
+                                    activity!!.finish()
+                                }
+                                else
+                                    mAuthView.navigateToFingerPrint(false)
                             }
 
                         }
@@ -179,6 +199,12 @@ class PassCodeFragment : BaseAuthFragment() {
             setHasOptionsMenu(!isCreatePassCode)
 
         }
+    }
+
+    private var isCreateNewPassCode: Boolean = false
+
+    fun setCreateNewPasscode(createNewPassCode: Boolean) {
+        this.isCreateNewPassCode = createNewPassCode
     }
 
 }

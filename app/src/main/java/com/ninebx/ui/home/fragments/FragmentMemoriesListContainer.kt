@@ -39,15 +39,9 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     }
 
     override fun onMemoryDeleted(memoryTimeline: MemoryTimeline?) {
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val users = realm!!.where(MemoryTimeline::class.java).equalTo("id", memoryTimeline!!.id).findAll()
-                realm.beginTransaction()
-                users.deleteFirstFromRealm()
-                realm.commitTransaction()
-//                context!!.hideProgressDialog()
-            }
-        })
+        memoryRealm!!.beginTransaction()
+        memoryTimeline!!.deleteFromRealm()
+        memoryRealm!!.commitTransaction()
     }
 
     override fun onMemoryEdit(memoryTimeLine: MemoryTimeline?) {
@@ -144,14 +138,21 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     }
 
     private fun saveMemoryTimeLine() {
-        val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
-        memoryObject.insertOrUpdate(memoryRealm!!)
-        context!!.hideProgressDialog()
-//        myList.clear()
-        val index: Int = myList.size - 1
-//        myList.removeAt(index)
-        myList.add(memoryObject)
-        mListsAdapter!!.notifyDataSetChanged()
+        if (currentMemoriesList!!.size != 0) {
+            val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
+            if (memoryObject.id.toString().trim() != "0") {
+                memoryObject.insertOrUpdate(memoryRealm!!)
+                context!!.hideProgressDialog()
+                val index: Int = myList.size - 1
+                myList.removeAt(index)
+                myList.add(memoryObject)
+                mListsAdapter!!.notifyDataSetChanged()
+            } else {
+                context!!.hideProgressDialog()
+            }
+        } else {
+            context!!.hideProgressDialog()
+        }
     }
 
 

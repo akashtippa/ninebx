@@ -12,9 +12,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.support.design.internal.BottomNavigationMenuView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
+import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
@@ -40,12 +42,15 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
+import q.rorbin.badgeview.QBadgeView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
+    val prefrences = NineBxPreferences()
 
     override fun getCurrentUsers(): RealmResults<Users> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
@@ -127,7 +132,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             }
             true
         }
-
+        var bottomNavigationMenuView : BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+        var v : View = bottomNavigationMenuView.getChildAt(3)
+        QBadgeView(this).bindTarget(v).setBadgeNumber(5)
 
         toggleToolbarImage()
         ivHome.setOnClickListener {
@@ -138,6 +145,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             callHomeFragment()
             showBottomView()
             ivBack.hide()
+            prefrences.currentBox = getString(R.string.home_amp_money)
         }
 
         ivBack.setOnClickListener {

@@ -31,8 +31,8 @@ internal class ContactsAdapter(private var myList: ArrayList<Contacts>?, private
         }
 
         holder.imgDeleteContact.setOnClickListener {
-            iContactsAdded.contactsDeleted(contacts)
             myList!!.remove(contacts)
+            iContactsAdded.contactsDeleted(contacts)
             notifyDataSetChanged()
         }
     }

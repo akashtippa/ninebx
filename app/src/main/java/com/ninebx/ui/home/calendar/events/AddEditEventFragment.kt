@@ -29,8 +29,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
+import com.ninebx.ui.base.realm.RealmString
 import com.ninebx.ui.home.customView.CalendarBottomFragment
-import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import java.io.File
 import java.util.*
@@ -40,7 +40,8 @@ import kotlin.collections.ArrayList
 /***
  * Created by Alok Omkar on 10/01/18.
  */
-class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.BottomSheetSelectedListener {
+class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.BottomSheetSelectedListener, AWSFileTransferHelper.FileOperationsCompletionListener {
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -175,6 +176,11 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     false
             }
             else false
+        }
+        if( !isAddEvent ) {
+            for( imageFilePath in mCalendarEvent.backingImages ) {
+                mAWSFileTransferHelper.beginDownload(imageFilePath.stringValue)
+            }
         }
     }
 
@@ -399,6 +405,9 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter?= null
     private fun setImagesAdapter() {
+        if( rvAttachments == null ) {
+            return
+        }
         attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
                 when (action) {
@@ -418,7 +427,21 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun uploadImageAws() {
         if( mImagesList.size > 0 ) {
             for( imageUri in mImagesList ) {
-                mAWSFileTransferHelper.beginUpload(getPath(imageUri))
+                val actualFilePath = getPath(imageUri)
+                val imageFile = File(actualFilePath)
+                val thumbFile = File( imageFile.parent + "/" + imageFile.nameWithoutExtension + "_thumb." + imageFile.extension )
+                saveFileTask( imageUri, thumbFile, object : AWSFileTransferHelper.FileOperationsCompletionListener {
+                    override fun onSuccess(outputFile: File?) {
+                        val renameFile = File(imageFile.parent + "/" + imageFile.nameWithoutExtension + "_normal." + imageFile.extension)
+                        AppLogger.d(TAG, "New File Name : " + renameFile.absolutePath)
+                        imageFile.renameTo(renameFile)
+                        mCalendarEvent.backingImages.add(RealmString(thumbFile.name))
+                        mCalendarEvent.backingImages.add(RealmString(imageFile.name))
+                        mAWSFileTransferHelper.beginUpload(thumbFile.absolutePath)
+                        mAWSFileTransferHelper.beginUpload(imageFile.absolutePath)
+                    }
+
+                })
             }
         }
     }
@@ -597,6 +620,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             }
         }
 
+    }
+
+    override fun onSuccess(outputFile: File?) {
+        if( !mImagesList.contains(Uri.fromFile(outputFile)))
+            mImagesList.add(Uri.fromFile(outputFile))
+        setImagesAdapter()
     }
 
     fun setCalendarEvent(event: CalendarEvents) {

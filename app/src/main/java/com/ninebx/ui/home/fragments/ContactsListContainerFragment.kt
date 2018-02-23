@@ -42,6 +42,7 @@ import java.util.*
  * Created by TechnoBlogger on 24/01/18.
  */
 class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
+
     override fun contactsDeleted(contacts: Contacts?) {
         contactsRealm!!.beginTransaction()
         contacts!!.deleteFromRealm()
@@ -61,9 +62,10 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         bundle.putParcelable(Constants.CONTACTS_VIEW, contacts)
         bundle.putString(Constants.FROM_CLASS, "Contacts")
         bundle.putString("ContactOperation", "Edit")
-        bundle.putString("ID", contacts!!.id.toString())
-        AppLogger.e("ID ", " is " + contacts.id.toString())
-        AppLogger.e("ID ", " is " + contacts.mobileOne)
+        bundle.putLong("ID", contacts!!.id)
+        AppLogger.e("Check New ID ", " is " + contacts.id)
+        AppLogger.e("ID contactID", "is " + contacts.id)
+
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
     }
 
@@ -79,7 +81,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     private var strMobileNumber = ""
 
     private val PERMISSIONS_REQUEST_CODE_CONTACTS = 111
-
 
     private val REQUEST_CONTACT = 0
     private var mContacts: ArrayList<Contact>? = ArrayList()
@@ -104,6 +105,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contacts")
 
         contactsList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
+        myList.reverse()
         myList.addAll(contactsList!!)
 
         mListsAdapter = ContactsAdapter(myList, this)
@@ -113,7 +115,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         rvContactList!!.adapter = mListsAdapter
 
         layoutAddList.setOnClickListener {
-
             val permissionList = arrayListOf<String>(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
             if (!handleMultiplePermission(context!!, permissionList)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -137,14 +138,21 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
 
     private fun saveContactsList() {
-        val memoryObject = Contacts.createContacts(contactsList!![0])
-        memoryObject.insertOrUpdate(contactsRealm!!)
-        context!!.hideProgressDialog()
-//        myList.clear()
-        myList.add(memoryObject)
-//        val index: Int = myList.size - 1
-//        myList.removeAt(index)
-        mListsAdapter!!.notifyDataSetChanged()
+        if (contactsList!!.size != 0) {
+            val memoryObject = Contacts.createContacts(contactsList!![0])
+            if (memoryObject.id.toString().trim() != "0") {
+                memoryObject.insertOrUpdate(contactsRealm!!)
+                myList.add(memoryObject)
+                val index: Int = myList.size - 1
+                myList.removeAt(index)
+                mListsAdapter!!.notifyDataSetChanged()
+                context!!.hideProgressDialog()
+            } else {
+                context!!.hideProgressDialog()
+            }
+        } else {
+            context!!.hideProgressDialog()
+        }
     }
 
 
@@ -165,7 +173,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
             for (contact in mContacts!!) {
                 val realmContacts = Contacts()
-                realmContacts.id = getUniqueId()
+                realmContacts.id = UUID.randomUUID().hashCode().toLong()
                 realmContacts.firstName = contact.firstName
                 realmContacts.lastName = contact.lastName
                 realmContacts.mobileOne = contact.getPhone(0)
@@ -179,7 +187,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         var contacts = Contacts()
-                        contacts.id = getUniqueId()
+                        contacts.id = UUID.randomUUID().hashCode().toLong()
                         contacts.firstName = firstName.encryptString()
                         contacts.lastName = lastName.encryptString()
                         contacts.mobileOne = strMobileNumber.encryptString()
@@ -191,9 +199,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 })
 
             }
-
-//            setContactsList()
-
         } else
             super.onActivityResult(requestCode, resultCode, data)
     }

@@ -41,7 +41,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onError(error: Int) {
     }
 
-
     override fun onSuccess(categories: ArrayList<Level2Category>) {
         hideProgress()
         inflateLayout(categories)
@@ -55,7 +54,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         return inflater.inflate(R.layout.fragment_level2_category, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categoryName = arguments!!.getString("categoryName")
@@ -67,9 +65,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()
 
         boxValue = prefrences.currentBox!!
+
         ivBack.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
+
         setTitle()
 
         setCamera(boxValue)

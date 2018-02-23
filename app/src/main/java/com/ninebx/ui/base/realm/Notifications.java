@@ -38,9 +38,9 @@ public class Notifications extends RealmObject {
     @Required
     private Integer form_id = 0;
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
-    public Notifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, int id) {
+    public Notifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, long id) {
         this.message = message;
         this.boxName = boxName;
         this.category = category;
@@ -155,11 +155,11 @@ public class Notifications extends RealmObject {
         this.form_id = form_id;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.NineBxPreferences
@@ -17,6 +16,7 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
     internal var inflater: LayoutInflater
     internal var prefrences = NineBxPreferences()
 
+    var countryp = CountryPicker()
 
     init {
         inflater = LayoutInflater.from(mContext)
@@ -52,7 +52,9 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
             Toast.makeText(mContext, "Selected Country is " + country.name, Toast.LENGTH_LONG).show()
             iCountrySelected.onCountrySelected(country.name)
 //            NineBxApplication.instance.getCountrySelected(country.name)
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+//            NineBxApplication.instance.activityInstance!!.onBackPressed()
+//            countryp.onSelectedCountry(country.name)
+
 
         }
         return view

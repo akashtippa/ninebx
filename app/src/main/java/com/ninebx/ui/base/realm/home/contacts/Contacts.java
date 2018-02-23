@@ -36,7 +36,7 @@ public class Contacts extends RealmObject implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -81,7 +81,7 @@ public class Contacts extends RealmObject implements Parcelable {
     @Required
     private List<String> photosId = new ArrayList<>();
 
-    public Contacts(int id, String selectionType, String firstName, String lastName, String dateOfBirth, String anniversary, String mobileOne, String mobileTwo, String emailOne, String emailTwo, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages) {
+    public Contacts(long id, String selectionType, String firstName, String lastName, String dateOfBirth, String anniversary, String mobileOne, String mobileTwo, String emailOne, String emailTwo, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages) {
         this.id = id;
         this.selectionType = selectionType;
         this.firstName = firstName;
@@ -109,7 +109,7 @@ public class Contacts extends RealmObject implements Parcelable {
     }
 
     protected Contacts(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         selectionType = in.readString();
         firstName = in.readString();
         lastName = in.readString();
@@ -149,7 +149,7 @@ public class Contacts extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(firstName);
         dest.writeString(lastName);
@@ -177,11 +177,11 @@ public class Contacts extends RealmObject implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -401,6 +401,22 @@ public class Contacts extends RealmObject implements Parcelable {
 
     @Override
     public int hashCode() {
-        return id;
+        return (int) (id ^ (id >>> 32));
     }
+
+    /*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contacts contacts = (Contacts) o;
+
+        return id == contacts.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }*/
 }

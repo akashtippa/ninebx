@@ -27,6 +27,7 @@ import com.ninebx.R
 import com.ninebx.ui.auth.BaseAuthFragment
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.Constants
 import kotlinx.android.synthetic.main.fragment_finger_print.*
 import java.io.IOException
 import java.security.*
@@ -49,6 +50,10 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
         if( context != null )
             context!!.showToast("Verified successfully")
+
+        if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            activity!!.finish()
+        }
 
         tvSkip.setText(R.string.save)
 
@@ -120,12 +125,17 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
                 mAuthView.navigateToInvitePeople()
             }
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             tvQuickAccess.text = Html.fromHtml(getString(R.string.allow_quicker_access), Html.FROM_HTML_MODE_LEGACY)
         } else {
             tvQuickAccess.text = Html.fromHtml(getString(R.string.allow_quicker_access))
         }
 
+        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+        if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            checkPermissions()
+        }
 
     }
 
@@ -306,5 +316,9 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
     fun fingerPrintCancelled() {
         if (switchTouchId != null) switchTouchId.isChecked = false
+
+        if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            activity!!.finish()
+        }
     }
 }

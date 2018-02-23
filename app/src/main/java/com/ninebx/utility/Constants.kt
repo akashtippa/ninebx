@@ -35,7 +35,7 @@ object Constants {
     val SUB_CATEGORY_DISPLAY_PERSON = 2
     val COGNITO_POOL_ID: String = "us-west-2:c2651f16-d7e1-4c2f-9f1f-1100caf406e3"
     val COGNITO_POOL_REGION: Regions = Regions.US_WEST_2
-    val BUCKET_NAME: String? = "ninebxfiles"
+    val BUCKET_NAME: String = "ninebxfiles"
     val INDEX_NOT_CHECKED: Int = -1
 
     val LEVEL2_LOCATION = 10
@@ -179,6 +179,8 @@ object Constants {
     val REALM_END_POINT_COMBINE_INTERESTS = "CombineInterests"
     val REALM_END_POINT_COMBINE_PERSONAL = "CombinePersonal"
     val COMBINE_ITEMS: String = "combine_items"
+    val RESET_PASSCODE: String = "reset_passcode"
+    val RESET_FINGER_PRINT: String = "reset_fingerprint"
 
 
 }

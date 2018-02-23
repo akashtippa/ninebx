@@ -1,24 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvTitle" />
+        android:id="@+id/tvBoxName"
+        android:text="@string/title"
+        android:textSize="16sp"
+        android:textColor="@color/textColorBlue"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvMessage" />
+        android:id="@+id/tvMessage"
+        android:layout_below="@+id/tvBoxName"
+        android:text="message"
+        android:textSize="14sp"
+        android:textColor="@color/grey_600"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvDueDate" />
+        android:id="@+id/tvSubTitle"
+        android:layout_alignParentRight="true"
+        android:text="previous"
+        android:textSize="14sp"
+        android:gravity="end"
+        android:textColor="@color/grey_400"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDueDate"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvSubTitle"
+        android:text="DueDate"
+        android:textSize="14sp"
+        android:gravity="end"
+        android:textColor="@color/grey_400" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="end"
+        android:layout_below="@+id/tvDueDate"
+        android:text="..."
+        android:id="@+id/tvMore"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/divider_color"/>
-</LinearLayout>
+        android:background="@color/divider_color"
+        android:layout_below="@+id/tvMore"
+        android:layout_marginTop="@dimen/margin_medium"/>
+
+</RelativeLayout>

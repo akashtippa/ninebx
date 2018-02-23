@@ -6,8 +6,11 @@ package com.ninebx.utility
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import com.amazonaws.auth.AWSCredentials
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
+import com.amazonaws.mobile.client.AWSMobileClient
+import com.amazonaws.mobile.config.AWSConfiguration
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
 import com.amazonaws.regions.Region
@@ -26,9 +29,13 @@ object Util {
     // We only need one instance of the clients and credentials provider
     private var sS3Client:AmazonS3Client? = null
     private var sCredProvider:CognitoCachingCredentialsProvider? = null
+    private var awsConfiguration : AWSConfiguration ?= null
 
     @SuppressLint("StaticFieldLeak")
     private var sTransferUtility:TransferUtility? = null
+
+    @SuppressLint("StaticFieldLeak")
+    private var sEncryptedTransferUtility:TransferUtility? = null
 
     /**
      * Gets an instance of CognitoCachingCredentialsProvider which is
@@ -37,7 +44,7 @@ object Util {
      * @param context An Context instance.
      * @return A default credential provider.
      */
-    private fun getCredProvider(context:Context):CognitoCachingCredentialsProvider {
+    fun getCredProvider(context:Context):CognitoCachingCredentialsProvider {
         if (sCredProvider == null)
         {
             sCredProvider = CognitoCachingCredentialsProvider(
@@ -62,6 +69,18 @@ object Util {
             sS3Client!!.setRegion(Region.getRegion(Constants.COGNITO_POOL_REGION))
         }
         return sS3Client!!
+    }
+
+    fun getSecureTransferUtility( context: Context ) : TransferUtility {
+        if( sEncryptedTransferUtility == null ) {
+            sEncryptedTransferUtility =
+                    TransferUtility.builder()
+                            .context(context)
+                            .awsConfiguration(AWSMobileClient.getInstance().configuration)
+                            .s3Client(AmazonS3Client(getCredProvider(context)))
+                            .build()
+        }
+        return sEncryptedTransferUtility!!
     }
 
     /**

@@ -2,32 +2,38 @@ package com.ninebx.ui.home.account
 
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.*
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
-import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.BaseHomeFragment
-import com.ninebx.ui.home.HomeView
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
+import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
+import com.ninebx.utility.AWSFileTransferHelper
+import com.ninebx.utility.AWSSecureFileTransfer
 import com.ninebx.utility.Constants
 import com.ninebx.utility.decryptString
-import io.realm.RealmResults
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account.*
-import java.util.*
+import java.io.File
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
+class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, AWSFileTransferHelper.FileOperationsCompletionListener {
+    override fun onSuccess(outputFile: File?) {
+        if (outputFile != null && imgProfile != null)
+            Glide.with(context).asBitmap().load(outputFile).into(imgProfile)
+    }
 
 
     override fun onClick(v: View?) {
@@ -82,7 +88,11 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
     private fun navigateToMasterPassword() {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.replace(R.id.frameLayout, MasterPasswordFragment()).commit()
+        val masterPasswordFragment = MasterPasswordFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, ArrayList<Users>(mHomeView.getCurrentUsers()))
+        masterPasswordFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, masterPasswordFragment).commit()
     }
 
     // Single method to open static page dialog,
@@ -165,8 +175,6 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
         bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
-
-
     }
 
     private fun navigateToMyProfileUsers() {
@@ -214,12 +222,33 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener{
         layoutLock.setOnClickListener {
             //            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
         }
-
+        txtPersonalPassCode.setOnClickListener {
+            startActivity( Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
+        }
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
             SyncUser.currentUser().logout()
             startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }
+        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
+            startActivity(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true))
+        }
+        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+        switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        val profilePhoto = mHomeView.getCurrentUsers()[0]!!.profilePhoto
+        if (profilePhoto.isNotEmpty()) {
+            awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + profilePhoto)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+        switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
     }
 }

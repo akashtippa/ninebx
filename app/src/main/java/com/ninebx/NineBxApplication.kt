@@ -107,13 +107,13 @@ class NineBxApplication : MultiDexApplication() {
 
     var currentUser: Users? = null
 
-//
-//    fun setCountrySelected(iCountrySelected: ICountrySelected) {
-//        this.iCountryselected = iCountrySelected
-//    }
-//
-//    fun getCountrySelected(name: String): ICountrySelected? {
-//        return iCountryselected
-//    }
+
+    fun setCountrySelected(iCountrySelected: ICountrySelected) {
+        this.iCountryselected = iCountrySelected
+    }
+
+    fun getCountrySelected(name: String): ICountrySelected? {
+        return iCountryselected
+    }
 
 }

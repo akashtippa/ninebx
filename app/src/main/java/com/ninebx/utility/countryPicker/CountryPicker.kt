@@ -13,7 +13,6 @@ import android.widget.ListView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
-import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.country_picker.*
 import java.util.*
@@ -83,6 +82,11 @@ class CountryPicker() : FragmentBackHelper(), ICountrySelected {
         })
 
     }
+//
+//    public fun onSelectedCountry(selectedCountry: String) {
+//        NineBxApplication.instance.getCountrySelected(selectedCountry)
+//        NineBxApplication.instance.activityInstance!!.onBackPressed()
+//    }
 
     fun setListener(listener: CountryPickerListener) {
         this.listener = listener
