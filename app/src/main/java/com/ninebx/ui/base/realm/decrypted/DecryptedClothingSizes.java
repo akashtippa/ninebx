@@ -30,6 +30,7 @@ public class DecryptedClothingSizes implements Parcelable {
             return new DecryptedClothingSizes[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

@@ -41,6 +41,7 @@ public class DecryptedGovernment implements Parcelable {
     private String selectionType = "";
     @Required
     private String idName = "";
+    @Ignore public String searchField = "";
     @Required
     private String name = "";
     @Required

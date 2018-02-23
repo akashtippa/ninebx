@@ -30,6 +30,7 @@ public class DecryptedMemoryTimeline implements Parcelable {
             return new DecryptedMemoryTimeline[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

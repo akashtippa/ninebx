@@ -30,6 +30,7 @@ public class DecryptedVitalNumbers implements Parcelable {
             return new DecryptedVitalNumbers[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

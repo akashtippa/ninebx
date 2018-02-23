@@ -30,6 +30,7 @@ public class DecryptedIdentification implements Parcelable {
             return new DecryptedIdentification[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

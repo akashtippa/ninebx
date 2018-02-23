@@ -30,6 +30,7 @@ public class DecryptedRecentPurchase implements Parcelable {
             return new DecryptedRecentPurchase[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

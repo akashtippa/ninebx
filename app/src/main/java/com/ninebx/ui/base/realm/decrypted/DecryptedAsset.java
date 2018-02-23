@@ -29,6 +29,7 @@ public class DecryptedAsset implements Parcelable {
             return new DecryptedAsset[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             private long id = 0;
     @Required

@@ -30,6 +30,7 @@ public class DecryptedVacations implements Parcelable {
             return new DecryptedVacations[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

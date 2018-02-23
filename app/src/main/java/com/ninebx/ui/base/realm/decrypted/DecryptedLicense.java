@@ -8,6 +8,7 @@ import com.ninebx.ui.base.realm.RealmString;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -15,7 +16,8 @@ import io.realm.annotations.Required;
  * Created by Alok on 24/01/18.
  */
 public class DecryptedLicense implements Parcelable {
-
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

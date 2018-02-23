@@ -19,6 +19,7 @@ import io.realm.annotations.Required;
 public class DecryptedCalendarEvents implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
+    @Ignore public String searchField = "";
     @Required
     private RealmList<String> eventID = new RealmList<>();
     @Required

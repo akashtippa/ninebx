@@ -29,6 +29,7 @@ public class DecryptedWork implements Parcelable {
             return new DecryptedWork[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

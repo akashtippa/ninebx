@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -22,6 +23,8 @@ public class DecryptedMainMemories implements Parcelable {
             return new DecryptedMainMemories[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

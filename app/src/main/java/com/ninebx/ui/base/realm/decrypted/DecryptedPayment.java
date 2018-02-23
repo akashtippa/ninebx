@@ -31,6 +31,7 @@ public class DecryptedPayment implements Parcelable {
             return new DecryptedPayment[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

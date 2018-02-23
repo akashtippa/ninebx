@@ -30,6 +30,7 @@ public class DecryptedMedicalHistory implements Parcelable {
             return new DecryptedMedicalHistory[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

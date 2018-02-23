@@ -29,6 +29,7 @@ public class DecryptedInterests implements Parcelable {
             return new DecryptedInterests[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -128,7 +129,8 @@ public class DecryptedCombineWellness implements Parcelable {
     public void setMedicalConditionsItems(ArrayList<DecryptedMedicalConditions> medicalConditionsItems) {
         this.medicalConditionsItems = medicalConditionsItems;
     }
-
+    @Ignore
+    public String searchField = "";
     public ArrayList<DecryptedMedicalHistory> getMedicalHistoryItems() {
         return medicalHistoryItems;
     }
