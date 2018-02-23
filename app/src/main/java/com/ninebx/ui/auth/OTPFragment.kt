@@ -15,6 +15,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.utility.AppLogger
+import com.ninebx.utility.Constants.PASSCODE_CREATE
 import com.ninebx.utility.decryptString
 import com.ninebx.utility.getCurrentUsers
 import com.ninebx.utility.prepareRealmConnections
@@ -50,7 +51,7 @@ class OTPFragment : BaseAuthFragment() {
                             context!!.hideProgressDialog()
 
 
-                            mAuthView.navigateToCreatePassCode(true, "")
+                            mAuthView.navigateToCreatePassCode(PASSCODE_CREATE, "")
                         }
                         else {
                             mAuthView.onError(R.string.unable_to_find_user)
