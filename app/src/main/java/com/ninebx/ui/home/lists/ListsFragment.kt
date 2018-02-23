@@ -7,17 +7,25 @@ import android.view.ViewGroup
 
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.search.SearchView
+import com.ninebx.utility.*
+import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 
-import com.ninebx.utility.AppLogger
+import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_lists.*
 
 /**
  * Created by Alok on 03/01/18.
  */
 class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
+
     override fun onCombineFetched(combine: DecryptedCombine) {
         txtHomeNumber.text = combine.listItems.count().toString()
     }
@@ -73,16 +81,16 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lists, container, false)
     }
-
-    private val mDecryptCombine: DecryptedCombine = DecryptedCombine()
-    private val mDecryptedCombineMemories = DecryptedCombineMemories()
-    private val mDecryptedCombineTravel = DecryptedCombineTravel()
-    private val mDecryptCombineEducation = DecryptedCombineEducation()
-    private val mDecryptCombineInterests = DecryptedCombineInterests()
-    private val mDecryptCombineWellness = DecryptedCombineWellness()
-    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
-    private val mDecryptCombineShopping = DecryptedCombineShopping()
-    private val mDecryptedCombineContacts = DecryptedCombineContacts()
+//
+//    private val mDecryptCombine: DecryptedCombine = DecryptedCombine()
+//    private val mDecryptedCombineMemories = DecryptedCombineMemories()
+//    private val mDecryptedCombineTravel = DecryptedCombineTravel()
+//    private val mDecryptCombineEducation = DecryptedCombineEducation()
+//    private val mDecryptCombineInterests = DecryptedCombineInterests()
+//    private val mDecryptCombineWellness = DecryptedCombineWellness()
+//    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
+//    private val mDecryptCombineShopping = DecryptedCombineShopping()
+//    private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -114,17 +122,140 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         layShopping.setOnClickListener {
             callSubListFragment(getString(R.string.shopping))
         }
+//
+//        var countHome = mDecryptCombine.getListsCount("HomeBanking")
+//        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
+//        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
+//        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
+//        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
+//        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
+//        var countWellness = mDecryptedCombineMemories.getLists("WellNess")
+//        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
+//        var countShopping = mDecryptCombineShopping.getShoppingLists("Shopping")
 
-        var countHome = mDecryptCombine.getListsCount("HomeBanking")
-        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
-        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
-        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
-        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
-        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
-        var countWellness = mDecryptCombinePersonal.getListsCount("WellNess")
-        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
-        var countShopping = mDecryptedCombineContacts.getListsCount("Shopping")
 
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "HomeBanking".encryptString()
+                val contactsUpdating = realm!!
+                        .where(HomeList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtHomeNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Travel".encryptString()
+                val contactsUpdating = realm!!
+                        .where(TravelList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtTravelNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Contacts".encryptString()
+                val contactsUpdating = realm!!
+                        .where(ContactsList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtContactNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Education".encryptString()
+                val contactsUpdating = realm!!
+                        .where(EducationList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtEducationNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Interests".encryptString()
+                val contactsUpdating = realm!!
+                        .where(InterestsList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtInterestsNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Personal".encryptString()
+                val contactsUpdating = realm!!
+                        .where(PersonalList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtPersonalNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "WellNess".encryptString()
+                val contactsUpdating = realm!!
+                        .where(WellnessList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtWellnessNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Memories".encryptString()
+                val contactsUpdating = realm!!
+                        .where(MemoriesList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtMemoriesNumber.text = contactsUpdating.toString()
+            }
+        })
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                var contacts = "Shopping".encryptString()
+                val contactsUpdating = realm!!
+                        .where(ShoppingList::class.java)
+                        .equalTo("selectionType", contacts)
+                        .count()
+                AppLogger.e("Count ", " is " + contactsUpdating)
+                txtShoppingNumber.text = contactsUpdating.toString()
+            }
+        })
+
+        var currentUsers: RealmResults<HomeList>? = null
+
+        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+
+                currentUsers = getHomeList(realm!!)
+                if (currentUsers != null) {
+                    AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
+                    if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+
+                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
+                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                        fragmentTransaction.addToBackStack(null)
+                        val addFamilyUsersFragment = AddFamilyUsersFragment()
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList(Constants.LIST_HOME, HomeList.createParcelableList(currentUsers!!))
+                        addFamilyUsersFragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+                    }
+                }
+            }
+        })
     }
 
     private fun callSubListFragment(option: String) {

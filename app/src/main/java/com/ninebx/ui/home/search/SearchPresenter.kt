@@ -138,15 +138,6 @@ class SearchPresenter {
                         AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
 
                     }
-                    for (finance in mDecryptedCombineContacts.mainContactsItems) {
-                        AppLogger.e("Main", finance.toString())
-                    }
-                    for (finance in mDecryptedCombineContacts.contactsItems) {
-                        AppLogger.e("Contact", finance.toString())
-                    }
-                    for (finance in mDecryptedCombineContacts.listItems) {
-                        AppLogger.e("Lists", finance.toString())
-                    }
 
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)

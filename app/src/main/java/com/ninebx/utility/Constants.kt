@@ -56,6 +56,7 @@ object Constants {
     val KEYBOARD_SEARCH = "search"
     val KEYBOARD_PICKER = "picker"
     val CURRENT_USER: String = "current_user"
+    val LIST_HOME: String = "homeList"
     val REALM_MEMORY_VIEW: String = "memory_view"
     val REALM_CONTACTS: String = "realm_contacts"
     val USER_EMAIL: String = "user_email"

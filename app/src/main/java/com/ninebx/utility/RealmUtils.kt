@@ -9,6 +9,7 @@ import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.TestSearch
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.base.realm.lists.HomeList
 import io.realm.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,6 +51,10 @@ fun getCurrentContactList(realmInstance: Realm): RealmResults<Contacts>? {
 
 fun getAllMemoryTimeLine(realmInstance: Realm): RealmResults<MemoryTimeline>? {
     return realmInstance.where(MemoryTimeline::class.java).findAll()
+}
+
+fun getHomeList(realmInstance: Realm): RealmResults<HomeList>? {
+    return realmInstance.where(HomeList::class.java).findAll()
 }
 
 private val TAG = "RealmUtils"
