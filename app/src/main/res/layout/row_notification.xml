@@ -103,6 +103,5 @@
             android:layout_weight="1"
             android:background="@color/grid_4"
             app:srcCompat="@drawable/ic_flag"/>
-
     </LinearLayout>
 </RelativeLayout>
