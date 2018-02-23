@@ -36,7 +36,12 @@ import java.util.*
  * Created by TechnoBlogger on 18/01/18.
  */
 
-class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, PermissionFragment.PermissionEdited {
+
+    private var permissionsMember : Member ?= null
+    override fun onPermissionEdited(member: Member) {
+         this.permissionsMember = member
+    }
 
     private lateinit var selectedRelation: String
     private lateinit var selectedRole: String
@@ -77,23 +82,29 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         }
 
         txtPermissions.setOnClickListener {
-            if (NineBxApplication.disabledFeature) {
-                context!!.showToast("To be done")
-                return@setOnClickListener
-            }
-            if (checkValidations()) {
+            if ((txtRelationship.selectedItem.toString().trim() == "Relationship" || txtRelationship.selectedItem.toString().trim().isEmpty())) {
+                Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
 
-                memberPresenter.setPermissionsForMember(updateMember!!, strRole)
+            }
+            else {
+
+                var tempMember = Member()
+                memberPresenter.setPermissionsForMember(tempMember, strRole)
+                if( permissionsMember != null ) {
+                    tempMember = permissionsMember!!
+                }
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
                 val permissionsFragment = PermissionFragment()
                 val bundle = Bundle()
-                bundle.putParcelable(Constants.MEMBER, member)
+                bundle.putParcelable(Constants.MEMBER, tempMember)
                 permissionsFragment.arguments = bundle
 
                 fragmentTransaction.replace(R.id.frameLayout, permissionsFragment).commit()
+                permissionsFragment.setPermissionsEdited(this)
             }
+
         }
 
         member = arguments!!.getParcelable(Constants.MEMBER)

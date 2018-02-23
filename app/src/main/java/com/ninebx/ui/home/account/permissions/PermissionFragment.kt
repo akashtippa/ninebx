@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.Member
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.account.model.AddEditPermissions
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_permissions.*
 
@@ -19,11 +19,6 @@ import kotlinx.android.synthetic.main.fragment_permissions.*
  */
 
 class PermissionFragment : FragmentBackHelper(), PermissionsView {
-
-    private lateinit var userRole: String
-    private lateinit var member: Member
-    private lateinit var memberUser: Users
-    private lateinit var adminId: String
 
     override fun showProgress(message: Int) {
 
@@ -37,6 +32,11 @@ class PermissionFragment : FragmentBackHelper(), PermissionsView {
 
     }
 
+    interface PermissionEdited {
+        fun onPermissionEdited( member : Member )
+    }
+
+    private lateinit var mPermissionEdited : PermissionEdited
     private lateinit var myList: ArrayList<AddEditPermissions>
     private var mListsAdapter: AddOrEditPermissionAdapter? = null
 
@@ -44,29 +44,118 @@ class PermissionFragment : FragmentBackHelper(), PermissionsView {
         return inflater.inflate(R.layout.fragment_permissions, container, false)
     }
 
+    private lateinit var tempMember: Member
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tempMember = arguments!!.getParcelable<Member>(Constants.MEMBER)
         NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         ivBackPermissions.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
         txtSave.setOnClickListener {
+            mListsAdapter!!.getPermissions( tempMember )
+            tempMember.addingRemovingMember = chkAddOrRemoveUsers.isChecked
+            mPermissionEdited.onPermissionEdited(tempMember)
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
+        /***
+         * "Home & Money",
+        "Travel",
+        "Contacts",
+        "Education & Work",
+        "Personal",
+        "Interests",
+        "Wellness",
+        "Memories",
+        "Shopping"
+         */
         myList = ArrayList()
-        for (i in 0 until PermissionData.menuName.size) {
-            myList.add(AddEditPermissions(
-                    PermissionData.bgDrawable[i],
-                    PermissionData.menuDrawable[i],
-                    PermissionData.menuName[i],
-                    PermissionData.chkView[i],
-                    PermissionData.chkAdd[i],
-                    PermissionData.chkEdit[i]
-            ))
-        }
+        var i = 0
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.homeView,
+                tempMember.homeAdd,
+                tempMember.homeEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.travelView,
+                tempMember.travelAdd,
+                tempMember.travelEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.contactsView,
+                tempMember.contactsAdd,
+                tempMember.contactsEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.educationlView,
+                tempMember.educationlAdd,
+                tempMember.educationlEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.personalView,
+                tempMember.personalAdd,
+                tempMember.personalEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.interestsView,
+                tempMember.interestsAdd,
+                tempMember.interestsEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.wellnessView,
+                tempMember.wellnessAdd,
+                tempMember.wellnessEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i++],
+                tempMember.memoriesView,
+                tempMember.memoriesAdd,
+                tempMember.memoriesEdit
+        ))
+
+        myList.add(AddEditPermissions(
+                PermissionData.bgDrawable[i],
+                PermissionData.menuDrawable[i],
+                PermissionData.menuName[i],
+                tempMember.shoppingView,
+                tempMember.shoppingAdd,
+                tempMember.shoppingEdit
+        ))
 
         mListsAdapter = AddOrEditPermissionAdapter(myList)
         val layoutManager = LinearLayoutManager(context)
@@ -74,6 +163,10 @@ class PermissionFragment : FragmentBackHelper(), PermissionsView {
         rvPermissions!!.layoutManager = layoutManager
         rvPermissions!!.adapter = mListsAdapter
 
+        chkAddOrRemoveUsers.isChecked = tempMember.addingRemovingMember
+    }
 
+    fun setPermissionsEdited( permissionEdited: PermissionEdited ) {
+        this.mPermissionEdited = permissionEdited
     }
 }
