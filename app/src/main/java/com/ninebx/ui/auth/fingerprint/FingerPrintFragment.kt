@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth.fingerprint
 
 import android.Manifest
+import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.KeyguardManager
 import android.content.Intent
@@ -53,6 +54,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
             context!!.showToast("Verified successfully")
 
         if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            NineBxApplication.getPreferences().isFingerPrintEnabled = arguments!!.getBoolean(Constants.FINGER_PRINT)
             activity!!.setResult(RESULT_OK, Intent())
             activity!!.finish()
         }
@@ -319,6 +321,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
         if (switchTouchId != null) switchTouchId.isChecked = false
 
         if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            NineBxApplication.getPreferences().isFingerPrintEnabled = !arguments!!.getBoolean(Constants.FINGER_PRINT)
             activity!!.setResult(RESULT_OK, Intent())
             activity!!.finish()
         }

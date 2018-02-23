@@ -13,7 +13,7 @@ class AuthPresenter(private val authView: AuthView) {
     private var TAG = AuthPresenter::class.java.simpleName
 
     init {
-        authView.navigateToSignIn()
+        //authView.navigateToSignIn()
     }
 
     fun signUp(userName: String, password: String) {

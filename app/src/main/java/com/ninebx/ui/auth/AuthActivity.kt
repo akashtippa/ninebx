@@ -239,6 +239,9 @@ class AuthActivity : AppCompatActivity(), AuthView {
                 Constants.SIGN_UP_COMPLETE -> {
                     navigateToSignUp()
                 }
+                else -> {
+                    navigateToSignIn()
+                }
             }
         }
         else {

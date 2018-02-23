@@ -235,7 +235,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         switchTouchId.setOnCheckedChangeListener { _, isChecked ->
             if( !fromFingerPrint ) {
-                startActivityForResult(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true), Constants.FINGER_PRINT_COMPLETE)
+                startActivityForResult(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true).putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
             }
             else fromFingerPrint = false
         }
