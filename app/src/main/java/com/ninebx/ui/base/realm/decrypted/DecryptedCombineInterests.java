@@ -26,7 +26,7 @@ public class DecryptedCombineInterests implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedInterests> interestItems = new RealmList<>();
     @Required
@@ -35,7 +35,7 @@ public class DecryptedCombineInterests implements Parcelable {
     public DecryptedCombineInterests() {
     }
 
-    public DecryptedCombineInterests(int id, RealmList<DecryptedInterests> interestItems, RealmList<DecryptedInterestsList> listItems) {
+    public DecryptedCombineInterests(long id, RealmList<DecryptedInterests> interestItems, RealmList<DecryptedInterestsList> listItems) {
         this.id = id;
         this.interestItems = interestItems;
         this.listItems = listItems;
@@ -45,11 +45,11 @@ public class DecryptedCombineInterests implements Parcelable {
         id = in.readInt();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -76,7 +76,7 @@ public class DecryptedCombineInterests implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     public int getServicesOrOtherAccounts(String selectionType) {

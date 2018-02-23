@@ -30,7 +30,7 @@ public class DecryptedMainContacts implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -112,11 +112,11 @@ public class DecryptedMainContacts implements Parcelable {
     public DecryptedMainContacts() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -327,7 +327,7 @@ public class DecryptedMainContacts implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
         dest.writeString(accountName);

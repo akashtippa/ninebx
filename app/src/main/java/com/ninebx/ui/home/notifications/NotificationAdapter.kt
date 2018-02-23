@@ -97,7 +97,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
             view.setOnLongClickListener(this)
         }
 
-        override fun onItemClick(position: Int, v: View, id: Int) {
+        override fun onItemClick(position: Int, v: View, id: Long) {
             clickListener.onItemClick(getAdapterPosition(), v, data[position].id)
         }
 
@@ -111,7 +111,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
     }
 
      interface ClickListener {
-        fun onItemClick(position: Int, v: View, id: Int)
+        fun onItemClick(position: Int, v: View, id: Long)
         fun onItemLongClick(position: Int, v: View, txtMessage: TextView)
      }
 

@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class MainContacts extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private String selectionType = "";
@@ -80,11 +80,11 @@ public class MainContacts extends RealmObject {
     @Required
     private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

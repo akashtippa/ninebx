@@ -25,7 +25,7 @@ public class DecryptedCombineEducation implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedEducation> educationItems = new RealmList<>();
     @Required
@@ -38,7 +38,7 @@ public class DecryptedCombineEducation implements Parcelable {
     public DecryptedCombineEducation() {
     }
 
-    public DecryptedCombineEducation(int id, RealmList<DecryptedEducation> educationItems, RealmList<DecryptedMainEducation> mainEducationItems, RealmList<DecryptedWork> workItems, RealmList<DecryptedEducationList> listItems) {
+    public DecryptedCombineEducation(long id, RealmList<DecryptedEducation> educationItems, RealmList<DecryptedMainEducation> mainEducationItems, RealmList<DecryptedWork> workItems, RealmList<DecryptedEducationList> listItems) {
         this.id = id;
         this.educationItems = educationItems;
         this.mainEducationItems = mainEducationItems;
@@ -52,7 +52,7 @@ public class DecryptedCombineEducation implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -60,11 +60,11 @@ public class DecryptedCombineEducation implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

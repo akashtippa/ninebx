@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class Taxes extends RealmObject {
 
     @PrimaryKey //@Required
-    int id = 0;
+    long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -27,11 +27,11 @@ public class Taxes extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -77,8 +77,9 @@ public class Taxes extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public Taxes(String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
+    public Taxes(long id, String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.returnName = returnName;
         this.taxYear = taxYear;
         this.taxPayer = taxPayer;

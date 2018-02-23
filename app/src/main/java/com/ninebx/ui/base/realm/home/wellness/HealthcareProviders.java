@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class HealthcareProviders extends RealmObject {
 
     @PrimaryKey //@Required
-    int id = 0;
+            long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class HealthcareProviders extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -87,8 +87,9 @@ public class HealthcareProviders extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public HealthcareProviders(String selectionType, String classType, String name, String physicianType, String practiceName, String phoneNumberOne, String phoneNumberTwo, String emailAddress, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
+    public HealthcareProviders(long id,String selectionType, String classType, String name, String physicianType, String practiceName, String phoneNumberOne, String phoneNumberTwo, String emailAddress, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.classType = classType;
         this.name = name;
         this.physicianType = physicianType;

@@ -20,7 +20,7 @@ public class Education extends RealmObject {
 
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private String selectionType = "";
 
@@ -57,7 +57,7 @@ public class Education extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Education(int id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public Education(long id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.institutionName = institutionName;
@@ -104,11 +104,11 @@ public class Education extends RealmObject {
         }
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -273,11 +273,11 @@ public class Education extends RealmObject {
     }
 
     public Boolean getPrivate() {
-        return isPrivate;
+        return this.isPrivate;
     }
 
     public void setPrivate(Boolean aPrivate) {
-        isPrivate = aPrivate;
+        this.isPrivate = aPrivate;
     }
 
     public String getCreatedUser() {

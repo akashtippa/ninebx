@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class VitalNumbers extends RealmObject {
 
     @PrimaryKey //@Required
-    int id = 0;
+            long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class VitalNumbers extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -91,9 +91,10 @@ public class VitalNumbers extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public VitalNumbers(String selectionType, String classType, String vital_description, String measurementDate, String height, String weight, String waist, String bodyFat, String bodyMassIndex, String bloodPressure, String heartRate, String totalCholesterol, String hdlCholesterol, String ldlCholesterol, String cholesterolRatio, String triglycerides, String bloodGlucose, String hemoglobin, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
+    public VitalNumbers(long id, String selectionType, String classType, String vital_description, String measurementDate, String height, String weight, String waist, String bodyFat, String bodyMassIndex, String bloodPressure, String heartRate, String totalCholesterol, String hdlCholesterol, String ldlCholesterol, String cholesterolRatio, String triglycerides, String bloodGlucose, String hemoglobin, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
+        this.id = id;
         this.vital_description = vital_description;
         this.measurementDate = measurementDate;
         this.height = height;

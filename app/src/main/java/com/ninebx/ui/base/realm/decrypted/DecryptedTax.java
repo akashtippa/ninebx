@@ -31,7 +31,7 @@ public class DecryptedTax implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
@@ -67,7 +67,7 @@ public class DecryptedTax implements Parcelable {
     public DecryptedTax() {
     }
 
-    public DecryptedTax(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
+    public DecryptedTax(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String returnName, String taxYear, String taxPayer, String contacts, String imageName, String attachmentNames, String notes, String title, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -110,11 +110,11 @@ public class DecryptedTax implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -248,7 +248,7 @@ public class DecryptedTax implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(returnName);

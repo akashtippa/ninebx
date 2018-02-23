@@ -31,7 +31,7 @@ public class DecryptedMedicalHistory implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
@@ -100,7 +100,7 @@ public class DecryptedMedicalHistory implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(classType);
@@ -121,11 +121,11 @@ public class DecryptedMedicalHistory implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

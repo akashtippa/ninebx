@@ -31,7 +31,7 @@ public class DecryptedFinancial implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
@@ -81,7 +81,7 @@ public class DecryptedFinancial implements Parcelable {
     public DecryptedFinancial() {
     }
 
-    public DecryptedFinancial(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+    public DecryptedFinancial(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -133,11 +133,11 @@ public class DecryptedFinancial implements Parcelable {
         attachmentNames = in.readString();
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -356,7 +356,7 @@ public class DecryptedFinancial implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
@@ -385,18 +385,4 @@ public class DecryptedFinancial implements Parcelable {
         return 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DecryptedFinancial financial = (DecryptedFinancial) o;
-
-        return id == financial.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
 }

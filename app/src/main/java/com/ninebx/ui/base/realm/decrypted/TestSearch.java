@@ -25,7 +25,7 @@ public class TestSearch {
         this.testName3 = testName3;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 

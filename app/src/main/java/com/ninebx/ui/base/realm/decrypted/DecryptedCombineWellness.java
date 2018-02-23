@@ -26,7 +26,7 @@ public class DecryptedCombineWellness implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedCheckups> checkupsItems = new RealmList<>();
     @Required
@@ -50,7 +50,7 @@ public class DecryptedCombineWellness implements Parcelable {
     @Required
     private RealmList<DecryptedWellnessList> listItems = new RealmList<>();
 
-    public DecryptedCombineWellness(int id, RealmList<DecryptedCheckups> checkupsItems, RealmList<DecryptedEmergencyContacts> emergencyContactsItems, RealmList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems, RealmList<DecryptedHealthcareProviders> healthcareProvidersItems, RealmList<DecryptedIdentification> identificationItems, RealmList<DecryptedMedicalConditions> medicalConditionsItems, RealmList<DecryptedMedicalHistory> medicalHistoryItems, RealmList<DecryptedMedications> medicationsItems, RealmList<DecryptedVitalNumbers> vitalNumbersItems, RealmList<DecryptedWellness> wellnessItems, RealmList<DecryptedWellnessList> listItems) {
+    public DecryptedCombineWellness(long id, RealmList<DecryptedCheckups> checkupsItems, RealmList<DecryptedEmergencyContacts> emergencyContactsItems, RealmList<DecryptedEyeglassPrescriptions> eyeglassPrescriptionsItems, RealmList<DecryptedHealthcareProviders> healthcareProvidersItems, RealmList<DecryptedIdentification> identificationItems, RealmList<DecryptedMedicalConditions> medicalConditionsItems, RealmList<DecryptedMedicalHistory> medicalHistoryItems, RealmList<DecryptedMedications> medicationsItems, RealmList<DecryptedVitalNumbers> vitalNumbersItems, RealmList<DecryptedWellness> wellnessItems, RealmList<DecryptedWellnessList> listItems) {
         this.id = id;
         this.checkupsItems = checkupsItems;
         this.emergencyContactsItems = emergencyContactsItems;
@@ -73,11 +73,11 @@ public class DecryptedCombineWellness implements Parcelable {
 
     }
 
-    public int getId() {
+    public  long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -176,7 +176,7 @@ public class DecryptedCombineWellness implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     public int getLists(String selectionType) {

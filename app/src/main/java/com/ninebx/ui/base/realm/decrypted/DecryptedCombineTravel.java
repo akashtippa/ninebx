@@ -26,7 +26,7 @@ public class DecryptedCombineTravel implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedDocuments> documentsItems = new RealmList<DecryptedDocuments>();
     @Required
@@ -41,7 +41,7 @@ public class DecryptedCombineTravel implements Parcelable {
     public DecryptedCombineTravel() {
     }
 
-    public DecryptedCombineTravel(int id, RealmList<DecryptedDocuments> documentsItems, RealmList<DecryptedLoyalty> loyaltyItems, RealmList<DecryptedTravel> travelItems, RealmList<DecryptedVacations> vacationsItems, RealmList<DecryptedTravelList> listItems) {
+    public DecryptedCombineTravel(long id, RealmList<DecryptedDocuments> documentsItems, RealmList<DecryptedLoyalty> loyaltyItems, RealmList<DecryptedTravel> travelItems, RealmList<DecryptedVacations> vacationsItems, RealmList<DecryptedTravelList> listItems) {
         this.id = id;
         this.documentsItems = documentsItems;
         this.loyaltyItems = loyaltyItems;
@@ -56,7 +56,7 @@ public class DecryptedCombineTravel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -64,11 +64,11 @@ public class DecryptedCombineTravel implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public  long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -128,7 +128,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Loyalty Programs
     public int getLoyaltyCount(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
 
         for (DecryptedLoyalty decryptedLicense : loyaltyItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
@@ -140,7 +140,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Documents
     public int getTravelDocuments(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedDocuments decryptedLicense : documentsItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
@@ -150,7 +150,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Dates And Plans
     public int getTravelDatesAndPlans(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedVacations decryptedLicense : vacationsItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
@@ -160,7 +160,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Dates And Plans
     public int getServices(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedTravel decryptedLicense : travelItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
@@ -170,7 +170,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Lists
     public int getTravelLists(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedTravelList decryptedLicense : listItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }

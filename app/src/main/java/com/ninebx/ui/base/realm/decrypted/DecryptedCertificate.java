@@ -31,7 +31,7 @@ public class DecryptedCertificate implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
@@ -75,7 +75,7 @@ public class DecryptedCertificate implements Parcelable {
     public DecryptedCertificate() {
     }
 
-    public DecryptedCertificate(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public DecryptedCertificate(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -123,7 +123,7 @@ public class DecryptedCertificate implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(cer_description);
@@ -149,11 +149,11 @@ public class DecryptedCertificate implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

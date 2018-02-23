@@ -17,9 +17,9 @@ public class SignUp extends RealmObject {
     @Required private String password  = "";
     @Required private String user_id  = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
-    public SignUp(String fullName, String emailAddress, String password, String user_id, int id) {
+    public SignUp(String fullName, String emailAddress, String password, String user_id, long id) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.password = password;
@@ -62,11 +62,11 @@ public class SignUp extends RealmObject {
         this.user_id = user_id;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

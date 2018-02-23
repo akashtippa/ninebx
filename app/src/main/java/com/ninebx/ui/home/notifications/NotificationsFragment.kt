@@ -58,8 +58,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         rvNotification.adapter = mAdapter
 
         mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
-
-            override fun onItemClick(position: Int, v: View, id: Int) {
+            override fun onItemClick(position: Int, v: View, id: Long) {
             }
             override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
                 var dialog =  Dialog(context)

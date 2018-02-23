@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class Documents extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class Documents extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -91,8 +91,9 @@ public class Documents extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public Documents(String selectionType, String passportName, String visaName, String nameOnPassport, String nameOnVisa, String visaType, String visaNumber, String travelDocumentTitle, String nameOnTravelDocument, String travelDocumentType, String travelDocumentNumber, String issuingCountry, String passportNumber, String placeIssued, String dateIssued, String expirationDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+    public Documents(long id, String selectionType, String passportName, String visaName, String nameOnPassport, String nameOnVisa, String visaType, String visaNumber, String travelDocumentTitle, String nameOnTravelDocument, String travelDocumentType, String travelDocumentNumber, String issuingCountry, String passportNumber, String placeIssued, String dateIssued, String expirationDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.passportName = passportName;
         this.visaName = visaName;
         this.nameOnPassport = nameOnPassport;

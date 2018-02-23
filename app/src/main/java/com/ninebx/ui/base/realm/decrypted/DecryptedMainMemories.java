@@ -23,7 +23,7 @@ public class DecryptedMainMemories implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -69,8 +69,9 @@ public class DecryptedMainMemories implements Parcelable {
     @Required
     private String createdUser = "";
 
-    public DecryptedMainMemories(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
+    public DecryptedMainMemories(long id ,String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.institutionName = institutionName;
         this.accountName = accountName;
         this.accountType = accountType;
@@ -126,7 +127,7 @@ public class DecryptedMainMemories implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
         dest.writeString(accountName);
@@ -149,6 +150,14 @@ public class DecryptedMainMemories implements Parcelable {
         dest.writeString(attachmentNames);
         dest.writeString(title);
         dest.writeString(createdUser);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId( long id ) {
+        this.id = id;
     }
 
     @Override

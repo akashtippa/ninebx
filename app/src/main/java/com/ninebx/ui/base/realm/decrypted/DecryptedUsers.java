@@ -44,14 +44,14 @@ public class DecryptedUsers implements Parcelable {
     @Required private String country              = "";
     @Required private String userId               = "";
     @PrimaryKey //@Required
-    private int id                  = 0;
+    private long id                  = 0;
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
     @Required private RealmList<DecryptedMember> members = new RealmList<DecryptedMember>();
     @Ignore
     private RealmList<DecryptedMember> decryptedMembers = new RealmList<DecryptedMember>();
 
-    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<DecryptedMember> members) {
+    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, long id, RealmList<DecryptedMember> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -73,7 +73,7 @@ public class DecryptedUsers implements Parcelable {
     }
 
 
-    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<DecryptedMember> members) {
+    public DecryptedUsers(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, long id, RealmList<DecryptedMember> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -230,11 +230,11 @@ public class DecryptedUsers implements Parcelable {
         this.country = country;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

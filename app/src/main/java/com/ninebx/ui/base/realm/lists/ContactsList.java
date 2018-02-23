@@ -14,7 +14,7 @@ import io.realm.annotations.Required;
 public class ContactsList extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private String selectionType = "";
@@ -45,7 +45,7 @@ public class ContactsList extends RealmObject {
     @Required
     private String createdUser = "";
 
-    public ContactsList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public ContactsList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -64,11 +64,11 @@ public class ContactsList extends RealmObject {
     public ContactsList() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

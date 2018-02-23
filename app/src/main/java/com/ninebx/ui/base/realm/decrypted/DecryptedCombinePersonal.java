@@ -33,7 +33,7 @@ public class DecryptedCombinePersonal implements Parcelable {
     RealmList<DecryptedTaxID> taxIDItems = new RealmList<>();
     RealmList<DecryptedPersonalList> listItems = new RealmList<>();
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     public DecryptedCombinePersonal() {
     }
@@ -109,11 +109,11 @@ public class DecryptedCombinePersonal implements Parcelable {
         this.listItems = listItems;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -124,7 +124,7 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     public int getDriversLicense(String selectionType) {
@@ -170,7 +170,7 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     public int getListsCount(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedPersonalList decryptedLicense : listItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }

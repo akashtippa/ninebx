@@ -26,7 +26,7 @@ public class DecryptedCombineContacts implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedContacts> contactsItems = new RealmList<>();
     @Required
@@ -34,7 +34,7 @@ public class DecryptedCombineContacts implements Parcelable {
     @Required
     private RealmList<DecryptedContactsList> listItems = new RealmList<>();
 
-    public DecryptedCombineContacts(int id, RealmList<DecryptedContacts> contactsItems, RealmList<DecryptedMainContacts> mainContactsItems, RealmList<DecryptedContactsList> listItems) {
+    public DecryptedCombineContacts(long id, RealmList<DecryptedContacts> contactsItems, RealmList<DecryptedMainContacts> mainContactsItems, RealmList<DecryptedContactsList> listItems) {
         this.id = id;
         this.contactsItems = contactsItems;
         this.mainContactsItems = mainContactsItems;
@@ -48,11 +48,11 @@ public class DecryptedCombineContacts implements Parcelable {
         id = in.readInt();
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -87,7 +87,7 @@ public class DecryptedCombineContacts implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
 

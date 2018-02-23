@@ -25,10 +25,8 @@ public class DecryptedRecentSearch implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
-    @Required
+    private long id = 0;
     private Integer search_id = 0;
-    @Required
     private Integer detail_id = 0;
     @Required
     private String listName = "";
@@ -41,7 +39,7 @@ public class DecryptedRecentSearch implements Parcelable {
     @Required
     private String classType = "";
 
-    public DecryptedRecentSearch(int id, Integer search_id, Integer detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
+    public DecryptedRecentSearch(long id, Integer search_id, Integer detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
         this.id = id;
         this.search_id = search_id;
         this.detail_id = detail_id;
@@ -75,7 +73,7 @@ public class DecryptedRecentSearch implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         if (search_id == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -99,11 +97,11 @@ public class DecryptedRecentSearch implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

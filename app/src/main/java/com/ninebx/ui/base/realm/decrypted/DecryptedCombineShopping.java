@@ -25,7 +25,7 @@ public class DecryptedCombineShopping implements Parcelable {
         }
     };
     @PrimaryKey
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems = new RealmList<>();
     @Required
@@ -40,7 +40,7 @@ public class DecryptedCombineShopping implements Parcelable {
     public DecryptedCombineShopping() {
     }
 
-    public DecryptedCombineShopping(int id, RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems, RealmList<DecryptedRecentPurchase> recentPurchaseItems, RealmList<DecryptedShopping> shoppingItems, RealmList<DecryptedClothingSizes> clothingSizesItems, RealmList<DecryptedShoppingList> listItems) {
+    public DecryptedCombineShopping(long id, RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems, RealmList<DecryptedRecentPurchase> recentPurchaseItems, RealmList<DecryptedShopping> shoppingItems, RealmList<DecryptedClothingSizes> clothingSizesItems, RealmList<DecryptedShoppingList> listItems) {
         this.id = id;
         this.loyaltyProgramsItems = loyaltyProgramsItems;
         this.recentPurchaseItems = recentPurchaseItems;
@@ -55,7 +55,7 @@ public class DecryptedCombineShopping implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -63,11 +63,11 @@ public class DecryptedCombineShopping implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public  long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

@@ -25,7 +25,7 @@ public class DecryptedCombineMemories implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private RealmList<DecryptedMainMemories> mainMemoriesItems = new RealmList<>();
     @Required
@@ -36,7 +36,7 @@ public class DecryptedCombineMemories implements Parcelable {
     public DecryptedCombineMemories() {
     }
 
-    public DecryptedCombineMemories(int id, RealmList<DecryptedMainMemories> mainMemoriesItems, RealmList<DecryptedMemoryTimeline> memoryTimelineItems, RealmList<DecryptedMemoriesList> listItems) {
+    public DecryptedCombineMemories(long id, RealmList<DecryptedMainMemories> mainMemoriesItems, RealmList<DecryptedMemoryTimeline> memoryTimelineItems, RealmList<DecryptedMemoriesList> listItems) {
         this.id = id;
         this.mainMemoriesItems = mainMemoriesItems;
         this.memoryTimelineItems = memoryTimelineItems;
@@ -49,7 +49,7 @@ public class DecryptedCombineMemories implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -57,11 +57,11 @@ public class DecryptedCombineMemories implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
