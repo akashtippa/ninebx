@@ -49,7 +49,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         //AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
         //AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
 
-        val id = getNotification!![position]!!.id//((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id)
+        val id = getNotification!![position]!!.id //((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id)
         AppLogger.d("SearchFor", "Notification : " + id)
         val notification = mNotificationsRealm.where(Notifications::class.java)
                 .equalTo("id", (id))

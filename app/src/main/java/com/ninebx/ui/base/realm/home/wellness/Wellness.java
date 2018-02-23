@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class Wellness extends RealmObject {
 
     @PrimaryKey //@Required
-    int id = 0;
+            long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class Wellness extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -88,8 +88,9 @@ public class Wellness extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public Wellness(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser) {
+    public Wellness(long id,String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
+        this.id =id;
         this.institutionName = institutionName;
         this.accountName = accountName;
         this.accountType = accountType;

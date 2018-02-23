@@ -14,16 +14,16 @@ import io.realm.annotations.Required;
 public class RecentSearch extends RealmObject {
 
     @PrimaryKey //@Required
-    private  int id  = 0;
-    @Required private  Integer search_id  = 0;
-    @Required private  Integer detail_id  = 0;
+    private  long id  = 0;
+    private  long search_id  = 0;
+    private  long detail_id  = 0;
     @Required private  String listName  = "";
     @Required private  String subCategory  = "";
     @Required private  String mainCategory  = "";
     @Required private  Date createdDate = new Date();
     @Required private  String classType  = "";
 
-    public RecentSearch(int id, Integer search_id, Integer detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
+    public RecentSearch(long id, long search_id, long detail_id, String listName, String subCategory, String mainCategory, Date createdDate, String classType) {
         this.id = id;
         this.search_id = search_id;
         this.detail_id = detail_id;
@@ -37,27 +37,27 @@ public class RecentSearch extends RealmObject {
     public RecentSearch() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Integer getSearch_id() {
+    public long getSearch_id() {
         return search_id;
     }
 
-    public void setSearch_id(Integer search_id) {
+    public void setSearch_id(long search_id) {
         this.search_id = search_id;
     }
 
-    public Integer getDetail_id() {
+    public long getDetail_id() {
         return detail_id;
     }
 
-    public void setDetail_id(Integer detail_id) {
+    public void setDetail_id(long detail_id) {
         this.detail_id = detail_id;
     }
 
@@ -100,6 +100,4 @@ public class RecentSearch extends RealmObject {
     public void setClassType(String classType) {
         this.classType = classType;
     }
-
-
 }

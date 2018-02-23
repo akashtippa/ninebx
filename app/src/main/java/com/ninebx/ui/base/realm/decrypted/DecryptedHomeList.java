@@ -26,7 +26,7 @@ public class DecryptedHomeList implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -56,7 +56,7 @@ public class DecryptedHomeList implements Parcelable {
     }
 
 
-    public DecryptedHomeList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public DecryptedHomeList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -92,11 +92,11 @@ public class DecryptedHomeList implements Parcelable {
         createdUser = in.readString();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -198,7 +198,7 @@ public class DecryptedHomeList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(classType);
         dest.writeString(listName);

@@ -58,7 +58,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     var strState = ""
     var strZipCode = ""
     var strCountry = ""
-    var idUser: Int? = null
+    var idUser: Long? = null
     var idUserID = ""
 
     val prefrences = NineBxPreferences()

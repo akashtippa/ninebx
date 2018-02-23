@@ -14,7 +14,7 @@ import io.realm.annotations.Required;
 public class HomeBankingList extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private String selectionType = "";
 
@@ -31,7 +31,7 @@ public class HomeBankingList extends RealmObject {
     @Required private String modified = "";
     @Required private Boolean isPrivate = false;
 
-    public HomeBankingList(int id, String selectionType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate) {
+    public HomeBankingList(long id, String selectionType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate) {
         this.id = id;
         this.selectionType = selectionType;
         this.listName = listName;
@@ -45,11 +45,11 @@ public class HomeBankingList extends RealmObject {
         this.isPrivate = isPrivate;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

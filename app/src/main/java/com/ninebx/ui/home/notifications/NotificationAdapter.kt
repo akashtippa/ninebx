@@ -12,9 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.R.layout.row_notification
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.isVisible
-import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.AppLogger
 import java.text.SimpleDateFormat
@@ -113,7 +110,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
             ivFlagNotification.setOnClickListener(this)
         }
 
-        override fun onItemClick(position: Int, v: View, id: Int, optionsLayout: View) {
+        override fun onItemClick(position: Int, v: View, id: Long, optionsLayout: View) {
            clickListener.onItemClick(position, v, id, optionsLayout)
 
         }
@@ -128,7 +125,7 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
     }
 
     interface ClickListener {
-        fun onItemClick(position: Int, v: View, id: Int, optionsLayout:View)
+        fun onItemClick(position: Int, v: View, id: Long, optionsLayout:View)
         fun onItemLongClick(position: Int, v: View, txtMessage: TextView)
     }
 

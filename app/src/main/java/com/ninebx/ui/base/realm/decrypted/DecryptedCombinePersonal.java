@@ -25,20 +25,20 @@ public class DecryptedCombinePersonal implements Parcelable {
             return new DecryptedCombinePersonal[size];
         }
     };
-    RealmList<DecryptedCertificate> certificateItems = new RealmList<>();
-    RealmList<DecryptedGovernment> governmentItems = new RealmList<>();
-    RealmList<DecryptedLicense> licenseItems = new RealmList<>();
-    RealmList<DecryptedPersonal> personalItems = new RealmList<>();
-    RealmList<DecryptedSocial> socialItems = new RealmList<>();
-    RealmList<DecryptedTaxID> taxIDItems = new RealmList<>();
-    RealmList<DecryptedPersonalList> listItems = new RealmList<>();
+    ArrayList<DecryptedCertificate> certificateItems = new ArrayList<>();
+    ArrayList<DecryptedGovernment> governmentItems = new ArrayList<>();
+    ArrayList<DecryptedLicense> licenseItems = new ArrayList<>();
+    ArrayList<DecryptedPersonal> personalItems = new ArrayList<>();
+    ArrayList<DecryptedSocial> socialItems = new ArrayList<>();
+    ArrayList<DecryptedTaxID> taxIDItems = new ArrayList<>();
+    ArrayList<DecryptedPersonalList> listItems = new ArrayList<>();
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     public DecryptedCombinePersonal() {
     }
 
-    public DecryptedCombinePersonal(RealmList<DecryptedCertificate> certificateItems, RealmList<DecryptedGovernment> governmentItems, RealmList<DecryptedLicense> licenseItems, RealmList<DecryptedPersonal> personalItems, RealmList<DecryptedSocial> socialItems, RealmList<DecryptedTaxID> taxIDItems, RealmList<DecryptedPersonalList> listItems, int id) {
+    public DecryptedCombinePersonal(ArrayList<DecryptedCertificate> certificateItems, ArrayList<DecryptedGovernment> governmentItems, ArrayList<DecryptedLicense> licenseItems, ArrayList<DecryptedPersonal> personalItems, ArrayList<DecryptedSocial> socialItems, ArrayList<DecryptedTaxID> taxIDItems, ArrayList<DecryptedPersonalList> listItems, int id) {
         this.certificateItems = certificateItems;
         this.governmentItems = governmentItems;
         this.licenseItems = licenseItems;
@@ -53,67 +53,67 @@ public class DecryptedCombinePersonal implements Parcelable {
         id = in.readInt();
     }
 
-    public RealmList<DecryptedCertificate> getCertificateItems() {
+    public ArrayList<DecryptedCertificate> getCertificateItems() {
         return certificateItems;
     }
 
-    public void setCertificateItems(RealmList<DecryptedCertificate> certificateItems) {
+    public void setCertificateItems(ArrayList<DecryptedCertificate> certificateItems) {
         this.certificateItems = certificateItems;
     }
 
-    public RealmList<DecryptedGovernment> getGovernmentItems() {
+    public ArrayList<DecryptedGovernment> getGovernmentItems() {
         return governmentItems;
     }
 
-    public void setGovernmentItems(RealmList<DecryptedGovernment> governmentItems) {
+    public void setGovernmentItems(ArrayList<DecryptedGovernment> governmentItems) {
         this.governmentItems = governmentItems;
     }
 
-    public RealmList<DecryptedLicense> getLicenseItems() {
+    public ArrayList<DecryptedLicense> getLicenseItems() {
         return licenseItems;
     }
 
-    public void setLicenseItems(RealmList<DecryptedLicense> licenseItems) {
+    public void setLicenseItems(ArrayList<DecryptedLicense> licenseItems) {
         this.licenseItems = licenseItems;
     }
 
-    public RealmList<DecryptedPersonal> getPersonalItems() {
+    public ArrayList<DecryptedPersonal> getPersonalItems() {
         return personalItems;
     }
 
-    public void setPersonalItems(RealmList<DecryptedPersonal> personalItems) {
+    public void setPersonalItems(ArrayList<DecryptedPersonal> personalItems) {
         this.personalItems = personalItems;
     }
 
-    public RealmList<DecryptedSocial> getSocialItems() {
+    public ArrayList<DecryptedSocial> getSocialItems() {
         return socialItems;
     }
 
-    public void setSocialItems(RealmList<DecryptedSocial> socialItems) {
+    public void setSocialItems(ArrayList<DecryptedSocial> socialItems) {
         this.socialItems = socialItems;
     }
 
-    public RealmList<DecryptedTaxID> getTaxIDItems() {
+    public ArrayList<DecryptedTaxID> getTaxIDItems() {
         return taxIDItems;
     }
 
-    public void setTaxIDItems(RealmList<DecryptedTaxID> taxIDItems) {
+    public void setTaxIDItems(ArrayList<DecryptedTaxID> taxIDItems) {
         this.taxIDItems = taxIDItems;
     }
 
-    public RealmList<DecryptedPersonalList> getListItems() {
+    public ArrayList<DecryptedPersonalList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedPersonalList> listItems) {
+    public void setListItems(ArrayList<DecryptedPersonalList> listItems) {
         this.listItems = listItems;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -124,7 +124,7 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     public int getDriversLicense(String selectionType) {
@@ -170,7 +170,7 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     public int getListsCount(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedPersonalList decryptedLicense : listItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }

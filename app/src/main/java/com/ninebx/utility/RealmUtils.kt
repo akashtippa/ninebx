@@ -139,8 +139,8 @@ fun getRealmServerConnection(realmEndPoint: String, callback: Realm.Callback) {
     })
 }
 
-fun getUniqueId(): Int {
-    return UUID.randomUUID().hashCode()
+fun getUniqueId(): Long {
+    return UUID.randomUUID().hashCode().toLong()
 }
 
 

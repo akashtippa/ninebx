@@ -20,18 +20,18 @@ public class Asset extends RealmObject {
 
 
     @PrimaryKey //@Required
-    int id = 0;
+    long id = 0;
 
     @Required private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -76,8 +76,9 @@ public class Asset extends RealmObject {
     @Required private String imageName = "";
     @Required private String attachmentNames = "";
 
-    public Asset(String selectionType, String test, String assetName, String descriptionOrLocation, String estimatedMarketValue, String serialNumber, String purchaseDate, String purchasePrice, String contacts, String created, String modified, Boolean isPrivate, String createdUser, String notes, String imageName, String attachmentNames) {
+    public Asset(long id, String selectionType, String test, String assetName, String descriptionOrLocation, String estimatedMarketValue, String serialNumber, String purchaseDate, String purchasePrice, String contacts, String created, String modified, Boolean isPrivate, String createdUser, String notes, String imageName, String attachmentNames) {
         this.selectionType = selectionType;
+        this.id=id;
         this.test = test;
         this.assetName = assetName;
         this.descriptionOrLocation = descriptionOrLocation;

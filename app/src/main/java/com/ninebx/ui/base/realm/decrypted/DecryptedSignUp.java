@@ -31,7 +31,7 @@ public class DecryptedSignUp implements Parcelable {
     @Required
     private String user_id = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     public DecryptedSignUp(String fullName, String emailAddress, String password, String user_id, int id) {
         this.fullName = fullName;
@@ -58,7 +58,7 @@ public class DecryptedSignUp implements Parcelable {
         dest.writeString(emailAddress);
         dest.writeString(password);
         dest.writeString(user_id);
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -98,11 +98,11 @@ public class DecryptedSignUp implements Parcelable {
         this.user_id = user_id;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

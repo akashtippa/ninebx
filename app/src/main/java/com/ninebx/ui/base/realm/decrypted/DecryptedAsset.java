@@ -30,9 +30,9 @@ public class DecryptedAsset implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-            int id = 0;
+            private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -72,7 +72,7 @@ public class DecryptedAsset implements Parcelable {
     public DecryptedAsset() {
     }
 
-    public DecryptedAsset(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String test, String assetName, String descriptionOrLocation, String estimatedMarketValue, String serialNumber, String purchaseDate, String purchasePrice, String contacts, String created, String modified, Boolean isPrivate, String createdUser, String notes, String imageName, String attachmentNames) {
+    public DecryptedAsset(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String test, String assetName, String descriptionOrLocation, String estimatedMarketValue, String serialNumber, String purchaseDate, String purchasePrice, String contacts, String created, String modified, Boolean isPrivate, String createdUser, String notes, String imageName, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -116,19 +116,19 @@ public class DecryptedAsset implements Parcelable {
         attachmentNames = in.readString();
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -278,7 +278,7 @@ public class DecryptedAsset implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(test);

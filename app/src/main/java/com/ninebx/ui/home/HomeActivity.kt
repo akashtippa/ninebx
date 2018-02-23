@@ -50,6 +50,14 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+    var count : Int = 0
+    override fun setNotificationCount(notificationCount: Int) {
+        this.count = notificationCount
+        var bottomNavigationMenuView : BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+        var v : View = bottomNavigationMenuView.getChildAt(3)
+        QBadgeView(this).bindTarget(v).setBadgeNumber(count)
+        AppLogger.d("notificationCount", " " + count)
+    }
 
     val prefrences = NineBxPreferences()
 
@@ -133,9 +141,7 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             }
             true
         }
-        var bottomNavigationMenuView : BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
-        var v : View = bottomNavigationMenuView.getChildAt(3)
-        QBadgeView(this).bindTarget(v).setBadgeNumber(5)
+
 
         toggleToolbarImage()
         ivHome.setOnClickListener {

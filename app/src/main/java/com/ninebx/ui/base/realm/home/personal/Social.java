@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class Social extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class Social extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -77,8 +77,9 @@ public class Social extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public Social(String selectionType, String cardName, String nameOnCard, String socialSecurityNumber, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public Social(long is, String selectionType, String cardName, String nameOnCard, String socialSecurityNumber, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.cardName = cardName;
         this.nameOnCard = nameOnCard;
         this.socialSecurityNumber = socialSecurityNumber;

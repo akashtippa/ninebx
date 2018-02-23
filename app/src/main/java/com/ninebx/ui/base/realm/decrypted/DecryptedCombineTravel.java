@@ -26,22 +26,22 @@ public class DecryptedCombineTravel implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<DecryptedDocuments> documentsItems = new RealmList<DecryptedDocuments>();
+    private ArrayList<DecryptedDocuments> documentsItems = new ArrayList<DecryptedDocuments>();
     @Required
-    private RealmList<DecryptedLoyalty> loyaltyItems = new RealmList<DecryptedLoyalty>();
+    private ArrayList<DecryptedLoyalty> loyaltyItems = new ArrayList<DecryptedLoyalty>();
     @Required
-    private RealmList<DecryptedTravel> travelItems = new RealmList<DecryptedTravel>();
+    private ArrayList<DecryptedTravel> travelItems = new ArrayList<DecryptedTravel>();
     @Required
-    private RealmList<DecryptedVacations> vacationsItems = new RealmList<DecryptedVacations>();
+    private ArrayList<DecryptedVacations> vacationsItems = new ArrayList<DecryptedVacations>();
     @Required
-    private RealmList<DecryptedTravelList> listItems = new RealmList<DecryptedTravelList>();
+    private ArrayList<DecryptedTravelList> listItems = new ArrayList<DecryptedTravelList>();
 
     public DecryptedCombineTravel() {
     }
 
-    public DecryptedCombineTravel(int id, RealmList<DecryptedDocuments> documentsItems, RealmList<DecryptedLoyalty> loyaltyItems, RealmList<DecryptedTravel> travelItems, RealmList<DecryptedVacations> vacationsItems, RealmList<DecryptedTravelList> listItems) {
+    public DecryptedCombineTravel(long id, ArrayList<DecryptedDocuments> documentsItems, ArrayList<DecryptedLoyalty> loyaltyItems, ArrayList<DecryptedTravel> travelItems, ArrayList<DecryptedVacations> vacationsItems, ArrayList<DecryptedTravelList> listItems) {
         this.id = id;
         this.documentsItems = documentsItems;
         this.loyaltyItems = loyaltyItems;
@@ -56,7 +56,7 @@ public class DecryptedCombineTravel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -64,51 +64,51 @@ public class DecryptedCombineTravel implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public  long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<DecryptedDocuments> getDocumentsItems() {
+    public ArrayList<DecryptedDocuments> getDocumentsItems() {
         return documentsItems;
     }
 
-    public void setDocumentsItems(RealmList<DecryptedDocuments> documentsItems) {
+    public void setDocumentsItems(ArrayList<DecryptedDocuments> documentsItems) {
         this.documentsItems = documentsItems;
     }
 
-    public RealmList<DecryptedLoyalty> getLoyaltyItems() {
+    public ArrayList<DecryptedLoyalty> getLoyaltyItems() {
         return loyaltyItems;
     }
 
-    public void setLoyaltyItems(RealmList<DecryptedLoyalty> loyaltyItems) {
+    public void setLoyaltyItems(ArrayList<DecryptedLoyalty> loyaltyItems) {
         this.loyaltyItems = loyaltyItems;
     }
 
-    public RealmList<DecryptedTravel> getTravelItems() {
+    public ArrayList<DecryptedTravel> getTravelItems() {
         return travelItems;
     }
 
-    public void setTravelItems(RealmList<DecryptedTravel> travelItems) {
+    public void setTravelItems(ArrayList<DecryptedTravel> travelItems) {
         this.travelItems = travelItems;
     }
 
-    public RealmList<DecryptedVacations> getVacationsItems() {
+    public ArrayList<DecryptedVacations> getVacationsItems() {
         return vacationsItems;
     }
 
-    public void setVacationsItems(RealmList<DecryptedVacations> vacationsItems) {
+    public void setVacationsItems(ArrayList<DecryptedVacations> vacationsItems) {
         this.vacationsItems = vacationsItems;
     }
 
-    public RealmList<DecryptedTravelList> getListItems() {
+    public ArrayList<DecryptedTravelList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedTravelList> listItems) {
+    public void setListItems(ArrayList<DecryptedTravelList> listItems) {
         this.listItems = listItems;
     }
 
@@ -128,7 +128,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Loyalty Programs
     public int getLoyaltyCount(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
 
         for (DecryptedLoyalty decryptedLicense : loyaltyItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
@@ -140,7 +140,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Documents
     public int getTravelDocuments(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedDocuments decryptedLicense : documentsItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
@@ -150,7 +150,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Dates And Plans
     public int getTravelDatesAndPlans(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedVacations decryptedLicense : vacationsItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
@@ -160,7 +160,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Dates And Plans
     public int getServices(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedTravel decryptedLicense : travelItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
@@ -170,7 +170,7 @@ public class DecryptedCombineTravel implements Parcelable {
     // Travel Lists
     public int getTravelLists(String selectionType) {
         int count = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedTravelList decryptedLicense : listItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }

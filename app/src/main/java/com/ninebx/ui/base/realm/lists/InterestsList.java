@@ -15,7 +15,7 @@ public class InterestsList extends RealmObject {
 
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private String selectionType = "";
     @Required private String classType = "InterestsList";
@@ -34,7 +34,7 @@ public class InterestsList extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public InterestsList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public InterestsList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -53,11 +53,11 @@ public class InterestsList extends RealmObject {
     public InterestsList() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

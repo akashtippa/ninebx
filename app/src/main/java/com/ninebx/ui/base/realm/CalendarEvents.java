@@ -15,7 +15,7 @@ import io.realm.annotations.Required;
 public class CalendarEvents extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     
     @Required
     private RealmList<String> eventID = new RealmList<>();
@@ -52,11 +52,34 @@ public class CalendarEvents extends RealmObject {
     public CalendarEvents() {
     }
 
-    public Integer getId() {
+    public CalendarEvents(long id, RealmList<String> eventID, String classType, RealmList<String> title, RealmList<String> location, RealmList<Boolean> isAllDay, RealmList<String> notes, RealmList<String> startsDate, RealmList<String> endsDate, RealmList<String> repeats, RealmList<String> endRepeat, RealmList<String> reminder, RealmList<String> travelTime, RealmList<String> alert, RealmList<String> showAs, RealmList<String> url, RealmList<String> isReminderSet, String attachmentNames, RealmList<RealmString> backingImages, RealmList<String> photosId) {
+        this.id = id;
+        this.eventID = eventID;
+        this.classType = classType;
+        this.title = title;
+        this.location = location;
+        this.isAllDay = isAllDay;
+        this.notes = notes;
+        this.startsDate = startsDate;
+        this.endsDate = endsDate;
+        this.repeats = repeats;
+        this.endRepeat = endRepeat;
+        this.reminder = reminder;
+        this.travelTime = travelTime;
+        this.alert = alert;
+        this.showAs = showAs;
+        this.url = url;
+        this.isReminderSet = isReminderSet;
+        this.attachmentNames = attachmentNames;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

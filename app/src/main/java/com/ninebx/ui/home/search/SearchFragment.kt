@@ -22,6 +22,8 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.baseCategories.CategoryFragment
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 03/01/18.
@@ -140,6 +142,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 rvRecentSearch.visibility = View.GONE
+
                 val text = edtSearch.text.toString().trim()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems( text )
                 searchDecryptCombineTravel = mSearchPresenter.searchTravelItems(text)
@@ -164,9 +167,13 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun setRecentSearchAdapter() {
-        rvRecentSearch.layoutManager = LinearLayoutManager(context)
+        var linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.setReverseLayout(true)
+        linearLayoutManager.setStackFromEnd(true)
+        rvRecentSearch.layoutManager = linearLayoutManager
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
+
     }
 
     private fun hideAllLayouts() {

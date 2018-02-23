@@ -23,7 +23,7 @@ public class DecryptedHash implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String finalPassword = "";
     @Required
@@ -34,7 +34,7 @@ public class DecryptedHash implements Parcelable {
     public DecryptedHash() {
     }
 
-    public DecryptedHash(int id, String finalPassword, String passcode, Boolean isEnabledTouchId) {
+    public DecryptedHash(long id, String finalPassword, String passcode, Boolean isEnabledTouchId) {
         this.id = id;
         this.finalPassword = finalPassword;
         this.passcode = passcode;
@@ -51,7 +51,7 @@ public class DecryptedHash implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(finalPassword);
         dest.writeString(passcode);
         dest.writeByte((byte) (isEnabledTouchId == null ? 0 : isEnabledTouchId ? 1 : 2));
@@ -62,11 +62,11 @@ public class DecryptedHash implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

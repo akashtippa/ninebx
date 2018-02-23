@@ -30,7 +30,7 @@ public class DecryptedMainContacts implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -76,7 +76,7 @@ public class DecryptedMainContacts implements Parcelable {
     @Required
     private String createdUser = "";
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -112,11 +112,11 @@ public class DecryptedMainContacts implements Parcelable {
     public DecryptedMainContacts() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -296,11 +296,11 @@ public class DecryptedMainContacts implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -327,7 +327,7 @@ public class DecryptedMainContacts implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
         dest.writeString(accountName);

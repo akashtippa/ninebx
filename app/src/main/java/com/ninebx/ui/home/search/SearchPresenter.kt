@@ -24,6 +24,7 @@ import com.ninebx.ui.home.fragments.FragmentMemoriesListContainer
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
+import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
 
@@ -146,13 +147,13 @@ class SearchPresenter {
     private fun fetchRecentSearch() {
         prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").findAll()
+                val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").sort("createdDate", Sort.DESCENDING).findAll()
                 if (recentSearch.size > 0) {
                     for (i in 0 until recentSearch.size) {
                         decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
-                        searchView!!.onRecentSearchFetched(decryptedRecentSearch)
                         AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
                     }
+                    searchView!!.onRecentSearchFetched(decryptedRecentSearch)
                 }
             }
         })

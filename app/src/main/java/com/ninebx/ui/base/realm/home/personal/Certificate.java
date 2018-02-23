@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class Certificate extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class Certificate extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -87,8 +87,9 @@ public class Certificate extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public Certificate(String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public Certificate(long id, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.cer_description = cer_description;
         this.nameOnCertificate = nameOnCertificate;
         this.gender = gender;

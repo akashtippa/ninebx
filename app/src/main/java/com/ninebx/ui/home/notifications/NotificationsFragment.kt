@@ -30,6 +30,8 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     private var decryptedNotifications = ArrayList<DecryptedNotifications>()
     private var mNotificationsPresenter : NotificationsPresenter ?= null
 
+    var count = 0
+
     override fun showProgress(message: Int) {
         if( progressLayout != null )
             progressLayout.show()
@@ -53,11 +55,16 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         hideProgress()
         if( rvNotification != null ) {
             this.decryptedNotifications = notifications
+            for( notification in decryptedNotifications ) {
+                count += if ( notification.read ) 0 else 1
+            }
+            AppLogger.d("notificationCount", " " + count)
+            mHomeView.setNotificationCount(count)
             rvNotification.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
             val mAdapter = NotificationAdapter(decryptedNotifications)
             mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
 
-                override fun onItemClick(position: Int, v: View, id: Int, optionsLayout : View) {
+                override fun onItemClick(position: Int, v: View, id: Long, optionsLayout : View) {
 
                     when( v.id ) {
                         R.id.tvBoxName,
@@ -90,17 +97,12 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
                             mNotificationsPresenter!!.markAsUnread(position)
                             mAdapter.notifyDataSetChanged()
                         }
-
                     }
-
-
                 }
                 override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
-
                 }
             })
             rvNotification.adapter = mAdapter
-
         }
     }
 

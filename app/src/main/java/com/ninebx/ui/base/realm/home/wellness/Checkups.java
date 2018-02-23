@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class Checkups extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,7 +29,7 @@ public class Checkups extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
@@ -79,8 +79,9 @@ public class Checkups extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public Checkups(String selectionType, String classType, String physicianName, String checkup_description, String physicianType, String reason, String dateOfVisit, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+    public Checkups(long id, String selectionType, String classType, String physicianName, String checkup_description, String physicianType, String reason, String dateOfVisit, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.classType = classType;
         this.physicianName = physicianName;
         this.checkup_description = checkup_description;

@@ -12,4 +12,5 @@ import java.util.*
 interface HomeView : BaseView {
     fun addEditCalendarEvent(calendarEvent : CalendarEvents?, selectedDate : Date )
     fun getCurrentUsers(): RealmResults<Users>
+    fun setNotificationCount(notificationCount: Int)
 }

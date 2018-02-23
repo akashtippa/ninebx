@@ -30,7 +30,7 @@ public class DecryptedEducation implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -76,7 +76,7 @@ public class DecryptedEducation implements Parcelable {
     @Required
     private String createdUser = "";
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -84,7 +84,7 @@ public class DecryptedEducation implements Parcelable {
     public DecryptedEducation() {
     }
 
-    public DecryptedEducation(int id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, RealmList<RealmString> backingImages, List<String> photosId) {
+    public DecryptedEducation(long id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String notes, String attachmentNames, String title, String created, String modified, Boolean isPrivate, String createdUser, ArrayList<RealmString> backingImages, List<String> photosId) {
         this.id = id;
         this.selectionType = selectionType;
         this.institutionName = institutionName;
@@ -111,6 +111,7 @@ public class DecryptedEducation implements Parcelable {
         this.backingImages = backingImages;
         this.photosId = photosId;
     }
+
 
     protected DecryptedEducation(Parcel in) {
         id = in.readInt();
@@ -156,11 +157,11 @@ public class DecryptedEducation implements Parcelable {
         }
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -325,11 +326,11 @@ public class DecryptedEducation implements Parcelable {
     }
 
     public Boolean getPrivate() {
-        return isPrivate;
+        return this.isPrivate;
     }
 
     public void setPrivate(Boolean aPrivate) {
-        isPrivate = aPrivate;
+        this.isPrivate = aPrivate;
     }
 
     public String getCreatedUser() {
@@ -340,17 +341,17 @@ public class DecryptedEducation implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
         dest.writeString(accountName);
