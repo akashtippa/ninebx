@@ -405,8 +405,12 @@ class SearchPresenter {
         val searchHomeList = ArrayList<DecryptedHomeList>()
         AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
         for (financeItems in mDecryptCombine.financialItems) {
-            if (performSearch(financeItems, text))
+            val searchResult = performSearchForResult(financeItems, text)
+            if (searchResult.isSearchFound) {
+                financeItems.searchField = searchResult.searchFieldName
                 searchFinanceItems.add(financeItems)
+            }
+
         }
 
         searchDecryptCombine.financialItems.addAll(searchFinanceItems)
@@ -414,19 +418,21 @@ class SearchPresenter {
         AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
 
         for (paymentItems in mDecryptCombine.paymentItems) {
-
-            if (performSearch(paymentItems, text))
-
-
+            val searchResult = performSearchForResult(paymentItems, text)
+            if (performSearch(paymentItems, text)) {
+                paymentItems.searchField = searchResult.searchFieldName
                 searchPaymentItems.add(paymentItems)
+            }
+
         }
 
         searchDecryptCombine.paymentItems.addAll(searchPaymentItems)
         AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
 
         for (propertyItems in mDecryptCombine.propertyItems) {
+            val searchResult = performSearchForResult(propertyItems, text)
             if (performSearch(propertyItems, text))
-
+                propertyItems.searchField = searchResult.searchFieldName
                 searchPropertyItems.add(propertyItems)
         }
 
@@ -434,40 +440,45 @@ class SearchPresenter {
         AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
 
         for (vehicleItems in mDecryptCombine.vehicleItems) {
+            val searchResult = performSearchForResult(vehicleItems, text)
             if (performSearch(vehicleItems, text))
-
+                vehicleItems.searchField = searchResult.searchFieldName
                 searchVehicleItems.add(vehicleItems)
         }
         searchDecryptCombine.vehicleItems.addAll(searchVehicleItems)
         AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
 
         for (assetItems in mDecryptCombine.assetItems) {
+            val searchResult = performSearchForResult(assetItems, text)
             if (performSearch(assetItems, text))
-
+                assetItems.searchField = searchResult.searchFieldName
                 searchAssetItems.add(assetItems)
         }
         searchDecryptCombine.assetItems.addAll(searchAssetItems)
         AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
         for (insuranceItems in mDecryptCombine.insuranceItems) {
+            val searchResult = performSearchForResult(insuranceItems, text)
             if (performSearch(insuranceItems, text))
-
+                insuranceItems.searchField = searchResult.searchFieldName
                 searchInsuranceItems.add(insuranceItems)
         }
         searchDecryptCombine.insuranceItems.addAll(searchInsuranceItems)
         AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
 
         for (taxItems in mDecryptCombine.taxesItems) {
+            val searchResult = performSearchForResult(taxItems, text)
             if (performSearch(taxItems, text))
-
+                taxItems.searchField = searchResult.searchFieldName
                 searchTaxItems.add(taxItems)
         }
         searchDecryptCombine.taxesItems.addAll(searchTaxItems)
         AppLogger.d("Search", "SearchTax" + searchTaxItems)
 
         for (listItems in mDecryptCombine.listItems) {
-            if (performSearch(searchTaxItems, text))
-
+            val searchResult = performSearchForResult(listItems, text)
+            if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchHomeList.add(listItems)
         }
         searchDecryptCombine.listItems.addAll(searchHomeList)

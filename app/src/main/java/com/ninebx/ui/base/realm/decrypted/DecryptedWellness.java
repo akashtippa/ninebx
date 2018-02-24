@@ -30,6 +30,7 @@ public class DecryptedWellness implements Parcelable {
             return new DecryptedWellness[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

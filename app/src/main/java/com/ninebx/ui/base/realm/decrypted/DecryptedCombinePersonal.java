@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -25,6 +26,8 @@ public class DecryptedCombinePersonal implements Parcelable {
             return new DecryptedCombinePersonal[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     ArrayList<DecryptedCertificate> certificateItems = new ArrayList<>();
     ArrayList<DecryptedGovernment> governmentItems = new ArrayList<>();
     ArrayList<DecryptedLicense> licenseItems = new ArrayList<>();

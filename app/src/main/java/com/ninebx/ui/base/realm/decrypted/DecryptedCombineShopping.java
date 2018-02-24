@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -26,6 +27,8 @@ public class DecryptedCombineShopping implements Parcelable {
             return new DecryptedCombineShopping[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey
     private long id = 0;
     @Required

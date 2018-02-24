@@ -30,6 +30,7 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
             return new DecryptedEyeglassPrescriptions[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

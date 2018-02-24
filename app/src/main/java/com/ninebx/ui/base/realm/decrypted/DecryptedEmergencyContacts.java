@@ -30,6 +30,7 @@ public class DecryptedEmergencyContacts implements Parcelable {
             return new DecryptedEmergencyContacts[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

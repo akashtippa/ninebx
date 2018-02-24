@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.Ignore;
+
 /**
  * Created by Alok on 10/02/18.
  */
@@ -21,6 +23,8 @@ public class DecryptedMember implements Parcelable {
             return new DecryptedMember[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     public Boolean isCompleteProfile = false;
     private String firstName = "";
     private String lastName = "";

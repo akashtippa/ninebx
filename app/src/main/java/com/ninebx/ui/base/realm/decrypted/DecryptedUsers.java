@@ -27,6 +27,7 @@ public class DecryptedUsers implements Parcelable {
             return new DecryptedUsers[size];
         }
     };
+    @Ignore public String searchField = "";
     @Required
     private String fullName             = "";
     @Required

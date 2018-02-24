@@ -23,7 +23,9 @@ import com.ninebx.R
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
@@ -34,6 +36,7 @@ import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
+import com.ninebx.ui.home.notifications.NotificationsView
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
@@ -46,17 +49,67 @@ import kotlinx.android.synthetic.main.activity_home.*
 import q.rorbin.badgeview.QBadgeView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @Suppress("DEPRECATION")
-class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
+    override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
+        count = 0
+        for( notification in notifications ) {
+            count += if ( notification.read ) 0 else 1
+        }
+        setNotificationCount(count)
+    }
+
+    override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {
+
+    }
+
+    override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
+        this.currentUsers = currentUsers
+        if (currentUsers != null) {
+            this@HomeActivity.hideProgressDialog()
+            AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
+            for (member in currentUsers!![0]!!.members) {
+
+                AppLogger.d("CurrentUser", "Members : " + member.toString())
+                AppLogger.e("Name ", "is : " + member.firstName)
+            }
+            if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+
+                NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
+
+                toggleCheck(true)
+                bottomNavigationView.menu.getItem(4).isChecked = true
+                callBottomViewFragment(getString(R.string.account))
+
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.addToBackStack(null)
+                val addFamilyUsersFragment = AddFamilyUsersFragment()
+                val bundle = Bundle()
+                bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
+                addFamilyUsersFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+                hideQuickAdd()
+            }
+        }
+    }
+
+    override fun getContextForScreen(): Context {
+        return this@HomeActivity
+    }
+
     var count : Int = 0
     override fun setNotificationCount(notificationCount: Int) {
-        this.count = notificationCount
-        var bottomNavigationMenuView : BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
-        var v : View = bottomNavigationMenuView.getChildAt(3)
-        QBadgeView(this).bindTarget(v).setBadgeNumber(count)
-        AppLogger.d("notificationCount", " " + count)
+        if( count > 0 ) {
+            this.count = notificationCount
+            var bottomNavigationMenuView : BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+            var v : View = bottomNavigationMenuView.getChildAt(3)
+            QBadgeView(this).bindTarget(v).setBadgeNumber(count)
+        }
     }
 
     val prefrences = NineBxPreferences()
@@ -103,11 +156,12 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
 
     private var currentUsers: RealmResults<Users>? = null
+    private lateinit var homePresenter: HomePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        homePresenter = HomePresenter( this )
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
@@ -168,39 +222,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         toggleCheck(false)
         //SearchUtils.search()
 
-        prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        homePresenter.fetchCurrentUsers()
 
-                currentUsers = getCurrentUsers(realm!!)
-                if (currentUsers != null) {
-                    this@HomeActivity.hideProgressDialog()
-                    AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
-                    for (member in currentUsers!![0]!!.members) {
-
-                        AppLogger.d("CurrentUser", "Members : " + member.toString())
-                        AppLogger.e("Name ", "is : " + member.firstName)
-                    }
-                    if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
-
-                        NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
-
-                        toggleCheck(true)
-                        bottomNavigationView.menu.getItem(4).isChecked = true
-                        callBottomViewFragment(getString(R.string.account))
-
-                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
-                        val fragmentTransaction = supportFragmentManager.beginTransaction()
-                        fragmentTransaction.addToBackStack(null)
-                        val addFamilyUsersFragment = AddFamilyUsersFragment()
-                        val bundle = Bundle()
-                        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
-                        addFamilyUsersFragment.arguments = bundle
-                        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
-                        hideQuickAdd()
-                    }
-                }
-            }
-        })
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment

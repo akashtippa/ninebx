@@ -30,6 +30,7 @@ public class DecryptedCheckups implements Parcelable {
             return new DecryptedCheckups[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

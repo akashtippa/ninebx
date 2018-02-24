@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -59,7 +60,8 @@ public class DecryptedCombine implements Parcelable {
         this.taxesItems = taxesItems;
         this.listItems = listItems;
     }
-
+    @Ignore
+    public String searchField = "";
     protected DecryptedCombine(Parcel in) {
         id = in.readInt();
     }
