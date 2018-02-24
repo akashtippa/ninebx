@@ -621,6 +621,4 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             }
         }
     }
-
-
 }
