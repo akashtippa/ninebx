@@ -128,6 +128,21 @@ class SearchPresenter {
         })
     }
 
+    private fun fetchRecentSearch() {
+        prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").sort("createdDate", Sort.DESCENDING).findAll()
+                if (recentSearch.size > 0) {
+                    for (i in 0 until recentSearch.size) {
+                        decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
+                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
+                    }
+                    searchView!!.onRecentSearchFetched(decryptedRecentSearch)
+                }
+            }
+        })
+    }
+
     private fun fetchCombineContacts() {
         prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
@@ -142,21 +157,6 @@ class SearchPresenter {
 
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
-                }
-            }
-        })
-    }
-
-    private fun fetchRecentSearch() {
-        prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").sort("createdDate", Sort.DESCENDING).findAll()
-                if (recentSearch.size > 0) {
-                    for (i in 0 until recentSearch.size) {
-                        decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
-                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
-                    }
-                    searchView!!.onRecentSearchFetched(decryptedRecentSearch)
                 }
             }
         })
@@ -500,31 +500,41 @@ class SearchPresenter {
         val searchListItems = ArrayList<DecryptedTravelList>()
 
         for (documentsItems in mDecryptedCombineTravel.documentsItems) {
+            val searchResult = performSearchForResult(documentsItems, text)
             if (performSearch(documentsItems, text))
+                documentsItems.searchField = searchResult.searchFieldName
                 searchDocumentItems.add(documentsItems)
         }
         searchDecryptCombineTravel.documentsItems.addAll(searchDocumentItems)
 
         for (loyaltyItems in mDecryptedCombineTravel.loyaltyItems) {
+            val searchResult = performSearchForResult(loyaltyItems, text)
             if (performSearch(loyaltyItems, text))
+                loyaltyItems.searchField = searchResult.searchFieldName
                 searchLoyaltyItems.add(loyaltyItems)
         }
         searchDecryptCombineTravel.loyaltyItems.addAll(searchLoyaltyItems)
 
         for (travelItems in mDecryptedCombineTravel.travelItems) {
+            val searchResult = performSearchForResult(travelItems, text)
             if (performSearch(travelItems, text))
+                travelItems.searchField = searchResult.searchFieldName
                 searchTravelItems.add(travelItems)
         }
         searchDecryptCombineTravel.travelItems.addAll(searchTravelItems)
 
         for (vacationItems in mDecryptedCombineTravel.vacationsItems) {
+            val searchResult = performSearchForResult(vacationItems, text)
             if (performSearch(vacationItems, text))
+                vacationItems.searchField = searchResult.searchFieldName
                 searchVacationItems.add(vacationItems)
         }
         searchDecryptCombineTravel.vacationsItems.addAll(searchVacationItems)
 
         for (listItems in mDecryptedCombineTravel.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchListItems.add(listItems)
         }
         searchDecryptCombineTravel.listItems.addAll(searchListItems)
@@ -542,21 +552,27 @@ class SearchPresenter {
         val searchMemorylistItems = ArrayList<DecryptedMemoriesList>()
 
         for (mainMemoryItems in mDecryptedCombineMemories.mainMemoriesItems) {
+            val searchResult = performSearchForResult(mainMemoryItems, text)
             if (performSearch(mainMemoryItems, text))
+                mainMemoryItems.searchField = searchResult.searchFieldName
                 searchMainMemoryItems.add(mainMemoryItems)
         }
         searchDecryptCombineMemories.mainMemoriesItems.addAll(searchMainMemoryItems)
         AppLogger.d("Search", "SearchMainMemoryItems" + searchMainMemoryItems)
 
         for (memoryTimelineItems in mDecryptedCombineMemories.memoryTimelineItems) {
+            val searchResult = performSearchForResult(memoryTimelineItems, text)
             if (performSearch(memoryTimelineItems, text))
+                memoryTimelineItems.searchField = searchResult.searchFieldName
                 searchMemoryTimelineItems.add(memoryTimelineItems)
         }
         searchDecryptCombineMemories.memoryTimelineItems.addAll(searchMemoryTimelineItems)
         AppLogger.d("Search", "SearchMemoryTimeLineItems" + searchMainMemoryItems)
 
         for (listItems in mDecryptedCombineMemories.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchMemorylistItems.add(listItems)
         }
         searchDecryptCombineMemories.listItems.addAll(searchMemorylistItems)
@@ -575,25 +591,33 @@ class SearchPresenter {
         val searchEducationListItems = ArrayList<DecryptedEducationList>()
 
         for (educationItems in mDecryptCombineEducation.educationItems) {
+            val searchResult = performSearchForResult(educationItems, text)
             if (performSearch(educationItems, text))
+                educationItems.searchField = searchResult.searchFieldName
                 searchEducationItems.add(educationItems)
         }
         searchDecryptCombineEducation.educationItems.addAll(searchEducationItems)
 
         for (mainEducationItems in mDecryptCombineEducation.mainEducationItems) {
+            val searchResult = performSearchForResult(mainEducationItems, text)
             if (performSearch(mainEducationItems, text))
+                mainEducationItems.searchField = searchResult.searchFieldName
                 searchMainEduactionItems.add(mainEducationItems)
         }
         searchDecryptCombineEducation.mainEducationItems.addAll(searchMainEduactionItems)
 
         for (workItems in mDecryptCombineEducation.workItems) {
+            val searchResult = performSearchForResult(workItems, text)
             if (performSearch(workItems, text))
+                workItems.searchField = searchResult.searchFieldName
                 searchWorkItems.add(workItems)
         }
         searchDecryptCombineEducation.workItems.addAll(searchWorkItems)
 
         for (listItems in mDecryptCombineEducation.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchEducationListItems.add(listItems)
         }
         searchDecryptCombineEducation.listItems.addAll(searchEducationListItems)
@@ -610,13 +634,17 @@ class SearchPresenter {
         val searchInterestList = ArrayList<DecryptedInterestsList>()
 
         for (interestitems in mDecryptCombineInterests.interestItems) {
+            val searchResult = performSearchForResult(interestitems, text)
             if (performSearch(interestitems, text))
+                interestitems.searchField = searchResult.searchFieldName
                 searchInterestItems.add(interestitems)
         }
         searchDecryptCombineInterests.interestItems.addAll(searchInterestItems)
 
         for (listItems in mDecryptCombineInterests.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchInterestList.add(listItems)
         }
         searchDecryptCombineInterests.listItems.addAll(searchInterestList)
@@ -642,67 +670,89 @@ class SearchPresenter {
         val searchWellnessList = ArrayList<DecryptedWellnessList>()
 
         for (checkupItems in mDecryptCombineWellness.checkupsItems) {
+            val searchResult = performSearchForResult(checkupItems, text)
             if (performSearch(checkupItems, text))
+                checkupItems.searchField = searchResult.searchFieldName
                 searchCheckupItems.add(checkupItems)
         }
         searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
 
         for (emergencyContactItems in mDecryptCombineWellness.emergencyContactsItems) {
+            val searchResult = performSearchForResult(emergencyContactItems, text)
             if (performSearch(emergencyContactItems, text))
+                emergencyContactItems.searchField = searchResult.searchFieldName
                 searchEmergencyContacts.add(emergencyContactItems)
         }
         searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
 
         for (eyeglassPrescriptionItems in mDecryptCombineWellness.eyeglassPrescriptionsItems) {
+            val searchResult = performSearchForResult(eyeglassPrescriptionItems, text)
             if (performSearch(eyeglassPrescriptionItems, text))
+                eyeglassPrescriptionItems.searchField = searchResult.searchFieldName
                 searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
         }
         searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
 
         for (healthCareProviderItems in mDecryptCombineWellness.healthcareProvidersItems) {
+            val searchResult = performSearchForResult(healthCareProviderItems, text)
             if (performSearch(healthCareProviderItems, text))
+                healthCareProviderItems.searchField = searchResult.searchFieldName
                 searchhealthcareProviders.add(healthCareProviderItems)
         }
         searchDecryptCombineWellness.healthcareProvidersItems.addAll(searchhealthcareProviders)
 
         for (identificationItems in mDecryptCombineWellness.identificationItems) {
+            val searchResult = performSearchForResult(identificationItems, text)
             if (performSearch(identificationItems, text))
+                identificationItems.searchField = searchResult.searchFieldName
                 searchIdentification.add(identificationItems)
         }
         searchDecryptCombineWellness.identificationItems.addAll(searchIdentification)
 
         for (medicalConditionsItems in mDecryptCombineWellness.medicalConditionsItems) {
+            val searchResult = performSearchForResult(medicalConditionsItems, text)
             if (performSearch(medicalConditionsItems, text))
+                medicalConditionsItems.searchField = searchResult.searchFieldName
                 searchMedicalConditions.add(medicalConditionsItems)
         }
         searchDecryptCombineWellness.medicalConditionsItems.addAll(searchMedicalConditions)
 
         for (medicalHistoryItems in mDecryptCombineWellness.medicalHistoryItems) {
+            val searchResult = performSearchForResult(medicalHistoryItems, text)
             if (performSearch(medicalHistoryItems, text))
+                medicalHistoryItems.searchField = searchResult.searchFieldName
                 searchMedicalHistory.add(medicalHistoryItems)
         }
         searchDecryptCombineWellness.medicalHistoryItems.addAll(searchMedicalHistory)
 
         for (medicationItems in mDecryptCombineWellness.medicationsItems) {
+            val searchResult = performSearchForResult(medicationItems, text)
             if (performSearch(medicationItems, text))
+                medicationItems.searchField = searchResult.searchFieldName
                 searchMedications.add(medicationItems)
         }
         searchDecryptCombineWellness.medicationsItems.addAll(searchMedications)
 
         for (vitalNumberItems in mDecryptCombineWellness.vitalNumbersItems) {
+            val searchResult = performSearchForResult(vitalNumberItems, text)
             if (performSearch(vitalNumberItems, text))
+                vitalNumberItems.searchField = searchResult.searchFieldName
                 searchVitalNumber.add(vitalNumberItems)
         }
         searchDecryptCombineWellness.vitalNumbersItems.addAll(searchVitalNumber)
 
         for (wellnessItems in mDecryptCombineWellness.wellnessItems) {
+            val searchResult = performSearchForResult(wellnessItems, text)
             if (performSearch(wellnessItems, text))
+                wellnessItems.searchField = searchResult.searchFieldName
                 searchWellness.add(wellnessItems)
         }
         searchDecryptCombineWellness.wellnessItems.addAll(searchWellness)
 
         for (listItems in mDecryptCombineWellness.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchWellnessList.add(listItems)
         }
         searchDecryptCombineWellness.listItems.addAll(searchWellnessList)
@@ -724,37 +774,51 @@ class SearchPresenter {
         val searchPersonalList = ArrayList<DecryptedPersonalList>()
 
         for (certificateItems in mDecryptCombinePersonal.certificateItems) {
+            val searchResult = performSearchForResult(certificateItems, text)
             if (performSearch(certificateItems, text))
+                certificateItems.searchField = searchResult.searchFieldName
                 searchCertifiacate.add(certificateItems)
         }
         searchDecryptCombinePersonal.certificateItems.addAll(searchCertifiacate)
         for (governmentItems in mDecryptCombinePersonal.governmentItems) {
+            val searchResult = performSearchForResult(governmentItems, text)
             if (performSearch(governmentItems, text))
+                governmentItems.searchField = searchResult.searchFieldName
                 searchGovernment.add(governmentItems)
         }
         searchDecryptCombinePersonal.governmentItems.addAll(searchGovernment)
         for (liceneItems in mDecryptCombinePersonal.licenseItems) {
+            val searchResult = performSearchForResult(liceneItems, text)
             if (performSearch(liceneItems, text))
+                liceneItems.searchField = searchResult.searchFieldName
                 searchLicense.add(liceneItems)
         }
         searchDecryptCombinePersonal.licenseItems.addAll(searchLicense)
         for (personalItems in mDecryptCombinePersonal.personalItems) {
+            val searchResult = performSearchForResult(personalItems, text)
             if (performSearch(personalItems, text))
+                personalItems.searchField = searchResult.searchFieldName
                 searchPersonal.add(personalItems)
         }
         searchDecryptCombinePersonal.personalItems.addAll(searchPersonal)
         for (socialItems in mDecryptCombinePersonal.socialItems) {
+            val searchResult = performSearchForResult(socialItems, text)
             if (performSearch(socialItems, text))
+                socialItems.searchField = searchResult.searchFieldName
                 searchSocial.add(socialItems)
         }
         searchDecryptCombinePersonal.socialItems.addAll(searchSocial)
         for (taxIDItems in mDecryptCombinePersonal.taxIDItems) {
+            val searchResult = performSearchForResult(taxIDItems, text)
             if (performSearch(taxIDItems, text))
+                taxIDItems.searchField = searchResult.searchFieldName
                 searchTaxID.add(taxIDItems)
         }
         searchDecryptCombinePersonal.taxIDItems.addAll(searchTaxID)
         for (listItems in mDecryptCombinePersonal.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchPersonalList.add(listItems)
         }
         searchDecryptCombinePersonal.listItems.addAll(searchPersonalList)
@@ -770,17 +834,23 @@ class SearchPresenter {
         val searchMainContacts = ArrayList<DecryptedMainContacts>()
         val searchContactsList = ArrayList<DecryptedContactsList>()
         for (contactsItems in mDecryptedCombineContacts.contactsItems) {
+            val searchResult = performSearchForResult(contactsItems, text)
             if (performSearch(contactsItems, text))
+                contactsItems.searchField = searchResult.searchFieldName
                 searchContacts.add(contactsItems)
         }
         searchDecryptCombineContacts.contactsItems.addAll(searchContacts)
         for (mainContactItems in mDecryptedCombineContacts.mainContactsItems) {
+            val searchResult = performSearchForResult(mainContactItems, text)
             if (performSearch(mainContactItems, text))
+                mainContactItems.searchField = searchResult.searchFieldName
                 searchMainContacts.add(mainContactItems)
         }
         searchDecryptCombineContacts.mainContactsItems.addAll(searchMainContacts)
         for (listItems in mDecryptedCombineContacts.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchContactsList.add(listItems)
         }
         searchDecryptCombineContacts.listItems.addAll(searchContactsList)
@@ -803,28 +873,35 @@ class SearchPresenter {
         }
         searchDecryptCombineShopping.loyaltyProgramsItems.addAll(searchLoyaltyPrograms)
         for (recentPurchaseItems in mDecryptCombineShopping.recentPurchaseItems) {
+            val searchResult = performSearchForResult(recentPurchaseItems, text)
             if (performSearch(recentPurchaseItems, text))
+                recentPurchaseItems.searchField = searchResult.searchFieldName
                 searchRecentPurchase.add(recentPurchaseItems)
         }
         searchDecryptCombineShopping.recentPurchaseItems.addAll(searchRecentPurchase)
         for (shoppingItems in mDecryptCombineShopping.shoppingItems) {
+            val searchResult = performSearchForResult(shoppingItems, text)
             if (performSearch(shoppingItems, text))
+                shoppingItems.searchField = searchResult.searchFieldName
                 searchShopping.add(shoppingItems)
         }
         searchDecryptCombineShopping.shoppingItems.addAll(searchShopping)
         for (clothingSizeItems in mDecryptCombineShopping.clothingSizesItems) {
+            val searchResult = performSearchForResult(clothingSizeItems, text)
             if (performSearch(clothingSizeItems, text))
+                clothingSizeItems.searchField = searchResult.searchFieldName
                 searchClothingSize.add(clothingSizeItems)
         }
         searchDecryptCombineShopping.clothingSizesItems.addAll(searchClothingSize)
         for (listItems in mDecryptCombineShopping.listItems) {
+            val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
+                listItems.searchField = searchResult.searchFieldName
                 searchShoppingList.add(listItems)
         }
         searchDecryptCombineShopping.listItems.addAll(searchShoppingList)
         return searchDecryptCombineShopping
     }
-
 }
 
 

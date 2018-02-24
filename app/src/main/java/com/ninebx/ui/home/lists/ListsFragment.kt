@@ -7,9 +7,7 @@ import android.view.ViewGroup
 
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
@@ -20,6 +18,7 @@ import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_lists.*
+
 
 /**
  * Created by Alok on 03/01/18.
@@ -62,21 +61,14 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         txtContactNumber.text = combineContacts.listItems.count().toString()
     }
 
-    override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
-        TODO()
-    }
+    override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {   }
 
-    override fun showProgress(message: Int) {
-
-    }
+    override fun showProgress(message: Int) {}
 
     override fun hideProgress() {
-
     }
 
-    override fun onError(error: Int) {
-
-    }
+    override fun onError(error: Int) { }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lists, container, false)
@@ -301,6 +293,4 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
             }
         }
     }
-
-
 }
