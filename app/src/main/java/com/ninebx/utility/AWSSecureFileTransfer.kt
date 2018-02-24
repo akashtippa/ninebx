@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Environment
+import android.util.Base64
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.*
@@ -33,8 +34,8 @@ class AWSSecureFileTransfer( val context: Context ) {
         // Get a range of bytes from an object.
         val getObjectRequest = GetObjectRequest(Constants.BUCKET_NAME, filePath)
         val sseCustomerKey = SSECustomerKey(privateKeyArrayBase64)
-        //sseCustomerKey.md5 = MD5Helper.getMD5(privateKeyArrayBase64)
-        //sseCustomerKey.algorithm = SSEAlgorithm.AES256.algorithm
+        sseCustomerKey.md5 = String(Base64.encode(MD5Helper.getMD5(privateKeyArrayBase64).toByteArray(), Base64.DEFAULT)).trim()
+        sseCustomerKey.algorithm = SSEAlgorithm.AES256.algorithm
         executeDownload( getObjectRequest, sseCustomerKey, filePath )
 
     }

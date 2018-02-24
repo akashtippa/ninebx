@@ -36,6 +36,7 @@ import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
+import com.ninebx.ui.home.notifications.NotificationsPresenter
 import com.ninebx.ui.home.notifications.NotificationsView
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
@@ -162,6 +163,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         homePresenter = HomePresenter( this )
+        NotificationsPresenter(this)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
