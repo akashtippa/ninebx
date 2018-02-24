@@ -23,6 +23,7 @@
         android:layout_margin="@dimen/default_mini_padding"
         android:background="@null"
         android:hint="@string/location"
+        android:singleLine="true"
         android:inputType="textCapWords"
         android:visibility="visible" />
 

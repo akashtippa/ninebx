@@ -35,7 +35,8 @@
             android:drawableLeft="@drawable/ic_icon_add_list"
             android:drawablePadding="@dimen/_5sdp"
             android:drawableStart="@drawable/ic_icon_add_list"
-            android:hint="@string/add_list" />
+            android:hint="@string/add_list"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/txtDone"

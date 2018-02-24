@@ -235,11 +235,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
                 if (currentUsers != null) {
                     AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
                     if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
-
-                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
-                        val addFamilyUsersFragment = AddFamilyUsersFragment()
+                        val addFamilyUsersFragment = SubListsFragment()
                         val bundle = Bundle()
                         bundle.putParcelableArrayList(Constants.LIST_HOME, HomeList.createParcelableList(currentUsers!!))
                         addFamilyUsersFragment.arguments = bundle

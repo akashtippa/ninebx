@@ -163,6 +163,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         homePresenter = HomePresenter( this )
+        NotificationsPresenter(this)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
