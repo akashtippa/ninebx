@@ -19,6 +19,7 @@
         android:layout_marginTop="@dimen/default_mini_margin"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:singleLine="true"
         android:text="@string/date"
         android:gravity="center_vertical"
         android:padding="10dp" />

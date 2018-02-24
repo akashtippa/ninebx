@@ -34,6 +34,7 @@
             android:layout_toRightOf="@+id/cvAttachment"
             android:background="@color/transparent_white"
             android:drawablePadding="@dimen/default_mini_padding"
+            android:singleLine="true"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/default_margin"
             android:paddingEnd="@dimen/default_margin"
