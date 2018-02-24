@@ -248,6 +248,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     private fun gettingMemoryTimeLineView() {
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                hideProgress()
 
                 allMemoryView = getAllMemoryTimeLine(realm!!)
                 if (allMemoryView != null) {
@@ -272,6 +273,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     private fun gettingContactsList() {
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                hideProgress()
 
                 allContacts = getCurrentContactList(realm!!)
                 if (allContacts != null) {

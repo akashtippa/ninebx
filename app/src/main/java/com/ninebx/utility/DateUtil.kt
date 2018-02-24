@@ -51,6 +51,7 @@ fun getDateFromPicker(context: Context, calendar: Calendar, dateTimeSelectionLis
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH))
 
+    datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
     datePickerDialog.show()
 
 }

@@ -54,6 +54,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
     override fun memoryAdded(memoryTimeLine: MemoryTimeline?) {
         myList.add(memoryTimeLine!!)
+        myDateList.addAll(currentDateList!!)
         mListsAdapter!!.notifyDataSetChanged()
         mListsDateAdapter!!.notifyDataSetChanged()
         saveMemoryTimeLine()

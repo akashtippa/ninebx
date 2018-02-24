@@ -29,6 +29,8 @@ class ClothesFragment : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Womens sizes")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -39,6 +41,8 @@ class ClothesFragment : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Mens sizes")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -49,6 +53,8 @@ class ClothesFragment : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Girls sizes")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -59,6 +65,8 @@ class ClothesFragment : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Boy's sizes")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -69,6 +77,8 @@ class ClothesFragment : FragmentBackHelper() {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Baby's sizes")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()

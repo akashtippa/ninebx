@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.id.spinnerAccountType
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.utility.Constants
@@ -57,11 +58,11 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
     var menTopsNumericSizes = arrayOf("Numeric size(US)", "32", "34", "36", "38", "40", "42", "44", "46", "48")
     var menBottomsNumericSizes = arrayOf("Numeric size(US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
     var menBottomsNumericSizesSuiting = arrayOf("Numeric (US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
-    var menJacketsNumericSizes = arrayOf("Numeric size(US)", "34", "36", "38", "40", "42", "44", "46")
+    var menJacketsNumericSizes = arrayOf("Numeric (size)", "34", "36", "38", "40", "42", "44", "46")
     var menShoeSizes = arrayOf("Size (US)", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5", "16")
     var menShoeWidthSizes = arrayOf("Width", "4A", "3A", "2A/B", "C", "D", "E/2E", "3E", "4E", "5E")
     var menBelts = arrayOf("Belts", "S", "M", "L", "XL", "XXL")
-    var menBottomsNumericBeltsSizes = arrayOf("Belts (Numeric size", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46")
+    var menBottomsNumericBeltsSizes = arrayOf("Belts (size)", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46")
     var menHats = arrayOf("Hats", "XS", "S", "M", "L", "L", "XXL")
     var menGloves = arrayOf("Gloves", "XS", "S", "M", "L", "L", "XXL")
 
@@ -85,6 +86,172 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
     var othersAccountTypeOptions = arrayOf("Cable/Satellite", "Phone", "Long Distance", "Wireless", "Internet", "Gas", "Electricity", "Water", "Trash", "Other")
 
+    var currencyType = arrayOf("USD",
+            "US Dollar - USD",
+            "Afghanistan Afghani - AFA",
+            "Albanian Lek - ALL",
+            "Algerian Dinar - DZD",
+            "Angolan Kwanza Reajustado - AOR",
+            "Argentine Peso - ARS",
+            "Armenian Dram - AMD",
+            "Aruban Guilder - AWG",
+            "Australian Dollar - AUD",
+            "Azerbaijanian New Manat - AZN",
+            "Bahamian Dollar - BSD",
+            "Bahraini Dinar - BHD",
+            "Bangladeshi Taka - BDT",
+            "Barbados Dollar - BBD",
+            "Belarusian Ruble - BYN",
+            "Belize Dollar - BZD",
+            "Bermudian Dollar - BMD",
+            "Bhutan Ngultrum - BTN",
+            "Bolivian Boliviano - BOB",
+            "Botswana Pula - BWP",
+            "Brazilian Real - BRL",
+            "British Pound - GBP",
+            "Brunei Dollar - BND",
+            "Bulgarian Lev - BGN",
+            "Burundi Franc - BIF",
+            "Cambodian Riel - KHR",
+            "Canadian Dollar - CAD",
+            "Cape Verde Escudo - CVE",
+            "Cayman Islands Dollar - KYD",
+            "CFA Franc BCEAO - XOF",
+            "CFA Franc BEAC - XAF",
+            "CFP Franc - XPF",
+            "Chilean Peso - CLP",
+            "Chinese Yuan Renminbi - CNY",
+            "Colombian Peso - COP",
+            "Comoros Franc - KMF",
+            "Congolese Franc - CDF",
+            "Costa Rican Colon - CRC",
+            "Croatian Kuna - HRK",
+            "Cuban Peso - CUP",
+            "Czech Koruna - CZK",
+            "Danish Krone - DKK",
+            "Djibouti Franc - DJF",
+            "Dominican Peso - DOP",
+            "East Caribbean Dollar - XCD",
+            "Egyptian Pound - EGP",
+            "El Salvador Colon - SVC",
+            "Eritrean Nakfa - ERN",
+            "Estonian Kroon - EEK",
+            "Ethiopian Birr - ETB",
+            "EU Euro - EUR",
+            "Falkland Islands Pound - FKP",
+            "Fiji Dollar - FJD",
+            "Gambian Dalasi - GMD",
+            "Georgian Lari - GEL",
+            "Ghanaian New Cedi - GHS",
+            "Gibraltar Pound - GIP",
+            "Gold (Ounce) - XAU",
+            "Gold Franc - XFO",
+            "Guatemalan Quetzal - GTQ",
+            "Guinean Franc - GNF",
+            "Guyana Dollar - GYD",
+            "Haitian Gourde - HTG",
+            "Honduran Lempira - HNL",
+            "Hong Kong SAR Dollar - HKD",
+            "Hungarian Forint - HUF",
+            "Icelandic Krona - ISK",
+            "IMF Special Drawing Right - XDR",
+            "Indian Rupee - INR",
+            "Indonesian Rupiah - IDR",
+            "Iranian Rial - IRR",
+            "Iraqi Dinar - IQD",
+            "Israeli New Shekel - ILS",
+            "Jamaican Dollar - JMD",
+            "Japanese Yen - JPY",
+            "Jordanian Dinar - JOD",
+            "Kazakh Tenge - KZT",
+            "Kenyan Shilling - KES",
+            "Kuwaiti Dinar - KWD",
+            "Kyrgyz Som - KGS",
+            "Lao Kip - LAK",
+            "Latvian Lats - LVL",
+            "Lebanese Pound - LBP",
+            "Lesotho Loti - LSL",
+            "Liberian Dollar - LRD",
+            "Libyan Dinar - LYD",
+            "Lithuanian Litas - LTL",
+            "Macao SAR Pataca - MOP",
+            "Macedonian Denar - MKD",
+            "Malagasy Ariary - MGA",
+            "Malawi Kwacha - MWK",
+            "Malaysian Ringgit - MYR",
+            "Maldivian Rufiyaa - MVR",
+            "Mauritanian Ouguiya - MRO",
+            "Mauritius Rupee - MUR",
+            "Mexican Peso - MXN",
+            "Moldovan Leu - MDL",
+            "Mongolian Tugrik - MNT",
+            "Moroccan Dirham - MAD",
+            "Mozambique New metical - MZN",
+            "Myanmar Kyat - MMK",
+            "Namibian Dollar - NAD",
+            "Nepalese Rupee - NPR",
+            "Netherlands Antillian Guilder - ANG",
+            "New Zealand Dollar - NZD",
+            "Nicaraguan Cordoba oro - NIO",
+            "Nigerian Naira - NGN",
+            "North Korean Won - KPW",
+            "Norwegian Krone - NOK",
+            "Omani Rial - OMR",
+            "Pakistani Rupee - PKR",
+            "Palladium (Ounce) - XPD",
+            "Panamanian Balboa - PAB",
+            "Papua New Guinea Kina - PGK",
+            "Paraguayan Guarani - PYG",
+            "Peruvian Nuevo Sol - PEN",
+            "Philippine Peso - PHP",
+            "Platinum (Ounce) - XPT",
+            "Polish Zloty - PLN",
+            "Qatari Rial - QAR",
+            "Romanian New Leu - RON",
+            "Russian Ruble - RUB",
+            "Rwandan Franc - RWF",
+            "Saint Helena Pound - SHP",
+            "Samoan Tala - WST",
+            "Sao Tome And Principe Dobra - STD",
+            "Saudi Riyal - SAR",
+            "Serbian Dinar - RSD",
+            "Seychelles Rupee - SCR",
+            "Sierra Leone Leone - SLL",
+            "Silver (Ounce) - XAG",
+            "Singapore Dollar - SGD",
+            "Solomon Islands Dollar - SBD",
+            "Somali Shilling - SOS",
+            "South African Rand - ZAR",
+            "South Korean Won - KRW",
+            "Sri Lanka Rupee - LKR",
+            "Sudanese Pound - SDG",
+            "Suriname Dollar - SRD",
+            "Swaziland Lilangeni - SZL",
+            "Swedish Krona - SEK",
+            "Swiss Franc - CHF",
+            "Syrian Pound - SYP",
+            "Taiwan New Dollar - TWD",
+            "Tajik Somoni - TJS",
+            "Tanzanian Shilling - TZS",
+            "Thai Baht - THB",
+            "Tongan Paanga - TOP",
+            "Trinidad And Tobago Dollar - TTD",
+            "Tunisian Dinar - TND",
+            "Turkish Lira - TRY",
+            "Turkmen New Manat - TMT",
+            "UAE Dirham - AED",
+            "Uganda New Shilling - UGX",
+            "UIC Franc - XFU",
+            "Ukrainian Hryvnia - UAH",
+            "Uruguayan Peso Uruguayo - UYU",
+            "US Dollar - USD",
+            "Uzbekistani Sum - UZS",
+            "Vanuatu Vatu - VUV",
+            "Venezuelan Bolivar Fuerte - VEF",
+            "Vietnamese Dong - VND",
+            "Yemeni Rial - YER",
+            "Zambian Kwacha - ZMK",
+            "Zimbabwe Dollar - ZWL")
     // End Of Constants
 
 
@@ -176,28 +343,11 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
 
+                val spinnerCurrency: Spinner = childView.findViewById<View>(R.id.spinnerCurrency) as Spinner
 
-                childView.findViewById<Spinner>(R.id.spinnerCurrency).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                    }
-
-                    override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                        val newValue = childView!!.findViewById<Spinner>(R.id.spinnerCurrency).getItemAtPosition(position) as String
-                        var test = newValue.split("-")
-
-//                        val separated = newValue.split("-")
-//                        separated[0]
-//                        separated[1]
-//                        AppLogger.e("Country ", " is " + separated[1])
-
-
-                    }
-
-
-                }
-
+                val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, currencyType)
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerCurrency.adapter = arrayAdapter
             }
             Constants.LEVEL2_NOTES -> {
 
@@ -244,19 +394,22 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                     childView.findViewById<EditText>(R.id.etSubHeader).hide()
                     childView.findViewById<Spinner>(R.id.spinnerAccountType).show()
 
-
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                        }
-
-                        override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-//                            val newValue = childView!!.findViewById<Spinner>(R.id.spinnerAccountType).getItemAtPosition(position) as String
-
-                        }
-
-
-                    }
+//
+//                    childView.findViewById<Spinner>(R.id.spinnerAccountType).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                        override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//                        }
+//
+//                        override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+////                            val newValue = childView!!.findViewById<Spinner>(R.id.spinnerAccountType).getItemAtPosition(position) as String
+//
+//                        }
+//
+//
+//                    }
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopsNumericSizes)
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    childView.findViewById<Spinner>(R.id.spinnerAccountType).adapter = arrayAdapter
 
                 } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {

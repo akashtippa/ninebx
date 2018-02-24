@@ -7,6 +7,7 @@ import android.view.ViewGroup
 
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
@@ -71,7 +72,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
     }
 
     override fun hideProgress() {
-
+        context!!.hideProgressDialog()
     }
 
     override fun onError(error: Int) {
@@ -169,17 +170,23 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Education".encryptString()
                 val contactsUpdating = realm!!
                         .where(EducationList::class.java)
                         .equalTo("selectionType", contacts)
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
-                txtEducationNumber.text = contactsUpdating.toString()
+                if (contactsUpdating.toString().isEmpty()) {
+                    return
+                } else {
+                    txtEducationNumber.text = contactsUpdating.toString()
+                }
             }
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Interests".encryptString()
                 val contactsUpdating = realm!!
                         .where(InterestsList::class.java)
@@ -191,6 +198,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Personal".encryptString()
                 val contactsUpdating = realm!!
                         .where(PersonalList::class.java)
@@ -213,6 +221,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Memories".encryptString()
                 val contactsUpdating = realm!!
                         .where(MemoriesList::class.java)
@@ -224,6 +233,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Shopping".encryptString()
                 val contactsUpdating = realm!!
                         .where(ShoppingList::class.java)
@@ -241,6 +251,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
 
                 currentUsers = getHomeList(realm!!)
                 if (currentUsers != null) {
+                    context!!.hideProgressDialog()
                     AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
                     if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
