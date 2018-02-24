@@ -1,5 +1,6 @@
 package com.ninebx.ui.home
 
+import android.content.Context
 import com.ninebx.ui.base.BaseView
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Users
@@ -13,4 +14,6 @@ interface HomeView : BaseView {
     fun addEditCalendarEvent(calendarEvent : CalendarEvents?, selectedDate : Date )
     fun getCurrentUsers(): RealmResults<Users>
     fun setNotificationCount(notificationCount: Int)
+    fun getContextForScreen() : Context
+    fun setCurrentUsers(currentUsers: RealmResults<Users>?)
 }
