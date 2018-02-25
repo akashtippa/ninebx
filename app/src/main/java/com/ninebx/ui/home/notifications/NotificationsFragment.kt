@@ -122,7 +122,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "NineBx Notifications & Alerts")
         emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody)
 
-
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."))
             AppLogger.d("SendingEmail","Finished sending email")

@@ -64,9 +64,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         setNotificationCount(count)
     }
 
-    override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {
-
-    }
+    override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {}
 
     override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
         this.currentUsers = currentUsers
