@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1975b7</color>
+    <color name="colorPrimary">#1A88C5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#1975b7</color>
     <color name="colorWhite">#FFFFFF</color>
@@ -32,5 +32,6 @@
     <color name="primary_text">#757575</color>
 
     <color name="background_dark">#263238</color>
+    <color name="color_timeline">#913B88</color>
 
 </resources>

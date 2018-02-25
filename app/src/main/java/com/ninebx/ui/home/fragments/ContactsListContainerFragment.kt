@@ -126,6 +126,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 contactsRealm = realm
+                context!!.hideProgressDialog()
                 saveContactsList()
             }
         })

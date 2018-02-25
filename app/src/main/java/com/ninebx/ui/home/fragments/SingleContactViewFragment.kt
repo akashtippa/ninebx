@@ -114,7 +114,8 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtMobileOne.setText(strContactNumber)
 
         ivBackContactView.setOnClickListener {
-            activity!!.onBackPressed()
+//            activity!!.onBackPressed()
+            activity!!.finish()
         }
 
         imgEdit.setOnClickListener {
@@ -161,7 +162,8 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                         realm.beginTransaction()
                         contactDeleting.deleteAllFromRealm()
                         realm.commitTransaction()
-                        activity!!.onBackPressed()
+//                        activity!!.onBackPressed()
+                        activity!!.finish()
                     }
                 }
             })
@@ -236,7 +238,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                 override fun onSuccess(realm: Realm?) {
                     contactsNew.insertOrUpdate(realm!!)
                     mContactsView.onContacts(contactsNew)
-                    activity!!.onBackPressed()
                 }
             })
         } else {
@@ -279,7 +280,8 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                             contactsUpdate.country = strCountry.encryptString()
                             contactsUpdate.selectionType = "Contacts".encryptString()
                             realm.copyToRealmOrUpdate(contactsUpdate)
-                            activity!!.onBackPressed()
+//                            activity!!.onBackPressed()
+                            activity!!.finish()
                         })
                     }
 
