@@ -15,6 +15,7 @@
             android:layout_weight="0.25"
             android:gravity="center"
             android:padding="@dimen/default_mini_padding"
+            android:id="@+id/tvEvent"
             android:text="@string/add_event"/>
 
         <View

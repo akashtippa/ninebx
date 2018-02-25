@@ -1,6 +1,11 @@
 package com.ninebx.ui.base.realm;
 
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -47,6 +52,9 @@ public class CalendarEvents extends RealmObject {
 
     @Ignore
     @Required private RealmList<String> photosId = new RealmList<>();
+
+    @Ignore
+    public ArrayList<String> allDays = new ArrayList<>();
 
 
     public CalendarEvents() {
@@ -259,5 +267,11 @@ public class CalendarEvents extends RealmObject {
                 ", backingImages=" + backingImages +
                 ", photosId=" + photosId +
                 '}';
+    }
+
+    @NotNull
+    public int getPositionForDay(@NotNull Date selectedDateIndex) {
+        int position = 0;
+        return position;
     }
 }
