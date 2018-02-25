@@ -175,6 +175,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView)
 
         NineBxApplication.instance.init(this)
+        NotificationsPresenter(this)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             toggleCheck(true)
@@ -620,6 +621,4 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             }
         }
     }
-
-
 }

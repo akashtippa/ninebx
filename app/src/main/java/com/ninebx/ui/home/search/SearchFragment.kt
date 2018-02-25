@@ -22,7 +22,6 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.baseCategories.CategoryFragment
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -129,9 +128,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private lateinit var searchDecryptedCombineShopping: DecryptedCombineShopping
     private lateinit var searchDecryptedCombineContacts: DecryptedCombineContacts
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -173,7 +169,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         rvRecentSearch.layoutManager = linearLayoutManager
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
-
     }
 
     private fun hideAllLayouts() {
