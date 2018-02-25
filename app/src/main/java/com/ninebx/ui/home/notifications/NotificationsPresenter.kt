@@ -107,4 +107,8 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.copyToRealmOrUpdate(notification)
         mNotificationsRealm.commitTransaction()
     }
+
+    fun addNotification() {
+
+    }
 }

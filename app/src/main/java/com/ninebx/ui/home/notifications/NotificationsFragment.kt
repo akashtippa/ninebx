@@ -159,10 +159,16 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             expirationDate = decryptedPayment[i].expiryDate
         }
         AppLogger.d("expirationDate", "" + expirationDate)
-        try{
-            var sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+        try {
+            var sdf: SimpleDateFormat = SimpleDateFormat("MM/yyyy")
             var dateOfExpiry = sdf.parse(expirationDate)
             AppLogger.d("expirationDate", "" + dateOfExpiry)
+            var difference: Long = dateOfExpiry.getTime() - date.getTime()
+            var daysBetween = (difference / (1000 * 60 * 60 * 24))
+            AppLogger.d("DaysInbetween", " " + daysBetween)
+            if (daysBetween > 90) {
+                mNotificationsPresenter!!.addNotification()
+            }
         }
         catch (e :Exception){
             AppLogger.d("Exception", "" + e.message )
