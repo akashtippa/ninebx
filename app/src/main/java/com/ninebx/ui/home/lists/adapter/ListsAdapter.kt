@@ -67,6 +67,4 @@ internal class ListsAdapter(private var myList: ArrayList<DecryptedCombine>) : R
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
     }
-
-
 }

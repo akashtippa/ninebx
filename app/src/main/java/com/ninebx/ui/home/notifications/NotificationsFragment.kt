@@ -15,22 +15,32 @@ import com.ninebx.ui.base.kotlin.isVisible
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Notifications
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
+import com.ninebx.ui.base.realm.decrypted.DecryptedPayment
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.AppLogger
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Alok on 03/01/18.
  */
 class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
-    var encryptedNotifications : RealmResults<Notifications> ?= null
+    private var encryptedNotifications : RealmResults<Notifications> ?= null
     private var decryptedNotifications = ArrayList<DecryptedNotifications>()
     private var mNotificationsPresenter : NotificationsPresenter ?= null
 
     var count = 0
+
+    private var mDecryptedCombine : DecryptedCombine ?= null
+
+    override fun onCombineFetched(decryptCombine: DecryptedCombine) {
+        this.mDecryptedCombine = decryptCombine
+    }
 
     override fun showProgress(message: Int) {
         if( progressLayout != null )
@@ -60,7 +70,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             }
             AppLogger.d("notificationCount", " " + count)
             mHomeView.setNotificationCount(count)
-            rvNotification.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
+            rvNotification.layoutManager = LinearLayoutManager(context)
             val mAdapter = NotificationAdapter(decryptedNotifications)
             mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
 
@@ -110,9 +120,9 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     }
 
     private fun sendEmail(boxName: String, message: String, subTitle: String, dueDate: String) {
-        val TO = arrayOf("")
-        val CC = arrayOf("")
-        val emailIntent = Intent(Intent.ACTION_SEND)
+        var TO = arrayOf("")
+        var CC = arrayOf("")
+        var emailIntent = Intent(Intent.ACTION_SEND)
 
         var emailBody : String = boxName + "\n" + message + "\n" + subTitle + "\t" + dueDate
         emailIntent.data = Uri.parse("mailto:")
@@ -128,7 +138,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         } catch (ex: android.content.ActivityNotFoundException) {
             AppLogger.d("SendingEmail", "There is no email client installed.")
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -138,5 +147,25 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mNotificationsPresenter = NotificationsPresenter(this)
+        AppLogger.d("Notification", "Decrypted combine " + mDecryptedCombine!!.paymentItems)
+        var decryptedPayment = ArrayList<DecryptedPayment>()
+        for (paymentItems in mDecryptedCombine!!.paymentItems){
+            decryptedPayment.add(paymentItems)
+        }
+        AppLogger.d("Notification", "Decrypted payment " + decryptedPayment)
+        var date : Date = Calendar.getInstance().time
+        var expirationDate : String = " "
+        for (i in 0 until decryptedPayment.size){
+            expirationDate = decryptedPayment[i].expiryDate
+        }
+        AppLogger.d("expirationDate", "" + expirationDate)
+        try{
+            var sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            var dateOfExpiry = sdf.parse(expirationDate)
+            AppLogger.d("expirationDate", "" + dateOfExpiry)
+        }
+        catch (e :Exception){
+            AppLogger.d("Exception", "" + e.message )
+        }
     }
 }
