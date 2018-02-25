@@ -4,25 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.realm.lists.HomeList
+import com.ninebx.ui.base.kotlin.progressDialog
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.AppLogger
-import com.ninebx.utility.Constants
-import com.ninebx.utility.getHomeList
-import com.ninebx.utility.prepareRealmConnections
-import io.realm.Realm
-import io.realm.RealmResults
 
 import kotlinx.android.synthetic.main.fragment_lists.*
-
 
 /**
  * Created by Alok on 03/01/18.
  */
-class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
+class ListsFragment() : BaseHomeFragment(), ListsCommunicationView{
+    var combineFetched = DecryptedCombine()
+    var combineListArray = ArrayList<DecryptedHomeList>()
+
+    override fun homeListCount(contactsUpdating: Long, decryptCombine: DecryptedCombine) {
+        txtHomeNumber.text = contactsUpdating.toString()
+        this.combineFetched = decryptCombine
+    }
+
     override fun shoppingListCount(contactsUpdating: Long) {
         txtShoppingNumber.text = contactsUpdating.toString()
     }
@@ -55,12 +57,10 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         txtTravelNumber.text = contactsUpdating.toString()
     }
 
-    override fun homeListCount(contactsUpdating: Long) {
-        txtHomeNumber.text = contactsUpdating.toString() }
-
     override fun showProgress(message: Int) {}
 
     override fun hideProgress() {
+        progressDialog!!.cancel()
     }
 
     override fun onError(error: Int) { }
@@ -83,7 +83,24 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         ListsPresenter(this)
 
         layHome.setOnClickListener {
-            callSubListFragment(getString(R.string.home_amp_money))
+            for(listItems in combineFetched.listItems){
+                combineListArray.add(listItems)
+            }
+
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideBottomView()
+
+            val bundle = Bundle()
+            bundle.putString("homeScreen", "bottom")
+            bundle.putSerializable("combineListItemsFetched", combineListArray)
+            val categoryFragment = SubListsFragment()
+            AppLogger.d("CombineListArray", " " + combineListArray)
+            categoryFragment.arguments = bundle
+            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+
+            /*callSubListFragment(getString(R.string.home_amp_money))*/
         }
         layTravel.setOnClickListener {
             callSubListFragment(getString(R.string.travel))
@@ -109,26 +126,6 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         layShopping.setOnClickListener {
             callSubListFragment(getString(R.string.shopping))
         }
-
-        var currentUsers: RealmResults<HomeList>? = null
-        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-                currentUsers = getHomeList(realm!!)
-                if (currentUsers != null) {
-                    AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
-                    if (NineBxApplication.getPreferences().currentStep == Constants.FINGER_PRINT_COMPLETE) {
-                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                        fragmentTransaction.addToBackStack(null)
-                        val addFamilyUsersFragment = SubListsFragment()
-                        val bundle = Bundle()
-                        bundle.putParcelableArrayList(Constants.LIST_HOME, HomeList.createParcelableList(currentUsers!!))
-                        addFamilyUsersFragment.arguments = bundle
-                        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
-                    }
-                }
-            }
-        })
 //        var countHome = mDecryptCombine.getListsCount("HomeBanking")
 //        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
 //        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
@@ -148,14 +145,15 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         val bundle = Bundle()
         bundle.putString("homeScreen", "bottom")
-
         val categoryFragment = SubListsFragment()
+        AppLogger.d("CombineListArray", " " + combineListArray)
         categoryFragment.arguments = bundle
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
 
         when (option) {
             getString(R.string.home_amp_money) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
+
             }
             getString(R.string.travel) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))

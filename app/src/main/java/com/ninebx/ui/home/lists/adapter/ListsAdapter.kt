@@ -9,13 +9,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.home.lists.SuperSubListFragment
 import com.ninebx.ui.home.lists.model.AddedItem
 import java.util.*
 
-internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : RecyclerView.Adapter<ListsAdapter.RecyclerItemViewHolder>() {
+internal class ListsAdapter(private var myList: ArrayList<DecryptedCombine>) : RecyclerView.Adapter<ListsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
-
+    lateinit var listName : ArrayList<String>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_list, parent, false)
         return RecyclerItemViewHolder(view)
@@ -23,7 +24,10 @@ internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : Recycle
 
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.etTitleTextView.text = myList!![position].strAddedItem
+        for (listItems in myList[position].listItems){
+            listName.add(listItems.listName)
+        }
+        holder.etTitleTextView.text = listName[position]
         mLastPosition = position
         holder.layoutAddedList.setOnClickListener {
             val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
@@ -37,7 +41,7 @@ internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : Recycle
     }
 
 
-    fun restoreAt(position: Int, iItem: AddedItem) {
+    fun restoreAt(position: Int, iItem: DecryptedCombine) {
         myList!!.add(position, iItem)
         notifyItemRemoved(position)
     }
@@ -49,7 +53,7 @@ internal class ListsAdapter(private var myList: ArrayList<AddedItem>?) : Recycle
     }
 
 
-    fun notifyData(myList: ArrayList<AddedItem>) {
+    fun notifyData(myList: ArrayList<DecryptedCombine>) {
         this.myList = myList
         notifyDataSetChanged()
     }

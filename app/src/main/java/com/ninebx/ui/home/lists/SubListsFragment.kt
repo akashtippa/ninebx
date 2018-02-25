@@ -16,12 +16,12 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.lists.HomeList
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
-import com.ninebx.utility.Constants
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_sub_list.*
@@ -50,10 +50,9 @@ class SubListsFragment : FragmentBackHelper() {
 
 //        currentUsers = arguments!!.getParcelableArrayList<HomeList>(Constants.LIST_HOME)
 //        myList.addAll(currentUsers!!)
-
-
-
-        mListsAdapter = ListsAdapter(myList)
+        var getArrayList : ArrayList<DecryptedCombine> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedCombine>
+        mListsAdapter = ListsAdapter(getArrayList)
+        AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
@@ -63,7 +62,7 @@ class SubListsFragment : FragmentBackHelper() {
 
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
-        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+       /* val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvAddedLists.adapter as ListsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
@@ -80,8 +79,8 @@ class SubListsFragment : FragmentBackHelper() {
                 snackBar.show()
 
             }
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        }*/
+      /*  val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rvAddedLists)
 
         txtDone.setOnClickListener {
@@ -101,7 +100,7 @@ class SubListsFragment : FragmentBackHelper() {
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             }
 
-        }
+        }*/
 
         edtAddList.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
