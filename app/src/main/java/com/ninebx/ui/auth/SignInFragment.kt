@@ -42,8 +42,8 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (BuildConfig.ON_DEBUG_MODE) {
-            edtEmailAddress.setText("alok.g@cognitiveclouds.com")
-            edtPassword.setText("Password14.")
+            edtEmailAddress.setText("android@yopmail.com")
+            edtPassword.setText("Android.24")
         }
     }
 
