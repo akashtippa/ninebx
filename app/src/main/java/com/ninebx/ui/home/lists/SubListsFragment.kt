@@ -56,7 +56,6 @@ class SubListsFragment : FragmentBackHelper() {
 //        myList.addAll(currentUsers!!)
         var getArrayList: ArrayList<DecryptedHomeList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedHomeList>
 
-
         mListsAdapter = ListsAdapter(getArrayList)
         AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)

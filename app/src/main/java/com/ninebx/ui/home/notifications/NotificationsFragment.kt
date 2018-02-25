@@ -19,7 +19,6 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedPayment
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.*
-import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.text.SimpleDateFormat
@@ -172,25 +171,10 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
             AppLogger.d("DaysInbetween", " " + daysBetween)
             if (daysBetween.equals(90)) {
-                var notifications = Notifications()
-                var boxName =  "Home&Banking"
-                var message = "AndroidTest"
-                notifications.id =  UUID.randomUUID().hashCode().toLong()
-                notifications.message = message.encryptString()
-                notifications.boxName = boxName.encryptString()
-                notifications.category = boxName.encryptString()
-                notifications.dueDate = expirationDate
-                notifications.subTitle = "Card Expiry".encryptString()
-                notifications.private = false
-                notifications.created = "Android Test" + date
-
-                prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
-                    override fun onSuccess(realm: Realm?) {
-                        realm!!.beginTransaction()
-                        notifications.insertOrUpdate(realm)
-                        realm.commitTransaction()
-                    }
-                })
+                mNotificationsPresenter!!.addNotification(expirationDate, date)
+            }
+            else{
+                AppLogger.d("NewNotification", "Not Added" )
             }
         }
         catch (e :Exception){

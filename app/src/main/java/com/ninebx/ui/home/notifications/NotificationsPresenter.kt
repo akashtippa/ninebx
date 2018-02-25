@@ -107,7 +107,25 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.commitTransaction()
     }
 
-    fun addNotification() {
+    fun addNotification(expirationDate: String, date: Date) {
+        var notifications = Notifications()
+        var boxName =  "Home&Banking"
+        var message = "AndroidTest"
+        notifications.id =  UUID.randomUUID().hashCode().toLong()
+        notifications.message = message.encryptString()
+        notifications.boxName = boxName.encryptString()
+        notifications.dueDate = expirationDate
+        notifications.subTitle = "Card Expiry".encryptString()
+        notifications.private = false
+        notifications.created = "Android Test" + date
 
+        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                realm!!.beginTransaction()
+                notifications.insertOrUpdate(realm)
+                realm.commitTransaction()
+                AppLogger.d("NewNotification", "Added" )
+            }
+        })
     }
 }

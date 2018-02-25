@@ -66,6 +66,4 @@ internal class TravelListsAdapter(private var myList: ArrayList<DecryptedTravelL
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
     }
-
-
 }

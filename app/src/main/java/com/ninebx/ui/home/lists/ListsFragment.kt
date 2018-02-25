@@ -51,9 +51,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         this.combineFetched = decryptCombine
     }
 
-    override fun travelListCount(contactsUpdating: Long, decryptCombine: DecryptedCombineTravel) {
+    override fun travelListCount(contactsUpdating: Long, decryptCombineTravel: DecryptedCombineTravel) {
         txtTravelNumber.text = contactsUpdating.toString()
-        this.combineTravelFetched = decryptCombine
+        this.combineTravelFetched = decryptCombineTravel
     }
 
     override fun contactListCount(contactsUpdating: Long, decryptCombine: DecryptedCombineContacts) {
@@ -132,7 +132,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineTravelFetched.listItems) {
                 combineTravelListArray.add(listItems)
             }
-
+            AppLogger.d("CombineTravel", " " + combineTravelListArray)
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
