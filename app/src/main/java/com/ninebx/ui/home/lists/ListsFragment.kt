@@ -68,15 +68,6 @@ class ListsFragment() : BaseHomeFragment(), ListsCommunicationView{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lists, container, false)
     }
-//    private val mDecryptCombine: DecryptedCombine = DecryptedCombine()
-//    private val mDecryptedCombineMemories = DecryptedCombineMemories()
-//    private val mDecryptedCombineTravel = DecryptedCombineTravel()
-//    private val mDecryptCombineEducation = DecryptedCombineEducation()
-//    private val mDecryptCombineInterests = DecryptedCombineInterests()
-//    private val mDecryptCombineWellness = DecryptedCombineWellness()
-//    private val mDecryptCombinePersonal = DecryptedCombinePersonal()
-//    private val mDecryptCombineShopping = DecryptedCombineShopping()
-//    private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -105,36 +96,34 @@ class ListsFragment() : BaseHomeFragment(), ListsCommunicationView{
         layTravel.setOnClickListener {
             callSubListFragment(getString(R.string.travel))
         }
+
         layContact.setOnClickListener {
             callSubListFragment(getString(R.string.contacts))
         }
+
         layEducation.setOnClickListener {
             callSubListFragment(getString(R.string.education_work))
         }
+
         layPersonal.setOnClickListener {
             callSubListFragment(getString(R.string.personal))
         }
+
         layInterests.setOnClickListener {
             callSubListFragment(getString(R.string.interests))
         }
+
         layWellness.setOnClickListener {
             callSubListFragment(getString(R.string.wellness))
         }
+
         layMemories.setOnClickListener {
             callSubListFragment(getString(R.string.memories))
         }
+
         layShopping.setOnClickListener {
             callSubListFragment(getString(R.string.shopping))
         }
-//        var countHome = mDecryptCombine.getListsCount("HomeBanking")
-//        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
-//        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
-//        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
-//        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
-//        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
-//        var countWellness = mDecryptedCombineMemories.getLists("WellNess")
-//        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
-//        var countShopping = mDecryptCombineShopping.getShoppingLists("Shopping")
     }
 
     private fun callSubListFragment(option: String) {

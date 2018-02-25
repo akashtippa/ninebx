@@ -16,7 +16,7 @@ import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 /**
  * Created by Alok on 03/01/18.
  */
-class ListsPresenter(val listsCommunicationView: ListsCommunicationView)  {
+class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
     init {
         val context = getApplicationContext()
 
@@ -33,8 +33,8 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView)  {
                 AppLogger.d("Count ", " is " + contactsUpdating)
 
                 val fetchCombine = realm.where(Combine::class.java).findAll()
-                if(fetchCombine.size > 0){
-                    for(i in 0 until fetchCombine.size){
+                if (fetchCombine.size > 0) {
+                    for (i in 0 until fetchCombine.size) {
                         var decryptCombine = decryptCombine(fetchCombine[i]!!)
                         decryptedCombine.listItems.addAll(decryptCombine.listItems)
                     }

@@ -17,7 +17,9 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
+import com.ninebx.ui.base.realm.decrypted.DecryptedHomeList
 import com.ninebx.ui.base.realm.lists.HomeList
+import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
@@ -34,9 +36,11 @@ import java.util.*
 class SubListsFragment : FragmentBackHelper() {
 
     private var mListsAdapter: ListsAdapter? = null
-    var myList: ArrayList<AddedItem> = ArrayList()
     var strAddItem = ""
     var fragmentValue = ""
+
+    private var myList: ArrayList<DecryptedHomeList>? = ArrayList()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sub_list, container, false)
@@ -50,7 +54,9 @@ class SubListsFragment : FragmentBackHelper() {
 
 //        currentUsers = arguments!!.getParcelableArrayList<HomeList>(Constants.LIST_HOME)
 //        myList.addAll(currentUsers!!)
-        var getArrayList : ArrayList<DecryptedCombine> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedCombine>
+        var getArrayList: ArrayList<DecryptedHomeList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedHomeList>
+
+
         mListsAdapter = ListsAdapter(getArrayList)
         AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)
@@ -62,25 +68,25 @@ class SubListsFragment : FragmentBackHelper() {
 
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
-       /* val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvAddedLists.adapter as ListsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
                 val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
                 snackBar.setAction("UNDO", View.OnClickListener {
                     // undo is selected, restore the deleted item
-                    val mLog = AddedItem()
-                    mLog.strAddedItem = strAddItem
-                    myList.add(mLog)
-                    mListsAdapter!!.notifyData(myList)
+                    val mLog = DecryptedHomeList()
+                    mLog.listName = strAddItem
+                    getArrayList.add(mLog)
+                    mListsAdapter!!.notifyDataSetChanged()
 
                 })
                 snackBar.setActionTextColor(Color.YELLOW)
                 snackBar.show()
 
             }
-        }*/
-      /*  val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rvAddedLists)
 
         txtDone.setOnClickListener {
@@ -92,15 +98,15 @@ class SubListsFragment : FragmentBackHelper() {
                 edtAddList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
-                val mLog = AddedItem()
-                mLog.strAddedItem = strAddItem
-                myList.add(mLog)
-                mListsAdapter!!.notifyData(myList)
+                val mLog = DecryptedHomeList()
+                mLog.listName = strAddItem
+                getArrayList.add(mLog)
+                mListsAdapter!!.notifyDataSetChanged()
                 edtAddList.text.clear()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             }
 
-        }*/
+        }
 
         edtAddList.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
