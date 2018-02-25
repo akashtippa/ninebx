@@ -4,12 +4,11 @@ import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.decryptNotifications
-import com.ninebx.utility.prepareRealmConnections
+import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import java.util.*
 
 /**
  * Created by Alok on 03/01/18.

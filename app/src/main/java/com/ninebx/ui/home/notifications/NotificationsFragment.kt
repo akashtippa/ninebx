@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,8 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedPayment
 import com.ninebx.ui.home.BaseHomeFragment
-import com.ninebx.utility.AppLogger
+import com.ninebx.utility.*
+import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.text.SimpleDateFormat
@@ -147,6 +147,10 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mNotificationsPresenter = NotificationsPresenter(this)
+        paymentNotification()
+    }
+
+    private fun paymentNotification() {
         AppLogger.d("Notification", "Decrypted combine " + mDecryptedCombine!!.paymentItems)
         var decryptedPayment = ArrayList<DecryptedPayment>()
         for (paymentItems in mDecryptedCombine!!.paymentItems){
@@ -165,9 +169,28 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             AppLogger.d("expirationDate", "" + dateOfExpiry)
             var difference: Long = dateOfExpiry.getTime() - date.getTime()
             var daysBetween = (difference / (1000 * 60 * 60 * 24))
+
             AppLogger.d("DaysInbetween", " " + daysBetween)
-            if (daysBetween > 90) {
-                mNotificationsPresenter!!.addNotification()
+            if (daysBetween.equals(90)) {
+                var notifications = Notifications()
+                var boxName =  "Home&Banking"
+                var message = "AndroidTest"
+                notifications.id =  UUID.randomUUID().hashCode().toLong()
+                notifications.message = message.encryptString()
+                notifications.boxName = boxName.encryptString()
+                notifications.category = boxName.encryptString()
+                notifications.dueDate = expirationDate
+                notifications.subTitle = "Card Expiry".encryptString()
+                notifications.private = false
+                notifications.created = "Android Test" + date
+
+                prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
+                    override fun onSuccess(realm: Realm?) {
+                        realm!!.beginTransaction()
+                        notifications.insertOrUpdate(realm)
+                        realm.commitTransaction()
+                    }
+                })
             }
         }
         catch (e :Exception){
