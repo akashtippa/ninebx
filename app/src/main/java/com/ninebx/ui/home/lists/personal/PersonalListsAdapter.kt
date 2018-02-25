@@ -9,12 +9,11 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedMemoriesList
 import com.ninebx.ui.base.realm.decrypted.DecryptedPersonalList
 import com.ninebx.ui.home.lists.SuperSubListFragment
 import java.util.ArrayList
 
-internal class PersonaalListsAdapter(private var myList: ArrayList<DecryptedPersonalList>) : RecyclerView.Adapter<PersonaalListsAdapter.RecyclerItemViewHolder>() {
+internal class PersonalListsAdapter(private var myList: ArrayList<DecryptedPersonalList>) : RecyclerView.Adapter<PersonalListsAdapter.RecyclerItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_list, parent, false)
