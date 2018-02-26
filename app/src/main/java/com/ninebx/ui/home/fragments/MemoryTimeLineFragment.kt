@@ -67,6 +67,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
     var addOrEdit = ""
+    val preferences = NineBxPreferences()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -152,7 +153,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             activity!!.finish()
         }
 
-        // Deleting the Memory
+        // Deleting the Memory from the Realm
         imgDelete.setOnClickListener {
             imgDelete.setOnClickListener {
                 prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
@@ -232,6 +233,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             memoryTimeLineData.contacts = strContacts.encryptString()
             memoryTimeLineData.notes = strNotes.encryptString()
             memoryTimeLineData.selectionType = "Memories".encryptString()
+//            memoryTimeLineData.createdUser =preferences.
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     memoryTimeLineData.insertOrUpdate(realm!!)
@@ -293,12 +295,12 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         if (memoryTimeline.notes.isNotEmpty())
             edtNotes.setText(memoryTimeline.notes.decryptString())
-//
-//        if (memoryTimeline.created.isNotEmpty())
-//            txtCreated.text = memoryTimeline.created.decryptString()
-//
-//        if (memoryTimeline.modified.isNotEmpty())
-//            txtModified.text = memoryTimeline.modified.decryptString()
+
+        if (memoryTimeline.created.isNotEmpty())
+            txtCreated.text = memoryTimeline.created.decryptString()
+
+        if (memoryTimeline.modified.isNotEmpty())
+            txtModified.text = memoryTimeline.modified.decryptString()
 
     }
 
@@ -368,7 +370,6 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
 
     // Handling Camera.
 

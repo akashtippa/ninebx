@@ -114,7 +114,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtMobileOne.setText(strContactNumber)
 
         ivBackContactView.setOnClickListener {
-//            activity!!.onBackPressed()
             activity!!.finish()
         }
 
@@ -243,16 +242,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         } else {
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
-//                    val contactsUpdating = realm!!
-//                            .where(Contacts::class.java)
-//                            .beginGroup()
-//                            .equalTo("firstName", mContacts.firstName)
-//                            .and()
-//                            .equalTo("lastName", mContacts.lastName)
-//                            .and()
-//                            .equalTo("mobileOne", mContacts.mobileOne)
-//                            .endGroup()
-//                            .findAll()
 
                     val contactsUpdating = realm!!
                             .where(Contacts::class.java)

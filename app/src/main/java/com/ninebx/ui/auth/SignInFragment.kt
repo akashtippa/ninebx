@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
+import com.ninebx.BuildConfig
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
@@ -40,11 +41,10 @@ class SignInFragment : BaseAuthFragment() {
             openStaticLayoutDialog((R.string.privacy_policy))
         }
 
-        if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("alok.g@cognitiveclouds.com")
-            edtPassword.setText("Password14.")
+        if (BuildConfig.ON_DEBUG_MODE) {
+            edtEmailAddress.setText("android@yopmail.com")
+            edtPassword.setText("Android.24")
         }
-
     }
 
     override fun validate(): Boolean {

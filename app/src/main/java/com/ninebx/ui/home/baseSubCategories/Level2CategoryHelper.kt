@@ -2167,7 +2167,7 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name", "Name", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Concenteration/major", "Concenteration/major", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Concenteration/majaor", "Concenteration/majaor", "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH))

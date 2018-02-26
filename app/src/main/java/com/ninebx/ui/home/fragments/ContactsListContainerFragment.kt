@@ -190,7 +190,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                         contacts.mobileOne = strMobileNumber.encryptString()
                         contacts.insertOrUpdate(realm!!)
 
-                        NineBxApplication.instance.activityInstance!!.onBackPressed()
+//                        NineBxApplication.instance.activityInstance!!.onBackPressed()
                     }
 
                 })

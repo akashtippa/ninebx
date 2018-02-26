@@ -124,6 +124,7 @@ class PassCodeDialog( val context : Context, val passCode : String, val passCode
                         if( text.length == 6 ) {
                             if( text.equals(passCode) ) {
                                 passCodeListener.onSuccess()
+
                                 dialog.dismiss()
                             }
                             else {

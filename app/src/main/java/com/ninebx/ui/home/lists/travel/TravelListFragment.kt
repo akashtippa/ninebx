@@ -1,9 +1,8 @@
-package com.ninebx.ui.home.lists
+package com.ninebx.ui.home.lists.travel
 
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -17,27 +16,23 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedHomeList
+import com.ninebx.ui.base.realm.decrypted.DecryptedTravelList
 import com.ninebx.ui.base.realm.lists.HomeList
-import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
-import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
-import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_sub_list.*
-import java.util.*
-
+import java.util.ArrayList
 
 /**
  * Created by Alok on 03/01/18.
  */
-class SubListsFragment : FragmentBackHelper() {
+class TravelListFragment : FragmentBackHelper() {
 
-    private var mListsAdapter: ListsAdapter? = null
+    private var mListsAdapter: TravelListsAdapter? = null
     var strAddItem = ""
     var fragmentValue = ""
 
@@ -48,17 +43,13 @@ class SubListsFragment : FragmentBackHelper() {
         return inflater.inflate(R.layout.fragment_sub_list, container, false)
     }
 
-    private var currentUsers: ArrayList<HomeList>? = ArrayList()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        currentUsers = arguments!!.getParcelableArrayList<HomeList>(Constants.LIST_HOME)
-//        myList.addAll(currentUsers!!)
-        var getArrayList: ArrayList<DecryptedHomeList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedHomeList>
+        var getArrayList: ArrayList<DecryptedTravelList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedTravelList>
 
-        mListsAdapter = ListsAdapter(getArrayList)
+        mListsAdapter = TravelListsAdapter(getArrayList)
         AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -71,12 +62,12 @@ class SubListsFragment : FragmentBackHelper() {
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rvAddedLists.adapter as ListsAdapter
+                val adapter = rvAddedLists.adapter as TravelListsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
                 val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
                 snackBar.setAction("UNDO", View.OnClickListener {
                     // undo is selected, restore the deleted item
-                    val mLog = DecryptedHomeList()
+                    val mLog = DecryptedTravelList()
                     mLog.listName = strAddItem
                     getArrayList.add(mLog)
                     mListsAdapter!!.notifyDataSetChanged()
@@ -99,7 +90,7 @@ class SubListsFragment : FragmentBackHelper() {
                 edtAddList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
-                val mLog = DecryptedHomeList()
+                val mLog = DecryptedTravelList()
                 mLog.listName = strAddItem
                 getArrayList.add(mLog)
                 mListsAdapter!!.notifyDataSetChanged()
@@ -134,15 +125,6 @@ class SubListsFragment : FragmentBackHelper() {
         if (fragmentValue == "HomeScreen") {
             NineBxApplication.instance.activityInstance!!.showBottomView()
             NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-            val fm = activity!!.supportFragmentManager
-            val transaction = fm.beginTransaction()
-            transaction.remove(this@SubListsFragment)
-            transaction.commit()
-            fm.popBackStack()
-            fm.popBackStack()
-            val preferences = NineBxPreferences()
-            val toolbarTitle = preferences.currentBox
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
         } else if (fragmentValue == "bottom") {
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
             NineBxApplication.instance.activityInstance!!.showBottomView()
@@ -151,4 +133,3 @@ class SubListsFragment : FragmentBackHelper() {
         return super.onBackPressed()
     }
 }
-
