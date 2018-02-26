@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.notifications
 
+import android.app.Notification
+import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,11 +20,18 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedPayment
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.*
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.Context.NOTIFICATION_SERVICE
+import android.app.NotificationManager
+import android.content.Context.ALARM_SERVICE
+import android.app.AlarmManager
+import kotlin.collections.ArrayList
+
 
 /**
  * Created by Alok on 03/01/18.
@@ -166,19 +175,49 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             var sdf: SimpleDateFormat = SimpleDateFormat("MM/yyyy")
             var dateOfExpiry = sdf.parse(expirationDate)
             AppLogger.d("expirationDate", "" + dateOfExpiry)
-            var difference: Long = dateOfExpiry.getTime() - date.getTime()
-            var daysBetween = (difference / (1000 * 60 * 60 * 24))
+            calculateNumberOfDays(date, dateOfExpiry)
+        }
+        catch (e :Exception){
+            AppLogger.d("Exception", "" + e.message )
+        }
+    }
 
-            AppLogger.d("DaysInbetween", " " + daysBetween)
+    private fun calculateNumberOfDays(date: Date, dateOfExpiry: Date?) {
+        var difference: Long = dateOfExpiry!!.getTime() - date.getTime()
+        var daysBetween = (difference / (1000 * 60 * 60 * 24))
+        AppLogger.d("DaysInbetween", " " + daysBetween)
+        newPaymentNotification(daysBetween, date, dateOfExpiry)
+    }
+
+    private fun newPaymentNotification(daysBetween: Long, date: Date, dateOfExpiry: Date?) {
+        try {
             if (daysBetween.equals(90)) {
-                mNotificationsPresenter!!.addNotification(expirationDate, date)
+                mNotificationsPresenter!!.addNotification(dateOfExpiry.toString(), date)
+                var intent : Intent = Intent(getActivity(), HomeActivity::class.java)
+                var pIntent : PendingIntent = PendingIntent.getActivity(getActivity(), System.currentTimeMillis().toInt(), intent, 0)
+                val alarmManager1 = context!!.getSystemService(ALARM_SERVICE) as AlarmManager
+                val calendar1Notify = Calendar.getInstance()
+                calendar1Notify.timeInMillis = System.currentTimeMillis()
+                calendar1Notify.set(Calendar.HOUR_OF_DAY, 12)
+                calendar1Notify.set(Calendar.MINUTE, 0)
+                alarmManager1.set(AlarmManager.RTC_WAKEUP, calendar1Notify.timeInMillis, pIntent)
+
+                val time24h = (24 * 60 * 60 * 1000).toLong()
+
+                alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.timeInMillis, time24h, pIntent)
+                val mNotifiction = Notification.Builder(getActivity())
+                        .setContentTitle("Notification from " + "TestNotification")
+                        .setContentText("Subject")
+                        .setContentIntent(pIntent).build()
+                val notificationManager = context!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                mNotifiction.flags = mNotifiction.flags or Notification.FLAG_AUTO_CANCEL
+                notificationManager.notify(0, mNotifiction)
             }
             else{
                 AppLogger.d("NewNotification", "Not Added" )
             }
-        }
-        catch (e :Exception){
-            AppLogger.d("Exception", "" + e.message )
+        }catch(e : Exception){
+            AppLogger.d("PaymentNotification", "" + e.message)
         }
     }
 }
