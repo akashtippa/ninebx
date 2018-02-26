@@ -1,12 +1,14 @@
 package com.ninebx.ui.home.baseSubCategories
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import com.ninebx.utility.NineBxPreferences
@@ -29,6 +31,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private var categoryName = ""
     private var categoryID = ""
+    private var classType = ""
+    private var selectedDocument : Parcelable ?= null
 
     override fun showProgress(message: Int) {
 
@@ -47,7 +51,12 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
-        layExpandable.setAdapter(ExpandableListViewAdapter(context!!, categories))
+
+        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, selectedDocument, categoryID, categoryName, classType ))
+
+        var decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
+        etTitle.setText(decryptedFinancial.institutionName)
+        etTitleValue.setText(decryptedFinancial.accountName)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,8 +65,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
+        selectedDocument = arguments!!.getParcelable("selectedDocument")
+        classType = arguments!!.getString("classType")
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, this)
         NineBxApplication.instance.activityInstance!!.hideBottomView()

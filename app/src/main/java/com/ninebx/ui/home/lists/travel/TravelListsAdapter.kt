@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.lists.travel
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedShoppingList
 import com.ninebx.ui.base.realm.decrypted.DecryptedTravelList
 import com.ninebx.ui.home.lists.SuperSubListFragment
+import com.ninebx.utility.Constants
 import java.util.ArrayList
 
 internal class TravelListsAdapter(private var myList: ArrayList<DecryptedTravelList>) : RecyclerView.Adapter<TravelListsAdapter.RecyclerItemViewHolder>() {
@@ -31,7 +33,11 @@ internal class TravelListsAdapter(private var myList: ArrayList<DecryptedTravelL
         holder.layoutAddedList.setOnClickListener {
             val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, SuperSubListFragment()).commit()
+            val superSubListFragment = SuperSubListFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.SELECTED_ITEM, member)
+            superSubListFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frameLayout, superSubListFragment).commit()
         }
     }
 

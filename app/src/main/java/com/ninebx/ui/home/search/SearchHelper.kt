@@ -1,8 +1,11 @@
 package com.ninebx.ui.home.search
 
+import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.utility.AppLogger
 
 /**
  * Created by Alok on 20/02/18.
@@ -356,23 +359,23 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "loyalty" -> {
                 val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "recentPurchase" -> {
                 val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "shopping" -> {
                 val selectedDocument = searchDecryptedCombineShopping.shoppingItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "clothingSize" -> {
                 val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "shoppingList" -> {
                 val selectedDocument = searchDecryptedCombineShopping.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -381,15 +384,15 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "mainMemory" -> {
                 val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "memoryTimeline" -> {
                 val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "memorylist" -> {
                 val selectedDocument = searchDecryptCombineMemories.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -398,47 +401,47 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "checkups" -> {
                 val selectedDocument = searchDecryptedCombineWellness.checkupsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "emergencyContacts" ->{
                 val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "eyeglassPrescription" -> {
                 val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "healthcareProvider" -> {
                 val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "identification" -> {
                 val selectedDocument = searchDecryptedCombineWellness.identificationItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "medicalCondition" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "medicalHistory" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "medications" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicationsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "vitalNumbers" -> {
                 val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "wellness" -> {
                 val selectedDocument = searchDecryptedCombineWellness.wellnessItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "wellnessList" -> {
                 val selectedDocument = searchDecryptedCombineWellness.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -447,12 +450,12 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "interests" -> {
                 val selectedDocument = searchDecryptedCombineInterests.interestItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "interestsList" ->
             {
                 val selectedDocument = searchDecryptedCombineInterests.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -461,31 +464,31 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "certificate" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "govenment" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "social" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.socialItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "taxID" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.taxIDItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "personalList" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -494,19 +497,19 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "education" -> {
                 val selectedDocument = searchDecryptCombineEducation.educationItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "mainEducation" -> {
                 val selectedDocument = searchDecryptCombineEducation.mainEducationItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "work" -> {
                 val selectedDocument = searchDecryptCombineEducation.workItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "educationList" -> {
                 val selectedDocument = searchDecryptCombineEducation.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -515,15 +518,15 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "contacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.contactsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "mainContacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.mainContactsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "contactList" -> {
                 val selectedDocument = searchDecryptedCombineContacts.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -532,23 +535,23 @@ class SearchHelper() {
         when(searchItem.categoryName){
             "document" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "loyalty" -> {
                 val selectedDocument = searchDecryptCombineTravel.loyaltyItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "travel" -> {
                 val selectedItems = searchDecryptCombineTravel.travelItems[position]
-                goToCategoryFragment( selectedItems )
+                goToCategoryFragment( selectedItems, selectedItems::class.java.simpleName )
             }
             "vacation" -> {
                 val selectedItems = searchDecryptCombineTravel.vacationsItems[position]
-                goToCategoryFragment( selectedItems )
+                goToCategoryFragment( selectedItems, selectedItems::class.java.simpleName )
             }
             "travelList" -> {
                 val selectedItems = searchDecryptCombineTravel.listItems[position]
-                goToCategoryFragment( selectedItems )
+                goToCategoryFragment( selectedItems, selectedItems::class.java.simpleName )
             }
         }
     }
@@ -558,41 +561,54 @@ class SearchHelper() {
         when( searchItem.categoryName ) {
             "finance" -> {
                 val selectedDocument = searchDecryptCombine.financialItems[position]
-                goToCategoryFragment(selectedDocument)
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "payment" -> {
                 val selectedDocument = searchDecryptCombine.paymentItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "asset" -> {
                 val selectedDocument = searchDecryptCombine.assetItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "insurance" -> {
                 val selectedDocument = searchDecryptCombine.insuranceItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "tax" -> {
                 val selectedDocument = searchDecryptCombine.taxesItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "vehicle" -> {
                 val selectedDocument = searchDecryptCombine.vehicleItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "property" -> {
                 val selectedDocument = searchDecryptCombine.propertyItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "home" -> {
                 val selectedDocument = searchDecryptCombine.listItems[position]
-                goToCategoryFragment( selectedDocument )
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
+    
+    interface OnDocumentSelection {
+        fun onDocumentSelected( selectedDocument: Parcelable?, classType : String )
+    }
+    
+    private var mOnDocumentSelection : OnDocumentSelection ?= null
+    
+    fun setOnDocumentSelection( onDocumentSelection: OnDocumentSelection ) {
+        this.mOnDocumentSelection = onDocumentSelection
+    }
 
-    private fun goToCategoryFragment(selectedDocument: Parcelable?) {
-
+    private fun goToCategoryFragment( selectedDocument: Parcelable?, classType: String ) {
+        if( mOnDocumentSelection != null ) {
+            AppLogger.d("ClassType", "Parcelable classType : " + classType )
+            mOnDocumentSelection!!.onDocumentSelected( selectedDocument, classType )
+        }
     }
 
 }

@@ -78,7 +78,7 @@ public class CombineShopping extends RealmObject {
         this.clothingSizesItems = clothingSizesItems;
     }
 
-    public RealmList getListItems() {
+    public RealmList<ShoppingList> getListItems() {
         return listItems;
     }
 

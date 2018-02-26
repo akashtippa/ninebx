@@ -246,10 +246,10 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         bundle.putString("homeScreen", "HomeScreen")
         bundle.putInt("category", fromWhichBox!!)
 
-        val categoryFragment = ListFinderFragment()
+        /*val categoryFragment = ListFinderFragment()
         categoryFragment.arguments = bundle
 
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()*/
     }
 
     private fun gettingMemoryTimeLineView() {

@@ -44,7 +44,20 @@ import java.util.concurrent.atomic.AtomicBoolean
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
+class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection {
+
+    override fun onDocumentSelected(selectedDocument: Parcelable?, classType : String ) {
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val bundle = Bundle()
+        bundle.putString("categoryName", categoryName)
+        bundle.putString("categoryId", categoryID)
+        bundle.putParcelable( "selectedDocument", selectedDocument )
+        bundle.putString("classType", classType)
+        val categoryFragment = Level2CategoryFragment()
+        categoryFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+    }
 
 
     var categoryName = ""
@@ -115,6 +128,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
         }
 
         searchHelper = SearchHelper()
+        searchHelper.setOnDocumentSelection(this)
         //TODO - change hard coded value
         val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!) )
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
@@ -131,7 +145,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener {
         }
     }
 
-    override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
+    override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
         searchHelper.switchAndSearch(searchItem)
     }
 

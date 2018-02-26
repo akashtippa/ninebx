@@ -25,8 +25,9 @@ class CalendarPresenter( val calendarView: CalendarView)  {
 
     private var calendarEvents: RealmResults<CalendarEvents>? = null
     private var calendarRealm: Realm? = null
-
+    private var dateFormat : SimpleDateFormat ?= null
     init {
+        dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         calendarView.showProgress(R.string.loading)
         prepareRealmConnections(context, false, "CalendarEvents", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
@@ -55,9 +56,9 @@ class CalendarPresenter( val calendarView: CalendarView)  {
                 }
                 else if( !event.isAllDay[i]!! ) {
                     datesWithEvents.add(startDate)
-                    event.allDays.add(dateFormat.format(startDate))
+                    event.allDays.add(dateFormat!!.format(startDate))
                     datesWithEvents.add(endDate)
-                    event.allDays.add(dateFormat.format(endDate))
+                    event.allDays.add(dateFormat!!.format(endDate))
                 }
 
             }
@@ -67,7 +68,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
         return datesWithEvents
     }
 
-    private val dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+
 
     private fun getDayStringForDates(startDate: Date, endDate: Date): Collection<String> {
         val dates = ArrayList<String>()
@@ -76,7 +77,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
 
         while (calendar.time.before(endDate)) {
             val result = calendar.time
-            dates.add(dateFormat.format(result))
+            dates.add(dateFormat!!.format(result))
             calendar.add(Calendar.DATE, 1)
         }
         return dates
@@ -94,7 +95,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
     }
 
     private fun checkForDateInEvent(selectedDate: Date, event: CalendarEvents?): Boolean {
-        return ( event!!.allDays.contains(dateFormat.format(selectedDate)) )
+        return ( event!!.allDays.contains(dateFormat!!.format(selectedDate)) )
     }
 
     fun getDaysBetweenDates(startDate: Date, endDate: Date): List<Date> {

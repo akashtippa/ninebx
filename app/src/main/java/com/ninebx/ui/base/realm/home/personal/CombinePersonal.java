@@ -94,7 +94,7 @@ public class CombinePersonal extends RealmObject {
         this.taxIDItems = taxIDItems;
     }
 
-    public RealmList getListItems() {
+    public RealmList<PersonalList> getListItems() {
         return listItems;
     }
 

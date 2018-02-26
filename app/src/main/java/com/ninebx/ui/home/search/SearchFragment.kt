@@ -282,7 +282,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
             @SuppressLint("CommitTransaction")
-            override fun onItemClick(position: Int, searchItem: Level3SearchItem) {
+            override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
 
                 fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction!!.addToBackStack(null)

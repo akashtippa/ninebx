@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseSubCategories
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Parcelable
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,25 +13,46 @@ import android.view.ViewGroup
 import android.widget.*
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.R.id.spinnerAccountType
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
+import com.ninebx.ui.base.realm.decrypted.DecryptedLoyaltyPrograms
 import com.ninebx.utility.Constants
 import com.ninebx.utility.DateTimeSelectionListener
 import com.ninebx.utility.countryPicker.CountryPicker
 import com.ninebx.utility.getDateFromPicker
 import com.ninebx.utility.getDateMonthYearFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /***
  * Created by TechnoBlogger on 23/01/18.
  */
 
-class ExpandableListViewAdapter(private val _context: Context, private val categories: ArrayList<Level2Category>) : BaseExpandableListAdapter() {
+class ExpandableListViewAdapter(private val _context: Context, private val categories: ArrayList<Level2Category>, private val selectedDocument: Parcelable?, val categoryID: String, val categoryName: String, val classType: String) : BaseExpandableListAdapter() {
 
     // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
 
+    private var decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms ?= null
+    private var decryptedFinancial : DecryptedFinancial ?= null
+
+    init {
+
+        when( classType ) {
+            DecryptedLoyaltyPrograms::class.java.simpleName -> {
+                decryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+            }
+            DecryptedFinancial::class.java.simpleName -> {
+                decryptedFinancial = selectedDocument as DecryptedFinancial
+            }
+            else -> {
+                //TODO
+            }
+        }
+
+
+    }
 
     var accountType = arrayOf("Account type", "Checking", "Savings", "Other")
     var cardType = arrayOf("Card type", "Credit", "Debit")
@@ -266,6 +288,9 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
     @SuppressLint("ClickableViewAccessibility")
     override fun getChildView(groupPosition: Int, childPosition: Int,
                               isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
+
+
+
         var childView = convertView
 
         //if (childView == null) {
@@ -407,9 +432,18 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 //
 //
 //                    }
-                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopsNumericSizes)
+                    val spinnerItems = when( classType ) {
+                        DecryptedFinancial::class.java.simpleName -> {
+                            accountType
+                        }
+                        else ->{
+                            womenTopsNumericSizes
+                        }
+                    }
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     childView.findViewById<Spinner>(R.id.spinnerAccountType).adapter = arrayAdapter
+                    childView.findViewById<Spinner>(R.id.spinnerAccountType).setSelection( spinnerItems.indexOf(decryptedFinancial!!.accountType) )
 
                 } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
