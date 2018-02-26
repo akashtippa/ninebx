@@ -29,7 +29,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
     init {
         dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         calendarView.showProgress(R.string.loading)
-        prepareRealmConnections(context, false, "CalendarEvents", object : Realm.Callback(){
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 calendarRealm = realm
                 refreshData()
@@ -82,21 +82,6 @@ class CalendarPresenter( val calendarView: CalendarView)  {
     }
 
 
-
-    private fun getDayStringForDates(startDate: Date, endDate: Date): Collection<String> {
-        val dates = ArrayList<String>()
-        val calendar = GregorianCalendar()
-        calendar.time = startDate
-        val newEndDate = Date(endDate.time + ( 1000 * 60 * 60 * 24 ))
-        while (calendar.time.before(newEndDate)) {
-            val result = calendar.time
-            dates.add(dateFormat!!.format(result))
-            calendar.add(Calendar.DATE, 1)
-        }
-        return dates
-    }
-
-
     fun getEventsForDate( selectedDate : Date ) : ArrayList<CalendarEvents> {
         val dateEvents = ArrayList<CalendarEvents>()
         calendarEventsList!!.filterTo(dateEvents) {
@@ -114,23 +99,6 @@ class CalendarPresenter( val calendarView: CalendarView)  {
         return ( event!!.allDays.contains(dateFormat!!.format(selectedDate)) )
     }
 
-    fun getDaysBetweenDates(startDate: Date, endDate: Date): List<Date> {
-        val dates = ArrayList<Date>()
-        val calendar = GregorianCalendar()
-        calendar.time = startDate
-        val newEndDate = Date(endDate.time + ( 1000 * 60 * 60 * 24 ))
-
-        while (calendar.time.before(newEndDate)) {
-            val result = calendar.time
-            dates.add(result)
-            calendar.add(Calendar.DATE, 1)
-        }
-        return dates
-    }
-
-    private fun getDateDifference(startDate: Date, endDate: Date): Int {
-        return (( endDate.time - startDate.time ) / ( 1000 * 60 * 60 * 24 )).toInt()
-    }
 
     private fun getDateForString(dateString: String?): Date {
 

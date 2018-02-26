@@ -222,8 +222,9 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
         val eventsForDate = mCalendarPresenter.getEventsForDate(mCalendar.time)
         mDayEventsAdapter = DayEventsRecyclerViewAdapter( eventsForDate, mCalendar.time, object : AdapterClickListener {
             override fun onItemClick(position: Int) {
+                val calendarEvent = mDayEventsAdapter.getItemAtPosition(position)
                 mHomeView.addEditCalendarEvent(
-                        mDayEventsAdapter.getItemAtPosition(position),
+                        calendarEvent,
                         mDayEventsAdapter.getSelectedDateForEvent() )
             }
         })

@@ -972,5 +972,6 @@
     <string name="error_change_password_members">Error changing password for members</string>
 
     <string name="alert_notification">\t REMAINDERS &amp; ALERTS</string>
+    <string name="pick_start_date_for_event">Pick a start date for event</string>
 
 </resources>
