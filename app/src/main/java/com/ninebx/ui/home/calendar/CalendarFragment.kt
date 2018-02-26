@@ -22,9 +22,12 @@ import kotlin.collections.ArrayList
  */
 class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListener {
 
-    override fun setDateWithEvents(datesWithEvents: java.util.ArrayList<Date>) {
+    private lateinit var dateStringWithEvents: java.util.ArrayList<String>
+
+    override fun setDateWithEvents(datesWithEvents: java.util.ArrayList<Date>, dateStringWithEvents: java.util.ArrayList<String>) {
         hideProgress()
         this.datesWithEvents = datesWithEvents
+        this.dateStringWithEvents = dateStringWithEvents
         setupUI()
     }
 
@@ -183,6 +186,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
                     mCalendar.get(Calendar.MONTH),
                     mCalendar.get(Calendar.YEAR),
                     datesWithEvents,
+                    dateStringWithEvents,
                     this)
             rvDays.adapter = mWeekDaysRecyclerAdpater
             //mDaysRecyclerAdapter!!.toggleWeekView( selectedDate, weekOfMonth, isWeekView )
@@ -196,6 +200,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
                     mCalendar.get(Calendar.MONTH),
                     mCalendar.get(Calendar.YEAR),
                     datesWithEvents,
+                    dateStringWithEvents,
                     selectedDate,
                     isWeekView,
                     weekOfMonth,

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ninebx.R
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -18,7 +19,10 @@ class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
                                    private val month : Int,
                                    private val year : Int,
                                    private val datesWithEvents: ArrayList<Date>,
+                                   private val dateStringWithEvents: ArrayList<String>,
                                    val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<WeekDaysRecyclerViewAdapter.ViewHolder>() {
+
+    var dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
 
     override fun getItemCount(): Int {
         return 1
@@ -49,7 +53,7 @@ class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
             calendarDay.set(Calendar.MONTH, month)
             calendarDay.set(Calendar.YEAR, year)
 
-            isEventPresent = datesWithEvents.contains(calendarDay.time)
+            isEventPresent = dateStringWithEvents.contains(dateFormat.format(calendarDay.time))
         }
 
         textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
