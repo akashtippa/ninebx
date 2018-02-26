@@ -70,14 +70,13 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
 
-                val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
-                if (combineTravel.size > 0) {
-                    for (i in 0 until combineTravel.size) {
-                        var combineTravelFetched = decryptCombineTravel(combineTravel[i]!!)
-                        combineTravelFetched.listItems.addAll(combineTravelFetched.listItems)
+                val fetchCombineTravel = realm.where(CombineTravel::class.java).findAll()
+                if (fetchCombineTravel.size > 0) {
+                    for (i in 0 until fetchCombineTravel.size) {
+                        var decryptCombineTravel = decryptCombineTravel(fetchCombineTravel[i]!!)
+                        combineTravelFetched.listItems.addAll(decryptCombineTravel.listItems)
                     }
                     listsCommunicationView.travelListCount(contactsUpdating, combineTravelFetched)
-                    AppLogger.d("CombineTravel", " " + combineTravelFetched)
                 }
             }
         })
@@ -91,16 +90,14 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .equalTo("selectionType", contacts)
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombine = realm.where(CombineContacts::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineContactsFetched = decryptCombineContacts(fetchCombine[i]!!)
-                        combineContactsFetched.listItems.addAll(combineContactsFetched.listItems)
+                val fetchCombineContacts = realm.where(CombineContacts::class.java).findAll()
+                if (fetchCombineContacts.size > 0) {
+                    for (i in 0 until fetchCombineContacts.size) {
+                        var decryptCombineContacts = decryptCombineContacts(fetchCombineContacts[i]!!)
+                        combineContactsFetched.listItems.addAll(decryptCombineContacts.listItems)
                     }
                     listsCommunicationView.contactListCount(contactsUpdating, combineContactsFetched)
                 }
-//                listsCommunicationView.contactListCount(contactsUpdating)
-
             }
         })
 
@@ -113,15 +110,14 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .equalTo("selectionType", contacts)
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombine = realm.where(CombineEducation::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineEducationFetched = decryptCombineEducation(fetchCombine[i]!!)
-                        combineEducationFetched.listItems.addAll(combineEducationFetched.listItems)
+                val fetchCombineEducation = realm.where(CombineEducation::class.java).findAll()
+                if (fetchCombineEducation.size > 0) {
+                    for (i in 0 until fetchCombineEducation.size) {
+                        var decryptCombineEducation = decryptCombineEducation(fetchCombineEducation[i]!!)
+                        combineEducationFetched.listItems.addAll(decryptCombineEducation.listItems)
                     }
                     listsCommunicationView.educationListCount(contactsUpdating, combineEducationFetched)
                 }
-//                listsCommunicationView.educationListCount(contactsUpdating)
             }
         })
 
@@ -134,15 +130,15 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .equalTo("selectionType", contacts)
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombine = realm.where(CombineInterests::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineInterestsFetched = decryptCombineInterests(fetchCombine[i]!!)
-                        combineInterestsFetched.listItems.addAll(combineInterestsFetched.listItems)
+
+                val fetchCombineInterests = realm.where(CombineInterests::class.java).findAll()
+                if (fetchCombineInterests.size > 0) {
+                    for (i in 0 until fetchCombineInterests.size) {
+                        var decryptCombineInterests = decryptCombineInterests(fetchCombineInterests[i]!!)
+                        combineInterestsFetched.listItems.addAll(decryptCombineInterests.listItems)
                     }
                     listsCommunicationView.interestListCount(contactsUpdating, combineInterestsFetched)
                 }
-//                listsCommunicationView.interestListCount(contactsUpdating)
             }
         })
 
@@ -155,15 +151,14 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .equalTo("selectionType", contacts)
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombine = realm.where(CombinePersonal::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combinePersonalFetched = decryptCombinePersonal(fetchCombine[i]!!)
-                        combinePersonalFetched.listItems.addAll(combinePersonalFetched.listItems)
+                val fetchCombinePersonal = realm.where(CombinePersonal::class.java).findAll()
+                if (fetchCombinePersonal.size > 0) {
+                    for (i in 0 until fetchCombinePersonal.size) {
+                        var decryptCombinePersonal = decryptCombinePersonal(fetchCombinePersonal[i]!!)
+                        combinePersonalFetched.listItems.addAll(decryptCombinePersonal.listItems)
                     }
                     listsCommunicationView.countPersonalList(contactsUpdating, combinePersonalFetched)
                 }
-//                listsCommunicationView.countPersonalList(contactsUpdating)
             }
         })
 
@@ -177,15 +172,14 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
 
-                val fetchCombine = realm.where(CombineWellness::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineWellnessFetched = decryptCombineWellness(fetchCombine[i]!!)
-                        combineWellnessFetched.listItems.addAll(combineWellnessFetched.listItems)
+                val fetchCombineWellness = realm.where(CombineWellness::class.java).findAll()
+                if (fetchCombineWellness.size > 0) {
+                    for (i in 0 until fetchCombineWellness.size) {
+                        var decryptCombineWellness= decryptCombineWellness(fetchCombineWellness[i]!!)
+                        combineWellnessFetched.listItems.addAll(decryptCombineWellness.listItems)
                     }
                     listsCommunicationView.wellnessListCount(contactsUpdating, combineWellnessFetched)
                 }
-//                listsCommunicationView.wellnessListCount(contactsUpdating)
             }
         })
 
@@ -199,15 +193,14 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
 
-                val fetchCombine = realm.where(CombineMemories::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineMemoriesFetched = decryptCombineMemories(fetchCombine[i]!!)
-                        combineMemoriesFetched.listItems.addAll(combineMemoriesFetched.listItems)
+                val fetchCombineMemories = realm.where(CombineMemories::class.java).findAll()
+                if (fetchCombineMemories.size > 0) {
+                    for (i in 0 until fetchCombineMemories.size) {
+                        var decryptCombineMemories= decryptCombineMemories(fetchCombineMemories[i]!!)
+                        combineMemoriesFetched.listItems.addAll(decryptCombineMemories.listItems)
                     }
                     listsCommunicationView.memoryListCount(contactsUpdating, combineMemoriesFetched)
                 }
-//                listsCommunicationView.memoryListCount(contactsUpdating)
             }
         })
 
@@ -221,15 +214,14 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
 
-                val fetchCombine = realm.where(CombineShopping::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineShoppingFetched = decryptCombineShopping(fetchCombine[i]!!)
-                        combineShoppingFetched.listItems.addAll(combineShoppingFetched.listItems)
+                val fetchCombineShopping = realm.where(CombineShopping::class.java).findAll()
+                if (fetchCombineShopping.size > 0) {
+                    for (i in 0 until fetchCombineShopping.size) {
+                        var decryptCombineShopping= decryptCombineShopping(fetchCombineShopping[i]!!)
+                        combineShoppingFetched.listItems.addAll(decryptCombineShopping.listItems)
                     }
                     listsCommunicationView.shoppingListCount(contactsUpdating, combineShoppingFetched)
                 }
-//                listsCommunicationView.shoppingListCount(contactsUpdating)
             }
         })
     }
