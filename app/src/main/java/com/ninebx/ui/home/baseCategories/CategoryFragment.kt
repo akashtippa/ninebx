@@ -89,10 +89,14 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     private fun setupUI() {
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), combinedItems!!, this)
+
     }
 
     var categoryName = ""
     var categoryID = ""
+
+    var fromWhichBox: Int? = null
+
 
     private var allMemoryView: RealmResults<MemoryTimeline>? = null
     private var allContacts: RealmResults<Contacts>? = null
@@ -215,6 +219,8 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         super.onViewCreated(view, savedInstanceState)
 
         mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
+        fromWhichBox = arguments!!.getInt("category")
+
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
     }
@@ -238,8 +244,9 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
         val bundle = Bundle()
         bundle.putString("homeScreen", "HomeScreen")
+        bundle.putInt("category", fromWhichBox!!)
 
-        val categoryFragment = SubListsFragment()
+        val categoryFragment = ListFinderFragment()
         categoryFragment.arguments = bundle
 
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()

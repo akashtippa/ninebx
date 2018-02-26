@@ -279,48 +279,4 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
     }
-
-    private fun callSubListFragment(option: String) {
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
-
-        val bundle = Bundle()
-        bundle.putString("homeScreen", "bottom")
-        val categoryFragment = SubListsFragment()
-        categoryFragment.arguments = bundle
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-
-        when (option) {
-            getString(R.string.home_amp_money) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
-
-            }
-            getString(R.string.travel) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
-            }
-            getString(R.string.contacts) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
-            }
-            getString(R.string.education_work) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
-            }
-            getString(R.string.personal) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
-            }
-            getString(R.string.interests) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
-            }
-            getString(R.string.wellness) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
-            }
-            getString(R.string.memories) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
-            }
-            getString(R.string.shopping) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
-            }
-        }
-    }
 }
