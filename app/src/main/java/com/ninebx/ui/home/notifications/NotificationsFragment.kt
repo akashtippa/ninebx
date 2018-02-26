@@ -74,6 +74,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
                             decryptedNotifications[position].read = true
                             optionsLayout.hide()
                             mNotificationsPresenter!!.markAsRead(position)
+                            mHomeView.setNotificationCount(--count)
                             mAdapter.notifyDataSetChanged()
                         }
                         R.id.ivMore -> {
@@ -85,6 +86,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
                             optionsLayout.hide()
                             decryptedNotifications.removeAt(position)
                             mNotificationsPresenter!!.deleteNotification(position)
+                            mHomeView.setNotificationCount(--count)
                             mAdapter.notifyDataSetChanged()
                         }
                         R.id.ivShareNotification -> {
@@ -94,6 +96,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
                         R.id.ivFlagNotification -> {
                             optionsLayout.hide()
                             decryptedNotifications[position].read = false
+                            mHomeView.setNotificationCount(++count)
                             mNotificationsPresenter!!.markAsUnread(position)
                             mAdapter.notifyDataSetChanged()
                         }

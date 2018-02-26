@@ -29,6 +29,7 @@ public class DecryptedVehicle implements Parcelable {
             return new DecryptedVehicle[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

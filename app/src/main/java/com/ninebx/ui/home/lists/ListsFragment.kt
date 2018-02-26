@@ -7,81 +7,71 @@ import android.view.ViewGroup
 
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.lists.*
+import com.ninebx.ui.base.realm.lists.HomeList
 import com.ninebx.ui.home.BaseHomeFragment
-import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
-import com.ninebx.ui.home.search.SearchView
 import com.ninebx.utility.*
-import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
-
 import io.realm.Realm
 import io.realm.RealmResults
+
 import kotlinx.android.synthetic.main.fragment_lists.*
+
 
 /**
  * Created by Alok on 03/01/18.
  */
-class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
-
-    override fun onCombineFetched(combine: DecryptedCombine) {
-        txtHomeNumber.text = combine.listItems.count().toString()
+class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
+    override fun shoppingListCount(contactsUpdating: Long) {
+        txtShoppingNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineMemoryFetched(combineMemory: DecryptedCombineMemories) {
-        txtMemoriesNumber.text = combineMemory.listItems.count().toString()
+    override fun memoryListCount(contactsUpdating: Long) {
+        txtMemoriesNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
-        txtTravelNumber.text = combineTravel.listItems.count().toString()
+    override fun wellnessListCount(contactsUpdating: Long) {
+        txtWellnessNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineEducationFetched(combineEducation: DecryptedCombineEducation) {
-        txtEducationNumber.text = combineEducation.listItems.count().toString()
+    override fun countPersonalList(contactsUpdating: Long) {
+        txtPersonalNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineInterestsFetched(combineInterests: DecryptedCombineInterests) {
-        txtInterestsNumber.text = combineInterests.listItems.count().toString()
+    override fun interestListCount(contactsUpdating: Long) {
+        txtInterestsNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineWellnessFetched(combineWellness: DecryptedCombineWellness) {
-        txtWellnessNumber.text = combineWellness.listItems.count().toString()
+    override fun educationListCount(contactsUpdating: Long) {
+        txtEducationNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombinePersonalFetched(combinePersonal: DecryptedCombinePersonal) {
-        txtPersonalNumber.text = combinePersonal.listItems.count().toString()
+    override fun contactListCount(contactsUpdating: Long) {
+        txtContactNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineShoppingFetched(combineShopping: DecryptedCombineShopping) {
-        txtShoppingNumber.text = combineShopping.listItems.count().toString()
+    override fun travelListCount(contactsUpdating: Long) {
+        txtTravelNumber.text = contactsUpdating.toString()
     }
 
-    override fun onCombineContactsFetched(combineContacts: DecryptedCombineContacts) {
-        txtContactNumber.text = combineContacts.listItems.count().toString()
-    }
+    override fun homeListCount(contactsUpdating: Long) {
+        txtHomeNumber.text = contactsUpdating.toString() }
 
-    override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
-        TODO()
-    }
-
-    override fun showProgress(message: Int) {
-
-    }
+    override fun showProgress(message: Int) {}
 
     override fun hideProgress() {
-
+        context!!.hideProgressDialog()
     }
 
-    override fun onError(error: Int) {
-
-    }
+    override fun onError(error: Int) { }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lists, container, false)
     }
-//
 //    private val mDecryptCombine: DecryptedCombine = DecryptedCombine()
 //    private val mDecryptedCombineMemories = DecryptedCombineMemories()
 //    private val mDecryptedCombineTravel = DecryptedCombineTravel()
@@ -94,6 +84,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ListsPresenter(this)
 
         layHome.setOnClickListener {
             callSubListFragment(getString(R.string.home_amp_money))
@@ -122,17 +113,6 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         layShopping.setOnClickListener {
             callSubListFragment(getString(R.string.shopping))
         }
-//
-//        var countHome = mDecryptCombine.getListsCount("HomeBanking")
-//        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
-//        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
-//        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
-//        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
-//        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
-//        var countWellness = mDecryptedCombineMemories.getLists("WellNess")
-//        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
-//        var countShopping = mDecryptCombineShopping.getShoppingLists("Shopping")
-
 
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
@@ -169,17 +149,23 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Education".encryptString()
                 val contactsUpdating = realm!!
                         .where(EducationList::class.java)
                         .equalTo("selectionType", contacts)
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
-                txtEducationNumber.text = contactsUpdating.toString()
+                if (contactsUpdating.toString().isEmpty()) {
+                    return
+                } else {
+                    txtEducationNumber.text = contactsUpdating.toString()
+                }
             }
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Interests".encryptString()
                 val contactsUpdating = realm!!
                         .where(InterestsList::class.java)
@@ -191,6 +177,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Personal".encryptString()
                 val contactsUpdating = realm!!
                         .where(PersonalList::class.java)
@@ -213,6 +200,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Memories".encryptString()
                 val contactsUpdating = realm!!
                         .where(MemoriesList::class.java)
@@ -224,6 +212,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+                context!!.hideProgressDialog()
                 var contacts = "Shopping".encryptString()
                 val contactsUpdating = realm!!
                         .where(ShoppingList::class.java)
@@ -235,19 +224,17 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
         })
 
         var currentUsers: RealmResults<HomeList>? = null
-
         prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
 
                 currentUsers = getHomeList(realm!!)
                 if (currentUsers != null) {
+                    context!!.hideProgressDialog()
                     AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
-                    if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
-
-                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
+                    if (NineBxApplication.getPreferences().currentStep == Constants.FINGER_PRINT_COMPLETE) {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
-                        val addFamilyUsersFragment = AddFamilyUsersFragment()
+                        val addFamilyUsersFragment = SubListsFragment()
                         val bundle = Bundle()
                         bundle.putParcelableArrayList(Constants.LIST_HOME, HomeList.createParcelableList(currentUsers!!))
                         addFamilyUsersFragment.arguments = bundle
@@ -256,6 +243,15 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
                 }
             }
         })
+//        var countHome = mDecryptCombine.getListsCount("HomeBanking")
+//        var countTravel = (mDecryptedCombineTravel.getTravelLists("Travel"))
+//        var countContact = (mDecryptedCombineContacts.getListsCount("Contacts"))
+//        var countEducation = (mDecryptCombineEducation.getListItemsCount("Education"))
+//        var countInterests = (mDecryptCombineInterests.getLists("Interests"))
+//        var countPersonal = (mDecryptCombinePersonal.getListsCount("Personal"))
+//        var countWellness = mDecryptedCombineMemories.getLists("WellNess")
+//        var countMemories = (mDecryptCombineWellness.getLists("WellNess"))
+//        var countShopping = mDecryptCombineShopping.getShoppingLists("Shopping")
     }
 
     private fun callSubListFragment(option: String) {
@@ -301,6 +297,4 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView, SearchView {
             }
         }
     }
-
-
 }

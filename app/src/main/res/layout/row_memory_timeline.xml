@@ -11,9 +11,11 @@
         android:id="@+id/time_marker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:visibility="visible"
         app:line="@color/grey_500"
         app:lineSize="2dp"
         app:markerSize="20dp" />
+
 
     <LinearLayout
         android:id="@+id/layoutMemoryHolder"

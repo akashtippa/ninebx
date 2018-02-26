@@ -184,7 +184,7 @@ class PassCodeFragment : BaseAuthFragment() {
     fun setCreatePassCode(createPassCode: Int) {
 
         this.isCreatePassCode = createPassCode
-        if( isCreatePassCode != PASSCODE_RESET ) {
+        if( isCreatePassCode != PASSCODE_RESET && etPassCode != null ) {
 
             passCode = NineBxApplication.getPreferences().passCode!!
             etPassCode.setText("")

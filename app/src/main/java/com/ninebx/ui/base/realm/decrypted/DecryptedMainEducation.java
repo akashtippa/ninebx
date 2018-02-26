@@ -30,6 +30,7 @@ public class DecryptedMainEducation implements Parcelable {
             return new DecryptedMainEducation[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

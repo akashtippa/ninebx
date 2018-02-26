@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -24,6 +25,8 @@ public class DecryptedNotifications implements Parcelable {
             return new DecryptedNotifications[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @Required
     private String message = "";
     @Required

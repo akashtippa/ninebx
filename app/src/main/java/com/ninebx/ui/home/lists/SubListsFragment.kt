@@ -16,9 +16,12 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.lists.HomeList
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import kotlinx.android.synthetic.main.fragment_sub_list.*
@@ -39,15 +42,22 @@ class SubListsFragment : FragmentBackHelper() {
         return inflater.inflate(R.layout.fragment_sub_list, container, false)
     }
 
+    private var currentUsers: ArrayList<HomeList>? = ArrayList()
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        currentUsers = arguments!!.getParcelableArrayList<HomeList>(Constants.LIST_HOME)
+//        myList.addAll(currentUsers!!)
+
+
 
         mListsAdapter = ListsAdapter(myList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
         rvAddedLists!!.adapter = mListsAdapter
-
 
         fragmentValue = arguments!!.getString("homeScreen")
 
@@ -57,10 +67,6 @@ class SubListsFragment : FragmentBackHelper() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvAddedLists.adapter as ListsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
-
-
-//                val name = myList[viewHolder.adapterPosition].strAddedItem
-
                 val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
                 snackBar.setAction("UNDO", View.OnClickListener {
                     // undo is selected, restore the deleted item
@@ -77,7 +83,6 @@ class SubListsFragment : FragmentBackHelper() {
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rvAddedLists)
-
 
         txtDone.setOnClickListener {
             strAddItem = edtAddList.text.toString()
@@ -117,8 +122,6 @@ class SubListsFragment : FragmentBackHelper() {
         })
 
     }
-
-    /** Setting the adapter to the ListView */
 
     override fun onBackPressed(): Boolean {
 

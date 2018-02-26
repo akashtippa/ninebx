@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -25,6 +26,8 @@ public class DecryptedCombineInterests implements Parcelable {
             return new DecryptedCombineInterests[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

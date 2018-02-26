@@ -241,8 +241,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
 
 
-       /* val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
-        awsSecureFileTransfer.setFileTransferListener(this)
+        /*val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
         awsSecureFileTransfer.setFileTransferListener(this)
         val profilePhoto = mHomeView.getCurrentUsers()[0]!!.profilePhoto
         if (profilePhoto.isNotEmpty()) {

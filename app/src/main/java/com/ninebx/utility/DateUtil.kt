@@ -35,6 +35,9 @@ fun parseDateMonthYearTimeFormat(date: String): Date {
     return SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.getDefault()).parse(date)
 }
 
+fun parseDateForFormat( dateString : String, dateFormat : String ) : Date {
+    return SimpleDateFormat(dateFormat, Locale.getDefault()).parse(dateFormat)
+}
 
 fun getDateFromPicker(context: Context, calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
 
@@ -51,6 +54,7 @@ fun getDateFromPicker(context: Context, calendar: Calendar, dateTimeSelectionLis
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH))
 
+    datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
     datePickerDialog.show()
 
 }

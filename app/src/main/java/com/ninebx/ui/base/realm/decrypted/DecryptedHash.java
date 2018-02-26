@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -30,7 +31,8 @@ public class DecryptedHash implements Parcelable {
     private String passcode = "";
     @Required
     private Boolean isEnabledTouchId = false;
-
+    @Ignore
+    public String searchField = "";
     public DecryptedHash() {
     }
 

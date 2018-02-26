@@ -30,6 +30,7 @@ public class DecryptedTax implements Parcelable {
             return new DecryptedTax[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
     @Required

@@ -30,6 +30,9 @@ public class DecryptedFinancial implements Parcelable {
             return new DecryptedFinancial[size];
         }
     };
+
+    @Ignore public String searchField = "";
+
     @PrimaryKey //@Required
     private long id = 0;
     @Required

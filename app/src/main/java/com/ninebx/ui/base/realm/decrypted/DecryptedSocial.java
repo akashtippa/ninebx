@@ -30,6 +30,7 @@ public class DecryptedSocial implements Parcelable {
             return new DecryptedSocial[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

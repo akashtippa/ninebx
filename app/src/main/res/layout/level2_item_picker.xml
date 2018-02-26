@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_mini_padding"
+        android:singleLine="true"
         android:background="@null"
         android:hint="@string/location"
         android:visibility="visible" />

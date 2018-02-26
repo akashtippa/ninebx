@@ -30,6 +30,7 @@ public class DecryptedCertificate implements Parcelable {
             return new DecryptedCertificate[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

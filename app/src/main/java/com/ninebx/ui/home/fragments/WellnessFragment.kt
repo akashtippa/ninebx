@@ -35,6 +35,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Identification")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -45,6 +47,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Medical history")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -55,6 +59,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Healthcare providers")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -65,6 +71,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Medications")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -75,6 +83,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Medical conditions/Allergies")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -85,6 +95,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Eyeglass prescriptions")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -95,6 +107,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Vital numbers")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -105,6 +119,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.addToBackStack(null)
             val bundle = Bundle()
             bundle.putString("categoryName", "Checkups and visits")
+            bundle.putString("categoryId", "1")
+
             val categoryFragment = Level2CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()

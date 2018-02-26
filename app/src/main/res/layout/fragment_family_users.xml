@@ -95,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:singleLine="true"
             android:drawablePadding="@dimen/_9sdp"
             android:drawableRight="@drawable/ic_icon_add_list"
             android:gravity="center"

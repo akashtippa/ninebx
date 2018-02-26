@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/default_margin"
+            android:singleLine="true"
             android:layout_marginRight="@dimen/default_mini_padding"
             android:layout_toEndOf="@+id/ivBack"
             android:layout_toLeftOf="@+id/ivHome"

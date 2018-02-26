@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -25,6 +26,8 @@ public class DecryptedHomeList implements Parcelable {
             return new DecryptedHomeList[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

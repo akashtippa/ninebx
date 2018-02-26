@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.R
+import com.ninebx.ui.base.AdapterClickListener
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
@@ -193,9 +194,19 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
     }
 
+    private lateinit var mDayEventsAdapter: DayEventsRecyclerViewAdapter
+
     override fun onDayClick(dayOfMonth: Int) {
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        rvDayEvents.adapter = DayEventsRecyclerViewAdapter( mCalendar.get(Calendar.DAY_OF_MONTH) % 7 )
+        val eventsForDate = mCalendarPresenter.getEventsForDate(mCalendar.time)
+        mDayEventsAdapter = DayEventsRecyclerViewAdapter( eventsForDate, mCalendar.time, object : AdapterClickListener {
+            override fun onItemClick(position: Int) {
+                mHomeView.addEditCalendarEvent(
+                        mDayEventsAdapter.getItemAtPosition(position),
+                        mDayEventsAdapter.getSelectedDateForEvent() )
+            }
+        })
+        rvDayEvents.adapter = mDayEventsAdapter
     }
 
 }

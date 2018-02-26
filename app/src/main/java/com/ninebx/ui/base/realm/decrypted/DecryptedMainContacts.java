@@ -29,6 +29,7 @@ public class DecryptedMainContacts implements Parcelable {
             return new DecryptedMainContacts[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
     @Required

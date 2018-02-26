@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.Required;
 
 /**
@@ -21,6 +22,8 @@ public class DecryptedDevice implements Parcelable {
             return new DecryptedDevice[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @Required
     private String deviceId = "";
     @Required

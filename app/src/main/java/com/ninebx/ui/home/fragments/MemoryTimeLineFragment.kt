@@ -89,12 +89,15 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
         addOrEdit = arguments!!.getString("Operation")
 
+        if (addOrEdit == "Add") {
+            enableAdding()
+        }
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
         ivBackFromMemory.setOnClickListener {
-            activity!!.onBackPressed()
+            activity!!.finish()
         }
 
         txtDate.setOnClickListener {
@@ -149,6 +152,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             activity!!.finish()
         }
 
+        // Deleting the Memory
         imgDelete.setOnClickListener {
             imgDelete.setOnClickListener {
                 prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
@@ -172,7 +176,23 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
 
     }
 
+    // When clicked on Existing Memory, enableEditing() will be called on imgEdit Click..
     private fun enableEditing() {
+        edtTitle.isEnabled = true
+        txtDate.isEnabled = true
+        cvAttachment.isClickable = true
+        edtLocation.isEnabled = true
+        edtContacts.isEnabled = true
+        edtNotes.isEnabled = true
+        NineBxApplication.instance.activityInstance!!.hideToolbar()
+        toolbar.show()
+        ivHome.hide()
+        txtSaveMemory.show()
+        imgEdit.setImageResource(R.drawable.ic_icon_save)
+    }
+
+    // When clicked on Add Memory, everything should be in editable mode.
+    private fun enableAdding() {
         edtTitle.isEnabled = true
         txtDate.isEnabled = true
         cvAttachment.isClickable = true
@@ -238,7 +258,8 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
                             memoryTimeLineData.notes = strNotes.encryptString()
                             memoryTimeLineData.selectionType = "Memories".encryptString()
                             realm.copyToRealmOrUpdate(memoryTimeLineData)
-                            activity!!.onBackPressed()
+//                            memberView.onMemoryTimeLine(memoryTimeLineData)
+                            activity!!.finish()
                         }
                     }
                 }

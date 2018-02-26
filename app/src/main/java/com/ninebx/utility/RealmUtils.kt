@@ -200,6 +200,28 @@ fun performSearchForString(classObject: Any, searchText: String): String {
     return searchString
 }
 
+class SearchResult(
+        var searchFieldName : String = "",
+        var isSearchFound : Boolean = false
+)
+
+fun performSearchForResult(classObject: Any, searchText: String): SearchResult {
+
+    val objectHashMap = pojo2Map(classObject)
+    var isSearchFound = false
+    var searchString = ""
+    if (objectHashMap.isNotEmpty()) {
+        for (`object` in objectHashMap.values) {
+            if (`object` is String && `object`.toLowerCase().contains(searchText.toLowerCase())) {
+                isSearchFound = true
+                searchString = `object`.toString()
+                break
+            }
+        }
+    }
+    return SearchResult(searchString, isSearchFound)
+}
+
 fun performSearch(classObject: Any, searchText: String): Boolean {
 
     val objectHashMap = pojo2Map(classObject)
