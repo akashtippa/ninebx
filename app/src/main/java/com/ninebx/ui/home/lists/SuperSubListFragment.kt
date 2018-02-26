@@ -142,7 +142,6 @@ class SuperSubListFragment : FragmentBackHelper() {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideBackIcon()
         NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 }

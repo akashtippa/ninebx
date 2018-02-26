@@ -579,30 +579,26 @@ fun decryptPayment(payment: Payment): DecryptedPayment {
     val decryptedPayment = DecryptedPayment()
 
     decryptedPayment.id = payment.id
-    decryptedPayment.photosId = payment.photosId
-    decryptedPayment.backingImages .addAll(payment.backingImages)
 
     decryptedPayment.selectionType = payment.selectionType.decryptString()
-    decryptedPayment.insuranceCompany = payment.insuranceCompany.decryptString()
-    decryptedPayment.insuredProperty = payment.insuredProperty.decryptString()
-    decryptedPayment.insuredVehicle = payment.insuredVehicle.decryptString()
-    decryptedPayment.insuredPerson = payment.insuredPerson.decryptString()
-    decryptedPayment.policyNumber = payment.policyNumber.decryptString()
-    decryptedPayment.policyEffectiveDate = payment.policyEffectiveDate.decryptString()
-    decryptedPayment.policyExpirationDate = payment.policyExpirationDate.decryptString()
-    decryptedPayment.contacts = payment.contacts.decryptString()
+    decryptedPayment.cardName = payment.cardName.decryptString()
+    decryptedPayment.cardNumber = payment.cardNumber.decryptString()
+    decryptedPayment.cardType = payment.cardType.decryptString()
+    decryptedPayment.cardHolder = payment.cardHolder.decryptString()
+    decryptedPayment.expiryDate = payment.expiryDate.decryptString()
+    decryptedPayment.cvvCode = payment.cvvCode.decryptString()
+    decryptedPayment.cardPin = payment.cardPin.decryptString()
+    decryptedPayment.issuingBank = payment.issuingBank.decryptString()
     decryptedPayment.website = payment.website.decryptString()
     decryptedPayment.password = payment.password.decryptString()
     decryptedPayment.pin = payment.pin.decryptString()
     decryptedPayment.created = payment.created
     decryptedPayment.modified = payment.modified
-   /* decryptedPayment.isPrivate = payment.isPrivate*/
+    decryptedPayment.isPrivate = payment.isPrivate
     decryptedPayment.createdUser = payment.createdUser
     decryptedPayment.notes = payment.notes
     decryptedPayment.attachmentNames = payment.attachmentNames
-
     AppLogger.d("Decrypt", "decryptedPayment : " + decryptedPayment)
-
     return decryptedPayment
 }
 

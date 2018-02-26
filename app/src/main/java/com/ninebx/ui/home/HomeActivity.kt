@@ -25,6 +25,7 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
@@ -55,6 +56,7 @@ import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+    override fun onCombineFetched(decryptCombine: DecryptedCombine) { }
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
         count = 0

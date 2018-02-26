@@ -60,7 +60,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
             }
         })
 
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+        prepareRealmConnections(context, false, "CombineTravel", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 context!!.hideProgressDialog()
                 var contacts = "Travel".encryptString()
@@ -70,15 +70,15 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView) {
                         .count()
                 AppLogger.e("Count ", " is " + contactsUpdating)
 
-                val fetchCombine = realm.where(CombineTravel::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    for (i in 0 until fetchCombine.size) {
-                        var combineTravelFetched = decryptCombineTravel(fetchCombine[i]!!)
+                val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
+                if (combineTravel.size > 0) {
+                    for (i in 0 until combineTravel.size) {
+                        var combineTravelFetched = decryptCombineTravel(combineTravel[i]!!)
                         combineTravelFetched.listItems.addAll(combineTravelFetched.listItems)
                     }
                     listsCommunicationView.travelListCount(contactsUpdating, combineTravelFetched)
+                    AppLogger.d("CombineTravel", " " + combineTravelFetched)
                 }
-//                listsCommunicationView.travelListCount(contactsUpdating)
             }
         })
 

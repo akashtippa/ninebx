@@ -51,9 +51,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         this.combineFetched = decryptCombine
     }
 
-    override fun travelListCount(contactsUpdating: Long, decryptCombine: DecryptedCombineTravel) {
+    override fun travelListCount(contactsUpdating: Long, decryptCombineTravel: DecryptedCombineTravel) {
         txtTravelNumber.text = contactsUpdating.toString()
-        this.combineTravelFetched = decryptCombine
+        this.combineTravelFetched = decryptCombineTravel
     }
 
     override fun contactListCount(contactsUpdating: Long, decryptCombine: DecryptedCombineContacts) {
@@ -112,6 +112,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineFetched.listItems) {
                 combineListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -132,7 +133,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineTravelFetched.listItems) {
                 combineTravelListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
 
+            AppLogger.d("CombineTravel", " " + combineTravelListArray)
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
@@ -151,6 +154,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineContactsFetched.listItems) {
                 combineContactListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -170,6 +174,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineEducationFetched.listItems) {
                 combineEducationListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -189,6 +194,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combinePersonalFetched.listItems) {
                 combinePersonalListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -208,6 +214,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineInterestsFetched.listItems) {
                 combineInterestListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -227,6 +234,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineWellnessFetched.listItems) {
                 combineWellnessListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -246,6 +254,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineMemoriesFetched.listItems) {
                 combineMemoriesListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -265,6 +274,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             for (listItems in combineShoppingFetched.listItems) {
                 combineShoppingListArray.add(listItems)
             }
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -278,6 +288,48 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             AppLogger.d("combineShoppingListArray", " " + combineShoppingListArray)
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+        }
+    }
+
+    private fun callSubListFragment(option: String) {
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+        NineBxApplication.instance.activityInstance!!.hideBottomView()
+
+        val bundle = Bundle()
+        bundle.putString("homeScreen", "bottom")
+
+        val categoryFragment = SubListsFragment()
+        categoryFragment.arguments = bundle
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+
+        when (option) {
+            getString(R.string.home_amp_money) -> {
+            }
+            getString(R.string.travel) -> {
+            }
+            getString(R.string.contacts) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
+            }
+            getString(R.string.education_work) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
+            }
+            getString(R.string.personal) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
+            }
+            getString(R.string.interests) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
+            }
+            getString(R.string.wellness) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
+            }
+            getString(R.string.memories) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
+            }
+            getString(R.string.shopping) -> {
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
+            }
         }
     }
 }

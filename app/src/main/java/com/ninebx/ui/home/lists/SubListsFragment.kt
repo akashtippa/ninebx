@@ -3,6 +3,7 @@ package com.ninebx.ui.home.lists
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -26,6 +27,7 @@ import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
+import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_sub_list.*
 import java.util.*
 
@@ -55,7 +57,6 @@ class SubListsFragment : FragmentBackHelper() {
 //        currentUsers = arguments!!.getParcelableArrayList<HomeList>(Constants.LIST_HOME)
 //        myList.addAll(currentUsers!!)
         var getArrayList: ArrayList<DecryptedHomeList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedHomeList>
-
 
         mListsAdapter = ListsAdapter(getArrayList)
         AppLogger.d("CombineListArray", " " + getArrayList)
@@ -133,6 +134,15 @@ class SubListsFragment : FragmentBackHelper() {
         if (fragmentValue == "HomeScreen") {
             NineBxApplication.instance.activityInstance!!.showBottomView()
             NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+            val fm = activity!!.supportFragmentManager
+            val transaction = fm.beginTransaction()
+            transaction.remove(this@SubListsFragment)
+            transaction.commit()
+            fm.popBackStack()
+            fm.popBackStack()
+            val prefrences = NineBxPreferences()
+            val toolbarTitle = prefrences.currentBox
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
         } else if (fragmentValue == "bottom") {
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
             NineBxApplication.instance.activityInstance!!.showBottomView()

@@ -290,7 +290,7 @@ class SearchHelper() {
         }
         itemIndex = 0
         for( payment in searchDecryptCombine.paymentItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.contacts, "payment", payment.selectionType, itemIndex++))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.userName, "payment", payment.selectionType, itemIndex++))
         }
         itemIndex = 0
         for( asset in searchDecryptCombine.assetItems ) {

@@ -128,6 +128,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineFetched.listItems) {
                     combineListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -135,7 +136,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineListArray)
                 val categoryFragment = SubListsFragment()
                 AppLogger.d("CombineListArray", " " + combineListArray)
@@ -147,6 +148,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineTravelFetched.listItems) {
                     combineTravelListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -154,7 +156,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineTravelListArray)
                 val categoryFragment = TravelListFragment()
                 AppLogger.d("combineTravelListArray", " " + combineTravelListArray)
@@ -165,6 +167,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineContactsFetched.listItems) {
                     combineContactListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -172,7 +175,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineContactListArray)
                 val categoryFragment = ContactsListFragment()
                 AppLogger.d("combineContactListArray", " " + combineContactListArray)
@@ -188,9 +191,10 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineEducationListArray)
                 val categoryFragment = EducationListFragment()
                 AppLogger.d("combineEducationListArray", " " + combineEducationListArray)
@@ -201,6 +205,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combinePersonalFetched.listItems) {
                     combinePersonalListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -208,7 +213,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combinePersonalListArray)
                 val categoryFragment = PersonalListFragment()
                 AppLogger.d("combinePersonalListArray", " " + combinePersonalListArray)
@@ -219,6 +224,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineInterestsFetched.listItems) {
                     combineInterestListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -226,7 +232,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineInterestListArray)
                 val categoryFragment = InterestListFragment()
                 AppLogger.d("combineInterestListArray", " " + combineInterestListArray)
@@ -237,6 +243,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineWellnessFetched.listItems) {
                     combineWellnessListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -244,7 +251,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineWellnessListArray)
                 val categoryFragment = WellnessListFragment()
                 AppLogger.d("combineWellnessListArray", " " + combineWellnessListArray)
@@ -255,6 +262,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineMemoriesFetched.listItems) {
                     combineMemoriesListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -262,7 +270,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineMemoriesListArray)
                 val categoryFragment = MemoriesListFragment()
                 AppLogger.d("combineMemoriesListArray", " " + combineMemoriesListArray)
@@ -273,6 +281,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 for (listItems in combineShoppingFetched.listItems) {
                     combineShoppingListArray.add(listItems)
                 }
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -280,7 +289,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
-                bundle.putString("homeScreen", "bottom")
+                bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineShoppingListArray)
                 val categoryFragment = ShoppingListFragment()
                 AppLogger.d("combineShoppingListArray", " " + combineShoppingListArray)
@@ -291,6 +300,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
     }
 
     override fun onBackPressed(): Boolean {
+//        NineBxApplication.instance.activityInstance!!.changeToolbarTitle()
         NineBxApplication.instance.activityInstance!!.showBottomView()
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         return super.onBackPressed()

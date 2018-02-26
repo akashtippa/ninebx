@@ -16,5 +16,4 @@ interface ListsCommunicationView : BaseView {
     fun wellnessListCount(contactsUpdating: Long, decryptCombine : DecryptedCombineWellness)
     fun memoryListCount(contactsUpdating: Long, decryptCombine : DecryptedCombineMemories)
     fun shoppingListCount(contactsUpdating: Long, decryptCombine : DecryptedCombineShopping)
-
 }

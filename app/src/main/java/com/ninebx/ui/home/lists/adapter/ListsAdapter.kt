@@ -68,6 +68,8 @@ internal class ListsAdapter(private var myList: ArrayList<DecryptedHomeList>) : 
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
     }
-
-
 }
+
+
+
+
