@@ -107,7 +107,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.commitTransaction()
     }
 
-    fun addNotification(expirationDate: String, date: Date) {
+    fun addNotification(expirationDate: String, date: Date, subTitle: String) {
         var notifications = Notifications()
         var boxName =  "Home&Banking"
         var message = "AndroidTest"
@@ -115,7 +115,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         notifications.message = message.encryptString()
         notifications.boxName = boxName.encryptString()
         notifications.dueDate = expirationDate
-        notifications.subTitle = "Card Expiry".encryptString()
+        notifications.subTitle = subTitle.encryptString()
         notifications.private = false
         notifications.created = "Android Test" + date
 
