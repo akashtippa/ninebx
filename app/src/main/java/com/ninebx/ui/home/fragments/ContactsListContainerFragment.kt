@@ -183,14 +183,13 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
                         var contacts = Contacts()
                         contacts.id = UUID.randomUUID().hashCode().toLong()
                         contacts.firstName = firstName.encryptString()
                         contacts.lastName = lastName.encryptString()
                         contacts.mobileOne = strMobileNumber.encryptString()
                         contacts.insertOrUpdate(realm!!)
-
-//                        NineBxApplication.instance.activityInstance!!.onBackPressed()
                     }
 
                 })

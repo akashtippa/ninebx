@@ -24,6 +24,7 @@ import com.ninebx.ui.home.lists.travel.TravelListsAdapter
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
+import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_sub_list.*
 import java.util.ArrayList
 
@@ -125,6 +126,15 @@ class WellnessListFragment : FragmentBackHelper() {
         if (fragmentValue == "HomeScreen") {
             NineBxApplication.instance.activityInstance!!.showBottomView()
             NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+            val fm = activity!!.supportFragmentManager
+            val transaction = fm.beginTransaction()
+            transaction.remove(this@WellnessListFragment)
+            transaction.commit()
+            fm.popBackStack()
+            fm.popBackStack()
+            val preferences = NineBxPreferences()
+            val toolbarTitle = preferences.currentBox
+            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
         } else if (fragmentValue == "bottom") {
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
             NineBxApplication.instance.activityInstance!!.showBottomView()

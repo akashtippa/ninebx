@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.realm.SearchItemClickListener
+import com.ninebx.ui.base.realm.decrypted.DecryptedHomeList
 import com.ninebx.utility.AppLogger
 
 
@@ -26,6 +27,19 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
     override fun onBindViewHolder(holder: SearchAdapter.ViewHolder, position: Int) {
         holder.textView.text = searchItems[position].itemName
     }
+
+
+    fun restoreAt(position: Int, iItem: Level3SearchItem) {
+        searchItems!!.add(position, iItem)
+        notifyItemRemoved(position)
+    }
+
+
+    fun removeAt(position: Int) {
+        searchItems!!.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         override fun onClick(view: View?) {
