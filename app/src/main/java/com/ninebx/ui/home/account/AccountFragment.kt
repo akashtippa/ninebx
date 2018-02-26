@@ -241,13 +241,13 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
 
 
-        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+       /* val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
         awsSecureFileTransfer.setFileTransferListener(this)
         awsSecureFileTransfer.setFileTransferListener(this)
         val profilePhoto = mHomeView.getCurrentUsers()[0]!!.profilePhoto
         if (profilePhoto.isNotEmpty()) {
             awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + profilePhoto)
-        }
+        }*/
     }
 
     private var fromFingerPrint = false
