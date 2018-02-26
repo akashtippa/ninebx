@@ -126,7 +126,6 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             AppLogger.d("CombineListArray", " " + combineListArray)
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
-
         }
 
         layTravel.setOnClickListener {

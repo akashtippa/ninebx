@@ -114,7 +114,6 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtMobileOne.setText(strContactNumber)
 
         ivBackContactView.setOnClickListener {
-//            activity!!.onBackPressed()
             activity!!.finish()
         }
 

@@ -140,8 +140,8 @@ class SubListsFragment : FragmentBackHelper() {
             transaction.commit()
             fm.popBackStack()
             fm.popBackStack()
-            val prefrences = NineBxPreferences()
-            val toolbarTitle = prefrences.currentBox
+            val preferences = NineBxPreferences()
+            val toolbarTitle = preferences.currentBox
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
         } else if (fragmentValue == "bottom") {
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
