@@ -132,7 +132,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             startDateCalendar = Calendar.getInstance()
             if( mCalendarEvent.startsDate.size > 0 )
                 startDateCalendar!!.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
-            showDateTimeSelector( tvStarts, startDateCalendar, switchAllDay.isSelected )
+            showDateTimeSelector( tvStarts, startDateCalendar, switchAllDay.isChecked )
         }
 
         tvEnds.setOnClickListener {
@@ -140,7 +140,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 endDateCalendar = Calendar.getInstance()
                 if( mCalendarEvent.endsDate.size > 0 )
                     endDateCalendar!!.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
-                showDateTimeSelector( tvEnds, endDateCalendar, startDateCalendar!!, switchAllDay.isSelected)
+                showDateTimeSelector( tvEnds, endDateCalendar, startDateCalendar!!, switchAllDay.isChecked)
             }
             else {
                  context!!.showToast(R.string.pick_start_date_for_event)
@@ -497,7 +497,6 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     private fun changeDateFormat(isAllDay: Boolean) {
         if( startDateCalendar != null ) {
-
 
             if( isAllDay ) {
                 startDateCalendar!!.set(Calendar.HOUR_OF_DAY, 0)
