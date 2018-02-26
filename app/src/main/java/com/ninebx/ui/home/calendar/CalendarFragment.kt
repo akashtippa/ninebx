@@ -22,38 +22,13 @@ import kotlin.collections.ArrayList
  */
 class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListener {
 
-
-    override fun showProgress(message: Int) {
-        if( progressLayout != null )
-            progressLayout.show()
-    }
-
-    override fun hideProgress() {
-        if( progressLayout != null )
-            progressLayout.hide()
-    }
-
-    override fun onError(error: Int) {
+    override fun setDateWithEvents(datesWithEvents: java.util.ArrayList<Date>) {
         hideProgress()
-        if( context != null )
-            context!!.showToast(error)
+        this.datesWithEvents = datesWithEvents
+        setupUI()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_calendar, container, false)
-    }
-
-    private lateinit var mMonthFormat: SimpleDateFormat
-    private lateinit var mPrevMonth : String
-    private lateinit var mCalendarPresenter : CalendarPresenter
-    private var mCalendar = Calendar.getInstance()
-    private var isWeekView = false
-    private var isYearChange = false
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        mCalendarPresenter = CalendarPresenter(this)
-
+    private fun setupUI() {
         mMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
         ivPreviousMonth.setOnClickListener {
@@ -129,6 +104,41 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
         tvAddEvent.setOnClickListener {
             mHomeView.addEditCalendarEvent( null, Date() )
         }
+    }
+
+
+    override fun showProgress(message: Int) {
+        if( progressLayout != null )
+            progressLayout.show()
+    }
+
+    override fun hideProgress() {
+        if( progressLayout != null )
+            progressLayout.hide()
+    }
+
+    override fun onError(error: Int) {
+        hideProgress()
+        if( context != null )
+            context!!.showToast(error)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_calendar, container, false)
+    }
+    private lateinit var datesWithEvents: ArrayList<Date>
+    private lateinit var mMonthFormat: SimpleDateFormat
+    private lateinit var mPrevMonth : String
+    private lateinit var mCalendarPresenter : CalendarPresenter
+    private var mCalendar = Calendar.getInstance()
+    private var isWeekView = false
+    private var isYearChange = false
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mCalendarPresenter = CalendarPresenter(this)
+
+
 
     }
 
@@ -170,6 +180,9 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             mWeekDaysRecyclerAdpater = WeekDaysRecyclerViewAdapter(
                     weekDates,
                     selectedDate,
+                    mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.YEAR),
+                    datesWithEvents,
                     this)
             rvDays.adapter = mWeekDaysRecyclerAdpater
             //mDaysRecyclerAdapter!!.toggleWeekView( selectedDate, weekOfMonth, isWeekView )
@@ -180,6 +193,9 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             mDaysRecyclerAdapter = DaysRecyclerViewAdapter(
                     mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH),
                     monthStartDate.get(Calendar.DAY_OF_WEEK),
+                    mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.YEAR),
+                    datesWithEvents,
                     selectedDate,
                     isWeekView,
                     weekOfMonth,

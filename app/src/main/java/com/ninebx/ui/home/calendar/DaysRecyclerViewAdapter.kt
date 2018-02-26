@@ -19,6 +19,9 @@ import com.ninebx.ui.home.calendar.DaysRecyclerViewAdapter.ViewHolder
  */
 class DaysRecyclerViewAdapter(val monthDates: Int,
                               val startDay: Int,
+                              private val month : Int,
+                              private val year : Int,
+                              private val datesWithEvents: ArrayList<Date>,
                               var selectedDate: Int,
                               private var isWeekView : Boolean,
                               private var weekOfMonth : Int,
@@ -154,19 +157,37 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
     }
 
     private fun setDrawable(textView: TextView?) {
-        textView!!.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
-                              else if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() % 7 != 0 ) mEventDrawable
+
+        var isEventPresent = false
+        var dateInt = 0
+
+        dateInt = if( textView!!.text.toString().isEmpty() ) 0 else textView.text.toString().toInt()
+        if( dateInt != 0 ) {
+            val calendarDay = Calendar.getInstance()
+            calendarDay.set(Calendar.DAY_OF_MONTH, dateInt)
+            calendarDay.set(Calendar.MONTH, month)
+            calendarDay.set(Calendar.YEAR, year)
+
+            isEventPresent = datesWithEvents.contains(calendarDay.time)
+        }
+
+
+
+        textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
+                              else if( isEventPresent ) mEventDrawable
                               else mUnSelectedDrawable
 
 
         textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
-        else if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() % 7 != 0 ) mBlackColor
+        else if( isEventPresent ) mBlackColor
         else mBlackColor)
+
     }
 
     private fun isSelected(textView : TextView?): Boolean {
         return textView!!.text.isNotEmpty() && textView.text.toString().toInt() == selectedDate
     }
+
     private lateinit var mEventDrawable : Drawable
     private lateinit var mSelectedDrawable : Drawable
     private lateinit var mUnSelectedDrawable : Drawable

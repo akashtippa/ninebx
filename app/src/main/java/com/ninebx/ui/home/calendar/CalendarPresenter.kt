@@ -31,7 +31,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
         prepareRealmConnections(context, false, "CalendarEvents", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 calendarRealm = realm
-                calendarView.hideProgress()
+                refreshData()
             }
         })
     }
@@ -62,6 +62,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
 
             }
         }
+        calendarView.setDateWithEvents(datesWithEvents)
         calendarView.hideProgress()
         return datesWithEvents
     }

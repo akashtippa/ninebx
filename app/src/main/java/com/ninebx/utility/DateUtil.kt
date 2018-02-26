@@ -36,7 +36,7 @@ fun parseDateMonthYearTimeFormat(date: String): Date {
 }
 
 fun parseDateForFormat( dateString : String, dateFormat : String ) : Date {
-    return SimpleDateFormat(dateFormat, Locale.getDefault()).parse(dateFormat)
+    return SimpleDateFormat(dateFormat, Locale.getDefault()).parse(dateString)
 }
 
 fun getDateFromPicker(context: Context, calendar: Calendar, dateTimeSelectionListener: DateTimeSelectionListener) {
