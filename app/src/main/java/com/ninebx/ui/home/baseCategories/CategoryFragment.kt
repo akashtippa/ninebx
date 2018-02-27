@@ -245,6 +245,44 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         bundle.putString("homeScreen", "HomeScreen")
         bundle.putInt("category", fromWhichBox!!)
 
+        when(fromWhichBox) {
+            R.string.home_amp_money -> {
+                bundle.putString("listOption", "Home")
+            }
+             R.string.travel -> {
+                bundle.putString("listOption", "Travel")
+            }
+             R.string.contacts -> {
+                bundle.putString("listOption", "Contacts")
+            }
+             R.string.education_work -> {
+                bundle.putString("listOption", "Education")
+            }
+             R.string.personal -> {
+                bundle.putString("listOption", "Personal")
+                 bundle.putInt("categoryName", (R.string.personal))
+
+             }
+             R.string.interests -> {
+                 bundle.putInt("categoryName", (R.string.interests))
+
+                 bundle.putString("listOption", "Interests")
+            }
+             R.string.wellness -> {
+                 bundle.putString("listOption", "Wellness")
+                 bundle.putInt("categoryName", (R.string.wellness))
+            }
+             R.string.memories -> {
+                 bundle.putString("listOption", "Memories")
+                 bundle.putInt("categoryName", (R.string.memories))
+            }
+             R.string.shopping -> {
+                 bundle.putString("listOption", "Shopping")
+                 bundle.putInt("categoryName", (R.string.shopping))
+            }
+
+        }
+
         val categoryFragment = SubListsFragment()
         categoryFragment.arguments = bundle
 

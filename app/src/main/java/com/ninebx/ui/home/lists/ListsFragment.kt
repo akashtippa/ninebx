@@ -247,9 +247,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
-            bundle.putInt("categoryName", (R.string.memories))
             bundle.putString("homeScreen", "bottom")
             bundle.putString("listOption", "Memories")
+            bundle.putInt("categoryName", (R.string.memories))
             categoryFragment.setCombineMemories( combineMemoriesFetched)
             //val categoryFragment = MemoriesListFragment()
             categoryFragment.arguments = bundle
@@ -266,9 +266,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
+            bundle.putString("listOption", "Shopping")
             bundle.putInt("categoryName", (R.string.shopping))
             bundle.putString("homeScreen", "bottom")
-            bundle.putString("listOption", "Shopping")
             categoryFragment.setCombineShopping( combineShoppingFetched)
             //val categoryFragment = ShoppingListFragment()
             categoryFragment.arguments = bundle

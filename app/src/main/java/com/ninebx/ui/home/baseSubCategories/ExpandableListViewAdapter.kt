@@ -15,8 +15,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
-import com.ninebx.ui.base.realm.decrypted.DecryptedLoyaltyPrograms
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.Constants
 import com.ninebx.utility.DateTimeSelectionListener
 import com.ninebx.utility.countryPicker.CountryPicker
@@ -34,18 +33,87 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
     // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
 
-    private var decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms ?= null
-    private var decryptedFinancial : DecryptedFinancial ?= null
+    // For Home & Money
+    private var decryptedFinancial: DecryptedFinancial? = null
+    private var decryptedPayment: DecryptedPayment? = null
+    private var decryptedProperty: DecryptedProperty? = null
+    private var decryptedVehicle: DecryptedVehicle? = null
+    private var decryptedAssets: DecryptedAsset? = null
+    private var decryptedInsurance: DecryptedInsurance? = null
+    private var decryptedTaxes: DecryptedTax? = null
+
+    // For Travel
+    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms? = null
+    private var decryptedTravel: DecryptedTravel? = null
+
+    // For Personal
+    private var decryptedDriversLicense: DecryptedLicense? = null
+    private var decryptedSocial: DecryptedSocial? = null
+    private var decryptedTAX_ID: DecryptedTaxID? = null
+    private var decryptedCertificate: DecryptedCertificate? = null
+    private var decryptedOtherGovernment: DecryptedGovernment? = null
 
     init {
 
-        when( classType ) {
-            DecryptedLoyaltyPrograms::class.java.simpleName -> {
-                decryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
-            }
+        when (classType) {
+
+        // For Home and Money
             DecryptedFinancial::class.java.simpleName -> {
                 decryptedFinancial = selectedDocument as DecryptedFinancial
             }
+            DecryptedPayment::class.java.simpleName -> {
+                decryptedPayment = selectedDocument as DecryptedPayment
+            }
+
+            DecryptedProperty::class.java.simpleName -> {
+                decryptedProperty = selectedDocument as DecryptedProperty
+            }
+
+            DecryptedVehicle::class.java.simpleName -> {
+                decryptedVehicle = selectedDocument as DecryptedVehicle
+            }
+
+            DecryptedAsset::class.java.simpleName -> {
+                decryptedAssets = selectedDocument as DecryptedAsset
+            }
+
+            DecryptedInsurance::class.java.simpleName -> {
+                decryptedInsurance = selectedDocument as DecryptedInsurance
+            }
+
+            DecryptedTax::class.java.simpleName -> {
+                decryptedTaxes = selectedDocument as DecryptedTax
+            }
+
+            DecryptedTravel::class.java.simpleName -> {
+                decryptedTravel = selectedDocument as DecryptedTravel
+            }
+
+        // For Travel
+            DecryptedLoyaltyPrograms::class.java.simpleName -> {
+                decryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+            }
+            DecryptedTravel::class.java.simpleName -> {
+                decryptedTravel = selectedDocument as DecryptedTravel
+            }
+
+        // For Personal
+            DecryptedLicense::class.java.simpleName -> {
+                decryptedDriversLicense = selectedDocument as DecryptedLicense
+            }
+            DecryptedSocial::class.java.simpleName -> {
+                decryptedSocial = selectedDocument as DecryptedSocial
+            }
+            DecryptedTaxID::class.java.simpleName -> {
+                decryptedTAX_ID = selectedDocument as DecryptedTaxID
+            }
+            DecryptedCertificate::class.java.simpleName -> {
+                decryptedCertificate = selectedDocument as DecryptedCertificate
+            }
+            DecryptedGovernment::class.java.simpleName -> {
+                decryptedOtherGovernment = selectedDocument as DecryptedGovernment
+            }
+
             else -> {
                 //TODO
             }
@@ -412,6 +480,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
 
+                childView.findViewById<EditText>(R.id.etSubHeader).setText(decryptedFinancial!!.accountNumber)
 
                 if (keyBoardType == Constants.KEYBOARD_NUMBER) {
                     childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
@@ -419,31 +488,18 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                     childView.findViewById<EditText>(R.id.etSubHeader).hide()
                     childView.findViewById<Spinner>(R.id.spinnerAccountType).show()
 
-//
-//                    childView.findViewById<Spinner>(R.id.spinnerAccountType).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                        override fun onNothingSelected(p0: AdapterView<*>?) {
-//
-//                        }
-//
-//                        override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-////                            val newValue = childView!!.findViewById<Spinner>(R.id.spinnerAccountType).getItemAtPosition(position) as String
-//
-//                        }
-//
-//
-//                    }
-                    val spinnerItems = when( classType ) {
+                    val spinnerItems = when (classType) {
                         DecryptedFinancial::class.java.simpleName -> {
                             accountType
                         }
-                        else ->{
+                        else -> {
                             womenTopsNumericSizes
                         }
                     }
                     val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     childView.findViewById<Spinner>(R.id.spinnerAccountType).adapter = arrayAdapter
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).setSelection( spinnerItems.indexOf(decryptedFinancial!!.accountType) )
+                    childView.findViewById<Spinner>(R.id.spinnerAccountType).setSelection(spinnerItems.indexOf(decryptedFinancial!!.accountType))
 
                 } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
