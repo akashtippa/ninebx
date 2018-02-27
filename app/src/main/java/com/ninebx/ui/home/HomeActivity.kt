@@ -81,9 +81,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         addNotification.onCombineEducationFetched(mDecryptCombineEducation)
     }
 
-
-    override fun onCombineFetched(decryptCombine: DecryptedCombine) { }
-
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
         count = 0
         for( notification in notifications ) {

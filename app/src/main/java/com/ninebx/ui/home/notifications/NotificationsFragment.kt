@@ -44,10 +44,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     private var mDecryptedCombine : DecryptedCombine ?= null
 
-    override fun onCombineFetched(decryptCombine: DecryptedCombine) {
-        this.mDecryptedCombine = decryptCombine
-    }
-
     override fun showProgress(message: Int) {
         if( progressLayout != null )
             progressLayout.show()
