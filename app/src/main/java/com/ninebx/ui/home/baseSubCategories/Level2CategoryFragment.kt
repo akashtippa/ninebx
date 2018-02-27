@@ -52,7 +52,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, selectedDocument, categoryID, categoryName, classType ))
+        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, mCategoryPresenter, categoryName, classType ))
 
         var decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
         etTitle.setText(decryptedFinancial.institutionName)
@@ -85,6 +85,14 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         setTitle()
 
         setCamera(boxValue)
+        tvSave.setOnClickListener {
+            if( validate() )
+            mCategoryPresenter.saveDocument( context )
+        }
+    }
+
+    private fun validate(): Boolean {
+        return !etTitle.text.toString().isEmpty()
     }
 
     private fun setCamera(boxValue: String) {

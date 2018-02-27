@@ -1,14 +1,17 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
-import com.ninebx.utility.Constants
+import com.ninebx.utility.*
+import io.realm.Realm
 
 /***
  * Created by TechnoBlogger on 23/01/18.
@@ -2733,5 +2736,277 @@ class Level2CategoryHelper(
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
+    }
+
+    fun setValue(level2Category: Level2SubCategory, selectedDocument: Parcelable) {
+        when (category_name) {
+            "Banking" -> {
+                setBanking( level2Category )
+            }
+            "Investments/Retirement" -> {
+                getInvestments()
+            }
+            "Loans/Mortgages" -> {
+                getLoadMortgages()
+            }
+            "Other financial accounts" -> {
+                getOtherFinancialAccounts()
+            }
+            "Credit/Debit cards" -> {
+                getCardDebitCardDetails()
+            }
+            "Other payment accounts" -> {
+                getOtherPaymentAccounts()
+            }
+            "Primary home (owned)" -> {
+                getPrimaryHomeOwned()
+            }
+            "Property (rented for own use)" -> {
+                getPropertyRentedForOwnUse()
+            }
+
+            "Vacation home" -> {
+                getVacationHome()
+            }
+
+            "Investment/Rental property" -> {
+                getInvestmentRentalProperty()
+            }
+
+            "Vehicles" -> {
+                getVehicles()
+            }
+
+            "Maintenance" -> {
+                getMaintenance()
+            }
+        //TODO - continue
+            "Jewelry" -> {
+                getJewelry()
+
+            }
+            "Art and collectibles" -> {
+                getArtsAndCollectibles()
+            }
+            "Computers and electronics" -> {
+                getComputerAndElectronics()
+            }
+            "Furniture" -> {
+                getFurnitureDetails()
+            }
+            "Others" -> {
+                getOtherDetails()
+            }
+
+        // Insurance Left
+
+            "Past returns" -> {
+                getPastReturns()
+            }
+
+            "Returns to be filed" -> {
+                getReturnsToBeFiled()
+            }
+
+        // Personal
+
+            "Drivers License" -> {
+                getDriversLicense()
+            }
+            "Social Security Card" -> {
+                getSocialSecurityCard()
+            }
+
+            "Tax ID" -> {
+                getTaxID()
+            }
+
+            "Birth Certificate" -> {
+                getBirthCertificate()
+            }
+            "Marriage Certificate" -> {
+                getMarriageCertificate()
+            }
+            "Other Government-Issued ID" -> {
+                getOtherGovernmentIssuedID()
+            }
+
+            "Airline" -> {
+                getAirline()
+            }
+            "Hotel" -> {
+                getHotel()
+            }
+            "Car Rental" -> {
+                getCarRental()
+            }
+            "Cruiseline" -> {
+                getCruiseline()
+            }
+            "Railway" -> {
+                getRailway()
+            }
+            "Other" -> {
+                getOther()
+            }
+            "Passport" -> {
+                getPassport()
+            }
+            "Visa" -> {
+                getVisa()
+            }
+            "Other travel document" -> {
+                getOtherTravelDocuments()
+            }
+
+        // Common View
+            "Services/Other Accounts" -> {
+                getServicesOthersAccounts()
+            }
+            "Other Attachments" -> {
+                getOtherAttachments()
+            }
+
+            "Loyalty Programs" -> {
+                getLoyaltyPrograms()
+            }
+
+            "Recent Purchases" -> {
+                getRecentPurchases()
+            }
+
+            "Add Person" -> {
+                getEducation()
+            }
+
+            "Add person" -> {
+                getWork()
+            }
+            "Travel Dates And Plans" -> {
+                getTravelDatesAndPlans()
+            }
+            "Homeowners/Renters insurance" -> {
+                gtHomeOwnerRentersInsurance()
+            }
+            "Auto insurance" -> {
+                getAutoInsurance()
+            }
+            "Life insurance" -> {
+                getLifeInsurance()
+            }
+            "Health insurance" -> {
+                getHealthInsurance()
+            }
+            "Umbrella insurance" -> {
+                getUmbrellaInsurance()
+            }
+
+        // Wellness
+
+            "Identification" -> {
+                getIdentification()
+            }
+            "Medical history" -> {
+                getMedicalHistory()
+            }
+            "Healthcare providers" -> {
+                getHealthCareProviders()
+            }
+            "Emergency contacts" -> {
+
+            }
+            "Medications" -> {
+                getMedications()
+            }
+            "Medical conditions/Allergies" -> {
+                getMedicalConditions()
+            }
+            "Eyeglass prescriptions" -> {
+                getEyeGlassPrescriptions()
+            }
+            "Vital numbers" -> {
+                getVitalNumbers()
+            }
+            "Checkups and visits" -> {
+                getCheckUps()
+            }
+
+        // Clothing Sizes
+            "Womens sizes" -> {
+                getWomensSizes()
+            }
+            "Mens sizes" -> {
+                getMenSizes()
+            }
+            "Girls sizes" -> {
+                getGirlsSizes()
+            }
+            "Boy's sizes" -> {
+                getBoysSizes()
+            }
+            "Baby's sizes" -> {
+                getBabysSizes()
+            }
+
+        }
+    }
+
+    private fun setBanking(level2Category: Level2SubCategory) {
+        when( level2Category.title ) {
+            "Account type"-> decryptedFinancial!!.accountType = level2Category.titleValue
+            "Name(s) on account"-> decryptedFinancial!!.accountName= level2Category.titleValue
+            "Account number"-> decryptedFinancial!!.accountNumber= level2Category.titleValue
+            "Location"-> decryptedFinancial!!.location= level2Category.titleValue
+            "SWIFT/other code"-> decryptedFinancial!!.swiftCode= level2Category.titleValue
+            "ABA routing number"-> decryptedFinancial!!.abaRoutingNumber= level2Category.titleValue
+            "Contacts"-> decryptedFinancial!!.contacts = level2Category.titleValue
+            "Website"-> decryptedFinancial!!.website = level2Category.titleValue
+            "Username/login"-> decryptedFinancial!!.userName= level2Category.titleValue
+            "Password"-> decryptedFinancial!!.password= level2Category.titleValue
+            "PIN"-> decryptedFinancial!!.pin= level2Category.titleValue
+            "Notes" -> decryptedFinancial!!.notes= level2Category.titleValue
+            "Attachments" -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
+        }
+    }
+
+    fun saveDocument( context: Context ) {
+        if( decryptedFinancial != null ) {
+            
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    val financial = Financial()
+                    financial.id = if( decryptedFinancial!!.id.equals(0) ) getUniqueId() else decryptedFinancial!!.id
+                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
+                    financial.backingImages .addAll(decryptedFinancial!!.backingImages)
+                    financial.selectionType = decryptedFinancial!!.selectionType.encryptString()
+                    financial.institutionName = decryptedFinancial!!.institutionName.encryptString()
+                    financial.accountName = decryptedFinancial!!.accountName.encryptString()
+                    financial.accountType = decryptedFinancial!!.accountType.encryptString()
+                    financial.nameOnAccount = decryptedFinancial!!.nameOnAccount.encryptString()
+                    financial.accountNumber = decryptedFinancial!!.accountNumber.encryptString()
+                    financial.location = decryptedFinancial!!.location.encryptString()
+                    financial.swiftCode = decryptedFinancial!!.swiftCode.encryptString()
+                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
+                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
+                    financial.contacts = decryptedFinancial!!.contacts.encryptString()
+                    financial.website = decryptedFinancial!!.website.encryptString()
+                    financial.userName = decryptedFinancial!!.userName.encryptString()
+                    financial.password = decryptedFinancial!!.password.encryptString()
+                    financial.pin = decryptedFinancial!!.pin.encryptString()
+                    financial.created = decryptedFinancial!!.created
+                    financial.modified = decryptedFinancial!!.modified
+                    financial.createdUser = decryptedFinancial!!.createdUser
+                    financial.created = decryptedFinancial!!.created
+                    financial.modified = decryptedFinancial!!.modified
+                    financial.createdUser = decryptedFinancial!!.createdUser
+                    financial.notes = decryptedFinancial!!.notes.encryptString()
+                    financial.attachmentNames = decryptedFinancial!!.attachmentNames.encryptString()
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
     }
 }
