@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import com.ninebx.utility.NineBxPreferences
@@ -62,9 +62,44 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType ))
 
-        var decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
-        etTitle.setText(decryptedFinancial.institutionName)
-        etTitleValue.setText(decryptedFinancial.accountName)
+        when( selectedDocument ) {
+            is DecryptedFinancial -> {
+                val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
+                etTitle.setText(decryptedFinancial.institutionName)
+                etTitleValue.setText(decryptedFinancial.accountName)
+            }
+            is DecryptedPayment -> {
+                val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
+                etTitle.setText(decryptedFinancial.cardName)
+                etTitleValue.setText(decryptedFinancial.userName)
+            }
+            is DecryptedProperty-> {
+                val decryptedFinancial : DecryptedProperty = selectedDocument as DecryptedProperty
+                etTitle.setText(decryptedFinancial.titleName)
+                etTitleValue.setText(decryptedFinancial.propertyName)
+            }
+            is  DecryptedVehicle-> {
+                val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
+                etTitle.setText(decryptedFinancial.titleName)
+                etTitleValue.setText(decryptedFinancial.vehicleName)
+            }
+            is DecryptedAsset-> {
+                val decryptedFinancial : DecryptedAsset = selectedDocument as DecryptedAsset
+                etTitle.setText(decryptedFinancial.assetName)
+                etTitleValue.setText(decryptedFinancial.assetName)
+            }
+            is DecryptedInsurance-> {
+                val decryptedFinancial : DecryptedInsurance = selectedDocument as DecryptedInsurance
+                etTitle.setText(decryptedFinancial.insuranceCompany)
+                etTitleValue.setText(decryptedFinancial.insuredVehicle)
+            }
+            is DecryptedTax-> {
+                val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
+                etTitle.setText(decryptedFinancial.title)
+                etTitleValue.setText(decryptedFinancial.taxPayer)
+            }
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
