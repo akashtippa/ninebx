@@ -33,94 +33,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
     // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
 
-    // For Home & Money
-    private var decryptedFinancial: DecryptedFinancial? = null
-    private var decryptedPayment: DecryptedPayment? = null
-    private var decryptedProperty: DecryptedProperty? = null
-    private var decryptedVehicle: DecryptedVehicle? = null
-    private var decryptedAssets: DecryptedAsset? = null
-    private var decryptedInsurance: DecryptedInsurance? = null
-    private var decryptedTaxes: DecryptedTax? = null
 
-    // For Travel
-    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms? = null
-    private var decryptedTravel: DecryptedTravel? = null
-
-    // For Personal
-    private var decryptedDriversLicense: DecryptedLicense? = null
-    private var decryptedSocial: DecryptedSocial? = null
-    private var decryptedTAX_ID: DecryptedTaxID? = null
-    private var decryptedCertificate: DecryptedCertificate? = null
-    private var decryptedOtherGovernment: DecryptedGovernment? = null
-
-    init {
-
-        when (classType) {
-
-        // For Home and Money
-            DecryptedFinancial::class.java.simpleName -> {
-                decryptedFinancial = selectedDocument as DecryptedFinancial
-            }
-            DecryptedPayment::class.java.simpleName -> {
-                decryptedPayment = selectedDocument as DecryptedPayment
-            }
-
-            DecryptedProperty::class.java.simpleName -> {
-                decryptedProperty = selectedDocument as DecryptedProperty
-            }
-
-            DecryptedVehicle::class.java.simpleName -> {
-                decryptedVehicle = selectedDocument as DecryptedVehicle
-            }
-
-            DecryptedAsset::class.java.simpleName -> {
-                decryptedAssets = selectedDocument as DecryptedAsset
-            }
-
-            DecryptedInsurance::class.java.simpleName -> {
-                decryptedInsurance = selectedDocument as DecryptedInsurance
-            }
-
-            DecryptedTax::class.java.simpleName -> {
-                decryptedTaxes = selectedDocument as DecryptedTax
-            }
-
-            DecryptedTravel::class.java.simpleName -> {
-                decryptedTravel = selectedDocument as DecryptedTravel
-            }
-
-        // For Travel
-            DecryptedLoyaltyPrograms::class.java.simpleName -> {
-                decryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
-            }
-            DecryptedTravel::class.java.simpleName -> {
-                decryptedTravel = selectedDocument as DecryptedTravel
-            }
-
-        // For Personal
-            DecryptedLicense::class.java.simpleName -> {
-                decryptedDriversLicense = selectedDocument as DecryptedLicense
-            }
-            DecryptedSocial::class.java.simpleName -> {
-                decryptedSocial = selectedDocument as DecryptedSocial
-            }
-            DecryptedTaxID::class.java.simpleName -> {
-                decryptedTAX_ID = selectedDocument as DecryptedTaxID
-            }
-            DecryptedCertificate::class.java.simpleName -> {
-                decryptedCertificate = selectedDocument as DecryptedCertificate
-            }
-            DecryptedGovernment::class.java.simpleName -> {
-                decryptedOtherGovernment = selectedDocument as DecryptedGovernment
-            }
-
-            else -> {
-                //TODO
-            }
-        }
-
-
-    }
 
     var accountType = arrayOf("Account type", "Checking", "Savings", "Other")
     var cardType = arrayOf("Card type", "Credit", "Debit")
@@ -369,6 +282,8 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
         val level2SubCategory = (getChild(groupPosition, childPosition) as Level2SubCategory)
         val headerTitle = level2SubCategory.title
         val keyBoardType = level2SubCategory.inputType
+        val titleValue = level2SubCategory.titleValue
+        val isValueSet = level2SubCategory.isValueSet
 
         when (getItemType(groupPosition, childPosition)) {
 
@@ -377,7 +292,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
 
-
+                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
                 childView.findViewById<EditText>(R.id.etSubHeader).setOnTouchListener(OnTouchListener { _, event ->
                     val DRAWABLE_RIGHT = 2
 
@@ -394,6 +309,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView = infalInflater.inflate(R.layout.level2_password, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etCurrentPassword).hint = headerTitle
+                childView.findViewById<EditText>(R.id.etCurrentPassword).setText(titleValue)
             }
             Constants.LEVEL2_RADIO -> {
                 childView = infalInflater.inflate(R.layout.level2_radio, null)
@@ -406,7 +322,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView = infalInflater.inflate(R.layout.level2_spinner, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-
+                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
                 if (keyBoardType == Constants.CONTACT_SPINNER) {
                     openContactList()
                 } else {
@@ -430,17 +346,20 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
             Constants.LEVEL2_SWITCH -> {
                 childView = infalInflater.inflate(R.layout.level2_switch, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                childView!!.findViewById<Switch>(R.id.switchView).isChecked = isValueSet
+
             }
             Constants.LEVEL2_USD -> {
                 childView = infalInflater.inflate(R.layout.level2_usd, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-
+                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
                 val spinnerCurrency: Spinner = childView.findViewById<View>(R.id.spinnerCurrency) as Spinner
 
                 val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, currencyType)
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerCurrency.adapter = arrayAdapter
+                spinnerCurrency.setSelection(currencyType.indexOf(titleValue))
             }
             Constants.LEVEL2_NOTES -> {
 
@@ -451,13 +370,14 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 } else {
                     childView!!.findViewById<EditText>(R.id.edtNotes).hint = headerTitle
                 }
+                childView!!.findViewById<EditText>(R.id.edtNotes).setText(titleValue)
             }
             Constants.LEVEL2_PICKER -> {
                 childView = infalInflater.inflate(R.layout.level2_item_picker, null)
 
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
-
+                childView!!.findViewById<TextView>(R.id.etSubHeader).text = titleValue
                 childView.findViewById<TextView>(R.id.etSubHeader).setOnClickListener {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
@@ -471,7 +391,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
-
+                childView!!.findViewById<TextView>(R.id.etSubHeader).text = titleValue
                 childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
             }
             Constants.LEVEL2_NORMAL -> {
@@ -479,8 +399,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(decryptedFinancial!!.accountNumber)
+                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
 
                 if (keyBoardType == Constants.KEYBOARD_NUMBER) {
                     childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
@@ -499,7 +418,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                     val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     childView.findViewById<Spinner>(R.id.spinnerAccountType).adapter = arrayAdapter
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).setSelection(spinnerItems.indexOf(decryptedFinancial!!.accountType))
+                    childView.findViewById<Spinner>(R.id.spinnerAccountType).setSelection(spinnerItems.indexOf(titleValue))
 
                 } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
@@ -529,48 +448,57 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopsNumericSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenTopsNumericSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_WOMEN_SIZE_US -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopSize)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenTopSize.indexOf(titleValue))
                     }
                     Constants.PICKER_WOMENS_DETAILS_SIZE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, sizeCategoryArray)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(sizeCategoryArray.indexOf(titleValue))
                     }
 
                     Constants.PICKER_WOMEN_SHOES -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenShoeSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenShoeSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_WOMEN_SHOES_WIDTH -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenShoeWidthSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenShoeWidthSizes.indexOf(titleValue))
                     }
 
                     Constants.PICKER_WOMEN_ACCESSORIES_BELTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesBelts)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenAccessoriesBelts.indexOf(titleValue))
                     }
                     Constants.PICKER_WOMEN_ACCESSORIES_HATS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesHats)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenAccessoriesHats.indexOf(titleValue))
                     }
                     Constants.PICKER_WOMEN_ACCESSORIES_GLOVES -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesGloves)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenAccessoriesGloves.indexOf(titleValue))
                     }
                     Constants.PICKER_WOMEN_ACCESSORIES_TIGHTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesTights)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(womenAccessoriesTights.indexOf(titleValue))
                     }
 
                 // Men's Shopping Category
@@ -578,66 +506,79 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menSizeCategories)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menSizeCategories.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_SIZE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menTopsSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_TOPS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsNumericSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menTopsNumericSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_BOTTOMS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menBottomsNumericSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menJacketsNumericSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menJacketsNumericSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizesSuiting)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menBottomsNumericSizesSuiting.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_OUTERWEAR -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsNumericSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menTopsNumericSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_SHOES -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menShoeSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menShoeSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_SHOES_WIDTH -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menShoeWidthSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menShoeWidthSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_BELTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBelts)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menBelts.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_BELTS_NUMERIC_SIZE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericBeltsSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menBottomsNumericBeltsSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_TIGHTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menHats)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menHats.indexOf(titleValue))
                     }
                     Constants.PICKER_MENS_GLOVES -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menGloves)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(menGloves.indexOf(titleValue))
                     }
 
 
@@ -647,51 +588,61 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsNumericSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsNumericSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_SHOES_TODDLER -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsShoeSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsShoeSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsShoesLittleAndBigKidSize)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsShoesLittleAndBigKidSize.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_SHOES_WIDTH -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsShoeWidthSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsShoeWidthSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_BELTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsBeltSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsBeltSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_BELTS_NUMERIC_SIZE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsNumericBeltsSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsNumericBeltsSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_HATS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsHatSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsHatSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_GLOVES -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsGlovesSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsGlovesSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_TIGHTS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsTightsSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsTightsSizes.indexOf(titleValue))
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_SOCKS -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsSocksSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(girlsSocksSizes.indexOf(titleValue))
                     }
 
                 // Baby Shopping Category
@@ -699,26 +650,31 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, babyClothings)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(babyClothings.indexOf(titleValue))
                     }
                     Constants.PICKER_BABY_SHOES -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, babyShoeSizes)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(babyShoeSizes.indexOf(titleValue))
                     }
 
                     Constants.BANK_ACCOUNT_TYPE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, accountType)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(accountType.indexOf(titleValue))
                     }
                     Constants.CARD_TYPE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, cardType)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerItem.adapter = arrayAdapter
+                        spinnerItem.setSelection(cardType.indexOf(titleValue))
                     }
 
 
                 }
+
 
 
             }

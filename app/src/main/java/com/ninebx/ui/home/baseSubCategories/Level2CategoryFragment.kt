@@ -71,7 +71,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         selectedDocument = arguments!!.getParcelable("selectedDocument")
         classType = arguments!!.getString("classType")
 
-        mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, this)
+        mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument!!, classType, this)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
         NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()
