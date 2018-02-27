@@ -86,8 +86,13 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         setCamera(boxValue)
         tvSave.setOnClickListener {
+            if( validate() )
             mCategoryPresenter.saveDocument( context )
         }
+    }
+
+    private fun validate(): Boolean {
+        return !etTitle.text.toString().isEmpty()
     }
 
     private fun setCamera(boxValue: String) {
