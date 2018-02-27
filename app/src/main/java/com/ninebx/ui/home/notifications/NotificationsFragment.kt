@@ -153,15 +153,15 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mNotificationsPresenter = NotificationsPresenter(this)
-        homeNotification()
+       /* homeNotification()
         travelNotification()
         contactsNotification()
         educationWorkNotification()
         personalNotification()
-        wellnessNotification()
+        wellnessNotification()*/
     }
 
-    private fun homeNotification() {
+   /* private fun homeNotification() {
         paymentNotification()
         propertyNotification()
         vehicleNotification()
@@ -362,5 +362,5 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         val notificationManager = context!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mNotifiction.flags = mNotifiction.flags or Notification.FLAG_AUTO_CANCEL
         notificationManager.notify(0, mNotifiction)
-    }
+    }*/
 }

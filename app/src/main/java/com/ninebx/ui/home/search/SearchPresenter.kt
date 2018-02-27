@@ -52,7 +52,6 @@ class SearchPresenter {
     private val mDecryptCombineShopping = DecryptedCombineShopping()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
-
     private var decryptedRecentSearch = ArrayList<DecryptedRecentSearch>()
 
 

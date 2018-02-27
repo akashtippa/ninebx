@@ -25,8 +25,7 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
-import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
@@ -56,6 +55,33 @@ import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+
+    private var addNotification = AddNotification()
+
+        override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
+            addNotification.onCombineHomeFetched(mDecryptCombineHome)
+        }
+
+    override fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel) {
+        addNotification.onCombineTravelFetched(mDecryptCombineTravel)  }
+
+    override fun onCombineContactsFetched(mDecryptCombineContacts: DecryptedCombineContacts) {
+        addNotification.onCombineContactsFetched(mDecryptCombineContacts)
+    }
+
+    override fun onCombinePersonalFetched(mDecryptCombinePersonal: DecryptedCombinePersonal) {
+        addNotification.onCombinePersonalFetched(mDecryptCombinePersonal)
+    }
+
+    override fun onCombineWellnessFetched(mDecryptCombineWellness: DecryptedCombineWellness) {
+        addNotification.onCombineWellnessFetched(mDecryptCombineWellness)
+    }
+
+    override fun onCombineEducationFetched(mDecryptCombineEducation: DecryptedCombineEducation) {
+        addNotification.onCombineEducationFetched(mDecryptCombineEducation)
+    }
+
+
     override fun onCombineFetched(decryptCombine: DecryptedCombine) { }
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
@@ -159,11 +185,15 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     private var currentUsers: RealmResults<Users>? = null
     private lateinit var homePresenter: HomePresenter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         homePresenter = HomePresenter( this )
         NotificationsPresenter(this)
+
+        addNotification.onBegin()
+
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
