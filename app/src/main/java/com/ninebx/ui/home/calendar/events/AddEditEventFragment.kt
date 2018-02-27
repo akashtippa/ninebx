@@ -131,7 +131,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         tvStarts.setOnClickListener {
             startDateCalendar = Calendar.getInstance()
             if( mCalendarEvent.startsDate.size > 0 )
-                startDateCalendar!!.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+                startDateCalendar!!.time = parseDateForFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!, DATE_FORMAT)
             showDateTimeSelector( tvStarts, startDateCalendar, switchAllDay.isChecked )
         }
 
@@ -139,7 +139,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             if( startDateCalendar != null ) {
                 endDateCalendar = Calendar.getInstance()
                 if( mCalendarEvent.endsDate.size > 0 )
-                    endDateCalendar!!.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
+                    endDateCalendar!!.time = parseDateForFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!, DATE_FORMAT)
                 showDateTimeSelector( tvEnds, endDateCalendar, startDateCalendar!!, switchAllDay.isChecked)
             }
             else {
@@ -511,7 +511,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
             if( mCalendarEvent.startsDate.size > 0 ) {
                 startDateCalendar = Calendar.getInstance()
-                startDateCalendar!!.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+                startDateCalendar!!.time = parseDateForFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!, DATE_FORMAT)
             }
 
 
@@ -581,9 +581,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             mCalendarEvent.id = id
         }
 
-        val eventCalendar = Calendar.getInstance()
-        eventCalendar.time = parseDateMonthYearTimeFormat( mCalendarEvent.startsDate[mSelectedDateIndex]!! )
-        AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
+
 
         val startRepeatEvent = tvRepeat.text.toString().trim()
         val endRepeatEvent = tvEndRepeat.text.toString().trim()
@@ -662,7 +660,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     mCalendarEvent.endRepeat.add(endRepeatEvent)
                     mCalendarEvent.eventID.add(index.toString())
                     mCalendarEvent.isAllDay.add(isAllDay)
-
+                    //TODO AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
                 }
             }
             else {
