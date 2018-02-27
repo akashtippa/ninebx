@@ -2734,4 +2734,221 @@ class Level2CategoryHelper(
 
         categoryView.onSuccess(categoryList)
     }
+
+    fun setValue(level2Category: Level2Category, selectedDocument: Parcelable) {
+        when (category_name) {
+            "Banking" -> {
+                setBanking()
+            }
+            "Investments/Retirement" -> {
+                getInvestments()
+            }
+            "Loans/Mortgages" -> {
+                getLoadMortgages()
+            }
+            "Other financial accounts" -> {
+                getOtherFinancialAccounts()
+            }
+            "Credit/Debit cards" -> {
+                getCardDebitCardDetails()
+            }
+            "Other payment accounts" -> {
+                getOtherPaymentAccounts()
+            }
+            "Primary home (owned)" -> {
+                getPrimaryHomeOwned()
+            }
+            "Property (rented for own use)" -> {
+                getPropertyRentedForOwnUse()
+            }
+
+            "Vacation home" -> {
+                getVacationHome()
+            }
+
+            "Investment/Rental property" -> {
+                getInvestmentRentalProperty()
+            }
+
+            "Vehicles" -> {
+                getVehicles()
+            }
+
+            "Maintenance" -> {
+                getMaintenance()
+            }
+        //TODO - continue
+            "Jewelry" -> {
+                getJewelry()
+
+            }
+            "Art and collectibles" -> {
+                getArtsAndCollectibles()
+            }
+            "Computers and electronics" -> {
+                getComputerAndElectronics()
+            }
+            "Furniture" -> {
+                getFurnitureDetails()
+            }
+            "Others" -> {
+                getOtherDetails()
+            }
+
+        // Insurance Left
+
+            "Past returns" -> {
+                getPastReturns()
+            }
+
+            "Returns to be filed" -> {
+                getReturnsToBeFiled()
+            }
+
+        // Personal
+
+            "Drivers License" -> {
+                getDriversLicense()
+            }
+            "Social Security Card" -> {
+                getSocialSecurityCard()
+            }
+
+            "Tax ID" -> {
+                getTaxID()
+            }
+
+            "Birth Certificate" -> {
+                getBirthCertificate()
+            }
+            "Marriage Certificate" -> {
+                getMarriageCertificate()
+            }
+            "Other Government-Issued ID" -> {
+                getOtherGovernmentIssuedID()
+            }
+
+            "Airline" -> {
+                getAirline()
+            }
+            "Hotel" -> {
+                getHotel()
+            }
+            "Car Rental" -> {
+                getCarRental()
+            }
+            "Cruiseline" -> {
+                getCruiseline()
+            }
+            "Railway" -> {
+                getRailway()
+            }
+            "Other" -> {
+                getOther()
+            }
+            "Passport" -> {
+                getPassport()
+            }
+            "Visa" -> {
+                getVisa()
+            }
+            "Other travel document" -> {
+                getOtherTravelDocuments()
+            }
+
+        // Common View
+            "Services/Other Accounts" -> {
+                getServicesOthersAccounts()
+            }
+            "Other Attachments" -> {
+                getOtherAttachments()
+            }
+
+            "Loyalty Programs" -> {
+                getLoyaltyPrograms()
+            }
+
+            "Recent Purchases" -> {
+                getRecentPurchases()
+            }
+
+            "Add Person" -> {
+                getEducation()
+            }
+
+            "Add person" -> {
+                getWork()
+            }
+            "Travel Dates And Plans" -> {
+                getTravelDatesAndPlans()
+            }
+            "Homeowners/Renters insurance" -> {
+                gtHomeOwnerRentersInsurance()
+            }
+            "Auto insurance" -> {
+                getAutoInsurance()
+            }
+            "Life insurance" -> {
+                getLifeInsurance()
+            }
+            "Health insurance" -> {
+                getHealthInsurance()
+            }
+            "Umbrella insurance" -> {
+                getUmbrellaInsurance()
+            }
+
+        // Wellness
+
+            "Identification" -> {
+                getIdentification()
+            }
+            "Medical history" -> {
+                getMedicalHistory()
+            }
+            "Healthcare providers" -> {
+                getHealthCareProviders()
+            }
+            "Emergency contacts" -> {
+
+            }
+            "Medications" -> {
+                getMedications()
+            }
+            "Medical conditions/Allergies" -> {
+                getMedicalConditions()
+            }
+            "Eyeglass prescriptions" -> {
+                getEyeGlassPrescriptions()
+            }
+            "Vital numbers" -> {
+                getVitalNumbers()
+            }
+            "Checkups and visits" -> {
+                getCheckUps()
+            }
+
+        // Clothing Sizes
+            "Womens sizes" -> {
+                getWomensSizes()
+            }
+            "Mens sizes" -> {
+                getMenSizes()
+            }
+            "Girls sizes" -> {
+                getGirlsSizes()
+            }
+            "Boy's sizes" -> {
+                getBoysSizes()
+            }
+            "Baby's sizes" -> {
+                getBabysSizes()
+            }
+
+        }
+    }
+
+    private fun setBanking() {
+
+    }
 }
