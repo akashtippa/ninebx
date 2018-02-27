@@ -23,9 +23,11 @@ class NineBxPreferences : Preferences() {
     var userID by stringPref(Constants.USER_EMAIL_ID)
     var userFirstName by stringPref(Constants.USER_FIRST_NAME)
     var userLastName by stringPref(Constants.USER_LAST_NAME)
+    var created by stringPref(Constants.USER_LAST_NAME)
     var userPassword by stringPref(Constants.USER_PASSWORD, "")
     var userPasswordUINT8 by stringPref(Constants.USER_PASSWORD_UINT, "")
 
+    var forTestingBackPress by stringPref(Constants.USER_FOR_TESTING, "")
     var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
     var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)
     fun clearPreferences() {

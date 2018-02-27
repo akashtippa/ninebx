@@ -23,6 +23,10 @@ fun parseDateForMemory(date: Date): String {
     return SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date)
 }
 
+fun parseDateForCreatedUser(date: Date): String {
+    return SimpleDateFormat("MMM d, yyyy, hh:mm", Locale.getDefault()).format(date)
+}
+
 fun getDateMonthYearTimeFormat(date: Date): String {
     return SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.getDefault()).format(date)
 }

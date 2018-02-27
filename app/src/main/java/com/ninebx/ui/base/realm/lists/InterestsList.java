@@ -23,7 +23,7 @@ public class InterestsList extends RealmObject {
     @Required private String listName = "";
     @Required private String dueDate = "";
 
-    @Required private Integer detailsId = 0;
+    private long detailsId = 0;
     @Required private Boolean isSelected = false;
 
     @Required private Date selectedDate = new Date();
@@ -34,7 +34,7 @@ public class InterestsList extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public InterestsList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public InterestsList(long id, String selectionType, String classType, String listName, String dueDate, long detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -93,11 +93,11 @@ public class InterestsList extends RealmObject {
         this.dueDate = dueDate;
     }
 
-    public Integer getDetailsId() {
+    public long getDetailsId() {
         return detailsId;
     }
 
-    public void setDetailsId(Integer detailsId) {
+    public void setDetailsId(long detailsId) {
         this.detailsId = detailsId;
     }
 

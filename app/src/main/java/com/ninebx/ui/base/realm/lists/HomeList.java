@@ -35,8 +35,8 @@ public class HomeList extends RealmObject implements Parcelable{
     @Required
     private String dueDate = "";
 
-    @Required
-    private Integer detailsId = 0;
+//    @Required
+    private long detailsId = 0;
     @Required
     private Boolean isSelected = false;
 
@@ -54,7 +54,7 @@ public class HomeList extends RealmObject implements Parcelable{
     @Required
     private String createdUser = "";
 
-    public HomeList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public HomeList(long id, String selectionType, String classType, String listName, String dueDate, long detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -79,11 +79,14 @@ public class HomeList extends RealmObject implements Parcelable{
         classType = in.readString();
         listName = in.readString();
         dueDate = in.readString();
-        if (in.readByte() == 0) {
-            detailsId = null;
+
+      /*  if (in.readLong() == 0) {
+            detailsId = Long.parseLong(null);
         } else {
-            detailsId = in.readInt();
-        }
+            detailsId = in.readLong();
+        }*/
+        detailsId = in.readLong();
+
         byte tmpIsSelected = in.readByte();
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
         created = in.readString();
@@ -100,12 +103,15 @@ public class HomeList extends RealmObject implements Parcelable{
         dest.writeString(classType);
         dest.writeString(listName);
         dest.writeString(dueDate);
-        if (detailsId == null) {
+       /* if (detailsId == 1L) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(detailsId);
-        }
+            dest.writeLong(detailsId);
+        }*/
+
+        dest.writeLong(detailsId);
+
         dest.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
         dest.writeString(created);
         dest.writeString(modified);
@@ -170,11 +176,11 @@ public class HomeList extends RealmObject implements Parcelable{
         this.dueDate = dueDate;
     }
 
-    public Integer getDetailsId() {
+    public long getDetailsId() {
         return detailsId;
     }
 
-    public void setDetailsId(Integer detailsId) {
+    public void setDetailsId(long detailsId) {
         this.detailsId = detailsId;
     }
 

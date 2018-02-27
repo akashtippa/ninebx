@@ -249,7 +249,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         bundle.putInt("category", fromWhichBox!!)
 
         when (fromWhichBox) {
-
             R.string.home_amp_money -> {
                 bundle.putString("listOption", "Home")
                 bundle.putInt("categoryName", (R.string.home_amp_money))

@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.R.string.contacts
+import com.ninebx.R.string.created
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
@@ -32,6 +33,7 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_super_sub_list.*
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -60,6 +62,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     private var contactsRealm: Realm? = null
 
     val detailsId: Long = 0
+    var createdDate = ""
 
     fun setCombine(combineFetched: ArrayList<HomeList>?) {
         this.combineFetched = combineFetched
@@ -71,6 +74,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     }
 
     private var combineTravelFetched: ArrayList<TravelList>? = null
+    val preferences = NineBxPreferences()
 
     fun setCombineFetched(combineFetched: ArrayList<TravelList>?) {
         this.combineTravelFetched = combineFetched
@@ -246,13 +250,11 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         txtSubListName.setText(listTitleName)
         categoryName = arguments!!.getInt("categoryName")
 
-
         for (items in searchItems!!) {
             val dates = AddedSubItem()
             dates.strAddedItem
             myList!!.add(dates)
         }
-
 
         AppLogger.e("List Id ", " is " + listId)
 
@@ -277,7 +279,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         txtDone.setOnClickListener {
             updateParticularListName(categoryName)
         }
-
 
         // Swipe to delete.
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
@@ -371,32 +372,89 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
+    private fun savingTheCreatedTime() {
+        val firstName = preferences.userFirstName
+        val lastName = preferences.userLastName
+
+        val fullName = firstName + lastName
+        val selectedDate = Calendar.getInstance()
+        val mSelectedDate: java.util.Date
+
+        selectedDate.timeInMillis = java.util.Date().time
+        mSelectedDate = selectedDate.time
+
+        val date = parseDateForCreatedUser(mSelectedDate)
+        val created = fullName + ", " + date
+        createdDate = created
+    }
+
     private fun aadToParticularRealmList(categoryName: Int) {
+        savingTheCreatedTime()
         when (categoryName) {
             R.string.home_amp_money -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = HomeList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "HomeBanking".encryptString()
+                        homeList.modified = createdDate
+                        AppLogger.e("Created Date ", " is " + createdDate)
                         homeList.insertOrUpdate(realm!!)
                     }
 
                 })
 
+//                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+//                    override fun onSuccess(realm: Realm?) {
+//
+//                        val checkItem = realm!!
+//                                .where(HomeList::class.java)
+//                                .beginGroup()
+//                                .equalTo("listName", listTitleName)
+//                                .and()
+//                                .equalTo("selectionType", "HomeBanking".encryptString())
+//                                .endGroup()
+//                                .findAll()
+//
+//                        if (checkItem.isValid) {
+//                            realm.executeTransaction({
+//                                var listItems = HomeList()
+//                                listItems.modified = createdDate
+//                                listItems.id = getUniqueId()
+//                                listItems.listName = strAddItem.encryptString()
+//                                listItems.detailsId = 0
+//                                listItems.selectionType = "HomeBanking".encryptString()
+//                                listItems.created = createdDate
+//                                AppLogger.e("Created Date ", " is " + preferences.created)
+//
+//                                listItems.createdUser = preferences.userID
+//                                realm.copyToRealmOrUpdate(listItems)
+//                                KeyboardUtil.hideSoftKeyboard(activity!!)
+//                                txtDone.hide()
+//                            })
+//                        }
+//                    }
+//
+//                })
+
             }
             R.string.travel -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = TravelList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Travel".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -404,14 +462,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.contacts -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = ContactsList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Contacts".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -419,14 +480,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.education_work -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = EducationList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Education".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -434,14 +498,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.personal -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = PersonalList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Personal".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -449,14 +516,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.interests -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = InterestsList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Interests".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -464,14 +534,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.wellness -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = WellnessList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Wellness".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -479,14 +552,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.memories -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = MemoriesList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
                         homeList.selectionType = "Memories".encryptString()
+                        homeList.modified = createdDate
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -494,13 +570,16 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
             }
             R.string.shopping -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = ShoppingList()
                         homeList.id = getUniqueId()
                         homeList.listName = edtAddSubList.text.toString().encryptString()
-                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.detailsId = listId
+                        homeList.modified = createdDate
                         homeList.selectionType = "Shopping".encryptString()
                         homeList.insertOrUpdate(realm!!)
                     }

@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.R.string.contacts
+import com.ninebx.R.string.created
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.SearchItemClickListener
@@ -46,6 +47,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     var fragmentValue = ""
     var listOption = ""
     var categoryName = 0
+    var createdDate = ""
 
     private lateinit var mListsAdapter: SearchAdapter
     private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
@@ -132,15 +134,28 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     }
 
+    private fun savingTheCreatedTime() {
+        val firstName = preferences.userFirstName
+        val lastName = preferences.userLastName
+
+        val fullName = firstName + lastName
+        val selectedDate = Calendar.getInstance()
+        val mSelectedDate: java.util.Date
+
+        selectedDate.timeInMillis = java.util.Date().time
+        mSelectedDate = selectedDate.time
+
+        val date = parseDateForCreatedUser(mSelectedDate)
+        val created = fullName + ", " + date
+        createdDate = created
+    }
+
     val preferences = NineBxPreferences()
     private fun aadToParticularRealmList(categoryName: Int) {
-
-        var firstName = preferences.userFirstName
-        var lastName = preferences.userLastName
-
-        var fullName = firstName + lastName
         when (categoryName) {
             R.string.home_amp_money -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -149,7 +164,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "HomeBanking".encryptString()
-                        listItems.created = ""
+                        listItems.created = createdDate
+                        AppLogger.e("Created Date ", " is " + preferences.created)
+
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
@@ -158,6 +175,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.travel -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -166,6 +185,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Travel".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -173,6 +194,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.contacts -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -181,6 +204,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Contacts".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -188,6 +213,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.education_work -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -196,6 +223,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Education".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -203,6 +232,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.personal -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -211,6 +242,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Personal".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -218,6 +251,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.interests -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -226,6 +261,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Interests".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -233,6 +270,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.wellness -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -241,6 +280,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Wellness".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -248,6 +289,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.memories -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
@@ -256,6 +299,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Memories".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -263,7 +308,10 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
             R.string.shopping -> {
+                savingTheCreatedTime()
+
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = ShoppingList()
@@ -271,6 +319,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Shopping".encryptString()
+                        listItems.created = createdDate
+                        listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
 
@@ -291,7 +341,14 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             val transaction = fm.beginTransaction()
             transaction.remove(this@SubListsFragment)
             transaction.commit()
-            fm.popBackStack()
+
+            // For now used the creepy way to manage things.
+            if (preferences.forTestingBackPress.equals("Home")) {
+                fm.popBackStack()
+                fm.popBackStack()
+            } else {
+                fm.popBackStack()
+            }
             val preferences = NineBxPreferences()
             val toolbarTitle = preferences.currentBox
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
@@ -410,7 +467,15 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
+
+        // For now managing in a bad way, just to make it work.
+        if (fragmentValue == "HomeScreen") {
+            preferences.forTestingBackPress = "Home"
+        } else {
+            preferences.forTestingBackPress = "Bottom"
+        }
         val superSubListFragment = SuperSubListFragment()
+
         val bundle = Bundle()
         bundle.putInt("categoryName", categoryName)
         superSubListFragment.arguments = bundle
@@ -454,6 +519,10 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             }
         }
         fragmentTransaction.replace(R.id.frameLayout, superSubListFragment).commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }
 
