@@ -5,7 +5,7 @@ package com.ninebx.ui.home.lists.model
  */
 
 class AddedSubItem {
-    var id: String = ""
+    var id: Long = 0
     var strAddedItem: String = ""
     var isSelected: Boolean = false
 }
