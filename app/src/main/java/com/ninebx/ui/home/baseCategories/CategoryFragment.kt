@@ -214,7 +214,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -246,10 +245,10 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         bundle.putString("homeScreen", "HomeScreen")
         bundle.putInt("category", fromWhichBox!!)
 
-        /*val categoryFragment = ListFinderFragment()
+        val categoryFragment = SubListsFragment()
         categoryFragment.arguments = bundle
 
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()*/
+        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 
     private fun gettingMemoryTimeLineView() {
