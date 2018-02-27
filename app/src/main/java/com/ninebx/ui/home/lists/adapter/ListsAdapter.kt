@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.lists.adapter
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +34,11 @@ internal class ListsAdapter(private var myList: ArrayList<DecryptedHomeList>) : 
         holder.layoutAddedList.setOnClickListener {
             val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, SuperSubListFragment()).commit()
+            val superSubListFragment = SuperSubListFragment()
+//            val bundle = Bundle()
+//            bundle.putString("homeScreen", "HomeScreen")
+//            superSubListFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frameLayout, superSubListFragment).commit()
         }
     }
 
