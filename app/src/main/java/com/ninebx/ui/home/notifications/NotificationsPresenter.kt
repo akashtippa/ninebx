@@ -23,7 +23,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 mNotificationsRealm = realm!!
-                getNotification = realm.where(Notifications::class.java)git .findAll()
+                getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
                 if(getNotification!!.size > 0){
                     getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
                     notificationsView.onNotificationsFetched(mDecryptNotifications)
@@ -79,7 +79,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.commitTransaction()
     }
 
-    fun addNotification(expirationDate: String, date: Date, subTitle: String) {
+    fun addNotification(expirationDate: String, date: Date, subTitle: String, boxName: String) {
         var notifications = Notifications()
         var boxName =  "Home&Banking"
         var message = "AndroidTest"

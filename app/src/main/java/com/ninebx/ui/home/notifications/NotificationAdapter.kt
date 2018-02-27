@@ -135,5 +135,4 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         data.removeAt(position)
         notifyDataSetChanged()
     }
-
 }

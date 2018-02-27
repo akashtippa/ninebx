@@ -10,8 +10,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.home.notifications.NotificationsPresenter
-import com.ninebx.utility.AppLogger
+import com.ninebx.utility.*
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.text.SimpleDateFormat
@@ -30,7 +29,7 @@ class AddNotification : HomeView {
     private var mDecryptedCombineContacts : DecryptedCombineContacts ?= null
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
     private var currentUsers: RealmResults<Users>? = null
-    private var mNotificationsPresenter : NotificationsPresenter?= null
+    private var mHomePresenter : HomePresenter ?= null
 
     private val context = getApplicationContext()
 
@@ -90,6 +89,13 @@ class AddNotification : HomeView {
        this.mDecryptedCombineEducation = mDecryptCombineEducation
         educationWorkNotification()
     }
+   /* fun onBegin(){
+        homeNotification()
+        travelNotification()
+        contactsNotification()
+        personalNotification()
+        wellnessNotification()
+    }*/
 
     private fun homeNotification() {
         paymentNotification()
@@ -121,13 +127,15 @@ class AddNotification : HomeView {
         personalHealthNotification()
     }
 
+
     var date : Date = Calendar.getInstance().time
     var sdf: SimpleDateFormat = SimpleDateFormat("MM/yyyy")
     var dateFormat : SimpleDateFormat = SimpleDateFormat("MM/dd/yyyy")
     var birthdayFormat : SimpleDateFormat = SimpleDateFormat("MM/dd")
 
     private fun paymentNotification() {
-        AppLogger.d("Notification", "Decrypted combine payment " + mDecryptedCombine!!.paymentItems)
+        val boxName = "Home&Money"
+        AppLogger.d("AddNewNotification", "Decrypted combine payment " + mDecryptedCombine!!.paymentItems)
         var decryptedPayment = ArrayList<DecryptedPayment>()
         for (paymentItems in mDecryptedCombine!!.paymentItems){
             decryptedPayment.add(paymentItems) }
@@ -145,17 +153,17 @@ class AddNotification : HomeView {
                 var daysBetween = (difference / (1000 * 60 * 60 * 24))
                 AppLogger.d("DaysInbetween", " " + daysBetween)
                 if (daysBetween.equals(90))
-                    newNotification(date, dateOfExpiry, cardName)
+                    newNotification(date, dateOfExpiry, cardName,boxName)
             }
             catch (e :Exception){
                 AppLogger.d("Exception", "paymentNotification" + e.message )
             }
         }
-
     }
 
     private fun propertyNotification() {
-        AppLogger.d("Notification", "Decrypted combine property" + mDecryptedCombine!!.propertyItems)
+        val boxName = "Home&Money"
+        AppLogger.d("AddNewNotification", "Decrypted combine property" + mDecryptedCombine!!.propertyItems)
         var decryptedProperty = ArrayList<DecryptedProperty>()
         for(propertyItems in mDecryptedCombine!!.propertyItems){
             decryptedProperty.add(propertyItems)
@@ -178,7 +186,7 @@ class AddNotification : HomeView {
                     var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24))
                     AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
                     if(propertyDaysBetween.equals(180))
-                        newNotification(date, endDate, propertyName)
+                        newNotification(date, endDate, propertyName, boxName)
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
                 }
@@ -190,7 +198,7 @@ class AddNotification : HomeView {
                     AppLogger.d("PurchaseAnniversary", "end Date" + purchase)
                     if (purchase.equals(present)){
                         AppLogger.d("purchaseAnniversary", " " + purchase)
-                        newNotification(date, present, propertyName)
+                        newNotification(date, present, propertyName, boxName)
                     }
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
@@ -201,7 +209,8 @@ class AddNotification : HomeView {
     }
 
     private fun vehicleNotification() {
-        AppLogger.d("Notification", "Decrypted combine vehicle" + mDecryptedCombine!!.vehicleItems)
+        AppLogger.d("AddNewNotification", "Decrypted combine vehicle" + mDecryptedCombine!!.vehicleItems)
+        val boxName = "Home&Money"
         var decryptedVehicle = ArrayList<DecryptedVehicle>()
         for(vehicleItems in mDecryptedCombine!!.vehicleItems){
             decryptedVehicle.add(vehicleItems)
@@ -222,7 +231,7 @@ class AddNotification : HomeView {
                 var vehicle = (differenceDate / (1000 * 60 * 60 * 24))
                 AppLogger.d("LeaseEndDate", "Days in between " + vehicle)
                 if(differenceDate.equals(180)){
-                    newNotification(date, lease, vehicleName)
+                    newNotification(date, lease, vehicleName, boxName)
                 }
             }else {
                 try {
@@ -231,7 +240,7 @@ class AddNotification : HomeView {
                     var VehicleDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24))
                     AppLogger.d("LeaseEndDate", "Days in between " + VehicleDaysBetween)
                     if(registrationDateDifference.equals(90)){
-                        newNotification(date, regExpiryDate, vehicleName)
+                        newNotification(date, regExpiryDate, vehicleName, boxName)
                     }
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
@@ -243,7 +252,8 @@ class AddNotification : HomeView {
     }
 
     private fun insuranceNotification() {
-        AppLogger.d("Notification", "Decrypted combine Insurance" + mDecryptedCombine!!.insuranceItems)
+        AppLogger.d("AddNewNotification", "Decrypted combine Insurance" + mDecryptedCombine!!.insuranceItems)
+        val boxName = "Home&Money"
         var decryptedInsurance = ArrayList<DecryptedInsurance>()
         for(insuranceItems in mDecryptedCombine!!.insuranceItems){
             decryptedInsurance.add(insuranceItems)
@@ -259,17 +269,18 @@ class AddNotification : HomeView {
             if(insuranceType.equals("Life"))
             {
                 if(insuranceDaysBetween.equals(90))
-                    newNotification(date, insuranceExpiryDate, insuranceType)
+                    newNotification(date, insuranceExpiryDate, insuranceType, boxName)
             }
             else{
                 if(insuranceDaysBetween.equals(30))
-                    newNotification(date, insuranceExpiryDate, insuranceType)
+                    newNotification(date, insuranceExpiryDate, insuranceType, boxName)
             }
         }
     }
 
     private fun travelDatesAndPlans() {
-        AppLogger.d("Notification", "Decrypted combineTravel Vacation " + mDecryptedCombineTravel!!.vacationsItems)
+        AppLogger.d("AddNewNotification", "Decrypted combineTravel Vacation " + mDecryptedCombineTravel!!.vacationsItems)
+        val boxName = "Travel"
         var decryptedVacations = ArrayList<DecryptedVacations>()
         for(vacationItems in mDecryptedCombineTravel!!.vacationsItems){
             decryptedVacations.add(vacationItems)
@@ -284,7 +295,7 @@ class AddNotification : HomeView {
                 var vacationDateDifference: Long = vacStart.getTime() - date.getTime()
                 var vacDaysBetween = (vacationDateDifference / (1000 * 60 * 60 * 24))
                 if(vacDaysBetween.equals(90))
-                    newNotification(date, vacStart, description)
+                    newNotification(date, vacStart, description, boxName)
             }
             catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
@@ -293,7 +304,8 @@ class AddNotification : HomeView {
     }
 
     private fun travelDocuments() {
-        AppLogger.d("Notification", "Decrypted combineTravel Documents " + mDecryptedCombineTravel!!.documentsItems)
+        AppLogger.d("AddNewNotification", "Decrypted combineTravel Documents " + mDecryptedCombineTravel!!.documentsItems)
+        val boxName = "Travel"
         var decryptedTravelDocuments = ArrayList<DecryptedDocuments>()
         for(documentItems in mDecryptedCombineTravel!!.documentsItems){
             decryptedTravelDocuments.add(documentItems)
@@ -308,16 +320,17 @@ class AddNotification : HomeView {
             var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24))
             if(docType.equals("Visa")){
                 if(docDaysBetween.equals(180))
-                    newNotification(date, docExpiry, docType)
+                    newNotification(date, docExpiry, docType, boxName)
             }else{
                 if (docDateDifference.equals(270))
-                    newNotification(date, docExpiry, docType)
+                    newNotification(date, docExpiry, docType, boxName)
             }
         }
     }
 
     private fun sharedContactsNotification() {
-        AppLogger.d("Notification", "Decrypted combinecontacts" + mDecryptedCombineContacts!!.contactsItems)
+        AppLogger.d("AddNewNotification", "Decrypted combinecontacts" + mDecryptedCombineContacts!!.contactsItems)
+        val boxName = "Contacts"
         var decryptedContacts = ArrayList<DecryptedContacts>()
         for(contactItems in mDecryptedCombineContacts!!.contactsItems){
             decryptedContacts.add(contactItems)
@@ -336,7 +349,7 @@ class AddNotification : HomeView {
                 AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
                 if (anniversary.equals(present)){
                     AppLogger.d("purchaseAnniversary", " " + anniversary)
-                    newNotification(date, present, contactsName)
+                    newNotification(date, present, contactsName, boxName)
                 }
             } catch (e: Exception) {
                 AppLogger.d("Exception", "birthdayNotification" + e.message) }
@@ -346,7 +359,7 @@ class AddNotification : HomeView {
                 AppLogger.d("PurchaseAnniversary", "end Date" + birthday)
                 if (birthday.equals(present)) {
                     AppLogger.d("purchaseAnniversary", " " + birthday)
-                    newNotification(date, present, contactsName)
+                    newNotification(date, present, contactsName, boxName)
                 }
             } catch (e: Exception) {
                 AppLogger.d("Exception", "birthdayNotification" + e.message)
@@ -354,7 +367,8 @@ class AddNotification : HomeView {
         }
         }
     private fun gradudationAnniversaryNotification() {
-        AppLogger.d("Notification", "Decrypted combine work and Education" + mDecryptedCombineEducation!!.educationItems)
+        val boxName = "Personal"
+        AppLogger.d("AddNewNotification", "Decrypted combine work and Education" + mDecryptedCombineEducation!!.educationItems)
         var decryptedEducation = ArrayList<DecryptedEducation>()
         for(educationItems in mDecryptedCombineEducation!!.educationItems){
             decryptedEducation.add(educationItems)
@@ -370,7 +384,7 @@ class AddNotification : HomeView {
                     AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
                     if (anniversary.equals(present)){
                         AppLogger.d("purchaseAnniversary", " " + anniversary)
-                        newNotification(date, present, graduationName)
+                        newNotification(date, present, graduationName, boxName)
                     }
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "birthdayNotification" + e.message) }
@@ -378,7 +392,8 @@ class AddNotification : HomeView {
     }
 
     private fun workAnniversaryNotification() {
-        AppLogger.d("Notification", "Decrypted combine work and Education" + mDecryptedCombineEducation!!.workItems)
+        val boxName = "Personal"
+        AppLogger.d("AddNewNotification", "Decrypted combine work and Education" + mDecryptedCombineEducation!!.workItems)
         var decryptedWork = ArrayList<DecryptedWork>()
         for(workItems in mDecryptedCombineEducation!!.workItems){
             decryptedWork.add(workItems)
@@ -395,7 +410,7 @@ class AddNotification : HomeView {
                 AppLogger.d("PurchaseAnniversary", "end Date" + anniversaryWork)
                 if (anniversaryWork.equals(present)){
                     AppLogger.d("purchaseAnniversary", " " + anniversaryWork)
-                    newNotification(date, present, companyName)
+                    newNotification(date, present, companyName, boxName)
                 }
             } catch (e: Exception) {
                 AppLogger.d("Exception", "birthdayNotification" + e.message) }
@@ -403,7 +418,8 @@ class AddNotification : HomeView {
     }
 
     private fun dlExpiryNotification() {
-        AppLogger.d("Notification", "Decrypted combinePersonal " + mDecryptedCombinePersonal!!.licenseItems)
+        //AppLogger.d("AddNewNotification", "Decrypted combinePersonal " + mDecryptedCombinePersonal!!.licenseItems)
+        val boxName = "Personal"
         var decryptedLicense = ArrayList<DecryptedLicense>()
         for (licenseItems in mDecryptedCombinePersonal!!.licenseItems){
             decryptedLicense.add(licenseItems)
@@ -417,7 +433,7 @@ class AddNotification : HomeView {
                 var licenseDateDifference: Long = licenseExpiry.getTime() - date.getTime()
                 var insuranceDaysBetween = (licenseDateDifference / (1000 * 60 * 60 * 24))
                 if (insuranceDaysBetween.equals(90))
-                    newNotification(date, licenseExpiry, driversLicense)
+                    newNotification(date, licenseExpiry, driversLicense, boxName)
             }
             catch (e: Exception){
                 AppLogger.d("Exception", "" + e.message)
@@ -426,7 +442,8 @@ class AddNotification : HomeView {
     }
 
     private fun birthdayNotification() {
-        AppLogger.d("Notification", "Decrypted combine personal" + mDecryptedCombinePersonal!!.personalItems)
+        val boxName = "Personal"
+        AppLogger.d("AddNewNotification", "Decrypted combine personal" + mDecryptedCombinePersonal!!.personalItems)
         var decryptedPersonal = ArrayList<DecryptedPersonal>()
         for(personalItems in mDecryptedCombinePersonal!!.personalItems){
             decryptedPersonal.add(personalItems)
@@ -441,18 +458,19 @@ class AddNotification : HomeView {
             AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
             if (anniversary.equals(present)){
                 AppLogger.d("anniversary", " " + anniversary)
-                newNotification(date, present, anniversary.toString())
+                newNotification(date, present, anniversary.toString(), boxName)
             }
             if (birthday.equals(present)){
                 AppLogger.d("birthday", " " + birthday)
-                newNotification(date, present, birthday.toString())
+                newNotification(date, present, birthday.toString(), boxName)
             }
         } catch (e: Exception) {
             AppLogger.d("Exception", "Anniversary" + e.message) }
     }
 
     private fun governmentIDNotification() {
-        AppLogger.d("Notification", "Decrypted Combine personal" + mDecryptedCombinePersonal!!.governmentItems)
+        val boxName = "Personal"
+        AppLogger.d("AddNewNotification", "Decrypted Combine personal" + mDecryptedCombinePersonal!!.governmentItems)
         var decryptedPersonalGovernment = ArrayList<DecryptedGovernment>()
         for (governmentItems in mDecryptedCombinePersonal!!.governmentItems){
             decryptedPersonalGovernment.add(governmentItems)
@@ -467,7 +485,7 @@ class AddNotification : HomeView {
                 var governmentDateDifference: Long = governmentExpiry.getTime() - date.getTime()
                 var insuranceDaysBetween = (governmentDateDifference / (1000 * 60 * 60 * 24))
                 if (insuranceDaysBetween.equals(90))
-                    newNotification(date, governmentExpiry, govIDName)
+                    newNotification(date, governmentExpiry, govIDName, boxName)
             }
             catch (e: Exception){
                 AppLogger.d("Exception", "" + e.message)
@@ -476,7 +494,8 @@ class AddNotification : HomeView {
     }
 
     private fun personalHealthNotification() {
-        AppLogger.d("Notification", "Decrypted Combine " + mDecryptedCombineWellness!!.eyeglassPrescriptionsItems)
+        val boxName = "Wellness"
+        AppLogger.d("AddNewNotification", "Decrypted Combine Wellness " + mDecryptedCombineWellness!!.eyeglassPrescriptionsItems)
         var decryptedEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
         var decryptedVitalNumbers = ArrayList<DecryptedVitalNumbers>()
         for(eyeglassPrescriptionsItems in mDecryptedCombineWellness!!.eyeglassPrescriptionsItems){
@@ -494,7 +513,7 @@ class AddNotification : HomeView {
                 var eyeglassDateDifference: Long = date.getTime() - eyeglassPrevious.getTime()
                 var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24))
                 if (eyeglassDaysBetween.equals(330))
-                    newNotification(date, eyeglassPrevious, userName)
+                    newNotification(date, eyeglassPrevious, userName, boxName)
             }catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
             }
@@ -507,15 +526,16 @@ class AddNotification : HomeView {
                 var vitalDateDifference: Long = date.getTime() - vitalPrevious.getTime()
                 var vitalDaysBetween = (vitalDateDifference / (1000 * 60 * 60 * 24))
                 if (vitalDaysBetween.equals(330))
-                    newNotification(date, vitalPrevious, userName)
+                    newNotification(date, vitalPrevious, userName, boxName)
             }catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
             }
         }
     }
 
-    private fun newNotification(currentDate: Date, expiryDate: Date, subTitle: String) {
-        mNotificationsPresenter!!.addNotification(expiryDate.toString(), currentDate, subTitle)
+    private fun newNotification(currentDate: Date, expiryDate: Date, subTitle: String, boxName: String) {
+        AppLogger.d("AddNewNotification", "Method invoked")
+        mHomePresenter!!.addNotification(expiryDate.toString(), currentDate, subTitle, boxName)
         var intent : Intent = Intent(context, HomeActivity::class.java)
         var pIntent : PendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
         val alarmManager1 = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager

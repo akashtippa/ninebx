@@ -43,7 +43,6 @@ import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
 import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
-import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
@@ -252,7 +251,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         //SearchUtils.search()
 
         homePresenter.fetchCurrentUsers()
-
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
