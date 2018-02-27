@@ -58,6 +58,8 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
                 var simpleDateFormat = SimpleDateFormat("MM/yyyy")
                 var getDueDate = simpleDateFormat.parse(dueDate)
                 AppLogger.d("Date", "Converting string to date 2nd try-catch " + getDueDate)
+                if (c.after(getDueDate)) txtDueDate.setTextColor(redColor)
+                else txtDueDate.setTextColor(normalColor)
             } catch (e: Exception) {
                 AppLogger.d("Date", "Exception thrown while converting string to date 2nd try-catch " + e.message)
             }
@@ -133,5 +135,4 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
         data.removeAt(position)
         notifyDataSetChanged()
     }
-
 }

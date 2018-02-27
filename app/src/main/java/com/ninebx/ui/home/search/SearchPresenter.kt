@@ -52,7 +52,6 @@ class SearchPresenter {
     private val mDecryptCombineShopping = DecryptedCombineShopping()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
-
     private var decryptedRecentSearch = ArrayList<DecryptedRecentSearch>()
 
 
@@ -295,7 +294,7 @@ class SearchPresenter {
                         val decryptedCombine = decryptCombine(combineResult[i]!!)
                         appendToDecrypt(decryptedCombine)
                     }
-                    AppLogger.d("COmbineDecrypted", "Decrypted combine financial" + mDecryptCombine)
+                    AppLogger.d("CombineDecrypted", "Decrypted combine financial" + mDecryptCombine)
                     for (finance in mDecryptCombine.financialItems) {
                         AppLogger.d("REcords", finance.toString())
                     }
