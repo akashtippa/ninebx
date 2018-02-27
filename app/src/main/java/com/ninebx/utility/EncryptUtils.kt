@@ -117,7 +117,7 @@ fun encryptProperty(property: DecryptedProperty): Property {
     decryptedProperty.leaseEndDate = property.leaseEndDate.encryptString()
     decryptedProperty.created = property.created
     decryptedProperty.modified = property.modified
-    // decryptedProperty.isPrivate = property.isPrivate
+
     decryptedProperty.createdUser = property.createdUser
     decryptedProperty.notes = property.notes
     decryptedProperty.attachmentNames = property.attachmentNames
