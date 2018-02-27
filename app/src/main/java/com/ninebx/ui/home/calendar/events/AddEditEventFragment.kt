@@ -270,18 +270,6 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         else
             dateTimeTextView!!.text = getDateMonthYearTimeFormat(selectedDate.time)
 
-        if( dateTimeTextView.id == tvStarts.id ) {
-            if( mCalendarEvent.startsDate.size > 0 )
-                mCalendarEvent.startsDate[mSelectedDateIndex] = (getDateMonthYearTimeFormat(selectedDate.time))
-            else
-                mCalendarEvent.startsDate.add( (getDateMonthYearTimeFormat(selectedDate.time)) )
-        }
-        else {
-            if( mCalendarEvent.endsDate.size > 0 )
-                mCalendarEvent.endsDate[mSelectedDateIndex] = (getDateMonthYearTimeFormat(selectedDate.time))
-            else
-                mCalendarEvent.endsDate.add( (getDateMonthYearTimeFormat(selectedDate.time)) )
-        }
     }
 
     private fun showSelectionDialog( selectedInterval : String, selectionType : String ) {
@@ -399,7 +387,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private val TAG: String = AddEditEventFragment::class.java.simpleName
-
+    private val DATE_FORMAT = "MMMM dd, yyyy hh:mm a"
     //a Uri object to store file path
     private var filePath: Uri? = null
     private var mImagesList : ArrayList<Uri> = ArrayList()
@@ -668,8 +656,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     mCalendarEvent.notes.add(eventNotes)
                     mCalendarEvent.reminder.add(eventReminder)
                     mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
-                    mCalendarEvent.startsDate.add(parseDateForFormat(eventStartDate!!, "MMMM dd, yyyy hh:mm a"))
-                    mCalendarEvent.endsDate.add(parseDateForFormat(eventEndDate!!, "MMMM dd, yyyy hh:mm a"))
+                    mCalendarEvent.startsDate.add(parseDateForFormat(eventStartDate!!, DATE_FORMAT))
+                    mCalendarEvent.endsDate.add(parseDateForFormat(eventEndDate!!, DATE_FORMAT))
                     mCalendarEvent.repeats.add(startRepeatEvent)
                     mCalendarEvent.endRepeat.add(endRepeatEvent)
                     mCalendarEvent.eventID.add(index.toString())
@@ -683,8 +671,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 mCalendarEvent.notes.add(eventNotes)
                 mCalendarEvent.reminder.add(eventReminder)
                 mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
-                mCalendarEvent.startsDate.add(parseDateForFormat(startDateCalendar!!.time, "MMMM dd, yyyy hh:mm a"))
-                mCalendarEvent.endsDate.add(parseDateForFormat(endDateCalendar!!.time, "MMMM dd, yyyy hh:mm a"))
+                mCalendarEvent.startsDate.add(parseDateForFormat(startDateCalendar!!.time, DATE_FORMAT))
+                mCalendarEvent.endsDate.add(parseDateForFormat(endDateCalendar!!.time, DATE_FORMAT))
                 mCalendarEvent.repeats.add(startRepeatEvent)
                 mCalendarEvent.endRepeat.add(endRepeatEvent)
                 mCalendarEvent.eventID.add("0")
@@ -698,8 +686,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             mCalendarEvent.notes.add(eventNotes)
             mCalendarEvent.reminder.add(eventReminder)
             mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
-            mCalendarEvent.startsDate.add(parseDateForFormat(startDateCalendar!!.time, "MMMM dd, yyyy hh:mm a"))
-            mCalendarEvent.endsDate.add(parseDateForFormat(endDateCalendar!!.time, "MMMM dd, yyyy hh:mm a"))
+            mCalendarEvent.startsDate.add(parseDateForFormat(startDateCalendar!!.time, DATE_FORMAT))
+            mCalendarEvent.endsDate.add(parseDateForFormat(endDateCalendar!!.time, DATE_FORMAT))
             mCalendarEvent.repeats.add(startRepeatEvent)
             mCalendarEvent.endRepeat.add(endRepeatEvent)
             mCalendarEvent.eventID.add("0")
@@ -708,8 +696,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
 
         uploadImageAws()
-
-        mCalendarEvent.insertOrUpdate( calendarRealm )
+        calendarRealm.copyToRealmOrUpdate(mCalendarEvent)
+        //mCalendarEvent.insertOrUpdate( calendarRealm )
         calendarRealm.commitTransaction()
         goBack()
     }
