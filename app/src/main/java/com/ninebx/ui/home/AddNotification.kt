@@ -16,6 +16,7 @@ import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -43,51 +44,51 @@ class AddNotification : HomeView {
 
     override fun getCurrentUsers(): RealmResults<Users> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
-        return currentUsers!! }
+        return currentUsers!!
+    }
 
     override fun setNotificationCount(notificationCount: Int) {    }
 
     override fun getContextForScreen(): Context {  return context }
 
-    override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {    }
+    override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
+        this.currentUsers = currentUsers
+        if( currentUsers != null ) {
+            personalNotification()
+            personalHealthNotification()
+        }
+    }
 
     override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
         this.mDecryptedCombine = mDecryptCombineHome
+        homeNotification()
     }
 
     override fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel) {
         this.mDecryptedCombineTravel = mDecryptCombineTravel
+        travelNotification()
     }
 
     override fun onCombineContactsFetched(mDecryptCombineContacts: DecryptedCombineContacts) {
         this.mDecryptedCombineContacts = mDecryptCombineContacts
+        contactsNotification()
     }
 
     override fun onCombinePersonalFetched(mDecryptCombinePersonal: DecryptedCombinePersonal) {
         this.mDecryptedCombinePersonal = mDecryptCombinePersonal
+        if( currentUsers != null )
+            personalNotification()
     }
 
     override fun onCombineWellnessFetched(mDecryptCombineWellness: DecryptedCombineWellness) {
         this.mDecryptedCombineWellness = mDecryptCombineWellness
+        if( currentUsers != null )
+        wellnessNotification()
     }
 
     override fun onCombineEducationFetched(mDecryptCombineEducation: DecryptedCombineEducation) {
        this.mDecryptedCombineEducation = mDecryptCombineEducation
-    }
-
-    fun onBegin(){
-        AppLogger.d("AddNotification", "Decrypt COmbine" + mDecryptedCombine)
-        AppLogger.d("AddNotification", "Decrypt COmbine Travel" + mDecryptedCombineTravel)
-        AppLogger.d("AddNotification", "Decrypt COmbine Education" + mDecryptedCombineEducation)
-        AppLogger.d("AddNotification", "Decrypt COmbine Wellness" + mDecryptedCombineWellness)
-        AppLogger.d("AddNotification", "Decrypt COmbine Contacts" + mDecryptedCombineContacts)
-        AppLogger.d("AddNotification", "Decrypt COmbine Personal" + mDecryptedCombinePersonal)
-        homeNotification()
-        travelNotification()
-        contactsNotification()
         educationWorkNotification()
-        personalNotification()
-        wellnessNotification()
     }
 
     private fun homeNotification() {
@@ -135,19 +136,22 @@ class AddNotification : HomeView {
         var cardName : String = ""
         for (i in 0 until decryptedPayment.size){
             expirationDate = decryptedPayment[i].expiryDate
-            cardName = decryptedPayment[i].cardName }
-        AppLogger.d("expirationDate", "" + expirationDate)
-        try {
-            var dateOfExpiry = sdf.parse(expirationDate)
-            AppLogger.d("expirationDate", "" + dateOfExpiry)
-            var difference : Long = dateOfExpiry.getTime() - date.getTime()
-            var daysBetween = (difference / (1000 * 60 * 60 * 24))
-            AppLogger.d("DaysInbetween", " " + daysBetween)
-            if (daysBetween.equals(90))
-                newNotification(date, dateOfExpiry, cardName)
+            cardName = decryptedPayment[i].cardName
+            AppLogger.d("expirationDate", "" + expirationDate)
+            try {
+                var dateOfExpiry = sdf.parse(expirationDate)
+                AppLogger.d("expirationDate", "" + dateOfExpiry)
+                var difference : Long = dateOfExpiry.getTime() - date.getTime()
+                var daysBetween = (difference / (1000 * 60 * 60 * 24))
+                AppLogger.d("DaysInbetween", " " + daysBetween)
+                if (daysBetween.equals(90))
+                    newNotification(date, dateOfExpiry, cardName)
+            }
+            catch (e :Exception){
+                AppLogger.d("Exception", "paymentNotification" + e.message )
+            }
         }
-        catch (e :Exception){
-            AppLogger.d("Exception", "paymentNotification" + e.message ) }
+
     }
 
     private fun propertyNotification() {
@@ -159,41 +163,41 @@ class AddNotification : HomeView {
         AppLogger.d("NotificationDecryptedProperty", "Decrypted payment " + decryptedProperty)
         var leaseEndDate = ""
         var propertyName = ""
-        var isRented = ""
+        var isRented : Boolean
         var purchaseDate = ""
         for (i in 0 until decryptedProperty.size){
             leaseEndDate = decryptedProperty[i].leaseEndDate
             propertyName = decryptedProperty[i].propertyName
-            isRented = decryptedProperty[i].currentlyRented as String
-            purchaseDate = decryptedProperty[i].purchaseDate}
-        AppLogger.d("LeaseEndDate", "" + leaseEndDate)
-
-        if(isRented.equals("true")) {
-            try {
-                var endDate = dateFormat.parse(leaseEndDate)
-                AppLogger.d("LeaseEndDate", "end Date" + endDate)
-                var propertyDateDifference: Long = endDate.getTime() - date.getTime()
-                var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24))
-                AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
-                if(propertyDaysBetween.equals(180))
-                    newNotification(date, endDate, propertyName)
-            } catch (e: Exception) {
-                AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
-            }
-        }
-        else{
-            try {
-                var purchase = birthdayFormat.parse(purchaseDate)
-                var present : Date = birthdayFormat.format(date) as Date
-                AppLogger.d("PurchaseAnniversary", "end Date" + purchase)
-                if (purchase.equals(present)){
-                    AppLogger.d("purchaseAnniversary", " " + purchase)
-                    newNotification(date, present, propertyName)
+            isRented = decryptedProperty[i].currentlyRented
+            purchaseDate = decryptedProperty[i].purchaseDate
+            if(isRented) {
+                try {
+                    var endDate = dateFormat.parse(leaseEndDate)
+                    AppLogger.d("LeaseEndDate", "end Date" + endDate)
+                    var propertyDateDifference: Long = endDate.getTime() - date.getTime()
+                    var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24))
+                    AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
+                    if(propertyDaysBetween.equals(180))
+                        newNotification(date, endDate, propertyName)
+                } catch (e: Exception) {
+                    AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
                 }
-            } catch (e: Exception) {
-                AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
+            }
+            else{
+                try {
+                    var purchase = birthdayFormat.parse(purchaseDate)
+                    var present : Date = birthdayFormat.format(date) as Date
+                    AppLogger.d("PurchaseAnniversary", "end Date" + purchase)
+                    if (purchase.equals(present)){
+                        AppLogger.d("purchaseAnniversary", " " + purchase)
+                        newNotification(date, present, propertyName)
+                    }
+                } catch (e: Exception) {
+                    AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
+                }
             }
         }
+        AppLogger.d("LeaseEndDate", "" + leaseEndDate)
     }
 
     private fun vehicleNotification() {
@@ -212,42 +216,102 @@ class AddNotification : HomeView {
             vehicleName = decryptedVehicle[i].vehicleName
             purchasedOrLeased = decryptedVehicle[i].purchasedOrLeased
             leaseEnd = decryptedVehicle[i].leaseEndDate
+            if(purchasedOrLeased.equals("Leased")){
+                var lease = dateFormat.parse(leaseEnd)
+                var differenceDate: Long = lease.getTime() - date.getTime()
+                var vehicle = (differenceDate / (1000 * 60 * 60 * 24))
+                AppLogger.d("LeaseEndDate", "Days in between " + vehicle)
+                if(differenceDate.equals(180)){
+                    newNotification(date, lease, vehicleName)
+                }
+            }else {
+                try {
+                    var regExpiryDate = dateFormat.parse(registrationExpiryDate)
+                    var registrationDateDifference: Long = regExpiryDate.getTime() - date.getTime()
+                    var VehicleDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24))
+                    AppLogger.d("LeaseEndDate", "Days in between " + VehicleDaysBetween)
+                    if(registrationDateDifference.equals(90)){
+                        newNotification(date, regExpiryDate, vehicleName)
+                    }
+                } catch (e: Exception) {
+                    AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
+                }
+            }
         }
         AppLogger.d("Vehicle", "Registration expiry date " + registrationExpiryDate)
         AppLogger.d("Vehicle", "Vehicle Name " + vehicleName)
-        if(purchasedOrLeased.equals("Leased")){
-            var lease = dateFormat.parse(leaseEnd)
-            var differenceDate: Long = lease.getTime() - date.getTime()
-            var vehicle = (differenceDate / (1000 * 60 * 60 * 24))
-            AppLogger.d("LeaseEndDate", "Days in between " + vehicle)
-            if(differenceDate.equals(180)){
-                newNotification(date, lease, vehicleName)
+    }
+
+    private fun insuranceNotification() {
+        AppLogger.d("Notification", "DecryptedInsurance" + mDecryptedCombine!!.insuranceItems)
+        var decryptedInsurance = ArrayList<DecryptedInsurance>()
+        for(insuranceItems in mDecryptedCombine!!.insuranceItems){
+            decryptedInsurance.add(insuranceItems)
+        }
+        var insuranceExpiryDate = ""
+        var insuranceType = ""
+        for(i in 0 until decryptedInsurance.size){
+            insuranceExpiryDate = decryptedInsurance[i].policyExpirationDate
+            insuranceType = decryptedInsurance[i].selectionType
+            var insuranceExpiryDate = dateFormat.parse(insuranceExpiryDate)
+            var insuranceDateDifference: Long = insuranceExpiryDate.getTime() - date.getTime()
+            var insuranceDaysBetween = (insuranceDateDifference / (1000 * 60 * 60 * 24))
+            if(insuranceType.equals("Life"))
+            {
+                if(insuranceDaysBetween.equals(90))
+                    newNotification(date, insuranceExpiryDate, insuranceType)
             }
-        }else {
-            try {
-                var regExpiryDate = dateFormat.parse(registrationExpiryDate)
-                var registrationDateDifference: Long = regExpiryDate.getTime() - date.getTime()
-                var VehicleDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24))
-                AppLogger.d("LeaseEndDate", "Days in between " + VehicleDaysBetween)
-                if(registrationDateDifference.equals(90)){
-                    newNotification(date, regExpiryDate, vehicleName)
-                }
-            } catch (e: Exception) {
-                AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
+            else{
+                if(insuranceDaysBetween.equals(30))
+                    newNotification(date, insuranceExpiryDate, insuranceType)
             }
         }
     }
 
-    private fun insuranceNotification() {
-
-    }
-
     private fun travelDatesAndPlans() {
-        //Todo
+        var decryptedVacations = ArrayList<DecryptedVacations>()
+        for(vacationItems in mDecryptedCombineTravel!!.vacationsItems){
+            decryptedVacations.add(vacationItems)
+        }
+        var startDate = ""
+        var description = ""
+        for(i in 0 until decryptedVacations.size){
+            startDate = decryptedVacations[i].startDate
+            description = decryptedVacations[i].vac_description
+            try{
+                var vacStart = dateFormat.parse(startDate)
+                var vacationDateDifference: Long = vacStart.getTime() - date.getTime()
+                var vacDaysBetween = (vacationDateDifference / (1000 * 60 * 60 * 24))
+                if(vacDaysBetween.equals(90))
+                    newNotification(date, vacStart, description)
+            }
+            catch(e : Exception){
+                AppLogger.d("Exception", " " + e.message)
+            }
+        }
     }
 
     private fun travelDocuments() {
-        //Todo
+        var decryptedTravelDocuments = ArrayList<DecryptedDocuments>()
+        for(documentItems in mDecryptedCombineTravel!!.documentsItems){
+            decryptedTravelDocuments.add(documentItems)
+        }
+        var docExpirationDate = ""
+        var docType = ""
+        for(i in 0 until decryptedTravelDocuments.size){
+            docExpirationDate = decryptedTravelDocuments[i].expirationDate
+            docType = decryptedTravelDocuments[i].travelDocumentType
+            var docExpiry = dateFormat.parse(docExpirationDate)
+            var docDateDifference: Long = docExpiry.getTime() - date.getTime()
+            var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24))
+            if(docType.equals("Visa")){
+                if(docDaysBetween.equals(180))
+                    newNotification(date, docExpiry, docType)
+            }else{
+                if (docDateDifference.equals(270))
+                    newNotification(date, docExpiry, docType)
+            }
+        }
     }
 
     private fun sharedContactsNotification() {
@@ -264,17 +328,16 @@ class AddNotification : HomeView {
             contactsAnniversary = decryptedContacts[i].anniversary
             contactsBirthday = decryptedContacts[i].dateOfBirth
             contactsName = decryptedContacts[i].firstName
-        }
-        try {
-            var anniversary = birthdayFormat.parse(contactsAnniversary)
-            var present : Date = birthdayFormat.format(date) as Date
-            AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
-            if (anniversary.equals(present)){
-                AppLogger.d("purchaseAnniversary", " " + anniversary)
-                newNotification(date, present, contactsName)
-            }
-        } catch (e: Exception) {
-            AppLogger.d("Exception", "birthdayNotification" + e.message) }
+            try {
+                var anniversary = birthdayFormat.parse(contactsAnniversary)
+                var present : Date = birthdayFormat.format(date) as Date
+                AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
+                if (anniversary.equals(present)){
+                    AppLogger.d("purchaseAnniversary", " " + anniversary)
+                    newNotification(date, present, contactsName)
+                }
+            } catch (e: Exception) {
+                AppLogger.d("Exception", "birthdayNotification" + e.message) }
             try {
                 var birthday = birthdayFormat.parse(contactsBirthday)
                 var present: Date = birthdayFormat.format(date) as Date
@@ -287,6 +350,7 @@ class AddNotification : HomeView {
                 AppLogger.d("Exception", "birthdayNotification" + e.message)
             }
         }
+        }
     private fun gradudationAnniversaryNotification() {
         AppLogger.d("Notification", "Decrypted combine work and Education" + mDecryptedCombineEducation!!.educationItems)
         var decryptedEducation = ArrayList<DecryptedEducation>()
@@ -294,21 +358,21 @@ class AddNotification : HomeView {
             decryptedEducation.add(educationItems)
         }
         AppLogger.d("Education", "Decrypted education" + decryptedEducation)
-        var graduationAnniversary = ""
-        var graduationName = ""
-        for(i in 0 until decryptedEducation.size){
-            graduationAnniversary = decryptedEducation[i].created
-        }
-        try {
-            var anniversary = birthdayFormat.parse(graduationAnniversary)
-            var present : Date = birthdayFormat.format(date) as Date
-            AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
-            if (anniversary.equals(present)){
-                AppLogger.d("purchaseAnniversary", " " + anniversary)
-                newNotification(date, present, graduationName)
+              var graduationAnniversary = ""
+            var graduationName = ""
+            for(i in 0 until decryptedEducation.size){
+                graduationAnniversary = decryptedEducation[i].created
+                try {
+                    var anniversary = birthdayFormat.parse(graduationAnniversary)
+                    var present : Date = birthdayFormat.format(date) as Date
+                    AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
+                    if (anniversary.equals(present)){
+                        AppLogger.d("purchaseAnniversary", " " + anniversary)
+                        newNotification(date, present, graduationName)
+                    }
+                } catch (e: Exception) {
+                    AppLogger.d("Exception", "birthdayNotification" + e.message) }
             }
-        } catch (e: Exception) {
-            AppLogger.d("Exception", "birthdayNotification" + e.message) }
     }
 
     private fun workAnniversaryNotification() {
@@ -323,21 +387,39 @@ class AddNotification : HomeView {
         for(i in 0 until decryptedWork.size){
             workAnniversary = decryptedWork[i].from
             companyName = decryptedWork[i].companyName
+            try {
+                var anniversaryWork = birthdayFormat.parse(workAnniversary)
+                var present : Date = birthdayFormat.format(date) as Date
+                AppLogger.d("PurchaseAnniversary", "end Date" + anniversaryWork)
+                if (anniversaryWork.equals(present)){
+                    AppLogger.d("purchaseAnniversary", " " + anniversaryWork)
+                    newNotification(date, present, companyName)
+                }
+            } catch (e: Exception) {
+                AppLogger.d("Exception", "birthdayNotification" + e.message) }
         }
-        try {
-            var anniversaryWork = birthdayFormat.parse(workAnniversary)
-            var present : Date = birthdayFormat.format(date) as Date
-            AppLogger.d("PurchaseAnniversary", "end Date" + anniversaryWork)
-            if (anniversaryWork.equals(present)){
-                AppLogger.d("purchaseAnniversary", " " + anniversaryWork)
-                newNotification(date, present, companyName)
-            }
-        } catch (e: Exception) {
-            AppLogger.d("Exception", "birthdayNotification" + e.message) }
     }
 
     private fun dlExpiryNotification() {
-        //Todo
+        var decryptedLicense = ArrayList<DecryptedLicense>()
+        for (licenseItems in mDecryptedCombinePersonal!!.licenseItems){
+            decryptedLicense.add(licenseItems)
+        }
+        var driversLicense = "Drivers License"
+        var licenceExpirationDate = ""
+        for(i in 0 until decryptedLicense.size){
+            licenceExpirationDate = decryptedLicense[i].expirationDate
+            try{
+                var licenseExpiry = dateFormat.parse(licenceExpirationDate)
+                var licenseDateDifference: Long = licenseExpiry.getTime() - date.getTime()
+                var insuranceDaysBetween = (licenseDateDifference / (1000 * 60 * 60 * 24))
+                if (insuranceDaysBetween.equals(90))
+                    newNotification(date, licenseExpiry, driversLicense)
+            }
+            catch (e: Exception){
+                AppLogger.d("Exception", "" + e.message)
+            }
+        }
     }
 
     private fun birthdayNotification() {
@@ -367,11 +449,66 @@ class AddNotification : HomeView {
     }
 
     private fun governmentIDNotification() {
-
+        AppLogger.d("Notification", "Decrypted Combine personal" + mDecryptedCombinePersonal!!.governmentItems)
+        var decryptedPersonalGovernment = ArrayList<DecryptedGovernment>()
+        for (governmentItems in mDecryptedCombinePersonal!!.governmentItems){
+            decryptedPersonalGovernment.add(governmentItems)
+        }
+        var govIDExpiryDate = ""
+        var govIDName = ""
+        for (i in 0 until decryptedPersonalGovernment.size){
+            govIDExpiryDate = decryptedPersonalGovernment[i].expirationDate
+            govIDName = decryptedPersonalGovernment[i].nameOnId
+            try{
+                var governmentExpiry = dateFormat.parse(govIDExpiryDate)
+                var governmentDateDifference: Long = governmentExpiry.getTime() - date.getTime()
+                var insuranceDaysBetween = (governmentDateDifference / (1000 * 60 * 60 * 24))
+                if (insuranceDaysBetween.equals(90))
+                    newNotification(date, governmentExpiry, govIDName)
+            }
+            catch (e: Exception){
+                AppLogger.d("Exception", "" + e.message)
+            }
+        }
     }
 
     private fun personalHealthNotification() {
-        //Todo
+        AppLogger.d("Notification", "Decrypted Combine " + mDecryptedCombineWellness!!.eyeglassPrescriptionsItems)
+        var decryptedEyeglassPrescriptions = ArrayList<DecryptedEyeglassPrescriptions>()
+        var decryptedVitalNumbers = ArrayList<DecryptedVitalNumbers>()
+        for(eyeglassPrescriptionsItems in mDecryptedCombineWellness!!.eyeglassPrescriptionsItems){
+            decryptedEyeglassPrescriptions.add(eyeglassPrescriptionsItems)
+        }
+        for(vitalNumberItems in mDecryptedCombineWellness!!.vitalNumbersItems){
+            decryptedVitalNumbers.add(vitalNumberItems)
+        }
+        var eyeglasslastCheckUp = ""
+        var userName = currentUsers!![0]!!.fullName
+        for(i in 0 until decryptedEyeglassPrescriptions.size) {
+            eyeglasslastCheckUp = decryptedEyeglassPrescriptions[i].datePrescribed
+            try {
+                var eyeglassPrevious = dateFormat.parse(eyeglasslastCheckUp)
+                var eyeglassDateDifference: Long = date.getTime() - eyeglassPrevious.getTime()
+                var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24))
+                if (eyeglassDaysBetween.equals(330))
+                    newNotification(date, eyeglassPrevious, userName)
+            }catch(e : Exception){
+                AppLogger.d("Exception", " " + e.message)
+            }
+        }
+        var vitalMeasurement = ""
+        for(i in 0 until decryptedVitalNumbers.size) {
+            vitalMeasurement = decryptedVitalNumbers[i].measurementDate
+            try {
+                var vitalPrevious = dateFormat.parse(vitalMeasurement)
+                var vitalDateDifference: Long = date.getTime() - vitalPrevious.getTime()
+                var vitalDaysBetween = (vitalDateDifference / (1000 * 60 * 60 * 24))
+                if (vitalDaysBetween.equals(330))
+                    newNotification(date, vitalPrevious, userName)
+            }catch(e : Exception){
+                AppLogger.d("Exception", " " + e.message)
+            }
+        }
     }
 
     private fun newNotification(currentDate: Date, expiryDate: Date, subTitle: String) {
@@ -391,7 +528,8 @@ class AddNotification : HomeView {
         val mNotifiction = Notification.Builder(context)
                 .setContentTitle("Notification from " + subTitle)
                 .setContentText("Subject")
-                .setContentIntent(pIntent).build()
+                .setContentIntent(pIntent).setPriority(Notification.PRIORITY_HIGH)
+                .setDefaults(Notification.DEFAULT_ALL).build()
 
         val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         mNotifiction.flags = mNotifiction.flags or Notification.FLAG_AUTO_CANCEL

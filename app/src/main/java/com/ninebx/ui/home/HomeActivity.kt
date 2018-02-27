@@ -96,6 +96,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
         this.currentUsers = currentUsers
+        addNotification.setCurrentUsers(currentUsers)
         if (currentUsers != null) {
             this@HomeActivity.hideProgressDialog()
             AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
@@ -191,8 +192,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         setContentView(R.layout.activity_home)
         homePresenter = HomePresenter( this )
         NotificationsPresenter(this)
-
-        addNotification.onBegin()
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
