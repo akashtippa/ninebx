@@ -2735,10 +2735,10 @@ class Level2CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    fun setValue(level2Category: Level2Category, selectedDocument: Parcelable) {
+    fun setValue(level2Category: Level2SubCategory, selectedDocument: Parcelable) {
         when (category_name) {
             "Banking" -> {
-                setBanking()
+                setBanking( level2Category )
             }
             "Investments/Retirement" -> {
                 getInvestments()
@@ -2948,7 +2948,21 @@ class Level2CategoryHelper(
         }
     }
 
-    private fun setBanking() {
-
+    private fun setBanking(level2Category: Level2SubCategory) {
+        when( level2Category.title ) {
+            "Account type"-> decryptedFinancial!!.accountType = level2Category.titleValue
+            "Name(s) on account"-> decryptedFinancial!!.accountName= level2Category.titleValue
+            "Account number"-> decryptedFinancial!!.accountNumber= level2Category.titleValue
+            "Location"-> decryptedFinancial!!.location= level2Category.titleValue
+            "SWIFT/other code"-> decryptedFinancial!!.swiftCode= level2Category.titleValue
+            "ABA routing number"-> decryptedFinancial!!.abaRoutingNumber= level2Category.titleValue
+            "Contacts"-> decryptedFinancial!!.contacts = level2Category.titleValue
+            "Website"-> decryptedFinancial!!.website = level2Category.titleValue
+            "Username/login"-> decryptedFinancial!!.userName= level2Category.titleValue
+            "Password"-> decryptedFinancial!!.password= level2Category.titleValue
+            "PIN"-> decryptedFinancial!!.pin= level2Category.titleValue
+            "Notes" -> decryptedFinancial!!.notes= level2Category.titleValue
+            "Attachments" -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
+        }
     }
 }

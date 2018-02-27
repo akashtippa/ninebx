@@ -20,11 +20,7 @@ import java.util.*
 /**
  * Created by mukesh on 25/04/16.
  */
-class CountryPicker() : FragmentBackHelper(), ICountrySelected {
-
-    override fun onCountrySelected(strCountry: String?) {
-        strSelectedCountry = strCountry!!
-    }
+class CountryPicker() : FragmentBackHelper() {
 
 
     private var searchEditText: EditText? = null
@@ -33,9 +29,11 @@ class CountryPicker() : FragmentBackHelper(), ICountrySelected {
     private val countriesList = ArrayList<Country>()
     private var selectedCountriesList: MutableList<Country> = ArrayList()
     private var listener: CountryPickerListener? = null
-    private var strSelectedCountry = ""
     private var iCountrySelected: ICountrySelected? = null
 
+    fun setCountrySelectionListener ( iCountrySelected: ICountrySelected ) {
+        this.iCountrySelected = iCountrySelected
+    }
     init {
         setCountriesList(Country.getAllCountries())
     }
@@ -59,7 +57,7 @@ class CountryPicker() : FragmentBackHelper(), ICountrySelected {
         selectedCountriesList = ArrayList(countriesList.size)
         selectedCountriesList.addAll(countriesList)
 
-        adapter = CountryListAdapter(context!!, selectedCountriesList, this)
+        adapter = CountryListAdapter(context!!, selectedCountriesList, iCountrySelected!!)
         countryListView!!.adapter = adapter
 
         countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->

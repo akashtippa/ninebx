@@ -15,7 +15,7 @@ class Level2CategoryPresenter(private val categoryName: String, private val cate
         level2CategoryHelper = Level2CategoryHelper(categoryName, categoryID, categoryView, selectedDocument, classType )
     }
 
-    fun setValueToDocument( level2Category: Level2Category ) {
+    fun setValueToDocument( level2Category: Level2SubCategory ) {
         level2CategoryHelper.setValue( level2Category, selectedDocument )
     }
 
