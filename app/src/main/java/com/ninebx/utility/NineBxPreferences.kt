@@ -20,7 +20,9 @@ class NineBxPreferences : Preferences() {
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
 
-    var userEmailID by stringPref(Constants.USER_EMAIL_ID)
+    var userID by stringPref(Constants.USER_EMAIL_ID)
+    var userFirstName by stringPref(Constants.USER_FIRST_NAME)
+    var userLastName by stringPref(Constants.USER_LAST_NAME)
     var userPassword by stringPref(Constants.USER_PASSWORD, "")
     var userPasswordUINT8 by stringPref(Constants.USER_PASSWORD_UINT, "")
 

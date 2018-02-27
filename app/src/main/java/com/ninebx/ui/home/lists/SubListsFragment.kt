@@ -22,6 +22,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedHomeList
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 
 import com.ninebx.ui.base.realm.lists.*
+import com.ninebx.ui.home.adapter.Date
 
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
@@ -103,11 +104,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             } else {
                 val mLog = AddedItem()
                 mLog.strAddedItem = strAddItem
-
                 mListsAdapter!!.notifyDataSetChanged()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
                 aadToParticularRealmList(categoryName)
-
                 edtAddList.text.clear()
             }
         }
@@ -133,18 +132,26 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     }
 
+    val preferences = NineBxPreferences()
     private fun aadToParticularRealmList(categoryName: Int) {
+
+        var firstName = preferences.userFirstName
+        var lastName = preferences.userLastName
+
+        var fullName = firstName + lastName
         when (categoryName) {
             R.string.home_amp_money -> {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = HomeList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "HomeBanking".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = HomeList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "HomeBanking".encryptString()
+                        listItems.created = ""
+                        listItems.createdUser = preferences.userID
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -154,12 +161,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = TravelList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Travel".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = TravelList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Travel".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -169,12 +176,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = ContactsList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Contacts".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = ContactsList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Contacts".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -184,12 +191,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = EducationList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Education".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = EducationList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Education".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -199,12 +206,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = PersonalList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Personal".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = PersonalList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Personal".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -214,12 +221,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = InterestsList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Interests".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = InterestsList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Interests".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -229,12 +236,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = WellnessList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Wellness".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = WellnessList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Wellness".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -244,12 +251,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = MemoriesList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Memories".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = MemoriesList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Memories".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -259,12 +266,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
-                        var homeList = ShoppingList()
-                        homeList.id = getUniqueId()
-                        homeList.listName = strAddItem.encryptString()
-                        homeList.detailsId = 0
-                        homeList.selectionType = "Shopping".encryptString()
-                        homeList.insertOrUpdate(realm!!)
+                        var listItems = ShoppingList()
+                        listItems.id = getUniqueId()
+                        listItems.listName = strAddItem.encryptString()
+                        listItems.detailsId = 0
+                        listItems.selectionType = "Shopping".encryptString()
+                        listItems.insertOrUpdate(realm!!)
                     }
 
                 })
@@ -285,10 +292,10 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             transaction.remove(this@SubListsFragment)
             transaction.commit()
             fm.popBackStack()
-            fm.popBackStack()
             val preferences = NineBxPreferences()
             val toolbarTitle = preferences.currentBox
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
+
         } else if (fragmentValue == "bottom") {
             NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
             NineBxApplication.instance.activityInstance!!.showBottomView()
@@ -308,6 +315,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     }
 
     private var combineTravelFetched: ArrayList<TravelList>? = null
+
 
     fun setCombineFetched(combineFetched: ArrayList<TravelList>?) {
         this.combineTravelFetched = combineFetched
@@ -406,6 +414,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         val bundle = Bundle()
         bundle.putInt("categoryName", categoryName)
         superSubListFragment.arguments = bundle
+
         when (categoryName) {
             R.string.home_amp_money -> {
                 val listItem = combineFetched!![itemPosition]

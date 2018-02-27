@@ -22,6 +22,7 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.DecryptedTravelList
 import com.ninebx.ui.base.realm.lists.*
+import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.home.lists.adapter.SubListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedSubItem
@@ -244,6 +245,14 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
         txtSubListName.setText(listTitleName)
         categoryName = arguments!!.getInt("categoryName")
+
+
+        for (items in searchItems!!) {
+            val dates = AddedSubItem()
+            dates.strAddedItem
+            myList!!.add(dates)
+        }
+
 
         AppLogger.e("List Id ", " is " + listId)
 
@@ -783,7 +792,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
         NineBxApplication.instance.activityInstance!!.showToolbar()
         return super.onBackPressed()
     }
