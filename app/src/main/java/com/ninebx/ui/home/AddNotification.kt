@@ -127,7 +127,7 @@ class AddNotification : HomeView {
     var birthdayFormat : SimpleDateFormat = SimpleDateFormat("MM/dd")
 
     private fun paymentNotification() {
-        AppLogger.d("Notification", "Decrypted combine " + mDecryptedCombine!!.paymentItems)
+        AppLogger.d("Notification", "Decrypted combine payment " + mDecryptedCombine!!.paymentItems)
         var decryptedPayment = ArrayList<DecryptedPayment>()
         for (paymentItems in mDecryptedCombine!!.paymentItems){
             decryptedPayment.add(paymentItems) }
@@ -243,7 +243,7 @@ class AddNotification : HomeView {
     }
 
     private fun insuranceNotification() {
-        AppLogger.d("Notification", "DecryptedInsurance" + mDecryptedCombine!!.insuranceItems)
+        AppLogger.d("Notification", "Decrypted combine Insurance" + mDecryptedCombine!!.insuranceItems)
         var decryptedInsurance = ArrayList<DecryptedInsurance>()
         for(insuranceItems in mDecryptedCombine!!.insuranceItems){
             decryptedInsurance.add(insuranceItems)
@@ -269,6 +269,7 @@ class AddNotification : HomeView {
     }
 
     private fun travelDatesAndPlans() {
+        AppLogger.d("Notification", "Decrypted combineTravel Vacation " + mDecryptedCombineTravel!!.vacationsItems)
         var decryptedVacations = ArrayList<DecryptedVacations>()
         for(vacationItems in mDecryptedCombineTravel!!.vacationsItems){
             decryptedVacations.add(vacationItems)
@@ -292,6 +293,7 @@ class AddNotification : HomeView {
     }
 
     private fun travelDocuments() {
+        AppLogger.d("Notification", "Decrypted combineTravel Documents " + mDecryptedCombineTravel!!.documentsItems)
         var decryptedTravelDocuments = ArrayList<DecryptedDocuments>()
         for(documentItems in mDecryptedCombineTravel!!.documentsItems){
             decryptedTravelDocuments.add(documentItems)
@@ -315,7 +317,7 @@ class AddNotification : HomeView {
     }
 
     private fun sharedContactsNotification() {
-        AppLogger.d("Notification", "Decrypted combine contacts" + mDecryptedCombineContacts!!.contactsItems)
+        AppLogger.d("Notification", "Decrypted combinecontacts" + mDecryptedCombineContacts!!.contactsItems)
         var decryptedContacts = ArrayList<DecryptedContacts>()
         for(contactItems in mDecryptedCombineContacts!!.contactsItems){
             decryptedContacts.add(contactItems)
@@ -401,6 +403,7 @@ class AddNotification : HomeView {
     }
 
     private fun dlExpiryNotification() {
+        AppLogger.d("Notification", "Decrypted combinePersonal " + mDecryptedCombinePersonal!!.licenseItems)
         var decryptedLicense = ArrayList<DecryptedLicense>()
         for (licenseItems in mDecryptedCombinePersonal!!.licenseItems){
             decryptedLicense.add(licenseItems)

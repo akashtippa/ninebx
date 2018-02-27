@@ -23,7 +23,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 mNotificationsRealm = realm!!
-                getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.DESCENDING).findAll()
+                getNotification = realm.where(Notifications::class.java)git .findAll()
                 if(getNotification!!.size > 0){
                     getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
                     notificationsView.onNotificationsFetched(mDecryptNotifications)
