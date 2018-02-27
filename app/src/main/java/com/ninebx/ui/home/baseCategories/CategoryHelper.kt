@@ -80,7 +80,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
-        category.formsCount = decryptedCombine.getLists("WellNess")
+        category.formsCount = decryptedCombine.getLists("WellNess", 0)
         category.category_id = "wellness_3001"
 
         categoryList.add(category)
@@ -90,7 +90,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getLists("WellNess")
+        category.formsCount = decryptedCombine.getLists("WellNess", 0)
         category.category_id = "wellness_4001"
 
         categoryList.add(category)
@@ -191,7 +191,7 @@ class CategoryHelper(
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
         category.category_id = "personal_9001"
-        category.formsCount = decryptedCombinePersonal.getListsCount("Personal")
+        category.formsCount = decryptedCombinePersonal.getListsCount("Personal", 0)
 
         categoryList.add(category)
 
@@ -242,7 +242,7 @@ class CategoryHelper(
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
         category.category_id = "cont_4001"
-        category.formsCount = decryptedCombinePersonal.getListsCount("Contacts")
+        category.formsCount = decryptedCombinePersonal.getListsCount("Contacts", 0)
 
         categoryList.add(category)
 
@@ -320,7 +320,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getTravelLists("Travel")
+        category.formsCount = decryptedCombine.getTravelLists("Travel", 0)
 
         categoryList.add(category)
         categoryView.onSuccess(categoryList)
@@ -451,7 +451,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getListsCount("HomeBanking")
+        category.formsCount = decryptedCombine.getListsCount("HomeBanking", 0)
 
         categoryList.add(category)
 
@@ -519,7 +519,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getShoppingLists("Shopping")
+        category.formsCount = decryptedCombine.getShoppingLists("Shopping", 0 )
         category.category_id = "shopping_6001"
 
         categoryList.add(category)
@@ -558,7 +558,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getLists("Interests")
+        category.formsCount = decryptedCombine.getLists("Interests", 0)
         category.category_id = "interest_3001"
 
         categoryList.add(category)
@@ -609,7 +609,7 @@ class CategoryHelper(
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
         category.category_id = "memory_4001"
-        category.formsCount = decryptedCombine.getLists("Memories")
+        category.formsCount = decryptedCombine.getLists("Memories", 0)
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -669,7 +669,7 @@ class CategoryHelper(
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
-        category.formsCount = decryptedCombine.getListItemsCount("Education")
+        category.formsCount = decryptedCombine.getListItemsCount("Education", 0)
         category.category_id = "edu_5001"
 
         categoryList.add(category)
