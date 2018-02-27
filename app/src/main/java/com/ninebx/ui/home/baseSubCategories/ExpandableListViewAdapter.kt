@@ -317,6 +317,19 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 childView.findViewById<CheckBox>(R.id.chkLeft).hint = headerTitle
                 childView.findViewById<CheckBox>(R.id.chkRight).hint = level2SubCategory.titleValue
 
+                if( titleValue.equals("purchased", true) ) {
+                    childView.findViewById<CheckBox>(R.id.chkLeft).text = "Purchased"
+                    childView.findViewById<CheckBox>(R.id.chkRight).text = "Leased"
+                    childView.findViewById<CheckBox>(R.id.chkLeft).isChecked = true
+                    childView.findViewById<CheckBox>(R.id.chkRight).isChecked = false
+                }
+                else {
+                    childView.findViewById<CheckBox>(R.id.chkLeft).text = "Purchased"
+                    childView.findViewById<CheckBox>(R.id.chkRight).text = "Leased"
+                    childView.findViewById<CheckBox>(R.id.chkLeft).isChecked = false
+                    childView.findViewById<CheckBox>(R.id.chkRight).isChecked = true
+                }
+
             }
             Constants.LEVEL2_SPINNER -> {
                 childView = infalInflater.inflate(R.layout.level2_spinner, null)
@@ -326,7 +339,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                 if (keyBoardType == Constants.CONTACT_SPINNER) {
                     openContactList()
                 } else {
-
+                    //TODO -
                     childView.findViewById<Spinner>(R.id.spinnerUsers).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(p0: AdapterView<*>?) {
 
