@@ -53,10 +53,6 @@ fun getAllMemoryTimeLine(realmInstance: Realm): RealmResults<MemoryTimeline>? {
     return realmInstance.where(MemoryTimeline::class.java).findAll()
 }
 
-fun getHomeList(realmInstance: Realm): RealmResults<HomeList>? {
-    return realmInstance.where(HomeList::class.java).findAll()
-}
-
 private val TAG = "RealmUtils"
 
 private val connectionsMap = HashMap<String, Realm>()

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
@@ -26,13 +27,10 @@ import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedSubItem
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.KeyboardUtil
-import com.ninebx.utility.decryptString
+import com.ninebx.utility.*
+import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_super_sub_list.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -43,27 +41,30 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
 
     override fun showProgress(message: Int) {
-        if( progressLayout != null )
+        if (progressLayout != null)
             progressLayout.show()
     }
 
     override fun hideProgress() {
-        if( progressLayout != null )
+        if (progressLayout != null)
             progressLayout.hide()
     }
 
     override fun onError(error: Int) {
-        if( context != null ) context!!.showToast(error)
+        if (context != null) context!!.showToast(error)
         hideProgress()
     }
 
-    private var combineFetched: ArrayList<HomeList> ?= null
+    private var combineFetched: ArrayList<HomeList>? = null
+    private var contactsRealm: Realm? = null
+
+    val detailsId: Long = 0
 
     fun setCombine(combineFetched: ArrayList<HomeList>?) {
         this.combineFetched = combineFetched
         searchItems.clear()
-        for( item in combineFetched!! ) {
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -73,8 +74,8 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineFetched(combineFetched: ArrayList<TravelList>?) {
         this.combineTravelFetched = combineFetched
         searchItems.clear()
-        for( item in combineFetched!! ) {
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -84,8 +85,8 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineContacts(combineContactsFetched: ArrayList<ContactsList>?) {
         this.combineContactsFetched = combineContactsFetched
         searchItems.clear()
-        for( item in combineContactsFetched!! ) {
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineContactsFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -95,9 +96,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineEduction(combineEducationFetched: ArrayList<EducationList>?) {
         this.combineEducationFetched = combineEducationFetched
         searchItems.clear()
-        for( item in combineEducationFetched!! ) {
+        for (item in combineEducationFetched!!) {
 
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -107,8 +108,8 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombinePersonal(combinePersonalFetched: ArrayList<PersonalList>?) {
         this.combinePersonalFetched = combinePersonalFetched
         searchItems.clear()
-        for( item in combinePersonalFetched!! ) {
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combinePersonalFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -118,9 +119,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineInterests(combineInterestsFetched: ArrayList<InterestsList>?) {
         this.combineInterestsFetched = combineInterestsFetched
         searchItems.clear()
-        for( item in combineInterestsFetched!! ) {
+        for (item in combineInterestsFetched!!) {
 
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -130,9 +131,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineWellness(combineWellnessFetched: ArrayList<WellnessList>?) {
         this.combineWellnessFetched = combineWellnessFetched
         searchItems.clear()
-        for( item in combineWellnessFetched!! ) {
+        for (item in combineWellnessFetched!!) {
 
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -142,9 +143,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineMemories(combineMemoriesFetched: ArrayList<MemoriesList>?) {
         this.combineMemoriesFetched = combineMemoriesFetched
         searchItems.clear()
-        for( item in combineMemoriesFetched!! ) {
+        for (item in combineMemoriesFetched!!) {
 
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -154,8 +155,8 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     fun setCombineShopping(combineShoppingFetched: ArrayList<ShoppingList>?) {
         this.combineShoppingFetched = combineShoppingFetched
         searchItems.clear()
-        for( item in combineShoppingFetched!! ) {
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineShoppingFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
 
     }
@@ -221,16 +222,17 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     private var mSubListAdapter: SubListsAdapter? = null
     var myList: ArrayList<AddedSubItem> = ArrayList()
     var strAddItem = ""
-    var decryptedTravelList : DecryptedTravelList ? = null
-    private lateinit var mListsAdapter : SearchAdapter
-    private var searchItems : ArrayList<Level3SearchItem> = ArrayList()
-    private var categoryName : Int = -1
+    var decryptedTravelList: DecryptedTravelList? = null
+    private lateinit var mListsAdapter: SearchAdapter
+    private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
+    private var categoryName: Int = -1
     private var listId: Long = -1
+    private var listTitleName = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ListsPresenter( this, listId, arguments!!.getInt("categoryName") )
+        ListsPresenter(this, listId, arguments!!.getInt("categoryName"))
 
         decryptedTravelList = arguments!!.getParcelable<DecryptedTravelList>(Constants.SELECTED_ITEM)
 
@@ -239,6 +241,34 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedSubLists!!.layoutManager = layoutManager
         rvAddedSubLists!!.adapter = mListsAdapter
+
+        txtSubListName.setText(listTitleName)
+        categoryName = arguments!!.getInt("categoryName")
+
+        AppLogger.e("List Id ", " is " + listId)
+
+        txtSubListName.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.trim().isEmpty()) {
+                    txtDone.hide()
+                } else {
+                    txtDone.show()
+                }
+            }
+        })
+
+        txtDone.setOnClickListener {
+            updateParticularListName(categoryName)
+        }
+
 
         // Swipe to delete.
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
@@ -274,8 +304,10 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
             } else {
                 val mLog = AddedSubItem()
                 mLog.strAddedItem = strAddItem
-                myList.add(mLog)
-                mSubListAdapter!!.notifyData(myList)
+//                myList.add(mLog)
+//                mSubListAdapter!!.notifyData(myList)
+                aadToParticularRealmList(categoryName)
+
                 edtAddSubList.text.clear()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             }
@@ -330,6 +362,425 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
+    private fun aadToParticularRealmList(categoryName: Int) {
+        when (categoryName) {
+            R.string.home_amp_money -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = HomeList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "HomeBanking".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.travel -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = TravelList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Travel".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.contacts -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = ContactsList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Contacts".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.education_work -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = EducationList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Education".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.personal -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = PersonalList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Personal".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.interests -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = InterestsList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Interests".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.wellness -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = WellnessList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Wellness".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.memories -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = MemoriesList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Memories".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.shopping -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = ShoppingList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = edtAddSubList.text.toString().encryptString()
+                        homeList.detailsId = getUniqueId().toInt()
+                        homeList.selectionType = "Shopping".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+
+
+        }
+    }
+
+    private fun updateParticularListName(categoryName: Int) {
+
+        when (categoryName) {
+            R.string.home_amp_money -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+
+                        val checkItem = realm!!
+                                .where(HomeList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "HomeBanking".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "HomeBanking".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+            }
+            R.string.travel -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+
+                        val checkItem = realm!!
+                                .where(TravelList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Travel".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Travel".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.contacts -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(ContactsList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Contacts".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Contacts".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.education_work -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(EducationList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Education".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Education".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.personal -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(PersonalList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Personal".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Personal".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.interests -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(InterestsList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Interests".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Interests".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.wellness -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(WellnessList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Wellness".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Wellness".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.memories -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(MemoriesList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Memories".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Memories".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+            R.string.shopping -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val checkItem = realm!!
+                                .where(ShoppingList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", "Personal".encryptString())
+                                .endGroup()
+                                .findAll()
+
+                        if (checkItem.isValid) {
+                            realm.executeTransaction({
+                                var homeList = HomeList()
+                                homeList.id = listId
+                                homeList.detailsId = 0
+                                homeList.listName = txtSubListName.text.toString().encryptString()
+                                homeList.selectionType = "Shopping".encryptString()
+
+                                realm.copyToRealmOrUpdate(homeList)
+                                KeyboardUtil.hideSoftKeyboard(activity!!)
+                                txtDone.hide()
+                            })
+                        }
+                    }
+
+                })
+
+            }
+        }
+    }
+
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideBackIcon()
@@ -339,38 +790,47 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     fun setHomeList(listItem: HomeList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setTravelList(listItem: TravelList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setContactsList(listItem: ContactsList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setEducationList(listItem: EducationList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setPersonalList(listItem: PersonalList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setInterestsList(listItem: InterestsList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setWellnessList(listItem: WellnessList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setMemoriesList(listItem: MemoriesList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     fun setShoppingList(listItem: ShoppingList) {
         listId = listItem.id
+        listTitleName = listItem.listName.decryptString()
     }
 
     override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {

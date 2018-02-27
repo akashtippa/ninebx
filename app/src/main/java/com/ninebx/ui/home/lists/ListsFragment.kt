@@ -120,6 +120,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val bundle = Bundle()
             bundle.putInt("categoryName", (R.string.home_amp_money))
+            bundle.putString("listOption", "Home")
             bundle.putString("homeScreen", "bottom")
             categoryFragment.setCombine( combineFetched)
             
@@ -137,6 +138,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             val bundle = Bundle()
             bundle.putInt("categoryName", (R.string.travel))
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Travel")
             categoryFragment.setCombineFetched( combineTravelFetched)
             //val categoryFragment = TravelListFragment()
             categoryFragment.arguments = bundle
@@ -154,6 +156,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             val bundle = Bundle()
             bundle.putInt("categoryName", (R.string.contacts))
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Contacts")
             categoryFragment.setCombineContacts( combineContactsFetched)
             //val categoryFragment = ContactsListFragment()
             categoryFragment.arguments = bundle
@@ -171,6 +174,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             val bundle = Bundle()
             bundle.putInt("categoryName", (R.string.education_work))
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Education")
             categoryFragment.setCombineEduction( combineEducationFetched)
             //val categoryFragment = EducationListFragment()
             categoryFragment.arguments = bundle
@@ -188,6 +192,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             val bundle = Bundle()
             bundle.putInt("categoryName", (R.string.personal))
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Personal")
             categoryFragment.setCombinePersonal( combinePersonalFetched)
             //val categoryFragment = PersonalListFragment()
             categoryFragment.arguments = bundle
@@ -206,6 +211,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             val bundle = Bundle()
             bundle.putInt("categoryName", (R.string.interests))
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Interests")
             categoryFragment.setCombineInterests( combineInterestsFetched)
             //val categoryFragment = InterestListFragment()
             categoryFragment.arguments = bundle
@@ -223,6 +229,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val bundle = Bundle()
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Wellness")
             bundle.putInt("categoryName", (R.string.wellness))
             categoryFragment.setCombineWellness( combineWellnessFetched)
             //val categoryFragment = WellnessListFragment()
@@ -240,8 +247,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
-            bundle.putInt("categoryName", (R.string.memories))
             bundle.putString("homeScreen", "bottom")
+            bundle.putString("listOption", "Memories")
+            bundle.putInt("categoryName", (R.string.memories))
             categoryFragment.setCombineMemories( combineMemoriesFetched)
             //val categoryFragment = MemoriesListFragment()
             categoryFragment.arguments = bundle
@@ -258,6 +266,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
+            bundle.putString("listOption", "Shopping")
             bundle.putInt("categoryName", (R.string.shopping))
             bundle.putString("homeScreen", "bottom")
             categoryFragment.setCombineShopping( combineShoppingFetched)

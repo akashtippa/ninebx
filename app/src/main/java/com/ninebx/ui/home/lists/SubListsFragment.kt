@@ -14,22 +14,24 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.DecryptedHomeList
+import com.ninebx.ui.base.realm.home.contacts.Contacts
 
 import com.ninebx.ui.base.realm.lists.*
 
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
+import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.KeyboardUtil
-import com.ninebx.utility.NineBxPreferences
-import com.ninebx.utility.decryptString
+import com.ninebx.utility.*
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_sub_list.*
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -41,10 +43,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     var strAddItem = ""
     var fragmentValue = ""
+    var listOption = ""
     var categoryName = 0
 
-    private lateinit var mListsAdapter : SearchAdapter
-    private var searchItems : ArrayList<Level3SearchItem> = ArrayList()
+    private lateinit var mListsAdapter: SearchAdapter
+    private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
+    private var contactsRealm: Realm? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sub_list, container, false)
@@ -54,13 +58,13 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
         mListsAdapter = SearchAdapter(searchItems, this)
         rvAddedLists!!.adapter = mListsAdapter
 
+        listOption = arguments!!.getString("listOption")
         fragmentValue = arguments!!.getString("homeScreen")
         categoryName = arguments!!.getInt("categoryName")
 
@@ -68,13 +72,13 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rvAddedLists.adapter as ListsAdapter
+                val adapter = rvAddedLists.adapter as SearchAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
                 val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
                 snackBar.setAction("UNDO", View.OnClickListener {
                     // undo is selected, restore the deleted item
-                    val mLog = DecryptedHomeList()
-                    mLog.listName = strAddItem
+                    val mLog = AddedItem()
+                    mLog.strAddedItem = strAddItem
                     //getArrayList.add(mLog)
                     mListsAdapter!!.notifyDataSetChanged()
 
@@ -84,6 +88,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             }
         }
+
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rvAddedLists)
 
@@ -96,16 +101,18 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 edtAddList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
-                val mLog = DecryptedHomeList()
-                mLog.listName = strAddItem
-                //getArrayList.add(mLog)
-                mListsAdapter!!.notifyDataSetChanged()
-                edtAddList.text.clear()
-                KeyboardUtil.hideSoftKeyboard(activity!!)
-            }
+                val mLog = AddedItem()
+                mLog.strAddedItem = strAddItem
 
+                mListsAdapter!!.notifyDataSetChanged()
+                KeyboardUtil.hideSoftKeyboard(activity!!)
+                aadToParticularRealmList(categoryName)
+
+                edtAddList.text.clear()
+            }
         }
 
+        // As soon as user starts typing, I've to show Done option to the end of the EditText
         edtAddList.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 
@@ -124,6 +131,148 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             }
         })
 
+    }
+
+    private fun aadToParticularRealmList(categoryName: Int) {
+        when (categoryName) {
+            R.string.home_amp_money -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = HomeList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "HomeBanking".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.travel -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = TravelList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Travel".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.contacts -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = ContactsList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Contacts".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.education_work -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = EducationList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Education".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.personal -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = PersonalList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Personal".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.interests -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = InterestsList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Interests".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.wellness -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = WellnessList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Wellness".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.memories -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = MemoriesList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Memories".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+            R.string.shopping -> {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
+                        var homeList = ShoppingList()
+                        homeList.id = getUniqueId()
+                        homeList.listName = strAddItem.encryptString()
+                        homeList.detailsId = 0
+                        homeList.selectionType = "Shopping".encryptString()
+                        homeList.insertOrUpdate(realm!!)
+                    }
+
+                })
+
+            }
+
+
+        }
     }
 
     override fun onBackPressed(): Boolean {
@@ -148,15 +297,14 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         return super.onBackPressed()
     }
 
-    private var combineFetched: ArrayList<HomeList> ?= null
+    private var combineFetched: ArrayList<HomeList>? = null
 
     fun setCombine(combineFetched: ArrayList<HomeList>?) {
         this.combineFetched = combineFetched
         searchItems.clear()
-        for( item in combineFetched!! ) {
-            searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-
     }
 
     private var combineTravelFetched: ArrayList<TravelList>? = null
@@ -164,10 +312,10 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineFetched(combineFetched: ArrayList<TravelList>?) {
         this.combineTravelFetched = combineFetched
         searchItems.clear()
-        for( item in combineFetched!! ) {
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combineContactsFetched: ArrayList<ContactsList>? = null
@@ -175,10 +323,10 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineContacts(combineContactsFetched: ArrayList<ContactsList>?) {
         this.combineContactsFetched = combineContactsFetched
         searchItems.clear()
-        for( item in combineContactsFetched!! ) {
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineContactsFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combineEducationFetched: ArrayList<EducationList>? = null
@@ -186,11 +334,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineEduction(combineEducationFetched: ArrayList<EducationList>?) {
         this.combineEducationFetched = combineEducationFetched
         searchItems.clear()
-        for( item in combineEducationFetched!! ) {
-            
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineEducationFetched!!) {
+
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combinePersonalFetched: ArrayList<PersonalList>? = null
@@ -198,10 +346,10 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombinePersonal(combinePersonalFetched: ArrayList<PersonalList>?) {
         this.combinePersonalFetched = combinePersonalFetched
         searchItems.clear()
-        for( item in combinePersonalFetched!! ) {
-             searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combinePersonalFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combineInterestsFetched: ArrayList<InterestsList>? = null
@@ -209,11 +357,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineInterests(combineInterestsFetched: ArrayList<InterestsList>?) {
         this.combineInterestsFetched = combineInterestsFetched
         searchItems.clear()
-        for( item in combineInterestsFetched!! ) {
-            
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineInterestsFetched!!) {
+
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combineWellnessFetched: ArrayList<WellnessList>? = null
@@ -221,11 +369,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineWellness(combineWellnessFetched: ArrayList<WellnessList>?) {
         this.combineWellnessFetched = combineWellnessFetched
         searchItems.clear()
-        for( item in combineWellnessFetched!! ) {
-            
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineWellnessFetched!!) {
+
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combineMemoriesFetched: ArrayList<MemoriesList>? = null
@@ -233,11 +381,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineMemories(combineMemoriesFetched: ArrayList<MemoriesList>?) {
         this.combineMemoriesFetched = combineMemoriesFetched
         searchItems.clear()
-        for( item in combineMemoriesFetched!! ) {
-            
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineMemoriesFetched!!) {
+
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
     private var combineShoppingFetched: ArrayList<ShoppingList>? = null
@@ -245,20 +393,20 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     fun setCombineShopping(combineShoppingFetched: ArrayList<ShoppingList>?) {
         this.combineShoppingFetched = combineShoppingFetched
         searchItems.clear()
-        for( item in combineShoppingFetched!! ) {
-                searchItems.add( Level3SearchItem(categoryName, item.listName.decryptString()))
+        for (item in combineShoppingFetched!!) {
+            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-       
+
     }
 
-    override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
+    override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val superSubListFragment = SuperSubListFragment()
         val bundle = Bundle()
         bundle.putInt("categoryName", categoryName)
         superSubListFragment.arguments = bundle
-        when( categoryName ) {
+        when (categoryName) {
             R.string.home_amp_money -> {
                 val listItem = combineFetched!![itemPosition]
                 superSubListFragment.setHomeList(listItem)

@@ -593,13 +593,13 @@ class SearchHelper() {
             }
         }
     }
-    
+
     interface OnDocumentSelection {
         fun onDocumentSelected( selectedDocument: Parcelable?, classType : String )
     }
-    
+
     private var mOnDocumentSelection : OnDocumentSelection ?= null
-    
+
     fun setOnDocumentSelection( onDocumentSelection: OnDocumentSelection ) {
         this.mOnDocumentSelection = onDocumentSelection
     }
