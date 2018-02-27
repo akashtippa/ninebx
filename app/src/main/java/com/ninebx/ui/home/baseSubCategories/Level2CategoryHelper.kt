@@ -1,14 +1,17 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
-import com.ninebx.utility.Constants
+import com.ninebx.utility.*
+import io.realm.Realm
 
 /***
  * Created by TechnoBlogger on 23/01/18.
@@ -2963,6 +2966,47 @@ class Level2CategoryHelper(
             "PIN"-> decryptedFinancial!!.pin= level2Category.titleValue
             "Notes" -> decryptedFinancial!!.notes= level2Category.titleValue
             "Attachments" -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
+        }
+    }
+
+    fun saveDocument( context: Context ) {
+        if( decryptedFinancial != null ) {
+            
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    val financial = Financial()
+                    financial.id = if( decryptedFinancial!!.id.equals(0) ) getUniqueId() else decryptedFinancial!!.id
+                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
+                    financial.backingImages .addAll(decryptedFinancial!!.backingImages)
+                    financial.selectionType = decryptedFinancial!!.selectionType.encryptString()
+                    financial.institutionName = decryptedFinancial!!.institutionName.encryptString()
+                    financial.accountName = decryptedFinancial!!.accountName.encryptString()
+                    financial.accountType = decryptedFinancial!!.accountType.encryptString()
+                    financial.nameOnAccount = decryptedFinancial!!.nameOnAccount.encryptString()
+                    financial.accountNumber = decryptedFinancial!!.accountNumber.encryptString()
+                    financial.location = decryptedFinancial!!.location.encryptString()
+                    financial.swiftCode = decryptedFinancial!!.swiftCode.encryptString()
+                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
+                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
+                    financial.contacts = decryptedFinancial!!.contacts.encryptString()
+                    financial.website = decryptedFinancial!!.website.encryptString()
+                    financial.userName = decryptedFinancial!!.userName.encryptString()
+                    financial.password = decryptedFinancial!!.password.encryptString()
+                    financial.pin = decryptedFinancial!!.pin.encryptString()
+                    financial.created = decryptedFinancial!!.created
+                    financial.modified = decryptedFinancial!!.modified
+                    financial.createdUser = decryptedFinancial!!.createdUser
+                    financial.created = decryptedFinancial!!.created
+                    financial.modified = decryptedFinancial!!.modified
+                    financial.createdUser = decryptedFinancial!!.createdUser
+                    financial.notes = decryptedFinancial!!.notes.encryptString()
+                    financial.attachmentNames = decryptedFinancial!!.attachmentNames.encryptString()
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
         }
     }
 }

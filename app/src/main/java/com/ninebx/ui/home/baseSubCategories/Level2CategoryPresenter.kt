@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.content.Context
 import android.os.Parcelable
 import com.ninebx.R
 
@@ -17,6 +18,10 @@ class Level2CategoryPresenter(private val categoryName: String, private val cate
 
     fun setValueToDocument( level2Category: Level2SubCategory ) {
         level2CategoryHelper.setValue( level2Category, selectedDocument )
+    }
+
+    fun saveDocument( context: Context? ) {
+        level2CategoryHelper.saveDocument( context!! )
     }
 
 }
