@@ -70,6 +70,8 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {}
 
+
+
     override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
         this.currentUsers = currentUsers
         if (currentUsers != null) {
@@ -78,7 +80,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
 
             prefrences.userID = currentUsers[0]!!.userId
-            prefrences.userFirstName = currentUsers[0]!!.firstName.encryptString()
+            prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
             prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
 
             for (member in currentUsers!![0]!!.members) {
