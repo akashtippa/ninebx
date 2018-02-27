@@ -12,7 +12,7 @@ import io.realm.annotations.Required;
 public class Hash extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required private String  finalPassword = "";
     @Required private String  passcode = "";
     @Required private Boolean  isEnabledTouchId = false;
@@ -27,11 +27,11 @@ public class Hash extends RealmObject {
         this.isEnabledTouchId = isEnabledTouchId;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

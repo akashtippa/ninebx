@@ -71,6 +71,9 @@ object Constants {
 
     // Just for Testing
     val USER_EMAIL_ID: String = "user_email"
+    val USER_FIRST_NAME: String = "user_first_name"
+    val USER_LAST_NAME: String = "user_last_name"
+    val CREATED: String = "created"
     val USER_PASSWORD: String = "user_password"
 
     val COUNTRY_SELECTED: String = "country_selected"
@@ -188,6 +191,7 @@ object Constants {
     val RESET_PASSCODE: String = "reset_passcode"
     val RESET_FINGER_PRINT: String = "reset_fingerprint"
     val USER_PASSWORD_UINT: String = "user_password_uint"
+    val USER_FOR_TESTING: String = "for_testing_backpress"
     val SELECTED_ITEM: String = "selectedItem"
 
 

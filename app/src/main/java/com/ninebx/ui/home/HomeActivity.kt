@@ -44,7 +44,6 @@ import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
 import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
 import io.realm.RealmResults
-import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
 import q.rorbin.badgeview.QBadgeView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -82,24 +81,30 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
         count = 0
-        for( notification in notifications ) {
-            count += if ( notification.read ) 0 else 1
+        for (notification in notifications) {
+            count += if (notification.read) 0 else 1
         }
         setNotificationCount(count)
     }
 
     override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {}
 
+
+
     override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
         this.currentUsers = currentUsers
         addNotification.setCurrentUsers(currentUsers)
         if (currentUsers != null) {
             this@HomeActivity.hideProgressDialog()
-            AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
-            for (member in currentUsers!![0]!!.members) {
+            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+            AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
 
+            prefrences.userID = currentUsers[0]!!.userId
+            prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
+            prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
+
+            for (member in currentUsers!![0]!!.members) {
                 AppLogger.d("CurrentUser", "Members : " + member.toString())
-                AppLogger.e("Name ", "is : " + member.firstName)
             }
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
 
@@ -126,12 +131,12 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         return this@HomeActivity
     }
 
-    var count : Int = 0
+    var count: Int = 0
     override fun setNotificationCount(notificationCount: Int) {
-        if( count > 0 ) {
+        if (count > 0) {
             this.count = notificationCount
-            var bottomNavigationMenuView : BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
-            var v : View = bottomNavigationMenuView.getChildAt(3)
+            var bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+            var v: View = bottomNavigationMenuView.getChildAt(3)
             QBadgeView(this).bindTarget(v).setBadgeNumber(count)
         }
     }
@@ -142,7 +147,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         NineBxApplication.instance.currentUser = currentUsers!![0]
         return currentUsers!!
     }
-
 
     override fun showProgress(message: Int) {
         showProgressDialog(getString(message))
@@ -172,12 +176,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
-    var myCredentials: SyncCredentials? = null
-
-
     var backBtnCount = 0
-
-    val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
 
     private var currentUsers: RealmResults<Users>? = null
     private lateinit var homePresenter: HomePresenter
@@ -186,7 +185,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        homePresenter = HomePresenter( this )
+        homePresenter = HomePresenter(this)
         NotificationsPresenter(this)
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
@@ -479,7 +478,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
     private fun callBottomViewFragment(option: String) {
-//        toolbarTitle.textSize = pxFromDp(10F, this)
         ivHome.show()
         layoutQuickAdd.hide()
         toolbarTitle.show()
@@ -497,8 +495,14 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 fragmentTransaction.replace(R.id.frameLayout, CalendarFragment()).commit()
             }
             getString(R.string.lists) -> {
+                val listsFragment = ListsFragment()
+
                 toolbarTitle.text = getString(R.string.lists)
-                fragmentTransaction.replace(R.id.frameLayout, ListsFragment()).commit()
+                val bundle = Bundle()
+                bundle.putString("homeScreen", "bottomScreen")
+                bundle.putInt("category", 0)
+                listsFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, listsFragment).commit()
             }
             getString(R.string.notifications) -> {
                 toolbarTitle.text = getString(R.string.notifications)
@@ -561,7 +565,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         layoutQuickAdd.show()
         ivHome.hide()
         ivBack.hide()
-//        toolbarTitle.textSize = pxFromDp(16F, this)
     }
 
 

@@ -19,8 +19,11 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.fragments.*
+import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.lists.SubListsFragment
+import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -32,7 +35,6 @@ import kotlinx.android.synthetic.main.fragment_category.*
  */
 class CategoryFragment : FragmentBackHelper(), CategoryView {
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private var combinedItems: Parcelable? = null
@@ -240,52 +242,52 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     private fun getLists() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
+        val categoryFragment = ListsFragment()
 
         val bundle = Bundle()
         bundle.putString("homeScreen", "HomeScreen")
         bundle.putInt("category", fromWhichBox!!)
 
-        when(fromWhichBox) {
+        when (fromWhichBox) {
             R.string.home_amp_money -> {
                 bundle.putString("listOption", "Home")
+                bundle.putInt("categoryName", (R.string.home_amp_money))
             }
-             R.string.travel -> {
+            R.string.travel -> {
                 bundle.putString("listOption", "Travel")
+                bundle.putInt("categoryName", (R.string.travel))
             }
-             R.string.contacts -> {
+            R.string.contacts -> {
                 bundle.putString("listOption", "Contacts")
+                bundle.putInt("categoryName", (R.string.contacts))
             }
-             R.string.education_work -> {
+            R.string.education_work -> {
                 bundle.putString("listOption", "Education")
+                bundle.putInt("categoryName", (R.string.education_work))
             }
-             R.string.personal -> {
+            R.string.personal -> {
                 bundle.putString("listOption", "Personal")
-                 bundle.putInt("categoryName", (R.string.personal))
-
-             }
-             R.string.interests -> {
-                 bundle.putInt("categoryName", (R.string.interests))
-
-                 bundle.putString("listOption", "Interests")
+                bundle.putInt("categoryName", (R.string.personal))
             }
-             R.string.wellness -> {
-                 bundle.putString("listOption", "Wellness")
-                 bundle.putInt("categoryName", (R.string.wellness))
+            R.string.interests -> {
+                bundle.putString("listOption", "Interests")
+                bundle.putInt("categoryName", (R.string.interests))
             }
-             R.string.memories -> {
-                 bundle.putString("listOption", "Memories")
-                 bundle.putInt("categoryName", (R.string.memories))
+            R.string.wellness -> {
+                bundle.putString("listOption", "Wellness")
+                bundle.putInt("categoryName", (R.string.wellness))
             }
-             R.string.shopping -> {
-                 bundle.putString("listOption", "Shopping")
-                 bundle.putInt("categoryName", (R.string.shopping))
+            R.string.memories -> {
+                bundle.putString("listOption", "Memories")
+                bundle.putInt("categoryName", (R.string.memories))
             }
-
+            R.string.shopping -> {
+                bundle.putString("listOption", "Shopping")
+                bundle.putInt("categoryName", (R.string.shopping))
+            }
         }
 
-        val categoryFragment = SubListsFragment()
         categoryFragment.arguments = bundle
-
         fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
     }
 
@@ -313,7 +315,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         })
     }
 
-
     private fun gettingContactsList() {
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
@@ -337,4 +338,9 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             }
         })
     }
+
+    private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
+
+    private var combineContactsFetched: ArrayList<ContactsList>? = null
+
 }

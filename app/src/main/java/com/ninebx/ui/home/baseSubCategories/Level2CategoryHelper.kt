@@ -6,7 +6,6 @@ import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -67,7 +66,7 @@ class Level2CategoryHelper(
             "Maintenance" -> {
                 getMaintenance()
             }
-        //TODO - continue
+
             "Jewelry" -> {
                 getJewelry()
 
@@ -1076,18 +1075,18 @@ class Level2CategoryHelper(
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
-        category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Estimated current market value", decryptedAssets!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Serial number", decryptedAssets!!.serialNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", decryptedAssets!!.purchaseDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchase price", decryptedAssets!!.purchasePrice, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Contacts", decryptedAssets!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2016
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1095,7 +1094,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1108,18 +1107,18 @@ class Level2CategoryHelper(
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
-        category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Estimated current market value", decryptedAssets!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Serial number", decryptedAssets!!.serialNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", decryptedAssets!!.purchaseDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchase price", decryptedAssets!!.purchasePrice, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Contacts", decryptedAssets!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2015
         category_id = "furniture_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1127,7 +1126,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1140,18 +1139,18 @@ class Level2CategoryHelper(
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
-        category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Estimated current market value", decryptedAssets!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Serial number", decryptedAssets!!.serialNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", decryptedAssets!!.purchaseDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchase price", decryptedAssets!!.purchasePrice, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Contacts", decryptedAssets!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2014
         category_id = "computer_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1159,7 +1158,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1172,18 +1171,18 @@ class Level2CategoryHelper(
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
-        category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Estimated current market value", decryptedAssets!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Serial number", decryptedAssets!!.serialNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", decryptedAssets!!.purchaseDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchase price", decryptedAssets!!.purchasePrice, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Contacts", decryptedAssets!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2013
         category_id = "art_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1191,7 +1190,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1204,18 +1203,18 @@ class Level2CategoryHelper(
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Asset Details"
-        category.subCategories.add(Level2SubCategory("Estimated current market value", "Estimated current market value", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Serial number", "Serial number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Purchase date", "Purchase date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchase price", "Purchase price", "", Constants.LEVEL2_USD))
-        category.subCategories.add(Level2SubCategory("Contacts", "Contacts", "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Estimated current market value", decryptedAssets!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Serial number", decryptedAssets!!.serialNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Purchase date", decryptedAssets!!.purchaseDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchase price", decryptedAssets!!.purchasePrice, "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Contacts", decryptedAssets!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2012
         category_id = "jewelry_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1223,7 +1222,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("", decryptedAssets!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1287,7 +1286,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Property Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on title", decryptedProperty!!.titleName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on title", decryptedProperty!!.propertyName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Purchase date", decryptedProperty!!.purchaseDate, "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", decryptedProperty!!.purchasePrice, "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", decryptedProperty!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
@@ -1341,7 +1340,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Property Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on title", decryptedProperty!!.titleName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on title", decryptedProperty!!.propertyName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Purchase date", decryptedProperty!!.purchaseDate, "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", decryptedProperty!!.purchasePrice, "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", decryptedProperty!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
@@ -1385,7 +1384,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Rental Details"
-        category.subCategories.add(Level2SubCategory("Name of landlord", decryptedProperty!!.titleName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name of landlord", decryptedProperty!!.tenantName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Lease start date", decryptedProperty!!.leaseStartDate, "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Lease end date", decryptedProperty!!.leaseEndDate, "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedProperty!!.contacts, "", Constants.LEVEL2_SPINNER))
@@ -1428,7 +1427,7 @@ class Level2CategoryHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Property Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on title", decryptedProperty!!.titleName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on title", decryptedProperty!!.propertyName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Purchase date", decryptedProperty!!.purchaseDate, "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Purchase price", decryptedProperty!!.purchasePrice, "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Estimated market value", decryptedProperty!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
@@ -1463,7 +1462,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Location", "Location", decryptedFinancial!!.location, Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -1473,7 +1472,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", decryptedFinancial!!.password, Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1548,7 +1547,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Location", "Location", decryptedFinancial!!.location, Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", decryptedFinancial!!.swiftCode, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("ABA routing number", decryptedFinancial!!.abaRoutingNumber, "", Constants.LEVEL2_NUMBER))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
@@ -1560,7 +1559,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", decryptedFinancial!!.password, Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1591,7 +1590,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Loan type", decryptedFinancial!!.accountType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Location", "Location", decryptedFinancial!!.location, Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -1601,7 +1600,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", decryptedFinancial!!.password, Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1633,7 +1632,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Location", "Location", decryptedFinancial!!.location, Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "" , Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -1643,7 +1642,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", decryptedFinancial!!.password, Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory(decryptedFinancial!!.password, "" , "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1675,7 +1674,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Location", "Location", decryptedFinancial!!.location, Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", decryptedFinancial!!.swiftCode, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("ABA routing number", decryptedFinancial!!.abaRoutingNumber, "", Constants.LEVEL2_NUMBER))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
@@ -1687,7 +1686,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", decryptedFinancial!!.password, Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -2744,60 +2743,58 @@ class Level2CategoryHelper(
                 setBanking( level2Category )
             }
             "Investments/Retirement" -> {
-                getInvestments()
+                setBanking( level2Category )
             }
             "Loans/Mortgages" -> {
-                getLoadMortgages()
+                setBanking( level2Category )
             }
             "Other financial accounts" -> {
-                getOtherFinancialAccounts()
+                setBanking( level2Category )
             }
             "Credit/Debit cards" -> {
-                getCardDebitCardDetails()
+                setCardDebitCardDetails( level2Category )
             }
             "Other payment accounts" -> {
-                getOtherPaymentAccounts()
+                setBanking( level2Category )
             }
             "Primary home (owned)" -> {
-                getPrimaryHomeOwned()
+                setProperty( level2Category )
             }
             "Property (rented for own use)" -> {
-                getPropertyRentedForOwnUse()
+                setProperty( level2Category )
             }
-
             "Vacation home" -> {
-                getVacationHome()
+                setProperty( level2Category )
             }
-
             "Investment/Rental property" -> {
-                getInvestmentRentalProperty()
+                setProperty( level2Category )
             }
-
             "Vehicles" -> {
-                getVehicles()
+                setVehicles( level2Category )
             }
 
             "Maintenance" -> {
-                getMaintenance()
+                setMaintenance(level2Category)
             }
-        //TODO - continue
+
             "Jewelry" -> {
-                getJewelry()
+                setAssets( level2Category )
 
             }
             "Art and collectibles" -> {
-                getArtsAndCollectibles()
+                setAssets( level2Category )
             }
             "Computers and electronics" -> {
-                getComputerAndElectronics()
+                setAssets( level2Category )
             }
             "Furniture" -> {
-                getFurnitureDetails()
+                setAssets( level2Category )
             }
             "Others" -> {
-                getOtherDetails()
+                setAssets( level2Category )
             }
 
+            //Check from here
         // Insurance Left
 
             "Past returns" -> {
@@ -2951,9 +2948,114 @@ class Level2CategoryHelper(
         }
     }
 
+    private fun setAssets(level2Category: Level2SubCategory) {
+        when( level2Category.title ) {
+            "Estimated current market value"-> decryptedAssets!!.estimatedMarketValue= level2Category.titleValue //, "", Constants.LEVEL2_USD))
+            "Serial number"-> decryptedAssets!!.serialNumber= level2Category.titleValue //, "", Constants.LEVEL2_NORMAL))
+            "Purchase date"-> decryptedAssets!!.purchaseDate= level2Category.titleValue //, "", Constants.LEVEL2_PICKER))
+            "Purchase price"-> decryptedAssets!!.purchasePrice= level2Category.titleValue //, "", Constants.LEVEL2_USD))
+            "Contacts"-> decryptedAssets!!.contacts= level2Category.titleValue //, "", Constants.LEVEL2_SPINNER))
+            else -> {
+                when( level2Category.type ) {
+                    Constants.LEVEL2_NOTES -> decryptedAssets!!.notes= level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedAssets!!.attachmentNames= level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setMaintenance(level2Category: Level2SubCategory) {
+        when( level2Category.title ) {
+            "Name of service provider"-> decryptedVehicle!!.maintenanceEvent = level2Category.titleValue
+            "Date of service"-> decryptedVehicle!!.dateOfService = level2Category.titleValue
+            "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
+            else -> {
+                when( level2Category.type ) {
+                    Constants.LEVEL2_NOTES -> decryptedVehicle!!.notes= level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedVehicle!!.attachmentNames= level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setVehicles(level2Category: Level2SubCategory) {
+        when( level2Category.titleValue ) {
+            "Vehicle identification number (VIN)" -> decryptedVehicle!!.vehicle = level2Category.titleValue//stants.LEVEL2_NORMAL))
+            "Make" -> decryptedVehicle!!.make = level2Category.titleValue//stants.LEVEL2_NORMAL))
+            "Model" -> decryptedVehicle!!.model = level2Category.titleValue//stants.LEVEL2_NORMAL))
+            "Model year" -> decryptedVehicle!!.modelYear = level2Category.titleValue//stants.LEVEL2_NORMAL))
+            "Color" -> decryptedVehicle!!.color = level2Category.titleValue//stants.LEVEL2_NORMAL))
+            "Name on title" -> decryptedVehicle!!.titleName = level2Category.titleValue//stants.LEVEL2_SPINNER))
+            "Estimated market value" -> decryptedVehicle!!.estimatedMarketValue = level2Category.titleValue//stants.LEVEL2_USD))
+            "Registration expiration date" -> decryptedVehicle!!.registrationExpirydate = level2Category.titleValue//stants.LEVEL2_PICKER))
+            "Purchased" -> decryptedVehicle!!.purchasedOrLeased = level2Category.titleValue//stants.LEVEL2_RADIO))
+            "Purchase date" -> decryptedVehicle!!.purchaseDate = level2Category.titleValue//stants.LEVEL2_PICKER))
+            "Financed through loan" -> decryptedVehicle!!.financedThroughLoan = level2Category.titleValue//stants.LEVEL2_SWITCH))
+            "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
+            else -> {
+                when( level2Category.type ) {
+                    Constants.LEVEL2_NOTES -> decryptedVehicle!!.notes= level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedVehicle!!.attachmentNames= level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setProperty(level2Category: Level2SubCategory) {
+        when( level2Category.title ) {
+            "Name of landlord" -> decryptedProperty!!.tenantName = level2Category.titleValue
+            "Street address 1"-> decryptedProperty!!.streetAddressOne= level2Category.titleValue
+            "Street address 2"-> decryptedProperty!!.streetAddressTwo= level2Category.titleValue
+            "City"-> decryptedProperty!!.city= level2Category.titleValue//.LEVEL2_NORMAL))
+            "State"-> decryptedProperty!!.state= level2Category.titleValue//.LEVEL2_NORMAL))
+            "Zip Code"-> decryptedProperty!!.zipCode= level2Category.titleValue//.LEVEL2_NUMBER))
+            "Country"-> decryptedProperty!!.country= level2Category.titleValue//.LEVEL2_NORMAL))
+            "Currently rented" -> decryptedProperty!!.currentlyRented = level2Category.isValueSet
+
+            "Name(s) on title"-> decryptedProperty!!.propertyName= level2Category.titleValue//.LEVEL2_SPINNER))
+            "Purchase date"-> decryptedProperty!!.purchaseDate= level2Category.titleValue//.LEVEL2_PICKER))
+            "Purchase price"-> decryptedProperty!!.purchasePrice= level2Category.titleValue//.LEVEL2_USD))
+            "Estimated market value"-> decryptedProperty!!.estimatedMarketValue= level2Category.titleValue//.LEVEL2_USD))
+            "Contacts"-> decryptedProperty!!.contacts= level2Category.titleValue//.LEVEL2_SPINNER))
+
+            else -> {
+                when( level2Category.type ) {
+                    Constants.LEVEL2_NOTES -> decryptedProperty!!.notes= level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedProperty!!.attachmentNames= level2Category.titleValue
+                }
+            }
+        }
+
+    }
+
+    private fun setCardDebitCardDetails(level2Category: Level2SubCategory) {
+        when( level2Category.title ) {
+
+
+            "Card number"-> decryptedPayment!!.cardNumber = level2Category.titleValue
+            "Card type"-> decryptedPayment!!.cardType = level2Category.titleValue
+            "Card holder"-> decryptedPayment!!.cardHolder = level2Category.titleValue
+            "Expiry date"-> decryptedPayment!!.expiryDate = level2Category.titleValue
+            "CVV code"-> decryptedPayment!!.cvvCode = level2Category.titleValue
+            "Issuing bank"-> decryptedPayment!!.issuingBank = level2Category.titleValue
+            "Website"-> decryptedPayment!!.website = level2Category.titleValue
+            "Username/login"-> decryptedPayment!!.userName = level2Category.titleValue
+            "Password"-> decryptedPayment!!.password = level2Category.titleValue
+            "PIN"-> decryptedPayment!!.pin = level2Category.titleValue
+
+            else -> {
+                when( level2Category.type ) {
+                    Constants.LEVEL2_NOTES -> decryptedPayment!!.notes= level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedPayment!!.attachmentNames= level2Category.titleValue
+                }
+            }
+
+        }
+    }
+
     private fun setBanking(level2Category: Level2SubCategory) {
         when( level2Category.title ) {
-            "Account type"-> decryptedFinancial!!.accountType = level2Category.titleValue
+            "Loan type","Account type"-> decryptedFinancial!!.accountType = level2Category.titleValue
             "Name(s) on account"-> decryptedFinancial!!.accountName= level2Category.titleValue
             "Account number"-> decryptedFinancial!!.accountNumber= level2Category.titleValue
             "Location"-> decryptedFinancial!!.location= level2Category.titleValue
@@ -2964,49 +3066,117 @@ class Level2CategoryHelper(
             "Username/login"-> decryptedFinancial!!.userName= level2Category.titleValue
             "Password"-> decryptedFinancial!!.password= level2Category.titleValue
             "PIN"-> decryptedFinancial!!.pin= level2Category.titleValue
-            "Notes" -> decryptedFinancial!!.notes= level2Category.titleValue
-            "Attachments" -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
+            else -> {
+                when( level2Category.type ) {
+                    Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes= level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
+                }
+            }
+
         }
     }
 
     fun saveDocument( context: Context ) {
         if( decryptedFinancial != null ) {
-            
+
             prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
-                    val financial = Financial()
-                    financial.id = if( decryptedFinancial!!.id.equals(0) ) getUniqueId() else decryptedFinancial!!.id
-                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
-                    financial.backingImages .addAll(decryptedFinancial!!.backingImages)
-                    financial.selectionType = decryptedFinancial!!.selectionType.encryptString()
-                    financial.institutionName = decryptedFinancial!!.institutionName.encryptString()
-                    financial.accountName = decryptedFinancial!!.accountName.encryptString()
-                    financial.accountType = decryptedFinancial!!.accountType.encryptString()
-                    financial.nameOnAccount = decryptedFinancial!!.nameOnAccount.encryptString()
-                    financial.accountNumber = decryptedFinancial!!.accountNumber.encryptString()
-                    financial.location = decryptedFinancial!!.location.encryptString()
-                    financial.swiftCode = decryptedFinancial!!.swiftCode.encryptString()
-                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
-                    financial.abaRoutingNumber = decryptedFinancial!!.abaRoutingNumber.encryptString()
-                    financial.contacts = decryptedFinancial!!.contacts.encryptString()
-                    financial.website = decryptedFinancial!!.website.encryptString()
-                    financial.userName = decryptedFinancial!!.userName.encryptString()
-                    financial.password = decryptedFinancial!!.password.encryptString()
-                    financial.pin = decryptedFinancial!!.pin.encryptString()
-                    financial.created = decryptedFinancial!!.created
-                    financial.modified = decryptedFinancial!!.modified
-                    financial.createdUser = decryptedFinancial!!.createdUser
-                    financial.created = decryptedFinancial!!.created
-                    financial.modified = decryptedFinancial!!.modified
-                    financial.createdUser = decryptedFinancial!!.createdUser
-                    financial.notes = decryptedFinancial!!.notes.encryptString()
-                    financial.attachmentNames = decryptedFinancial!!.attachmentNames.encryptString()
+                    if( decryptedFinancial!!.id.toInt() == 0 ) {
+                        decryptedFinancial!!.id = getUniqueId()
+                    }
+                    val financial = encryptFinancial(decryptedFinancial!!)
                     realm.copyToRealmOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
             })
         }
+
+        if( decryptedPayment!= null ) {
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    if( decryptedPayment!!.id.toInt() == 0 ) {
+                        decryptedPayment!!.id = getUniqueId()
+                    }
+                    val financial = encryptPayment(decryptedPayment!!)
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+        if( decryptedProperty!= null ) {
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    if( decryptedProperty!!.id.toInt() == 0 ) {
+                        decryptedProperty!!.id = getUniqueId()
+                    }
+                    val financial = encryptProperty(decryptedProperty!!)
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+        if( decryptedVehicle!= null ) {
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    if( decryptedVehicle!!.id.toInt() == 0 ) {
+                        decryptedVehicle!!.id = getUniqueId()
+                    }
+                    val financial = encryptVehicle(decryptedVehicle!!)
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+        if( decryptedAssets!= null ) {
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    if( decryptedAssets!!.id.toInt() == 0 ) {
+                        decryptedAssets!!.id = getUniqueId()
+                    }
+                    val financial = encryptAsset(decryptedAssets!!)
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+        if( decryptedInsurance!= null ) {
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    if( decryptedInsurance!!.id.toInt() == 0 ) {
+                        decryptedInsurance!!.id = getUniqueId()
+                    }
+                    val financial = encryptInsurance(decryptedInsurance!!)
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+        if( decryptedTaxes!= null ) {
+            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    if( decryptedTaxes!!.id.toInt() == 0 ) {
+                        decryptedTaxes!!.id = getUniqueId()
+                    }
+                    val financial = encryptTaxes(decryptedTaxes!!)
+                    realm.copyToRealmOrUpdate(financial)
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+
     }
 }

@@ -87,7 +87,6 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
         currentMemoriesList = arguments!!.getParcelableArrayList<MemoryTimeline>(Constants.REALM_MEMORY_VIEW)
 
-
         for (contact in currentMemoriesList!!) {
             val dates = Date()
             dates.strDate

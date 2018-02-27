@@ -9,7 +9,9 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
 import com.ninebx.utility.NineBxPreferences
+import com.ninebx.utility.parseDateForCreatedUser
 import kotlinx.android.synthetic.main.fragment_home_updated.*
+import java.util.*
 
 /***
  * Created by TechnoBlogger on 08/01/18.
@@ -64,7 +66,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         txtWellness.setOnClickListener(this)
         txtMemories.setOnClickListener(this)
         txtShopping.setOnClickListener(this)
+
+
     }
+
+
 
     private fun callBottomViewFragment(option: Int) {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()

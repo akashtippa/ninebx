@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.FragmentBackHelper
 import com.ninebx.utility.KeyboardUtil
 import com.ninebx.utility.NineBxPreferences
@@ -19,6 +20,13 @@ import kotlinx.android.synthetic.main.fragment_level2_category.*
  */
 
 class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
+    override fun setValueToDocument(level2Category: Level2SubCategory) {
+        mCategoryPresenter.setValueToDocument(level2Category)
+    }
+
+    override fun saveDocument(context: Context?) {
+        mCategoryPresenter.saveDocument(context)
+    }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
     private val adapterExpandable: ExpandableListViewAdapter? = null
@@ -52,11 +60,46 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, mCategoryPresenter, categoryName, classType ))
+        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType ))
 
-        var decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
-        etTitle.setText(decryptedFinancial.institutionName)
-        etTitleValue.setText(decryptedFinancial.accountName)
+        when( selectedDocument ) {
+            is DecryptedFinancial -> {
+                val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
+                etTitle.setText(decryptedFinancial.institutionName)
+                etTitleValue.setText(decryptedFinancial.accountName)
+            }
+            is DecryptedPayment -> {
+                val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
+                etTitle.setText(decryptedFinancial.cardName)
+                etTitleValue.setText(decryptedFinancial.userName)
+            }
+            is DecryptedProperty-> {
+                val decryptedFinancial : DecryptedProperty = selectedDocument as DecryptedProperty
+                etTitle.setText(decryptedFinancial.titleName)
+                etTitleValue.setText(decryptedFinancial.propertyName)
+            }
+            is  DecryptedVehicle-> {
+                val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
+                etTitle.setText(decryptedFinancial.titleName)
+                etTitleValue.setText(decryptedFinancial.vehicleName)
+            }
+            is DecryptedAsset-> {
+                val decryptedFinancial : DecryptedAsset = selectedDocument as DecryptedAsset
+                etTitle.setText(decryptedFinancial.assetName)
+                etTitleValue.setText(decryptedFinancial.assetName)
+            }
+            is DecryptedInsurance-> {
+                val decryptedFinancial : DecryptedInsurance = selectedDocument as DecryptedInsurance
+                etTitle.setText(decryptedFinancial.insuranceCompany)
+                etTitleValue.setText(decryptedFinancial.insuredVehicle)
+            }
+            is DecryptedTax-> {
+                val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
+                etTitle.setText(decryptedFinancial.title)
+                etTitleValue.setText(decryptedFinancial.taxPayer)
+            }
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,6 +115,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         classType = arguments!!.getString("classType")
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument!!, classType, this)
+
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
         NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()
