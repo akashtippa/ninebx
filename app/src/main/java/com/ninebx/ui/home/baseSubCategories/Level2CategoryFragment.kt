@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -19,6 +20,13 @@ import kotlinx.android.synthetic.main.fragment_level2_category.*
  */
 
 class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
+    override fun setValueToDocument(level2Category: Level2SubCategory) {
+        mCategoryPresenter.setValueToDocument(level2Category)
+    }
+
+    override fun saveDocument(context: Context?) {
+        mCategoryPresenter.saveDocument(context)
+    }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
     private val adapterExpandable: ExpandableListViewAdapter? = null
@@ -52,7 +60,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, mCategoryPresenter, categoryName, classType ))
+        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType ))
 
         var decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
         etTitle.setText(decryptedFinancial.institutionName)
@@ -72,6 +80,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         classType = arguments!!.getString("classType")
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument!!, classType, this)
+
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
         NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()

@@ -31,7 +31,7 @@ import kotlin.collections.ArrayList
  * Created by TechnoBlogger on 23/01/18.
  */
 
-class ExpandableListViewAdapter(private val _context: Context, private val categories: ArrayList<Level2Category>, private val level2CategoryPresenter: Level2CategoryPresenter, val categoryName: String, val classType: String) : BaseExpandableListAdapter() {
+class ExpandableListViewAdapter(private val _context: Context, private val categories: ArrayList<Level2Category>, private val level2CategoryPresenter: Level2CategoryView, val categoryName: String, val classType: String) : BaseExpandableListAdapter() {
 
     // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
 
