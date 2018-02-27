@@ -13,70 +13,29 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.calendar.DaysRecyclerViewAdapter.ViewHolder
+import java.text.SimpleDateFormat
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 09/01/18.
  */
 class DaysRecyclerViewAdapter(val monthDates: Int,
                               val startDay: Int,
+                              private val month : Int,
+                              private val year : Int,
+                              private val datesWithEvents: ArrayList<Date>,
+                              private val eventDateStrings : ArrayList<String>,
                               var selectedDate: Int,
                               private var isWeekView : Boolean,
                               private var weekOfMonth : Int,
                               val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
+    var dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
     override fun getItemCount(): Int {
         return 1
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-
-       /* holder!!.tvSunday1.isSelected = isSelected(holder.tvSunday1)
-        holder.tvMonday1.isSelected = isSelected(holder.tvMonday1)
-        holder.tvTuesday1.isSelected = isSelected(holder.tvTuesday1)
-        holder.tvWednesday1.isSelected = isSelected(holder.tvWednesday1)
-        holder.tvThursday1.isSelected = isSelected(holder.tvThursday1)
-        holder.tvFriday1.isSelected = isSelected(holder.tvFriday1)
-        holder.tvSaturday1.isSelected = isSelected(holder.tvSaturday1)
-
-        holder.tvSunday2.isSelected = isSelected(holder.tvSunday2)
-        holder.tvMonday2.isSelected = isSelected(holder.tvMonday2)
-        holder.tvTuesday2.isSelected = isSelected(holder.tvTuesday2)
-        holder.tvWednesday2.isSelected = isSelected(holder.tvWednesday2)
-        holder.tvThursday2.isSelected = isSelected(holder.tvThursday2)
-        holder.tvFriday2.isSelected = isSelected(holder.tvFriday2)
-        holder.tvSaturday2.isSelected = isSelected(holder.tvSaturday2)
-
-        holder.tvSunday3.isSelected = isSelected(holder.tvSunday3)
-        holder.tvMonday3.isSelected = isSelected(holder.tvMonday3)
-        holder.tvTuesday3.isSelected = isSelected(holder.tvTuesday3)
-        holder.tvWednesday3.isSelected = isSelected(holder.tvWednesday3)
-        holder.tvThursday3.isSelected = isSelected(holder.tvThursday3)
-        holder.tvFriday3.isSelected = isSelected(holder.tvFriday3)
-        holder.tvSaturday3.isSelected = isSelected(holder.tvSaturday3)
-
-        holder.tvSunday4.isSelected = isSelected(holder.tvSunday4)
-        holder.tvMonday4.isSelected = isSelected(holder.tvMonday4)
-        holder.tvTuesday4.isSelected = isSelected(holder.tvTuesday4)
-        holder.tvWednesday4.isSelected = isSelected(holder.tvWednesday4)
-        holder.tvThursday4.isSelected = isSelected(holder.tvThursday4)
-        holder.tvFriday4.isSelected = isSelected(holder.tvFriday4)
-        holder.tvSaturday4.isSelected = isSelected(holder.tvSaturday4)
-
-        holder.tvSunday5.isSelected = isSelected(holder.tvSunday5)
-        holder.tvMonday5.isSelected = isSelected(holder.tvMonday5)
-        holder.tvTuesday5.isSelected = isSelected(holder.tvTuesday5)
-        holder.tvWednesday5.isSelected = isSelected(holder.tvWednesday5)
-        holder.tvThursday5.isSelected = isSelected(holder.tvThursday5)
-        holder.tvFriday5.isSelected = isSelected(holder.tvFriday5)
-        holder.tvSaturday5.isSelected = isSelected(holder.tvSaturday5)
-
-        holder.tvSunday6.isSelected = isSelected(holder.tvSunday6)
-        holder.tvMonday6.isSelected = isSelected(holder.tvMonday6)
-        holder.tvTuesday6.isSelected = isSelected(holder.tvTuesday6)
-        holder.tvWednesday6.isSelected = isSelected(holder.tvWednesday6)
-        holder.tvThursday6.isSelected = isSelected(holder.tvThursday6)
-        holder.tvFriday6.isSelected = isSelected(holder.tvFriday6)
-        holder.tvSaturday6.isSelected = isSelected(holder.tvSaturday6)*/
 
         setDrawable( holder!!.tvSunday1)
         setDrawable( holder.tvMonday1)
@@ -154,19 +113,37 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
     }
 
     private fun setDrawable(textView: TextView?) {
-        textView!!.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
-                              else if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() % 7 != 0 ) mEventDrawable
+
+        var isEventPresent = false
+        var dateInt = 0
+
+        dateInt = if( textView!!.text.toString().isEmpty() ) 0 else textView.text.toString().toInt()
+        if( dateInt != 0 ) {
+            val calendarDay = Calendar.getInstance()
+            calendarDay.set(Calendar.DAY_OF_MONTH, dateInt)
+            calendarDay.set(Calendar.MONTH, month)
+            calendarDay.set(Calendar.YEAR, year)
+
+            isEventPresent = eventDateStrings.contains(dateFormat.format(calendarDay.time))
+        }
+
+
+
+        textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
+                              else if( isEventPresent ) mEventDrawable
                               else mUnSelectedDrawable
 
 
         textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
-        else if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() % 7 != 0 ) mBlackColor
+        else if( isEventPresent ) mBlackColor
         else mBlackColor)
+
     }
 
     private fun isSelected(textView : TextView?): Boolean {
         return textView!!.text.isNotEmpty() && textView.text.toString().toInt() == selectedDate
     }
+
     private lateinit var mEventDrawable : Drawable
     private lateinit var mSelectedDrawable : Drawable
     private lateinit var mUnSelectedDrawable : Drawable

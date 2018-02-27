@@ -2,71 +2,111 @@ package com.ninebx.ui.home.calendar
 
 import com.ninebx.R
 import com.ninebx.ui.base.realm.CalendarEvents
-import com.ninebx.utility.parseDateMonthYearFormat
-import com.ninebx.utility.parseDateMonthYearTimeFormat
-import com.ninebx.utility.prepareRealmConnections
+import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+
+
 
 /**
  * Created by Alok on 03/01/18.
  */
 class CalendarPresenter( val calendarView: CalendarView)  {
+
+    val TAG = "CalendarPresenter"
     private val context = getApplicationContext()
     private lateinit var calendarEventsMap : HashMap<Int, ArrayList<CalendarEvents>>
 
     private var calendarEvents: RealmResults<CalendarEvents>? = null
+    private var calendarEventsList : ArrayList<CalendarEvents>? = null
     private var calendarRealm: Realm? = null
-
+    private var dateFormat : SimpleDateFormat ?= null
     init {
+        dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         calendarView.showProgress(R.string.loading)
-        prepareRealmConnections(context, false, "CalendarEvents", object : Realm.Callback(){
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 calendarRealm = realm
-                calendarView.hideProgress()
+                refreshData()
             }
         })
     }
 
-    fun filterEventsForMonth( monthString : String ) : HashMap<Int, ArrayList<CalendarEvents>> {
-        calendarEvents = calendarRealm!!.where(CalendarEvents::class.java)
-                .beginGroup()
-                .contains("startsDate", monthString )
-                .endGroup()
-                .findAll()
+    private lateinit var datesWithEvents: ArrayList<Date>
+    private lateinit var dateStringWithEvents: ArrayList<String>
+    fun refreshData() : ArrayList<Date> {
+        datesWithEvents = ArrayList<Date>()
+        dateStringWithEvents = ArrayList<String>()
+        calendarView.showProgress(R.string.loading)
+        calendarEvents = calendarRealm!!.where(CalendarEvents::class.java).findAll()
+        calendarEventsList = ArrayList()
+        calendarEventsList!!.addAll(calendarEvents!!.asIterable())
+        for( event in calendarEventsList!! ) {
+            val eventCount = event.startsDate.count()
+            for( i in 0 until eventCount ) {
 
-        calendarEventsMap = HashMap()
-        return addEventToMap( calendarEvents )
-    }
+                val startDate = getDateForString(event.startsDate[i])
+                val endDate = getDateForString(event.endsDate[i])
 
-    private fun addEventToMap(events: RealmResults<CalendarEvents>?): HashMap<Int, ArrayList<CalendarEvents>> {
-        for( calendarEvent in  events!! ) {
-            for( startDate in calendarEvent.startsDate ) {
-                val parsedDate = parseAnyDate( startDate )
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = parsedDate.time
+                val daysCount = getDateDifference( startDate, endDate )
+                if( daysCount > 0 ) {
+                    datesWithEvents.addAll(getDaysBetweenDates(startDate, endDate))
+                    event.allDays.addAll(getDayStringForDates( startDate, endDate ))
+                    dateStringWithEvents.addAll(getDayStringForDates( startDate, endDate ))
+                }
+                else {
 
-                if( !calendarEventsMap.containsKey(calendar.get(Calendar.DATE)) )
-                    calendarEventsMap.put(calendar.get(Calendar.DATE), ArrayList())
+                    //if( !event.isAllDay[i]!! ) {
+                    datesWithEvents.add(startDate)
+                    dateStringWithEvents.add(dateFormat!!.format(startDate))
+                    event.allDays.add(dateFormat!!.format(startDate))
+                    datesWithEvents.add(endDate)
+                    dateStringWithEvents.add(dateFormat!!.format(endDate))
+                    event.allDays.add(dateFormat!!.format(endDate))
+                    //}
+                }
 
-                val eventsList = calendarEventsMap.get(calendar.get(Calendar.DATE))
-                eventsList!!.add(calendarEvent)
             }
-
+            AppLogger.d(TAG, "Calendar Event : " + event)
+            AppLogger.d(TAG, "Calendar Event Days : " + event.allDays)
         }
-        return calendarEventsMap
+        AppLogger.d(TAG, "setDateWithEvents : " + datesWithEvents)
+        calendarView.setDateWithEvents(datesWithEvents, dateStringWithEvents)
+        calendarView.hideProgress()
+        return datesWithEvents
     }
 
-    private fun parseAnyDate(startDate: String?): Date {
+
+    fun getEventsForDate( selectedDate : Date ) : ArrayList<CalendarEvents> {
+        val dateEvents = ArrayList<CalendarEvents>()
+        calendarEventsList!!.filterTo(dateEvents) {
+            //check if selectedDate is present either in startDate[] or endDate[]
+            //if present add the event to dateEvents
+            checkForDateInEvent(selectedDate, it)
+        }
+        AppLogger.d(TAG, "getEventsForDate : " + dateEvents)
+        AppLogger.d(TAG, "getEventsForDate : " + dateEvents.count())
+        return dateEvents
+    }
+
+    private fun checkForDateInEvent(selectedDate: Date, event: CalendarEvents?): Boolean {
+        AppLogger.d(TAG, "checkForDateInEvent : " + selectedDate + " All Days " + event!!.allDays)
+        return ( event!!.allDays.contains(dateFormat!!.format(selectedDate)) )
+    }
+
+
+    private fun getDateForString(dateString: String?): Date {
+
         try {
-            return parseDateMonthYearFormat(startDate!!)
-        } catch ( e : Exception ) {
-            return parseDateMonthYearTimeFormat(startDate!!)
+            return parseDateForFormat( dateString!!, "MMMM dd, yyyy hh:mm a")
+        } catch ( e: Exception ) {
+            return parseDateForFormat( dateString!!, "MMMM dd, yyyy")
         }
-
     }
+
 }

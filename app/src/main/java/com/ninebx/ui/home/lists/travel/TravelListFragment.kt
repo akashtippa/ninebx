@@ -47,7 +47,7 @@ class TravelListFragment : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var getArrayList: ArrayList<DecryptedTravelList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedTravelList>
+        var getArrayList: ArrayList<DecryptedTravelList> = arguments!!.getParcelableArrayList<DecryptedTravelList>("combineListItemsFetched")
 
         mListsAdapter = TravelListsAdapter(getArrayList)
         AppLogger.d("CombineListArray", " " + getArrayList)

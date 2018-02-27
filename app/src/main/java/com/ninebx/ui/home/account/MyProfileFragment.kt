@@ -196,12 +196,12 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (users.country.isNotEmpty())
             txtCountry.text = users.country.decryptString()
 
-        mAWSFileTransferHelper.setFileTransferListener(this)
-        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        //mAWSFileTransferHelper.setFileTransferListener(this)
+        /*val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
         awsSecureFileTransfer.setFileTransferListener(this)
         if (users.profilePhoto.isNotEmpty()) {
             awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
-        }
+        }*/
             //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
     }
 

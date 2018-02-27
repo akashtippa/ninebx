@@ -134,7 +134,7 @@ public class CombineWellness extends RealmObject {
         this.wellnessItems = wellnessItems;
     }
 
-    public RealmList getListItems() {
+    public RealmList<WellnessList> getListItems() {
         return listItems;
     }
 

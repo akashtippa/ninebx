@@ -188,6 +188,7 @@ object Constants {
     val RESET_PASSCODE: String = "reset_passcode"
     val RESET_FINGER_PRINT: String = "reset_fingerprint"
     val USER_PASSWORD_UINT: String = "user_password_uint"
+    val SELECTED_ITEM: String = "selectedItem"
 
 
 }
