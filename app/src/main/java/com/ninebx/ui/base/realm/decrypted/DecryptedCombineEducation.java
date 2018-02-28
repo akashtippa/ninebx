@@ -130,10 +130,10 @@ public class DecryptedCombineEducation implements Parcelable {
         return count;
     }
 
-    public int getListItemsCount(String selectionType) {
+    public int getListItemsCount(String selectionType, long detailsId ) {
         int count = 0;
         for (DecryptedEducationList selectedItem : listItems) {
-            count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+            count += ( selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detailsId ) ? 1 : 0;
         }
         return count;
     }

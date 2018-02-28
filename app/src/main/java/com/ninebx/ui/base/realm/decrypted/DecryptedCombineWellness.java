@@ -181,10 +181,10 @@ public class DecryptedCombineWellness implements Parcelable {
         dest.writeLong(id);
     }
 
-    public int getLists(String selectionType) {
+    public int getLists(String selectionType, Integer detailsId ) {
         int count = 0;
         for (DecryptedWellnessList decryptedLicense : listItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            count += ( decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )  ? 1 : 0;
         }
         return count;
     }

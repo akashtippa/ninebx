@@ -94,10 +94,10 @@ public class DecryptedCombineContacts implements Parcelable {
     }
 
 
-    public int getListsCount(String selectionType) {
+    public int getListsCount(String selectionType, long detailsId ) {
         int count = 0;
         for (DecryptedContactsList decryptedLicense : listItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            count += (decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId ) ? 1 : 0;
         }
         return count;
     }

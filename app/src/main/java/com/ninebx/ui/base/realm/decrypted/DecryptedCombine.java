@@ -263,12 +263,12 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
-    public int getListsCount(String selectionType) {
+    public int getListsCount(String selectionType, long detilsId ) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedHomeList selectedItem : listItems) {
             if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                count += (selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detilsId)? 1 : 0;
                 ids.add(selectedItem.getId());
             }
         }
