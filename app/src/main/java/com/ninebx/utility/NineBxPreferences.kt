@@ -41,6 +41,12 @@ class NineBxPreferences : Preferences() {
         currentBox = ""
         countrySelected = ""
         isFingerPrintEnabled = false
+        userID = ""
+        userFirstName = ""
+        userLastName = ""
+        created = ""
+        userPassword = ""
+        userPasswordUINT8 = ""
     }
 
 
