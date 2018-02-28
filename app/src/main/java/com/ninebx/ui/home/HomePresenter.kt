@@ -1,6 +1,5 @@
 package com.ninebx.ui.home
 
-import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -11,7 +10,6 @@ import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
-import java.util.*
 
 /**
  * Created by Alok Omkar on 2018-02-24.
@@ -45,7 +43,6 @@ class HomePresenter( val homeView : HomeView ) {
                         mDecryptCombineHome.paymentItems.addAll(decryptedCombine.paymentItems)
                         mDecryptCombineHome.financialItems.addAll(decryptedCombine.financialItems)
                     }
-                    AppLogger.d("CombineDecrypted", "Decrypted combine financial" + mDecryptCombineHome)
                     homeView!!.onCombineHomeFetched(mDecryptCombineHome)
                 } else {
                     homeView!!.onCombineHomeFetched(mDecryptCombineHome)
@@ -65,12 +62,11 @@ class HomePresenter( val homeView : HomeView ) {
                         mDecryptedCombineTravel.vacationsItems.addAll(decryptedCombineTravel.vacationsItems)
                         mDecryptedCombineTravel.listItems.addAll(decryptedCombineTravel.listItems)
                     }
-                    AppLogger.d("CombineTravel", "Decrypted combine travel" + mDecryptedCombineTravel)
                     homeView!!.onCombineTravelFetched(mDecryptedCombineTravel)
                 } else {
                     homeView!!.onCombineTravelFetched(mDecryptedCombineTravel)
                 }
-                AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
+                //AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
             }
         })
 
@@ -83,11 +79,11 @@ class HomePresenter( val homeView : HomeView ) {
                             mDecryptedCombineContacts.contactsItems.addAll(decryptedCombineContacts.contactsItems)
                             mDecryptedCombineContacts.mainContactsItems.addAll(decryptedCombineContacts.mainContactsItems)
                             mDecryptedCombineContacts.listItems.addAll(decryptedCombineContacts.listItems)
-                            AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
+                            //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
 
                         }
                         homeView!!.onCombineContactsFetched(mDecryptedCombineContacts)
-                        AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
+                        //AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                     } else {
                         homeView!!.onCombineContactsFetched(mDecryptedCombineContacts)
                     }
@@ -109,7 +105,7 @@ class HomePresenter( val homeView : HomeView ) {
                             mDecryptCombinePersonal.listItems.addAll(decryptedCombinePersonal.listItems)
                         }
                         homeView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
-                        AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
+                        //AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
                     } else {
                         homeView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
                     }
@@ -135,7 +131,7 @@ class HomePresenter( val homeView : HomeView ) {
                             mDecryptCombineWellness.listItems.addAll(decryptedCombineWellness.listItems)
                         }
                         homeView!!.onCombineWellnessFetched(mDecryptCombineWellness)
-                        AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
+                        //AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
                     } else {
                         homeView!!.onCombineWellnessFetched(mDecryptCombineWellness)
                     }
@@ -154,10 +150,10 @@ class HomePresenter( val homeView : HomeView ) {
                         mDecryptCombineEducation.workItems.addAll(decryptedCombineEducation.workItems)
                     }
                     for (finance in mDecryptCombineEducation.workItems) {
-                        AppLogger.d("REcords", finance.toString())
+                        //AppLogger.d("REcords", finance.toString())
                     }
                     homeView!!.onCombineEducationFetched(mDecryptCombineEducation)
-                    AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
+                    //AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
                 } else {
                     homeView!!.onCombineEducationFetched(mDecryptCombineEducation)
                 }
@@ -175,7 +171,7 @@ class HomePresenter( val homeView : HomeView ) {
         }
 /*
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
-        AppLogger.d("UpdateNotification", "Method invoked ")
+        //AppLogger.d("UpdateNotification", "Method invoked ")
         var notifications = Notifications()
         var message = "AndroidTest"
         notifications.id =  UUID.randomUUID().hashCode().toLong()
@@ -191,7 +187,7 @@ class HomePresenter( val homeView : HomeView ) {
                 realm!!.beginTransaction()
                 notifications.insertOrUpdate(realm)
                 realm.commitTransaction()
-                AppLogger.d("NewNotification", "Added" )
+                //AppLogger.d("NewNotification", "Added" )
             }
         })
     }*/

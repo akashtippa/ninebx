@@ -17,7 +17,7 @@ public class CombineShopping extends RealmObject {
 
     /* @Required*/
     @PrimaryKey
-    private int id = 0;
+    private long id = 0;
 
     @Required private RealmList<LoyaltyPrograms> loyaltyProgramsItems            = new RealmList<LoyaltyPrograms>();
     @Required private RealmList<RecentPurchase> recentPurchaseItems             = new RealmList<RecentPurchase>();
@@ -29,7 +29,7 @@ public class CombineShopping extends RealmObject {
     public CombineShopping() {
     }
 
-    public CombineShopping(int id, RealmList loyaltyProgramsItems, RealmList recentPurchaseItems, RealmList shoppingItems, RealmList clothingSizesItems, RealmList listItems) {
+    public CombineShopping(long id, RealmList loyaltyProgramsItems, RealmList recentPurchaseItems, RealmList shoppingItems, RealmList clothingSizesItems, RealmList listItems) {
         this.id = id;
         this.loyaltyProgramsItems = loyaltyProgramsItems;
         this.recentPurchaseItems = recentPurchaseItems;
@@ -38,11 +38,11 @@ public class CombineShopping extends RealmObject {
         this.listItems = listItems;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

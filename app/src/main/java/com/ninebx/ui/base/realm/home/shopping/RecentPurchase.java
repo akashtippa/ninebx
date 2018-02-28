@@ -33,9 +33,6 @@ public class RecentPurchase extends RealmObject {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public RealmList<RealmString> getBackingImages() {
         return backingImages;

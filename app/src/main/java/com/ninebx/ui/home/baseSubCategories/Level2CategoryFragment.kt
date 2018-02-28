@@ -9,10 +9,9 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.KeyboardUtil
-import com.ninebx.utility.NineBxPreferences
+import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level2_category.*
 
 /***
@@ -25,7 +24,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun saveDocument(context: Context?) {
-        mCategoryPresenter.saveDocument(context)
+        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim())
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
@@ -41,6 +40,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var categoryID = ""
     private var classType = ""
     private var selectedDocument : Parcelable ?= null
+    private var combineItem : Parcelable ?= null
 
     override fun showProgress(message: Int) {
 
@@ -112,9 +112,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
+        combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
         if( arguments!!.containsKey("selectedDocument") ) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
             classType = arguments!!.getString("classType")
+            //AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)
@@ -133,12 +135,19 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         setCamera(boxValue)
         tvSave.setOnClickListener {
-            if( validate() )
-                mCategoryPresenter.saveDocument( context )
+            if( validate() ) {
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
+                NineBxApplication.instance.activityInstance!!.onBackPressed()
+            }
+
         }
     }
 
     private fun validate(): Boolean {
+        if( etTitle.text.toString().isEmpty() ) {
+            context!!.showToast(R.string.error_empty_title)
+            etTitle.requestFocus()
+        }
         return !etTitle.text.toString().isEmpty()
     }
 

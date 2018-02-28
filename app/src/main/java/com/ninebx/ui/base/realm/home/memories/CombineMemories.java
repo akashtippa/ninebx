@@ -15,25 +15,25 @@ import io.realm.annotations.Required;
 public class CombineMemories extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private RealmList<MainMemories> mainMemoriesItems       = new RealmList<>();
     @Required private RealmList<MemoryTimeline> memoryTimelineItems     = new RealmList<>();
 
     @Required private RealmList<MemoriesList> listItems               = new RealmList<>();
 
-    public CombineMemories(int id, RealmList<MainMemories> mainMemoriesItems, RealmList<MemoryTimeline> memoryTimelineItems, RealmList<MemoriesList> listItems) {
+    public CombineMemories(long id, RealmList<MainMemories> mainMemoriesItems, RealmList<MemoryTimeline> memoryTimelineItems, RealmList<MemoriesList> listItems) {
         this.id = id;
         this.mainMemoriesItems = mainMemoriesItems;
         this.memoryTimelineItems = memoryTimelineItems;
         this.listItems = listItems;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

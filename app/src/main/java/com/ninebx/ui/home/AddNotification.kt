@@ -80,11 +80,11 @@ class AddNotification : HomeView {
     override fun onCombineWellnessFetched(mDecryptCombineWellness: DecryptedCombineWellness) {
         this.mDecryptedCombineWellness = mDecryptCombineWellness
         if( currentUsers != null )
-        wellnessNotification()
+            wellnessNotification()
     }
 
     override fun onCombineEducationFetched(mDecryptCombineEducation: DecryptedCombineEducation) {
-       this.mDecryptedCombineEducation = mDecryptCombineEducation
+        this.mDecryptedCombineEducation = mDecryptCombineEducation
         educationWorkNotification()
     }
 
@@ -567,7 +567,7 @@ class AddNotification : HomeView {
             override fun onSuccess(realm: Realm?) {
                 AppLogger.d("UpdatedNotification", "Connection successful")
                 realm!!.beginTransaction()
-                realm.copyToRealm(notifications)
+                realm.copyToRealmOrUpdate(notifications)
                 realm.commitTransaction()
                 AppLogger.d("NewNotification", "Added" )
             }

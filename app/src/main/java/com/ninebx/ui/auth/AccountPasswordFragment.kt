@@ -64,7 +64,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
             override fun onSuccess(realm: Realm?) {
                 mCurrentUser.id = getUniqueId()
                 mCurrentUser = encryptUsers(mCurrentUser)
-                AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
+                //AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
                 mCurrentUser.insertOrUpdate(realm!!)
                 mAuthView.navigateToOTP(false)
             }

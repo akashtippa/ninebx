@@ -24,24 +24,24 @@ class Level2CategoryHelper(
 ) {
 
     // For Home & Money
-    private var decryptedFinancial: DecryptedFinancial = DecryptedFinancial()
-    private var decryptedPayment: DecryptedPayment = DecryptedPayment()
-    private var decryptedProperty: DecryptedProperty = DecryptedProperty()
-    private var decryptedVehicle: DecryptedVehicle = DecryptedVehicle()
-    private var decryptedAssets: DecryptedAsset = DecryptedAsset()
-    private var decryptedInsurance: DecryptedInsurance = DecryptedInsurance()
-    private var decryptedTaxes: DecryptedTax = DecryptedTax()
+    private var decryptedFinancial: DecryptedFinancial ?= null // DecryptedFinancial()
+    private var decryptedPayment: DecryptedPayment ?= null // DecryptedPayment()
+    private var decryptedProperty: DecryptedProperty ?= null // DecryptedProperty()
+    private var decryptedVehicle: DecryptedVehicle ?= null // DecryptedVehicle()
+    private var decryptedAssets: DecryptedAsset ?= null // DecryptedAsset()
+    private var decryptedInsurance: DecryptedInsurance ?= null // DecryptedInsurance()
+    private var decryptedTaxes: DecryptedTax ?= null // DecryptedTax()
 
     // For Travel
-    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms = DecryptedLoyaltyPrograms()
-    private var decryptedTravel: DecryptedTravel = DecryptedTravel()
+    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms ?= null // DecryptedLoyaltyPrograms()
+    private var decryptedTravel: DecryptedTravel ?= null // DecryptedTravel()
 
     // For Personal
-    private var decryptedDriversLicense: DecryptedLicense = DecryptedLicense()
-    private var decryptedSocial: DecryptedSocial = DecryptedSocial()
-    private var decryptedTAX_ID: DecryptedTaxID = DecryptedTaxID()
-    private var decryptedCertificate: DecryptedCertificate = DecryptedCertificate()
-    private var decryptedOtherGovernment: DecryptedGovernment = DecryptedGovernment()
+    private var decryptedDriversLicense: DecryptedLicense ?= null // DecryptedLicense()
+    private var decryptedSocial: DecryptedSocial ?= null // DecryptedSocial()
+    private var decryptedTAX_ID: DecryptedTaxID ?= null // DecryptedTaxID()
+    private var decryptedCertificate: DecryptedCertificate ?= null // DecryptedCertificate()
+    private var decryptedOtherGovernment: DecryptedGovernment ?= null // DecryptedGovernment()
 
     init {
         extractObject()
@@ -1426,7 +1426,7 @@ class Level2CategoryHelper(
 
     private fun getOtherPaymentAccounts() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 2002
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1468,7 +1468,7 @@ class Level2CategoryHelper(
 
     private fun getCardDebitCardDetails() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedPayment == null ) decryptedPayment = DecryptedPayment()
         var categoryIndex = 2001
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1511,7 +1511,7 @@ class Level2CategoryHelper(
 
     private fun getOtherFinancialAccounts() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1004
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1554,7 +1554,7 @@ class Level2CategoryHelper(
 
     private fun getLoadMortgages() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1003
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1596,7 +1596,7 @@ class Level2CategoryHelper(
 
     private fun getInvestments() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1002
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1638,7 +1638,7 @@ class Level2CategoryHelper(
 
     private fun getBanking() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1001
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2703,7 +2703,7 @@ class Level2CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    fun setValue(level2Category: Level2SubCategory, selectedDocument: Parcelable) {
+    fun setValue( level2Category: Level2SubCategory ) {
         when (category_name) {
             "Banking" -> {
                 setBanking( level2Category )
@@ -3042,17 +3042,22 @@ class Level2CategoryHelper(
         }
     }
 
-    fun saveDocument( context: Context ) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
-
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedFinancial!!.selectionType = categoryID
+                    decryptedFinancial!!.institutionName = title
                     if( decryptedFinancial!!.id.toInt() == 0 ) {
                         decryptedFinancial!!.id = getUniqueId()
                     }
                     val financial = encryptFinancial(decryptedFinancial!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    val combine : DecryptedCombine = combineItem as DecryptedCombine
+                    combine.financialItems.add( decryptedFinancial )
+                    val encryptedCombine = encryptCombine(combine)
+                    realm.insertOrUpdate(encryptedCombine)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
@@ -3060,84 +3065,118 @@ class Level2CategoryHelper(
         }
 
         if( decryptedPayment!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedPayment!!.selectionType = categoryID
+                    decryptedPayment!!.cardName = title
                     if( decryptedPayment!!.id.toInt() == 0 ) {
                         decryptedPayment!!.id = getUniqueId()
                     }
+
                     val financial = encryptPayment(decryptedPayment!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    val combine : DecryptedCombine = combineItem as DecryptedCombine
+                    combine.paymentItems.add( decryptedPayment )
+                    val encryptedCombine = encryptCombine(combine)
+                    realm.insertOrUpdate(encryptedCombine)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
             })
         }
+
         if( decryptedProperty!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedProperty!!.selectionType = categoryID
+                    decryptedProperty!!.titleName = title
                     if( decryptedProperty!!.id.toInt() == 0 ) {
                         decryptedProperty!!.id = getUniqueId()
                     }
                     val financial = encryptProperty(decryptedProperty!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
             })
         }
         if( decryptedVehicle!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedVehicle!!.titleName = title
+                    decryptedVehicle!!.selectionType = categoryID
                     if( decryptedVehicle!!.id.toInt() == 0 ) {
                         decryptedVehicle!!.id = getUniqueId()
                     }
                     val financial = encryptVehicle(decryptedVehicle!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    val combine : DecryptedCombine = combineItem as DecryptedCombine
+                    combine.vehicleItems.add( decryptedVehicle )
+                    val encryptedCombine = encryptCombine(combine)
+                    realm.insertOrUpdate(encryptedCombine)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
             })
         }
         if( decryptedAssets!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedAssets!!.selectionType = categoryID
+                    decryptedAssets!!.test = title
                     if( decryptedAssets!!.id.toInt() == 0 ) {
                         decryptedAssets!!.id = getUniqueId()
                     }
                     val financial = encryptAsset(decryptedAssets!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    val combine : DecryptedCombine = combineItem as DecryptedCombine
+                    combine.assetItems.add( decryptedAssets )
+                    val encryptedCombine = encryptCombine(combine)
+                    realm.insertOrUpdate(encryptedCombine)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
             })
         }
         if( decryptedInsurance!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedInsurance!!.selectionType = categoryID
+                    decryptedInsurance!!.insuranceCompany = title
                     if( decryptedInsurance!!.id.toInt() == 0 ) {
                         decryptedInsurance!!.id = getUniqueId()
                     }
                     val financial = encryptInsurance(decryptedInsurance!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    val combine : DecryptedCombine = combineItem as DecryptedCombine
+                    combine.insuranceItems.add( decryptedInsurance )
+                    val encryptedCombine = encryptCombine(combine)
+                    realm.insertOrUpdate(encryptedCombine)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 
             })
         }
         if( decryptedTaxes!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
                     realm!!.beginTransaction()
+                    decryptedTaxes!!.selectionType = categoryID
+                    decryptedTaxes!!.title = title
                     if( decryptedTaxes!!.id.toInt() == 0 ) {
                         decryptedTaxes!!.id = getUniqueId()
                     }
                     val financial = encryptTaxes(decryptedTaxes!!)
-                    realm.copyToRealmOrUpdate(financial)
+                    val combine : DecryptedCombine = combineItem as DecryptedCombine
+                    combine.taxesItems.add( decryptedTaxes )
+                    val encryptedCombine = encryptCombine(combine)
+                    realm.insertOrUpdate(encryptedCombine)
+                    realm.insertOrUpdate(financial)
                     realm.commitTransaction()
                 }
 

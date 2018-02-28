@@ -68,6 +68,7 @@ fun prepareRealmConnections(context: Context?,
 
     if (connectionsMap.containsKey(realmEndPoint)) {
         AppLogger.d(TAG, "Connection Found : " + realmEndPoint)
+        connectionsMap[realmEndPoint]!!.refresh()
         callback.onSuccess(connectionsMap[realmEndPoint])
     } else {
         AppLogger.d(TAG, "New Connection : " + realmEndPoint)
@@ -75,11 +76,11 @@ fun prepareRealmConnections(context: Context?,
             override fun onSuccess(realm: Realm?) {
 
                 AppLogger.d(TAG, "Connection established : " + realmEndPoint)
-
                 connectionsMap.put(realmEndPoint, realm!!)
+                realm.refresh()
                 callback.onSuccess(realm)
 
-                if (isForeground)
+                if ( isForeground && context != null )
                     context!!.hideProgressDialog()
             }
 
@@ -89,13 +90,13 @@ fun prepareRealmConnections(context: Context?,
 
                     AppLogger.e(TAG, "Connection error : " + realmEndPoint)
 
-                    if (isForeground)
+                    if (isForeground && context != null)
                         context!!.showToast(exception.localizedMessage)
 
                     exception.printStackTrace()
                 }
 
-                if (isForeground)
+                if (isForeground && context != null)
                     context!!.hideProgressDialog()
 
             }

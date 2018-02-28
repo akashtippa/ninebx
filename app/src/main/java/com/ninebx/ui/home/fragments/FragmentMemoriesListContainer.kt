@@ -31,7 +31,7 @@ import java.util.*
 class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
     override fun onDateClicked(strDate: String?) {
-        AppLogger.e("The Selected Date ", " is " + strDate)
+        //AppLogger.e("The Selected Date ", " is " + strDate)
         Toast.makeText(context, " Date " + strDate, Toast.LENGTH_LONG).show()
         var position: Int = 0
         rvMemoryView.scrollToPosition(position)

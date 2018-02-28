@@ -41,9 +41,9 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
                 mCalendar.add( Calendar.WEEK_OF_YEAR, -1 )
 
                 if( mPrevMonth != mMonthFormat.format(mCalendar.time) ) {
-                    AppLogger.d(TAG, "Week dates : Max Date for month : " + mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+                    //AppLogger.d(TAG, "Week dates : Max Date for month : " + mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
                     mCalendar.set(Calendar.DAY_OF_MONTH, mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
-                    AppLogger.d(TAG, "Week dates : Months : " + mPrevMonth + " : " + mMonthFormat.format(mCalendar.time) )
+                    //AppLogger.d(TAG, "Week dates : Months : " + mPrevMonth + " : " + mMonthFormat.format(mCalendar.time) )
                     if( mPrevMonth.contains("January") && mMonthFormat.format(mCalendar.time).contains("December") ) {
                         isYearChange = true
                     }
@@ -176,8 +176,8 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
             val maxDate = weekCalendar.get(Calendar.DATE)
 
-            AppLogger.d(TAG, "Week dates : " + minDate + " : " + maxDate )
-            AppLogger.d(TAG, "Week dates : List : " + weekDates )
+            //AppLogger.d(TAG, "Week dates : " + minDate + " : " + maxDate )
+            //AppLogger.d(TAG, "Week dates : List : " + weekDates )
             //Create a list of dates to be passed across.
 
             mWeekDaysRecyclerAdpater = WeekDaysRecyclerViewAdapter(
@@ -211,7 +211,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
         onDayClick(selectedDate)
 
-        AppLogger.d(TAG, "Week dates : Selected Date : " + selectedDate + " : Date in month : " + mCalendar.get(Calendar.DATE))
+        //AppLogger.d(TAG, "Week dates : Selected Date : " + selectedDate + " : Date in month : " + mCalendar.get(Calendar.DATE))
 
     }
 

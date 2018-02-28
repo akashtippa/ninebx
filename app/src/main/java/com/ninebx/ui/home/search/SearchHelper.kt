@@ -606,7 +606,7 @@ class SearchHelper() {
 
     private fun goToCategoryFragment( selectedDocument: Parcelable?, classType: String ) {
         if( mOnDocumentSelection != null ) {
-            AppLogger.d("ClassType", "Parcelable classType : " + classType )
+            //AppLogger.d("ClassType", "Parcelable classType : " + classType )
             mOnDocumentSelection!!.onDocumentSelected( selectedDocument, classType )
         }
     }

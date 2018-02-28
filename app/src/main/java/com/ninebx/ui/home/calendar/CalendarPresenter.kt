@@ -72,10 +72,10 @@ class CalendarPresenter( val calendarView: CalendarView)  {
                 }
 
             }
-            AppLogger.d(TAG, "Calendar Event : " + event)
-            AppLogger.d(TAG, "Calendar Event Days : " + event.allDays)
+            //AppLogger.d(TAG, "Calendar Event : " + event)
+            //AppLogger.d(TAG, "Calendar Event Days : " + event.allDays)
         }
-        AppLogger.d(TAG, "setDateWithEvents : " + datesWithEvents)
+        //AppLogger.d(TAG, "setDateWithEvents : " + datesWithEvents)
         calendarView.setDateWithEvents(datesWithEvents, dateStringWithEvents)
         calendarView.hideProgress()
         return datesWithEvents
@@ -89,13 +89,13 @@ class CalendarPresenter( val calendarView: CalendarView)  {
             //if present add the event to dateEvents
             checkForDateInEvent(selectedDate, it)
         }
-        AppLogger.d(TAG, "getEventsForDate : " + dateEvents)
-        AppLogger.d(TAG, "getEventsForDate : " + dateEvents.count())
+        //AppLogger.d(TAG, "getEventsForDate : " + dateEvents)
+        //AppLogger.d(TAG, "getEventsForDate : " + dateEvents.count())
         return dateEvents
     }
 
     private fun checkForDateInEvent(selectedDate: Date, event: CalendarEvents?): Boolean {
-        AppLogger.d(TAG, "checkForDateInEvent : " + selectedDate + " All Days " + event!!.allDays)
+        //AppLogger.d(TAG, "checkForDateInEvent : " + selectedDate + " All Days " + event!!.allDays)
         return ( event!!.allDays.contains(dateFormat!!.format(selectedDate)) )
     }
 

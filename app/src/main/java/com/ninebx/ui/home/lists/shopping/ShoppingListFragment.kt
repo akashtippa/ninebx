@@ -56,7 +56,7 @@ class ShoppingListFragment : FragmentBackHelper() {
 
 
         mListsAdapter = ShoppingListsAdapter(getArrayList)
-        AppLogger.d("CombineListArray", " " + getArrayList)
+        //AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager

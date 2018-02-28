@@ -117,7 +117,7 @@ class MasterPasswordPresenter(private val masterPasswordView: MasterPasswordView
             // ]
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
-                AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
+                //AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
 
                 if( !isMasterPasswordReset ) {
                     isMasterPasswordReset = true
@@ -132,7 +132,7 @@ class MasterPasswordPresenter(private val masterPasswordView: MasterPasswordView
             }
 
             override fun onComplete() {
-                AppLogger.d(TAG, "GetUserAPI : onComplete")
+                //AppLogger.d(TAG, "GetUserAPI : onComplete")
             }
 
             override fun onSubscribe(d: Disposable) {

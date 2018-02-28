@@ -165,7 +165,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.detailsId = 0
                         listItems.selectionType = "HomeBanking".encryptString()
                         listItems.created = createdDate
-                        AppLogger.e("Created Date ", " is " + preferences.created)
+                        //AppLogger.e("Created Date ", " is " + preferences.created)
 
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)

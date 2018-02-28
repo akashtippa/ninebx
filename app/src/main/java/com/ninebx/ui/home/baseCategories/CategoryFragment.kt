@@ -17,8 +17,17 @@ import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.education.CombineEducation
+import com.ninebx.ui.base.realm.home.homeBanking.Combine
+import com.ninebx.ui.base.realm.home.interests.CombineInterests
+import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
+import com.ninebx.ui.base.realm.home.personal.CombinePersonal
+import com.ninebx.ui.base.realm.home.shopping.CombineShopping
+import com.ninebx.ui.base.realm.home.travel.CombineTravel
+import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
@@ -27,6 +36,7 @@ import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmObject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_category.*
 
@@ -34,6 +44,64 @@ import kotlinx.android.synthetic.main.fragment_category.*
  * Created by Alok on 12/01/18.
  */
 class CategoryFragment : FragmentBackHelper(), CategoryView {
+
+
+    private var combine: RealmResults<Combine> ?= null
+    private var combineMemories : RealmResults<CombineMemories> ?= null
+    private var combineTravel : RealmResults<CombineTravel> ?= null
+    private var combineEducation : RealmResults<CombineEducation> ?= null
+    private var combineInterests : RealmResults<CombineInterests> ?= null
+    private var combineWellness : RealmResults<CombineWellness> ?= null
+    private var combinePeronal : RealmResults<CombinePersonal> ?= null
+    private var combineShopping : RealmResults<CombineShopping> ?= null
+    private var combineContacts : RealmResults<CombineContacts> ?= null
+
+
+    override fun onCombineResultsFetched(combine: RealmResults<Combine>) {
+        this.combine = combine
+        //setupUI()
+    }
+
+    override fun onCombineMemoryResultsFetched(combineMemory: RealmResults<CombineMemories>) {
+        this.combineMemories = combineMemory
+        //setupUI()
+    }
+
+    override fun onCombineTravelResultsFetched(combineTravel: RealmResults<CombineTravel>) {
+        this.combineTravel = combineTravel
+        //setupUI()
+    }
+
+    override fun onCombineEducationResultsFetched(combineEducation: RealmResults<CombineEducation>) {
+        this.combineEducation = combineEducation
+        //setupUI()
+    }
+
+    override fun onCombineInterestsResultsFetched(combineInterests: RealmResults<CombineInterests>) {
+        this.combineInterests = combineInterests
+        //setupUI()
+    }
+
+    override fun onCombineWellnessResultsFetched(combineWellness: RealmResults<CombineWellness>) {
+        this.combineWellness = combineWellness
+        //setupUI()
+    }
+
+    override fun onCombinePersonalResultsFetched(combinePersonal: RealmResults<CombinePersonal>) {
+        this.combinePeronal = combinePersonal
+        //setupUI()
+    }
+
+    override fun onCombineShoppingResultsFetched(combineShopping: RealmResults<CombineShopping>) {
+        this.combineShopping = combineShopping
+        //setupUI()
+    }
+
+    override fun onCombineContactsResultsFetched(combineContacts: RealmResults<CombineContacts>) {
+        this.combineContacts = combineContacts
+        //setupUI()
+    }
+
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
     }
 
@@ -91,7 +159,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     private fun setupUI() {
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), combinedItems!!, this)
-
     }
 
     var categoryName = ""
@@ -299,7 +366,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 allMemoryView = getAllMemoryTimeLine(realm!!)
                 if (allMemoryView != null) {
                     context!!.hideProgressDialog()
-                    AppLogger.e("Memory", "MemoryView from Realm : " + allMemoryView.toString())
+                    //AppLogger.e("Memory", "MemoryView from Realm : " + allMemoryView.toString())
 
                     val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
@@ -323,7 +390,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 allContacts = getCurrentContactList(realm!!)
                 if (allContacts != null) {
                     context!!.hideProgressDialog()
-                    AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
+                    //AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
 
                     val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
