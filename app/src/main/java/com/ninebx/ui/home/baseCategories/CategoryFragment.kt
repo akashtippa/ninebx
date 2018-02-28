@@ -158,6 +158,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     private fun setupUI() {
+        showProgress(R.string.loading)
         mCategoryPresenter = CategoryPresenter(arguments!!.getInt("category"), combinedItems!!, this)
     }
 
@@ -285,7 +286,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
         fromWhichBox = arguments!!.getInt("category")
 
