@@ -511,14 +511,12 @@ class AddNotification : HomeView {
                 var eyeglassPrevious = dateFormat.parse(eyeglasslastCheckUp)
                 var eyeglassDateDifference: Long = date.getTime() - eyeglassPrevious.getTime()
                 var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24))
-               /* if (eyeglassDaysBetween.equals(330))*/
-                    /*newNotification(date, eyeglassPrevious, userName, boxName)*/
+                if (eyeglassDaysBetween.equals(330))
+                    newNotification(date, eyeglassPrevious, userName, boxName)
             }catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
             }
         }
-        var eyeglassPrevious = dateFormat.parse(eyeglasslastCheckUp)
-        newNotification(date, eyeglassPrevious, userName, boxName)
         var vitalMeasurement = ""
         for(i in 0 until decryptedVitalNumbers.size) {
             vitalMeasurement = decryptedVitalNumbers[i].measurementDate
@@ -539,7 +537,7 @@ class AddNotification : HomeView {
         addNotification(expiryDate.toString(), currentDate, subTitle, boxName)
         val mBuilder = NotificationCompat.Builder(context).setSmallIcon(ic_launcher)
                 .setContentTitle("NineBx")
-                .setContentText(subTitle + expiryDate)
+                .setContentText(subTitle)
         val mNotificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mNotificationManager.notify(1, mBuilder.build())
         /*  var intent : Intent = Intent(context, HomeActivity::class.java)
@@ -572,14 +570,14 @@ class AddNotification : HomeView {
         notifications.id =  UUID.randomUUID().hashCode().toLong()
         notifications.message = message.encryptString()
         notifications.boxName = box_Name.encryptString()
-        notifications.dueDate = dateFormat.format(expirationDate)
+        notifications.dueDate = expirationDate                                //dateFormat.format(expirationDate)
         notifications.subTitle = subTitle.encryptString()
         notifications.private = false
         notifications.created = box_Name + date
 
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
-                AppLogger.d("NewNotification", "Connection successful")
+                AppLogger.d("UpdatedNotification", "Connection successful")
                 realm!!.beginTransaction()
                 realm.copyToRealmOrUpdate(notifications)
                 realm.commitTransaction()
