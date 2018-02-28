@@ -105,7 +105,7 @@ class AddNotification : HomeView {
     }
 
     private fun educationWorkNotification() {
-        gradudationAnniversaryNotification()
+        graduationAnniversaryNotification()
         workAnniversaryNotification()
     }
 
@@ -357,7 +357,7 @@ class AddNotification : HomeView {
             }
         }
         }
-    private fun gradudationAnniversaryNotification() {
+    private fun graduationAnniversaryNotification() {
         val boxName = "Personal"
         AppLogger.d("AddNewNotification", "Decrypted combine work and Education" + mDecryptedCombineEducation!!.educationItems)
         var decryptedEducation = ArrayList<DecryptedEducation>()
@@ -366,7 +366,8 @@ class AddNotification : HomeView {
         }
         AppLogger.d("Education", "Decrypted education" + decryptedEducation)
               var graduationAnniversary = ""
-            var graduationName = ""
+              var graduationName = ""
+            /*  var anni = "02/28/2018"*/
             for(i in 0 until decryptedEducation.size){
                 graduationAnniversary = decryptedEducation[i].created
                 try {
@@ -550,7 +551,6 @@ class AddNotification : HomeView {
         notificationManager.notify(0, mNotifiction)
     }
 
-
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
         AppLogger.d("UpdateNotification", "Method invoked ")
         var notifications = Notifications()
@@ -558,15 +558,16 @@ class AddNotification : HomeView {
         notifications.id =  UUID.randomUUID().hashCode().toLong()
         notifications.message = message.encryptString()
         notifications.boxName = box_Name.encryptString()
-        notifications.dueDate = expirationDate
+        notifications.dueDate = dateFormat.format(expirationDate)
         notifications.subTitle = subTitle.encryptString()
         notifications.private = false
         notifications.created = box_Name + date
 
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
+                AppLogger.d("UpdatedNotification", "Connection successful")
                 realm!!.beginTransaction()
-                notifications.insertOrUpdate(realm)
+                realm.copyToRealm(notifications)
                 realm.commitTransaction()
                 AppLogger.d("NewNotification", "Added" )
             }

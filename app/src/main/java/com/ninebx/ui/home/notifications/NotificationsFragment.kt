@@ -28,6 +28,7 @@ import android.app.NotificationManager
 import android.content.Context.ALARM_SERVICE
 import android.app.AlarmManager
 import com.ninebx.ui.base.realm.decrypted.*
+import io.realm.Realm
 import kotlin.collections.ArrayList
 
 
@@ -42,8 +43,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     var count = 0
 
-    private var mDecryptedCombine : DecryptedCombine ?= null
-
     override fun showProgress(message: Int) {
         if( progressLayout != null )
             progressLayout.show()
@@ -56,8 +55,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun hideProgress() {
         if( progressLayout != null )
             progressLayout.hide()
-        tv_noNotifications.show()
-        rLayoutNotify.hide()
     }
 
     override fun onError(error: Int) {
@@ -75,55 +72,61 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             }
             AppLogger.d("notificationCount", " " + count)
             mHomeView.setNotificationCount(count)
-                rvNotification.layoutManager = LinearLayoutManager(context)
-                val mAdapter = NotificationAdapter(decryptedNotifications)
-                mAdapter.onClickListener(object : NotificationAdapter.ClickListener {
+            rvNotification.layoutManager = LinearLayoutManager(context)
+            val mAdapter = NotificationAdapter(decryptedNotifications)
+            mAdapter.onClickListener(object : NotificationAdapter.ClickListener {
 
-                    override fun onItemClick(position: Int, v: View, id: Long, optionsLayout: View) {
+                override fun onItemClick(position: Int, v: View, id: Long, optionsLayout: View) {
 
-                        when (v.id) {
-                            R.id.tvBoxName,
-                            R.id.tvMessage,
-                            R.id.tvDueDate,
-                            R.id.tvSubTitle -> {
-                                decryptedNotifications[position].read = true
+                    when (v.id) {
+                        R.id.tvBoxName,
+                        R.id.tvMessage,
+                        R.id.tvDueDate,
+                        R.id.tvSubTitle -> {
+                            decryptedNotifications[position].read = true
+                            optionsLayout.hide()
+                            mNotificationsPresenter!!.markAsRead(position)
+                            mHomeView.setNotificationCount(--count)
+                            mAdapter.notifyDataSetChanged()
+                        }
+                        R.id.ivMore -> {
+                            if (optionsLayout.isVisible()) {
                                 optionsLayout.hide()
-                                mNotificationsPresenter!!.markAsRead(position)
-                                mHomeView.setNotificationCount(--count)
-                                mAdapter.notifyDataSetChanged()
-                            }
-                            R.id.ivMore -> {
-                                if (optionsLayout.isVisible()) {
-                                    optionsLayout.hide()
-                                } else optionsLayout.show()
-                            }
-                            R.id.ivDeleteNotification -> {
-                                optionsLayout.hide()
-                                decryptedNotifications.removeAt(position)
-                                mNotificationsPresenter!!.deleteNotification(position)
-                                mHomeView.setNotificationCount(--count)
-                                mAdapter.notifyDataSetChanged()
-                            }
-                            R.id.ivShareNotification -> {
-                                optionsLayout.hide()
-                                sendEmail(decryptedNotifications[position].boxName, decryptedNotifications[position].message, decryptedNotifications[position].subTitle, decryptedNotifications[position].dueDate)
-                            }
-                            R.id.ivFlagNotification -> {
-                                optionsLayout.hide()
-                                decryptedNotifications[position].read = false
-                                mHomeView.setNotificationCount(++count)
-                                mNotificationsPresenter!!.markAsUnread(position)
-                                mAdapter.notifyDataSetChanged()
-                            }
+                            } else optionsLayout.show()
+                        }
+                        R.id.ivDeleteNotification -> {
+                            optionsLayout.hide()
+                            decryptedNotifications.removeAt(position)
+                            mNotificationsPresenter!!.deleteNotification(position)
+                            mHomeView.setNotificationCount(--count)
+                            mAdapter.notifyDataSetChanged()
+                        }
+                        R.id.ivShareNotification -> {
+                            optionsLayout.hide()
+                            sendEmail(decryptedNotifications[position].boxName, decryptedNotifications[position].message, decryptedNotifications[position].subTitle, decryptedNotifications[position].dueDate)
+                        }
+                        R.id.ivFlagNotification -> {
+                            optionsLayout.hide()
+                            decryptedNotifications[position].read = false
+                            mHomeView.setNotificationCount(++count)
+                            mNotificationsPresenter!!.markAsUnread(position)
+                            mAdapter.notifyDataSetChanged()
                         }
                     }
+                }
 
-                    override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
-                    }
-                })
-                rvNotification.adapter = mAdapter
+                override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
+                }
+            })
+            rvNotification.adapter = mAdapter
+            if(decryptedNotifications.isEmpty()){
+                tv_noNotifications.show()
+            }
+            else {
+                tv_noNotifications.hide()
             }
         }
+    }
 
     private fun sendEmail(boxName: String, message: String, subTitle: String, dueDate: String) {
         var TO = arrayOf("")

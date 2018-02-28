@@ -1,7 +1,5 @@
 package com.ninebx.ui.home.notifications
 
-import com.ninebx.R.id.rLayoutNotify
-import com.ninebx.R.id.tv_noNotifications
 import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.*
@@ -9,7 +7,6 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
-import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.util.*
 
 /**
@@ -81,5 +78,4 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.copyToRealmOrUpdate(notification)
         mNotificationsRealm.commitTransaction()
     }
-
 }
