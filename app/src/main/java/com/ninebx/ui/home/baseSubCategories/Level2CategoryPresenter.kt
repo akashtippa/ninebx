@@ -20,8 +20,8 @@ class Level2CategoryPresenter(private val categoryName: String, private val cate
         level2CategoryHelper.setValue( level2Category )
     }
 
-    fun saveDocument( context: Context? ) {
-        level2CategoryHelper.saveDocument( context!! )
+    fun saveDocument(context: Context?, combineItem: Parcelable?, title: String) {
+        level2CategoryHelper.saveDocument( context!!, combineItem, title )
     }
 
 }

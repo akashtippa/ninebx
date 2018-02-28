@@ -41,7 +41,7 @@ public class DecryptedCombinePersonal implements Parcelable {
     public DecryptedCombinePersonal() {
     }
 
-    public DecryptedCombinePersonal(ArrayList<DecryptedCertificate> certificateItems, ArrayList<DecryptedGovernment> governmentItems, ArrayList<DecryptedLicense> licenseItems, ArrayList<DecryptedPersonal> personalItems, ArrayList<DecryptedSocial> socialItems, ArrayList<DecryptedTaxID> taxIDItems, ArrayList<DecryptedPersonalList> listItems, int id) {
+    public DecryptedCombinePersonal(ArrayList<DecryptedCertificate> certificateItems, ArrayList<DecryptedGovernment> governmentItems, ArrayList<DecryptedLicense> licenseItems, ArrayList<DecryptedPersonal> personalItems, ArrayList<DecryptedSocial> socialItems, ArrayList<DecryptedTaxID> taxIDItems, ArrayList<DecryptedPersonalList> listItems, long id) {
         this.certificateItems = certificateItems;
         this.governmentItems = governmentItems;
         this.licenseItems = licenseItems;

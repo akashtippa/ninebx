@@ -20,7 +20,7 @@ public class Hash extends RealmObject {
     public Hash() {
     }
 
-    public Hash(int id, String finalPassword, String passcode, Boolean isEnabledTouchId) {
+    public Hash(long id, String finalPassword, String passcode, Boolean isEnabledTouchId) {
         this.id = id;
         this.finalPassword = finalPassword;
         this.passcode = passcode;

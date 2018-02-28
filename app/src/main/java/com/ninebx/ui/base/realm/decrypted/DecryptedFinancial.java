@@ -332,28 +332,28 @@ public class DecryptedFinancial implements Parcelable {
     public String toString() {
         return "DecryptedFinancial{" +
                 "id=" + id +
-                ", backingImages=" + backingImages +
-                ", photosId=" + photosId +
-                ", selectionType='" + selectionType + '\'' +
-                ", institutionName='" + institutionName + '\'' +
-                ", accountName='" + accountName + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", nameOnAccount='" + nameOnAccount + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", location='" + location + '\'' +
-                ", swiftCode='" + swiftCode + '\'' +
-                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", website='" + website + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", pin='" + pin + '\'' +
-                ", created='" + created + '\'' +
-                ", modified='" + modified + '\'' +
-                ", isPrivate=" + isPrivate +
-                ", createdUser='" + createdUser + '\'' +
-                ", notes='" + notes + '\'' +
-                ", attachmentNames='" + attachmentNames + '\'' +
+                "\n, backingImages=" + backingImages +
+                "\n, photosId=" + photosId +
+                "\n, selectionType='" + selectionType + '\'' +
+                "\n, institutionName='" + institutionName + '\'' +
+                "\n, accountName='" + accountName + '\'' +
+                "\n, accountType='" + accountType + '\'' +
+                "\n, nameOnAccount='" + nameOnAccount + '\'' +
+                "\n, accountNumber='" + accountNumber + '\'' +
+                "\n, location='" + location + '\'' +
+                "\n, swiftCode='" + swiftCode + '\'' +
+                "\n, abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                "\n, contacts='" + contacts + '\'' +
+                "\n, website='" + website + '\'' +
+                "\n, userName='" + userName + '\'' +
+                "\n, password='" + password + '\'' +
+                "\n, pin='" + pin + '\'' +
+                "\n, created='" + created + '\'' +
+                "\n, modified='" + modified + '\'' +
+                "\n, isPrivate=" + isPrivate +
+                "\n, createdUser='" + createdUser + '\'' +
+                "\n, notes='" + notes + '\'' +
+                "\n, attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
 

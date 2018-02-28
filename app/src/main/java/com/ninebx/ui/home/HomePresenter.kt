@@ -1,6 +1,5 @@
 package com.ninebx.ui.home
 
-import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -11,7 +10,6 @@ import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
-import java.util.*
 
 /**
  * Created by Alok Omkar on 2018-02-24.

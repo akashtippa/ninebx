@@ -7,6 +7,7 @@ import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
+import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
@@ -287,8 +288,12 @@ class SearchPresenter {
     private fun fetchCombine() {
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
 
+                val combineResult = realm!!.where(Combine::class.java).findAll()
+                if( categoryView != null ) {
+                    categoryView!!.onCombineResultsFetched(combineResult)
+                    val financialResults = realm.where(Financial::class.java).findAll()
+                }
                 if (combineResult.size > 0) {
                     for (i in 0 until combineResult.size) {
                         val decryptedCombine = decryptCombine(combineResult[i]!!)
