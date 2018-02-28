@@ -229,5 +229,4 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
         }
 
     }
-
 }

@@ -6,6 +6,23 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/tv_noNotifications"
+        android:text="@string/no_notifications"
+        android:textColor="@color/grey_600"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rLayoutNotify"
+        android:visibility="visible">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/tvNotification"
         android:text="@string/alert_notification"
         android:padding="@dimen/default_mini_padding"
@@ -41,5 +58,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/rvNotification"
         android:layout_below="@+id/tvNotification"/>
-
+    </RelativeLayout>
 </RelativeLayout>
