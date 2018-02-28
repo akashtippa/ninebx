@@ -154,12 +154,12 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
         cipher.init(Cipher.DECRYPT_MODE, key)
         val plainText = ByteArray(cipher.getOutputSize(convertedCipher.length))
         var cipherText : ByteArray
-        cipherText = try {
+        cipherText = Base64.decode(cipherTextBase64, Base64.DEFAULT)/*try {
             Base64.decode(cipherTextBase64, Base64.DEFAULT)
         } catch (e : BadPaddingException) {
             e.printStackTrace()
             Base64.decode(convertedCipher, Base64.DEFAULT)
-        }
+        }*/
 
         var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
         ptLength += cipher.doFinal(plainText, ptLength)
@@ -384,7 +384,7 @@ fun String.decryptString(): String {
     if (this.isEmpty()) {
         return ""
     }
-    return decryptAESKEY(this.trim().toByteArray(), NineBxApplication.getPreferences().privateKey!!.trim())
+    return decryptAESKEY(this.toByteArray(), NineBxApplication.getPreferences().privateKey!!.trim())
 }
 
 fun encryptUsers(currentUser: Users): Users {

@@ -35,6 +35,7 @@ fun closeAllConnections() {
     for (realmConnection in connectionsMap.values) {
         realmConnection.close()
     }
+    connectionsMap.clear()
 }
 
 fun closeConnection(realmConnection: Realm) {
