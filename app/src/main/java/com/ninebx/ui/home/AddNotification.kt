@@ -18,6 +18,13 @@ import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.content.Context.NOTIFICATION_SERVICE
+import android.support.v4.app.NotificationCompat
+import com.ninebx.R
+import com.ninebx.R.drawable.ic_launcher
+import com.ninebx.R.drawable.ic_launcher_background
+
+
 
 
 /**
@@ -504,12 +511,14 @@ class AddNotification : HomeView {
                 var eyeglassPrevious = dateFormat.parse(eyeglasslastCheckUp)
                 var eyeglassDateDifference: Long = date.getTime() - eyeglassPrevious.getTime()
                 var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24))
-                if (eyeglassDaysBetween.equals(330))
-                    newNotification(date, eyeglassPrevious, userName, boxName)
+               /* if (eyeglassDaysBetween.equals(330))*/
+                    /*newNotification(date, eyeglassPrevious, userName, boxName)*/
             }catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
             }
         }
+        var eyeglassPrevious = dateFormat.parse(eyeglasslastCheckUp)
+        newNotification(date, eyeglassPrevious, userName, boxName)
         var vitalMeasurement = ""
         for(i in 0 until decryptedVitalNumbers.size) {
             vitalMeasurement = decryptedVitalNumbers[i].measurementDate
@@ -528,27 +537,32 @@ class AddNotification : HomeView {
     private fun newNotification(currentDate: Date, expiryDate: Date, subTitle: String, boxName: String) {
         AppLogger.d("AddNewNotification", "Method invoked")
         addNotification(expiryDate.toString(), currentDate, subTitle, boxName)
-        var intent : Intent = Intent(context, HomeActivity::class.java)
-        var pIntent : PendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
-        val alarmManager1 = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val calendar1Notify = Calendar.getInstance()
-        calendar1Notify.timeInMillis = System.currentTimeMillis()
-        calendar1Notify.set(Calendar.HOUR_OF_DAY, 12)
-        calendar1Notify.set(Calendar.MINUTE, 0)
-        alarmManager1.set(AlarmManager.RTC_WAKEUP, calendar1Notify.timeInMillis, pIntent)
+        val mBuilder = NotificationCompat.Builder(context).setSmallIcon(ic_launcher)
+                .setContentTitle("NineBx")
+                .setContentText(subTitle + expiryDate)
+        val mNotificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        mNotificationManager.notify(1, mBuilder.build())
+        /*  var intent : Intent = Intent(context, HomeActivity::class.java)
+          var pIntent : PendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
+          val alarmManager1 = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+          val calendar1Notify = Calendar.getInstance()
+          calendar1Notify.timeInMillis = System.currentTimeMillis()
+          calendar1Notify.set(Calendar.HOUR_OF_DAY, 12)
+          calendar1Notify.set(Calendar.MINUTE, 0)
+          alarmManager1.set(AlarmManager.RTC_WAKEUP, calendar1Notify.timeInMillis, pIntent)
 
-        val time24h = (24 * 60 * 60 * 1000).toLong()
+          val time24h = (24 * 60 * 60 * 1000).toLong()
 
-        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.timeInMillis, time24h, pIntent)
-        val mNotifiction = Notification.Builder(context)
-                .setContentTitle("Notification from " + subTitle)
-                .setContentText("Subject")
-                .setContentIntent(pIntent).setPriority(Notification.PRIORITY_HIGH)
-                .setDefaults(Notification.DEFAULT_ALL).build()
+          alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.timeInMillis, time24h, pIntent)
+          val mNotifiction = Notification.Builder(context)
+                  .setContentTitle("Notification from " + subTitle)
+                  .setContentText("Subject")
+                  .setContentIntent(pIntent).setPriority(Notification.PRIORITY_HIGH)
+                  .setDefaults(Notification.DEFAULT_ALL).build()
 
-        val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        mNotifiction.flags = mNotifiction.flags or Notification.FLAG_AUTO_CANCEL
-        notificationManager.notify(0, mNotifiction)
+          val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+          mNotifiction.flags = mNotifiction.flags or Notification.FLAG_AUTO_CANCEL
+          notificationManager.notify(0, mNotifiction)*/
     }
 
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
@@ -565,7 +579,7 @@ class AddNotification : HomeView {
 
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
-                AppLogger.d("UpdatedNotification", "Connection successful")
+                AppLogger.d("NewNotification", "Connection successful")
                 realm!!.beginTransaction()
                 realm.copyToRealmOrUpdate(notifications)
                 realm.commitTransaction()
