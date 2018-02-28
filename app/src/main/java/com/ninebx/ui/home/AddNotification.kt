@@ -143,7 +143,7 @@ class AddNotification : HomeView {
                 var difference : Long = dateOfExpiry.getTime() - date.getTime()
                 var daysBetween = (difference / (1000 * 60 * 60 * 24))
                 AppLogger.d("DaysInbetween", " " + daysBetween)
-                if (daysBetween.equals(90))
+               /* if (daysBetween.equals(90))*/
                     newNotification(date, dateOfExpiry, cardName,boxName)
             }
             catch (e :Exception){
