@@ -256,7 +256,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
             myList!!.add(dates)
         }
 
-        AppLogger.e("List Id ", " is " + listId)
+        //AppLogger.e("List Id ", " is " + listId)
 
         txtSubListName.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -403,7 +403,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                         homeList.detailsId = listId
                         homeList.selectionType = "HomeBanking".encryptString()
                         homeList.modified = createdDate
-                        AppLogger.e("Created Date ", " is " + createdDate)
+                        //AppLogger.e("Created Date ", " is " + createdDate)
                         homeList.insertOrUpdate(realm!!)
                     }
 
@@ -430,7 +430,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 //                                listItems.detailsId = 0
 //                                listItems.selectionType = "HomeBanking".encryptString()
 //                                listItems.created = createdDate
-//                                AppLogger.e("Created Date ", " is " + preferences.created)
+//                                //AppLogger.e("Created Date ", " is " + preferences.created)
 //
 //                                listItems.createdUser = preferences.userID
 //                                realm.copyToRealmOrUpdate(listItems)

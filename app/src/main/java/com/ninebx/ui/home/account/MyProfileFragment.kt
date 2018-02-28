@@ -145,11 +145,11 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     }
 
     private fun checkEncryption() {
-        AppLogger.d(TAG, "User Name From Realm : " + currentUsers!![0].firstName)
+        //AppLogger.d(TAG, "User Name From Realm : " + currentUsers!![0].firstName)
         val decryptedName = currentUsers!![0].firstName.decryptString()
-        AppLogger.d(TAG, "User Name From Realm Decrypted : " + decryptedName)
+        //AppLogger.d(TAG, "User Name From Realm Decrypted : " + decryptedName)
         val encryptedName = decryptedName.encryptString()
-        AppLogger.d(TAG, "User Name From Realm Encrypted : " + encryptedName)
+        //AppLogger.d(TAG, "User Name From Realm Encrypted : " + encryptedName)
     }
 
     private fun populateUserInfo(users: Users?) {

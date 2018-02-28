@@ -54,7 +54,7 @@ class HomeListFragment : FragmentBackHelper() {
 
 
         mListsAdapter = HomeListsAdapter(getArrayList)
-        AppLogger.d("CombineListArray", " " + getArrayList)
+        //AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager

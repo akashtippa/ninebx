@@ -98,15 +98,15 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         homePresenter.fetchAllData()
         if (currentUsers != null) {
             this@HomeActivity.hideProgressDialog()
-            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
-            AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
+            //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+            //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
 
             prefrences.userID = currentUsers[0]!!.userId
             prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
             prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
 
             for (member in currentUsers!![0]!!.members) {
-                AppLogger.d("CurrentUser", "Members : " + member.toString())
+                //AppLogger.d("CurrentUser", "Members : " + member.toString())
             }
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
 

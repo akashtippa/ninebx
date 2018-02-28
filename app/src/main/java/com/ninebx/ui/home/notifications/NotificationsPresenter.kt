@@ -28,10 +28,10 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                     getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
                     notificationsView.onNotificationsFetched(mDecryptNotifications)
                     notificationsView.onEncryptedNotifications(getNotification!!)
-                    AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
+                    //AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
                 }
                 else
-                    AppLogger.d("Notification", "No data" )
+                    //AppLogger.d("Notification", "No data" )
                 notificationsView.hideProgress()
             }
         })
@@ -46,12 +46,12 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
     fun markAsUnread(position: Int) {
         mDecryptNotifications[position].read = false
         mNotificationsRealm.beginTransaction()
-        //AppLogger.d("SearchFor", "Notification : " + abs(getNotification!![position]!!.id))
-        //AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
-        //AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
+        ////AppLogger.d("SearchFor", "Notification : " + abs(getNotification!![position]!!.id))
+        ////AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
+        ////AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
 
         val id = getNotification!![position]!!.id //((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id)
-        AppLogger.d("SearchFor", "Notification : " + id)
+        //AppLogger.d("SearchFor", "Notification : " + id)
         val notification = mNotificationsRealm.where(Notifications::class.java)
                 .equalTo("id", (id))
                 .findFirst()
@@ -64,12 +64,12 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
     fun markAsRead(position: Int) {
         mDecryptNotifications[position].read = true
         mNotificationsRealm.beginTransaction()
-        //AppLogger.d("SearchFor", "Notification : " + abs(getNotification!![position]!!.id))
-        //AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
-        //AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
+        ////AppLogger.d("SearchFor", "Notification : " + abs(getNotification!![position]!!.id))
+        ////AppLogger.d("SearchFor", "Notification : " + ((Math.ceil(getNotification!![position]!!.id/1000.0))*1000).toLong())
+        ////AppLogger.d("SearchFor", "Notification : " + ((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id))
 
         val id = getNotification!![position]!!.id//((1000 - (getNotification!![position]!!.id % 1000)) + getNotification!![position]!!.id)
-        AppLogger.d("SearchFor", "Notification : " + id)
+        //AppLogger.d("SearchFor", "Notification : " + id)
         val notification = mNotificationsRealm.where(Notifications::class.java)
                 .equalTo("id", (id))
                 .findFirst()
@@ -96,7 +96,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                 realm!!.beginTransaction()
                 notifications.insertOrUpdate(realm)
                 realm.commitTransaction()
-                AppLogger.d("NewNotification", "Added" )
+                //AppLogger.d("NewNotification", "Added" )
             }
         })
     }*/

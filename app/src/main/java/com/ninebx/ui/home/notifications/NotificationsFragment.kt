@@ -70,7 +70,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             for( notification in decryptedNotifications ) {
                 count += if ( notification.read ) 0 else 1
             }
-            AppLogger.d("notificationCount", " " + count)
+            //AppLogger.d("notificationCount", " " + count)
             mHomeView.setNotificationCount(count)
             rvNotification.layoutManager = LinearLayoutManager(context)
             val mAdapter = NotificationAdapter(decryptedNotifications)
@@ -136,9 +136,9 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."))
-            AppLogger.d("SendingEmail","Finished sending email")
+            //AppLogger.d("SendingEmail","Finished sending email")
         } catch (ex: android.content.ActivityNotFoundException) {
-            AppLogger.d("SendingEmail", "There is no email client installed.")
+            //AppLogger.d("SendingEmail", "There is no email client installed.")
         }
     }
 
@@ -192,83 +192,83 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
 
     private fun paymentNotification() {
         val paymentString = "Payment"
-        AppLogger.d("Notification", "Decrypted combine " + mDecryptedCombine!!.paymentItems)
+        //AppLogger.d("Notification", "Decrypted combine " + mDecryptedCombine!!.paymentItems)
         var decryptedPayment = ArrayList<DecryptedPayment>()
         for (paymentItems in mDecryptedCombine!!.paymentItems){
             decryptedPayment.add(paymentItems) }
-        AppLogger.d("Notification", "Decrypted payment " + decryptedPayment)
+        //AppLogger.d("Notification", "Decrypted payment " + decryptedPayment)
         var expirationDate : String = " "
         var cardName : String = ""
         for (i in 0 until decryptedPayment.size){
             expirationDate = decryptedPayment[i].expiryDate
             cardName = decryptedPayment[i].cardName }
-        AppLogger.d("expirationDate", "" + expirationDate)
+        //AppLogger.d("expirationDate", "" + expirationDate)
         try {
             var sdf: SimpleDateFormat = SimpleDateFormat("MM/yyyy")
             var dateOfExpiry = sdf.parse(expirationDate)
-            AppLogger.d("expirationDate", "" + dateOfExpiry)
+            //AppLogger.d("expirationDate", "" + dateOfExpiry)
             var difference : Long = dateOfExpiry.getTime() - date.getTime()
             var daysBetween = (difference / (1000 * 60 * 60 * 24))
-            AppLogger.d("DaysInbetween", " " + daysBetween)
+            //AppLogger.d("DaysInbetween", " " + daysBetween)
             addNewNotification(daysBetween, date, dateOfExpiry, paymentString, cardName)
         }
         catch (e :Exception){
-            AppLogger.d("Exception", "paymentNotification" + e.message ) }
+            //AppLogger.d("Exception", "paymentNotification" + e.message ) }
     }
 
     private fun propertyNotification() {
         val propertyString = "Property"
-        AppLogger.d("Notification", "Decrypted combine property" + mDecryptedCombine!!.propertyItems)
+        //AppLogger.d("Notification", "Decrypted combine property" + mDecryptedCombine!!.propertyItems)
         var decryptedProperty = ArrayList<DecryptedProperty>()
         for(propertyItems in mDecryptedCombine!!.propertyItems){
             decryptedProperty.add(propertyItems)
         }
-        AppLogger.d("NotificationDecryptedProperty", "Decrypted payment " + decryptedProperty)
+        //AppLogger.d("NotificationDecryptedProperty", "Decrypted payment " + decryptedProperty)
         var leaseEndDate = ""
         var propertyName = ""
         for (i in 0 until decryptedProperty.size){
             leaseEndDate = decryptedProperty[i].leaseEndDate
             propertyName = decryptedProperty[i].propertyName}
-        AppLogger.d("LeaseEndDate", "" + leaseEndDate)
+        //AppLogger.d("LeaseEndDate", "" + leaseEndDate)
 
         try{
             var propertyDateFormat : SimpleDateFormat = SimpleDateFormat("MM/dd/yyyy")
             var endDate = propertyDateFormat.parse(leaseEndDate)
-            AppLogger.d("LeaseEndDate", "end Date" + endDate)
+            //AppLogger.d("LeaseEndDate", "end Date" + endDate)
             var propertyDateDifference : Long = endDate.getTime() - date.getTime()
             var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24))
-            AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
+            //AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
             addNewNotification(propertyDaysBetween, date, endDate, propertyString, propertyName)
         }catch(e : Exception) {
-            AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
+            //AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
         }
     }
 
     private fun vehicleNotification() {
         val vehicleString = "Vehicle"
-        AppLogger.d("Notification", "Decrypted combine vehicle" + mDecryptedCombine!!.vehicleItems)
+        //AppLogger.d("Notification", "Decrypted combine vehicle" + mDecryptedCombine!!.vehicleItems)
         var decryptedVehicle = ArrayList<DecryptedVehicle>()
         for(vehicleItems in mDecryptedCombine!!.vehicleItems){
             decryptedVehicle.add(vehicleItems)
         }
-        AppLogger.d("Vehicle", "Decrypted vehicle" + decryptedVehicle)
+        //AppLogger.d("Vehicle", "Decrypted vehicle" + decryptedVehicle)
         var registrationExpiryDate = ""
         var vehicleName = ""
         for(i in 0 until decryptedVehicle.size){
             registrationExpiryDate = decryptedVehicle[i].registrationExpirydate
             vehicleName = decryptedVehicle[i].vehicleName
         }
-        AppLogger.d("Vehicle", "Registration expiry date " + registrationExpiryDate)
-        AppLogger.d("Vehicle", "Vehicle Name " + vehicleName)
+        //AppLogger.d("Vehicle", "Registration expiry date " + registrationExpiryDate)
+        //AppLogger.d("Vehicle", "Vehicle Name " + vehicleName)
         try{
             var vehicleDateFormat : SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
             var regExpiryDate = vehicleDateFormat.parse(registrationExpiryDate)
             var registrationDateDifference : Long = regExpiryDate.getTime() - date.getTime()
             var propertyDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24))
-            AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
+            //AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
             addNewNotification(propertyDaysBetween, date, regExpiryDate, vehicleName, vehicleString)
         }catch(e: Exception){
-            AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
+            //AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
         }
     }
 
@@ -333,7 +333,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
             }
 
         }catch(e : Exception){
-            AppLogger.d("PaymentNotification", "" + e.message)
+            //AppLogger.d("PaymentNotification", "" + e.message)
         }
     }
 

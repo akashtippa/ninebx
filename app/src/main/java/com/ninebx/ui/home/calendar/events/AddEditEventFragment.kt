@@ -180,11 +180,11 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                                 .build(activity)
                         startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE)
                     } catch (e: GooglePlayServicesRepairableException) {
-                        AppLogger.e(TAG, "GooglePlayServicesRepairableException: " + e.message)
+                        //AppLogger.e(TAG, "GooglePlayServicesRepairableException: " + e.message)
                         e.printStackTrace()
                         NineBxApplication.getPreferences().isPasswordEnabled = false
                     } catch (e: GooglePlayServicesNotAvailableException) {
-                        AppLogger.e(TAG, "GooglePlayServicesNotAvailableException: " + e.message)
+                        //AppLogger.e(TAG, "GooglePlayServicesNotAvailableException: " + e.message)
                         e.printStackTrace()
                         NineBxApplication.getPreferences().isPasswordEnabled = false
                     }
@@ -396,12 +396,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             NineBxApplication.getPreferences().isPasswordEnabled = false
             if (resultCode == RESULT_OK) {
                 val place = PlaceAutocomplete.getPlace(context, data)
-                AppLogger.i(TAG, "Place: " + place.name)
+                //AppLogger.i(TAG, "Place: " + place.name)
                 etLocation.setText( place.name )
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 val status = PlaceAutocomplete.getStatus(context, data)
                 // TODO: Handle the error.
-                AppLogger.i(TAG, status.statusMessage!!)
+                //AppLogger.i(TAG, status.statusMessage!!)
 
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
@@ -467,7 +467,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 saveFileTask( imageUri, thumbFile, object : AWSFileTransferHelper.FileOperationsCompletionListener {
                     override fun onSuccess(outputFile: File?) {
                         val renameFile = File(imageFile.parent + "/" + imageFile.nameWithoutExtension + "_normal." + imageFile.extension)
-                        AppLogger.d(TAG, "New File Name : " + renameFile.absolutePath)
+                        //AppLogger.d(TAG, "New File Name : " + renameFile.absolutePath)
                         imageFile.renameTo(renameFile)
                         mCalendarEvent.backingImages.add(RealmString(thumbFile.name))
                         mCalendarEvent.backingImages.add(RealmString(imageFile.name))

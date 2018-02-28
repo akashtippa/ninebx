@@ -93,7 +93,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
 
                 val fetchCombineShopping = realm.where(CombineShopping::class.java).findAll()
                 if (fetchCombineShopping.size > 0) {
@@ -117,7 +117,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
 
                 val fetchCombineMemories = realm.where(CombineMemories::class.java).findAll()
                 if (fetchCombineMemories.size > 0) {
@@ -141,7 +141,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
 
                 val fetchCombineWellness = realm.where(CombineWellness::class.java).findAll()
                 if (fetchCombineWellness.size > 0) {
@@ -165,7 +165,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
                 val fetchCombinePersonal = realm.where(CombinePersonal::class.java).findAll()
                 if (fetchCombinePersonal.size > 0) {
                     listsCommunicationView.countPersonalList(contactsUpdating.count(), contactsUpdating)
@@ -188,7 +188,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
 
                 val fetchCombineInterests = realm.where(CombineInterests::class.java).findAll()
                 if (fetchCombineInterests.size > 0) {
@@ -212,7 +212,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
                 val fetchCombineEducation = realm.where(CombineEducation::class.java).findAll()
                 if (fetchCombineEducation.size > 0) {
                     listsCommunicationView.educationListCount(contactsUpdating.count(), contactsUpdating)
@@ -235,7 +235,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
                 val fetchCombineContacts = realm.where(CombineContacts::class.java).findAll()
                 if (fetchCombineContacts.size > 0) {
                     listsCommunicationView.contactListCount(contactsUpdating.count(), contactsUpdating)
@@ -258,7 +258,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
 
                 val fetchCombineTravel = realm.where(CombineTravel::class.java).findAll()
                 if (fetchCombineTravel.size > 0) {
@@ -282,7 +282,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                         .equalTo("selectionType", contacts)
                         .endGroup()
                         .findAll()
-                AppLogger.d("Count ", " is " + contactsUpdating)
+                //AppLogger.d("Count ", " is " + contactsUpdating)
 
                 val fetchCombine = realm.where(Combine::class.java).findAll()
                 if (fetchCombine.size > 0) {

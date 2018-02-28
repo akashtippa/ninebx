@@ -25,7 +25,7 @@ internal class MemoriesDateAdapter(private var myList: ArrayList<Date>, private 
 
         val member = myList[position]
 
-        AppLogger.d("Decrypt", "Decrypting : " + member.toString())
+        //AppLogger.d("Decrypt", "Decrypting : " + member.toString())
         var date = member.strDate.decryptString()
 
         val separated = date.split(",")

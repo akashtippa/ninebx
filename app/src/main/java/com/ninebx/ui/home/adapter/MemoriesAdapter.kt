@@ -21,7 +21,7 @@ import java.util.*
 internal class MemoriesAdapter(private var myList: ArrayList<MemoryTimeline>?, private val iMemoryAdded: IMemoryAdded) : RecyclerView.Adapter<MemoriesAdapter.RecyclerItemViewHolder>(), AWSFileTransferHelper.FileOperationsCompletionListener {
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgProfilePic != null)
-            AppLogger.e("Image ", " is " + outputFile)
+            //AppLogger.e("Image ", " is " + outputFile)
     }
 
 
@@ -34,7 +34,7 @@ internal class MemoriesAdapter(private var myList: ArrayList<MemoryTimeline>?, p
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val member = myList!![position]
-        AppLogger.d("Decrypt", "Decrypting : " + member.toString())
+        //AppLogger.d("Decrypt", "Decrypting : " + member.toString())
         holder.txtMemoryTitle.text = member.title.decryptString()
         holder.txtMemoryDate.text = member.date.decryptString()
 

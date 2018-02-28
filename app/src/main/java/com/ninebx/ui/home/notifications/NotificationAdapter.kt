@@ -41,27 +41,27 @@ class NotificationAdapter(val data: ArrayList<DecryptedNotifications>) : Recycle
     @SuppressLint("ResourceAsColor")
     private fun notificationValidity(dueDate: String, txtDueDate: TextView) {
         var c : Date = Calendar.getInstance().time
-        AppLogger.d("CurrentDate ", "Current Date And Time" + c)
+        //AppLogger.d("CurrentDate ", "Current Date And Time" + c)
         if (dueDate.length == 10) {
             try {
                 var sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
                 var getDueDate = sdf.parse(dueDate)
-                AppLogger.d("Date", "Converting string to date " + getDueDate)
+                //AppLogger.d("Date", "Converting string to date " + getDueDate)
                 if (c.after(getDueDate)) txtDueDate.setTextColor(redColor)
                 else txtDueDate.setTextColor(normalColor)
             } catch (e: Exception) {
-                AppLogger.d("Date", "Exception thrown while converting string to date " + e.message)
+                //AppLogger.d("Date", "Exception thrown while converting string to date " + e.message)
             }
         }
         else if(dueDate.length == 7) {
             try {
                 var simpleDateFormat = SimpleDateFormat("MM/yyyy")
                 var getDueDate = simpleDateFormat.parse(dueDate)
-                AppLogger.d("Date", "Converting string to date 2nd try-catch " + getDueDate)
+                //AppLogger.d("Date", "Converting string to date 2nd try-catch " + getDueDate)
                 if (c.after(getDueDate)) txtDueDate.setTextColor(redColor)
                 else txtDueDate.setTextColor(normalColor)
             } catch (e: Exception) {
-                AppLogger.d("Date", "Exception thrown while converting string to date 2nd try-catch " + e.message)
+                //AppLogger.d("Date", "Exception thrown while converting string to date 2nd try-catch " + e.message)
             }
         }
     }

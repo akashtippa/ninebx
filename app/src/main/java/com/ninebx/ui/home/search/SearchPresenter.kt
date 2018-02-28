@@ -115,7 +115,7 @@ class SearchPresenter {
             override fun onSuccess(realm: Realm?) {
                 var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname.encryptString(), subCategory.encryptString(), mainCategory.encryptString(), Date(), classType.encryptString())
                 updateRecent.insertOrUpdate(realm!!)
-                AppLogger.d("RecentSearch", "Update successful " + encryptRecentSearch(updateRecent))
+                //AppLogger.d("RecentSearch", "Update successful " + encryptRecentSearch(updateRecent))
             }
         })
     }
@@ -127,7 +127,7 @@ class SearchPresenter {
                 if (recentSearch.size > 0) {
                     for (i in 0 until recentSearch.size) {
                         decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
-                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
+                        //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
                     }
                     searchView!!.onRecentSearchFetched(decryptedRecentSearch)
                 }
@@ -143,12 +143,12 @@ class SearchPresenter {
                     for (i in 0 until combineContacts.size) {
                         val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
                         appendToDecryptCombineContacts(decryptedCombineContacts)
-                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
+                        //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
 
                     }
 
                     searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
-                    AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
+                    //AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                 }
             }
         })
@@ -164,7 +164,7 @@ class SearchPresenter {
                         appendToDecryptCombineShopping(decryptedCombineShopping)
                     }
                     searchView!!.onCombineShoppingFetched(mDecryptCombineShopping)
-                    AppLogger.d("Combine", "CombineShopping : " + mDecryptCombineShopping)
+                    //AppLogger.d("Combine", "CombineShopping : " + mDecryptCombineShopping)
                 } else {
                     searchView!!.onCombineShoppingFetched(mDecryptCombineShopping)
                 }
@@ -182,7 +182,7 @@ class SearchPresenter {
                         appendToDecryptCombinePersonal(decryptedCombinePersonal)
                     }
                     searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
-                    AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
+                    //AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
                 } else {
                     searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
                 }
@@ -200,7 +200,7 @@ class SearchPresenter {
                         appendToDecryptCombineWellness(decryptedCombineWellness)
                     }
                     searchView!!.onCombineWellnessFetched(mDecryptCombineWellness)
-                    AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
+                    //AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
                 } else {
                     searchView!!.onCombineWellnessFetched(mDecryptCombineWellness)
                 }
@@ -218,7 +218,7 @@ class SearchPresenter {
                         appendToDecryptCombineInterests(decryptedCombineInterests)
                     }
                     searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
-                    AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
+                    //AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
                 } else {
                     searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
                 }
@@ -237,10 +237,10 @@ class SearchPresenter {
                         appendToDecryptCombineEducation(decryptedCombineEducation)
                     }
                     for (finance in mDecryptCombineEducation.workItems) {
-                        AppLogger.d("REcords", finance.toString())
+                        //AppLogger.d("REcords", finance.toString())
                     }
                     searchView!!.onCombineEducationFetched(mDecryptCombineEducation)
-                    AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
+                    //AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
                 } else {
                     searchView!!.onCombineEducationFetched(mDecryptCombineEducation)
                 }
@@ -257,7 +257,7 @@ class SearchPresenter {
                         val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
                         appendToDecryptCOmbineMemories(decryptedCombineMemories)
                     }
-                    AppLogger.d("DecryptedCOmbineMemories", "Decrypted combine memories" + mDecryptedCombineMemories)
+                    //AppLogger.d("DecryptedCOmbineMemories", "Decrypted combine memories" + mDecryptedCombineMemories)
                     searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)
                 } else {
                     searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)
@@ -275,12 +275,12 @@ class SearchPresenter {
                         val decryptedCombineTravel = decryptCombineTravel(combineTravel[i]!!)
                         appendToDecryptCombineTravel(decryptedCombineTravel)
                     }
-                    AppLogger.d("CombineTravel", "Decrypted combine travel" + mDecryptedCombineTravel)
+                    //AppLogger.d("CombineTravel", "Decrypted combine travel" + mDecryptedCombineTravel)
                     searchView!!.onCombineTravelFetched(mDecryptedCombineTravel)
                 } else {
                     searchView!!.onCombineTravelFetched(mDecryptedCombineTravel)
                 }
-                AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
+                //AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
             }
         })
     }
@@ -289,7 +289,7 @@ class SearchPresenter {
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
 
-                val combineResult = realm!!.where(Combine::class.java).findAll()
+                val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
                 if( categoryView != null ) {
                     categoryView!!.onCombineResultsFetched(combineResult)
                     val financialResults = realm.where(Financial::class.java).findAll()
@@ -298,10 +298,6 @@ class SearchPresenter {
                     for (i in 0 until combineResult.size) {
                         val decryptedCombine = decryptCombine(combineResult[i]!!)
                         appendToDecrypt(decryptedCombine)
-                    }
-                    AppLogger.d("CombineDecrypted", "Decrypted combine financial" + mDecryptCombine)
-                    for (finance in mDecryptCombine.financialItems) {
-                        AppLogger.d("REcords", finance.toString())
                     }
                     searchView!!.onCombineFetched(mDecryptCombine)
                 } else {
@@ -399,7 +395,7 @@ class SearchPresenter {
         val searchInsuranceItems = ArrayList<DecryptedInsurance>()
         val searchTaxItems = ArrayList<DecryptedTax>()
         val searchHomeList = ArrayList<DecryptedHomeList>()
-        AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
+        //AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
         for (financeItems in mDecryptCombine.financialItems) {
             val searchResult = performSearchForResult(financeItems, text)
             if (searchResult.isSearchFound) {
@@ -410,8 +406,8 @@ class SearchPresenter {
         }
 
         searchDecryptCombine.financialItems.addAll(searchFinanceItems)
-        AppLogger.d("Search", "SearchItems : " + searchFinanceItems)
-        AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
+        //AppLogger.d("Search", "SearchItems : " + searchFinanceItems)
+        //AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
 
         for (paymentItems in mDecryptCombine.paymentItems) {
             val searchResult = performSearchForResult(paymentItems, text)
@@ -423,7 +419,7 @@ class SearchPresenter {
         }
 
         searchDecryptCombine.paymentItems.addAll(searchPaymentItems)
-        AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
+        //AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
 
         for (propertyItems in mDecryptCombine.propertyItems) {
             val searchResult = performSearchForResult(propertyItems, text)
@@ -433,7 +429,7 @@ class SearchPresenter {
         }
 
         searchDecryptCombine.propertyItems.addAll(searchPropertyItems)
-        AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
+        //AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
 
         for (vehicleItems in mDecryptCombine.vehicleItems) {
             val searchResult = performSearchForResult(vehicleItems, text)
@@ -442,7 +438,7 @@ class SearchPresenter {
                 searchVehicleItems.add(vehicleItems)
         }
         searchDecryptCombine.vehicleItems.addAll(searchVehicleItems)
-        AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
+        //AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
 
         for (assetItems in mDecryptCombine.assetItems) {
             val searchResult = performSearchForResult(assetItems, text)
@@ -451,7 +447,7 @@ class SearchPresenter {
                 searchAssetItems.add(assetItems)
         }
         searchDecryptCombine.assetItems.addAll(searchAssetItems)
-        AppLogger.d("Search", "SearchAsset" + searchAssetItems)
+        //AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
         for (insuranceItems in mDecryptCombine.insuranceItems) {
             val searchResult = performSearchForResult(insuranceItems, text)
@@ -460,7 +456,7 @@ class SearchPresenter {
                 searchInsuranceItems.add(insuranceItems)
         }
         searchDecryptCombine.insuranceItems.addAll(searchInsuranceItems)
-        AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
+        //AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
 
         for (taxItems in mDecryptCombine.taxesItems) {
             val searchResult = performSearchForResult(taxItems, text)
@@ -469,7 +465,7 @@ class SearchPresenter {
                 searchTaxItems.add(taxItems)
         }
         searchDecryptCombine.taxesItems.addAll(searchTaxItems)
-        AppLogger.d("Search", "SearchTax" + searchTaxItems)
+        //AppLogger.d("Search", "SearchTax" + searchTaxItems)
 
         for (listItems in mDecryptCombine.listItems) {
             val searchResult = performSearchForResult(listItems, text)
@@ -478,7 +474,7 @@ class SearchPresenter {
                 searchHomeList.add(listItems)
         }
         searchDecryptCombine.listItems.addAll(searchHomeList)
-        AppLogger.d("Search", "SearchHomeList" + searchHomeList)
+        //AppLogger.d("Search", "SearchHomeList" + searchHomeList)
 
         return searchDecryptCombine
     }
@@ -554,7 +550,7 @@ class SearchPresenter {
                 searchMainMemoryItems.add(mainMemoryItems)
         }
         searchDecryptCombineMemories.mainMemoriesItems.addAll(searchMainMemoryItems)
-        AppLogger.d("Search", "SearchMainMemoryItems" + searchMainMemoryItems)
+        //AppLogger.d("Search", "SearchMainMemoryItems" + searchMainMemoryItems)
 
         for (memoryTimelineItems in mDecryptedCombineMemories.memoryTimelineItems) {
             val searchResult = performSearchForResult(memoryTimelineItems, text)
@@ -563,7 +559,7 @@ class SearchPresenter {
                 searchMemoryTimelineItems.add(memoryTimelineItems)
         }
         searchDecryptCombineMemories.memoryTimelineItems.addAll(searchMemoryTimelineItems)
-        AppLogger.d("Search", "SearchMemoryTimeLineItems" + searchMainMemoryItems)
+        //AppLogger.d("Search", "SearchMemoryTimeLineItems" + searchMainMemoryItems)
 
         for (listItems in mDecryptedCombineMemories.listItems) {
             val searchResult = performSearchForResult(listItems, text)
@@ -572,7 +568,7 @@ class SearchPresenter {
                 searchMemorylistItems.add(listItems)
         }
         searchDecryptCombineMemories.listItems.addAll(searchMemorylistItems)
-        AppLogger.d("Search", "SearchMemoryListItems" + searchMainMemoryItems)
+        //AppLogger.d("Search", "SearchMemoryListItems" + searchMainMemoryItems)
         return searchDecryptCombineMemories
     }
 

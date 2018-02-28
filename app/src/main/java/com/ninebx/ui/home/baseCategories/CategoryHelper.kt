@@ -50,7 +50,7 @@ class CategoryHelper(
     private fun getWellness() {
 
         val decryptedCombine: DecryptedCombineWellness = combineItems as DecryptedCombineWellness
-        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
+        //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -101,7 +101,7 @@ class CategoryHelper(
 
     private fun getPersonal() {
         val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
-        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
+        //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
 
         val categoryList = ArrayList<Category>()
 
@@ -201,7 +201,7 @@ class CategoryHelper(
 
     private fun getContacts() {
         val decryptedCombinePersonal: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
-        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
+        //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
 
         val categoryList = ArrayList<Category>()
 
@@ -252,7 +252,7 @@ class CategoryHelper(
     private fun getTravelCategories() {
 
         val decryptedCombine: DecryptedCombineTravel = combineItems as DecryptedCombineTravel
-        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
+        //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
         var categoryIndex = 1002
@@ -329,7 +329,7 @@ class CategoryHelper(
     private fun getHomeAndMoneyCategories() {
 
         val decryptedCombine: DecryptedCombine = combineItems as DecryptedCombine
-        AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine)
+        //AppLogger.d("CategoryHelper", "Decrypted Combine : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -460,7 +460,7 @@ class CategoryHelper(
 
     private fun getShoppingCategories() {
         val decryptedCombine: DecryptedCombineShopping = combineItems as DecryptedCombineShopping
-        AppLogger.e("CategoryHelper", " DecryptedCombineShopping : " + decryptedCombine)
+        //AppLogger.e("CategoryHelper", " DecryptedCombineShopping : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -530,7 +530,7 @@ class CategoryHelper(
 
     private fun getInterests() {
         val decryptedCombine: DecryptedCombineInterests = combineItems as DecryptedCombineInterests
-        AppLogger.e("CategoryHelper", " DecryptedCombineInterests : " + decryptedCombine)
+        //AppLogger.e("CategoryHelper", " DecryptedCombineInterests : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -569,7 +569,7 @@ class CategoryHelper(
 
     private fun getMemories() {
         val decryptedCombine: DecryptedCombineMemories = combineItems as DecryptedCombineMemories
-        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
+        //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 
@@ -617,7 +617,7 @@ class CategoryHelper(
 
     private fun getEducation() {
         val decryptedCombine: DecryptedCombineEducation = combineItems as DecryptedCombineEducation
-        AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
+        //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombine)
 
         val categoryList = ArrayList<Category>()
 

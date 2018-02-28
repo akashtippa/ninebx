@@ -221,14 +221,14 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             //            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
         }
         txtPersonalPassCode.setOnClickListener {
-            AppLogger.d("Auth", "From AccountFragment")
+            //AppLogger.d("Auth", "From AccountFragment")
             startActivity( Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
         }
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
               SyncUser.currentUser().logout()
             closeAllConnections()
-            AppLogger.d("Auth", "From AccountFragment")
+            //AppLogger.d("Auth", "From AccountFragment")
             startActivity(Intent(context, AuthActivity::class.java))
             activity!!.finish()
         }

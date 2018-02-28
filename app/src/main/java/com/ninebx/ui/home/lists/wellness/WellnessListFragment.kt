@@ -51,7 +51,7 @@ class WellnessListFragment : FragmentBackHelper() {
         var getArrayList: ArrayList<DecryptedWellnessList> = getArguments()!!.getSerializable("combineListItemsFetched") as ArrayList<DecryptedWellnessList>
 
         mListsAdapter = WellnessListsAdapter(getArrayList)
-        AppLogger.d("CombineListArray", " " + getArrayList)
+        //AppLogger.d("CombineListArray", " " + getArrayList)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager

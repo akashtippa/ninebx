@@ -45,7 +45,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     }
 
     override fun memberAdded(member: Member?) {
-        AppLogger.d("Member", "onMemberAdded" + member)
+        //AppLogger.d("Member", "onMemberAdded" + member)
         myList.add(member!!)
         mListsAdapter!!.notifyDataSetChanged()
         saveUserObject()

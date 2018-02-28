@@ -359,7 +359,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
             if (resultCode == Activity.RESULT_OK) {
                 val place = PlaceAutocomplete.getPlace(context, data)
                 edtLocation.setText(place.name)
-                AppLogger.e("Selected Place ", " is " + place.name)
+                //AppLogger.e("Selected Place ", " is " + place.name)
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 val status = PlaceAutocomplete.getStatus(context, data)
 
