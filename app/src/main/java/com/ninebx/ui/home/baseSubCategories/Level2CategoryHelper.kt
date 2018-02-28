@@ -2739,7 +2739,7 @@ class Level2CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    fun setValue(level2Category: Level2SubCategory, selectedDocument: Parcelable) {
+    fun setValue( level2Category: Level2SubCategory ) {
         when (category_name) {
             "Banking" -> {
                 setBanking( level2Category )

@@ -17,7 +17,7 @@ class Level2CategoryPresenter(private val categoryName: String, private val cate
     }
 
     fun setValueToDocument( level2Category: Level2SubCategory ) {
-        level2CategoryHelper.setValue( level2Category, selectedDocument!! )
+        level2CategoryHelper.setValue( level2Category )
     }
 
     fun saveDocument( context: Context? ) {
