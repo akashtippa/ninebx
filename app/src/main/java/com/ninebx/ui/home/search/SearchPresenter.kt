@@ -1,5 +1,8 @@
 package com.ninebx.ui.home.search
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.RecentSearch
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
@@ -7,7 +10,6 @@ import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
@@ -17,13 +19,17 @@ import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.home.baseCategories.CategoryView
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmChangeListener
+import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 03/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class SearchPresenter {
 
     private var searchView: SearchView? = null
@@ -288,18 +294,47 @@ class SearchPresenter {
     private fun fetchCombine() {
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-                val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
-                if (combineResult.size > 0) {
-                    for (i in 0 until combineResult.size) {
-                        val decryptedCombine = decryptCombine(combineResult[i]!!)
-                        appendToDecrypt(decryptedCombine)
+                val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAllAsync()
+                combineResult.addChangeListener { t ->
+                    //realm!!.where(Combine::class.java).distinctValues("id").findAll()
+                    if (t!!.size > 0) {
+                        executeCombineTask( combineResult )
+                    } else {
+                        searchView!!.onCombineFetched(mDecryptCombine)
                     }
-                    searchView!!.onCombineFetched(mDecryptCombine)
-                } else {
-                    searchView!!.onCombineFetched(mDecryptCombine)
                 }
+
             }
         })
+    }
+
+
+    private fun executeCombineTask(combineResult: RealmResults<Combine>) {
+
+        NineBxApplication.instance.activityInstance!!.runOnUiThread{
+            for (i in 0 until combineResult.size) {
+                val decryptedCombine = decryptCombine(combineResult[i]!!)
+                appendToDecrypt(decryptedCombine)
+            }
+            searchView!!.onCombineFetched(mDecryptCombine)
+        }
+        /*object : AsyncTask<Void, Void, String>() {
+            override fun doInBackground(vararg p0: Void?): String {
+                for (i in 0 until combineResult.size) {
+                    val decryptedCombine = decryptCombine(combineResult[i]!!)
+                    appendToDecrypt(decryptedCombine)
+                }
+                return ""
+            }
+
+            override fun onPostExecute(result: String) {
+                super.onPostExecute(result)
+                searchView!!.onCombineFetched(mDecryptCombine)
+            }
+
+
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)*/
+
     }
 
     private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
