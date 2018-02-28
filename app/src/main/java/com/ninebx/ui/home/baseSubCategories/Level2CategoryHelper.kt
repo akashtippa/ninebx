@@ -23,6 +23,26 @@ class Level2CategoryHelper(
         val classType: String?
 ) {
 
+    // For Home & Money
+    private var decryptedFinancial: DecryptedFinancial = DecryptedFinancial()
+    private var decryptedPayment: DecryptedPayment = DecryptedPayment()
+    private var decryptedProperty: DecryptedProperty = DecryptedProperty()
+    private var decryptedVehicle: DecryptedVehicle = DecryptedVehicle()
+    private var decryptedAssets: DecryptedAsset = DecryptedAsset()
+    private var decryptedInsurance: DecryptedInsurance = DecryptedInsurance()
+    private var decryptedTaxes: DecryptedTax = DecryptedTax()
+
+    // For Travel
+    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms = DecryptedLoyaltyPrograms()
+    private var decryptedTravel: DecryptedTravel = DecryptedTravel()
+
+    // For Personal
+    private var decryptedDriversLicense: DecryptedLicense = DecryptedLicense()
+    private var decryptedSocial: DecryptedSocial = DecryptedSocial()
+    private var decryptedTAX_ID: DecryptedTaxID = DecryptedTaxID()
+    private var decryptedCertificate: DecryptedCertificate = DecryptedCertificate()
+    private var decryptedOtherGovernment: DecryptedGovernment = DecryptedGovernment()
+
     init {
         extractObject()
         when (category_name) {
@@ -238,25 +258,7 @@ class Level2CategoryHelper(
 
 
     }
-    // For Home & Money
-    private var decryptedFinancial: DecryptedFinancial? = null
-    private var decryptedPayment: DecryptedPayment? = null
-    private var decryptedProperty: DecryptedProperty? = null
-    private var decryptedVehicle: DecryptedVehicle? = null
-    private var decryptedAssets: DecryptedAsset? = null
-    private var decryptedInsurance: DecryptedInsurance? = null
-    private var decryptedTaxes: DecryptedTax? = null
 
-    // For Travel
-    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms? = null
-    private var decryptedTravel: DecryptedTravel? = null
-
-    // For Personal
-    private var decryptedDriversLicense: DecryptedLicense? = null
-    private var decryptedSocial: DecryptedSocial? = null
-    private var decryptedTAX_ID: DecryptedTaxID? = null
-    private var decryptedCertificate: DecryptedCertificate? = null
-    private var decryptedOtherGovernment: DecryptedGovernment? = null
 
     private fun extractObject() {
         if( selectedDocument == null ) {
