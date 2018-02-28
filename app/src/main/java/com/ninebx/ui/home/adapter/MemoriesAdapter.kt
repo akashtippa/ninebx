@@ -21,7 +21,7 @@ import java.util.*
 internal class MemoriesAdapter(private var myList: ArrayList<MemoryTimeline>?, private val iMemoryAdded: IMemoryAdded) : RecyclerView.Adapter<MemoriesAdapter.RecyclerItemViewHolder>(), AWSFileTransferHelper.FileOperationsCompletionListener {
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgProfilePic != null)
-            //AppLogger.e("Image ", " is " + outputFile)
+            AppLogger.e("Image ", " is " + outputFile)
     }
 
 
