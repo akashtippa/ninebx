@@ -173,8 +173,9 @@ class HomePresenter( val homeView : HomeView ) {
                         }
                     })
         }
-
+/*
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
+        AppLogger.d("UpdateNotification", "Method invoked ")
         var notifications = Notifications()
         var message = "AndroidTest"
         notifications.id =  UUID.randomUUID().hashCode().toLong()
@@ -193,5 +194,5 @@ class HomePresenter( val homeView : HomeView ) {
                 AppLogger.d("NewNotification", "Added" )
             }
         })
-    }
+    }*/
 }

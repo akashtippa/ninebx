@@ -79,7 +79,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.commitTransaction()
     }
 
-    fun addNotification(expirationDate: String, date: Date, subTitle: String, boxName: String) {
+   /* fun addNotification(expirationDate: String, date: Date, subTitle: String, boxName: String) {
         var notifications = Notifications()
         var boxName =  "Home&Banking"
         var message = "AndroidTest"
@@ -99,5 +99,5 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                 AppLogger.d("NewNotification", "Added" )
             }
         })
-    }
+    }*/
 }

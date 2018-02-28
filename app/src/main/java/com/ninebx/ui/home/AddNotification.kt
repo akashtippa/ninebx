@@ -8,9 +8,11 @@ import android.content.Context
 import android.content.Intent
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.*
+import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.text.SimpleDateFormat
@@ -89,13 +91,6 @@ class AddNotification : HomeView {
        this.mDecryptedCombineEducation = mDecryptCombineEducation
         educationWorkNotification()
     }
-   /* fun onBegin(){
-        homeNotification()
-        travelNotification()
-        contactsNotification()
-        personalNotification()
-        wellnessNotification()
-    }*/
 
     private fun homeNotification() {
         paymentNotification()
@@ -535,7 +530,7 @@ class AddNotification : HomeView {
 
     private fun newNotification(currentDate: Date, expiryDate: Date, subTitle: String, boxName: String) {
         AppLogger.d("AddNewNotification", "Method invoked")
-        mHomePresenter!!.addNotification(expiryDate.toString(), currentDate, subTitle, boxName)
+        addNotification(expiryDate.toString(), currentDate, subTitle, boxName)
         var intent : Intent = Intent(context, HomeActivity::class.java)
         var pIntent : PendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
         val alarmManager1 = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -557,5 +552,28 @@ class AddNotification : HomeView {
         val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         mNotifiction.flags = mNotifiction.flags or Notification.FLAG_AUTO_CANCEL
         notificationManager.notify(0, mNotifiction)
+    }
+
+
+    fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
+        AppLogger.d("UpdateNotification", "Method invoked ")
+        var notifications = Notifications()
+        var message = "AndroidTest"
+        notifications.id =  UUID.randomUUID().hashCode().toLong()
+        notifications.message = message.encryptString()
+        notifications.boxName = box_Name.encryptString()
+        notifications.dueDate = expirationDate
+        notifications.subTitle = subTitle.encryptString()
+        notifications.private = false
+        notifications.created = box_Name + date
+
+        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                realm!!.beginTransaction()
+                notifications.insertOrUpdate(realm)
+                realm.commitTransaction()
+                AppLogger.d("NewNotification", "Added" )
+            }
+        })
     }
 }
