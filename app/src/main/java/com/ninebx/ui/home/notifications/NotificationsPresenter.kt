@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.notifications
 
+import com.ninebx.R.id.rLayoutNotify
+import com.ninebx.R.id.tv_noNotifications
 import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.*
@@ -7,6 +9,7 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.util.*
 
 /**
@@ -32,7 +35,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                 }
                 else
                     AppLogger.d("Notification", "No data" )
-                notificationsView.hideProgress()
+                    notificationsView.hideProgress()
             }
         })
     }
@@ -78,26 +81,4 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         mNotificationsRealm.copyToRealmOrUpdate(notification)
         mNotificationsRealm.commitTransaction()
     }
-
-   /* fun addNotification(expirationDate: String, date: Date, subTitle: String, boxName: String) {
-        var notifications = Notifications()
-        var boxName =  "Home&Banking"
-        var message = "AndroidTest"
-        notifications.id =  UUID.randomUUID().hashCode().toLong()
-        notifications.message = message.encryptString()
-        notifications.boxName = boxName.encryptString()
-        notifications.dueDate = expirationDate
-        notifications.subTitle = subTitle.encryptString()
-        notifications.private = false
-        notifications.created = "Android Test" + date
-
-        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
-            override fun onSuccess(realm: Realm?) {
-                realm!!.beginTransaction()
-                notifications.insertOrUpdate(realm)
-                realm.commitTransaction()
-                AppLogger.d("NewNotification", "Added" )
-            }
-        })
-    }*/
 }

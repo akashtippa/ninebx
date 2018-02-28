@@ -56,6 +56,8 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun hideProgress() {
         if( progressLayout != null )
             progressLayout.hide()
+        tv_noNotifications.show()
+        rLayoutNotify.hide()
     }
 
     override fun onError(error: Int) {
@@ -64,10 +66,7 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     }
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
-        if (notifications.size == 0) {
-            tv_noNotifications.visibility = View.VISIBLE
-            rLayoutNotify.visibility = View.GONE
-        }
+
         hideProgress()
         if( rvNotification != null ) {
             this.decryptedNotifications = notifications
