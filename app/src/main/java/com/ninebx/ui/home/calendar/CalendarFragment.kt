@@ -32,6 +32,8 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     }
 
     private fun setupUI() {
+        if( ivPreviousMonth == null ) return
+
         mMonthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
         ivPreviousMonth.setOnClickListener {
@@ -147,6 +149,8 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
     private fun setDaysAdapter(selectedDate: Int, weekOfMonth: Int) {
 
+        if( tvWeekMonth == null ) return
+
         isWeekView = tvWeekMonth.text.toString() == "Month"
 
 
@@ -214,7 +218,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     private lateinit var mDayEventsAdapter: DayEventsRecyclerViewAdapter
 
     override fun onDayClick(dayOfMonth: Int) {
-        if( mCalendarPresenter != null ) {
+        if( mCalendarPresenter != null && rvDayEvents != null ) {
             mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             val eventsForDate = mCalendarPresenter!!.getEventsForDate(mCalendar.time)
             mDayEventsAdapter = DayEventsRecyclerViewAdapter( eventsForDate, mCalendar.time, object : AdapterClickListener {

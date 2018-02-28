@@ -28,7 +28,7 @@ class HomePresenter( val homeView : HomeView ) {
     private val mDecryptCombinePersonal = DecryptedCombinePersonal()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
-    init {
+    fun fetchAllData() {
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()

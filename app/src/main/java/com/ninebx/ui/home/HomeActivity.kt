@@ -26,6 +26,7 @@ import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.account.MyProfileFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
@@ -55,9 +56,9 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     private var addNotification = AddNotification()
 
-        override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
-            addNotification.onCombineHomeFetched(mDecryptCombineHome)
-        }
+    override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
+        addNotification.onCombineHomeFetched(mDecryptCombineHome)
+    }
 
     override fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel) {
         addNotification.onCombineTravelFetched(mDecryptCombineTravel)  }
@@ -93,6 +94,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
         this.currentUsers = currentUsers
         addNotification.setCurrentUsers(currentUsers)
+        homePresenter.fetchAllData()
         if (currentUsers != null) {
             this@HomeActivity.hideProgressDialog()
             AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
@@ -113,17 +115,41 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 bottomNavigationView.menu.getItem(4).isChecked = true
                 callBottomViewFragment(getString(R.string.account))
 
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.addToBackStack(null)
-                val addFamilyUsersFragment = AddFamilyUsersFragment()
-                val bundle = Bundle()
-                bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
-                addFamilyUsersFragment.arguments = bundle
-                fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
-                hideQuickAdd()
+                if( currentUsers!![0]!!.completeProfile ) {
+                    navigateToAddMembers()
+                }
+                else {
+                    navigateToMyProfile()
+                }
+
+
+
             }
         }
+    }
+
+    private fun navigateToAddMembers() {
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val addFamilyUsersFragment = AddFamilyUsersFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
+        addFamilyUsersFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+        hideQuickAdd()
+    }
+
+    private fun navigateToMyProfile() {
+        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val myProfileFragment = MyProfileFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
+        myProfileFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
+        hideQuickAdd()
     }
 
     override fun getContextForScreen(): Context {

@@ -121,6 +121,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
                 val bundle = Bundle()
                 bundle.putString("categoryName", categoryName)
                 bundle.putString("categoryId", categoryID)
+
                 val categoryFragment = Level2CategoryFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()

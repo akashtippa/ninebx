@@ -146,7 +146,8 @@ class LoginSignupTask(private var userName: String,
             authView.hideProgress()
             if (error != null) {
                 error.printStackTrace()
-                authView.onError(error.errorMessage!!)
+                if( error.errorMessage != null )
+                    authView.onError(error.errorMessage!!)
             }
             NineBxApplication.getPreferences().currentStep = NONE_COMPLETE
             authView.navigateToStart()
