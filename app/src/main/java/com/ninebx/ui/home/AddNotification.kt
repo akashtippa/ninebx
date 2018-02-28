@@ -54,10 +54,6 @@ class AddNotification : HomeView {
 
     override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
         this.currentUsers = currentUsers
-        if( currentUsers != null ) {
-            personalNotification()
-            personalHealthNotification()
-        }
     }
 
     override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {

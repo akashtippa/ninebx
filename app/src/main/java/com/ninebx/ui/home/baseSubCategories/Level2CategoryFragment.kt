@@ -62,43 +62,44 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType ))
 
-        when( selectedDocument ) {
-            is DecryptedFinancial -> {
-                val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
-                etTitle.setText(decryptedFinancial.institutionName)
-                etTitleValue.setText(decryptedFinancial.accountName)
+        if( selectedDocument != null )
+            when( selectedDocument ) {
+                is DecryptedFinancial -> {
+                    val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
+                    etTitle.setText(decryptedFinancial.institutionName)
+                    etTitleValue.setText(decryptedFinancial.accountName)
+                }
+                is DecryptedPayment -> {
+                    val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
+                    etTitle.setText(decryptedFinancial.cardName)
+                    etTitleValue.setText(decryptedFinancial.userName)
+                }
+                is DecryptedProperty-> {
+                    val decryptedFinancial : DecryptedProperty = selectedDocument as DecryptedProperty
+                    etTitle.setText(decryptedFinancial.titleName)
+                    etTitleValue.setText(decryptedFinancial.propertyName)
+                }
+                is  DecryptedVehicle-> {
+                    val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
+                    etTitle.setText(decryptedFinancial.titleName)
+                    etTitleValue.setText(decryptedFinancial.vehicleName)
+                }
+                is DecryptedAsset-> {
+                    val decryptedFinancial : DecryptedAsset = selectedDocument as DecryptedAsset
+                    etTitle.setText(decryptedFinancial.assetName)
+                    etTitleValue.setText(decryptedFinancial.assetName)
+                }
+                is DecryptedInsurance-> {
+                    val decryptedFinancial : DecryptedInsurance = selectedDocument as DecryptedInsurance
+                    etTitle.setText(decryptedFinancial.insuranceCompany)
+                    etTitleValue.setText(decryptedFinancial.insuredVehicle)
+                }
+                is DecryptedTax-> {
+                    val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
+                    etTitle.setText(decryptedFinancial.title)
+                    etTitleValue.setText(decryptedFinancial.taxPayer)
+                }
             }
-            is DecryptedPayment -> {
-                val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
-                etTitle.setText(decryptedFinancial.cardName)
-                etTitleValue.setText(decryptedFinancial.userName)
-            }
-            is DecryptedProperty-> {
-                val decryptedFinancial : DecryptedProperty = selectedDocument as DecryptedProperty
-                etTitle.setText(decryptedFinancial.titleName)
-                etTitleValue.setText(decryptedFinancial.propertyName)
-            }
-            is  DecryptedVehicle-> {
-                val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
-                etTitle.setText(decryptedFinancial.titleName)
-                etTitleValue.setText(decryptedFinancial.vehicleName)
-            }
-            is DecryptedAsset-> {
-                val decryptedFinancial : DecryptedAsset = selectedDocument as DecryptedAsset
-                etTitle.setText(decryptedFinancial.assetName)
-                etTitleValue.setText(decryptedFinancial.assetName)
-            }
-            is DecryptedInsurance-> {
-                val decryptedFinancial : DecryptedInsurance = selectedDocument as DecryptedInsurance
-                etTitle.setText(decryptedFinancial.insuranceCompany)
-                etTitleValue.setText(decryptedFinancial.insuredVehicle)
-            }
-            is DecryptedTax-> {
-                val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
-                etTitle.setText(decryptedFinancial.title)
-                etTitleValue.setText(decryptedFinancial.taxPayer)
-            }
-        }
 
     }
 
@@ -111,10 +112,12 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
-        selectedDocument = arguments!!.getParcelable("selectedDocument")
-        classType = arguments!!.getString("classType")
+        if( arguments!!.containsKey("selectedDocument") ) {
+            selectedDocument = arguments!!.getParcelable("selectedDocument")
+            classType = arguments!!.getString("classType")
+        }
 
-        mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument!!, classType, this)
+        mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)
 
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.hideToolbar()
@@ -131,7 +134,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         setCamera(boxValue)
         tvSave.setOnClickListener {
             if( validate() )
-            mCategoryPresenter.saveDocument( context )
+                mCategoryPresenter.saveDocument( context )
         }
     }
 

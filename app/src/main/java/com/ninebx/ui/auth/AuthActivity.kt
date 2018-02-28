@@ -70,6 +70,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun onSuccess(syncUser: SyncUser?) {
         when (mCurrentTag) {
             "SignIn" -> {
+                hideProgressDialog()
                 signInFragment!!.onSuccess(syncUser)
             }
             "AccountPassword" -> {
@@ -237,6 +238,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                     navigateToHome()
                 }
                 Constants.SIGN_UP_COMPLETE -> {
+                    navigateToSignIn()
                     navigateToSignUp()
                 }
                 else -> {

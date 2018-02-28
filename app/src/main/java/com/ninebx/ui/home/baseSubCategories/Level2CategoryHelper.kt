@@ -20,7 +20,7 @@ class Level2CategoryHelper(
         val categoryID: String,
         val categoryView: Level2CategoryView,
         val selectedDocument: Parcelable?,
-        val classType: String
+        val classType: String?
 ) {
 
     init {

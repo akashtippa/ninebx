@@ -48,7 +48,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)
     }
 
-    var strFullName = ""
+
     var strFirstName = ""
     var strLastName = ""
     var strEmail = ""
@@ -126,7 +126,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtCountry.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.add(R.id.frameLayout, CountryPicker()).commit()
+            val countryPicker = CountryPicker()
+            countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> txtCountry.text = strCountry })
+            fragmentTransaction.add(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -314,6 +316,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 users.state = strState.encryptString()
                 users.zipCode = strZipCode.encryptString()
                 users.country = strCountry.encryptString()
+                users.completeProfile = true
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
                 realm.commitTransaction()
                 users.insertOrUpdate(realm)
