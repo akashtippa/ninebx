@@ -288,12 +288,7 @@ class SearchPresenter {
     private fun fetchCombine() {
         prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
-
                 val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
-                if( categoryView != null ) {
-                    categoryView!!.onCombineResultsFetched(combineResult)
-                    val financialResults = realm.where(Financial::class.java).findAll()
-                }
                 if (combineResult.size > 0) {
                     for (i in 0 until combineResult.size) {
                         val decryptedCombine = decryptCombine(combineResult[i]!!)
