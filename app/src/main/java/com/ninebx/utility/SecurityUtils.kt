@@ -444,7 +444,7 @@ fun encryptMember(member: Member): Member? {
 fun decryptUsers(currentUser: Users): DecryptedUsers {
 
     val decryptedUsers = DecryptedUsers()
-
+    decryptedUsers.id = currentUser.id
     decryptedUsers.fullName = currentUser.fullName.decryptString()
     decryptedUsers.firstName = currentUser.firstName.decryptString()
     decryptedUsers.lastName = currentUser.lastName.decryptString()

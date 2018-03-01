@@ -13,6 +13,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
@@ -88,7 +89,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         fragmentTransaction.addToBackStack(null)
         val masterPasswordFragment = MasterPasswordFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, ArrayList<Users>(mHomeView.getCurrentUsers()))
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         masterPasswordFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, masterPasswordFragment).commit()
     }
@@ -170,7 +171,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
     }
@@ -181,7 +182,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         fragmentTransaction.addToBackStack(null)
         val addFamilyUsersFragment = AddFamilyUsersFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         addFamilyUsersFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
     }

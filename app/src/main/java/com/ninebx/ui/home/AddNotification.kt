@@ -29,7 +29,7 @@ class AddNotification : HomeView {
     private var mDecryptedCombineWellness : DecryptedCombineWellness ?= null
     private var mDecryptedCombineContacts : DecryptedCombineContacts ?= null
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
-    private var currentUsers: RealmResults<Users>? = null
+    private var currentUsers: ArrayList<DecryptedUsers>? = null
 
     private val context = getApplicationContext()
 
@@ -45,7 +45,7 @@ class AddNotification : HomeView {
 
     override fun addEditCalendarEvent(calendarEvent: CalendarEvents?, selectedDate: Date) {    }
 
-    override fun getCurrentUsers(): RealmResults<Users> {
+    override fun getCurrentUsers(): ArrayList<DecryptedUsers> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
         return currentUsers!!
     }
@@ -54,7 +54,7 @@ class AddNotification : HomeView {
 
     override fun getContextForScreen(): Context {  return context }
 
-    override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
+    override fun setCurrentUsers(currentUsers: ArrayList<DecryptedUsers> ?) {
         this.currentUsers = currentUsers
     }
 

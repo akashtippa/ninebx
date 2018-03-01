@@ -3087,8 +3087,6 @@ class Level2CategoryHelper(
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
 
-
-
                         }
 
                     })
