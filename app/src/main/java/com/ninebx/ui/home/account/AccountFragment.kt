@@ -226,7 +226,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
-              SyncUser.currentUser().logout()
+            SyncUser.currentUser().logout()
             closeAllConnections()
             //AppLogger.d("Auth", "From AccountFragment")
             startActivity(Intent(context, AuthActivity::class.java))

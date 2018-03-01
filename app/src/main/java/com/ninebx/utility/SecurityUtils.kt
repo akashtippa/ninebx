@@ -553,7 +553,7 @@ fun decryptFinancial(finance: Financial): DecryptedFinancial {
 
     decryptedFinancial.id = finance.id
     decryptedFinancial.photosId = finance.photosId
-    decryptedFinancial.backingImages .addAll(finance.backingImages)
+    decryptedFinancial.backingImages = ArrayList(finance.backingImages)
 
     decryptedFinancial.selectionType = finance.selectionType.decryptString()
     decryptedFinancial.institutionName = finance.institutionName.decryptString()
@@ -615,7 +615,7 @@ fun decryptProperty(property: Property): DecryptedProperty {
 
     decryptedProperty.id = property.id
     decryptedProperty.photosId = property.photosId
-    decryptedProperty.backingImages .addAll(property.backingImages)
+    decryptedProperty.backingImages = ArrayList(property.backingImages)
 
     decryptedProperty.selectionType = property.selectionType.decryptString()
     decryptedProperty.propertyName = property.propertyName.decryptString()
@@ -651,7 +651,7 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
 
     decryptedVehicle.id = vehicle.id
     decryptedVehicle.photosId = vehicle.photosId
-    decryptedVehicle.backingImages .addAll(vehicle.backingImages)
+    decryptedVehicle.backingImages = ArrayList(vehicle.backingImages)
 
     decryptedVehicle.selectionType = vehicle.selectionType.decryptString()
     decryptedVehicle.vehicleName = vehicle.vehicleName.decryptString()
@@ -688,7 +688,7 @@ fun decryptAsset(asset: Asset): DecryptedAsset {
 
     decryptedAsset.id = asset.id
     decryptedAsset.photosId = asset.photosId
-    decryptedAsset.backingImages .addAll(asset.backingImages)
+    decryptedAsset.backingImages = ArrayList(asset.backingImages)
 
     decryptedAsset.selectionType = asset.selectionType.decryptString()
     decryptedAsset.test = asset.test.decryptString()
@@ -717,7 +717,7 @@ fun decryptInsurance(insurance: Insurance): DecryptedInsurance {
 
     decryptedInsurance.id = insurance.id
     decryptedInsurance.photosId = insurance.photosId
-    decryptedInsurance.backingImages .addAll(insurance.backingImages)
+    decryptedInsurance.backingImages = ArrayList(insurance.backingImages)
 
     decryptedInsurance.selectionType = insurance.selectionType.decryptString()
     decryptedInsurance.insuranceCompany = insurance.insuranceCompany.decryptString()
@@ -748,7 +748,7 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
 
     decryptedTax.id = taxes.id
     decryptedTax.photosId = taxes.photosId
-    decryptedTax.backingImages .addAll(taxes.backingImages)
+    decryptedTax.backingImages = ArrayList(taxes.backingImages)
 
     decryptedTax.selectionType = taxes.selectionType.decryptString()
     decryptedTax.returnName = taxes.returnName.decryptString()
@@ -814,7 +814,7 @@ fun decryptEducation(education: Education): DecryptedEducation {
     decryptedEducation.createdUser = education.createdUser
     decryptedEducation.modified = education.modified
     decryptedEducation.private = education.private
-    decryptedEducation.backingImages .addAll(education.backingImages)
+    decryptedEducation.backingImages = ArrayList(education.backingImages)
     decryptedEducation.photosId = education.photosId
 
     //AppLogger.d("Decrypt", "decryptedEducation : " + decryptedEducation)
@@ -840,7 +840,7 @@ fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     decryptedMainEducation.private = mainEducation.private
     decryptedMainEducation.attachmentNames = mainEducation.attachmentNames
     decryptedMainEducation.createdUser = mainEducation.createdUser
-    decryptedMainEducation.backingImages .addAll(mainEducation.backingImages)
+    decryptedMainEducation.backingImages = ArrayList(mainEducation.backingImages)
     //AppLogger.d("Decrypt", "decryptedMainEducation : " + decryptedMainEducation)
     return decryptedMainEducation
 }
@@ -864,7 +864,7 @@ fun decryptWork(work: Work): DecryptedWork {
     decryptedWork.notes = work.notes.decryptString()
     decryptedWork.attachmentNames = work.attachmentNames
     decryptedWork.createdUser = work.createdUser
-    decryptedWork.backingImages .addAll(work.backingImages)
+    decryptedWork.backingImages = ArrayList(work.backingImages)
 
     //AppLogger.d("Decrypt", "decryptedWork : " + decryptedWork)
     return decryptedWork
@@ -895,7 +895,7 @@ fun decryptContact(contactsList: Contacts): DecryptedContacts {
     decryptedContacts.modified = contactsList.modified
     decryptedContacts.createdUser = contactsList.createdUser
     decryptedContacts.private = contactsList.private
-    decryptedContacts.backingImages .addAll(contactsList.backingImages)
+    decryptedContacts.backingImages = ArrayList(contactsList.backingImages)
 
     //AppLogger.d("Decrypt", "decryptedContacts : " + decryptedContacts)
     return decryptedContacts
@@ -939,7 +939,7 @@ fun encryptContact(contacts: Contacts): Contacts {
     contacts.modified = contacts.modified.encryptString()
     contacts.createdUser = contacts.createdUser.encryptString()
 
-    contacts.backingImages .addAll(encryptContactBackingImages(contacts.backingImages)!!)
+    contacts.backingImages = (encryptContactBackingImages(contacts.backingImages)!!)
     return contacts
 }
 
@@ -989,7 +989,7 @@ fun decryptCalendarEvents(calendarEvents: CalendarEvents): DecryptedCalendarEven
     decryptedCalendarEvents.url = calendarEvents.url
     decryptedCalendarEvents.isReminderSet = calendarEvents.isReminderSet
     decryptedCalendarEvents.attachmentNames = calendarEvents.attachmentNames
-    decryptedCalendarEvents.backingImages .addAll(calendarEvents.backingImages)
+    decryptedCalendarEvents.backingImages = (calendarEvents.backingImages)
     decryptedCalendarEvents.photosId = calendarEvents.photosId
 
     return decryptedCalendarEvents
@@ -1015,7 +1015,7 @@ fun decryptCertificate(certificate: Certificate): DecryptedCertificate {
     decryptCertificate.private = certificate.private
     decryptCertificate.attachmentNames = certificate.attachmentNames
     decryptCertificate.createdUser = certificate.createdUser
-    decryptCertificate.backingImages .addAll(certificate.backingImages)
+    decryptCertificate.backingImages = ArrayList(certificate.backingImages)
 
     return decryptCertificate
 }
@@ -1038,7 +1038,7 @@ fun decryptGovernment(government: Government): DecryptedGovernment {
     decryptGovernment.notes = government.notes.decryptString()
     decryptGovernment.attachmentNames = government.attachmentNames
     decryptGovernment.createdUser = government.createdUser
-    decryptGovernment.backingImages .addAll(government.backingImages)
+    decryptGovernment.backingImages = ArrayList(government.backingImages)
     return decryptGovernment
 }
 
@@ -1059,7 +1059,7 @@ fun decryptLicense(license: License): DecryptedLicense {
     decryptLicense.private = license.private
     decryptLicense.attachmentNames = license.attachmentNames
     decryptLicense.createdUser = license.createdUser
-    decryptLicense.backingImages .addAll(license.backingImages)
+    decryptLicense.backingImages = ArrayList(license.backingImages)
     return decryptLicense
 }
 
@@ -1087,7 +1087,7 @@ fun decryptPersonal(personal: Personal): DecryptedPersonal {
     decryptPersonal.created = personal.created
     decryptPersonal.modified = personal.modified
     decryptPersonal.createdUser = personal.createdUser
-    decryptPersonal.backingImages .addAll(personal.backingImages)
+    decryptPersonal.backingImages = ArrayList(personal.backingImages)
     return decryptPersonal
 }
 
@@ -1104,7 +1104,7 @@ fun decryptSocial(social: Social): DecryptedSocial {
     decryptSocial.private = social.private
     decryptSocial.attachmentNames = social.attachmentNames
     decryptSocial.createdUser = social.createdUser
-    decryptSocial.backingImages .addAll(social.backingImages)
+    decryptSocial.backingImages = ArrayList(social.backingImages)
     return decryptSocial
 }
 
@@ -1121,7 +1121,7 @@ fun decryptTaxID(taxID: TaxID): DecryptedTaxID {
     decryptTaxID.modified = taxID.modified
     decryptTaxID.private = taxID.private
     decryptTaxID.attachmentNames = taxID.attachmentNames
-    decryptTaxID.backingImages .addAll(taxID.backingImages)
+    decryptTaxID.backingImages = ArrayList(taxID.backingImages)
     return decryptTaxID
 }
 
@@ -1159,7 +1159,7 @@ fun decryptCheckUps(checkups: Checkups): DecryptedCheckups {
     decryptCheckUps.modified = checkups.modified
     decryptCheckUps.createdUser = checkups.createdUser
     decryptCheckUps.private = checkups.private
-    decryptCheckUps.backingImages .addAll(checkups.backingImages)
+    decryptCheckUps.backingImages = ArrayList(checkups.backingImages)
     decryptCheckUps.photosId = checkups.photosId
     return decryptCheckUps
 }
@@ -1186,7 +1186,7 @@ fun decryptEmergencyContacts(emergencyContacts: EmergencyContacts): DecryptedEme
     decryptEmergencyContacts.attachmentNames = emergencyContacts.attachmentNames
     decryptEmergencyContacts.createdUser = emergencyContacts.createdUser
     decryptEmergencyContacts.private = emergencyContacts.private
-    decryptEmergencyContacts.backingImages .addAll(emergencyContacts.backingImages)
+    decryptEmergencyContacts.backingImages = ArrayList(emergencyContacts.backingImages)
     return decryptEmergencyContacts
 }
 
@@ -1215,7 +1215,7 @@ fun decryptEyeGlassPrescriptions(eyeglassPrescriptions: EyeglassPrescriptions): 
     decryptEyeGlassPrescriptions.modified = eyeglassPrescriptions.modified
     decryptEyeGlassPrescriptions.createdUser = eyeglassPrescriptions.createdUser
     decryptEyeGlassPrescriptions.private = eyeglassPrescriptions.private
-    decryptEyeGlassPrescriptions.backingImages .addAll(eyeglassPrescriptions.backingImages)
+    decryptEyeGlassPrescriptions.backingImages = ArrayList(eyeglassPrescriptions.backingImages)
     return decryptEyeGlassPrescriptions
 }
 
@@ -1242,7 +1242,7 @@ fun decryptHealthCareProviders(healthcareProviders: HealthcareProviders): Decryp
     decryptHealthCareProviders.attachmentNames = healthcareProviders.attachmentNames
     decryptHealthCareProviders.createdUser = healthcareProviders.createdUser
     decryptHealthCareProviders.private = healthcareProviders.private
-    decryptHealthCareProviders.backingImages .addAll(healthcareProviders.backingImages)
+    decryptHealthCareProviders.backingImages = ArrayList(healthcareProviders.backingImages)
     return decryptHealthCareProviders
 }
 
@@ -1268,7 +1268,7 @@ fun decryptIdentification(identification: Identification): DecryptedIdentificati
     decryptHomeList.attachmentNames = identification.attachmentNames
     decryptHomeList.createdUser = identification.createdUser
     decryptHomeList.private = identification.private
-    decryptHomeList.backingImages .addAll(identification.backingImages)
+    decryptHomeList.backingImages = ArrayList(identification.backingImages)
     return decryptHomeList
 }
 
@@ -1285,7 +1285,7 @@ fun decryptMedicalConditions(medicalConditions: MedicalConditions): DecryptedMed
     decryptMedicalConditions.created = medicalConditions.created
     decryptMedicalConditions.modified = medicalConditions.modified
     decryptMedicalConditions.createdUser = medicalConditions.createdUser
-    decryptMedicalConditions.backingImages .addAll(medicalConditions.backingImages)
+    decryptMedicalConditions.backingImages = ArrayList(medicalConditions.backingImages)
     decryptMedicalConditions.private = medicalConditions.private
     return decryptMedicalConditions
 }
@@ -1305,7 +1305,7 @@ fun decryptMedicalHistory(medicalHistory: MedicalHistory): DecryptedMedicalHisto
     decryptMedicalHistory.attachmentNames = medicalHistory.attachmentNames
     decryptMedicalHistory.createdUser = medicalHistory.createdUser
     decryptMedicalHistory.private = medicalHistory.private
-    decryptMedicalHistory.backingImages .addAll(medicalHistory.backingImages)
+    decryptMedicalHistory.backingImages = ArrayList(medicalHistory.backingImages)
     return decryptMedicalHistory
 }
 
@@ -1325,7 +1325,7 @@ fun decryptMedications(medications: Medications): DecryptedMedications {
     decryptMedications.modified = medications.modified
     decryptMedications.createdUser = medications.createdUser
     decryptMedications.private = medications.private
-    decryptMedications.backingImages .addAll(medications.backingImages)
+    decryptMedications.backingImages = ArrayList(medications.backingImages)
     return decryptMedications
 }
 
@@ -1356,7 +1356,7 @@ fun decryptVitalNumbers(vitalNumbers: VitalNumbers): DecryptedVitalNumbers {
     decryptVitalNumbers.attachmentNames = vitalNumbers.attachmentNames
     decryptVitalNumbers.createdUser = vitalNumbers.createdUser
     decryptVitalNumbers.private = vitalNumbers.private
-    decryptVitalNumbers.backingImages .addAll(vitalNumbers.backingImages)
+    decryptVitalNumbers.backingImages = ArrayList(vitalNumbers.backingImages)
     return decryptVitalNumbers
 }
 
@@ -1385,7 +1385,7 @@ fun decryptWellness(wellness: Wellness): DecryptedWellness {
     decryptWellness.modified = wellness.modified
     decryptWellness.createdUser = wellness.createdUser
     decryptWellness.private = wellness.private
-    decryptWellness.backingImages .addAll(wellness.backingImages)
+    decryptWellness.backingImages = ArrayList(wellness.backingImages)
     return decryptWellness
 }
 
@@ -1453,7 +1453,7 @@ fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes
     decryptClothingSizes.modified = clothingSizes.modified
     decryptClothingSizes.createdUser = clothingSizes.createdUser
     decryptClothingSizes.private = clothingSizes.private
-    decryptClothingSizes.backingImages .addAll(clothingSizes.backingImages)
+    decryptClothingSizes.backingImages = ArrayList(clothingSizes.backingImages)
     return decryptClothingSizes
 }
 
@@ -1673,7 +1673,7 @@ fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation 
     decrypytMainEducation.attachmentNames = mainEducation.attachmentNames
     decrypytMainEducation.createdUser = mainEducation.createdUser
     decrypytMainEducation.private = mainEducation.private
-    decrypytMainEducation.backingImages .addAll(mainEducation.backingImages)
+    decrypytMainEducation.backingImages = ArrayList(mainEducation.backingImages)
     return decrypytMainEducation
 }
 
