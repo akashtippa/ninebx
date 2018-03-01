@@ -60,7 +60,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
 
-        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
+        prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 mCurrentUser.id = getUniqueId()
                 mCurrentUser = encryptUsers(mCurrentUser)

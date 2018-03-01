@@ -237,7 +237,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ListsPresenter(this, listId, arguments!!.getInt("categoryName"))
+        ListsPresenter(this, listId, arguments!!.getInt("categoryName")).fetchDataInBackground()
 
         decryptedTravelList = arguments!!.getParcelable<DecryptedTravelList>(Constants.SELECTED_ITEM)
 

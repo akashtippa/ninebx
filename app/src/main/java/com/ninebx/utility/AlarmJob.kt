@@ -132,7 +132,7 @@ class AlarmJob : Job() {
 
         val TAG = AlarmJob::class.java.simpleName
 
-        fun scheduleJob(reminder: CalendarEvents, calendar: Calendar ) {
+        fun scheduleJob( reminder: CalendarEvents, calendar: Calendar ) {
             AppLogger.d(TAG, "scheduleJob : " + reminder.toString())
             val gson = Gson()
             val reminderString = gson.toJson(reminder)

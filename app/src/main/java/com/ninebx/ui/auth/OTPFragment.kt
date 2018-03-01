@@ -1,5 +1,7 @@
 package com.ninebx.ui.auth
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -14,17 +16,15 @@ import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.utility.AppLogger
+import com.ninebx.utility.*
 import com.ninebx.utility.Constants.PASSCODE_CREATE
-import com.ninebx.utility.decryptString
-import com.ninebx.utility.getCurrentUsers
-import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_otp.*
 
 /**
  * Created by Alok on 04/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class OTPFragment : BaseAuthFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,25 +40,34 @@ class OTPFragment : BaseAuthFragment() {
         btnSubmit.setOnClickListener {
             if( validate() ) {
                 emailOtp = ""
-                prepareRealmConnections( context, true,"Users", object : Realm.Callback( ) {
-                    override fun onSuccess(realm: Realm?) {
 
-                        val currentUsers = getCurrentUsers( realm!! )
+                object : AsyncTask<Void, Void, Int>() {
+                    override fun doInBackground(vararg p0: Void?) : Int {
+                        prepareRealmConnections( context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback( ) {
+                            override fun onSuccess(realm: Realm?) {
+                                val currentUsers = getCurrentUsers( realm!! )
+                                if (currentUsers != null && currentUsers.size > 0) {
+                                    NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
+                                }
+                                else {
+                                    onPostExecute(R.string.unable_to_find_user)
+                                }
+                            }
 
-                        if (currentUsers != null && currentUsers.size > 0) {
-                            //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
-                            NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
-                            context!!.hideProgressDialog()
-
-
-                            mAuthView.navigateToCreatePassCode(PASSCODE_CREATE, "")
-                        }
-                        else {
-                            mAuthView.onError(R.string.unable_to_find_user)
-                        }
+                        })
+                        return -1
                     }
 
-                })
+                    override fun onPostExecute(result: Int) {
+                        super.onPostExecute(result)
+                        context!!.hideProgressDialog()
+                        mAuthView.navigateToCreatePassCode(PASSCODE_CREATE, "")
+                        if( result != -1 ) mAuthView.onError(result)
+                    }
+
+
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
 
             }
         }
