@@ -71,9 +71,15 @@ class AccountPasswordFragment : BaseAuthFragment() {
                         mCurrentUser = encryptUsers(mCurrentUser)
                         //AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
                         mCurrentUser.insertOrUpdate(realm!!)
-                        mAuthView.navigateToOTP(false)
+
                     }
                 })
+
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                mAuthView.navigateToOTP(false)
             }
 
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
