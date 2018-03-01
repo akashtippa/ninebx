@@ -204,8 +204,8 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName.decryptString()
-        txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress.decryptString()
+        txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
+        txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
 
         txtProfile.setOnClickListener(this)
         txtSecurityOverview.setOnClickListener(this)

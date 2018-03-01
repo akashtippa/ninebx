@@ -3079,8 +3079,11 @@ class Level2CategoryHelper(
                     prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine : DecryptedCombine = combineItem as DecryptedCombine
-                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java)
+                            }
                             combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
                             /*combine.financialItems.add( decryptedFinancial )
                             val encryptedCombine = encryptCombine(combine)*/
