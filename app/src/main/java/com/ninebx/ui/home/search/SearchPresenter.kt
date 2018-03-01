@@ -261,10 +261,7 @@ class SearchPresenter {
                                 val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
                                 appendToDecryptCombineInterests(decryptedCombineInterests)
                             }
-                            searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
-                            //AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
-                        } else {
-                            searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
+
                         }
 
                     }
