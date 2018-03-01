@@ -1,7 +1,5 @@
 package com.ninebx.ui.home.notifications
 
-import android.app.Notification
-import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,20 +15,14 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.home.BaseHomeFragment
-import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.*
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Context.NOTIFICATION_SERVICE
-import android.app.NotificationManager
-import android.content.Context.ALARM_SERVICE
-import android.app.AlarmManager
 import com.ninebx.ui.base.realm.decrypted.*
-import io.realm.Realm
+import com.ninebx.utility.AlarmJob.Companion.scheduleNotificaiton
 import kotlin.collections.ArrayList
-
 
 /**
  * Created by Alok on 03/01/18.
@@ -156,5 +148,14 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mNotificationsPresenter = NotificationsPresenter(this)
+        var notifications = Notifications()
+        notifications.subTitle = "AndroidTest".encryptString()
+        var sdf  = SimpleDateFormat("dd/MM/yyyy")
+        var sdfTime = SimpleDateFormat("hh.mm")
+        notifications.created = sdf.format(Calendar.getInstance().time)
+        notifications.id = getUniqueId()
+        notifications.message = "Android Test expiry".encryptString()
+        scheduleNotificaiton(notifications, Calendar.getInstance())
+        AppLogger.d("NotificationScheduled", "Scheduling Notifications")
     }
 }

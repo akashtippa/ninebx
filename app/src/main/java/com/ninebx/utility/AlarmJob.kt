@@ -34,8 +34,12 @@ class AlarmJob : Job() {
         val title: String
         val desc: String
 
+        val extraNotification = params.extras["notification"] as String
+        val notify = gson.fromJson(extraNotification, Notifications::class.java)
+        val notificationTitle : String
+        val notificationDesc : String
 
-        /*if (reminder.action == Reminders.ACTION_PREGAME || reminder.action == Reminders.ACTION_POSTGAME) {
+           /*if (reminder.action == Reminders.ACTION_PREGAME || reminder.action == Reminders.ACTION_POSTGAME) {
             val testDateTime = getGameDateTime(reminder.date + " , " + reminder.time)
             title = "Reminder : You have an event - ${reminder.title}"
             desc = "${testDateTime.toString("dd MMM ")} at ${testDateTime.toString("hh:mm a")}"
@@ -53,10 +57,13 @@ class AlarmJob : Job() {
         else desc = reminder.title[0]!!
         
         showNotification( title, desc )
-        
+
+        notificationTitle = "NineBx : ${notify.subTitle[0]}"
+        notificationDesc =notify.message
+        showNotification(notificationTitle, notificationDesc)
+
         return Result.SUCCESS
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showNotification(title: String, desc: String?) {
@@ -163,10 +170,10 @@ class AlarmJob : Job() {
         }
 
         fun scheduleNotificaiton(notification : Notifications , calendar: Calendar ){
-            AppLogger.d(TAG, "scheduleNotification : " + notification.toString())
+            AppLogger.d("NotificationScheduled", "scheduleNotification : " + notification.toString())
             val gson = Gson()
             val notificationString = gson.toJson(notification)
-            AppLogger.d(TAG, "scheduleNotification : JSON" + notificationString)
+            AppLogger.d("NotificationScheduled", "scheduleNotification : JSON" + notificationString)
             var extras = PersistableBundleCompat()
             extras.putString("notification", notificationString)
             val reminderTimeInMillis: Long = calendar.timeInMillis
@@ -176,7 +183,6 @@ class AlarmJob : Job() {
             if (reminderTimeInMillis > calendar.timeInMillis ){
                 jobId = JobRequest.Builder(id)
                         .setExact((reminderTimeInMillis - calendar.timeInMillis))
-                        //.setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
                         .setRequiresDeviceIdle(false)
                         .setExtras(extras)
                         .build()
