@@ -1,11 +1,14 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -47,7 +50,7 @@ class Level2CategoryHelper(
         extractObject()
         when (category_name) {
 
-            //Home&Money
+        //Home&Money
             "Banking" -> {
                 getBanking()
             }
@@ -153,7 +156,7 @@ class Level2CategoryHelper(
                 getOtherGovernmentIssuedID()
             }
 
-            //Travel
+        //Travel
 
             "Airline" -> {
                 getAirline()
@@ -2760,7 +2763,7 @@ class Level2CategoryHelper(
                 setAssets( level2Category )
             }
 
-            //Check from here
+        //Check from here
         // Insurance Left
 
             "Past returns" -> {
@@ -3042,26 +3045,57 @@ class Level2CategoryHelper(
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedFinancial!!.selectionType = categoryID
-                    decryptedFinancial!!.institutionName = title
-                    if( decryptedFinancial!!.id.toInt() == 0 ) {
-                        decryptedFinancial!!.id = getUniqueId()
-                    }
-                    val financial = encryptFinancial(decryptedFinancial!!)
-                    val combine : DecryptedCombine = combineItem as DecryptedCombine
-                    combine.financialItems.add( decryptedFinancial )
-                    val encryptedCombine = encryptCombine(combine)
-                    realm.insertOrUpdate(encryptedCombine)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
-                }
+            decryptedFinancial!!.selectionType = categoryID
+            decryptedFinancial!!.institutionName = title
+            if( decryptedFinancial!!.id.toInt() == 0 ) {
+                decryptedFinancial!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>() {
 
-            })
+                override fun doInBackground(vararg p0: Void?) {
+
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val financial = encryptFinancial(decryptedFinancial!!)
+                            realm.insertOrUpdate(financial)
+                            realm.commitTransaction()
+
+
+
+                        }
+
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
+                            /*combine.financialItems.add( decryptedFinancial )
+                            val encryptedCombine = encryptCombine(combine)*/
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+
+
+
+                        }
+
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+
         }
 
         if( decryptedPayment!= null ) {
@@ -3102,6 +3136,7 @@ class Level2CategoryHelper(
 
             })
         }
+
         if( decryptedVehicle!= null ) {
             prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
@@ -3122,6 +3157,7 @@ class Level2CategoryHelper(
 
             })
         }
+
         if( decryptedAssets!= null ) {
             prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
@@ -3142,6 +3178,7 @@ class Level2CategoryHelper(
 
             })
         }
+
         if( decryptedInsurance!= null ) {
             prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
@@ -3162,6 +3199,7 @@ class Level2CategoryHelper(
 
             })
         }
+
         if( decryptedTaxes!= null ) {
             prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
@@ -3182,6 +3220,7 @@ class Level2CategoryHelper(
 
             })
         }
+
 
     }
 }

@@ -35,6 +35,7 @@ import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_super_sub_list.*
 import java.util.*
 import kotlin.collections.ArrayList
+import com.ninebx.ui.base.realm.decrypted.*
 
 
 /***
@@ -58,13 +59,13 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         hideProgress()
     }
 
-    private var combineFetched: ArrayList<HomeList>? = null
+    private var combineFetched: ArrayList<DecryptedHomeList>? = null
     private var contactsRealm: Realm? = null
 
     val detailsId: Long = 0
     var createdDate = ""
 
-    fun setCombine(combineFetched: ArrayList<HomeList>?) {
+    fun setCombine(combineFetched: ArrayList<DecryptedHomeList>?) {
         this.combineFetched = combineFetched
         searchItems.clear()
         for (item in combineFetched!!) {
@@ -73,10 +74,10 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineTravelFetched: ArrayList<TravelList>? = null
+    private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
     val preferences = NineBxPreferences()
 
-    fun setCombineFetched(combineFetched: ArrayList<TravelList>?) {
+    fun setCombineFetched(combineFetched: ArrayList<DecryptedTravelList>?) {
         this.combineTravelFetched = combineFetched
         searchItems.clear()
         for (item in combineFetched!!) {
@@ -85,9 +86,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineContactsFetched: ArrayList<ContactsList>? = null
+    private var combineContactsFetched: ArrayList<DecryptedContactsList>? = null
 
-    fun setCombineContacts(combineContactsFetched: ArrayList<ContactsList>?) {
+    fun setCombineContacts(combineContactsFetched: ArrayList<DecryptedContactsList>?) {
         this.combineContactsFetched = combineContactsFetched
         searchItems.clear()
         for (item in combineContactsFetched!!) {
@@ -96,9 +97,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineEducationFetched: ArrayList<EducationList>? = null
+    private var combineEducationFetched: ArrayList<DecryptedEducationList>? = null
 
-    fun setCombineEduction(combineEducationFetched: ArrayList<EducationList>?) {
+    fun setCombineEduction(combineEducationFetched: ArrayList<DecryptedEducationList>?) {
         this.combineEducationFetched = combineEducationFetched
         searchItems.clear()
         for (item in combineEducationFetched!!) {
@@ -108,9 +109,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combinePersonalFetched: ArrayList<PersonalList>? = null
+    private var combinePersonalFetched: ArrayList<DecryptedPersonalList>? = null
 
-    fun setCombinePersonal(combinePersonalFetched: ArrayList<PersonalList>?) {
+    fun setCombinePersonal(combinePersonalFetched: ArrayList<DecryptedPersonalList>?) {
         this.combinePersonalFetched = combinePersonalFetched
         searchItems.clear()
         for (item in combinePersonalFetched!!) {
@@ -119,9 +120,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineInterestsFetched: ArrayList<InterestsList>? = null
+    private var combineInterestsFetched: ArrayList<DecryptedInterestsList>? = null
 
-    fun setCombineInterests(combineInterestsFetched: ArrayList<InterestsList>?) {
+    fun setCombineInterests(combineInterestsFetched: ArrayList<DecryptedInterestsList>?) {
         this.combineInterestsFetched = combineInterestsFetched
         searchItems.clear()
         for (item in combineInterestsFetched!!) {
@@ -131,9 +132,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineWellnessFetched: ArrayList<WellnessList>? = null
+    private var combineWellnessFetched: ArrayList<DecryptedWellnessList>? = null
 
-    fun setCombineWellness(combineWellnessFetched: ArrayList<WellnessList>?) {
+    fun setCombineWellness(combineWellnessFetched: ArrayList<DecryptedWellnessList>?) {
         this.combineWellnessFetched = combineWellnessFetched
         searchItems.clear()
         for (item in combineWellnessFetched!!) {
@@ -143,9 +144,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineMemoriesFetched: ArrayList<MemoriesList>? = null
+    private var combineMemoriesFetched: ArrayList<DecryptedMemoriesList>? = null
 
-    fun setCombineMemories(combineMemoriesFetched: ArrayList<MemoriesList>?) {
+    fun setCombineMemories(combineMemoriesFetched: ArrayList<DecryptedMemoriesList>?) {
         this.combineMemoriesFetched = combineMemoriesFetched
         searchItems.clear()
         for (item in combineMemoriesFetched!!) {
@@ -155,9 +156,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    private var combineShoppingFetched: ArrayList<ShoppingList>? = null
+    private var combineShoppingFetched: ArrayList<DecryptedShoppingList>? = null
 
-    fun setCombineShopping(combineShoppingFetched: ArrayList<ShoppingList>?) {
+    fun setCombineShopping(combineShoppingFetched: ArrayList<DecryptedShoppingList>?) {
         this.combineShoppingFetched = combineShoppingFetched
         searchItems.clear()
         for (item in combineShoppingFetched!!) {
@@ -166,55 +167,55 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
-    override fun homeListCount(contactsUpdating: Int, decryptCombine: RealmResults<HomeList>?) {
+    override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
         combineFetched = ArrayList()
         combineFetched!!.addAll(decryptCombine!!.asIterable())
         setCombine(combineFetched)
     }
 
-    override fun travelListCount(contactsUpdating: Int, decryptCombine: RealmResults<TravelList>) {
+    override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
         combineTravelFetched = ArrayList()
         combineTravelFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineFetched(combineTravelFetched)
     }
 
-    override fun contactListCount(contactsUpdating: Int, decryptCombine: RealmResults<ContactsList>) {
+    override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
         combineContactsFetched = ArrayList()
         combineContactsFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineContacts(combineContactsFetched)
     }
 
-    override fun educationListCount(contactsUpdating: Int, decryptCombine: RealmResults<EducationList>) {
+    override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
         combineEducationFetched = ArrayList()
         combineEducationFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineEduction(combineEducationFetched)
     }
 
-    override fun interestListCount(contactsUpdating: Int, decryptCombine: RealmResults<InterestsList>) {
+    override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
         combineInterestsFetched = ArrayList()
         combineInterestsFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineInterests(combineInterestsFetched)
     }
 
-    override fun countPersonalList(contactsUpdating: Int, decryptCombine: RealmResults<PersonalList>) {
+    override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
         combinePersonalFetched = ArrayList()
         combinePersonalFetched!!.addAll(decryptCombine!!.asIterable())
         setCombinePersonal(combinePersonalFetched)
     }
 
-    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: RealmResults<WellnessList>) {
+    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
         combineWellnessFetched = ArrayList()
         combineWellnessFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineWellness(combineWellnessFetched)
     }
 
-    override fun memoryListCount(contactsUpdating: Int, decryptCombine: RealmResults<MemoriesList>) {
+    override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
         combineMemoriesFetched = ArrayList()
         combineMemoriesFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineMemories(combineMemoriesFetched)
     }
 
-    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: RealmResults<ShoppingList>) {
+    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
         combineShoppingFetched = ArrayList()
         combineShoppingFetched!!.addAll(decryptCombine!!.asIterable())
         setCombineShopping(combineShoppingFetched)
@@ -875,49 +876,49 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         return super.onBackPressed()
     }
 
-    fun setHomeList(listItem: HomeList) {
+    fun setHomeList(listItem: DecryptedHomeList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setTravelList(listItem: TravelList) {
+    fun setTravelList(listItem: DecryptedTravelList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setContactsList(listItem: ContactsList) {
+    fun setContactsList(listItem: DecryptedContactsList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setEducationList(listItem: EducationList) {
+    fun setEducationList(listItem: DecryptedEducationList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setPersonalList(listItem: PersonalList) {
+    fun setPersonalList(listItem: DecryptedPersonalList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setInterestsList(listItem: InterestsList) {
+    fun setInterestsList(listItem: DecryptedInterestsList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setWellnessList(listItem: WellnessList) {
+    fun setWellnessList(listItem: DecryptedWellnessList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setMemoriesList(listItem: MemoriesList) {
+    fun setMemoriesList(listItem: DecryptedMemoriesList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
-    fun setShoppingList(listItem: ShoppingList) {
+    fun setShoppingList(listItem: DecryptedShoppingList) {
         listId = listItem.id
-        listTitleName = listItem.listName.decryptString()
+        listTitleName = listItem.listName
     }
 
     override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {

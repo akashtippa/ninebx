@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.notifications
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import com.ninebx.ui.base.realm.Notifications
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
 import com.ninebx.utility.*
@@ -12,6 +14,7 @@ import java.util.*
 /**
  * Created by Alok on 03/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class NotificationsPresenter(val notificationsView: NotificationsView)  {
     private val context = getApplicationContext()
     private val mDecryptNotifications = ArrayList<DecryptedNotifications>()
@@ -20,21 +23,34 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
     private var getNotification: RealmResults<Notifications>?=null
 
     init {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
-            override fun onSuccess(realm: Realm?) {
-                mNotificationsRealm = realm!!
-                getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
-                if(getNotification!!.size > 0){
-                    getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
-                    notificationsView.onNotificationsFetched(mDecryptNotifications)
-                    notificationsView.onEncryptedNotifications(getNotification!!)
-                    AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
-                }
-                else
-                    AppLogger.d("Notification", "No data" )
-                    notificationsView.hideProgress()
+
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
+                    override fun onSuccess(realm: Realm?) {
+                        mNotificationsRealm = realm!!
+                        getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
+                        if(getNotification!!.size > 0){
+                            getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
+
+                            AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
+                        }
+                        else
+                            AppLogger.d("Notification", "No data" )
+
+                    }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                notificationsView.onNotificationsFetched(mDecryptNotifications)
+                notificationsView.onEncryptedNotifications(getNotification!!)
+                notificationsView.hideProgress()
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+
     }
 
     fun deleteNotification(position: Int) {

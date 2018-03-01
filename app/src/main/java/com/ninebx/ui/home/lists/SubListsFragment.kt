@@ -24,7 +24,7 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts
 
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.adapter.Date
-
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
@@ -361,105 +361,105 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         return super.onBackPressed()
     }
 
-    private var combineFetched: ArrayList<HomeList>? = null
+    private var combineFetched: ArrayList<DecryptedHomeList>? = null
 
-    fun setCombine(combineFetched: ArrayList<HomeList>?) {
+    fun setCombine(combineFetched: ArrayList<DecryptedHomeList>?) {
         this.combineFetched = combineFetched
         searchItems.clear()
         for (item in combineFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
     }
 
-    private var combineTravelFetched: ArrayList<TravelList>? = null
+    private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
 
 
-    fun setCombineFetched(combineFetched: ArrayList<TravelList>?) {
+    fun setCombineFetched(combineFetched: ArrayList<DecryptedTravelList>?) {
         this.combineTravelFetched = combineFetched
         searchItems.clear()
         for (item in combineFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combineContactsFetched: ArrayList<ContactsList>? = null
+    private var combineContactsFetched: ArrayList<DecryptedContactsList>? = null
 
-    fun setCombineContacts(combineContactsFetched: ArrayList<ContactsList>?) {
+    fun setCombineContacts(combineContactsFetched: ArrayList<DecryptedContactsList>?) {
         this.combineContactsFetched = combineContactsFetched
         searchItems.clear()
         for (item in combineContactsFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combineEducationFetched: ArrayList<EducationList>? = null
+    private var combineEducationFetched: ArrayList<DecryptedEducationList>? = null
 
-    fun setCombineEduction(combineEducationFetched: ArrayList<EducationList>?) {
+    fun setCombineEduction(combineEducationFetched: ArrayList<DecryptedEducationList>?) {
         this.combineEducationFetched = combineEducationFetched
         searchItems.clear()
         for (item in combineEducationFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combinePersonalFetched: ArrayList<PersonalList>? = null
+    private var combinePersonalFetched: ArrayList<DecryptedPersonalList>? = null
 
-    fun setCombinePersonal(combinePersonalFetched: ArrayList<PersonalList>?) {
+    fun setCombinePersonal(combinePersonalFetched: ArrayList<DecryptedPersonalList>?) {
         this.combinePersonalFetched = combinePersonalFetched
         searchItems.clear()
         for (item in combinePersonalFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combineInterestsFetched: ArrayList<InterestsList>? = null
+    private var combineInterestsFetched: ArrayList<DecryptedInterestsList>? = null
 
-    fun setCombineInterests(combineInterestsFetched: ArrayList<InterestsList>?) {
+    fun setCombineInterests(combineInterestsFetched: ArrayList<DecryptedInterestsList>?) {
         this.combineInterestsFetched = combineInterestsFetched
         searchItems.clear()
         for (item in combineInterestsFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combineWellnessFetched: ArrayList<WellnessList>? = null
+    private var combineWellnessFetched: ArrayList<DecryptedWellnessList>? = null
 
-    fun setCombineWellness(combineWellnessFetched: ArrayList<WellnessList>?) {
+    fun setCombineWellness(combineWellnessFetched: ArrayList<DecryptedWellnessList>?) {
         this.combineWellnessFetched = combineWellnessFetched
         searchItems.clear()
         for (item in combineWellnessFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combineMemoriesFetched: ArrayList<MemoriesList>? = null
+    private var combineMemoriesFetched: ArrayList<DecryptedMemoriesList>? = null
 
-    fun setCombineMemories(combineMemoriesFetched: ArrayList<MemoriesList>?) {
+    fun setCombineMemories(combineMemoriesFetched: ArrayList<DecryptedMemoriesList>?) {
         this.combineMemoriesFetched = combineMemoriesFetched
         searchItems.clear()
         for (item in combineMemoriesFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }
 
-    private var combineShoppingFetched: ArrayList<ShoppingList>? = null
+    private var combineShoppingFetched: ArrayList<DecryptedShoppingList>? = null
 
-    fun setCombineShopping(combineShoppingFetched: ArrayList<ShoppingList>?) {
+    fun setCombineShopping(combineShoppingFetched: ArrayList<DecryptedShoppingList>?) {
         this.combineShoppingFetched = combineShoppingFetched
         searchItems.clear()
         for (item in combineShoppingFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
     }

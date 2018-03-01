@@ -72,9 +72,9 @@ fun encryptAESKeyPassword(inputString: String, privateKey: ByteArray): String {
     val keyBytes = privateKey
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
-    AppLogger.d("encryptAESKeyPassword", "Private Key : " + Arrays.toString(keyBytes))
-    AppLogger.d("encryptAESKeyPassword", "Input : " + String(input))
-    AppLogger.d("encryptAESKeyPassword", "Input Bytes : " + Arrays.toString(input))
+    //AppLogger.d("encryptAESKeyPassword", "Private Key : " + Arrays.toString(keyBytes))
+    //AppLogger.d("encryptAESKeyPassword", "Input : " + String(input))
+    //AppLogger.d("encryptAESKeyPassword", "Input Bytes : " + Arrays.toString(input))
 
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
@@ -94,10 +94,10 @@ fun decryptAESKEYPassword(cipherTextBase64: ByteArray?, masterPassword: ByteArra
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
-    AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
+    //AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
     val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+    //AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
+    //AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
 
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
@@ -107,9 +107,9 @@ fun decryptAESKEYPassword(cipherTextBase64: ByteArray?, masterPassword: ByteArra
     var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
     ptLength += cipher.doFinal(plainText, ptLength)
 
-    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
-    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
-    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+    //AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+    //AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+    //AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
 
     return String(plainText).substring(0, ptLength)
 }
@@ -122,9 +122,9 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
     val keyBytes = (privateKey.toByteArray(Charsets.UTF_8))
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
-    AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
-    AppLogger.d("encryptAESKey", "Input : " + String(input))
-    AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
+    //AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
+    //AppLogger.d("encryptAESKey", "Input : " + String(input))
+    //AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
 
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
@@ -145,10 +145,10 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
         val key = SecretKeySpec(keyBytes, "AES")
         val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
-        AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
+        //AppLogger.d("decryptAESKey", "Cipher : " + (cipherTextBase64))
         val convertedCipher = convertToUInt8(cipherTextBase64)
-        AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-        AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+        //AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
+        //AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
 
         // decryption pass
         cipher.init(Cipher.DECRYPT_MODE, key)
@@ -164,9 +164,9 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
         var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
         ptLength += cipher.doFinal(plainText, ptLength)
 
-        AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
-        AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
-        AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+        //AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+        //AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+        //AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
 
         return String(plainText).substring(0, ptLength)
 
@@ -192,9 +192,9 @@ fun encryptDecryptAESKey(masterPassword: String): String {
     val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
-    AppLogger.d("decryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
-    AppLogger.d("decryptAESKey", "Input : " + String(input))
-    AppLogger.d("decryptAESKey", "Input Bytes : " + Arrays.toString(input))
+    //AppLogger.d("decryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
+    //AppLogger.d("decryptAESKey", "Input : " + String(input))
+    //AppLogger.d("decryptAESKey", "Input Bytes : " + Arrays.toString(input))
 
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
@@ -204,12 +204,12 @@ fun encryptDecryptAESKey(masterPassword: String): String {
 
     val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
 
-    AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
+    //AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
     val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
-    AppLogger.d("decryptAESKey", "Cipher Length : " + cipherText.size)
-    AppLogger.d("decryptAESKey", "Cipher Length : " + ctLength)
+    //AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
+    //AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+    //AppLogger.d("decryptAESKey", "Cipher Length : " + cipherText.size)
+    //AppLogger.d("decryptAESKey", "Cipher Length : " + ctLength)
 
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
@@ -219,9 +219,9 @@ fun encryptDecryptAESKey(masterPassword: String): String {
     var ptLength = cipher.update(cipherText, 0, plainText.size, plainText, 0)
     ptLength += cipher.doFinal(plainText, ptLength)
 
-    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
-    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
-    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+    //AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+    //AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+    //AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
 
     return ""
 
@@ -236,9 +236,9 @@ fun encryptAESKey(masterPassword: String): String {
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
-    AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
-    AppLogger.d("encryptAESKey", "Input : " + String(input))
-    AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
+    //AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
+    //AppLogger.d("encryptAESKey", "Input : " + String(input))
+    //AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
 
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
@@ -263,10 +263,10 @@ fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
 
-    AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
+    //AppLogger.d("decryptAESKey", "Cipher : " + Arrays.toString(cipherTextBase64))
     val convertedCipher = convertToUInt8(cipherTextBase64)
-    AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
-    AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
+    //AppLogger.d("decryptAESKey", "Cipher iOS : " + convertedCipher)
+    //AppLogger.d("decryptAESKey", "Cipher Android : " + convertToByte(convertedCipher.toCharArray()))
 
     // decryption pass
     cipher.init(Cipher.DECRYPT_MODE, key)
@@ -276,9 +276,9 @@ fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
     var ptLength = cipher.update(cipherText, 0, cipherText.size, plainText, 0)
     ptLength += cipher.doFinal(plainText, ptLength)
 
-    AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
-    AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
-    AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
+    //AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
+    //AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
+    //AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
 }
 
 /**
@@ -370,10 +370,10 @@ fun securityTest() {
     val privateKey = randomString(16)
 
     val encryptedKey = encryptAESKey(privateKey, privateKey)
-    AppLogger.d("securityTest", "Encrypted Key : " + encryptedKey)
+    //AppLogger.d("securityTest", "Encrypted Key : " + encryptedKey)
 
     val decryptedKey = decryptAESKEY(encryptedKey.toByteArray(Charsets.UTF_8), privateKey)
-    AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
+    //AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
 }
 
 fun String.encryptString(): String {
@@ -465,7 +465,7 @@ fun decryptUsers(currentUser: Users): DecryptedUsers {
     decryptedUsers.profilePhoto = currentUser.profilePhoto
 
     decryptedUsers.decryptedMembers = decryptMembers(currentUser.members)
-    AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers)
+    //AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers)
     return decryptedUsers
 }
 
@@ -577,9 +577,7 @@ fun decryptFinancial(finance: Financial): DecryptedFinancial {
     decryptedFinancial.modified = finance.modified
     decryptedFinancial.createdUser = finance.createdUser
     decryptedFinancial.notes = finance.notes.decryptString()
-    decryptedFinancial.attachmentNames = finance.attachmentNames.decryptString()
-
-    AppLogger.d("Decrypt", "decryptedFinancial : " + decryptedFinancial)
+    decryptedFinancial.attachmentNames = finance.attachmentNames
 
     return decryptedFinancial
 }
@@ -608,7 +606,7 @@ fun decryptPayment(payment: Payment): DecryptedPayment {
     decryptedPayment.createdUser = payment.createdUser
     decryptedPayment.notes = payment.notes
     decryptedPayment.attachmentNames = payment.attachmentNames
-    AppLogger.d("Decrypt", "decryptedPayment : " + decryptedPayment)
+    //AppLogger.d("Decrypt", "decryptedPayment : " + decryptedPayment)
     return decryptedPayment
 }
 
@@ -643,7 +641,7 @@ fun decryptProperty(property: Property): DecryptedProperty {
     decryptedProperty.notes = property.notes
     decryptedProperty.attachmentNames = property.attachmentNames
 
-    AppLogger.d("Decrypt", "decryptedProperty : " + decryptedProperty)
+    //AppLogger.d("Decrypt", "decryptedProperty : " + decryptedProperty)
 
     return decryptedProperty
 }
@@ -679,9 +677,9 @@ fun decryptVehicle(vehicle: Vehicle): DecryptedVehicle {
     decryptedVehicle.dateOfService = vehicle.dateOfService
     decryptedVehicle.vehicle = vehicle.vehicle.decryptString()
     decryptedVehicle.notes = vehicle.notes.decryptString()
-    decryptedVehicle.attachmentNames = vehicle.attachmentNames.decryptString()
+    decryptedVehicle.attachmentNames = vehicle.attachmentNames
 
-    AppLogger.d("Decrypt", "decryptedVehicle : " + decryptedVehicle)
+    //AppLogger.d("Decrypt", "decryptedVehicle : " + decryptedVehicle)
     return decryptedVehicle
 }
 
@@ -709,7 +707,7 @@ fun decryptAsset(asset: Asset): DecryptedAsset {
     decryptedAsset.imageName = asset.imageName
     decryptedAsset.attachmentNames = asset.attachmentNames
 
-    AppLogger.d("Decrypt", "decryptedAsset : " + decryptedAsset)
+    //AppLogger.d("Decrypt", "decryptedAsset : " + decryptedAsset)
 
     return decryptedAsset
 }
@@ -741,7 +739,7 @@ fun decryptInsurance(insurance: Insurance): DecryptedInsurance {
     decryptedInsurance.notes = insurance.notes
     decryptedInsurance.attachmentNames = insurance.attachmentNames
 
-    AppLogger.d("Decrypt", "decryptedInsurance : " + decryptedInsurance)
+    //AppLogger.d("Decrypt", "decryptedInsurance : " + decryptedInsurance)
     return decryptedInsurance
 }
 
@@ -758,14 +756,14 @@ fun decryptTaxes(taxes: Taxes): DecryptedTax {
     decryptedTax.taxPayer = taxes.taxPayer.decryptString()
     decryptedTax.contacts = taxes.contacts.decryptString()
     decryptedTax.imageName = taxes.imageName.decryptString()
-    decryptedTax.attachmentNames = taxes.attachmentNames.decryptString()
+    decryptedTax.attachmentNames = taxes.attachmentNames
     decryptedTax.notes = taxes.notes.decryptString()
     decryptedTax.title = taxes.title.decryptString()
     decryptedTax.created = taxes.created
     decryptedTax.modified = taxes.modified
    // decryptedTax.isPrivate = taxes.isPrivate
     decryptedTax.createdUser = taxes.createdUser
-    AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
+    //AppLogger.d("Decrypt", "decryptedTax : " + decryptedTax)
     return decryptedTax
 }
 
@@ -786,7 +784,7 @@ fun decryptHomeList(homeList: HomeList): DecryptedHomeList {
     decryptedHomeList.private = homeList.private
     decryptedHomeList.createdUser = homeList.createdUser
 
-    AppLogger.d("Decrypt", "decryptedHomeList : " + decryptedHomeList)
+    //AppLogger.d("Decrypt", "decryptedHomeList : " + decryptedHomeList)
     return decryptedHomeList
 }
 
@@ -810,7 +808,7 @@ fun decryptEducation(education: Education): DecryptedEducation {
     decryptedEducation.pin = education.pin.decryptString()
     decryptedEducation.paymentMethodOnFile = education.paymentMethodOnFile.decryptString()
     decryptedEducation.notes = education.notes.decryptString()
-    decryptedEducation.attachmentNames = education.attachmentNames.decryptString()
+    decryptedEducation.attachmentNames = education.attachmentNames
     decryptedEducation.title = education.title.decryptString()
     decryptedEducation.created = education.created
     decryptedEducation.createdUser = education.createdUser
@@ -819,7 +817,7 @@ fun decryptEducation(education: Education): DecryptedEducation {
     decryptedEducation.backingImages .addAll(education.backingImages)
     decryptedEducation.photosId = education.photosId
 
-    AppLogger.d("Decrypt", "decryptedEducation : " + decryptedEducation)
+    //AppLogger.d("Decrypt", "decryptedEducation : " + decryptedEducation)
     return decryptedEducation
 }
 
@@ -840,10 +838,10 @@ fun decryptMainEducation(mainEducation: MainEducation): DecryptedMainEducation {
     decryptedMainEducation.created = mainEducation.created
     decryptedMainEducation.modified = mainEducation.modified
     decryptedMainEducation.private = mainEducation.private
-    decryptedMainEducation.attachmentNames = mainEducation.attachmentNames.decryptString()
+    decryptedMainEducation.attachmentNames = mainEducation.attachmentNames
     decryptedMainEducation.createdUser = mainEducation.createdUser
     decryptedMainEducation.backingImages .addAll(mainEducation.backingImages)
-    AppLogger.d("Decrypt", "decryptedMainEducation : " + decryptedMainEducation)
+    //AppLogger.d("Decrypt", "decryptedMainEducation : " + decryptedMainEducation)
     return decryptedMainEducation
 }
 
@@ -864,11 +862,11 @@ fun decryptWork(work: Work): DecryptedWork {
     decryptedWork.modified = work.modified
     decryptedWork.private = work.private
     decryptedWork.notes = work.notes.decryptString()
-    decryptedWork.attachmentNames = work.attachmentNames.decryptString()
+    decryptedWork.attachmentNames = work.attachmentNames
     decryptedWork.createdUser = work.createdUser
     decryptedWork.backingImages .addAll(work.backingImages)
 
-    AppLogger.d("Decrypt", "decryptedWork : " + decryptedWork)
+    //AppLogger.d("Decrypt", "decryptedWork : " + decryptedWork)
     return decryptedWork
 }
 
@@ -899,7 +897,7 @@ fun decryptContact(contactsList: Contacts): DecryptedContacts {
     decryptedContacts.private = contactsList.private
     decryptedContacts.backingImages .addAll(contactsList.backingImages)
 
-    AppLogger.d("Decrypt", "decryptedContacts : " + decryptedContacts)
+    //AppLogger.d("Decrypt", "decryptedContacts : " + decryptedContacts)
     return decryptedContacts
 }
 
@@ -990,7 +988,7 @@ fun decryptCalendarEvents(calendarEvents: CalendarEvents): DecryptedCalendarEven
     decryptedCalendarEvents.showAs = calendarEvents.showAs
     decryptedCalendarEvents.url = calendarEvents.url
     decryptedCalendarEvents.isReminderSet = calendarEvents.isReminderSet
-    decryptedCalendarEvents.attachmentNames = calendarEvents.attachmentNames.decryptString()
+    decryptedCalendarEvents.attachmentNames = calendarEvents.attachmentNames
     decryptedCalendarEvents.backingImages .addAll(calendarEvents.backingImages)
     decryptedCalendarEvents.photosId = calendarEvents.photosId
 
@@ -1015,7 +1013,7 @@ fun decryptCertificate(certificate: Certificate): DecryptedCertificate {
     decryptCertificate.created = certificate.created
     decryptCertificate.modified = certificate.modified
     decryptCertificate.private = certificate.private
-    decryptCertificate.attachmentNames = certificate.attachmentNames.decryptString()
+    decryptCertificate.attachmentNames = certificate.attachmentNames
     decryptCertificate.createdUser = certificate.createdUser
     decryptCertificate.backingImages .addAll(certificate.backingImages)
 
@@ -1038,7 +1036,7 @@ fun decryptGovernment(government: Government): DecryptedGovernment {
     decryptGovernment.modified = government.modified
     decryptGovernment.private = government.private
     decryptGovernment.notes = government.notes.decryptString()
-    decryptGovernment.attachmentNames = government.attachmentNames.decryptString()
+    decryptGovernment.attachmentNames = government.attachmentNames
     decryptGovernment.createdUser = government.createdUser
     decryptGovernment.backingImages .addAll(government.backingImages)
     return decryptGovernment
@@ -1059,7 +1057,7 @@ fun decryptLicense(license: License): DecryptedLicense {
     decryptLicense.created = license.created
     decryptLicense.modified = license.modified
     decryptLicense.private = license.private
-    decryptLicense.attachmentNames = license.attachmentNames.decryptString()
+    decryptLicense.attachmentNames = license.attachmentNames
     decryptLicense.createdUser = license.createdUser
     decryptLicense.backingImages .addAll(license.backingImages)
     return decryptLicense
@@ -1084,7 +1082,7 @@ fun decryptPersonal(personal: Personal): DecryptedPersonal {
     decryptPersonal.pin = personal.pin.decryptString()
     decryptPersonal.paymentMethodOnFile = personal.paymentMethodOnFile.decryptString()
     decryptPersonal.notes = personal.notes.decryptString()
-    decryptPersonal.attachmentNames = personal.attachmentNames.decryptString()
+    decryptPersonal.attachmentNames = personal.attachmentNames
     decryptPersonal.title = personal.title.decryptString()
     decryptPersonal.created = personal.created
     decryptPersonal.modified = personal.modified
@@ -1104,7 +1102,7 @@ fun decryptSocial(social: Social): DecryptedSocial {
     decryptSocial.created = social.created
     decryptSocial.modified = social.modified
     decryptSocial.private = social.private
-    decryptSocial.attachmentNames = social.attachmentNames.decryptString()
+    decryptSocial.attachmentNames = social.attachmentNames
     decryptSocial.createdUser = social.createdUser
     decryptSocial.backingImages .addAll(social.backingImages)
     return decryptSocial
@@ -1122,7 +1120,7 @@ fun decryptTaxID(taxID: TaxID): DecryptedTaxID {
     decryptTaxID.created = taxID.created
     decryptTaxID.modified = taxID.modified
     decryptTaxID.private = taxID.private
-    decryptTaxID.attachmentNames = taxID.attachmentNames.decryptString()
+    decryptTaxID.attachmentNames = taxID.attachmentNames
     decryptTaxID.backingImages .addAll(taxID.backingImages)
     return decryptTaxID
 }
@@ -1156,7 +1154,7 @@ fun decryptCheckUps(checkups: Checkups): DecryptedCheckups {
     decryptCheckUps.reason = checkups.reason.decryptString()
     decryptCheckUps.dateOfVisit = checkups.dateOfVisit.decryptString()
     decryptCheckUps.notes = checkups.notes.decryptString()
-    decryptCheckUps.attachmentNames = checkups.attachmentNames.decryptString()
+    decryptCheckUps.attachmentNames = checkups.attachmentNames
     decryptCheckUps.created = checkups.created
     decryptCheckUps.modified = checkups.modified
     decryptCheckUps.createdUser = checkups.createdUser
@@ -1185,7 +1183,7 @@ fun decryptEmergencyContacts(emergencyContacts: EmergencyContacts): DecryptedEme
     decryptEmergencyContacts.created = emergencyContacts.created
     decryptEmergencyContacts.modified = emergencyContacts.modified
     decryptEmergencyContacts.notes = emergencyContacts.notes.decryptString()
-    decryptEmergencyContacts.attachmentNames = emergencyContacts.attachmentNames.decryptString()
+    decryptEmergencyContacts.attachmentNames = emergencyContacts.attachmentNames
     decryptEmergencyContacts.createdUser = emergencyContacts.createdUser
     decryptEmergencyContacts.private = emergencyContacts.private
     decryptEmergencyContacts.backingImages .addAll(emergencyContacts.backingImages)
@@ -1212,7 +1210,7 @@ fun decryptEyeGlassPrescriptions(eyeglassPrescriptions: EyeglassPrescriptions): 
     decryptEyeGlassPrescriptions.odBaseValue = eyeglassPrescriptions.odBaseValue.decryptString()
     decryptEyeGlassPrescriptions.osBaseValue = eyeglassPrescriptions.osBaseValue.decryptString()
     decryptEyeGlassPrescriptions.notes = eyeglassPrescriptions.notes.decryptString()
-    decryptEyeGlassPrescriptions.attachmentNames = eyeglassPrescriptions.attachmentNames.decryptString()
+    decryptEyeGlassPrescriptions.attachmentNames = eyeglassPrescriptions.attachmentNames
     decryptEyeGlassPrescriptions.created = eyeglassPrescriptions.created
     decryptEyeGlassPrescriptions.modified = eyeglassPrescriptions.modified
     decryptEyeGlassPrescriptions.createdUser = eyeglassPrescriptions.createdUser
@@ -1241,7 +1239,7 @@ fun decryptHealthCareProviders(healthcareProviders: HealthcareProviders): Decryp
     decryptHealthCareProviders.created = healthcareProviders.created
     decryptHealthCareProviders.modified = healthcareProviders.modified
     decryptHealthCareProviders.notes = healthcareProviders.notes.decryptString()
-    decryptHealthCareProviders.attachmentNames = healthcareProviders.attachmentNames.decryptString()
+    decryptHealthCareProviders.attachmentNames = healthcareProviders.attachmentNames
     decryptHealthCareProviders.createdUser = healthcareProviders.createdUser
     decryptHealthCareProviders.private = healthcareProviders.private
     decryptHealthCareProviders.backingImages .addAll(healthcareProviders.backingImages)
@@ -1267,7 +1265,7 @@ fun decryptIdentification(identification: Identification): DecryptedIdentificati
     decryptHomeList.created = identification.created
     decryptHomeList.modified = identification.modified
     decryptHomeList.notes = identification.notes.decryptString()
-    decryptHomeList.attachmentNames = identification.attachmentNames.decryptString()
+    decryptHomeList.attachmentNames = identification.attachmentNames
     decryptHomeList.createdUser = identification.createdUser
     decryptHomeList.private = identification.private
     decryptHomeList.backingImages .addAll(identification.backingImages)
@@ -1283,7 +1281,7 @@ fun decryptMedicalConditions(medicalConditions: MedicalConditions): DecryptedMed
     decryptMedicalConditions.dateDiagnosed = medicalConditions.dateDiagnosed.decryptString()
     decryptMedicalConditions.medi_description = medicalConditions.medi_description.decryptString()
     decryptMedicalConditions.notes = medicalConditions.notes.decryptString()
-    decryptMedicalConditions.attachmentNames = medicalConditions.attachmentNames.decryptString()
+    decryptMedicalConditions.attachmentNames = medicalConditions.attachmentNames
     decryptMedicalConditions.created = medicalConditions.created
     decryptMedicalConditions.modified = medicalConditions.modified
     decryptMedicalConditions.createdUser = medicalConditions.createdUser
@@ -1304,7 +1302,7 @@ fun decryptMedicalHistory(medicalHistory: MedicalHistory): DecryptedMedicalHisto
     decryptMedicalHistory.created = medicalHistory.created
     decryptMedicalHistory.modified = medicalHistory.modified
     decryptMedicalHistory.notes = medicalHistory.notes.decryptString()
-    decryptMedicalHistory.attachmentNames = medicalHistory.attachmentNames.decryptString()
+    decryptMedicalHistory.attachmentNames = medicalHistory.attachmentNames
     decryptMedicalHistory.createdUser = medicalHistory.createdUser
     decryptMedicalHistory.private = medicalHistory.private
     decryptMedicalHistory.backingImages .addAll(medicalHistory.backingImages)
@@ -1322,7 +1320,7 @@ fun decryptMedications(medications: Medications): DecryptedMedications {
     decryptMedications.startDate = medications.startDate.decryptString()
     decryptMedications.endDate = medications.endDate.decryptString()
     decryptMedications.notes = medications.notes.decryptString()
-    decryptMedications.attachmentNames = medications.attachmentNames.decryptString()
+    decryptMedications.attachmentNames = medications.attachmentNames
     decryptMedications.created = medications.created
     decryptMedications.modified = medications.modified
     decryptMedications.createdUser = medications.createdUser
@@ -1355,7 +1353,7 @@ fun decryptVitalNumbers(vitalNumbers: VitalNumbers): DecryptedVitalNumbers {
     decryptVitalNumbers.created = vitalNumbers.created
     decryptVitalNumbers.modified = vitalNumbers.modified
     decryptVitalNumbers.notes = vitalNumbers.notes.decryptString()
-    decryptVitalNumbers.attachmentNames = vitalNumbers.attachmentNames.decryptString()
+    decryptVitalNumbers.attachmentNames = vitalNumbers.attachmentNames
     decryptVitalNumbers.createdUser = vitalNumbers.createdUser
     decryptVitalNumbers.private = vitalNumbers.private
     decryptVitalNumbers.backingImages .addAll(vitalNumbers.backingImages)
@@ -1381,7 +1379,7 @@ fun decryptWellness(wellness: Wellness): DecryptedWellness {
     decryptWellness.pin = wellness.pin.decryptString()
     decryptWellness.paymentMethodOnFile = wellness.paymentMethodOnFile.decryptString()
     decryptWellness.notes = wellness.notes.decryptString()
-    decryptWellness.attachmentNames = wellness.attachmentNames.decryptString()
+    decryptWellness.attachmentNames = wellness.attachmentNames
     decryptWellness.title = wellness.title.decryptString()
     decryptWellness.created = wellness.created
     decryptWellness.modified = wellness.modified
@@ -1446,7 +1444,7 @@ fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes
     decryptClothingSizes.clothing = clothingSizes.clothing.decryptString()
     decryptClothingSizes.shoes = clothingSizes.shoes.decryptString()
     decryptClothingSizes.notes = clothingSizes.notes.decryptString()
-    decryptClothingSizes.attachmentNames = clothingSizes.attachmentNames.decryptString()
+    decryptClothingSizes.attachmentNames = clothingSizes.attachmentNames
     decryptClothingSizes.beltsNumericSize = clothingSizes.beltsNumericSize.decryptString()
     decryptClothingSizes.socks = clothingSizes.socks.decryptString()
     decryptClothingSizes.seat = clothingSizes.seat.decryptString()
@@ -1464,7 +1462,7 @@ fun decryptContactsList(contactsList: ContactsList): DecryptedContactsList {
     decryptContactList.id = contactsList.id
     decryptContactList.selectionType = contactsList.selectionType.decryptString()
     decryptContactList.classType = contactsList.classType.decryptString()
-    decryptContactList.listName = contactsList.listName
+    decryptContactList.listName = contactsList.listName.decryptString()
     decryptContactList.dueDate = contactsList.dueDate.decryptString()
     decryptContactList.created = contactsList.created
     decryptContactList.modified = contactsList.modified
@@ -1500,7 +1498,7 @@ fun decryptDocuments(documents: Documents): DecryptedDocuments {
     decryptDocuments.dateIssued = documents.dateIssued.decryptString()
     decryptDocuments.expirationDate = documents.expirationDate.decryptString()
     decryptDocuments.notes = documents.notes.decryptString()
-    decryptDocuments.attachmentNames = documents.attachmentNames.decryptString()
+    decryptDocuments.attachmentNames = documents.attachmentNames
     decryptDocuments.created = documents.created
     decryptDocuments.modified = documents.modified
     decryptDocuments.createdUser = documents.createdUser
@@ -1559,7 +1557,7 @@ fun decryptInterests(interest: Interests): DecryptedInterests {
     decryptInterests.pin = interest.pin.decryptString()
     decryptInterests.paymentMethodOnFile = interest.paymentMethodOnFile.decryptString()
     decryptInterests.notes = interest.notes.decryptString()
-    decryptInterests.attachmentNames = interest.attachmentNames.decryptString()
+    decryptInterests.attachmentNames = interest.attachmentNames
     decryptInterests.title = interest.title.decryptString()
     decryptInterests.created = interest.created
     decryptInterests.modified = interest.modified
@@ -1600,7 +1598,7 @@ fun decryptLoyality(loyalty: Loyalty): DecryptedLoyalty {
     decryptLoyality.password = loyalty.password.decryptString()
     decryptLoyality.pin = loyalty.pin.decryptString()
     decryptLoyality.notes = loyalty.notes.decryptString()
-    decryptLoyality.attachmentNames = loyalty.attachmentNames.decryptString()
+    decryptLoyality.attachmentNames = loyalty.attachmentNames
     decryptLoyality.created = loyalty.created
     decryptLoyality.modified = loyalty.modified
     decryptLoyality.createdUser = loyalty.createdUser
@@ -1621,7 +1619,7 @@ fun decryptLoyaltyPrograms(loyalityPrograms: LoyaltyPrograms): DecryptedLoyaltyP
     decryptLoyaltyPrograms.password = loyalityPrograms.password.decryptString()
     decryptLoyaltyPrograms.pin = loyalityPrograms.pin.decryptString()
     decryptLoyaltyPrograms.notes = loyalityPrograms.notes.decryptString()
-    decryptLoyaltyPrograms.attachmentNames = loyalityPrograms.attachmentNames.decryptString()
+    decryptLoyaltyPrograms.attachmentNames = loyalityPrograms.attachmentNames
     decryptLoyaltyPrograms.created = loyalityPrograms.created
     decryptLoyaltyPrograms.modified = loyalityPrograms.modified
     decryptLoyaltyPrograms.createdUser = loyalityPrograms.createdUser
@@ -1648,7 +1646,7 @@ fun decryptMainContacts(mainContacts: MainContacts): DecryptedMainContacts {
     decryptMainContacts.pin = decryptMainContacts.pin.decryptString()
     decryptMainContacts.paymentMethodOnFile = decryptMainContacts.paymentMethodOnFile.decryptString()
     decryptMainContacts.notes = decryptMainContacts.notes.decryptString()
-    decryptMainContacts.attachmentNames = decryptMainContacts.attachmentNames.decryptString()
+    decryptMainContacts.attachmentNames = decryptMainContacts.attachmentNames
     decryptMainContacts.title = decryptMainContacts.title.decryptString()
     decryptMainContacts.created = decryptMainContacts.created
     decryptMainContacts.modified = decryptMainContacts.modified
@@ -1672,7 +1670,7 @@ fun decrypytMainEducation(mainEducation: MainEducation): DecryptedMainEducation 
     decrypytMainEducation.notes = mainEducation.notes.decryptString()
     decrypytMainEducation.created = mainEducation.created
     decrypytMainEducation.modified = mainEducation.modified
-    decrypytMainEducation.attachmentNames = mainEducation.attachmentNames.decryptString()
+    decrypytMainEducation.attachmentNames = mainEducation.attachmentNames
     decrypytMainEducation.createdUser = mainEducation.createdUser
     decrypytMainEducation.private = mainEducation.private
     decrypytMainEducation.backingImages .addAll(mainEducation.backingImages)
@@ -1700,7 +1698,7 @@ fun decryptMainMemories(mainMemories: MainMemories): DecryptedMainMemories {
     decrypytMainMemories.created = mainMemories.created
     decrypytMainMemories.modified = mainMemories.modified
     decrypytMainMemories.notes = mainMemories.notes.decryptString()
-    decrypytMainMemories.attachmentNames = mainMemories.attachmentNames.decryptString()
+    decrypytMainMemories.attachmentNames = mainMemories.attachmentNames
     decrypytMainMemories.title = mainMemories.title.decryptString()
     decrypytMainMemories.createdUser = mainMemories.createdUser
 
@@ -1730,7 +1728,7 @@ fun decryptMemoryTimeLine(memoryTimeline: MemoryTimeline): DecryptedMemoryTimeli
     decryptMemoryTimeLine.place = memoryTimeline.place.decryptString()
     decryptMemoryTimeLine.contacts = memoryTimeline.contacts.decryptString()
     decryptMemoryTimeLine.notes = memoryTimeline.notes.decryptString()
-    decryptMemoryTimeLine.attachmentNames = memoryTimeline.attachmentNames.decryptString()
+    decryptMemoryTimeLine.attachmentNames = memoryTimeline.attachmentNames
     decryptMemoryTimeLine.created = memoryTimeline.created
     decryptMemoryTimeLine.modified = memoryTimeline.modified
     decryptMemoryTimeLine.createdUser = memoryTimeline.createdUser
@@ -1764,7 +1762,7 @@ fun decryptRecentPurchase(recentPurchase: RecentPurchase): DecryptedRecentPurcha
     decryptRecentPurchase.notes = recentPurchase.notes.decryptString()
     decryptRecentPurchase.created = recentPurchase.created
     decryptRecentPurchase.modified = recentPurchase.modified
-    decryptRecentPurchase.attachmentNames = recentPurchase.attachmentNames.decryptString()
+    decryptRecentPurchase.attachmentNames = recentPurchase.attachmentNames
     decryptRecentPurchase.createdUser = recentPurchase.createdUser
     return decryptRecentPurchase
 }
@@ -1799,7 +1797,7 @@ fun decryptShopping(shopping: Shopping): DecryptedShopping {
     decryptShopping.paymentMethodOnFile = shopping.paymentMethodOnFile.decryptString()
     decryptShopping.notes = shopping.notes.decryptString()
     decryptShopping.imageName = shopping.imageName.decryptString()
-    decryptShopping.attachmentNames = shopping.attachmentNames.decryptString()
+    decryptShopping.attachmentNames = shopping.attachmentNames
     decryptShopping.title = shopping.title.decryptString()
     decryptShopping.created = shopping.created
     decryptShopping.modified = shopping.modified
@@ -1851,7 +1849,7 @@ fun decryptTravel(travel: Travel): DecryptedTravel {
     decryptTravel.paymentMethodOnFile = travel.paymentMethodOnFile.decryptString()
     decryptTravel.notes = travel.notes.decryptString()
     decryptTravel.imageName = travel.imageName.decryptString()
-    decryptTravel.attachmentNames = travel.attachmentNames.decryptString()
+    decryptTravel.attachmentNames = travel.attachmentNames
     decryptTravel.title = travel.title.decryptString()
     decryptTravel.created = travel.created
     decryptTravel.modified = travel.modified
@@ -1884,7 +1882,7 @@ fun decryptVacations(vacations: Vacations): DecryptedVacations {
     decryptVacations.placesToVisit_2 = vacations.placesToVisit_2.decryptString()
     decryptVacations.placesToVisit_3 = vacations.placesToVisit_3.decryptString()
     decryptVacations.notes = vacations.notes.decryptString()
-    decryptVacations.attachmentNames = vacations.attachmentNames.decryptString()
+    decryptVacations.attachmentNames = vacations.attachmentNames
     decryptVacations.created = vacations.created
     decryptVacations.modified = vacations.modified
     decryptVacations.createdUser = vacations.createdUser

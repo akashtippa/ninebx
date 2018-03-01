@@ -140,7 +140,6 @@ class SearchPresenter {
                                 decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
                                 //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
                             }
-                            searchView!!.onRecentSearchFetched(decryptedRecentSearch)
                         }
                     }
                 })

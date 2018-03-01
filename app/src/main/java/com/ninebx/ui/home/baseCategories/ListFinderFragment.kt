@@ -27,33 +27,40 @@ import io.realm.RealmResults
  * Created by Alok on 12/01/18.
  */
 class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
-
-    override fun homeListCount(contactsUpdating: Int, decryptCombine: RealmResults<HomeList>?) {
-
+    override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun travelListCount(contactsUpdating: Int, decryptCombine: RealmResults<TravelList>) {
+    override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun contactListCount(contactsUpdating: Int, decryptCombine: RealmResults<ContactsList>) {
+    override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun educationListCount(contactsUpdating: Int, decryptCombine: RealmResults<EducationList>) {
+    override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun interestListCount(contactsUpdating: Int, decryptCombine: RealmResults<InterestsList>) {
+    override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun countPersonalList(contactsUpdating: Int, decryptCombine: RealmResults<PersonalList>) {
+    override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: RealmResults<WellnessList>) {
+    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun memoryListCount(contactsUpdating: Int, decryptCombine: RealmResults<MemoriesList>) {
+    override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: RealmResults<ShoppingList>) {
+    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
 
