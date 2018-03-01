@@ -7,16 +7,17 @@ import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import io.realm.RealmResults
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 16/01/18.
  */
 interface HomeView : BaseView {
     fun addEditCalendarEvent(calendarEvent : CalendarEvents?, selectedDate : Date )
-    fun getCurrentUsers(): RealmResults<Users>
+    fun getCurrentUsers(): ArrayList<DecryptedUsers>
     fun setNotificationCount(notificationCount: Int)
     fun getContextForScreen() : Context
-    fun setCurrentUsers(currentUsers: RealmResults<Users>?)
+    fun setCurrentUsers(currentUsers: ArrayList<DecryptedUsers>?)
     fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine)
     fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel)
     fun onCombineContactsFetched(mDecryptCombineContacts: DecryptedCombineContacts)

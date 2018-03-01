@@ -2,6 +2,7 @@ package com.ninebx.ui.home
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -11,6 +12,7 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 
 /**
@@ -200,13 +202,28 @@ class HomePresenter( val homeView : HomeView ) {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
+    private var currentUsers: ArrayList<DecryptedUsers>?=null
+
     fun fetchCurrentUsers() {
-        prepareRealmConnections(homeView.getContextForScreen(), true, Constants.REALM_END_POINT_USERS,
-                object : Realm.Callback() {
-                    override fun onSuccess(realm: Realm?) {
-                        homeView.setCurrentUsers(getCurrentUsers(realm!!))
-                    }
-                })
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(homeView.getContextForScreen(), true, Constants.REALM_END_POINT_USERS,
+                        object : Realm.Callback() {
+                            override fun onSuccess(realm: Realm?) {
+                                currentUsers = ArrayList()
+                                for( user in realm!!.where(Users::class.java).findAll() ) {
+                                    currentUsers!!.add( decryptUsers(user) )
+                                }
+                            }
+                        })
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                homeView.setCurrentUsers(currentUsers!!)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
     }
 /*
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {

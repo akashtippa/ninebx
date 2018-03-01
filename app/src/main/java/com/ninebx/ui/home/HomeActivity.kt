@@ -23,7 +23,6 @@ import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Notifications
-import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.account.MyProfileFragment
@@ -91,11 +90,12 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
 
 
-    override fun setCurrentUsers(currentUsers: RealmResults<Users>?) {
+    override fun setCurrentUsers(currentUsers: ArrayList<DecryptedUsers>?) {
         this.currentUsers = currentUsers
         addNotification.setCurrentUsers(currentUsers)
         //homePresenter.fetchDataInBackground()
         if (currentUsers != null) {
+            AppLogger.d("HomeActivity", "Users found")
             this@HomeActivity.hideProgressDialog()
             //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
             //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
@@ -104,26 +104,17 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
             prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
 
-            for (member in currentUsers!![0]!!.members) {
-                //AppLogger.d("CurrentUser", "Members : " + member.toString())
-            }
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
-
                 NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
-
                 toggleCheck(true)
                 bottomNavigationView.menu.getItem(4).isChecked = true
                 callBottomViewFragment(getString(R.string.account))
-
                 if( currentUsers!![0]!!.completeProfile ) {
                     navigateToAddMembers()
                 }
                 else {
                     navigateToMyProfile()
                 }
-
-
-
             }
         }
     }
@@ -134,7 +125,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         fragmentTransaction.addToBackStack(null)
         val addFamilyUsersFragment = AddFamilyUsersFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, currentUsers!!)
         addFamilyUsersFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
         hideQuickAdd()
@@ -146,7 +137,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, currentUsers!!)
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
         hideQuickAdd()
@@ -168,7 +159,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     val prefrences = NineBxPreferences()
 
-    override fun getCurrentUsers(): RealmResults<Users> {
+    override fun getCurrentUsers(): ArrayList<DecryptedUsers> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
         return currentUsers!!
     }
@@ -203,7 +194,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     var backBtnCount = 0
 
-    private var currentUsers: RealmResults<Users>? = null
+    private var currentUsers: ArrayList<DecryptedUsers>? = null
     private lateinit var homePresenter: HomePresenter
 
 
@@ -273,7 +264,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         callHomeFragment()
         toggleCheck(false)
         //SearchUtils.search()
-
+        this.showProgressDialog(getString(R.string.loading))
         homePresenter.fetchCurrentUsers()
     }
 

@@ -81,8 +81,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun navigateToHome() {
 
-        if (NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE)
-            NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
+        if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
+            NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
 
         val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
         startActivity(homeIntent)
