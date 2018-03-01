@@ -1,11 +1,8 @@
 package com.ninebx.ui.home
 
-import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Notifications
@@ -20,12 +17,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.content.Context.NOTIFICATION_SERVICE
 import android.support.v4.app.NotificationCompat
-import com.ninebx.R
-import com.ninebx.R.drawable.ic_launcher
-import com.ninebx.R.drawable.ic_launcher_background
-
-
-
+import com.ninebx.R.drawable.logo_nine
 
 /**
  * Created by smrit on 26-02-2018.
@@ -38,7 +30,6 @@ class AddNotification : HomeView {
     private var mDecryptedCombineContacts : DecryptedCombineContacts ?= null
     private var mDecryptedCombinePersonal : DecryptedCombinePersonal ?= null
     private var currentUsers: RealmResults<Users>? = null
-    private var mHomePresenter : HomePresenter ?= null
 
     private val context = getApplicationContext()
 
@@ -150,8 +141,8 @@ class AddNotification : HomeView {
                 var difference : Long = dateOfExpiry.getTime() - date.getTime()
                 var daysBetween = (difference / (1000 * 60 * 60 * 24))
                 AppLogger.d("DaysInbetween", " " + daysBetween)
-               /* if (daysBetween.equals(90))*/
-                    newNotification(date, dateOfExpiry, cardName,boxName)
+                if (daysBetween.equals(90))
+                    newNotification(decryptedPayment[i].id, date, dateOfExpiry, cardName,boxName)
             }
             catch (e :Exception){
                 AppLogger.d("Exception", "paymentNotification" + e.message )
@@ -184,7 +175,7 @@ class AddNotification : HomeView {
                     var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24))
                     AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
                     if(propertyDaysBetween.equals(180))
-                        newNotification(date, endDate, propertyName, boxName)
+                        newNotification(decryptedProperty[i].id, date, endDate, propertyName, boxName)
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
                 }
@@ -196,7 +187,7 @@ class AddNotification : HomeView {
                     AppLogger.d("PurchaseAnniversary", "end Date" + purchase)
                     if (purchase.equals(present)){
                         AppLogger.d("purchaseAnniversary", " " + purchase)
-                        newNotification(date, present, propertyName, boxName)
+                        newNotification(decryptedProperty[i].id, date, present, propertyName, boxName)
                     }
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
@@ -229,7 +220,7 @@ class AddNotification : HomeView {
                 var vehicle = (differenceDate / (1000 * 60 * 60 * 24))
                 AppLogger.d("LeaseEndDate", "Days in between " + vehicle)
                 if(differenceDate.equals(180)){
-                    newNotification(date, lease, vehicleName, boxName)
+                    newNotification(decryptedVehicle[i].id, date, lease, vehicleName, boxName)
                 }
             }else {
                 try {
@@ -238,7 +229,7 @@ class AddNotification : HomeView {
                     var VehicleDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24))
                     AppLogger.d("LeaseEndDate", "Days in between " + VehicleDaysBetween)
                     if(registrationDateDifference.equals(90)){
-                        newNotification(date, regExpiryDate, vehicleName, boxName)
+                        newNotification(decryptedVehicle[i].id, date, regExpiryDate, vehicleName, boxName)
                     }
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
@@ -267,11 +258,11 @@ class AddNotification : HomeView {
             if(insuranceType.equals("Life"))
             {
                 if(insuranceDaysBetween.equals(90))
-                    newNotification(date, insuranceExpiryDate, insuranceType, boxName)
+                    newNotification(decryptedInsurance[i].id, date, insuranceExpiryDate, insuranceType, boxName)
             }
             else{
                 if(insuranceDaysBetween.equals(30))
-                    newNotification(date, insuranceExpiryDate, insuranceType, boxName)
+                    newNotification(decryptedInsurance[i].id, date, insuranceExpiryDate, insuranceType, boxName)
             }
         }
     }
@@ -293,7 +284,7 @@ class AddNotification : HomeView {
                 var vacationDateDifference: Long = vacStart.getTime() - date.getTime()
                 var vacDaysBetween = (vacationDateDifference / (1000 * 60 * 60 * 24))
                 if(vacDaysBetween.equals(90))
-                    newNotification(date, vacStart, description, boxName)
+                    newNotification(decryptedVacations[i].id, date, vacStart, description, boxName)
             }
             catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
@@ -318,10 +309,10 @@ class AddNotification : HomeView {
             var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24))
             if(docType.equals("Visa")){
                 if(docDaysBetween.equals(180))
-                    newNotification(date, docExpiry, docType, boxName)
+                    newNotification(decryptedTravelDocuments[i].id, date, docExpiry, docType, boxName)
             }else{
                 if (docDateDifference.equals(270))
-                    newNotification(date, docExpiry, docType, boxName)
+                    newNotification(decryptedTravelDocuments[i].id,date, docExpiry, docType, boxName)
             }
         }
     }
@@ -347,7 +338,7 @@ class AddNotification : HomeView {
                 AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
                 if (anniversary.equals(present)){
                     AppLogger.d("purchaseAnniversary", " " + anniversary)
-                    newNotification(date, present, contactsName, boxName)
+                    newNotification(decryptedContacts[i].id, date, present, contactsName, boxName)
                 }
             } catch (e: Exception) {
                 AppLogger.d("Exception", "birthdayNotification" + e.message) }
@@ -357,7 +348,7 @@ class AddNotification : HomeView {
                 AppLogger.d("PurchaseAnniversary", "end Date" + birthday)
                 if (birthday.equals(present)) {
                     AppLogger.d("purchaseAnniversary", " " + birthday)
-                    newNotification(date, present, contactsName, boxName)
+                    newNotification(decryptedContacts[i].id, date, present, contactsName, boxName)
                 }
             } catch (e: Exception) {
                 AppLogger.d("Exception", "birthdayNotification" + e.message)
@@ -374,7 +365,6 @@ class AddNotification : HomeView {
         AppLogger.d("Education", "Decrypted education" + decryptedEducation)
               var graduationAnniversary = ""
               var graduationName = ""
-            /*  var anni = "02/28/2018"*/
             for(i in 0 until decryptedEducation.size){
                 graduationAnniversary = decryptedEducation[i].created
                 try {
@@ -383,7 +373,7 @@ class AddNotification : HomeView {
                     AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
                     if (anniversary.equals(present)){
                         AppLogger.d("purchaseAnniversary", " " + anniversary)
-                        newNotification(date, present, graduationName, boxName)
+                        newNotification(decryptedEducation[i].id, date, present, graduationName, boxName)
                     }
                 } catch (e: Exception) {
                     AppLogger.d("Exception", "birthdayNotification" + e.message) }
@@ -409,7 +399,7 @@ class AddNotification : HomeView {
                 AppLogger.d("PurchaseAnniversary", "end Date" + anniversaryWork)
                 if (anniversaryWork.equals(present)){
                     AppLogger.d("purchaseAnniversary", " " + anniversaryWork)
-                    newNotification(date, present, companyName, boxName)
+                    newNotification(decryptedWork[i].id, date, present, companyName, boxName)
                 }
             } catch (e: Exception) {
                 AppLogger.d("Exception", "birthdayNotification" + e.message) }
@@ -432,7 +422,7 @@ class AddNotification : HomeView {
                 var licenseDateDifference: Long = licenseExpiry.getTime() - date.getTime()
                 var insuranceDaysBetween = (licenseDateDifference / (1000 * 60 * 60 * 24))
                 if (insuranceDaysBetween.equals(90))
-                    newNotification(date, licenseExpiry, driversLicense, boxName)
+                    newNotification(decryptedLicense[i].id, date, licenseExpiry, driversLicense, boxName)
             }
             catch (e: Exception){
                 AppLogger.d("Exception", "" + e.message)
@@ -457,11 +447,11 @@ class AddNotification : HomeView {
             AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
             if (anniversary.equals(present)){
                 AppLogger.d("anniversary", " " + anniversary)
-                newNotification(date, present, anniversary.toString(), boxName)
+                newNotification(mDecryptedCombinePersonal!!.id, date, present, anniversary.toString(), boxName)
             }
             if (birthday.equals(present)){
                 AppLogger.d("birthday", " " + birthday)
-                newNotification(date, present, birthday.toString(), boxName)
+                newNotification(mDecryptedCombinePersonal!!.id, date, present, birthday.toString(), boxName)
             }
         } catch (e: Exception) {
             AppLogger.d("Exception", "Anniversary" + e.message) }
@@ -484,7 +474,7 @@ class AddNotification : HomeView {
                 var governmentDateDifference: Long = governmentExpiry.getTime() - date.getTime()
                 var insuranceDaysBetween = (governmentDateDifference / (1000 * 60 * 60 * 24))
                 if (insuranceDaysBetween.equals(90))
-                    newNotification(date, governmentExpiry, govIDName, boxName)
+                    newNotification(decryptedPersonalGovernment[i].id, date, governmentExpiry, govIDName, boxName)
             }
             catch (e: Exception){
                 AppLogger.d("Exception", "" + e.message)
@@ -512,7 +502,7 @@ class AddNotification : HomeView {
                 var eyeglassDateDifference: Long = date.getTime() - eyeglassPrevious.getTime()
                 var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24))
                 if (eyeglassDaysBetween.equals(330))
-                    newNotification(date, eyeglassPrevious, userName, boxName)
+                    newNotification(decryptedEyeglassPrescriptions[i].id, date, eyeglassPrevious, userName, boxName)
             }catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
             }
@@ -525,19 +515,18 @@ class AddNotification : HomeView {
                 var vitalDateDifference: Long = date.getTime() - vitalPrevious.getTime()
                 var vitalDaysBetween = (vitalDateDifference / (1000 * 60 * 60 * 24))
                 if (vitalDaysBetween.equals(330))
-                    newNotification(date, vitalPrevious, userName, boxName)
+                    newNotification(decryptedEyeglassPrescriptions[i].id, date, vitalPrevious, userName, boxName)
             }catch(e : Exception){
                 AppLogger.d("Exception", " " + e.message)
             }
         }
     }
 
-    private fun newNotification(currentDate: Date, expiryDate: Date, subTitle: String, boxName: String) {
+    private fun newNotification(id : Long, currentDate: Date, expiryDate: Date, subTitle: String, boxName: String) {
         AppLogger.d("AddNewNotification", "Method invoked")
-        addNotification(expiryDate.toString(), currentDate, subTitle, boxName)
-        val mBuilder = NotificationCompat.Builder(context).setSmallIcon(ic_launcher)
-                .setContentTitle("NineBx")
-                .setContentText(subTitle)
+        addNotification(id, expiryDate.toString(), currentDate, subTitle, boxName)
+        val mBuilder = NotificationCompat.Builder(context).setSmallIcon(logo_nine)
+                .setContentTitle("NineBx").setContentText(subTitle).setDefaults(Notification.DEFAULT_ALL)
         val mNotificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mNotificationManager.notify(1, mBuilder.build())
         /*  var intent : Intent = Intent(context, HomeActivity::class.java)
@@ -563,17 +552,18 @@ class AddNotification : HomeView {
           notificationManager.notify(0, mNotifiction)*/
     }
 
-    fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
+    fun addNotification( id : Long, expirationDate: String, date: Date, subTitle: String, box_Name : String) {
         AppLogger.d("UpdateNotification", "Method invoked ")
         var notifications = Notifications()
         var message = "AndroidTest"
-        notifications.id =  UUID.randomUUID().hashCode().toLong()
+        notifications.id =  id
         notifications.message = message.encryptString()
         notifications.boxName = box_Name.encryptString()
         notifications.dueDate = expirationDate                                //dateFormat.format(expirationDate)
         notifications.subTitle = subTitle.encryptString()
         notifications.private = false
         notifications.created = box_Name + date
+        notifications.read = false
 
         prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
