@@ -3,43 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvNotification"
-        android:text="@string/alert_notification"
-        android:padding="@dimen/default_mini_padding"
-        android:textColor="@color/textColorBlue"
-        android:background="@color/grey_100"
-        android:textSize="@dimen/text_16"
-        android:drawableLeft="@drawable/ic_alert_notification"/>
-
-    <RelativeLayout
-        android:id="@+id/progressLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_below="@+id/tvNotification">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
         <TextView
-            android:id="@+id/tvProgress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBar"
-            android:gravity="center"
-            android:text="@string/loading" />
-    </RelativeLayout>
+            android:id="@+id/tv_noNotifications"
+            android:text="@string/no_notifications"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:visibility="visible"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rvNotification"
-        android:layout_below="@+id/tvNotification"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvNotification"
+            android:text="@string/alert_notification"
+            android:padding="@dimen/default_mini_padding"
+            android:textColor="@color/textColorBlue"
+            android:background="@color/grey_100"
+            android:textSize="@dimen/text_16"
+            android:drawableLeft="@drawable/ic_alert_notification"/>
 
+        <RelativeLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:layout_below="@+id/tvNotification">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBar"
+                android:gravity="center"
+                android:text="@string/loading" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvNotification"
+            android:layout_below="@+id/tvNotification"/>
 </RelativeLayout>

@@ -46,6 +46,8 @@ class Level2CategoryHelper(
     init {
         extractObject()
         when (category_name) {
+
+            //Home&Money
             "Banking" -> {
                 getBanking()
             }
@@ -104,7 +106,21 @@ class Level2CategoryHelper(
                 getOtherDetails()
             }
 
-        // Insurance Left
+            "Homeowners/Renters insurance" -> {
+                gtHomeOwnerRentersInsurance()
+            }
+            "Auto insurance" -> {
+                getAutoInsurance()
+            }
+            "Life insurance" -> {
+                getLifeInsurance()
+            }
+            "Health insurance" -> {
+                getHealthInsurance()
+            }
+            "Umbrella insurance" -> {
+                getUmbrellaInsurance()
+            }
 
             "Past returns" -> {
                 getPastReturns()
@@ -136,6 +152,8 @@ class Level2CategoryHelper(
             "Other Government-Issued ID" -> {
                 getOtherGovernmentIssuedID()
             }
+
+            //Travel
 
             "Airline" -> {
                 getAirline()
@@ -173,6 +191,7 @@ class Level2CategoryHelper(
                 getOtherAttachments()
             }
 
+        // Shopping
             "Loyalty Programs" -> {
                 getLoyaltyPrograms()
             }
@@ -190,21 +209,6 @@ class Level2CategoryHelper(
             }
             "Travel Dates And Plans" -> {
                 getTravelDatesAndPlans()
-            }
-            "Homeowners/Renters insurance" -> {
-                gtHomeOwnerRentersInsurance()
-            }
-            "Auto insurance" -> {
-                getAutoInsurance()
-            }
-            "Life insurance" -> {
-                getLifeInsurance()
-            }
-            "Health insurance" -> {
-                getHealthInsurance()
-            }
-            "Umbrella insurance" -> {
-                getUmbrellaInsurance()
             }
 
         // Wellness
@@ -253,10 +257,7 @@ class Level2CategoryHelper(
             "Baby's sizes" -> {
                 getBabysSizes()
             }
-
         }
-
-
     }
 
 
@@ -340,8 +341,6 @@ class Level2CategoryHelper(
 
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -386,7 +385,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_GIRLS_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -395,7 +393,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Little and big kid size(US)", "Little and big kid size(US)", Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_GIRLS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -418,14 +415,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -462,7 +457,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_GIRLS_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -485,7 +479,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Little and big kid size(US)", "Little and big kid size(US)", Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_GIRLS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -510,14 +503,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -538,8 +529,6 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_MENS_SIZE_CATEGORY_US, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -565,7 +554,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -590,7 +578,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_MENS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -612,14 +599,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -640,8 +625,6 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_WOMENS_DETAILS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -668,7 +651,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -694,7 +676,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_WOMEN_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -717,14 +698,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -748,15 +727,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Contacts", decryptedVehicle!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", decryptedVehicle!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -804,7 +780,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -844,7 +819,6 @@ class Level2CategoryHelper(
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -886,7 +860,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -926,7 +899,6 @@ class Level2CategoryHelper(
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -968,7 +940,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -978,7 +949,6 @@ class Level2CategoryHelper(
 
         categoryView.onSuccess(categoryList)
     }
-
 
     private fun getFragmentSubList() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
@@ -2687,15 +2657,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Hemoglobin A1C(%)", "Hemoglobin A1C(%)", "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2719,15 +2686,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Date of visit", "Date of visit", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex

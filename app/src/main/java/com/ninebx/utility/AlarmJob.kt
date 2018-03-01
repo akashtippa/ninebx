@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.ninebx.R
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Notifications
 import java.util.*
 
 /**
@@ -25,6 +26,7 @@ import java.util.*
  */
 class AlarmJob : Job() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onRunJob(params: Params): Result {
         val gson = Gson()
         val extraModel = params.extras["reminder"] as String
@@ -56,6 +58,7 @@ class AlarmJob : Job() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showNotification(title: String, desc: String?) {
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 
@@ -115,11 +118,8 @@ class AlarmJob : Job() {
                         .setWhen(0)
                         .setSound(defaultSoundUri)
             }
-
-
            notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
     }
-
 
     companion object {
 
@@ -156,17 +156,32 @@ class AlarmJob : Job() {
                             .build()
                             .schedule()
             }
-
-
-
         }
 
         fun cancelJob(remindJobId: String) {
             JobManager.instance().cancelAllForTag(remindJobId)
         }
 
-
+        fun scheduleNotificaiton(notification : Notifications , calendar: Calendar ){
+            AppLogger.d(TAG, "scheduleNotification : " + notification.toString())
+            val gson = Gson()
+            val notificationString = gson.toJson(notification)
+            AppLogger.d(TAG, "scheduleNotification : JSON" + notificationString)
+            var extras = PersistableBundleCompat()
+            extras.putString("notification", notificationString)
+            val reminderTimeInMillis: Long = calendar.timeInMillis
+            val id: String = "Notification_" + notification.id
+            val calendar = Calendar.getInstance()
+            var jobId: Int = -1
+            if (reminderTimeInMillis > calendar.timeInMillis ){
+                jobId = JobRequest.Builder(id)
+                        .setExact((reminderTimeInMillis - calendar.timeInMillis))
+                        //.setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
+                        .setRequiresDeviceIdle(false)
+                        .setExtras(extras)
+                        .build()
+                        .schedule()
+            }
+            }
+        }
     }
-
-
-}
