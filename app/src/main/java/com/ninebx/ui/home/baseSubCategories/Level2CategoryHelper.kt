@@ -3054,20 +3054,14 @@ class Level2CategoryHelper(
                 decryptedFinancial!!.id = getUniqueId()
             }
             object : AsyncTask<Void, Void, Unit>() {
-
                 override fun doInBackground(vararg p0: Void?) {
-
                     prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val financial = encryptFinancial(decryptedFinancial!!)
                             realm.insertOrUpdate(financial)
                             realm.commitTransaction()
-
-
-
                         }
-
                     })
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3086,141 +3080,220 @@ class Level2CategoryHelper(
                             val encryptedCombine = encryptCombine(combine)*/
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
-
-
-
                         }
 
                     })
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-
         }
 
         if( decryptedPayment!= null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedPayment!!.selectionType = categoryID
-                    decryptedPayment!!.cardName = title
-                    if( decryptedPayment!!.id.toInt() == 0 ) {
-                        decryptedPayment!!.id = getUniqueId()
-                    }
-
-                    val financial = encryptPayment(decryptedPayment!!)
-                    val combine : DecryptedCombine = combineItem as DecryptedCombine
-                    combine.paymentItems.add( decryptedPayment )
-                    val encryptedCombine = encryptCombine(combine)
-                    realm.insertOrUpdate(encryptedCombine)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedPayment!!.selectionType = categoryID
+            decryptedPayment!!.cardName = title
+            if( decryptedPayment!!.id.toInt() == 0 ) {
+                decryptedPayment!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val payment = encryptPayment(decryptedPayment!!)
+                            realm.insertOrUpdate(payment)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
 
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.paymentItems.add(encryptPayment(decryptedPayment!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                    }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedProperty!= null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedProperty!!.selectionType = categoryID
-                    decryptedProperty!!.titleName = title
-                    if( decryptedProperty!!.id.toInt() == 0 ) {
-                        decryptedProperty!!.id = getUniqueId()
-                    }
-                    val financial = encryptProperty(decryptedProperty!!)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedProperty!!.selectionType = categoryID
+            decryptedProperty!!.titleName = title
+            if( decryptedProperty!!.id.toInt() == 0 ) {
+                decryptedProperty!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val property = encryptProperty(decryptedProperty!!)
+                            realm.insertOrUpdate(property)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
 
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.propertyItems.add(encryptProperty(decryptedProperty!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedVehicle!= null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedVehicle!!.titleName = title
-                    decryptedVehicle!!.selectionType = categoryID
-                    if( decryptedVehicle!!.id.toInt() == 0 ) {
-                        decryptedVehicle!!.id = getUniqueId()
-                    }
-                    val financial = encryptVehicle(decryptedVehicle!!)
-                    val combine : DecryptedCombine = combineItem as DecryptedCombine
-                    combine.vehicleItems.add( decryptedVehicle )
-                    val encryptedCombine = encryptCombine(combine)
-                    realm.insertOrUpdate(encryptedCombine)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedVehicle!!.titleName = title
+            decryptedVehicle!!.selectionType = categoryID
+            if( decryptedVehicle!!.id.toInt() == 0 ) {
+                decryptedVehicle!!.id = getUniqueId()
+            }
+            object  : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val vehicle = encryptVehicle(decryptedVehicle!!)
+                            realm.insertOrUpdate(vehicle)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
-
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.vehicleItems.add(encryptVehicle(decryptedVehicle!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedAssets!= null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedAssets!!.selectionType = categoryID
-                    decryptedAssets!!.test = title
-                    if( decryptedAssets!!.id.toInt() == 0 ) {
-                        decryptedAssets!!.id = getUniqueId()
-                    }
-                    val financial = encryptAsset(decryptedAssets!!)
-                    val combine : DecryptedCombine = combineItem as DecryptedCombine
-                    combine.assetItems.add( decryptedAssets )
-                    val encryptedCombine = encryptCombine(combine)
-                    realm.insertOrUpdate(encryptedCombine)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedAssets!!.selectionType = categoryID
+            decryptedAssets!!.test = title
+            if( decryptedAssets!!.id.toInt() == 0 ) {
+                decryptedAssets!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val assets = encryptAsset(decryptedAssets!!)
+                            realm.insertOrUpdate(assets)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
-
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.assetItems.add(encryptAsset(decryptedAssets!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedInsurance!= null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedInsurance!!.selectionType = categoryID
-                    decryptedInsurance!!.insuranceCompany = title
-                    if( decryptedInsurance!!.id.toInt() == 0 ) {
-                        decryptedInsurance!!.id = getUniqueId()
-                    }
-                    val financial = encryptInsurance(decryptedInsurance!!)
-                    val combine : DecryptedCombine = combineItem as DecryptedCombine
-                    combine.insuranceItems.add( decryptedInsurance )
-                    val encryptedCombine = encryptCombine(combine)
-                    realm.insertOrUpdate(encryptedCombine)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedInsurance!!.selectionType = categoryID
+            decryptedInsurance!!.insuranceCompany = title
+            if( decryptedInsurance!!.id.toInt() == 0 ) {
+                decryptedInsurance!!.id = getUniqueId() }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val insurance = encryptInsurance(decryptedInsurance!!)
+                            realm.insertOrUpdate(insurance)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            })
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedTaxes!= null ) {
-            prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    decryptedTaxes!!.selectionType = categoryID
-                    decryptedTaxes!!.title = title
-                    if( decryptedTaxes!!.id.toInt() == 0 ) {
-                        decryptedTaxes!!.id = getUniqueId()
-                    }
-                    val financial = encryptTaxes(decryptedTaxes!!)
-                    val combine : DecryptedCombine = combineItem as DecryptedCombine
-                    combine.taxesItems.add( decryptedTaxes )
-                    val encryptedCombine = encryptCombine(combine)
-                    realm.insertOrUpdate(encryptedCombine)
-                    realm.insertOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedTaxes!!.selectionType = categoryID
+            decryptedTaxes!!.title = title
+            if( decryptedTaxes!!.id.toInt() == 0 ) {
+                decryptedTaxes!!.id = getUniqueId()
+            }
+           object : AsyncTask<Void, Void, Unit>(){
+               override fun doInBackground(vararg params: Void?) {
+                   prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                       override fun onSuccess(realm: Realm?) {
+                           realm!!.beginTransaction()
+                           val insurance = encryptInsurance(decryptedInsurance!!)
+                           realm.insertOrUpdate(insurance)
+                           realm.commitTransaction()
+                       }
+                   })
+               }
+           }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
-
-            })
+            }
         }
-
-
     }
 }
