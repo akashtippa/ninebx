@@ -572,6 +572,12 @@ class AddNotification : HomeView {
         notifications.created = box_Name + date
         notifications.read = false
 
+        var sdfTime = SimpleDateFormat("dd/MM/yyy hh:mm")
+        var myTime = sdfTime.parse("1/03/2018 15:50")
+        var timeObj : Calendar = Calendar.getInstance()
+        timeObj.time = myTime
+        AlarmJob.scheduleNotificaiton(notifications, timeObj)
+
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 //AppLogger.d("UpdatedNotification", "Connection successful")

@@ -151,11 +151,10 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         var notifications = Notifications()
         notifications.subTitle = "AndroidTest".encryptString()
         var sdf  = SimpleDateFormat("dd/MM/yyyy")
-        var sdfTime = SimpleDateFormat("hh.mm")
         notifications.created = sdf.format(Calendar.getInstance().time)
         notifications.id = getUniqueId()
         notifications.message = "Android Test expiry".encryptString()
-        scheduleNotificaiton(notifications, Calendar.getInstance())
+
         AppLogger.d("NotificationScheduled", "Scheduling Notifications")
     }
 }
