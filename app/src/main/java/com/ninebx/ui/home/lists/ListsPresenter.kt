@@ -3,20 +3,10 @@ package com.ninebx.ui.home.lists
 import android.annotation.SuppressLint
 import android.os.AsyncTask
 import com.ninebx.R
-import com.ninebx.ui.base.realm.home.contacts.CombineContacts
-import com.ninebx.ui.base.realm.home.education.CombineEducation
-import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.ui.base.realm.home.interests.CombineInterests
-import com.ninebx.ui.base.realm.home.memories.CombineMemories
-import com.ninebx.ui.base.realm.home.personal.CombinePersonal
-import com.ninebx.ui.base.realm.home.shopping.CombineShopping
-import com.ninebx.ui.base.realm.home.travel.CombineTravel
-import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.utility.*
 import io.realm.Realm
-import io.realm.RealmList
-import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 
 /**
@@ -86,7 +76,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
 
     }
 
-    private var shoppingList: RealmResults<ShoppingList> ?= null
+    private var shoppingList: ArrayList<DecryptedShoppingList> ?= null
 
     private fun prepareShopping() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -94,14 +84,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Shopping".encryptString()
-                        shoppingList = realm!!
+                        shoppingList = ArrayList()
+                        for( shopping in realm!!
                                 .where(ShoppingList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId)
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll() ) {
+                            shoppingList!!.add(decryptShoppingList(shopping))
+                        }
                     }
                 })
             }
@@ -115,7 +108,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var memoriesList: RealmResults<MemoriesList> ?= null
+    private var memoriesList: ArrayList<DecryptedMemoriesList> ?= null
 
     private fun prepareMemories() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -123,14 +116,16 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Memories".encryptString()
-                        memoriesList = realm!!
+                        memoriesList = ArrayList()
+                        for( memoryList in realm!!
                                 .where(MemoriesList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll())
+                            memoriesList!!.add(decryptMemoriesList(memoryList))
 
                     }
                 })
@@ -144,7 +139,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var wellnessList: RealmResults<WellnessList>? = null
+    private var wellnessList: ArrayList<DecryptedWellnessList>? = null
 
     private fun prepareWellness() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -152,14 +147,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "WellNess".encryptString()
-                        wellnessList = realm!!
+                        wellnessList = ArrayList()
+                        for( wellness in realm!!
                                 .where(WellnessList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll()) {
+                            wellnessList!!.add(decryptWellnessList(wellness))
+                        }
 
                     }
                 })
@@ -174,7 +172,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var personalList: RealmResults<PersonalList>? = null
+    private var personalList: ArrayList<DecryptedPersonalList>? = null
 
     private fun preparePersonal() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -182,14 +180,16 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Personal".encryptString()
-                        personalList = realm!!
+                        personalList = ArrayList()
+                        for( item in realm!!
                                 .where(PersonalList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll())
+                            personalList!!.add(decryptPersonalList(item))
                         //AppLogger.e("Count ", " is " + contactsUpdating)
                     }
                 })
@@ -205,7 +205,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var interestsList: RealmResults<InterestsList>?=null
+    private var interestsList: ArrayList<DecryptedInterestsList>?=null
 
     private fun prepareInterests() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -213,14 +213,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Interests".encryptString()
-                        interestsList = realm!!
+                        interestsList = ArrayList()
+                        for( interest in realm!!
                                 .where(InterestsList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll() ) {
+                            interestsList!!.add(decryptInterestList(interest))
+                        }
                         //AppLogger.e("Count ", " is " + contactsUpdating)
 
 
@@ -237,7 +240,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var eductationList: RealmResults<EducationList>? = null
+    private var eductationList: ArrayList<DecryptedEducationList>? = null
 
     private fun prepareEducation() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -245,14 +248,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Education".encryptString()
-                        eductationList = realm!!
+                        eductationList = ArrayList()
+                        for( education in realm!!
                                 .where(EducationList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll()) {
+                            eductationList!!.add(decryptEducationList(education))
+                        }
                     }
                 })
             }
@@ -266,7 +272,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var contactsList: RealmResults<ContactsList>? = null
+    private var contactsList: ArrayList<DecryptedContactsList>? = null
 
     private fun prepareContacts() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -274,14 +280,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Contacts".encryptString()
-                        contactsList = realm!!
+                        contactsList = ArrayList()
+                        for( contact in realm!!
                                 .where(ContactsList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll()) {
+                            contactsList!!.add(decryptContactsList(contact))
+                        }
 
 
                     }
@@ -297,7 +306,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var travelList: RealmResults<TravelList>? = null
+    private var travelList: ArrayList<DecryptedTravelList>? = null
 
     private fun prepareTravel() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -305,14 +314,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "Travel".encryptString()
-                        travelList = realm!!
+                        travelList = ArrayList()
+                        for( travel in realm!!
                                 .where(TravelList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll()) {
+                            travelList!!.add(decryptTravelList(travel))
+                        }
 
                     }
                 })
@@ -327,7 +339,7 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private var homeList: RealmResults<HomeList>?=null
+    private var homeList: ArrayList<DecryptedHomeList>?=null
 
     private fun prepareCombine() {
         object : AsyncTask<Void, Void, Unit>() {
@@ -335,14 +347,17 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         val contacts = "HomeBanking".encryptString()
-                        homeList = realm!!
+                        homeList = ArrayList()
+                        for( home in realm!!
                                 .where(HomeList::class.java)
                                 .beginGroup()
                                 .equalTo("detailsId", detailsId )
                                 .and()
                                 .equalTo("selectionType", contacts)
                                 .endGroup()
-                                .findAll()
+                                .findAll()) {
+                            homeList!!.add(decryptHomeList(home))
+                        }
 
 
                     }

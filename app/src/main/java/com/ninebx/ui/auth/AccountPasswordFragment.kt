@@ -1,5 +1,7 @@
 package com.ninebx.ui.auth
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -57,18 +59,31 @@ class AccountPasswordFragment : BaseAuthFragment() {
     }
 
     var mSyncUser: SyncUser? = null
+    @SuppressLint("StaticFieldLeak")
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
 
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                mCurrentUser.id = getUniqueId()
-                mCurrentUser = encryptUsers(mCurrentUser)
-                //AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
-                mCurrentUser.insertOrUpdate(realm!!)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        mCurrentUser.id = getUniqueId()
+                        mCurrentUser = encryptUsers(mCurrentUser)
+                        //AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
+                        mCurrentUser.insertOrUpdate(realm!!)
+
+                    }
+                })
+
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
                 mAuthView.navigateToOTP(false)
             }
-        })
+
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
     }
 
     override fun validate(): Boolean {

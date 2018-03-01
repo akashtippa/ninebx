@@ -9,6 +9,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.decrypted.*
 
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.BaseHomeFragment
@@ -21,69 +22,69 @@ import kotlinx.android.synthetic.main.fragment_lists.*
  */
 class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
-    override fun homeListCount(contactsUpdating: Int, decryptCombine: RealmResults<HomeList>?) {
+    override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
         txtHomeNumber.text = contactsUpdating.toString()
         combineFetched!!.clear()
         this.combineFetched!!.addAll(decryptCombine!!.asIterable())
     }
 
-    override fun travelListCount(contactsUpdating: Int, decryptCombine: RealmResults<TravelList>) {
+    override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
         txtTravelNumber.text = contactsUpdating.toString()
         combineTravelFetched!!.clear()
         this.combineTravelFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun contactListCount(contactsUpdating: Int, decryptCombine: RealmResults<ContactsList>) {
+    override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
         txtContactNumber.text = contactsUpdating.toString()
         combineContactsFetched!!.clear()
         this.combineContactsFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun educationListCount(contactsUpdating: Int, decryptCombine: RealmResults<EducationList>) {
+    override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
         txtEducationNumber.text = contactsUpdating.toString()
         combineEducationFetched!!.clear()
         this.combineEducationFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun interestListCount(contactsUpdating: Int, decryptCombine: RealmResults<InterestsList>) {
+    override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
         txtInterestsNumber.text = contactsUpdating.toString()
         combineInterestsFetched!!.clear()
         this.combineInterestsFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun countPersonalList(contactsUpdating: Int, decryptCombine: RealmResults<PersonalList>) {
+    override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
         txtPersonalNumber.text = contactsUpdating.toString()
         combinePersonalFetched!!.clear()
         this.combinePersonalFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: RealmResults<WellnessList>) {
+    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
         txtWellnessNumber.text = contactsUpdating.toString()
         combineWellnessFetched!!.clear()
         this.combineWellnessFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun memoryListCount(contactsUpdating: Int, decryptCombine: RealmResults<MemoriesList>) {
+    override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
         txtMemoriesNumber.text = contactsUpdating.toString()
         combineMemoriesFetched!!.clear()
         this.combineMemoriesFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: RealmResults<ShoppingList>) {
+    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
         txtShoppingNumber.text = contactsUpdating.toString()
         combineShoppingFetched!!.clear()
         this.combineShoppingFetched!!.addAll(decryptCombine.asIterable())
     }
 
-    val combineFetched: ArrayList<HomeList>? = ArrayList()
-    val combineTravelFetched: ArrayList<TravelList>? = ArrayList()
-    val combineContactsFetched: ArrayList<ContactsList>? = ArrayList()
-    val combineEducationFetched: ArrayList<EducationList>? = ArrayList()
-    val combineInterestsFetched: ArrayList<InterestsList>? = ArrayList()
-    val combinePersonalFetched: ArrayList<PersonalList>? = ArrayList()
-    val combineWellnessFetched: ArrayList<WellnessList>? = ArrayList()
-    val combineMemoriesFetched: ArrayList<MemoriesList>? = ArrayList()
-    val combineShoppingFetched: ArrayList<ShoppingList>? = ArrayList()
+    val combineFetched: ArrayList<DecryptedHomeList>? = ArrayList()
+    val combineTravelFetched: ArrayList<DecryptedTravelList>? = ArrayList()
+    val combineContactsFetched: ArrayList<DecryptedContactsList>? = ArrayList()
+    val combineEducationFetched: ArrayList<DecryptedEducationList>? = ArrayList()
+    val combineInterestsFetched: ArrayList<DecryptedInterestsList>? = ArrayList()
+    val combinePersonalFetched: ArrayList<DecryptedPersonalList>? = ArrayList()
+    val combineWellnessFetched: ArrayList<DecryptedWellnessList>? = ArrayList()
+    val combineMemoriesFetched: ArrayList<DecryptedMemoriesList>? = ArrayList()
+    val combineShoppingFetched: ArrayList<DecryptedShoppingList>? = ArrayList()
 
 
     override fun showProgress(message: Int) {

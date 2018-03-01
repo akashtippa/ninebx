@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.calendar
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import com.ninebx.R
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.utility.*
@@ -16,6 +18,7 @@ import kotlin.collections.HashMap
 /**
  * Created by Alok on 03/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class CalendarPresenter( val calendarView: CalendarView)  {
 
     val TAG = "CalendarPresenter"
@@ -29,12 +32,25 @@ class CalendarPresenter( val calendarView: CalendarView)  {
     init {
         dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         calendarView.showProgress(R.string.loading)
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
-            override fun onSuccess(realm: Realm?) {
-                calendarRealm = realm
-                refreshData()
+
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
+                    override fun onSuccess(realm: Realm?) {
+                        calendarRealm = realm
+                        refreshData()
+                    }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                //AppLogger.d(TAG, "setDateWithEvents : " + datesWithEvents)
+                calendarView.setDateWithEvents(datesWithEvents, dateStringWithEvents)
+                calendarView.hideProgress()
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
     }
 
     private lateinit var datesWithEvents: ArrayList<Date>
@@ -75,9 +91,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
             //AppLogger.d(TAG, "Calendar Event : " + event)
             //AppLogger.d(TAG, "Calendar Event Days : " + event.allDays)
         }
-        //AppLogger.d(TAG, "setDateWithEvents : " + datesWithEvents)
-        calendarView.setDateWithEvents(datesWithEvents, dateStringWithEvents)
-        calendarView.hideProgress()
+
         return datesWithEvents
     }
 
