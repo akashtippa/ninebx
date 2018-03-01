@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.lists
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import com.ninebx.R
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -19,10 +21,25 @@ import io.realm.internal.SyncObjectServerFacade.getApplicationContext
  * Created by Alok on 03/01/18.
  */
 class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val detailsId : Long, var categoryInt : Int = -1 ) {
-    
+
     private var categoryCount = 0
     val context = getApplicationContext()
-    init {
+
+    @SuppressLint("StaticFieldLeak")
+    fun fetchDataInBackground() {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                fetchData()
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                hideProgressDialog()
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    fun fetchData() {
         listsCommunicationView.showProgress(R.string.loading)
         categoryCount = 0
         if( categoryInt == -1 ) {

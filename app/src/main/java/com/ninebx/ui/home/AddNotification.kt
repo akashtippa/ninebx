@@ -563,7 +563,7 @@ class AddNotification : HomeView {
         notifications.private = false
         notifications.created = box_Name + date
 
-        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 realm!!.beginTransaction()
                 notifications.insertOrUpdate(realm)

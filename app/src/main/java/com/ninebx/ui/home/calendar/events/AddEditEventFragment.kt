@@ -660,7 +660,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     mCalendarEvent.endRepeat.add(endRepeatEvent)
                     mCalendarEvent.eventID.add(index.toString())
                     mCalendarEvent.isAllDay.add(isAllDay)
-                    //TODO AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
+                    AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
                 }
             }
             else {

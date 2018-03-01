@@ -110,7 +110,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ListsPresenter(this, 0, -1)
+        ListsPresenter(this, 0, -1).fetchDataInBackground()
 
 
         fragmentValue = arguments!!.getString("homeScreen")

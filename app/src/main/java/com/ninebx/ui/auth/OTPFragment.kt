@@ -14,11 +14,8 @@ import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.utility.AppLogger
+import com.ninebx.utility.*
 import com.ninebx.utility.Constants.PASSCODE_CREATE
-import com.ninebx.utility.decryptString
-import com.ninebx.utility.getCurrentUsers
-import com.ninebx.utility.prepareRealmConnections
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_otp.*
 
@@ -40,7 +37,7 @@ class OTPFragment : BaseAuthFragment() {
         btnSubmit.setOnClickListener {
             if( validate() ) {
                 emailOtp = ""
-                prepareRealmConnections( context, true,"Users", object : Realm.Callback( ) {
+                prepareRealmConnections( context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback( ) {
                     override fun onSuccess(realm: Realm?) {
 
                         val currentUsers = getCurrentUsers( realm!! )

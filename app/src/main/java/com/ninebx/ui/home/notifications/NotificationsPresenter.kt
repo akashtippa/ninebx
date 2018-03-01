@@ -20,7 +20,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
     private var getNotification: RealmResults<Notifications>?=null
 
     init {
-        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
                 mNotificationsRealm = realm!!
                 getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()

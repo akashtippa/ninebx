@@ -1,5 +1,7 @@
 package com.ninebx.ui.home
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -26,8 +28,28 @@ class HomePresenter( val homeView : HomeView ) {
     private val mDecryptCombinePersonal = DecryptedCombinePersonal()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
 
+    @SuppressLint("StaticFieldLeak")
+    fun fetchDataInBackground() {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                fetchAllData()
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                homeView!!.onCombineHomeFetched(mDecryptCombineHome)
+                homeView!!.onCombineTravelFetched(mDecryptedCombineTravel)
+                homeView!!.onCombineContactsFetched(mDecryptedCombineContacts)
+                homeView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
+                homeView!!.onCombineWellnessFetched(mDecryptCombineWellness)
+                homeView!!.onCombineEducationFetched(mDecryptCombineEducation)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
     fun fetchAllData() {
-        prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
+
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
 
@@ -43,14 +65,11 @@ class HomePresenter( val homeView : HomeView ) {
                         mDecryptCombineHome.paymentItems.addAll(decryptedCombine.paymentItems)
                         mDecryptCombineHome.financialItems.addAll(decryptedCombine.financialItems)
                     }
-                    homeView!!.onCombineHomeFetched(mDecryptCombineHome)
-                } else {
-                    homeView!!.onCombineHomeFetched(mDecryptCombineHome)
                 }
             }
         })
 
-        prepareRealmConnections(context, false, "CombineTravel", object : Realm.Callback() {
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
                 if (combineTravel.size > 0) {
@@ -62,83 +81,71 @@ class HomePresenter( val homeView : HomeView ) {
                         mDecryptedCombineTravel.vacationsItems.addAll(decryptedCombineTravel.vacationsItems)
                         mDecryptedCombineTravel.listItems.addAll(decryptedCombineTravel.listItems)
                     }
-                    homeView!!.onCombineTravelFetched(mDecryptedCombineTravel)
-                } else {
-                    homeView!!.onCombineTravelFetched(mDecryptedCombineTravel)
+
                 }
                 //AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
             }
         })
 
-            prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
-                    if (combineContacts.size > 0) {
-                        for (i in 0 until combineContacts.size) {
-                            val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
-                            mDecryptedCombineContacts.contactsItems.addAll(decryptedCombineContacts.contactsItems)
-                            mDecryptedCombineContacts.mainContactsItems.addAll(decryptedCombineContacts.mainContactsItems)
-                            mDecryptedCombineContacts.listItems.addAll(decryptedCombineContacts.listItems)
-                            //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
+                if (combineContacts.size > 0) {
+                    for (i in 0 until combineContacts.size) {
+                        val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
+                        mDecryptedCombineContacts.contactsItems.addAll(decryptedCombineContacts.contactsItems)
+                        mDecryptedCombineContacts.mainContactsItems.addAll(decryptedCombineContacts.mainContactsItems)
+                        mDecryptedCombineContacts.listItems.addAll(decryptedCombineContacts.listItems)
+                        //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
 
-                        }
-                        homeView!!.onCombineContactsFetched(mDecryptedCombineContacts)
-                        //AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
-                    } else {
-                        homeView!!.onCombineContactsFetched(mDecryptedCombineContacts)
+                    }
+
+                }
+            }
+        })
+
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
+                if (combinePersonal.size > 0) {
+                    for (i in 0 until combinePersonal.size) {
+                        val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
+                        mDecryptCombinePersonal.certificateItems.addAll(decryptedCombinePersonal.certificateItems)
+                        mDecryptCombinePersonal.governmentItems.addAll(decryptedCombinePersonal.governmentItems)
+                        mDecryptCombinePersonal.licenseItems.addAll(decryptedCombinePersonal.licenseItems)
+                        mDecryptCombinePersonal.personalItems.addAll(decryptedCombinePersonal.personalItems)
+                        mDecryptCombinePersonal.socialItems.addAll(decryptedCombinePersonal.socialItems)
+                        mDecryptCombinePersonal.taxIDItems.addAll(decryptedCombinePersonal.taxIDItems)
+                        mDecryptCombinePersonal.listItems.addAll(decryptedCombinePersonal.listItems)
                     }
                 }
-            })
+            }
+        })
 
-            prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
-                    if (combinePersonal.size > 0) {
-                        for (i in 0 until combinePersonal.size) {
-                            val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
-                            mDecryptCombinePersonal.certificateItems.addAll(decryptedCombinePersonal.certificateItems)
-                            mDecryptCombinePersonal.governmentItems.addAll(decryptedCombinePersonal.governmentItems)
-                            mDecryptCombinePersonal.licenseItems.addAll(decryptedCombinePersonal.licenseItems)
-                            mDecryptCombinePersonal.personalItems.addAll(decryptedCombinePersonal.personalItems)
-                            mDecryptCombinePersonal.socialItems.addAll(decryptedCombinePersonal.socialItems)
-                            mDecryptCombinePersonal.taxIDItems.addAll(decryptedCombinePersonal.taxIDItems)
-                            mDecryptCombinePersonal.listItems.addAll(decryptedCombinePersonal.listItems)
-                        }
-                        homeView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
-                        //AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
-                    } else {
-                        homeView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                val combineWellness = realm!!.where(CombineWellness::class.java).distinctValues("id").findAll()
+                if (combineWellness.size > 0) {
+                    for (i in 0 until combineWellness.size) {
+                        val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
+                        mDecryptCombineWellness.checkupsItems.addAll(decryptedCombineWellness.checkupsItems)
+                        mDecryptCombineWellness.emergencyContactsItems.addAll(decryptedCombineWellness.emergencyContactsItems)
+                        mDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(decryptedCombineWellness.eyeglassPrescriptionsItems)
+                        mDecryptCombineWellness.healthcareProvidersItems.addAll(decryptedCombineWellness.healthcareProvidersItems)
+                        mDecryptCombineWellness.identificationItems.addAll(decryptedCombineWellness.identificationItems)
+                        mDecryptCombineWellness.medicalConditionsItems.addAll(decryptedCombineWellness.medicalConditionsItems)
+                        mDecryptCombineWellness.medicalHistoryItems.addAll(decryptedCombineWellness.medicalHistoryItems)
+                        mDecryptCombineWellness.medicationsItems.addAll(decryptedCombineWellness.medicationsItems)
+                        mDecryptCombineWellness.vitalNumbersItems.addAll(decryptedCombineWellness.vitalNumbersItems)
+                        mDecryptCombineWellness.wellnessItems.addAll(decryptedCombineWellness.wellnessItems)
+                        mDecryptCombineWellness.listItems.addAll(decryptedCombineWellness.listItems)
                     }
-                }
-            })
 
-            prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    val combineWellness = realm!!.where(CombineWellness::class.java).distinctValues("id").findAll()
-                    if (combineWellness.size > 0) {
-                        for (i in 0 until combineWellness.size) {
-                            val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
-                            mDecryptCombineWellness.checkupsItems.addAll(decryptedCombineWellness.checkupsItems)
-                            mDecryptCombineWellness.emergencyContactsItems.addAll(decryptedCombineWellness.emergencyContactsItems)
-                            mDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(decryptedCombineWellness.eyeglassPrescriptionsItems)
-                            mDecryptCombineWellness.healthcareProvidersItems.addAll(decryptedCombineWellness.healthcareProvidersItems)
-                            mDecryptCombineWellness.identificationItems.addAll(decryptedCombineWellness.identificationItems)
-                            mDecryptCombineWellness.medicalConditionsItems.addAll(decryptedCombineWellness.medicalConditionsItems)
-                            mDecryptCombineWellness.medicalHistoryItems.addAll(decryptedCombineWellness.medicalHistoryItems)
-                            mDecryptCombineWellness.medicationsItems.addAll(decryptedCombineWellness.medicationsItems)
-                            mDecryptCombineWellness.vitalNumbersItems.addAll(decryptedCombineWellness.vitalNumbersItems)
-                            mDecryptCombineWellness.wellnessItems.addAll(decryptedCombineWellness.wellnessItems)
-                            mDecryptCombineWellness.listItems.addAll(decryptedCombineWellness.listItems)
-                        }
-                        homeView!!.onCombineWellnessFetched(mDecryptCombineWellness)
-                        //AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
-                    } else {
-                        homeView!!.onCombineWellnessFetched(mDecryptCombineWellness)
-                    }
                 }
-            })
+            }
+        })
 
-        prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 val combineEducation = realm!!.where(CombineEducation::class.java).distinctValues("id").findAll()
                 if (combineEducation.size > 0) {
@@ -152,23 +159,20 @@ class HomePresenter( val homeView : HomeView ) {
                     for (finance in mDecryptCombineEducation.workItems) {
                         //AppLogger.d("REcords", finance.toString())
                     }
-                    homeView!!.onCombineEducationFetched(mDecryptCombineEducation)
-                    //AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
-                } else {
-                    homeView!!.onCombineEducationFetched(mDecryptCombineEducation)
+
                 }
             }
         })
     }
 
     fun fetchCurrentUsers() {
-            prepareRealmConnections(homeView.getContextForScreen(), true, "Users",
-                    object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            homeView.setCurrentUsers(getCurrentUsers(realm!!))
-                        }
-                    })
-        }
+        prepareRealmConnections(homeView.getContextForScreen(), true, Constants.REALM_END_POINT_USERS,
+                object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        homeView.setCurrentUsers(getCurrentUsers(realm!!))
+                    }
+                })
+    }
 /*
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {
         //AppLogger.d("UpdateNotification", "Method invoked ")

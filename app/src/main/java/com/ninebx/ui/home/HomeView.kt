@@ -17,7 +17,6 @@ interface HomeView : BaseView {
     fun setNotificationCount(notificationCount: Int)
     fun getContextForScreen() : Context
     fun setCurrentUsers(currentUsers: RealmResults<Users>?)
-
     fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine)
     fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel)
     fun onCombineContactsFetched(mDecryptCombineContacts: DecryptedCombineContacts)

@@ -98,7 +98,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ListsPresenter(this, 0)
+        ListsPresenter(this, 0).fetchDataInBackground()
 
         fromWhichBox = arguments!!.getInt("category")
         navigateToParticularList(fromWhichBox)
