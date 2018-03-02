@@ -142,7 +142,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtCountry.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            CountryPickerDialog(context!!, ICountrySelected { strCountry -> this.strCountry = strCountry })
+            CountryPickerDialog(context!!, ICountrySelected { strCountry -> txtCountry.text = strCountry })
             //AppLogger.e("Selected Country ", " is " + strCountry)
             //countryPicker.setCountrySelectionListener()
             //fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()

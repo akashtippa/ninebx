@@ -47,11 +47,11 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
         if (country.flag != -1)
             cell.imageView.setImageResource(country.flag)
 
-        cell.layoutCountry.setOnClickListener {
+       /* cell.layoutCountry.setOnClickListener {
             iCountrySelected.onCountrySelected(country.name)
             NineBxApplication.instance.getCountrySelected(country.name)
             NineBxApplication.instance.activityInstance!!.onBackPressed()
-        }
+        }*/
         return view
     }
 

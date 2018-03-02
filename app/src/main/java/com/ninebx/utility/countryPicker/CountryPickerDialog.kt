@@ -30,7 +30,7 @@ class CountryPickerDialog(private val context : Context, private val iCountrySel
 
     init {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.country_picker, null)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_country_picker, null)
         dialog.setContentView(dialogView)
         initView( dialog )
 
@@ -48,7 +48,7 @@ class CountryPickerDialog(private val context : Context, private val iCountrySel
 
 
     private fun initView(dialogView: Dialog?) {
-        val imageView = dialogView!!.findViewById<ImageView>(R.id.ivBackFromSelectCountry)
+        val imageView = dialogView!!.findViewById<ImageView>(R.id.imgBack)
         imageView.setOnClickListener {
             dialog.dismiss()
         }
@@ -70,15 +70,9 @@ class CountryPickerDialog(private val context : Context, private val iCountrySel
             adapter = CountryListAdapter(context, selectedCountriesList, iCountrySelected)
             countryListView!!.adapter = adapter
 
-            countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-
-
-
-            }
-
             countryListView!!.onItemClickListener = object : AdapterView.OnItemClickListener {
                 override fun onItemClick(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                    iCountrySelected.onCountrySelected(adapter!!.getItem(position).toString())
+                    iCountrySelected.onCountrySelected((adapter!!.getItem(position) as Country).name)
                     dialog.dismiss()
                 }
 
