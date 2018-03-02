@@ -17,8 +17,6 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
     internal var inflater: LayoutInflater
     internal var prefrences = NineBxPreferences()
 
-    var countryp = CountryPicker()
-
     init {
         inflater = LayoutInflater.from(mContext)
     }
@@ -28,11 +26,11 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
     }
 
     override fun getItem(arg0: Int): Any? {
-        return null
+        return countries[arg0]
     }
 
     override fun getItemId(arg0: Int): Long {
-        return 0
+        return arg0.toLong()
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View? {
@@ -82,4 +80,6 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
             }
         }
     }
+
+
 }

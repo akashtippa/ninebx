@@ -6,9 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
@@ -29,23 +27,32 @@ class CountryPickerDialog(private val context : Context, private val iCountrySel
     private var adapter: CountryListAdapter? = null
     private val countriesList = ArrayList<Country>()
     private var selectedCountriesList: MutableList<Country> = ArrayList()
-    private var listener: CountryPickerListener? = null
 
     init {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val dialogView = LayoutInflater.from(context).inflate(R.layout.country_picker, null)
         dialog.setContentView(dialogView)
-        initView( dialogView )
+        initView( dialog )
+
+        val window = dialog.window
+        val wlp = window.attributes
+
+        wlp.gravity = Gravity.CENTER
+        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+        window.attributes = wlp
+        dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
         showDialog()
     }
 
 
 
-    private fun initView(dialogView: View?) {
-        dialogView!!.findViewById<ImageView>(R.id.ivBackFromSelectCountry).setOnClickListener {
+    private fun initView(dialogView: Dialog?) {
+        val imageView = dialogView!!.findViewById<ImageView>(R.id.ivBackFromSelectCountry)
+        imageView.setOnClickListener {
             dialog.dismiss()
         }
-        setCountriesList(Country.getAllCountries(), dialogView)
+        setCountriesList(Country.getAllCountries(), dialogView.findViewById(R.id.dialogCountryLayout))
     }
 
     private fun setCountriesList(newCountries: List<Country>, view: View) {
@@ -65,11 +72,15 @@ class CountryPickerDialog(private val context : Context, private val iCountrySel
 
             countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
 
-                val country = selectedCountriesList[position]
-                iCountrySelected.onCountrySelected(country.name)
-                /*listener!!.onSelectCountry(country.name, country.code, country.dialCode,
-                        country.flag)*/
-                dialog.dismiss()
+
+
+            }
+
+            countryListView!!.onItemClickListener = object : AdapterView.OnItemClickListener {
+                override fun onItemClick(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    iCountrySelected.onCountrySelected(adapter!!.getItem(position).toString())
+                    dialog.dismiss()
+                }
 
             }
 
