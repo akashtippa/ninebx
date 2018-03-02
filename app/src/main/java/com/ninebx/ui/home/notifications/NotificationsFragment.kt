@@ -148,13 +148,5 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mNotificationsPresenter = NotificationsPresenter(this)
-        var notifications = Notifications()
-        notifications.subTitle = "AndroidTest".encryptString()
-        var sdf  = SimpleDateFormat("dd/MM/yyyy")
-        notifications.created = sdf.format(Calendar.getInstance().time)
-        notifications.id = getUniqueId()
-        notifications.message = "Android Test expiry".encryptString()
-
-        AppLogger.d("NotificationScheduled", "Scheduling Notifications")
     }
 }

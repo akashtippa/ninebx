@@ -180,10 +180,14 @@ class AddNotification : HomeView {
                     var endDate = dateFormat.parse(leaseEndDate)
                     //AppLogger.d("LeaseEndDate", "end Date" + endDate)
                     var propertyDateDifference: Long = endDate.getTime() - date.getTime()
-                    var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24))
+                    var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24)).toInt()
                     //AppLogger.d("LeaseEndDate", "Days in between " + propertyDaysBetween)
-                    if(propertyDaysBetween.equals(180))
-                        newNotification(decryptedProperty[i].id, date, endDate, propertyName, boxName)
+                    if(propertyDaysBetween == 180){
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = endDate.time - (propertyDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedProperty[i].id, schecduledDate.time, endDate, propertyName, boxName)
+                    }
+
                 } catch (e: Exception) {
                     //AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
                 }
@@ -193,9 +197,13 @@ class AddNotification : HomeView {
                     var purchase = birthdayFormat.parse(purchaseDate)
                     var present : Date = birthdayFormat.format(date) as Date
                     //AppLogger.d("PurchaseAnniversary", "end Date" + purchase)
-                    if (purchase.equals(present)){
+                    var propertyDateDifference: Long = purchase.getTime() - date.getTime()
+                    var propertyDaysBetween = (propertyDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                    if (propertyDaysBetween == 1){
                         //AppLogger.d("purchaseAnniversary", " " + purchase)
-                        newNotification(decryptedProperty[i].id, date, present, propertyName, boxName)
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = purchase.time - (propertyDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedProperty[i].id, schecduledDate.time, present, propertyName, boxName)
                     }
                 } catch (e: Exception) {
                     //AppLogger.d("Exception", "propertyLeaseNotification" + e.message)
@@ -225,19 +233,23 @@ class AddNotification : HomeView {
             if(purchasedOrLeased.equals("Leased")){
                 var lease = dateFormat.parse(leaseEnd)
                 var differenceDate: Long = lease.getTime() - date.getTime()
-                var vehicle = (differenceDate / (1000 * 60 * 60 * 24))
+                var vehicle = (differenceDate / (1000 * 60 * 60 * 24)).toInt()
                 //AppLogger.d("LeaseEndDate", "Days in between " + vehicle)
-                if(differenceDate.equals(180)){
-                    newNotification(decryptedVehicle[i].id, date, lease, vehicleName, boxName)
+                if(vehicle == 180){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = lease.time - (differenceDate * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedVehicle[i].id, schecduledDate.time, lease, vehicleName, boxName)
                 }
             }else {
                 try {
                     var regExpiryDate = dateFormat.parse(registrationExpiryDate)
                     var registrationDateDifference: Long = regExpiryDate.getTime() - date.getTime()
-                    var VehicleDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24))
+                    var vehicleDaysBetween = (registrationDateDifference / (1000 * 60 * 60 * 24)).toInt()
                     //AppLogger.d("LeaseEndDate", "Days in between " + VehicleDaysBetween)
-                    if(registrationDateDifference.equals(90)){
-                        newNotification(decryptedVehicle[i].id, date, regExpiryDate, vehicleName, boxName)
+                    if(vehicleDaysBetween == 90){
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = regExpiryDate.time - (vehicleDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedVehicle[i].id, schecduledDate.time, regExpiryDate, vehicleName, boxName)
                     }
                 } catch (e: Exception) {
                     //AppLogger.d("Exception", "vehicleRegistrationExpiration" + e.message)
@@ -262,15 +274,22 @@ class AddNotification : HomeView {
             insuranceType = decryptedInsurance[i].selectionType
             var insuranceExpiryDate = dateFormat.parse(insuranceExpiryDate)
             var insuranceDateDifference: Long = insuranceExpiryDate.getTime() - date.getTime()
-            var insuranceDaysBetween = (insuranceDateDifference / (1000 * 60 * 60 * 24))
+            var insuranceDaysBetween = (insuranceDateDifference / (1000 * 60 * 60 * 24)).toInt()
             if(insuranceType.equals("Life"))
             {
-                if(insuranceDaysBetween.equals(90))
-                    newNotification(decryptedInsurance[i].id, date, insuranceExpiryDate, insuranceType, boxName)
+                if(insuranceDaysBetween == 90){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = insuranceExpiryDate.time - (insuranceDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedInsurance[i].id, schecduledDate.time, insuranceExpiryDate, insuranceType, boxName)
+                }
+
             }
             else{
-                if(insuranceDaysBetween.equals(30))
-                    newNotification(decryptedInsurance[i].id, date, insuranceExpiryDate, insuranceType, boxName)
+                if(insuranceDaysBetween == 30){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = insuranceExpiryDate.time - (insuranceDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedInsurance[i].id, schecduledDate.time, insuranceExpiryDate, insuranceType, boxName)
+                }
             }
         }
     }
@@ -290,9 +309,12 @@ class AddNotification : HomeView {
             try{
                 var vacStart = dateFormat.parse(startDate)
                 var vacationDateDifference: Long = vacStart.getTime() - date.getTime()
-                var vacDaysBetween = (vacationDateDifference / (1000 * 60 * 60 * 24))
-                if(vacDaysBetween.equals(90))
-                    newNotification(decryptedVacations[i].id, date, vacStart, description, boxName)
+                var vacDaysBetween = (vacationDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                if(vacDaysBetween == 90){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = vacStart.time - (vacDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedVacations[i].id, schecduledDate.time, vacStart, description, boxName)
+                }
             }
             catch(e : Exception){
                 //AppLogger.d("Exception", " " + e.message)
@@ -314,13 +336,19 @@ class AddNotification : HomeView {
             docType = decryptedTravelDocuments[i].travelDocumentType
             var docExpiry = dateFormat.parse(docExpirationDate)
             var docDateDifference: Long = docExpiry.getTime() - date.getTime()
-            var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24))
+            var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24)).toInt()
             if(docType.equals("Visa")){
-                if(docDaysBetween.equals(180))
-                    newNotification(decryptedTravelDocuments[i].id, date, docExpiry, docType, boxName)
+                if(docDaysBetween == 180){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = docExpiry.time - (docDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedTravelDocuments[i].id, schecduledDate.time, docExpiry, docType, boxName)
+                }
             }else{
-                if (docDateDifference.equals(270))
-                    newNotification(decryptedTravelDocuments[i].id,date, docExpiry, docType, boxName)
+                if (docDaysBetween == 270){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = docExpiry.time - (docDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedTravelDocuments[i].id,schecduledDate.time, docExpiry, docType, boxName)
+                }
             }
         }
     }
@@ -343,23 +371,33 @@ class AddNotification : HomeView {
             try {
                 var anniversary = birthdayFormat.parse(contactsAnniversary)
                 var present : Date = birthdayFormat.format(date) as Date
+                var anniversaryDifference: Long = anniversary.getTime() - present.getTime()
+                var anniversaryDaysBetween = (anniversaryDifference / (1000 * 60 * 60 * 24)).toInt()
                 //AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
-                if (anniversary.equals(present)){
-                    newNotification(decryptedContacts[i].id, date, present, contactsName, boxName)
+                if (anniversaryDaysBetween == 1){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = anniversary.time - (anniversaryDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedContacts[i].id, schecduledDate.time, present, contactsName, boxName)
                 }
             } catch (e: Exception) {
                 //AppLogger.d("Exception", "birthdayNotification" + e.message)
+                e.printStackTrace()
             }
             try {
                 var birthday = birthdayFormat.parse(contactsBirthday)
                 var present: Date = birthdayFormat.format(date) as Date
                 //AppLogger.d("PurchaseAnniversary", "end Date" + birthday)
-                if (birthday.equals(present)) {
+                var birthdayDifference: Long = birthday.getTime() - present.getTime()
+                var birthdayDaysBetween = (birthdayDifference / (1000 * 60 * 60 * 24)).toInt()
+                if (birthdayDaysBetween == 1) {
                     //AppLogger.d("purchaseAnniversary", " " + birthday)
-                    newNotification(decryptedContacts[i].id, date, present, contactsName, boxName)
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = birthday.time - (birthdayDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedContacts[i].id, schecduledDate.time, present, contactsName, boxName)
                 }
             } catch (e: Exception) {
                 //AppLogger.d("Exception", "birthdayNotification" + e.message)
+                e.printStackTrace()
             }
         }
         }
@@ -378,10 +416,14 @@ class AddNotification : HomeView {
                 try {
                     var anniversary = birthdayFormat.parse(graduationAnniversary)
                     var present : Date = birthdayFormat.format(date) as Date
+                    var gradAnniversaryDifference: Long = anniversary.getTime() - present.getTime()
+                    var gradAnniversaryBetween = (gradAnniversaryDifference / (1000 * 60 * 60 * 24)).toInt()
                     //AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
-                    if (anniversary.equals(present)){
+                    if (gradAnniversaryBetween == 1){
                         //AppLogger.d("purchaseAnniversary", " " + anniversary)
-                        newNotification(decryptedEducation[i].id, date, present, graduationName, boxName)
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = anniversary.time - (gradAnniversaryBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedEducation[i].id, schecduledDate.time, present, graduationName, boxName)
                     }
                 } catch (e: Exception) {
                     //AppLogger.d("Exception", "birthdayNotification" + e.message)
@@ -405,13 +447,18 @@ class AddNotification : HomeView {
             try {
                 var anniversaryWork = birthdayFormat.parse(workAnniversary)
                 var present : Date = birthdayFormat.format(date) as Date
+                var workAnniversaryDifference: Long = anniversaryWork.getTime() - present.getTime()
+                var workAnniversaryBetween = (workAnniversaryDifference / (1000 * 60 * 60 * 24)).toInt()
                 //AppLogger.d("PurchaseAnniversary", "end Date" + anniversaryWork)
-                if (anniversaryWork.equals(present)){
+                if (workAnniversaryBetween == 1){
                     //AppLogger.d("purchaseAnniversary", " " + anniversaryWork)
-                    newNotification(decryptedWork[i].id, date, present, companyName, boxName)
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = anniversaryWork.time - (workAnniversaryBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedWork[i].id, schecduledDate.time, present, companyName, boxName)
                 }
             } catch (e: Exception) {
                 //AppLogger.d("Exception", "birthdayNotification" + e.message)
+                e.printStackTrace()
             }
         }
     }
@@ -430,12 +477,16 @@ class AddNotification : HomeView {
             try{
                 var licenseExpiry = dateFormat.parse(licenceExpirationDate)
                 var licenseDateDifference: Long = licenseExpiry.getTime() - date.getTime()
-                var insuranceDaysBetween = (licenseDateDifference / (1000 * 60 * 60 * 24))
-                if (insuranceDaysBetween.equals(90))
-                    newNotification(decryptedLicense[i].id, date, licenseExpiry, driversLicense, boxName)
+                var licenceDaysBetween = (licenseDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                if (licenceDaysBetween == 90){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = licenseExpiry.time - (licenceDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedLicense[i].id, schecduledDate.time, licenseExpiry, driversLicense, boxName)
+                }
             }
             catch (e: Exception){
                 //AppLogger.d("Exception", "" + e.message)
+                e.printStackTrace()
             }
         }
     }
@@ -452,19 +503,29 @@ class AddNotification : HomeView {
         var birthday = currentUsers!![0]!!.dateOfBirth
 
         try {
-            var anniversary = birthdayFormat.parse(anniversary)
+            var anniversaryy = birthdayFormat.parse(anniversary)
             var present : Date = birthdayFormat.format(date) as Date
+            var birthdayy = birthdayFormat.parse(birthday)
             //AppLogger.d("PurchaseAnniversary", "end Date" + anniversary)
-            if (anniversary.equals(present)){
+            var anniversaryyDifference: Long = anniversaryy.getTime() - present.getTime()
+            var anniversaryDaysBetween = (anniversaryyDifference / (1000 * 60 * 60 * 24)).toInt()
+            if (anniversaryDaysBetween == 1){
                 //AppLogger.d("anniversary", " " + anniversary)
-                newNotification(mDecryptedCombinePersonal!!.id, date, present, anniversary.toString(), boxName)
+                val schecduledDate = Calendar.getInstance()
+                schecduledDate.timeInMillis = anniversaryy.time - (anniversaryDaysBetween * (1000 * 60 * 60 * 24))
+                newNotification(mDecryptedCombinePersonal!!.id, schecduledDate.time, present, anniversary.toString(), boxName)
             }
-            if (birthday.equals(present)){
+            var birthdayyDifference: Long = birthdayy.getTime() - present.getTime()
+            var birthdayyDaysBetween = (birthdayyDifference / (1000 * 60 * 60 * 24)).toInt()
+            if (birthdayyDaysBetween == 1){
                 //AppLogger.d("birthday", " " + birthday)
-                newNotification(mDecryptedCombinePersonal!!.id, date, present, birthday.toString(), boxName)
+                val schecduledDate = Calendar.getInstance()
+                schecduledDate.timeInMillis = birthdayy.time - (anniversaryDaysBetween * (1000 * 60 * 60 * 24))
+                newNotification(mDecryptedCombinePersonal!!.id, schecduledDate.time, present, birthday.toString(), boxName)
             }
         } catch (e: Exception) {
             //AppLogger.d("Exception", "Anniversary" + e.message)
+            e.printStackTrace()
         }
     }
 
@@ -483,12 +544,17 @@ class AddNotification : HomeView {
             try{
                 var governmentExpiry = dateFormat.parse(govIDExpiryDate)
                 var governmentDateDifference: Long = governmentExpiry.getTime() - date.getTime()
-                var insuranceDaysBetween = (governmentDateDifference / (1000 * 60 * 60 * 24))
-                if (insuranceDaysBetween.equals(90))
-                    newNotification(decryptedPersonalGovernment[i].id, date, governmentExpiry, govIDName, boxName)
+                var govDaysBetween = (governmentDateDifference / (1000 * 60 * 60 * 24))
+                if (govDaysBetween.equals(90))
+                {
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = governmentExpiry.time - (govDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedPersonalGovernment[i].id, schecduledDate.time, governmentExpiry, govIDName, boxName)
+                }
             }
             catch (e: Exception){
                 //AppLogger.d("Exception", "" + e.message)
+                e.printStackTrace()
             }
         }
     }
@@ -511,11 +577,16 @@ class AddNotification : HomeView {
             try {
                 var eyeglassPrevious = dateFormat.parse(eyeglasslastCheckUp)
                 var eyeglassDateDifference: Long = date.getTime() - eyeglassPrevious.getTime()
-                var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24))
-                if (eyeglassDaysBetween.equals(330))
-                    newNotification(decryptedEyeglassPrescriptions[i].id, date, eyeglassPrevious, userName, boxName)
+                var eyeglassDaysBetween = (eyeglassDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                if (eyeglassDaysBetween == 330){
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = eyeglassPrevious.time - (eyeglassDateDifference * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedEyeglassPrescriptions[i].id, schecduledDate.time, eyeglassPrevious, userName, boxName)
+                }
+
             }catch(e : Exception){
                 //AppLogger.d("Exception", " " + e.message)
+                e.printStackTrace()
             }
         }
         var vitalMeasurement = ""
@@ -533,6 +604,7 @@ class AddNotification : HomeView {
 
             }catch(e : Exception){
                 //AppLogger.d("Exception", " " + e.message)
+                e.printStackTrace()
             }
         }
     }
