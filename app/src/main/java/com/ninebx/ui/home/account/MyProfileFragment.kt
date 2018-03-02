@@ -26,6 +26,7 @@ import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.countryPicker.CountryPicker
+import com.ninebx.utility.countryPicker.CountryPickerDialog
 import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_my_profile.*
@@ -141,10 +142,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtCountry.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val countryPicker = CountryPicker()
-            AppLogger.e("Selected Country ", " is " + strCountry)
-            countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
+            CountryPickerDialog(context!!, ICountrySelected { strCountry -> this.strCountry = strCountry })
+            //AppLogger.e("Selected Country ", " is " + strCountry)
+            //countryPicker.setCountrySelectionListener()
+            //fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -161,6 +162,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtSaveCompletedProfile.setOnClickListener {
 
         }
+        txtCountry.text = strCountry
     }
 
     private fun checkEncryption() {
