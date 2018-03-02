@@ -3075,7 +3075,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
                             /*combine.financialItems.add( decryptedFinancial )
@@ -3116,7 +3116,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.paymentItems.add(encryptPayment(decryptedPayment!!))
                             realm.insertOrUpdate(combineRealm)
@@ -3155,7 +3155,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.propertyItems.add(encryptProperty(decryptedProperty!!))
                             realm.insertOrUpdate(combineRealm)
@@ -3192,7 +3192,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.vehicleItems.add(encryptVehicle(decryptedVehicle!!))
                             realm.insertOrUpdate(combineRealm)
@@ -3229,7 +3229,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.assetItems.add(encryptAsset(decryptedAssets!!))
                             realm.insertOrUpdate(combineRealm)
@@ -3266,7 +3266,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
                             realm.insertOrUpdate(combineRealm)
@@ -3304,7 +3304,7 @@ class Level2CategoryHelper(
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
-                                combineRealm = realm.createObject(Combine::class.java)
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
                             realm.insertOrUpdate(combineRealm)
