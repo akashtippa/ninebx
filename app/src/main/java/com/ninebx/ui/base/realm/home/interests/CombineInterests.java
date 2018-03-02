@@ -15,22 +15,22 @@ import io.realm.annotations.Required;
 public class CombineInterests extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private RealmList<Interests> interestItems = new RealmList<>();
     @Required private RealmList<InterestsList> listItems = new RealmList<>();
 
-    public CombineInterests(int id, RealmList<Interests> interestItems, RealmList<InterestsList> listItems) {
+    public CombineInterests(long id, RealmList<Interests> interestItems, RealmList<InterestsList> listItems) {
         this.id = id;
         this.interestItems = interestItems;
         this.listItems = listItems;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

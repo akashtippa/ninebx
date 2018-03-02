@@ -12,5 +12,4 @@ import io.realm.RealmResults
 interface NotificationsView : BaseView {
     fun onNotificationsFetched(notifications : ArrayList<DecryptedNotifications>)
     fun onEncryptedNotifications( notifications : RealmResults<Notifications> )
-    fun onCombineFetched(decryptCombine: DecryptedCombine)
 }

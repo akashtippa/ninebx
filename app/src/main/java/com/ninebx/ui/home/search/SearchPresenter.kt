@@ -1,5 +1,8 @@
 package com.ninebx.ui.home.search
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.RecentSearch
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
@@ -19,10 +22,12 @@ import io.realm.Realm
 import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 03/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class SearchPresenter {
 
     private var searchView: SearchView? = null
@@ -51,7 +56,6 @@ class SearchPresenter {
     private val mDecryptCombinePersonal = DecryptedCombinePersonal()
     private val mDecryptCombineShopping = DecryptedCombineShopping()
     private val mDecryptedCombineContacts = DecryptedCombineContacts()
-
 
     private var decryptedRecentSearch = ArrayList<DecryptedRecentSearch>()
 
@@ -111,201 +115,264 @@ class SearchPresenter {
     }
 
     fun updateRecentSearch(listname: String, subCategory: String, mainCategory: String, classType: String) {
-        prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname.encryptString(), subCategory.encryptString(), mainCategory.encryptString(), Date(), classType.encryptString())
-                updateRecent.insertOrUpdate(realm!!)
-                AppLogger.d("RecentSearch", "Update successful " + encryptRecentSearch(updateRecent))
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_RECENT_SEARCH, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname.encryptString(), subCategory.encryptString(), mainCategory.encryptString(), Date(), classType.encryptString())
+                        updateRecent.insertOrUpdate(realm!!)
+                        //AppLogger.d("RecentSearch", "Update successful " + encryptRecentSearch(updateRecent))
+                    }
+                })
+
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchRecentSearch() {
-        prepareRealmConnections(context, false, "RecentSearch", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").sort("createdDate", Sort.DESCENDING).findAll()
-                if (recentSearch.size > 0) {
-                    for (i in 0 until recentSearch.size) {
-                        decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
-                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_RECENT_SEARCH, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").sort("createdDate", Sort.DESCENDING).findAll()
+                        if (recentSearch.size > 0) {
+                            for (i in 0 until recentSearch.size) {
+                                decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
+                                //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptRecentSearch(recentSearch[i]!!))
+                            }
+                        }
                     }
-                    searchView!!.onRecentSearchFetched(decryptedRecentSearch)
-                }
+                })
             }
-        })
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onRecentSearchFetched(decryptedRecentSearch)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineContacts() {
-        prepareRealmConnections(context, false, "CombineContacts", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
-                if (combineContacts.size > 0) {
-                    for (i in 0 until combineContacts.size) {
-                        val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
-                        appendToDecryptCombineContacts(decryptedCombineContacts)
-                        AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
+                        if (combineContacts.size > 0) {
+                            for (i in 0 until combineContacts.size) {
+                                val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
+                                appendToDecryptCombineContacts(decryptedCombineContacts)
+                                //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
 
+                            }
+
+
+                            //AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
+                        }
                     }
-
-                    searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
-                    AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
-                }
+                })
             }
-        })
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineShopping() {
-        prepareRealmConnections(context, false, "CombineShopping", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineShopping = realm!!.where(CombineShopping::class.java).distinctValues("id").findAll()
-                if (combineShopping.size > 0) {
-                    for (i in 0 until combineShopping.size) {
-                        val decryptedCombineShopping = decryptCombineShopping(combineShopping[i]!!)
-                        appendToDecryptCombineShopping(decryptedCombineShopping)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineShopping = realm!!.where(CombineShopping::class.java).distinctValues("id").findAll()
+                        if (combineShopping.size > 0) {
+                            for (i in 0 until combineShopping.size) {
+                                val decryptedCombineShopping = decryptCombineShopping(combineShopping[i]!!)
+                                appendToDecryptCombineShopping(decryptedCombineShopping)
+                            }
+
+                        }
                     }
-                    searchView!!.onCombineShoppingFetched(mDecryptCombineShopping)
-                    AppLogger.d("Combine", "CombineShopping : " + mDecryptCombineShopping)
-                } else {
-                    searchView!!.onCombineShoppingFetched(mDecryptCombineShopping)
-                }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineShoppingFetched(mDecryptCombineShopping)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombinePersonal() {
-        prepareRealmConnections(context, false, "CombinePersonal", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
-                if (combinePersonal.size > 0) {
-                    for (i in 0 until combinePersonal.size) {
-                        val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
-                        appendToDecryptCombinePersonal(decryptedCombinePersonal)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
+                        if (combinePersonal.size > 0) {
+                            for (i in 0 until combinePersonal.size) {
+                                val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
+                                appendToDecryptCombinePersonal(decryptedCombinePersonal)
+                            }
+
+                        }
                     }
-                    searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
-                    AppLogger.d("Combine", "CombinePersonal : " + mDecryptCombinePersonal)
-                } else {
-                    searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
-                }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineWellness() {
-        prepareRealmConnections(context, false, "CombineWellness", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineWellness = realm!!.where(CombineWellness::class.java).distinctValues("id").findAll()
-                if (combineWellness.size > 0) {
-                    for (i in 0 until combineWellness.size) {
-                        val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
-                        appendToDecryptCombineWellness(decryptedCombineWellness)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineWellness = realm!!.where(CombineWellness::class.java).distinctValues("id").findAll()
+                        if (combineWellness.size > 0) {
+                            for (i in 0 until combineWellness.size) {
+                                val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
+                                appendToDecryptCombineWellness(decryptedCombineWellness)
+                            }
+                        }
                     }
-                    searchView!!.onCombineWellnessFetched(mDecryptCombineWellness)
-                    AppLogger.d("Combine", "CombinedWellness : " + mDecryptCombineWellness)
-                } else {
-                    searchView!!.onCombineWellnessFetched(mDecryptCombineWellness)
-                }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineWellnessFetched(mDecryptCombineWellness)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineInterests() {
-        prepareRealmConnections(context, false, "CombineInterests", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineInterests = realm!!.where(CombineInterests::class.java).distinctValues("id").findAll()
-                if (combineInterests.size > 0) {
-                    for (i in 0 until combineInterests.size) {
-                        val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
-                        appendToDecryptCombineInterests(decryptedCombineInterests)
-                    }
-                    searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
-                    AppLogger.d("Combine", "CombinedInterests : " + mDecryptCombineInterests)
-                } else {
-                    searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
-                }
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineInterests = realm!!.where(CombineInterests::class.java).distinctValues("id").findAll()
+                        if (combineInterests.size > 0) {
+                            for (i in 0 until combineInterests.size) {
+                                val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
+                                appendToDecryptCombineInterests(decryptedCombineInterests)
+                            }
 
+                        }
+
+                    }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineEducation() {
-        prepareRealmConnections(context, false, "CombineEducation", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineEducation = realm!!.where(CombineEducation::class.java).distinctValues("id").findAll()
-                if (combineEducation.size > 0) {
-                    for (i in 0 until combineEducation.size) {
-                        val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
-                        appendToDecryptCombineEducation(decryptedCombineEducation)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineEducation = realm!!.where(CombineEducation::class.java).distinctValues("id").findAll()
+                        if (combineEducation.size > 0) {
+                            for (i in 0 until combineEducation.size) {
+                                val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
+                                appendToDecryptCombineEducation(decryptedCombineEducation)
+                            }
+                            for (finance in mDecryptCombineEducation.workItems) {
+                                //AppLogger.d("REcords", finance.toString())
+                            }
+
+                        }
                     }
-                    for (finance in mDecryptCombineEducation.workItems) {
-                        AppLogger.d("REcords", finance.toString())
-                    }
-                    searchView!!.onCombineEducationFetched(mDecryptCombineEducation)
-                    AppLogger.d("Combine", "Decrypted Combined Education : " + mDecryptCombineEducation)
-                } else {
-                    searchView!!.onCombineEducationFetched(mDecryptCombineEducation)
-                }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineEducationFetched(mDecryptCombineEducation)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineMemories() {
-        prepareRealmConnections(context, false, "CombineMemories", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineMemories = realm!!.where(CombineMemories::class.java).distinctValues("id").findAll()
-                if (combineMemories.size > 0) {
-                    for (i in 0 until combineMemories.size) {
-                        val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
-                        appendToDecryptCOmbineMemories(decryptedCombineMemories)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineMemories = realm!!.where(CombineMemories::class.java).distinctValues("id").findAll()
+                        if (combineMemories.size > 0) {
+                            for (i in 0 until combineMemories.size) {
+                                val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
+                                appendToDecryptCOmbineMemories(decryptedCombineMemories)
+                            }
+                        }
                     }
-                    AppLogger.d("DecryptedCOmbineMemories", "Decrypted combine memories" + mDecryptedCombineMemories)
-                    searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)
-                } else {
-                    searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)
-                }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombineTravel() {
-        prepareRealmConnections(context, false, "CombineTravel", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
-                if (combineTravel.size > 0) {
-                    for (i in 0 until combineTravel.size) {
-                        val decryptedCombineTravel = decryptCombineTravel(combineTravel[i]!!)
-                        appendToDecryptCombineTravel(decryptedCombineTravel)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
+                        if (combineTravel.size > 0) {
+                            for (i in 0 until combineTravel.size) {
+                                val decryptedCombineTravel = decryptCombineTravel(combineTravel[i]!!)
+                                appendToDecryptCombineTravel(decryptedCombineTravel)
+                            }
+                        }
+                        //AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
                     }
-                    AppLogger.d("CombineTravel", "Decrypted combine travel" + mDecryptedCombineTravel)
-                    searchView!!.onCombineTravelFetched(mDecryptedCombineTravel)
-                } else {
-                    searchView!!.onCombineTravelFetched(mDecryptedCombineTravel)
-                }
-                AppLogger.d("Combine", "CombinedTravel : " + combineTravel)
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineTravelFetched(mDecryptedCombineTravel)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun fetchCombine() {
-        prepareRealmConnections(context, false, "Combine", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
-
-                if (combineResult.size > 0) {
-                    for (i in 0 until combineResult.size) {
-                        val decryptedCombine = decryptCombine(combineResult[i]!!)
-                        appendToDecrypt(decryptedCombine)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
+                        if( combineResult.size > 0 ) {
+                            for (i in 0 until combineResult.size) {
+                                val decryptedCombine = decryptCombine(combineResult[i]!!)
+                                appendToDecrypt(decryptedCombine)
+                            }
+                        }
                     }
-                    AppLogger.d("COmbineDecrypted", "Decrypted combine financial" + mDecryptCombine)
-                    for (finance in mDecryptCombine.financialItems) {
-                        AppLogger.d("REcords", finance.toString())
-                    }
-                    searchView!!.onCombineFetched(mDecryptCombine)
-                } else {
-                    searchView!!.onCombineFetched(mDecryptCombine)
-                }
+                })
             }
-        })
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                searchView!!.onCombineFetched(mDecryptCombine)
+            }
+
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
     }
+
 
     private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
         mDecryptCombine.listItems.addAll(decryptedCombine.listItems)
@@ -395,7 +462,7 @@ class SearchPresenter {
         val searchInsuranceItems = ArrayList<DecryptedInsurance>()
         val searchTaxItems = ArrayList<DecryptedTax>()
         val searchHomeList = ArrayList<DecryptedHomeList>()
-        AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
+        //AppLogger.d("Search", "Decryptex : " + mDecryptCombine.financialItems)
         for (financeItems in mDecryptCombine.financialItems) {
             val searchResult = performSearchForResult(financeItems, text)
             if (searchResult.isSearchFound) {
@@ -406,8 +473,8 @@ class SearchPresenter {
         }
 
         searchDecryptCombine.financialItems.addAll(searchFinanceItems)
-        AppLogger.d("Search", "SearchItems : " + searchFinanceItems)
-        AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
+        //AppLogger.d("Search", "SearchItems : " + searchFinanceItems)
+        //AppLogger.d("Search", "DecryptedCombine : " + searchDecryptCombine)
 
         for (paymentItems in mDecryptCombine.paymentItems) {
             val searchResult = performSearchForResult(paymentItems, text)
@@ -419,62 +486,62 @@ class SearchPresenter {
         }
 
         searchDecryptCombine.paymentItems.addAll(searchPaymentItems)
-        AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
+        //AppLogger.d("Search", "SearchPayment : " + searchPaymentItems)
 
         for (propertyItems in mDecryptCombine.propertyItems) {
             val searchResult = performSearchForResult(propertyItems, text)
             if (performSearch(propertyItems, text))
                 propertyItems.searchField = searchResult.searchFieldName
-                searchPropertyItems.add(propertyItems)
+            searchPropertyItems.add(propertyItems)
         }
 
         searchDecryptCombine.propertyItems.addAll(searchPropertyItems)
-        AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
+        //AppLogger.d("Search", "SearchProperty : " + searchPropertyItems)
 
         for (vehicleItems in mDecryptCombine.vehicleItems) {
             val searchResult = performSearchForResult(vehicleItems, text)
             if (performSearch(vehicleItems, text))
                 vehicleItems.searchField = searchResult.searchFieldName
-                searchVehicleItems.add(vehicleItems)
+            searchVehicleItems.add(vehicleItems)
         }
         searchDecryptCombine.vehicleItems.addAll(searchVehicleItems)
-        AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
+        //AppLogger.d("Search", "SearchVehicle" + searchVehicleItems)
 
         for (assetItems in mDecryptCombine.assetItems) {
             val searchResult = performSearchForResult(assetItems, text)
             if (performSearch(assetItems, text))
                 assetItems.searchField = searchResult.searchFieldName
-                searchAssetItems.add(assetItems)
+            searchAssetItems.add(assetItems)
         }
         searchDecryptCombine.assetItems.addAll(searchAssetItems)
-        AppLogger.d("Search", "SearchAsset" + searchAssetItems)
+        //AppLogger.d("Search", "SearchAsset" + searchAssetItems)
 
         for (insuranceItems in mDecryptCombine.insuranceItems) {
             val searchResult = performSearchForResult(insuranceItems, text)
             if (performSearch(insuranceItems, text))
                 insuranceItems.searchField = searchResult.searchFieldName
-                searchInsuranceItems.add(insuranceItems)
+            searchInsuranceItems.add(insuranceItems)
         }
         searchDecryptCombine.insuranceItems.addAll(searchInsuranceItems)
-        AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
+        //AppLogger.d("Search", "SearchInsurance" + searchInsuranceItems)
 
         for (taxItems in mDecryptCombine.taxesItems) {
             val searchResult = performSearchForResult(taxItems, text)
             if (performSearch(taxItems, text))
                 taxItems.searchField = searchResult.searchFieldName
-                searchTaxItems.add(taxItems)
+            searchTaxItems.add(taxItems)
         }
         searchDecryptCombine.taxesItems.addAll(searchTaxItems)
-        AppLogger.d("Search", "SearchTax" + searchTaxItems)
+        //AppLogger.d("Search", "SearchTax" + searchTaxItems)
 
         for (listItems in mDecryptCombine.listItems) {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchHomeList.add(listItems)
+            searchHomeList.add(listItems)
         }
         searchDecryptCombine.listItems.addAll(searchHomeList)
-        AppLogger.d("Search", "SearchHomeList" + searchHomeList)
+        //AppLogger.d("Search", "SearchHomeList" + searchHomeList)
 
         return searchDecryptCombine
     }
@@ -495,7 +562,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(documentsItems, text)
             if (performSearch(documentsItems, text))
                 documentsItems.searchField = searchResult.searchFieldName
-                searchDocumentItems.add(documentsItems)
+            searchDocumentItems.add(documentsItems)
         }
         searchDecryptCombineTravel.documentsItems.addAll(searchDocumentItems)
 
@@ -503,7 +570,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(loyaltyItems, text)
             if (performSearch(loyaltyItems, text))
                 loyaltyItems.searchField = searchResult.searchFieldName
-                searchLoyaltyItems.add(loyaltyItems)
+            searchLoyaltyItems.add(loyaltyItems)
         }
         searchDecryptCombineTravel.loyaltyItems.addAll(searchLoyaltyItems)
 
@@ -511,7 +578,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(travelItems, text)
             if (performSearch(travelItems, text))
                 travelItems.searchField = searchResult.searchFieldName
-                searchTravelItems.add(travelItems)
+            searchTravelItems.add(travelItems)
         }
         searchDecryptCombineTravel.travelItems.addAll(searchTravelItems)
 
@@ -519,7 +586,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(vacationItems, text)
             if (performSearch(vacationItems, text))
                 vacationItems.searchField = searchResult.searchFieldName
-                searchVacationItems.add(vacationItems)
+            searchVacationItems.add(vacationItems)
         }
         searchDecryptCombineTravel.vacationsItems.addAll(searchVacationItems)
 
@@ -527,7 +594,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchListItems.add(listItems)
+            searchListItems.add(listItems)
         }
         searchDecryptCombineTravel.listItems.addAll(searchListItems)
 
@@ -547,28 +614,28 @@ class SearchPresenter {
             val searchResult = performSearchForResult(mainMemoryItems, text)
             if (performSearch(mainMemoryItems, text))
                 mainMemoryItems.searchField = searchResult.searchFieldName
-                searchMainMemoryItems.add(mainMemoryItems)
+            searchMainMemoryItems.add(mainMemoryItems)
         }
         searchDecryptCombineMemories.mainMemoriesItems.addAll(searchMainMemoryItems)
-        AppLogger.d("Search", "SearchMainMemoryItems" + searchMainMemoryItems)
+        //AppLogger.d("Search", "SearchMainMemoryItems" + searchMainMemoryItems)
 
         for (memoryTimelineItems in mDecryptedCombineMemories.memoryTimelineItems) {
             val searchResult = performSearchForResult(memoryTimelineItems, text)
             if (performSearch(memoryTimelineItems, text))
                 memoryTimelineItems.searchField = searchResult.searchFieldName
-                searchMemoryTimelineItems.add(memoryTimelineItems)
+            searchMemoryTimelineItems.add(memoryTimelineItems)
         }
         searchDecryptCombineMemories.memoryTimelineItems.addAll(searchMemoryTimelineItems)
-        AppLogger.d("Search", "SearchMemoryTimeLineItems" + searchMainMemoryItems)
+        //AppLogger.d("Search", "SearchMemoryTimeLineItems" + searchMainMemoryItems)
 
         for (listItems in mDecryptedCombineMemories.listItems) {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchMemorylistItems.add(listItems)
+            searchMemorylistItems.add(listItems)
         }
         searchDecryptCombineMemories.listItems.addAll(searchMemorylistItems)
-        AppLogger.d("Search", "SearchMemoryListItems" + searchMainMemoryItems)
+        //AppLogger.d("Search", "SearchMemoryListItems" + searchMainMemoryItems)
         return searchDecryptCombineMemories
     }
 
@@ -586,7 +653,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(educationItems, text)
             if (performSearch(educationItems, text))
                 educationItems.searchField = searchResult.searchFieldName
-                searchEducationItems.add(educationItems)
+            searchEducationItems.add(educationItems)
         }
         searchDecryptCombineEducation.educationItems.addAll(searchEducationItems)
 
@@ -594,7 +661,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(mainEducationItems, text)
             if (performSearch(mainEducationItems, text))
                 mainEducationItems.searchField = searchResult.searchFieldName
-                searchMainEduactionItems.add(mainEducationItems)
+            searchMainEduactionItems.add(mainEducationItems)
         }
         searchDecryptCombineEducation.mainEducationItems.addAll(searchMainEduactionItems)
 
@@ -602,7 +669,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(workItems, text)
             if (performSearch(workItems, text))
                 workItems.searchField = searchResult.searchFieldName
-                searchWorkItems.add(workItems)
+            searchWorkItems.add(workItems)
         }
         searchDecryptCombineEducation.workItems.addAll(searchWorkItems)
 
@@ -610,7 +677,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchEducationListItems.add(listItems)
+            searchEducationListItems.add(listItems)
         }
         searchDecryptCombineEducation.listItems.addAll(searchEducationListItems)
 
@@ -629,7 +696,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(interestitems, text)
             if (performSearch(interestitems, text))
                 interestitems.searchField = searchResult.searchFieldName
-                searchInterestItems.add(interestitems)
+            searchInterestItems.add(interestitems)
         }
         searchDecryptCombineInterests.interestItems.addAll(searchInterestItems)
 
@@ -637,7 +704,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchInterestList.add(listItems)
+            searchInterestList.add(listItems)
         }
         searchDecryptCombineInterests.listItems.addAll(searchInterestList)
 
@@ -665,7 +732,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(checkupItems, text)
             if (performSearch(checkupItems, text))
                 checkupItems.searchField = searchResult.searchFieldName
-                searchCheckupItems.add(checkupItems)
+            searchCheckupItems.add(checkupItems)
         }
         searchDecryptCombineWellness.checkupsItems.addAll(searchCheckupItems)
 
@@ -673,7 +740,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(emergencyContactItems, text)
             if (performSearch(emergencyContactItems, text))
                 emergencyContactItems.searchField = searchResult.searchFieldName
-                searchEmergencyContacts.add(emergencyContactItems)
+            searchEmergencyContacts.add(emergencyContactItems)
         }
         searchDecryptCombineWellness.emergencyContactsItems.addAll(searchEmergencyContacts)
 
@@ -681,7 +748,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(eyeglassPrescriptionItems, text)
             if (performSearch(eyeglassPrescriptionItems, text))
                 eyeglassPrescriptionItems.searchField = searchResult.searchFieldName
-                searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
+            searchEyeglassPrescriptions.add(eyeglassPrescriptionItems)
         }
         searchDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(searchEyeglassPrescriptions)
 
@@ -689,7 +756,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(healthCareProviderItems, text)
             if (performSearch(healthCareProviderItems, text))
                 healthCareProviderItems.searchField = searchResult.searchFieldName
-                searchhealthcareProviders.add(healthCareProviderItems)
+            searchhealthcareProviders.add(healthCareProviderItems)
         }
         searchDecryptCombineWellness.healthcareProvidersItems.addAll(searchhealthcareProviders)
 
@@ -697,7 +764,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(identificationItems, text)
             if (performSearch(identificationItems, text))
                 identificationItems.searchField = searchResult.searchFieldName
-                searchIdentification.add(identificationItems)
+            searchIdentification.add(identificationItems)
         }
         searchDecryptCombineWellness.identificationItems.addAll(searchIdentification)
 
@@ -705,7 +772,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(medicalConditionsItems, text)
             if (performSearch(medicalConditionsItems, text))
                 medicalConditionsItems.searchField = searchResult.searchFieldName
-                searchMedicalConditions.add(medicalConditionsItems)
+            searchMedicalConditions.add(medicalConditionsItems)
         }
         searchDecryptCombineWellness.medicalConditionsItems.addAll(searchMedicalConditions)
 
@@ -713,7 +780,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(medicalHistoryItems, text)
             if (performSearch(medicalHistoryItems, text))
                 medicalHistoryItems.searchField = searchResult.searchFieldName
-                searchMedicalHistory.add(medicalHistoryItems)
+            searchMedicalHistory.add(medicalHistoryItems)
         }
         searchDecryptCombineWellness.medicalHistoryItems.addAll(searchMedicalHistory)
 
@@ -721,7 +788,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(medicationItems, text)
             if (performSearch(medicationItems, text))
                 medicationItems.searchField = searchResult.searchFieldName
-                searchMedications.add(medicationItems)
+            searchMedications.add(medicationItems)
         }
         searchDecryptCombineWellness.medicationsItems.addAll(searchMedications)
 
@@ -729,7 +796,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(vitalNumberItems, text)
             if (performSearch(vitalNumberItems, text))
                 vitalNumberItems.searchField = searchResult.searchFieldName
-                searchVitalNumber.add(vitalNumberItems)
+            searchVitalNumber.add(vitalNumberItems)
         }
         searchDecryptCombineWellness.vitalNumbersItems.addAll(searchVitalNumber)
 
@@ -737,7 +804,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(wellnessItems, text)
             if (performSearch(wellnessItems, text))
                 wellnessItems.searchField = searchResult.searchFieldName
-                searchWellness.add(wellnessItems)
+            searchWellness.add(wellnessItems)
         }
         searchDecryptCombineWellness.wellnessItems.addAll(searchWellness)
 
@@ -745,7 +812,7 @@ class SearchPresenter {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchWellnessList.add(listItems)
+            searchWellnessList.add(listItems)
         }
         searchDecryptCombineWellness.listItems.addAll(searchWellnessList)
 
@@ -769,49 +836,49 @@ class SearchPresenter {
             val searchResult = performSearchForResult(certificateItems, text)
             if (performSearch(certificateItems, text))
                 certificateItems.searchField = searchResult.searchFieldName
-                searchCertifiacate.add(certificateItems)
+            searchCertifiacate.add(certificateItems)
         }
         searchDecryptCombinePersonal.certificateItems.addAll(searchCertifiacate)
         for (governmentItems in mDecryptCombinePersonal.governmentItems) {
             val searchResult = performSearchForResult(governmentItems, text)
             if (performSearch(governmentItems, text))
                 governmentItems.searchField = searchResult.searchFieldName
-                searchGovernment.add(governmentItems)
+            searchGovernment.add(governmentItems)
         }
         searchDecryptCombinePersonal.governmentItems.addAll(searchGovernment)
         for (liceneItems in mDecryptCombinePersonal.licenseItems) {
             val searchResult = performSearchForResult(liceneItems, text)
             if (performSearch(liceneItems, text))
                 liceneItems.searchField = searchResult.searchFieldName
-                searchLicense.add(liceneItems)
+            searchLicense.add(liceneItems)
         }
         searchDecryptCombinePersonal.licenseItems.addAll(searchLicense)
         for (personalItems in mDecryptCombinePersonal.personalItems) {
             val searchResult = performSearchForResult(personalItems, text)
             if (performSearch(personalItems, text))
                 personalItems.searchField = searchResult.searchFieldName
-                searchPersonal.add(personalItems)
+            searchPersonal.add(personalItems)
         }
         searchDecryptCombinePersonal.personalItems.addAll(searchPersonal)
         for (socialItems in mDecryptCombinePersonal.socialItems) {
             val searchResult = performSearchForResult(socialItems, text)
             if (performSearch(socialItems, text))
                 socialItems.searchField = searchResult.searchFieldName
-                searchSocial.add(socialItems)
+            searchSocial.add(socialItems)
         }
         searchDecryptCombinePersonal.socialItems.addAll(searchSocial)
         for (taxIDItems in mDecryptCombinePersonal.taxIDItems) {
             val searchResult = performSearchForResult(taxIDItems, text)
             if (performSearch(taxIDItems, text))
                 taxIDItems.searchField = searchResult.searchFieldName
-                searchTaxID.add(taxIDItems)
+            searchTaxID.add(taxIDItems)
         }
         searchDecryptCombinePersonal.taxIDItems.addAll(searchTaxID)
         for (listItems in mDecryptCombinePersonal.listItems) {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchPersonalList.add(listItems)
+            searchPersonalList.add(listItems)
         }
         searchDecryptCombinePersonal.listItems.addAll(searchPersonalList)
         return searchDecryptCombinePersonal
@@ -829,21 +896,21 @@ class SearchPresenter {
             val searchResult = performSearchForResult(contactsItems, text)
             if (performSearch(contactsItems, text))
                 contactsItems.searchField = searchResult.searchFieldName
-                searchContacts.add(contactsItems)
+            searchContacts.add(contactsItems)
         }
         searchDecryptCombineContacts.contactsItems.addAll(searchContacts)
         for (mainContactItems in mDecryptedCombineContacts.mainContactsItems) {
             val searchResult = performSearchForResult(mainContactItems, text)
             if (performSearch(mainContactItems, text))
                 mainContactItems.searchField = searchResult.searchFieldName
-                searchMainContacts.add(mainContactItems)
+            searchMainContacts.add(mainContactItems)
         }
         searchDecryptCombineContacts.mainContactsItems.addAll(searchMainContacts)
         for (listItems in mDecryptedCombineContacts.listItems) {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchContactsList.add(listItems)
+            searchContactsList.add(listItems)
         }
         searchDecryptCombineContacts.listItems.addAll(searchContactsList)
         return searchDecryptCombineContacts
@@ -868,28 +935,28 @@ class SearchPresenter {
             val searchResult = performSearchForResult(recentPurchaseItems, text)
             if (performSearch(recentPurchaseItems, text))
                 recentPurchaseItems.searchField = searchResult.searchFieldName
-                searchRecentPurchase.add(recentPurchaseItems)
+            searchRecentPurchase.add(recentPurchaseItems)
         }
         searchDecryptCombineShopping.recentPurchaseItems.addAll(searchRecentPurchase)
         for (shoppingItems in mDecryptCombineShopping.shoppingItems) {
             val searchResult = performSearchForResult(shoppingItems, text)
             if (performSearch(shoppingItems, text))
                 shoppingItems.searchField = searchResult.searchFieldName
-                searchShopping.add(shoppingItems)
+            searchShopping.add(shoppingItems)
         }
         searchDecryptCombineShopping.shoppingItems.addAll(searchShopping)
         for (clothingSizeItems in mDecryptCombineShopping.clothingSizesItems) {
             val searchResult = performSearchForResult(clothingSizeItems, text)
             if (performSearch(clothingSizeItems, text))
                 clothingSizeItems.searchField = searchResult.searchFieldName
-                searchClothingSize.add(clothingSizeItems)
+            searchClothingSize.add(clothingSizeItems)
         }
         searchDecryptCombineShopping.clothingSizesItems.addAll(searchClothingSize)
         for (listItems in mDecryptCombineShopping.listItems) {
             val searchResult = performSearchForResult(listItems, text)
             if (performSearch(listItems, text))
                 listItems.searchField = searchResult.searchFieldName
-                searchShoppingList.add(listItems)
+            searchShoppingList.add(listItems)
         }
         searchDecryptCombineShopping.listItems.addAll(searchShoppingList)
         return searchDecryptCombineShopping

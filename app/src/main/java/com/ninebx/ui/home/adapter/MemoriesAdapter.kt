@@ -34,7 +34,7 @@ internal class MemoriesAdapter(private var myList: ArrayList<MemoryTimeline>?, p
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val member = myList!![position]
-        AppLogger.d("Decrypt", "Decrypting : " + member.toString())
+        //AppLogger.d("Decrypt", "Decrypting : " + member.toString())
         holder.txtMemoryTitle.text = member.title.decryptString()
         holder.txtMemoryDate.text = member.date.decryptString()
 

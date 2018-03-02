@@ -1,11 +1,14 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -20,12 +23,34 @@ class Level2CategoryHelper(
         val categoryID: String,
         val categoryView: Level2CategoryView,
         val selectedDocument: Parcelable?,
-        val classType: String
+        val classType: String?
 ) {
+
+    // For Home & Money
+    private var decryptedFinancial: DecryptedFinancial ?= null // DecryptedFinancial()
+    private var decryptedPayment: DecryptedPayment ?= null // DecryptedPayment()
+    private var decryptedProperty: DecryptedProperty ?= null // DecryptedProperty()
+    private var decryptedVehicle: DecryptedVehicle ?= null // DecryptedVehicle()
+    private var decryptedAssets: DecryptedAsset ?= null // DecryptedAsset()
+    private var decryptedInsurance: DecryptedInsurance ?= null // DecryptedInsurance()
+    private var decryptedTaxes: DecryptedTax ?= null // DecryptedTax()
+
+    // For Travel
+    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms ?= null // DecryptedLoyaltyPrograms()
+    private var decryptedTravel: DecryptedTravel ?= null // DecryptedTravel()
+
+    // For Personal
+    private var decryptedDriversLicense: DecryptedLicense ?= null // DecryptedLicense()
+    private var decryptedSocial: DecryptedSocial ?= null // DecryptedSocial()
+    private var decryptedTAX_ID: DecryptedTaxID ?= null // DecryptedTaxID()
+    private var decryptedCertificate: DecryptedCertificate ?= null // DecryptedCertificate()
+    private var decryptedOtherGovernment: DecryptedGovernment ?= null // DecryptedGovernment()
 
     init {
         extractObject()
         when (category_name) {
+
+        //Home&Money
             "Banking" -> {
                 getBanking()
             }
@@ -84,7 +109,21 @@ class Level2CategoryHelper(
                 getOtherDetails()
             }
 
-        // Insurance Left
+            "Homeowners/Renters insurance" -> {
+                gtHomeOwnerRentersInsurance()
+            }
+            "Auto insurance" -> {
+                getAutoInsurance()
+            }
+            "Life insurance" -> {
+                getLifeInsurance()
+            }
+            "Health insurance" -> {
+                getHealthInsurance()
+            }
+            "Umbrella insurance" -> {
+                getUmbrellaInsurance()
+            }
 
             "Past returns" -> {
                 getPastReturns()
@@ -116,6 +155,8 @@ class Level2CategoryHelper(
             "Other Government-Issued ID" -> {
                 getOtherGovernmentIssuedID()
             }
+
+        //Travel
 
             "Airline" -> {
                 getAirline()
@@ -153,6 +194,7 @@ class Level2CategoryHelper(
                 getOtherAttachments()
             }
 
+        // Shopping
             "Loyalty Programs" -> {
                 getLoyaltyPrograms()
             }
@@ -170,21 +212,6 @@ class Level2CategoryHelper(
             }
             "Travel Dates And Plans" -> {
                 getTravelDatesAndPlans()
-            }
-            "Homeowners/Renters insurance" -> {
-                gtHomeOwnerRentersInsurance()
-            }
-            "Auto insurance" -> {
-                getAutoInsurance()
-            }
-            "Life insurance" -> {
-                getLifeInsurance()
-            }
-            "Health insurance" -> {
-                getHealthInsurance()
-            }
-            "Umbrella insurance" -> {
-                getUmbrellaInsurance()
             }
 
         // Wellness
@@ -233,30 +260,9 @@ class Level2CategoryHelper(
             "Baby's sizes" -> {
                 getBabysSizes()
             }
-
         }
-
-
     }
-    // For Home & Money
-    private var decryptedFinancial: DecryptedFinancial? = null
-    private var decryptedPayment: DecryptedPayment? = null
-    private var decryptedProperty: DecryptedProperty? = null
-    private var decryptedVehicle: DecryptedVehicle? = null
-    private var decryptedAssets: DecryptedAsset? = null
-    private var decryptedInsurance: DecryptedInsurance? = null
-    private var decryptedTaxes: DecryptedTax? = null
 
-    // For Travel
-    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms? = null
-    private var decryptedTravel: DecryptedTravel? = null
-
-    // For Personal
-    private var decryptedDriversLicense: DecryptedLicense? = null
-    private var decryptedSocial: DecryptedSocial? = null
-    private var decryptedTAX_ID: DecryptedTaxID? = null
-    private var decryptedCertificate: DecryptedCertificate? = null
-    private var decryptedOtherGovernment: DecryptedGovernment? = null
 
     private fun extractObject() {
         if( selectedDocument == null ) {
@@ -338,8 +344,6 @@ class Level2CategoryHelper(
 
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -384,7 +388,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_GIRLS_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -393,7 +396,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Little and big kid size(US)", "Little and big kid size(US)", Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_GIRLS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -416,14 +418,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -460,7 +460,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_GIRLS_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -483,7 +482,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Little and big kid size(US)", "Little and big kid size(US)", Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_GIRLS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -508,14 +506,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -536,8 +532,6 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_MENS_SIZE_CATEGORY_US, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -563,7 +557,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -588,7 +581,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_MENS_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -610,14 +602,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -638,8 +628,6 @@ class Level2CategoryHelper(
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_WOMENS_DETAILS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
-
-
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
@@ -666,7 +654,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -692,7 +679,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_WOMEN_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -715,14 +701,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -746,15 +730,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Contacts", decryptedVehicle!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", decryptedVehicle!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -802,7 +783,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -842,7 +822,6 @@ class Level2CategoryHelper(
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -884,7 +863,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -924,7 +902,6 @@ class Level2CategoryHelper(
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -966,7 +943,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -976,7 +952,6 @@ class Level2CategoryHelper(
 
         categoryView.onSuccess(categoryList)
     }
-
 
     private fun getFragmentSubList() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
@@ -1454,7 +1429,7 @@ class Level2CategoryHelper(
 
     private fun getOtherPaymentAccounts() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 2002
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1496,7 +1471,7 @@ class Level2CategoryHelper(
 
     private fun getCardDebitCardDetails() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedPayment == null ) decryptedPayment = DecryptedPayment()
         var categoryIndex = 2001
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1539,7 +1514,7 @@ class Level2CategoryHelper(
 
     private fun getOtherFinancialAccounts() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1004
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1582,7 +1557,7 @@ class Level2CategoryHelper(
 
     private fun getLoadMortgages() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1003
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1624,7 +1599,7 @@ class Level2CategoryHelper(
 
     private fun getInvestments() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1002
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1666,7 +1641,7 @@ class Level2CategoryHelper(
 
     private fun getBanking() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1001
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2685,15 +2660,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Hemoglobin A1C(%)", "Hemoglobin A1C(%)", "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2717,15 +2689,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Date of visit", "Date of visit", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2737,7 +2706,7 @@ class Level2CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    fun setValue(level2Category: Level2SubCategory, selectedDocument: Parcelable) {
+    fun setValue( level2Category: Level2SubCategory ) {
         when (category_name) {
             "Banking" -> {
                 setBanking( level2Category )
@@ -2794,7 +2763,7 @@ class Level2CategoryHelper(
                 setAssets( level2Category )
             }
 
-            //Check from here
+        //Check from here
         // Insurance Left
 
             "Past returns" -> {
@@ -3076,107 +3045,275 @@ class Level2CategoryHelper(
         }
     }
 
-    fun saveDocument( context: Context ) {
+    @SuppressLint("StaticFieldLeak")
+    fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
-
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedFinancial!!.id.toInt() == 0 ) {
-                        decryptedFinancial!!.id = getUniqueId()
-                    }
-                    val financial = encryptFinancial(decryptedFinancial!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedFinancial!!.selectionType = categoryID
+            decryptedFinancial!!.institutionName = title
+            if( decryptedFinancial!!.id.toInt() == 0 ) {
+                decryptedFinancial!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val financial = encryptFinancial(decryptedFinancial!!)
+                            realm.insertOrUpdate(financial)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            })
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
+                            /*combine.financialItems.add( decryptedFinancial )
+                            val encryptedCombine = encryptCombine(combine)*/
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedPayment!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedPayment!!.id.toInt() == 0 ) {
-                        decryptedPayment!!.id = getUniqueId()
-                    }
-                    val financial = encryptPayment(decryptedPayment!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedPayment!!.selectionType = categoryID
+            decryptedPayment!!.cardName = title
+            if( decryptedPayment!!.id.toInt() == 0 ) {
+                decryptedPayment!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val payment = encryptPayment(decryptedPayment!!)
+                            realm.insertOrUpdate(payment)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
 
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.paymentItems.add(encryptPayment(decryptedPayment!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                    }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if( decryptedProperty!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedProperty!!.id.toInt() == 0 ) {
-                        decryptedProperty!!.id = getUniqueId()
-                    }
-                    val financial = encryptProperty(decryptedProperty!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedProperty!!.selectionType = categoryID
+            decryptedProperty!!.titleName = title
+            if( decryptedProperty!!.id.toInt() == 0 ) {
+                decryptedProperty!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val property = encryptProperty(decryptedProperty!!)
+                            realm.insertOrUpdate(property)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
 
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.propertyItems.add(encryptProperty(decryptedProperty!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if( decryptedVehicle!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedVehicle!!.id.toInt() == 0 ) {
-                        decryptedVehicle!!.id = getUniqueId()
-                    }
-                    val financial = encryptVehicle(decryptedVehicle!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedVehicle!!.titleName = title
+            decryptedVehicle!!.selectionType = categoryID
+            if( decryptedVehicle!!.id.toInt() == 0 ) {
+                decryptedVehicle!!.id = getUniqueId()
+            }
+            object  : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val vehicle = encryptVehicle(decryptedVehicle!!)
+                            realm.insertOrUpdate(vehicle)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
-
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.vehicleItems.add(encryptVehicle(decryptedVehicle!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if( decryptedAssets!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedAssets!!.id.toInt() == 0 ) {
-                        decryptedAssets!!.id = getUniqueId()
-                    }
-                    val financial = encryptAsset(decryptedAssets!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedAssets!!.selectionType = categoryID
+            decryptedAssets!!.test = title
+            if( decryptedAssets!!.id.toInt() == 0 ) {
+                decryptedAssets!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val assets = encryptAsset(decryptedAssets!!)
+                            realm.insertOrUpdate(assets)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
-
-            })
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.assetItems.add(encryptAsset(decryptedAssets!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if( decryptedInsurance!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedInsurance!!.id.toInt() == 0 ) {
-                        decryptedInsurance!!.id = getUniqueId()
-                    }
-                    val financial = encryptInsurance(decryptedInsurance!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedInsurance!!.selectionType = categoryID
+            decryptedInsurance!!.insuranceCompany = title
+            if( decryptedInsurance!!.id.toInt() == 0 ) {
+                decryptedInsurance!!.id = getUniqueId() }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val insurance = encryptInsurance(decryptedInsurance!!)
+                            realm.insertOrUpdate(insurance)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            })
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if( decryptedTaxes!= null ) {
-            prepareRealmConnections( context, true, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                override fun onSuccess(realm: Realm?) {
-                    realm!!.beginTransaction()
-                    if( decryptedTaxes!!.id.toInt() == 0 ) {
-                        decryptedTaxes!!.id = getUniqueId()
-                    }
-                    val financial = encryptTaxes(decryptedTaxes!!)
-                    realm.copyToRealmOrUpdate(financial)
-                    realm.commitTransaction()
+            decryptedTaxes!!.selectionType = categoryID
+            decryptedTaxes!!.title = title
+            if( decryptedTaxes!!.id.toInt() == 0 ) {
+                decryptedTaxes!!.id = getUniqueId()
+            }
+           object : AsyncTask<Void, Void, Unit>(){
+               override fun doInBackground(vararg params: Void?) {
+                   prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                       override fun onSuccess(realm: Realm?) {
+                           realm!!.beginTransaction()
+                           val insurance = encryptInsurance(decryptedInsurance!!)
+                           realm.insertOrUpdate(insurance)
+                           realm.commitTransaction()
+                       }
+                   })
+               }
+           }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                            realm.beginTransaction()
+                            if( combineRealm == null ) {
+                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                            }
+                            combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
                 }
-
-            })
+            }
         }
-
     }
 }

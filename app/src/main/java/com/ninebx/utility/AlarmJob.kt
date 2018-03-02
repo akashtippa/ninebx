@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.ninebx.R
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.base.realm.CalendarEvents
+import com.ninebx.ui.base.realm.Notifications
 import java.util.*
 
 /**
@@ -25,6 +26,7 @@ import java.util.*
  */
 class AlarmJob : Job() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onRunJob(params: Params): Result {
         val gson = Gson()
         val extraModel = params.extras["reminder"] as String
@@ -32,8 +34,12 @@ class AlarmJob : Job() {
         val title: String
         val desc: String
 
+        val extraNotification = params.extras["notification"] as String
+        val notify = gson.fromJson(extraNotification, Notifications::class.java)
+        val notificationTitle : String
+        val notificationDesc : String
 
-        /*if (reminder.action == Reminders.ACTION_PREGAME || reminder.action == Reminders.ACTION_POSTGAME) {
+           /*if (reminder.action == Reminders.ACTION_PREGAME || reminder.action == Reminders.ACTION_POSTGAME) {
             val testDateTime = getGameDateTime(reminder.date + " , " + reminder.time)
             title = "Reminder : You have an event - ${reminder.title}"
             desc = "${testDateTime.toString("dd MMM ")} at ${testDateTime.toString("hh:mm a")}"
@@ -51,11 +57,15 @@ class AlarmJob : Job() {
         else desc = reminder.title[0]!!
         
         showNotification( title, desc )
-        
+
+        notificationTitle = "NineBx : ${notify.subTitle[0]}"
+        notificationDesc =notify.message
+        showNotification(notificationTitle, notificationDesc)
+
         return Result.SUCCESS
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showNotification(title: String, desc: String?) {
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 
@@ -115,17 +125,14 @@ class AlarmJob : Job() {
                         .setWhen(0)
                         .setSound(defaultSoundUri)
             }
-
-
            notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
     }
-
 
     companion object {
 
         val TAG = AlarmJob::class.java.simpleName
 
-        fun scheduleJob(reminder: CalendarEvents, calendar: Calendar ) {
+        fun scheduleJob( reminder: CalendarEvents, calendar: Calendar ) {
             AppLogger.d(TAG, "scheduleJob : " + reminder.toString())
             val gson = Gson()
             val reminderString = gson.toJson(reminder)
@@ -156,17 +163,31 @@ class AlarmJob : Job() {
                             .build()
                             .schedule()
             }
-
-
-
         }
 
         fun cancelJob(remindJobId: String) {
             JobManager.instance().cancelAllForTag(remindJobId)
         }
 
-
+        fun scheduleNotificaiton(notification : Notifications , calendar: Calendar ){
+            AppLogger.d("NotificationScheduled", "scheduleNotification : " + notification.toString())
+            val gson = Gson()
+            val notificationString = gson.toJson(notification)
+            AppLogger.d("NotificationScheduled", "scheduleNotification : JSON" + notificationString)
+            var extras = PersistableBundleCompat()
+            extras.putString("notification", notificationString)
+            val reminderTimeInMillis: Long = calendar.timeInMillis
+            val id: String = "Notification_" + notification.id
+            val calendar = Calendar.getInstance()
+            var jobId: Int = -1
+            if (reminderTimeInMillis > calendar.timeInMillis ){
+                jobId = JobRequest.Builder(id)
+                        .setExact((reminderTimeInMillis - calendar.timeInMillis))
+                        .setRequiresDeviceIdle(false)
+                        .setExtras(extras)
+                        .build()
+                        .schedule()
+            }
+            }
+        }
     }
-
-
-}

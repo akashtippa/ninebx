@@ -173,7 +173,9 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtCountry.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.fragmentContainer, CountryPicker()).commit()
+            val countryPicker = CountryPicker()
+            countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> edtCountry.setText(strCountry) })
+            fragmentTransaction.replace(R.id.fragmentContainer, countryPicker).commit()
         }
 
         populateView(mContacts)

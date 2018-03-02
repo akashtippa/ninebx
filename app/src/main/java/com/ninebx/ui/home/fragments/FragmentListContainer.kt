@@ -53,6 +53,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         bundle.putString("categoryName", categoryName)
         bundle.putString("categoryId", categoryID)
         bundle.putParcelable( "selectedDocument", selectedDocument )
+        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
         bundle.putString("classType", classType)
         val categoryFragment = Level2CategoryFragment()
         categoryFragment.arguments = bundle
@@ -121,6 +122,8 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
                 val bundle = Bundle()
                 bundle.putString("categoryName", categoryName)
                 bundle.putString("categoryId", categoryID)
+                bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+
                 val categoryFragment = Level2CategoryFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()

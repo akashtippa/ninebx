@@ -1,11 +1,13 @@
 package com.ninebx.ui.home.account
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,11 +18,9 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.getImageUri
-import com.ninebx.ui.base.kotlin.handleMultiplePermission
-import com.ninebx.ui.base.kotlin.saveImage
-import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
@@ -48,7 +48,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)
     }
 
-    var strFullName = ""
+
     var strFirstName = ""
     var strLastName = ""
     var strEmail = ""
@@ -70,7 +70,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     var user: SyncUser? = null
     lateinit var realm: Realm
 
-    private var currentUsers: ArrayList<Users>? = ArrayList()
+    private var currentUsers: ArrayList<DecryptedUsers>? = ArrayList()
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
 
@@ -84,7 +84,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         NineBxApplication.instance.activityInstance!!.showBackIcon()
 
-        currentUsers = arguments!!.getParcelableArrayList<Users>(Constants.CURRENT_USER)
+        currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
@@ -126,7 +126,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtCountry.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.add(R.id.frameLayout, CountryPicker()).commit()
+            val countryPicker = CountryPicker()
+            countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> txtCountry.text = strCountry })
+            fragmentTransaction.add(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -143,58 +145,58 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     }
 
     private fun checkEncryption() {
-        AppLogger.d(TAG, "User Name From Realm : " + currentUsers!![0].firstName)
+        //AppLogger.d(TAG, "User Name From Realm : " + currentUsers!![0].firstName)
         val decryptedName = currentUsers!![0].firstName.decryptString()
-        AppLogger.d(TAG, "User Name From Realm Decrypted : " + decryptedName)
+        //AppLogger.d(TAG, "User Name From Realm Decrypted : " + decryptedName)
         val encryptedName = decryptedName.encryptString()
-        AppLogger.d(TAG, "User Name From Realm Encrypted : " + encryptedName)
+        //AppLogger.d(TAG, "User Name From Realm Encrypted : " + encryptedName)
     }
 
-    private fun populateUserInfo(users: Users?) {
+    private fun populateUserInfo(users: DecryptedUsers?) {
         idUser = users!!.id
         idUserID = users.userId
 
         if (users.firstName.isNotEmpty())
-            edtFirstName.setText(users.firstName.decryptString())
+            edtFirstName.setText(users.firstName)
 
         if (users.lastName.isNotEmpty())
-            edtLastName.setText(users.lastName.decryptString())
+            edtLastName.setText(users.lastName)
 
         if (users.emailAddress.isNotEmpty())
-            edtEmail.setText(users.emailAddress.decryptString())
+            edtEmail.setText(users.emailAddress)
 
         if (users.relationship.isNotEmpty())
-            edtRelationship.setText(users.relationship.decryptString())
+            edtRelationship.setText(users.relationship)
 
         if (users.gender.isNotEmpty())
-            txtGender.prompt = users.gender.decryptString()
+            txtGender.prompt = users.gender
 
         if (users.dateOfBirth.isNotEmpty())
-            txtDOB.text = users.dateOfBirth.decryptString()
+            txtDOB.text = users.dateOfBirth
 
         if (users.anniversary.isNotEmpty())
-            txtAnniversary.text = users.anniversary.decryptString()
+            txtAnniversary.text = users.anniversary
 
         if (users.mobileNumber.isNotEmpty())
-            edtMobileNumber.setText(users.mobileNumber.decryptString())
+            edtMobileNumber.setText(users.mobileNumber)
 
         if (users.street_1.isNotEmpty())
-            edtAddress1.setText(users.street_1.decryptString())
+            edtAddress1.setText(users.street_1)
 
         if (users.street_2.isNotEmpty())
-            edtAddress2.setText(users.street_2.decryptString())
+            edtAddress2.setText(users.street_2)
 
         if (users.city.isNotEmpty())
-            edtCity.setText(users.city.decryptString())
+            edtCity.setText(users.city)
 
         if (users.state.isNotEmpty())
-            edtState.setText(users.state.decryptString())
+            edtState.setText(users.state)
 
         if (users.zipCode.isNotEmpty())
-            edtZipCode.setText(users.zipCode.decryptString())
+            edtZipCode.setText(users.zipCode)
 
         if (users.country.isNotEmpty())
-            txtCountry.text = users.country.decryptString()
+            txtCountry.text = users.country
 
         //mAWSFileTransferHelper.setFileTransferListener(this)
         /*val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
@@ -291,36 +293,58 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     }
 
     private val TAG = "Profile"
+    @SuppressLint("StaticFieldLeak")
     private fun updateTheUserInfo() {
 
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
 
-                val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
-                realm.beginTransaction()
+        object : AsyncTask<Void, Void, Unit>() {
 
-                users!!.firstName = strFirstName.encryptString()
-                users.lastName = strLastName.encryptString()
-                users.fullName = (strFirstName + " " + strLastName).encryptString()
-                users.emailAddress = strEmail.encryptString()
-                users.relationship = strRelationship.encryptString()
-                users.dateOfBirth = strDOB.encryptString()
-                users.anniversary = strAnniversary.encryptString()
-                users.gender = strGender.encryptString()
-                users.mobileNumber = strMobileNumber.encryptString()
-                users.street_1 = strStreetAddress1.encryptString()
-                users.street_2 = strStreetAddress2.encryptString()
-                users.city = strCity.encryptString()
-                users.state = strState.encryptString()
-                users.zipCode = strZipCode.encryptString()
-                users.country = strCountry.encryptString()
-                //                realm.copyToRealmOrUpdate(updatingUserInfo)
-                realm.commitTransaction()
-                users.insertOrUpdate(realm)
+            override fun onPreExecute() {
+                super.onPreExecute()
+                context!!.showProgressDialog(getString(R.string.saving_user))
+            }
 
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+
+                        val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
+                        realm.beginTransaction()
+
+                        users!!.firstName = strFirstName.encryptString()
+                        users.lastName = strLastName.encryptString()
+                        users.fullName = (strFirstName + " " + strLastName).encryptString()
+                        users.emailAddress = strEmail.encryptString()
+                        users.relationship = strRelationship.encryptString()
+                        users.dateOfBirth = strDOB.encryptString()
+                        users.anniversary = strAnniversary.encryptString()
+                        users.gender = strGender.encryptString()
+                        users.mobileNumber = strMobileNumber.encryptString()
+                        users.street_1 = strStreetAddress1.encryptString()
+                        users.street_2 = strStreetAddress2.encryptString()
+                        users.city = strCity.encryptString()
+                        users.state = strState.encryptString()
+                        users.zipCode = strZipCode.encryptString()
+                        users.country = strCountry.encryptString()
+                        users.completeProfile = true
+                        //                realm.copyToRealmOrUpdate(updatingUserInfo)
+                        users.insertOrUpdate(realm)
+                        realm.commitTransaction()
+
+                    }
+                })
+
+
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
             }
-        })
+
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
     }
 
     override fun onBackPressed(): Boolean {

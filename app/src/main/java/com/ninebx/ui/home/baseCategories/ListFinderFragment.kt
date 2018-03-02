@@ -27,33 +27,40 @@ import io.realm.RealmResults
  * Created by Alok on 12/01/18.
  */
 class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
-
-    override fun homeListCount(contactsUpdating: Int, decryptCombine: RealmResults<HomeList>?) {
-
+    override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun travelListCount(contactsUpdating: Int, decryptCombine: RealmResults<TravelList>) {
+    override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun contactListCount(contactsUpdating: Int, decryptCombine: RealmResults<ContactsList>) {
+    override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun educationListCount(contactsUpdating: Int, decryptCombine: RealmResults<EducationList>) {
+    override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun interestListCount(contactsUpdating: Int, decryptCombine: RealmResults<InterestsList>) {
+    override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun countPersonalList(contactsUpdating: Int, decryptCombine: RealmResults<PersonalList>) {
+    override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: RealmResults<WellnessList>) {
+    override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun memoryListCount(contactsUpdating: Int, decryptCombine: RealmResults<MemoriesList>) {
+    override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: RealmResults<ShoppingList>) {
+    override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
+        // //To change body of created functions use File | Settings | File Templates.
     }
 
 
@@ -98,7 +105,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ListsPresenter(this, 0)
+        ListsPresenter(this, 0).fetchDataInBackground()
 
         fromWhichBox = arguments!!.getInt("category")
         navigateToParticularList(fromWhichBox)
@@ -122,7 +129,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineListArray)
                 val categoryFragment = SubListsFragment()
-                AppLogger.d("CombineListArray", " " + combineListArray)
+                //AppLogger.d("CombineListArray", " " + combineListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
 
@@ -142,7 +149,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineTravelListArray)
                 val categoryFragment = TravelListFragment()
-                AppLogger.d("combineTravelListArray", " " + combineTravelListArray)
+                //AppLogger.d("combineTravelListArray", " " + combineTravelListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -161,7 +168,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineContactListArray)
                 val categoryFragment = ContactsListFragment()
-                AppLogger.d("combineContactListArray", " " + combineContactListArray)
+                //AppLogger.d("combineContactListArray", " " + combineContactListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -180,7 +187,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineEducationListArray)
                 val categoryFragment = EducationListFragment()
-                AppLogger.d("combineEducationListArray", " " + combineEducationListArray)
+                //AppLogger.d("combineEducationListArray", " " + combineEducationListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -199,7 +206,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combinePersonalListArray)
                 val categoryFragment = PersonalListFragment()
-                AppLogger.d("combinePersonalListArray", " " + combinePersonalListArray)
+                //AppLogger.d("combinePersonalListArray", " " + combinePersonalListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -218,7 +225,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineInterestListArray)
                 val categoryFragment = InterestListFragment()
-                AppLogger.d("combineInterestListArray", " " + combineInterestListArray)
+                //AppLogger.d("combineInterestListArray", " " + combineInterestListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -237,7 +244,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineWellnessListArray)
                 val categoryFragment = WellnessListFragment()
-                AppLogger.d("combineWellnessListArray", " " + combineWellnessListArray)
+                //AppLogger.d("combineWellnessListArray", " " + combineWellnessListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -256,7 +263,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineMemoriesListArray)
                 val categoryFragment = MemoriesListFragment()
-                AppLogger.d("combineMemoriesListArray", " " + combineMemoriesListArray)
+                //AppLogger.d("combineMemoriesListArray", " " + combineMemoriesListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
@@ -275,7 +282,7 @@ class ListFinderFragment : FragmentBackHelper(), ListsCommunicationView {
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putSerializable("combineListItemsFetched", combineShoppingListArray)
                 val categoryFragment = ShoppingListFragment()
-                AppLogger.d("combineShoppingListArray", " " + combineShoppingListArray)
+                //AppLogger.d("combineShoppingListArray", " " + combineShoppingListArray)
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }

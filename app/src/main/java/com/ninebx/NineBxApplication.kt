@@ -8,6 +8,7 @@ import android.support.multidex.MultiDexApplication
 import com.evernote.android.job.JobManager
 import com.ninebx.ui.base.network.NetModule
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.FragmentOrganiser
@@ -104,7 +105,7 @@ class NineBxApplication : MultiDexApplication() {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
-    var currentUser: Users? = null
+    var currentUser: DecryptedUsers? = null
 
 
     fun setCountrySelected(iCountrySelected: ICountrySelected) {

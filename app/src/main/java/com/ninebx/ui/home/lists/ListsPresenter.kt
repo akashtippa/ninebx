@@ -1,15 +1,9 @@
 package com.ninebx.ui.home.lists
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import com.ninebx.R
-import com.ninebx.ui.base.realm.home.contacts.CombineContacts
-import com.ninebx.ui.base.realm.home.education.CombineEducation
-import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.ui.base.realm.home.interests.CombineInterests
-import com.ninebx.ui.base.realm.home.memories.CombineMemories
-import com.ninebx.ui.base.realm.home.personal.CombinePersonal
-import com.ninebx.ui.base.realm.home.shopping.CombineShopping
-import com.ninebx.ui.base.realm.home.travel.CombineTravel
-import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -18,11 +12,14 @@ import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 /**
  * Created by Alok on 03/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val detailsId : Long, var categoryInt : Int = -1 ) {
-    
+
     private var categoryCount = 0
     val context = getApplicationContext()
-    init {
+
+
+    fun fetchDataInBackground() {
         listsCommunicationView.showProgress(R.string.loading)
         categoryCount = 0
         if( categoryInt == -1 ) {
@@ -79,217 +76,301 @@ class ListsPresenter(val listsCommunicationView: ListsCommunicationView, val det
 
     }
 
+    private var shoppingList: ArrayList<DecryptedShoppingList> ?= null
+
     private fun prepareShopping() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Shopping".encryptString()
+                        shoppingList = ArrayList()
+                        for( shopping in realm!!
+                                .where(ShoppingList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId)
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll() ) {
+                            shoppingList!!.add(decryptShoppingList(shopping))
+                        }
+                    }
+                })
+            }
+
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                listsCommunicationView.shoppingListCount(shoppingList!!.count(), shoppingList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Shopping".encryptString()
-                val contactsUpdating = realm!!
-                        .where(ShoppingList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-
-                val fetchCombineShopping = realm.where(CombineShopping::class.java).findAll()
-                if (fetchCombineShopping.size > 0) {
-                    listsCommunicationView.shoppingListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var memoriesList: ArrayList<DecryptedMemoriesList> ?= null
 
     private fun prepareMemories() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Memories".encryptString()
+                        memoriesList = ArrayList()
+                        for( memoryList in realm!!
+                                .where(MemoriesList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll())
+                            memoriesList!!.add(decryptMemoriesList(memoryList))
+
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                listsCommunicationView.memoryListCount(memoriesList!!.count(), memoriesList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Memories".encryptString()
-                val contactsUpdating = realm!!
-                        .where(MemoriesList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-
-                val fetchCombineMemories = realm.where(CombineMemories::class.java).findAll()
-                if (fetchCombineMemories.size > 0) {
-                    listsCommunicationView.memoryListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var wellnessList: ArrayList<DecryptedWellnessList>? = null
 
     private fun prepareWellness() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "WellNess".encryptString()
+                        wellnessList = ArrayList()
+                        for( wellness in realm!!
+                                .where(WellnessList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll()) {
+                            wellnessList!!.add(decryptWellnessList(wellness))
+                        }
+
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.wellnessListCount(wellnessList!!.count(), wellnessList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "WellNess".encryptString()
-                val contactsUpdating = realm!!
-                        .where(WellnessList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-
-                val fetchCombineWellness = realm.where(CombineWellness::class.java).findAll()
-                if (fetchCombineWellness.size > 0) {
-                    listsCommunicationView.wellnessListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var personalList: ArrayList<DecryptedPersonalList>? = null
 
     private fun preparePersonal() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Personal".encryptString()
+                        personalList = ArrayList()
+                        for( item in realm!!
+                                .where(PersonalList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll())
+                            personalList!!.add(decryptPersonalList(item))
+                        //AppLogger.e("Count ", " is " + contactsUpdating)
+                    }
+                })
+
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.countPersonalList(personalList!!.count(), personalList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Personal".encryptString()
-                val contactsUpdating = realm!!
-                        .where(PersonalList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombinePersonal = realm.where(CombinePersonal::class.java).findAll()
-                if (fetchCombinePersonal.size > 0) {
-                    listsCommunicationView.countPersonalList(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var interestsList: ArrayList<DecryptedInterestsList>?=null
 
     private fun prepareInterests() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Interests".encryptString()
+                        interestsList = ArrayList()
+                        for( interest in realm!!
+                                .where(InterestsList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll() ) {
+                            interestsList!!.add(decryptInterestList(interest))
+                        }
+                        //AppLogger.e("Count ", " is " + contactsUpdating)
+
+
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.interestListCount(interestsList!!.count(), interestsList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Interests".encryptString()
-                val contactsUpdating = realm!!
-                        .where(InterestsList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-
-                val fetchCombineInterests = realm.where(CombineInterests::class.java).findAll()
-                if (fetchCombineInterests.size > 0) {
-                    listsCommunicationView.interestListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var eductationList: ArrayList<DecryptedEducationList>? = null
 
     private fun prepareEducation() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Education".encryptString()
+                        eductationList = ArrayList()
+                        for( education in realm!!
+                                .where(EducationList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll()) {
+                            eductationList!!.add(decryptEducationList(education))
+                        }
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.educationListCount(eductationList!!.count(), eductationList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Education".encryptString()
-                val contactsUpdating = realm!!
-                        .where(EducationList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombineEducation = realm.where(CombineEducation::class.java).findAll()
-                if (fetchCombineEducation.size > 0) {
-                    listsCommunicationView.educationListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var contactsList: ArrayList<DecryptedContactsList>? = null
 
     private fun prepareContacts() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Contacts".encryptString()
+                        contactsList = ArrayList()
+                        for( contact in realm!!
+                                .where(ContactsList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll()) {
+                            contactsList!!.add(decryptContactsList(contact))
+                        }
+
+
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.contactListCount(contactsList!!.count(), contactsList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Contacts".encryptString()
-                val contactsUpdating = realm!!
-                        .where(ContactsList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-                val fetchCombineContacts = realm.where(CombineContacts::class.java).findAll()
-                if (fetchCombineContacts.size > 0) {
-                    listsCommunicationView.contactListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
+
+    private var travelList: ArrayList<DecryptedTravelList>? = null
 
     private fun prepareTravel() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "Travel".encryptString()
+                        travelList = ArrayList()
+                        for( travel in realm!!
+                                .where(TravelList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll()) {
+                            travelList!!.add(decryptTravelList(travel))
+                        }
+
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.travelListCount(travelList!!.count(), travelList!!)
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "Travel".encryptString()
-                val contactsUpdating = realm!!
-                        .where(TravelList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.e("Count ", " is " + contactsUpdating)
-
-                val fetchCombineTravel = realm.where(CombineTravel::class.java).findAll()
-                if (fetchCombineTravel.size > 0) {
-                    listsCommunicationView.travelListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
+    private var homeList: ArrayList<DecryptedHomeList>?=null
+
     private fun prepareCombine() {
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        val contacts = "HomeBanking".encryptString()
+                        homeList = ArrayList()
+                        for( home in realm!!
+                                .where(HomeList::class.java)
+                                .beginGroup()
+                                .equalTo("detailsId", detailsId )
+                                .and()
+                                .equalTo("selectionType", contacts)
+                                .endGroup()
+                                .findAll()) {
+                            homeList!!.add(decryptHomeList(home))
+                        }
+
+
+                    }
+                })
+            }
+            override fun onPostExecute(result: Unit) {
+                super.onPostExecute(result)
+                //AppLogger.e("Count ", " is " + contactsUpdating)
+                listsCommunicationView.homeListCount( homeList!!.count(), homeList )
                 categoryCount++
                 hideProgressDialog()
-                val contacts = "HomeBanking".encryptString()
-                val contactsUpdating = realm!!
-                        .where(HomeList::class.java)
-                        .beginGroup()
-                        .equalTo("detailsId", detailsId )
-                        .and()
-                        .equalTo("selectionType", contacts)
-                        .endGroup()
-                        .findAll()
-                AppLogger.d("Count ", " is " + contactsUpdating)
-
-                val fetchCombine = realm.where(Combine::class.java).findAll()
-                if (fetchCombine.size > 0) {
-                    listsCommunicationView.homeListCount(contactsUpdating.count(), contactsUpdating)
-                }
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     private fun hideProgressDialog() {

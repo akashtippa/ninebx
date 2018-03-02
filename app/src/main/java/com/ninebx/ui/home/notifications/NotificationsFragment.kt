@@ -14,15 +14,15 @@ import com.ninebx.ui.base.kotlin.isVisible
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Notifications
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
-import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
-import com.ninebx.ui.base.realm.decrypted.DecryptedPayment
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.*
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import java.text.SimpleDateFormat
 import java.util.*
+import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.utility.AlarmJob.Companion.scheduleNotificaiton
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 03/01/18.
@@ -34,12 +34,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     private var mNotificationsPresenter : NotificationsPresenter ?= null
 
     var count = 0
-
-    private var mDecryptedCombine : DecryptedCombine ?= null
-
-    override fun onCombineFetched(decryptCombine: DecryptedCombine) {
-        this.mDecryptedCombine = decryptCombine
-    }
 
     override fun showProgress(message: Int) {
         if( progressLayout != null )
@@ -61,21 +55,22 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     }
 
     override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
+
         hideProgress()
         if( rvNotification != null ) {
             this.decryptedNotifications = notifications
-            for( notification in decryptedNotifications ) {
-                count += if ( notification.read ) 0 else 1
+            for (notification in decryptedNotifications) {
+                count += if (notification.read) 0 else 1
             }
             AppLogger.d("notificationCount", " " + count)
             mHomeView.setNotificationCount(count)
             rvNotification.layoutManager = LinearLayoutManager(context)
             val mAdapter = NotificationAdapter(decryptedNotifications)
-            mAdapter.onClickListener(object : NotificationAdapter.ClickListener{
+            mAdapter.onClickListener(object : NotificationAdapter.ClickListener {
 
-                override fun onItemClick(position: Int, v: View, id: Long, optionsLayout : View) {
+                override fun onItemClick(position: Int, v: View, id: Long, optionsLayout: View) {
 
-                    when( v.id ) {
+                    when (v.id) {
                         R.id.tvBoxName,
                         R.id.tvMessage,
                         R.id.tvDueDate,
@@ -111,10 +106,17 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
                         }
                     }
                 }
+
                 override fun onItemLongClick(position: Int, v: View, txtMessage: TextView) {
                 }
             })
             rvNotification.adapter = mAdapter
+            if(decryptedNotifications.isEmpty()){
+                tv_noNotifications.show()
+            }
+            else {
+                tv_noNotifications.hide()
+            }
         }
     }
 
@@ -146,39 +148,13 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mNotificationsPresenter = NotificationsPresenter(this)
-        paymentNotification()
-    }
+        var notifications = Notifications()
+        notifications.subTitle = "AndroidTest".encryptString()
+        var sdf  = SimpleDateFormat("dd/MM/yyyy")
+        notifications.created = sdf.format(Calendar.getInstance().time)
+        notifications.id = getUniqueId()
+        notifications.message = "Android Test expiry".encryptString()
 
-    private fun paymentNotification() {
-        AppLogger.d("Notification", "Decrypted combine " + mDecryptedCombine!!.paymentItems)
-        var decryptedPayment = ArrayList<DecryptedPayment>()
-        for (paymentItems in mDecryptedCombine!!.paymentItems){
-            decryptedPayment.add(paymentItems)
-        }
-        AppLogger.d("Notification", "Decrypted payment " + decryptedPayment)
-        var date : Date = Calendar.getInstance().time
-        var expirationDate : String = " "
-        for (i in 0 until decryptedPayment.size){
-            expirationDate = decryptedPayment[i].expiryDate
-        }
-        AppLogger.d("expirationDate", "" + expirationDate)
-        try {
-            var sdf: SimpleDateFormat = SimpleDateFormat("MM/yyyy")
-            var dateOfExpiry = sdf.parse(expirationDate)
-            AppLogger.d("expirationDate", "" + dateOfExpiry)
-            var difference: Long = dateOfExpiry.getTime() - date.getTime()
-            var daysBetween = (difference / (1000 * 60 * 60 * 24))
-
-            AppLogger.d("DaysInbetween", " " + daysBetween)
-            if (daysBetween.equals(90)) {
-                mNotificationsPresenter!!.addNotification(expirationDate, date)
-            }
-            else{
-                AppLogger.d("NewNotification", "Not Added" )
-            }
-        }
-        catch (e :Exception){
-            AppLogger.d("Exception", "" + e.message )
-        }
+        AppLogger.d("NotificationScheduled", "Scheduling Notifications")
     }
 }

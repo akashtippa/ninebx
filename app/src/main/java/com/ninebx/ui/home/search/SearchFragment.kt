@@ -163,6 +163,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     }
 
     private fun setRecentSearchAdapter() {
+
+        if( rvRecentSearch == null ) return
+
         var linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.setReverseLayout(true)
         linearLayoutManager.setStackFromEnd(true)

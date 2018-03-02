@@ -1490,7 +1490,7 @@ fun encryptLoyalty(loyalty: DecryptedLoyalty): Loyalty {
 
 fun encryptCombine(combine: DecryptedCombine) : Combine {
     val decryptedCombine = Combine()
-
+    decryptedCombine.id = combine.id
     for ( financialItems in combine.financialItems ) {
         val decryptedItem = encryptFinancial(financialItems)
         decryptedCombine.financialItems.add( decryptedItem )
@@ -1529,6 +1529,7 @@ fun encryptCombine(combine: DecryptedCombine) : Combine {
 
 fun encryptCombineTravel(combineTravel: DecryptedCombineTravel) : CombineTravel {
     val decryptedCombineTravel = CombineTravel()
+    decryptedCombineTravel.id = combineTravel.id
     for (documentsItems in combineTravel.documentsItems) {
         decryptedCombineTravel.documentsItems.add(encryptDocuments(documentsItems))
     }
@@ -1561,7 +1562,7 @@ fun encryptTravelList(travelList: DecryptedTravelList): TravelList {
 
 fun encryptCombineMemories(combineMemories : DecryptedCombineMemories) : CombineMemories {
     val decryptedCombineMemories = CombineMemories()
-
+    decryptedCombineMemories.id = combineMemories.id
     for(mainMemoryItems in combineMemories.mainMemoriesItems)  {
         decryptedCombineMemories.mainMemoriesItems.add(encryptMainMemories(mainMemoryItems))
     }
@@ -1576,7 +1577,7 @@ fun encryptCombineMemories(combineMemories : DecryptedCombineMemories) : Combine
 
 fun encryptCombineEducation(combineEducation: DecryptedCombineEducation) : CombineEducation {
     val decryptedCombineEducation = CombineEducation()
-
+    decryptedCombineEducation.id = combineEducation.id
     for(educationItems in combineEducation.educationItems){
         decryptedCombineEducation.educationItems.add(encryptEducation(educationItems))
     }
@@ -1597,7 +1598,7 @@ fun encryptCombineEducation(combineEducation: DecryptedCombineEducation) : Combi
 
 fun encryptCombineInterests(combineInterest : DecryptedCombineInterests) : CombineInterests {
     val decryptedCombineInterests = CombineInterests()
-
+    decryptedCombineInterests.id = combineInterest.id
     for(interestItems  in combineInterest.interestItems){
         decryptedCombineInterests.interestItems.add(encryptInterests(interestItems))
     }
@@ -1610,7 +1611,7 @@ fun encryptCombineInterests(combineInterest : DecryptedCombineInterests) : Combi
 
 fun encryptCombinePersonal(combinePersonal: DecryptedCombinePersonal): CombinePersonal {
     val decryptedCombinePersonal = CombinePersonal()
-
+    decryptedCombinePersonal.id = combinePersonal.id
     for (certificateItems in combinePersonal.certificateItems) {
         decryptedCombinePersonal.certificateItems.add(encryptCertificate(certificateItems as DecryptedCertificate))
     }
@@ -1643,6 +1644,7 @@ fun encryptCombinePersonal(combinePersonal: DecryptedCombinePersonal): CombinePe
 
 fun encryptCombineWellness(combineWellness: DecryptedCombineWellness): CombineWellness {
     val decryptedCombineWellness = CombineWellness()
+    decryptedCombineWellness.id = combineWellness.id
     for (checkupsItems in combineWellness.checkupsItems) {
         decryptedCombineWellness.checkupsItems.add(encryptCheckUps(checkupsItems))
     }
@@ -1691,6 +1693,7 @@ fun encryptCombineWellness(combineWellness: DecryptedCombineWellness): CombineWe
 
 fun encryptCombineShopping(combineShopping : DecryptedCombineShopping) : CombineShopping {
     val decryptedCombineShopping = CombineShopping()
+    decryptedCombineShopping.id = combineShopping.id
     for(loyaltyProgramItems in combineShopping.loyaltyProgramsItems){
         decryptedCombineShopping.loyaltyProgramsItems.add(encryptLoyaltyPrograms(loyaltyProgramItems as DecryptedLoyaltyPrograms))
     }
@@ -1713,6 +1716,7 @@ fun encryptCombineShopping(combineShopping : DecryptedCombineShopping) : Combine
 
 fun encryptCombineContacts(combineContacts: DecryptedCombineContacts): CombineContacts {
     val decryptedCombineContacts = CombineContacts()
+    decryptedCombineContacts.id = combineContacts.id
     for(contactItems in combineContacts.contactsItems){
         decryptedCombineContacts.contactsItems.add(encryptContact(contactItems as DecryptedContacts))
     }

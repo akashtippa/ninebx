@@ -41,7 +41,7 @@ public class DecryptedCombinePersonal implements Parcelable {
     public DecryptedCombinePersonal() {
     }
 
-    public DecryptedCombinePersonal(ArrayList<DecryptedCertificate> certificateItems, ArrayList<DecryptedGovernment> governmentItems, ArrayList<DecryptedLicense> licenseItems, ArrayList<DecryptedPersonal> personalItems, ArrayList<DecryptedSocial> socialItems, ArrayList<DecryptedTaxID> taxIDItems, ArrayList<DecryptedPersonalList> listItems, int id) {
+    public DecryptedCombinePersonal(ArrayList<DecryptedCertificate> certificateItems, ArrayList<DecryptedGovernment> governmentItems, ArrayList<DecryptedLicense> licenseItems, ArrayList<DecryptedPersonal> personalItems, ArrayList<DecryptedSocial> socialItems, ArrayList<DecryptedTaxID> taxIDItems, ArrayList<DecryptedPersonalList> listItems, long id) {
         this.certificateItems = certificateItems;
         this.governmentItems = governmentItems;
         this.licenseItems = licenseItems;
@@ -187,11 +187,11 @@ public class DecryptedCombinePersonal implements Parcelable {
     }
 
 
-    public int getListsCount(String selectionType) {
+    public int getListsCount(String selectionType, Integer detailsId ) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedPersonalList decryptedLicense : listItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            count += (decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )? 1 : 0;
         }
         return count;
     }

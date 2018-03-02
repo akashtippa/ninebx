@@ -70,6 +70,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun onSuccess(syncUser: SyncUser?) {
         when (mCurrentTag) {
             "SignIn" -> {
+                hideProgressDialog()
                 signInFragment!!.onSuccess(syncUser)
             }
             "AccountPassword" -> {
@@ -80,8 +81,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun navigateToHome() {
 
-        if (NineBxApplication.getPreferences().currentStep < Constants.ALL_COMPLETE)
-            NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
+        if (NineBxApplication.getPreferences().currentStep < Constants.FINGER_PRINT_COMPLETE)
+            NineBxApplication.getPreferences().currentStep = Constants.FINGER_PRINT_COMPLETE
 
         val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
         startActivity(homeIntent)
@@ -237,6 +238,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                     navigateToHome()
                 }
                 Constants.SIGN_UP_COMPLETE -> {
+                    navigateToSignIn()
                     navigateToSignUp()
                 }
                 else -> {

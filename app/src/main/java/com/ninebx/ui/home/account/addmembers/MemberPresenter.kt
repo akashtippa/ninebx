@@ -61,13 +61,13 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
 
         val encryptedPrivateKey = encryptAESKeyPassword(NineBxApplication.getPreferences().privateKey!!, encryptedPasswordByteArray)
 
-        AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
+        //AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
         userMap.put("secure_key", encryptedPrivateKey)
-        AppLogger.d(TAG, "UserMap : " + userMap)
+        //AppLogger.d(TAG, "UserMap : " + userMap)
 
         val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
-        AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
+        //AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
 
         NineBxApplication.getUserAPI()!!.postUserDetails(userMap)
                 .subscribeOn(Schedulers.io())
@@ -88,7 +88,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
             // ]
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
-                AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
+                //AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
                 memberView.onMemberSignup(mCurrentUser!!)
             }
 
@@ -97,7 +97,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
             }
 
             override fun onComplete() {
-                AppLogger.d(TAG, "GetUserAPI : onComplete")
+                //AppLogger.d(TAG, "GetUserAPI : onComplete")
                 memberView.hideProgress()
             }
 

@@ -35,8 +35,8 @@ class LoginSignupTask(private var userName: String,
             authView.onError(R.string.error_login)
             prefrences.isLogin = true
         } else {
-            AppLogger.d(TAG, "login : result : " + result.toString())
-            AppLogger.d(TAG, result.toJson())
+            //AppLogger.d(TAG, "login : result : " + result.toString())
+            //AppLogger.d(TAG, result.toJson())
             mCurrentUser = result
             if (type == "Signup") {
 
@@ -51,18 +51,18 @@ class LoginSignupTask(private var userName: String,
                 userMap.put("is_admin", type == "Signup")
 
                 val privateKey = randomString(16)
-                NineBxApplication.getPreferences().privateKey = privateKey
+                NineBxApplication.getPreferences().privateKey = privateKey.trim()
 
                 val encryptedPrivateKey = encryptAESKeyPassword(privateKey, encryptedPasswordByteArray)
 
-                AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
+                //AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
                 userMap.put("secure_key", encryptedPrivateKey)
-                AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
-                AppLogger.d(TAG, "UserMap : " + userMap)
+                //AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
+                //AppLogger.d(TAG, "UserMap : " + userMap)
 
                 val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
-                AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
+                //AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
 
                 NineBxApplication.getUserAPI()!!.postUserDetails(userMap)
                         .subscribeOn(Schedulers.io())
@@ -92,7 +92,7 @@ class LoginSignupTask(private var userName: String,
             // ]
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
-                AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
+                //AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
                 authView.onSuccess(mCurrentUser)
             }
 
@@ -102,7 +102,7 @@ class LoginSignupTask(private var userName: String,
             }
 
             override fun onComplete() {
-                AppLogger.d(TAG, "GetUserAPI : onComplete")
+                //AppLogger.d(TAG, "GetUserAPI : onComplete")
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -119,7 +119,7 @@ class LoginSignupTask(private var userName: String,
             }
 
             override fun onComplete() {
-                AppLogger.d(TAG, "GetUserAPI : onComplete")
+                //AppLogger.d(TAG, "GetUserAPI : onComplete")
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -127,10 +127,10 @@ class LoginSignupTask(private var userName: String,
             }
 
             override fun onNext(responseList: ArrayList<SignInResponse>) {
-                AppLogger.d(TAG, "Response : Signin : " + responseList.toString())
+                //AppLogger.d(TAG, "Response : Signin : " + responseList.toString())
                 val privateKey = decryptAESKEYPassword(responseList[0].secureKey.toByteArray(), encryptedPasswordByteArray)
-                AppLogger.d(TAG, "Save user secure key : " + privateKey)
-                NineBxApplication.getPreferences().privateKey = privateKey
+                //AppLogger.d(TAG, "Save user secure key : " + privateKey)
+                NineBxApplication.getPreferences().privateKey = privateKey.trim()
                 authView.onSuccess(mCurrentUser)
             }
 
@@ -146,7 +146,8 @@ class LoginSignupTask(private var userName: String,
             authView.hideProgress()
             if (error != null) {
                 error.printStackTrace()
-                authView.onError(error.errorMessage!!)
+                if( error.errorMessage != null )
+                    authView.onError(error.errorMessage!!)
             }
             NineBxApplication.getPreferences().currentStep = NONE_COMPLETE
             authView.navigateToStart()
@@ -195,8 +196,8 @@ class LoginSignupTask(private var userName: String,
         NineBxApplication.getPreferences().userPassword = Arrays.toString(encryptedPasswordByteArray)
         NineBxApplication.getPreferences().userPasswordUINT8 = Arrays.toString(encryptedPasswordByteArray)
 
-        AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
-        AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
+        //AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
+        //AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
         //Attempt to login with credentials by default - if successful when signing up - the user already exists
         val isSignup = (type == "Signup")
 

@@ -1,68 +1,56 @@
 package com.ninebx.ui.home.notifications
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import com.ninebx.ui.base.realm.Notifications
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedNotifications
-import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
+import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
 
 /**
  * Created by Alok on 03/01/18.
  */
+@SuppressLint("StaticFieldLeak")
 class NotificationsPresenter(val notificationsView: NotificationsView)  {
     private val context = getApplicationContext()
     private val mDecryptNotifications = ArrayList<DecryptedNotifications>()
     private lateinit var mNotificationsRealm : Realm
-    val decryptCombine: DecryptedCombine = DecryptedCombine()
 
     private var getNotification: RealmResults<Notifications>?=null
 
     init {
-        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
-            override fun onSuccess(realm: Realm?) {
-                mNotificationsRealm = realm!!
-                getNotification = realm.where(Notifications::class.java).findAll()
-                if(getNotification!!.size > 0){
-                    getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
-                    notificationsView.onNotificationsFetched(mDecryptNotifications)
-                    notificationsView.onEncryptedNotifications(getNotification!!)
-                    AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
-                }
-                else
-                    AppLogger.d("Notification", "No data" )
+
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
+                    override fun onSuccess(realm: Realm?) {
+                        mNotificationsRealm = realm!!
+                        getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
+                        if(getNotification!!.size > 0){
+                            getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
+
+                            AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
+                        }
+                        else
+                            AppLogger.d("Notification", "No data" )
+
+                    }
+                })
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                notificationsView.onNotificationsFetched(mDecryptNotifications)
+                notificationsView.onEncryptedNotifications(getNotification!!)
                 notificationsView.hideProgress()
             }
-        })
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-        prepareRealmConnections(context, false, "Combine", object : Realm.Callback(){
-            override fun onSuccess(realm: Realm?) {
-              var getCombine = realm!!.where(Combine::class.java).findAll()
-                if(getCombine.size > 0){
-                    for (i in 0 until getCombine.size) {
-                        val decryptedCombine = com.ninebx.utility.decryptCombine(getCombine[i]!!)
-                        addDecryptCombine(decryptedCombine)
-                    }
-                    notificationsView.onCombineFetched(decryptCombine)
-                }else{
-                    AppLogger.d("Notification", "No data found")
-                }
-            }
-        })
-    }
 
-    private fun addDecryptCombine(decryptedCombine: DecryptedCombine) {
-        decryptCombine.listItems.addAll(decryptedCombine.listItems)
-        decryptCombine.propertyItems.addAll(decryptedCombine.propertyItems)
-        decryptCombine.vehicleItems.addAll(decryptedCombine.vehicleItems)
-        decryptCombine.taxesItems.addAll(decryptedCombine.taxesItems)
-        decryptCombine.insuranceItems.addAll(decryptedCombine.insuranceItems)
-        decryptCombine.assetItems.addAll(decryptedCombine.assetItems)
-        decryptCombine.paymentItems.addAll(decryptedCombine.paymentItems)
-        decryptCombine.financialItems.addAll(decryptedCombine.financialItems)
     }
 
     fun deleteNotification(position: Int) {
@@ -105,27 +93,5 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
         notification!!.read = true
         mNotificationsRealm.copyToRealmOrUpdate(notification)
         mNotificationsRealm.commitTransaction()
-    }
-
-    fun addNotification(expirationDate: String, date: Date) {
-        var notifications = Notifications()
-        var boxName =  "Home&Banking"
-        var message = "AndroidTest"
-        notifications.id =  UUID.randomUUID().hashCode().toLong()
-        notifications.message = message.encryptString()
-        notifications.boxName = boxName.encryptString()
-        notifications.dueDate = expirationDate
-        notifications.subTitle = "Card Expiry".encryptString()
-        notifications.private = false
-        notifications.created = "Android Test" + date
-
-        prepareRealmConnections(context, false, "Notifications", object : Realm.Callback(){
-            override fun onSuccess(realm: Realm?) {
-                realm!!.beginTransaction()
-                notifications.insertOrUpdate(realm)
-                realm.commitTransaction()
-                AppLogger.d("NewNotification", "Added" )
-            }
-        })
     }
 }

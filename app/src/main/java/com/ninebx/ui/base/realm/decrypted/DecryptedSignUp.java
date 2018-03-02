@@ -36,7 +36,7 @@ public class DecryptedSignUp implements Parcelable {
     @PrimaryKey //@Required
     private long id = 0;
 
-    public DecryptedSignUp(String fullName, String emailAddress, String password, String user_id, int id) {
+    public DecryptedSignUp(String fullName, String emailAddress, String password, String user_id, long id) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.password = password;

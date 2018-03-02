@@ -20,7 +20,7 @@ import java.util.*
 /**
  * Created by mukesh on 25/04/16.
  */
-class CountryPicker() : FragmentBackHelper() {
+class CountryPicker : FragmentBackHelper() {
 
 
     private var searchEditText: EditText? = null
@@ -34,9 +34,7 @@ class CountryPicker() : FragmentBackHelper() {
     fun setCountrySelectionListener ( iCountrySelected: ICountrySelected ) {
         this.iCountrySelected = iCountrySelected
     }
-    init {
-        setCountriesList(Country.getAllCountries())
-    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.country_picker, container, false)
@@ -51,33 +49,9 @@ class CountryPicker() : FragmentBackHelper() {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
-        searchEditText = view.findViewById<View>(R.id.country_code_picker_search) as EditText
-        countryListView = view.findViewById<View>(R.id.country_code_picker_listview) as ListView
+        setCountriesList(Country.getAllCountries(), view)
 
-        selectedCountriesList = ArrayList(countriesList.size)
-        selectedCountriesList.addAll(countriesList)
 
-        adapter = CountryListAdapter(context!!, selectedCountriesList, iCountrySelected!!)
-        countryListView!!.adapter = adapter
-
-        countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            if (listener != null) {
-                val country = selectedCountriesList[position]
-                listener!!.onSelectCountry(country.name, country.code, country.dialCode,
-                        country.flag)
-            }
-        }
-
-        searchEditText!!.addTextChangedListener(object : TextWatcher {
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                search(s.toString())
-            }
-        })
 
     }
 //
@@ -101,9 +75,41 @@ class CountryPicker() : FragmentBackHelper() {
         adapter!!.notifyDataSetChanged()
     }
 
-    fun setCountriesList(newCountries: List<Country>) {
+    private fun setCountriesList(newCountries: List<Country>, view: View) {
         this.countriesList.clear()
         this.countriesList.addAll(newCountries)
+        if( adapter != null ) {
+            adapter!!.notifyDataSetChanged()
+        }
+        else {
+            searchEditText = view.findViewById<View>(R.id.country_code_picker_search) as EditText
+            countryListView = view.findViewById<View>(R.id.country_code_picker_listview) as ListView
+
+            selectedCountriesList = ArrayList(countriesList.size)
+            selectedCountriesList.addAll(countriesList)
+
+            adapter = CountryListAdapter(context!!, selectedCountriesList, iCountrySelected!!)
+            countryListView!!.adapter = adapter
+
+            countryListView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                if (listener != null) {
+                    val country = selectedCountriesList[position]
+                    listener!!.onSelectCountry(country.name, country.code, country.dialCode,
+                            country.flag)
+                }
+            }
+
+            searchEditText!!.addTextChangedListener(object : TextWatcher {
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+                override fun afterTextChanged(s: Editable) {
+                    search(s.toString())
+                }
+            })
+        }
     }
 
     companion object {

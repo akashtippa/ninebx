@@ -11,7 +11,7 @@ import io.realm.annotations.Required;
 public class Bank {
 
     @PrimaryKey //@Required
-    private int id  = 0;
+    private long id  = 0;
     @Required private String  institutionName  = "";
     @Required private String  accountName  = "";
     @Required private String  accountType  = "";
@@ -26,7 +26,7 @@ public class Bank {
     @Required private String  password  = "";
     @Required private String  pin  = "";
 
-    public Bank(int id, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin) {
+    public Bank(long id, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin) {
         this.id = id;
         this.institutionName = institutionName;
         this.accountName = accountName;
@@ -46,11 +46,11 @@ public class Bank {
     public Bank() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

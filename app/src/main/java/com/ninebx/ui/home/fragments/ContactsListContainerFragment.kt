@@ -50,7 +50,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     }
 
     override fun contactsAdded(contacts: Contacts?) {
-        AppLogger.d("Contacts", "are" + contacts)
+        //AppLogger.d("Contacts", "are" + contacts)
         myList.add(contacts!!)
         mListsAdapter!!.notifyDataSetChanged()
         saveContactsList()
