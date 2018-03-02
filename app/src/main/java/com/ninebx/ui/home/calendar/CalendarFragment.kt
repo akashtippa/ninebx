@@ -132,17 +132,13 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     private lateinit var datesWithEvents: ArrayList<Date>
     private lateinit var mMonthFormat: SimpleDateFormat
     private lateinit var mPrevMonth : String
-    private lateinit var mCalendarPresenter : CalendarPresenter
+    private var mCalendarPresenter : CalendarPresenter ?= null
     private var mCalendar = Calendar.getInstance()
     private var isWeekView = false
     private var isYearChange = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         mCalendarPresenter = CalendarPresenter(this)
-
-
-
     }
 
     private val TAG: String = CalendarFragment::class.java.simpleName
@@ -218,17 +214,20 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     private lateinit var mDayEventsAdapter: DayEventsRecyclerViewAdapter
 
     override fun onDayClick(dayOfMonth: Int) {
-        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        val eventsForDate = mCalendarPresenter.getEventsForDate(mCalendar.time)
-        mDayEventsAdapter = DayEventsRecyclerViewAdapter( eventsForDate, mCalendar.time, object : AdapterClickListener {
-            override fun onItemClick(position: Int) {
-                val calendarEvent = mDayEventsAdapter.getItemAtPosition(position)
-                mHomeView.addEditCalendarEvent(
-                        calendarEvent,
-                        mDayEventsAdapter.getSelectedDateForEvent() )
-            }
-        })
-        rvDayEvents.adapter = mDayEventsAdapter
+        if( mCalendarPresenter != null ) {
+            mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            val eventsForDate = mCalendarPresenter!!.getEventsForDate(mCalendar.time)
+            mDayEventsAdapter = DayEventsRecyclerViewAdapter( eventsForDate, mCalendar.time, object : AdapterClickListener {
+                override fun onItemClick(position: Int) {
+                    val calendarEvent = mDayEventsAdapter.getItemAtPosition(position)
+                    mHomeView.addEditCalendarEvent(
+                            calendarEvent,
+                            mDayEventsAdapter.getSelectedDateForEvent() )
+                }
+            })
+            rvDayEvents.adapter = mDayEventsAdapter
+        }
+
     }
 
 }
