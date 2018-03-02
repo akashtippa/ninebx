@@ -24,33 +24,23 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
 
     init {
 
-        object : AsyncTask<Void, Void, Unit>() {
-            override fun doInBackground(vararg p0: Void?) {
-                prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
-                    override fun onSuccess(realm: Realm?) {
-                        mNotificationsRealm = realm!!
-                        getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
-                        if(getNotification!!.size > 0){
-                            getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
+        prepareRealmConnectionsRealmThread(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                mNotificationsRealm = realm!!
+                getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
+                if(getNotification!!.size > 0){
+                    getNotification!!.mapTo(mDecryptNotifications) { decryptNotifications(it) }
 
-                            AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
-                        }
-                        else
-                            AppLogger.d("Notification", "No data" )
+                    AppLogger.d("Notification", "Notification Decrypted" + mDecryptNotifications)
+                }
+                else
+                    AppLogger.d("Notification", "No data" )
 
-                    }
-                })
-            }
-
-            override fun onPostExecute(result: Unit?) {
-                super.onPostExecute(result)
                 notificationsView.onNotificationsFetched(mDecryptNotifications)
                 notificationsView.onEncryptedNotifications(getNotification!!)
                 notificationsView.hideProgress()
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-
+        })
     }
 
     fun deleteNotification(position: Int) {

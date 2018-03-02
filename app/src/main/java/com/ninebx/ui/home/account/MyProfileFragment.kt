@@ -314,55 +314,36 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     private val TAG = "Profile"
     @SuppressLint("StaticFieldLeak")
     private fun updateTheUserInfo() {
+        context!!.showProgressDialog(getString(R.string.saving_user))
+        prepareRealmConnectionsRealmThread(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
 
+                val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
+                realm.beginTransaction()
 
-        object : AsyncTask<Void, Void, Unit>() {
-
-            override fun onPreExecute() {
-                super.onPreExecute()
-                context!!.showProgressDialog(getString(R.string.saving_user))
-            }
-
-            override fun doInBackground(vararg p0: Void?) {
-                prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
-                    override fun onSuccess(realm: Realm?) {
-
-                        val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
-                        realm.beginTransaction()
-
-                        users!!.firstName = strFirstName.encryptString()
-                        users.lastName = strLastName.encryptString()
-                        users.fullName = (strFirstName + " " + strLastName).encryptString()
-                        users.emailAddress = strEmail.encryptString()
-                        users.relationship = strRelationship.encryptString()
-                        users.dateOfBirth = strDOB.encryptString()
-                        users.anniversary = strAnniversary.encryptString()
-                        users.gender = strGender.encryptString()
-                        users.mobileNumber = strMobileNumber.encryptString()
-                        users.street_1 = strStreetAddress1.encryptString()
-                        users.street_2 = strStreetAddress2.encryptString()
-                        users.city = strCity.encryptString()
-                        users.state = strState.encryptString()
-                        users.zipCode = strZipCode.encryptString()
-                        users.country = strCountry.encryptString()
-                        users.completeProfile = true
-                        //                realm.copyToRealmOrUpdate(updatingUserInfo)
-                        users.insertOrUpdate(realm)
-                        realm.commitTransaction()
-
-                    }
-                })
-
-
-            }
-
-            override fun onPostExecute(result: Unit?) {
-                super.onPostExecute(result)
+                users!!.firstName = strFirstName.encryptString()
+                users.lastName = strLastName.encryptString()
+                users.fullName = (strFirstName + " " + strLastName).encryptString()
+                users.emailAddress = strEmail.encryptString()
+                users.relationship = strRelationship.encryptString()
+                users.dateOfBirth = strDOB.encryptString()
+                users.anniversary = strAnniversary.encryptString()
+                users.gender = strGender.encryptString()
+                users.mobileNumber = strMobileNumber.encryptString()
+                users.street_1 = strStreetAddress1.encryptString()
+                users.street_2 = strStreetAddress2.encryptString()
+                users.city = strCity.encryptString()
+                users.state = strState.encryptString()
+                users.zipCode = strZipCode.encryptString()
+                users.country = strCountry.encryptString()
+                users.completeProfile = true
+                //                realm.copyToRealmOrUpdate(updatingUserInfo)
+                users.insertOrUpdate(realm)
+                realm.commitTransaction()
                 context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
             }
-
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        })
 
     }
 

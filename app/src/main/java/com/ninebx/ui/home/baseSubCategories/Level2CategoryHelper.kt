@@ -25,7 +25,6 @@ class Level2CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
-
     // For Home & Money
     private var decryptedFinancial: DecryptedFinancial ?= null // DecryptedFinancial()
     private var decryptedPayment: DecryptedPayment ?= null // DecryptedPayment()
@@ -3000,7 +2999,6 @@ class Level2CategoryHelper(
     private fun setCardDebitCardDetails(level2Category: Level2SubCategory) {
         when( level2Category.title ) {
 
-
             "Card number"-> decryptedPayment!!.cardNumber = level2Category.titleValue
             "Card type"-> decryptedPayment!!.cardType = level2Category.titleValue
             "Card holder"-> decryptedPayment!!.cardHolder = level2Category.titleValue
@@ -3047,11 +3045,14 @@ class Level2CategoryHelper(
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
+            decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
-            decryptedFinancial!!.institutionName = title
+            decryptedFinancial!!.accountName = title
+            var isSaveComplete = false
             if( decryptedFinancial!!.id.toInt() == 0 ) {
                 decryptedFinancial!!.id = getUniqueId()
             }
+            AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
@@ -3063,6 +3064,16 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if( isSaveComplete ) {
+                        isSaveComplete = true
+                    }
+                    else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
             object : AsyncTask<Void, Void, Unit>() {
@@ -3072,6 +3083,7 @@ class Level2CategoryHelper(
                     prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
@@ -3085,12 +3097,23 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if( isSaveComplete ) {
+                        isSaveComplete = true
+                    }
+                    else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedPayment!= null ) {
+            decryptedPayment!!.cardType = categoryID
+            decryptedPayment!!.cardNumber = title
             decryptedPayment!!.selectionType = categoryID
-            decryptedPayment!!.cardName = title
             if( decryptedPayment!!.id.toInt() == 0 ) {
                 decryptedPayment!!.id = getUniqueId()
             }
@@ -3129,7 +3152,7 @@ class Level2CategoryHelper(
 
         if( decryptedProperty!= null ) {
             decryptedProperty!!.selectionType = categoryID
-            decryptedProperty!!.titleName = title
+            decryptedProperty!!.propertyName = title
             if( decryptedProperty!!.id.toInt() == 0 ) {
                 decryptedProperty!!.id = getUniqueId()
             }
@@ -3167,7 +3190,7 @@ class Level2CategoryHelper(
         }
 
         if( decryptedVehicle!= null ) {
-            decryptedVehicle!!.titleName = title
+            decryptedVehicle!!.vehicleName = title
             decryptedVehicle!!.selectionType = categoryID
             if( decryptedVehicle!!.id.toInt() == 0 ) {
                 decryptedVehicle!!.id = getUniqueId()
@@ -3205,7 +3228,7 @@ class Level2CategoryHelper(
 
         if( decryptedAssets!= null ) {
             decryptedAssets!!.selectionType = categoryID
-            decryptedAssets!!.test = title
+            decryptedAssets!!.assetName = title
             if( decryptedAssets!!.id.toInt() == 0 ) {
                 decryptedAssets!!.id = getUniqueId()
             }
@@ -3279,7 +3302,7 @@ class Level2CategoryHelper(
 
         if( decryptedTaxes!= null ) {
             decryptedTaxes!!.selectionType = categoryID
-            decryptedTaxes!!.title = title
+            decryptedTaxes!!.returnName = title
             if( decryptedTaxes!!.id.toInt() == 0 ) {
                 decryptedTaxes!!.id = getUniqueId()
             }

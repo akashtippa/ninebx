@@ -11,4 +11,5 @@ interface Level2CategoryView : BaseView {
     fun onSuccess( categories : ArrayList<Level2Category> )
     fun setValueToDocument( level2Category: Level2SubCategory )
     fun saveDocument( context: Context? )
+    fun savedToRealm()
 }

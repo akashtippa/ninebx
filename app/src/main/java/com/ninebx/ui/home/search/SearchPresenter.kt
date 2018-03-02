@@ -375,6 +375,7 @@ class SearchPresenter {
 
 
     private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
+        mDecryptCombine.id = decryptedCombine.id
         mDecryptCombine.listItems.addAll(decryptedCombine.listItems)
         mDecryptCombine.propertyItems.addAll(decryptedCombine.propertyItems)
         mDecryptCombine.vehicleItems.addAll(decryptedCombine.vehicleItems)
