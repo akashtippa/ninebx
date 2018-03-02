@@ -25,7 +25,6 @@ class Level2CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
-
     // For Home & Money
     private var decryptedFinancial: DecryptedFinancial ?= null // DecryptedFinancial()
     private var decryptedPayment: DecryptedPayment ?= null // DecryptedPayment()

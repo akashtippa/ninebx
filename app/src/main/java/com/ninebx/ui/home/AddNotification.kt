@@ -146,7 +146,11 @@ class AddNotification : HomeView {
                 var daysBetween = (difference / (1000 * 60 * 60 * 24))
                 //AppLogger.d("DaysInbetween", " " + daysBetween)
                 if (daysBetween.equals(90))
-                    newNotification(decryptedPayment[i].id, date, dateOfExpiry, cardName,boxName)
+                {
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = dateOfExpiry.time - (daysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedPayment[i].id, schecduledDate.time, dateOfExpiry, cardName,boxName)
+                }
             }
             catch (e :Exception){
                 AppLogger.d("Exception", "paymentNotification" + e.message )
@@ -520,9 +524,13 @@ class AddNotification : HomeView {
             try {
                 var vitalPrevious = dateFormat.parse(vitalMeasurement)
                 var vitalDateDifference: Long = date.getTime() - vitalPrevious.getTime()
-                var vitalDaysBetween = (vitalDateDifference / (1000 * 60 * 60 * 24))
-                if (vitalDaysBetween.equals(330))
-                    newNotification(decryptedEyeglassPrescriptions[i].id, date, vitalPrevious, userName, boxName)
+                var vitalDaysBetween = (vitalDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                if (vitalDaysBetween == 330) {
+                    val schecduledDate = Calendar.getInstance()
+                    schecduledDate.timeInMillis = vitalPrevious.time - (vitalDaysBetween * (1000 * 60 * 60 * 24))
+                    newNotification(decryptedEyeglassPrescriptions[i].id, schecduledDate.time, vitalPrevious, userName, boxName)
+                }
+
             }catch(e : Exception){
                 //AppLogger.d("Exception", " " + e.message)
             }
@@ -531,7 +539,7 @@ class AddNotification : HomeView {
 
     private fun newNotification(id : Long, currentDate: Date, expiryDate: Date, subTitle: String, boxName: String) {
         //AppLogger.d("AddNewNotification", "Method invoked")
-        addNotification(id, expiryDate.toString(), currentDate, subTitle, boxName)
+        addNotification(id, expiryDate, currentDate, subTitle, boxName)
         val mBuilder = NotificationCompat.Builder(context).setSmallIcon(logo_nine)
                 .setContentTitle("NineBx").setContentText(subTitle).setDefaults(Notification.DEFAULT_ALL)
         val mNotificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -559,24 +567,28 @@ class AddNotification : HomeView {
           notificationManager.notify(0, mNotifiction)*/
     }
 
-    fun addNotification( id : Long, expirationDate: String, date: Date, subTitle: String, box_Name : String) {
+    fun addNotification( id : Long, expirationDate: Date, date: Date, subTitle: String, box_Name : String) {
         //AppLogger.d("UpdateNotification", "Method invoked ")
         var notifications = Notifications()
         var message = "AndroidTest"
         notifications.id =  id
         notifications.message = message.encryptString()
         notifications.boxName = box_Name.encryptString()
-        notifications.dueDate = expirationDate                                //dateFormat.format(expirationDate)
+        notifications.dueDate = expirationDate.toString()                                //dateFormat.format(expirationDate)
         notifications.subTitle = subTitle.encryptString()
         notifications.private = false
         notifications.created = box_Name + date
         notifications.read = false
 
-        var sdfTime = SimpleDateFormat("dd/MM/yyy hh:mm")
+       /* var sdfTime = SimpleDateFormat("dd/MM/yyy hh:mm")
         var myTime = sdfTime.parse("1/03/2018 15:50")
         var timeObj : Calendar = Calendar.getInstance()
-        timeObj.time = myTime
-        AlarmJob.scheduleNotificaiton(notifications, timeObj)
+        timeObj.time = myTime*/
+        val scheduledCalendarTime = Calendar.getInstance()
+        scheduledCalendarTime.time = date
+        scheduledCalendarTime.set(Calendar.HOUR_OF_DAY, 0)
+        scheduledCalendarTime.set(Calendar.MINUTE, 0)
+        AlarmJob.scheduleNotificaiton(notifications, scheduledCalendarTime)
 
         prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
             override fun onSuccess(realm: Realm?) {
