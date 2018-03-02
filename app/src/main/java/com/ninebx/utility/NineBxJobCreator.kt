@@ -17,6 +17,9 @@ class NineBxJobCreator : JobCreator {
                 if( tag.startsWith("Calendar_Event") ) {
                     return AlarmJob()
                 }
+                else if( tag.startsWith("Notification_")) {
+                    return AlarmJob()
+                }
                 return null
             }
         }

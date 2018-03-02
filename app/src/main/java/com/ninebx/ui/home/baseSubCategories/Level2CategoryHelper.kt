@@ -25,7 +25,6 @@ class Level2CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
-
     // For Home & Money
     private var decryptedFinancial: DecryptedFinancial ?= null // DecryptedFinancial()
     private var decryptedPayment: DecryptedPayment ?= null // DecryptedPayment()
@@ -2999,7 +2998,6 @@ class Level2CategoryHelper(
 
     private fun setCardDebitCardDetails(level2Category: Level2SubCategory) {
         when( level2Category.title ) {
-
 
             "Card number"-> decryptedPayment!!.cardNumber = level2Category.titleValue
             "Card type"-> decryptedPayment!!.cardType = level2Category.titleValue
