@@ -3048,8 +3048,8 @@ class Level2CategoryHelper(
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
-            decryptedFinancial!!.selectionType = categoryID
-            decryptedFinancial!!.institutionName = title
+            decryptedFinancial!!.accountType = categoryID
+            decryptedFinancial!!.accountName = title
             if( decryptedFinancial!!.id.toInt() == 0 ) {
                 decryptedFinancial!!.id = getUniqueId()
             }
@@ -3090,8 +3090,8 @@ class Level2CategoryHelper(
         }
 
         if( decryptedPayment!= null ) {
-            decryptedPayment!!.selectionType = categoryID
-            decryptedPayment!!.cardName = title
+            decryptedPayment!!.cardType = categoryID
+            decryptedPayment!!.cardNumber = title
             if( decryptedPayment!!.id.toInt() == 0 ) {
                 decryptedPayment!!.id = getUniqueId()
             }
@@ -3130,7 +3130,7 @@ class Level2CategoryHelper(
 
         if( decryptedProperty!= null ) {
             decryptedProperty!!.selectionType = categoryID
-            decryptedProperty!!.titleName = title
+            decryptedProperty!!.propertyName = title
             if( decryptedProperty!!.id.toInt() == 0 ) {
                 decryptedProperty!!.id = getUniqueId()
             }
@@ -3168,7 +3168,7 @@ class Level2CategoryHelper(
         }
 
         if( decryptedVehicle!= null ) {
-            decryptedVehicle!!.titleName = title
+            decryptedVehicle!!.vehicleName = title
             decryptedVehicle!!.selectionType = categoryID
             if( decryptedVehicle!!.id.toInt() == 0 ) {
                 decryptedVehicle!!.id = getUniqueId()
@@ -3206,7 +3206,7 @@ class Level2CategoryHelper(
 
         if( decryptedAssets!= null ) {
             decryptedAssets!!.selectionType = categoryID
-            decryptedAssets!!.test = title
+            decryptedAssets!!.assetName = title
             if( decryptedAssets!!.id.toInt() == 0 ) {
                 decryptedAssets!!.id = getUniqueId()
             }
@@ -3280,7 +3280,7 @@ class Level2CategoryHelper(
 
         if( decryptedTaxes!= null ) {
             decryptedTaxes!!.selectionType = categoryID
-            decryptedTaxes!!.title = title
+            decryptedTaxes!!.returnName = title
             if( decryptedTaxes!!.id.toInt() == 0 ) {
                 decryptedTaxes!!.id = getUniqueId()
             }
