@@ -26,7 +26,7 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
 
         object : AsyncTask<Void, Void, Unit>() {
             override fun doInBackground(vararg p0: Void?) {
-                prepareRealmConnections(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
+                prepareRealmConnectionsRealmThread(context, false, Constants.REALM_END_POINT_NOTIFICATIONS, object : Realm.Callback(){
                     override fun onSuccess(realm: Realm?) {
                         mNotificationsRealm = realm!!
                         getNotification = realm.where(Notifications::class.java).sort("updatedDate", Sort.ASCENDING).findAll()
