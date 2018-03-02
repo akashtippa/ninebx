@@ -97,9 +97,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         when (fromWhichClass) {
             "Home" -> {
-                NineBxApplication.instance.activityInstance!!.hideBackIcon()
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Complete your profile")
-                NineBxApplication.instance.activityInstance!!.hideHomeIcon()
+                NineBxApplication.instance.activityInstance!!.hideToolbar()
+                toolbarCompleteProfile.show()
                 imgEdit.hide()
             }
             "Account" -> {
@@ -143,6 +142,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             val countryPicker = CountryPicker()
+            AppLogger.e("Selected Country ", " is " + strCountry)
             countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> txtCountry.text = strCountry })
             fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
@@ -158,6 +158,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         checkEncryption()
 
+        txtSaveCompletedProfile.setOnClickListener {
+
+        }
     }
 
     private fun checkEncryption() {
