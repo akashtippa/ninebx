@@ -4,8 +4,8 @@
     <string name="ac_terms_of_use">Terms of Use</string>
     <string name="privacy_policy"><u>Privacy Policy</u></string>
     <string name="ac_privacy_policy">Privacy Policy</string>
-    <string name="email_address">Email Address</string>
-    <string name="master_password">Master Password</string>
+    <string name="email_address">Email address</string>
+    <string name="master_password">Master password</string>
     <string name="title_activity_test">TestActivity</string>
 
     <string name="search">Search</string>
@@ -86,8 +86,8 @@
     <string name="logging_in">Logging In</string>
     <string name="error_login">Error logging in</string>
     <string name="submit">SUBMIT</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
     <string name="sign_up">Sign Up</string>
     <string name="required">Required</string>
     <string name="quick_add">Quick Add</string>
@@ -138,22 +138,22 @@
     <string name="create_account_password">Create account password</string>
     <string name="create_master_password">Create master password</string>
     <string name="new_master_password">New master password</string>
-    <string name="confirm_master_password">Confirm Master Password</string>
+    <string name="confirm_master_password">Confirm master Password</string>
     <string name="confirm_new_master_password">Confirm new master password</string>
     <string name="current_master_password">Current master password</string>
     <string name="create_account_master_password">Create your account\n Master Password</string>
     <string name="change_account_master_password">Change your account\n Master Password</string>
-    <string name="choose_a_strong_password">\u25CF Choose a strong password with at least\n\t\u25CB eight characters\n\t\u25CB one uppercase letter\n\t\u25CB one lowercase letter\n\t\u25CB one number\n\t\u25CB one symbol(! @ # $ etc)</string>
+    <string name="choose_a_strong_password">\u25CF <b>Choose a strong master password,</b> <font color='#C7C7CD'> with at least\n\t\u25CB eight characters\n\t\u25CB one uppercase letter\n\t\u25CB one lowercase letter\n\t\u25CB one number\n\t\u25CB one symbol(!, @, #, $, etc.)</font> </string>
     <string name="error_passwords_dont_match">Passwords don\'t match</string>
-    <string name="authenticate_device">Authenticate Device</string>
-    <string name="enter_six_digit_code">Enter 6 digit code sent to</string>
+    <string name="authenticate_device">Authenticate device</string>
+    <string name="enter_six_digit_code">Enter 6 - digit code sent to</string>
     <string name="resend_otp">Resend code</string>
     <string name="create_your_pass_code">Create your 6-digit \nPersonal Passcode</string>
-    <string name="additional_security">Provides additional security - prevents unauthorized access to your account if others use your device</string>
+    <string name="additional_security"><b>Provides added security - </b>prevents unauthorized access to your account if others use your device.</string>
     <string name="create_personal_passcode">Create personal passcode</string>
     <string name="confirm_your_passcode">Confirm your 6-digit \nPersonal Passcode</string>
 
-    <string name="invalid_email_format">Check your email format</string>
+    <string name="invalid_email_format">Email address invalid</string>
 
     <!--Security OverView Screen in Walkthrough-->
     <string name="end_to_end_encryption">End-to-end encryption</string>
@@ -371,9 +371,9 @@
     <string name="account_password">Account password</string>
 
 
-    <string name="account_master_password_share">\u25CF Choose one you can share - you will need to share this master password with users you add to this account</string>
+    <string name="account_master_password_share">\u25CF <b> Choose one you can share </b>- <font color='#C7C7CD'>you will need to share this master password with users you add to this account.</font></string>
 
-    <string name="account_master_password_remember">\u25CF Please remember it - only you and your other account users will know this password. For this security your master password is never saced on our servers and canot be retrieved if forgotten.</string>
+    <string name="account_master_password_remember">\u25CF <b> Please remember it - </b><font color='#C7C7CD'>only you and your other account users will know this password. For your security, your master password is never saved on our servers and cannot be retrieved if forgotten.</font></string>
     <string name="add_list">Add list</string>
 
     <string name="save">Save</string>
@@ -403,7 +403,7 @@
     <string name="date">Date</string>
     <string name="how_was_it_in_terms_of_visual_appeal">How was it in terms of visual appeal?</string>
     <string name="how_was_it_to_navigate">How was it to navigate?</string>
-    <string name="by_signing_up_you_agree_to_our">By signing up you agree to our</string>
+    <string name="by_signing_up_you_agree_to_our">By signing up, you agree to our</string>
     <string name="error_empty_title">Title should not be empty</string>
     <string name="error_empty_start_date">Start date cannot be empty</string>
     <string name="error_empty_end_date">End date cannot be empty</string>
@@ -415,16 +415,17 @@
     <string name="account_name">Account name</string>
     <string name="institution_name">Institution name</string>
     <string name="requesting_otp">Requesting OTP</string>
-    <string name="password_length_8">Password needs to be atleast 8 characters</string>
-    <string name="password_rules">Password should contain at least one uppercase letter, one lowercase letter, one number, one symbol (!, @, #, $, etc.)</string>
+    <string name="password_length_8">Password needs to be at least 8 characters</string>
+    <string name="password_rules">Password should contain at least contain one uppercase letter, one lowercase letter, one number, one symbol (!, @, #, $, etc.)</string>
     <string name="connecting">Connecting</string>
 
     <string name="selected_photos">Selected Photos</string>
     <string name="select_country">Select Country</string>
-    <string name="error_empty_email">Email Required</string>
-    <string name="error_empty_password">Empty Password</string>
-    <string name="error_empty_first_name">First Name cannot be empty</string>
-    <string name="error_empty_last_name">Last name cannot be empty</string>
+    <string name="error_empty_email">Email address should not be empty</string>
+    <string name="error_empty_password">Password should not be empty</string>
+    <string name="please_enter_password">Please enter the password</string>
+    <string name="error_empty_first_name">First name should not be empty</string>
+    <string name="error_empty_last_name">Last name should not be empty</string>
     <string name="unable_to_find_user">Unable to find user</string>
 
     <string-array name="gender">

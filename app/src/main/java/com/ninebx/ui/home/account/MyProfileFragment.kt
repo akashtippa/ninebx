@@ -38,6 +38,7 @@ import java.util.*
  */
 
 class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, ICountrySelected {
+
     override fun onCountrySelected(strCountry: String?) {
         Toast.makeText(context, "Selected Country is " + strCountry, Toast.LENGTH_LONG).show()
         txtCountry.setText(strCountry)
@@ -47,6 +48,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (outputFile != null && imgEditProfile != null)
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)
     }
+
+    var fromWhichClass = ""
 
 
     var strFirstName = ""
@@ -90,6 +93,19 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
+        fromWhichClass = arguments!!.getString("fromClass")
+
+        when (fromWhichClass) {
+            "Home" -> {
+                NineBxApplication.instance.activityInstance!!.hideBackIcon()
+                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Complete your profile")
+                NineBxApplication.instance.activityInstance!!.hideHomeIcon()
+                imgEdit.hide()
+            }
+            "Account" -> {
+
+            }
+        }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -128,7 +144,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             fragmentTransaction.addToBackStack(null)
             val countryPicker = CountryPicker()
             countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            fragmentTransaction.add(R.id.frameLayout, countryPicker).commit()
+            fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -204,7 +220,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (users.profilePhoto.isNotEmpty()) {
             awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
         }*/
-            //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
+        //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
     }
 
     private fun enableEditing() {
@@ -464,6 +480,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     private fun setProfileImage(imageUri: Uri) {
         Glide.with(context).load(imageUri).into(imgEditProfile)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }

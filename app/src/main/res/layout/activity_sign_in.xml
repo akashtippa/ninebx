@@ -29,31 +29,74 @@
             android:orientation="vertical"
             android:padding="@dimen/_4sdp">
 
-            <EditText
-                android:id="@+id/edtEmailAddress"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_address"
-                android:inputType="textEmailAddress" />
+                android:layout_height="@dimen/margin_32"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/edtEmailAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.9"
+                    android:background="@null"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/color_text_hint" />
+
+                <ImageView
+                    android:id="@+id/imgDelEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:src="@android:drawable/ic_notification_clear_all"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/default_circle_indicator_radius"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_circle_indicator_radius"
+                android:background="#AAAAAA" />
 
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
                 android:hint="@string/master_password"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/color_text_hint"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorAccent">
+                app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@null"
                     android:hint="@string/master_password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/color_text_hint" />
             </android.support.design.widget.TextInputLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/default_circle_indicator_radius"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:background="#AAAAAA" />
 
             <Button
                 android:id="@+id/btnLogin"
@@ -72,6 +115,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_26sdp"
                 android:text="NEED AN ACCOUNT ?"
+                android:textColor="#686868"
                 android:textSize="@dimen/text_16" />
 
             <Button
@@ -82,7 +126,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/signup_btn"
                 android:text="SIGN-UP NOW"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/_14sdp" />
 
 
