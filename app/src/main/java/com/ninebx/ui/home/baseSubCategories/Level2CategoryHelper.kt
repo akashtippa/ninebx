@@ -2440,15 +2440,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Organ donor", "Organ donor", "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2470,7 +2467,6 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
@@ -2485,15 +2481,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2524,15 +2517,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2556,15 +2546,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2586,15 +2573,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2616,15 +2600,12 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-
-
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
-
 
         categoryIndex += 2001
         category_id = "account_details" + categoryIndex
@@ -2776,24 +2757,24 @@ class Level2CategoryHelper(
         // Personal
 
             "Drivers License" -> {
-                getDriversLicense()
+                setDriversLicense(level2Category)
             }
             "Social Security Card" -> {
-                getSocialSecurityCard()
+                setSocialSecurityCard(level2Category)
             }
 
             "Tax ID" -> {
-                getTaxID()
+                setTaxID(level2Category)
             }
 
             "Birth Certificate" -> {
-                getBirthCertificate()
+                setCertificate(level2Category)
             }
             "Marriage Certificate" -> {
-                getMarriageCertificate()
+                setCertificate(level2Category)
             }
             "Other Government-Issued ID" -> {
-                getOtherGovernmentIssuedID()
+                setOtherGovernmentIssuedID(level2Category)
             }
 
             "Airline" -> {
@@ -2912,13 +2893,12 @@ class Level2CategoryHelper(
             "Baby's sizes" -> {
                 getBabysSizes()
             }
-
         }
     }
 
     private fun setAssets(level2Category: Level2SubCategory) {
         when( level2Category.title ) {
-            "Estimated current market value"-> decryptedAssets!!.estimatedMarketValue= level2Category.titleValue //, "", Constants.LEVEL2_USD))
+            "Estimated current market value"-> decryptedAssets!!.estimatedMarketValue = level2Category.titleValue //, "", Constants.LEVEL2_USD))
             "Serial number"-> decryptedAssets!!.serialNumber= level2Category.titleValue //, "", Constants.LEVEL2_NORMAL))
             "Purchase date"-> decryptedAssets!!.purchaseDate= level2Category.titleValue //, "", Constants.LEVEL2_PICKER))
             "Purchase price"-> decryptedAssets!!.purchasePrice= level2Category.titleValue //, "", Constants.LEVEL2_USD))
@@ -2993,7 +2973,6 @@ class Level2CategoryHelper(
                 }
             }
         }
-
     }
 
     private fun setCardDebitCardDetails(level2Category: Level2SubCategory) {
@@ -3016,7 +2995,6 @@ class Level2CategoryHelper(
                     Constants.LEVEL2_ATTACHMENTS -> decryptedPayment!!.attachmentNames= level2Category.titleValue
                 }
             }
-
         }
     }
 
@@ -3039,10 +3017,87 @@ class Level2CategoryHelper(
                     Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
                 }
             }
-
         }
     }
-
+    private fun setDriversLicense(level2Category: Level2SubCategory) {
+        when(level2Category.title){
+            "Description" -> decryptedDriversLicense!!.lic_description = level2Category.titleValue
+            "Name on license" -> decryptedDriversLicense!!.nameOnLicense = level2Category.titleValue
+            "Issuing country" -> decryptedDriversLicense!!.issuingCountry = level2Category.titleValue
+            "License number" -> decryptedDriversLicense!!.licenseNumber = level2Category.titleValue
+            "Date issued" -> decryptedDriversLicense!!.dateIssued = level2Category.titleValue
+            "Expiration date" -> decryptedDriversLicense!!.expirationDate = level2Category.titleValue
+            else -> {
+                when(level2Category.type){
+                    Constants.LEVEL2_NOTES -> decryptedDriversLicense!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedDriversLicense!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+    private fun setSocialSecurityCard(level2Category: Level2SubCategory) {
+        when(level2Category.title){
+            "Card name" -> decryptedSocial!!.cardName = level2Category.titleValue
+            "Name on card" -> decryptedSocial!!.nameOnCard = level2Category.titleValue
+            "Social security number" -> decryptedSocial!!.socialSecurityNumber = level2Category.titleValue
+            else -> {
+                when(level2Category.type){
+                    Constants.LEVEL2_NOTES -> decryptedSocial!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedSocial!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+    private fun setTaxID(level2Category: Level2SubCategory) {
+        when(level2Category.title){
+            "Tax ID name" -> decryptedTAX_ID!!.taxIdName = level2Category.titleValue
+            "Name on ID" -> decryptedTAX_ID!!.name = level2Category.titleValue
+            "Tax ID number" -> decryptedTAX_ID!!.taxIdNumber = level2Category.titleValue
+            "Issuing country" -> decryptedTAX_ID!!.issuingCountry = level2Category.titleValue
+            else -> {
+                when(level2Category.type){
+                    Constants.LEVEL2_NOTES -> decryptedTAX_ID!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedTAX_ID!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+    private fun setCertificate(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Description" -> decryptedCertificate!!.cer_description = level2Category.titleValue
+            "Name on certificate" -> decryptedCertificate!!.nameOnCertificate = level2Category.titleValue
+            "Gender" -> decryptedCertificate!!.gender = level2Category.titleValue
+            "Date of birth" -> decryptedCertificate!!.dateOfBirth = level2Category.titleValue
+            "Time of birth" -> decryptedCertificate!!.timeOfBirth = level2Category.titleValue
+            "Place of birth" -> decryptedCertificate!!.placeOfBirth = level2Category.titleValue
+            "Name 1 on certificate" -> decryptedCertificate!!.nameOneCertificate = level2Category.titleValue
+            "Name 2 on certificate" -> decryptedCertificate!!.nameTwoCertificate = level2Category.titleValue
+            "Date of marriage" -> decryptedCertificate!!.dateOfMarriage = level2Category.titleValue
+            "Place of marriage" -> decryptedCertificate!!.placeOfMarriage = level2Category.titleValue
+            else -> {
+                when(level2Category.type){
+                    Constants.LEVEL2_NOTES -> decryptedCertificate!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedCertificate!!.attachmentNames = level2Category.titleValue
+                }
+        }
+    }
+    }
+    private fun setOtherGovernmentIssuedID(level2Category: Level2SubCategory) {
+        when(level2Category.title){
+            "ID name" -> decryptedOtherGovernment!!.idName = level2Category.titleValue
+            "Name on ID" -> decryptedOtherGovernment!!.nameOnId = level2Category.titleValue
+            "Issuing country" -> decryptedOtherGovernment!!.issuingCountry = level2Category.titleValue
+            "ID number" -> decryptedOtherGovernment!!.idNumber = level2Category.titleValue
+            "Date issued" -> decryptedOtherGovernment!!.dateIssued = level2Category.titleValue
+            "Expiration date" -> decryptedOtherGovernment!!.expirationDate = level2Category.titleValue
+            else -> {
+                when(level2Category.type){
+                    Constants.LEVEL2_NOTES -> decryptedOtherGovernment!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedOtherGovernment!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
