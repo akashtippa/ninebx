@@ -3041,7 +3041,6 @@ class Level2CategoryHelper(
                     Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
                 }
             }
-
         }
     }
 
