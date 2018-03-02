@@ -3047,10 +3047,13 @@ class Level2CategoryHelper(
     fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
         if( decryptedFinancial != null ) {
             decryptedFinancial!!.accountType = categoryID
+            decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.accountName = title
+            var isSaveComplete = false
             if( decryptedFinancial!!.id.toInt() == 0 ) {
                 decryptedFinancial!!.id = getUniqueId()
             }
+            AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
@@ -3062,6 +3065,16 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if( isSaveComplete ) {
+                        isSaveComplete = true
+                    }
+                    else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
             object : AsyncTask<Void, Void, Unit>() {
@@ -3071,6 +3084,7 @@ class Level2CategoryHelper(
                     prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if( combineRealm == null ) {
@@ -3084,12 +3098,23 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if( isSaveComplete ) {
+                        isSaveComplete = true
+                    }
+                    else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if( decryptedPayment!= null ) {
             decryptedPayment!!.cardType = categoryID
             decryptedPayment!!.cardNumber = title
+            decryptedPayment!!.selectionType = categoryID
             if( decryptedPayment!!.id.toInt() == 0 ) {
                 decryptedPayment!!.id = getUniqueId()
             }

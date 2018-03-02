@@ -974,5 +974,7 @@
     <string name="alert_notification">\t REMAINDERS &amp; ALERTS</string>
     <string name="pick_start_date_for_event">Pick a start date for event</string>
     <string name="saving_user">Saving profile details</string>
+    <string name="saving_data">Saving data</string>
+    <string name="otp_expired">OTP expired</string>
 
 </resources>

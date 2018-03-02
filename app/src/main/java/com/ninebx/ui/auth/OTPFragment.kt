@@ -16,6 +16,7 @@ import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.PASSCODE_CREATE
 import io.realm.Realm
@@ -94,8 +95,12 @@ class OTPFragment : BaseAuthFragment() {
 
     private var handler: Handler = Handler()
     private var runnable: Runnable = Runnable {
-        if (tvResend != null)
+        if (tvResend != null) {
+            context!!.showToast(R.string.otp_expired)
+            emailOtp = ""
             tvResend.isEnabled = true
+        }
+
     }
 
     private fun setupOtp() {
@@ -267,6 +272,10 @@ class OTPFragment : BaseAuthFragment() {
                     etOtp5.text.toString().trim() +
                     etOtp6.text.toString().trim()
             isValid = emailOtp == otp
+        }
+        else if( emailOtp == "" ) {
+            isValid = false
+            context!!.showToast(R.string.otp_expired)
         }
 
         return isValid

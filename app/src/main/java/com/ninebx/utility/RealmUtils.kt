@@ -78,7 +78,7 @@ fun prepareRealmConnections(context: Context?,
 
                 AppLogger.d(TAG, "Connection established : " + realmEndPoint)
                 //connectionsMap.put(realmEndPoint, realm!!)
-                //realm!!.refresh()
+                realm!!.refresh()
                 callback.onSuccess(realm)
 
                 if ( isForeground && context != null )
@@ -127,7 +127,7 @@ fun prepareRealmConnectionsRealmThread(context: Context?,
 
             AppLogger.d(TAG, "Connection established : " + realmEndPoint)
             //connectionsMap.put(realmEndPoint, realm!!)
-            //realm!!.refresh()
+            realm!!.refresh()
             callback.onSuccess(realm)
 
             if ( isForeground && context != null )

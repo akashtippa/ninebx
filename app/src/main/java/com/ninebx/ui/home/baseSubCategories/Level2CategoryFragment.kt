@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.*
@@ -19,6 +21,13 @@ import kotlinx.android.synthetic.main.fragment_level2_category.*
  */
 
 class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
+    override fun savedToRealm() {
+        if( context != null ) {
+            context!!.hideProgressDialog()
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+        }
+    }
+
     override fun setValueToDocument(level2Category: Level2SubCategory) {
         mCategoryPresenter.setValueToDocument(level2Category)
     }
@@ -136,8 +145,9 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         setCamera(boxValue)
         tvSave.setOnClickListener {
             if( validate() ) {
+                context!!.showProgressDialog(getString(R.string.saving_data))
                 mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
-                NineBxApplication.instance.activityInstance!!.onBackPressed()
+
             }
 
         }
