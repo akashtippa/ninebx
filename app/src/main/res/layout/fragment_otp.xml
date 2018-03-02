@@ -79,6 +79,7 @@
                 android:minWidth="@dimen/margin_48"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 tools:text="4" />
 
             <EditText
@@ -92,6 +93,7 @@
                 android:minWidth="@dimen/margin_48"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 tools:text="4" />
 
             <EditText
@@ -105,6 +107,7 @@
                 android:minWidth="@dimen/margin_48"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 tools:text="4" />
 
             <EditText
@@ -118,6 +121,7 @@
                 android:minWidth="@dimen/margin_48"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 tools:text="4" />
 
             <EditText
@@ -131,6 +135,7 @@
                 android:minWidth="@dimen/margin_48"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 tools:text="4" />
 
             <EditText
@@ -144,6 +149,7 @@
                 android:minWidth="@dimen/margin_48"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 tools:text="4" />
 
         </LinearLayout>
@@ -168,7 +174,8 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="@dimen/default_mini_padding"
-            android:text="@string/resend_otp" />
+            android:text="@string/resend_otp"
+            android:textColor="@color/colorAccent" />
 
 
     </LinearLayout>

@@ -2,12 +2,15 @@ package com.ninebx.ui.auth
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.*
 import android.widget.ImageView
 import com.ninebx.BuildConfig
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.utility.isValidPassword
 import io.realm.SyncUser
@@ -45,6 +48,31 @@ class SignInFragment : BaseAuthFragment() {
             edtEmailAddress.setText("android@yopmail.com")
             edtPassword.setText("Android.24")
         }
+
+
+        // For First Name
+        edtEmailAddress.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.trim().isEmpty()) {
+                    imgDelEmail.visibility = View.INVISIBLE
+                } else {
+                    imgDelEmail.show()
+                }
+            }
+        })
+
+
+        imgDelEmail.setOnClickListener {
+            edtEmailAddress.setText("")
+        }
     }
 
     override fun validate(): Boolean {
@@ -68,13 +96,13 @@ class SignInFragment : BaseAuthFragment() {
             context!!.showToast(R.string.error_empty_password)
         }
 
-        if( edtPassword.text.toString().isNotEmpty() && edtPassword.text.toString().trim().length < 8 ) {
+        if (edtPassword.text.toString().isNotEmpty() && edtPassword.text.toString().trim().length < 8) {
             context!!.showToast(R.string.password_length_8)
             edtPassword.requestFocus()
             isValid = false
         }
 
-        if( edtPassword.text.toString().isNotEmpty() && !isValidPassword(edtPassword.text.toString().trim()) ) {
+        if (edtPassword.text.toString().isNotEmpty() && !isValidPassword(edtPassword.text.toString().trim())) {
             context!!.showToast(R.string.password_rules)
             edtPassword.requestFocus()
             isValid = false

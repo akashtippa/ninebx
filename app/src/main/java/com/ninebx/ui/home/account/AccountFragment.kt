@@ -171,6 +171,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
         val bundle = Bundle()
+        bundle.putString("fromClass", "Account")
         bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()

@@ -454,7 +454,7 @@ fun decryptUsers(currentUser: Users): DecryptedUsers {
     decryptedUsers.anniversary = currentUser.anniversary.decryptString()
     decryptedUsers.gender = currentUser.gender.decryptString()
     decryptedUsers.mobileNumber = currentUser.mobileNumber.decryptString()
-
+    decryptedUsers.completeProfile = currentUser.completeProfile
     decryptedUsers.street_1 = currentUser.street_1.decryptString()
     decryptedUsers.street_2 = currentUser.street_2.decryptString()
     decryptedUsers.city = currentUser.city.decryptString()

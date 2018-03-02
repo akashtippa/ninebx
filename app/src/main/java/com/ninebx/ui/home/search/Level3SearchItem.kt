@@ -11,14 +11,16 @@ class Level3SearchItem(
         var itemName: String = "",
         var categoryName: String = "",
         var categoryId:String = "",
-        var itemIndex : Int = 0
+        var itemIndex : Int = 0,
+        var itemId : Long = 0
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
             source.readString(),
             source.readString(),
             source.readString(),
-            source.readInt()
+            source.readInt(),
+            source.readLong()
     )
 
     override fun describeContents() = 0
@@ -29,7 +31,27 @@ class Level3SearchItem(
         writeString(categoryName)
         writeString(categoryId)
         writeInt(itemIndex)
+        writeLong(itemId)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Level3SearchItem
+
+        if (categoryId != other.categoryId) return false
+        if (itemId != other.itemId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = categoryId.hashCode()
+        result = 31 * result + itemId.hashCode()
+        return result
+    }
+
 
     companion object {
         @JvmField
@@ -38,4 +60,6 @@ class Level3SearchItem(
             override fun newArray(size: Int): Array<Level3SearchItem?> = arrayOfNulls(size)
         }
     }
+
+
 }

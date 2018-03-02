@@ -137,6 +137,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
         val bundle = Bundle()
+        bundle.putString("fromClass", "Home")
         bundle.putParcelableArrayList(Constants.CURRENT_USER, currentUsers!!)
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()

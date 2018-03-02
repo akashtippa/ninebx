@@ -38,6 +38,7 @@ import java.util.*
  */
 
 class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, ICountrySelected {
+
     override fun onCountrySelected(strCountry: String?) {
         Toast.makeText(context, "Selected Country is " + strCountry, Toast.LENGTH_LONG).show()
         txtCountry.setText(strCountry)
@@ -47,6 +48,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (outputFile != null && imgEditProfile != null)
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)
     }
+
+    var fromWhichClass = ""
 
 
     var strFirstName = ""
@@ -90,6 +93,18 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
+        fromWhichClass = arguments!!.getString("fromClass")
+
+        when (fromWhichClass) {
+            "Home" -> {
+                NineBxApplication.instance.activityInstance!!.hideToolbar()
+                toolbarCompleteProfile.show()
+                imgEdit.hide()
+            }
+            "Account" -> {
+
+            }
+        }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -127,8 +142,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             val countryPicker = CountryPicker()
+            AppLogger.e("Selected Country ", " is " + strCountry)
             countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            fragmentTransaction.add(R.id.frameLayout, countryPicker).commit()
+            fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -142,6 +158,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         checkEncryption()
 
+        txtSaveCompletedProfile.setOnClickListener {
+
+        }
     }
 
     private fun checkEncryption() {
@@ -204,7 +223,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (users.profilePhoto.isNotEmpty()) {
             awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
         }*/
-            //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
+        //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
     }
 
     private fun enableEditing() {
@@ -295,55 +314,36 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     private val TAG = "Profile"
     @SuppressLint("StaticFieldLeak")
     private fun updateTheUserInfo() {
+        context!!.showProgressDialog(getString(R.string.saving_user))
+        prepareRealmConnectionsRealmThread(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
 
+                val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
+                realm.beginTransaction()
 
-        object : AsyncTask<Void, Void, Unit>() {
-
-            override fun onPreExecute() {
-                super.onPreExecute()
-                context!!.showProgressDialog(getString(R.string.saving_user))
-            }
-
-            override fun doInBackground(vararg p0: Void?) {
-                prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
-                    override fun onSuccess(realm: Realm?) {
-
-                        val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
-                        realm.beginTransaction()
-
-                        users!!.firstName = strFirstName.encryptString()
-                        users.lastName = strLastName.encryptString()
-                        users.fullName = (strFirstName + " " + strLastName).encryptString()
-                        users.emailAddress = strEmail.encryptString()
-                        users.relationship = strRelationship.encryptString()
-                        users.dateOfBirth = strDOB.encryptString()
-                        users.anniversary = strAnniversary.encryptString()
-                        users.gender = strGender.encryptString()
-                        users.mobileNumber = strMobileNumber.encryptString()
-                        users.street_1 = strStreetAddress1.encryptString()
-                        users.street_2 = strStreetAddress2.encryptString()
-                        users.city = strCity.encryptString()
-                        users.state = strState.encryptString()
-                        users.zipCode = strZipCode.encryptString()
-                        users.country = strCountry.encryptString()
-                        users.completeProfile = true
-                        //                realm.copyToRealmOrUpdate(updatingUserInfo)
-                        users.insertOrUpdate(realm)
-                        realm.commitTransaction()
-
-                    }
-                })
-
-
-            }
-
-            override fun onPostExecute(result: Unit?) {
-                super.onPostExecute(result)
+                users!!.firstName = strFirstName.encryptString()
+                users.lastName = strLastName.encryptString()
+                users.fullName = (strFirstName + " " + strLastName).encryptString()
+                users.emailAddress = strEmail.encryptString()
+                users.relationship = strRelationship.encryptString()
+                users.dateOfBirth = strDOB.encryptString()
+                users.anniversary = strAnniversary.encryptString()
+                users.gender = strGender.encryptString()
+                users.mobileNumber = strMobileNumber.encryptString()
+                users.street_1 = strStreetAddress1.encryptString()
+                users.street_2 = strStreetAddress2.encryptString()
+                users.city = strCity.encryptString()
+                users.state = strState.encryptString()
+                users.zipCode = strZipCode.encryptString()
+                users.country = strCountry.encryptString()
+                users.completeProfile = true
+                //                realm.copyToRealmOrUpdate(updatingUserInfo)
+                users.insertOrUpdate(realm)
+                realm.commitTransaction()
                 context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
             }
-
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        })
 
     }
 
@@ -464,6 +464,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     private fun setProfileImage(imageUri: Uri) {
         Glide.with(context).load(imageUri).into(imgEditProfile)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }
