@@ -622,6 +622,17 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         bundle!!.putParcelable("selectedDocument", selectedDocument)
         fragmentTransaction!!.add(R.id.frameLayout, categoryFragment).commit()
     }
+
+    companion object {
+        fun getSearchInstance() : SearchFragment {
+            if( instance == null ) {
+                instance = SearchFragment()
+            }
+            return instance!!
+        }
+        var instance : SearchFragment? = null
+
+    }
 }
 
 

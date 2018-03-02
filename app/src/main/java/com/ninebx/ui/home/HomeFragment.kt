@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
+import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.utility.NineBxPreferences
 import com.ninebx.utility.parseDateForCreatedUser
 import kotlinx.android.synthetic.main.fragment_home_updated.*
@@ -66,8 +67,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         txtWellness.setOnClickListener(this)
         txtMemories.setOnClickListener(this)
         txtShopping.setOnClickListener(this)
-
-
     }
 
 
@@ -133,9 +132,19 @@ class HomeFragment : Fragment(), View.OnClickListener {
             (R.string.shopping) -> {
                 NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
                 prefrences.currentBox = getString(R.string.shopping)
-
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
         }
+    }
+
+    companion object {
+        fun getHomeInstance() : HomeFragment {
+            if( instance == null ) {
+                instance = HomeFragment()
+            }
+            return instance!!
+        }
+        var instance : HomeFragment? = null
+
     }
 }
