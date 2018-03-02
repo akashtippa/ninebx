@@ -32,24 +32,25 @@ class CalendarPresenter( val calendarView: CalendarView)  {
     init {
         dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
         calendarView.showProgress(R.string.loading)
-
-        object : AsyncTask<Void, Void, Unit>() {
+        prepareRealmConnectionsRealmThread(context, false, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                calendarRealm = realm
+                refreshData()
+                calendarView.setDateWithEvents(datesWithEvents, dateStringWithEvents)
+                calendarView.hideProgress()
+            }
+        })
+       /* object : AsyncTask<Void, Void, Unit>() {
             override fun doInBackground(vararg p0: Void?) {
-                prepareRealmConnections(context, false, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
-                    override fun onSuccess(realm: Realm?) {
-                        calendarRealm = realm
-                        refreshData()
-                    }
-                })
+
             }
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
                 //AppLogger.d(TAG, "setDateWithEvents : " + datesWithEvents)
-                calendarView.setDateWithEvents(datesWithEvents, dateStringWithEvents)
-                calendarView.hideProgress()
+
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)*/
 
     }
 

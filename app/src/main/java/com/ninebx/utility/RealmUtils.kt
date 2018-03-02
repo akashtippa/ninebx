@@ -78,7 +78,7 @@ fun prepareRealmConnections(context: Context?,
 
                 AppLogger.d(TAG, "Connection established : " + realmEndPoint)
                 //connectionsMap.put(realmEndPoint, realm!!)
-                realm!!.refresh()
+                //realm!!.refresh()
                 callback.onSuccess(realm)
 
                 if ( isForeground && context != null )
@@ -106,6 +106,55 @@ fun prepareRealmConnections(context: Context?,
 
 }
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+fun prepareRealmConnectionsRealmThread(context: Context?,
+                            isForeground: Boolean,
+                            realmEndPoint: String,
+                            callback: Realm.Callback) {
+
+
+    if ( isForeground && context != null )
+        context.showProgressDialog(context.getString(R.string.connecting))
+
+    /*if (connectionsMap.containsKey(realmEndPoint)) {
+        AppLogger.d(TAG, "Connection Found : " + realmEndPoint)
+        connectionsMap[realmEndPoint]!!.refresh()
+        callback.onSuccess(connectionsMap[realmEndPoint])
+    } else {*/
+    AppLogger.d(TAG, "New Connection : " + realmEndPoint)
+    getRealmInstanceRealmThread(realmEndPoint, object : Realm.Callback() {
+        override fun onSuccess(realm: Realm?) {
+
+            AppLogger.d(TAG, "Connection established : " + realmEndPoint)
+            //connectionsMap.put(realmEndPoint, realm!!)
+            //realm!!.refresh()
+            callback.onSuccess(realm)
+
+            if ( isForeground && context != null )
+                context!!.hideProgressDialog()
+        }
+
+        override fun onError(exception: Throwable?) {
+
+            if (exception != null && exception.localizedMessage != null) {
+
+                AppLogger.e(TAG, "Connection error : " + realmEndPoint)
+
+                if (isForeground && context != null)
+                    context!!.showToast(exception.localizedMessage)
+
+                exception.printStackTrace()
+            }
+
+            if (isForeground && context != null)
+                context!!.hideProgressDialog()
+
+        }
+    })
+    //}
+
+}
+
 private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
 
     val user = SyncUser.currentUser()
@@ -117,6 +166,15 @@ private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
 
 }
 
+private fun getRealmInstanceRealmThread(realmEndPoint: String, callback: Realm.Callback) {
+
+    val user = SyncUser.currentUser()
+    AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_URL + realmEndPoint)
+    val config = SyncConfiguration.Builder(user, Constants.SERVER_URL + realmEndPoint)
+            .waitForInitialRemoteData()
+            .build()
+    Realm.getInstanceAsync(config, callback)
+}
 
 fun getRealmServerConnection(realmEndPoint: String, callback: Realm.Callback) {
     val user = SyncUser.currentUser()

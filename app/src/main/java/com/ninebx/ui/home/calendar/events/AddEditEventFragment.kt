@@ -508,12 +508,15 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun setValues() {
         if( !isAddEvent ) {
 
-
             if( mCalendarEvent.startsDate.size > 0 ) {
                 startDateCalendar = Calendar.getInstance()
                 startDateCalendar!!.time = parseDateForFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!, DATE_FORMAT)
             }
 
+            if( mCalendarEvent.endsDate.size > 0 ) {
+                endDateCalendar = Calendar.getInstance()
+                endDateCalendar!!.time = parseDateForFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!, DATE_FORMAT)
+            }
 
             etTitle.setText(  mCalendarEvent.title[mSelectedDateIndex]!! )
             etLocation.setText( mCalendarEvent.location[mSelectedDateIndex]!! )
@@ -580,8 +583,6 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             mCalendarEvent = CalendarEvents()
             mCalendarEvent.id = id
         }
-
-
 
         val startRepeatEvent = tvRepeat.text.toString().trim()
         val endRepeatEvent = tvEndRepeat.text.toString().trim()
