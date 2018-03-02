@@ -37,7 +37,6 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                         }
                         else
                             AppLogger.d("Notification", "No data" )
-
                     }
                 })
             }
@@ -49,8 +48,6 @@ class NotificationsPresenter(val notificationsView: NotificationsView)  {
                 notificationsView.hideProgress()
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-
     }
 
     fun deleteNotification(position: Int) {

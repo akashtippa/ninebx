@@ -295,6 +295,4 @@ public class Personal extends RealmObject {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
-
-
 }

@@ -3000,7 +3000,6 @@ class Level2CategoryHelper(
     private fun setCardDebitCardDetails(level2Category: Level2SubCategory) {
         when( level2Category.title ) {
 
-
             "Card number"-> decryptedPayment!!.cardNumber = level2Category.titleValue
             "Card type"-> decryptedPayment!!.cardType = level2Category.titleValue
             "Card holder"-> decryptedPayment!!.cardHolder = level2Category.titleValue
