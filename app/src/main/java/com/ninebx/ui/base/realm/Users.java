@@ -19,6 +19,7 @@ import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 import static com.ninebx.utility.SecurityUtilsKt.encryptMembers;
+import static com.ninebx.utility.SecurityUtilsKt.encryptString;
 
 /**
  * Created by Alok on 11/01/18.
@@ -179,26 +180,26 @@ public class Users extends RealmObject implements Parcelable {
     public static Users createUserObject(@NotNull DecryptedUsers users, ArrayList<DecryptedMember> members) {
 
         Users newUser = new Users();
-        newUser.setAnniversary(users.getAnniversary());
-        newUser.setCity(users.getCity());
+        newUser.setAnniversary(encryptString(users.getAnniversary()));
+        newUser.setCity(encryptString(users.getCity()));
         newUser.setCompleteProfile(users.getCompleteProfile());
-        newUser.setCountry(users.getCountry());
+        newUser.setCountry(encryptString(users.getCountry()));
         newUser.setUserId(users.getUserId());
         newUser.setId(users.getId());
-        newUser.setDateOfBirth(users.getDateOfBirth());
-        newUser.setZipCode(users.getZipCode());
-        newUser.setEmailAddress(users.getEmailAddress());
-        newUser.setFirstName(users.getFirstName());
-        newUser.setFullName(users.getFullName());
-        newUser.setLastName(users.getLastName());
-        newUser.setGender(users.getGender());
-        newUser.setStreet_1(users.getStreet_1());
-        newUser.setStreet_2(users.getStreet_2());
-        newUser.setState(users.getState());
-        newUser.setMobileNumber(users.getMobileNumber());
+        newUser.setDateOfBirth(encryptString(users.getDateOfBirth()));
+        newUser.setZipCode(encryptString(users.getZipCode()));
+        newUser.setEmailAddress(encryptString(users.getEmailAddress()));
+        newUser.setFirstName(encryptString(users.getFirstName()));
+        newUser.setFullName(encryptString(users.getFullName()));
+        newUser.setLastName(encryptString(users.getLastName()));
+        newUser.setGender(encryptString(users.getGender()));
+        newUser.setStreet_1(encryptString(users.getStreet_1()));
+        newUser.setStreet_2(encryptString(users.getStreet_2()));
+        newUser.setState(encryptString(users.getState()));
+        newUser.setMobileNumber(encryptString(users.getMobileNumber()));
         newUser.setProfilePhoto(users.getProfilePhoto());
         newUser.members.addAll(encryptMembers(members));
-        newUser.setRelationship(users.getRelationship());
+        newUser.setRelationship(encryptString(users.getRelationship()));
         return newUser;
 
     }

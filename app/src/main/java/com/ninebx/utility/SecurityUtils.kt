@@ -417,7 +417,7 @@ fun encryptUsers(currentUser: Users): Users {
 fun encryptMembers(decryptedMembers: ArrayList<DecryptedMember>): ArrayList<Member>? {
     val members = ArrayList<Member>()
     for (i in 0 until decryptedMembers.size) {
-        encryptMember(members[i]!!)
+        members.add(encryptMember(decryptedMembers[i])!!)
     }
     return members
 }
