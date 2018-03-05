@@ -96,16 +96,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         fromWhichClass = arguments!!.getString("fromClass")
 
-        when (fromWhichClass) {
-            "Home" -> {
-                NineBxApplication.instance.activityInstance!!.hideToolbar()
-                toolbarCompleteProfile.show()
-                imgEdit.hide()
-            }
-            "Account" -> {
 
-            }
-        }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -157,21 +148,24 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
 
-        checkEncryption()
-
         txtSaveCompletedProfile.setOnClickListener {
 
         }
         txtCountry.text = strCountry
+
+        when (fromWhichClass) {
+            "Home" -> {
+                NineBxApplication.instance.activityInstance!!.hideToolbar()
+                toolbarCompleteProfile.show()
+                imgEdit.callOnClick()
+                imgEdit.hide()
+            }
+            "Account" -> {
+
+            }
+        }
     }
 
-    private fun checkEncryption() {
-        //AppLogger.d(TAG, "User Name From Realm : " + currentUsers!![0].firstName)
-        val decryptedName = currentUsers!![0].firstName.decryptString()
-        //AppLogger.d(TAG, "User Name From Realm Decrypted : " + decryptedName)
-        val encryptedName = decryptedName.encryptString()
-        //AppLogger.d(TAG, "User Name From Realm Encrypted : " + encryptedName)
-    }
 
     private fun populateUserInfo(users: DecryptedUsers?) {
         idUser = users!!.id

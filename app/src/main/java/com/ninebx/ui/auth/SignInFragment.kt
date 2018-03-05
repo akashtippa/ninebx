@@ -44,7 +44,7 @@ class SignInFragment : BaseAuthFragment() {
             openStaticLayoutDialog((R.string.privacy_policy))
         }
 
-        if (BuildConfig.ON_DEBUG_MODE) {
+        if (NineBxApplication.autoTestMode) {
             edtEmailAddress.setText("android@yopmail.com")
             edtPassword.setText("Android.24")
         }
