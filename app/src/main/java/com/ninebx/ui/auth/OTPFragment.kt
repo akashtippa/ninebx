@@ -41,7 +41,7 @@ class OTPFragment : BaseAuthFragment() {
         btnSubmit.setOnClickListener {
             if( validate() ) {
                 emailOtp = ""
-
+                handler.removeCallbacks(runnable)
                 object : AsyncTask<Void, Void, Int>() {
                     override fun doInBackground(vararg p0: Void?) : Int {
                         prepareRealmConnections( context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback( ) {

@@ -171,7 +171,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
     }
 
     private fun navigateToMyProfile() {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
@@ -183,7 +183,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
     }
 
     private fun navigateToMyProfileUsers() {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val addFamilyUsersFragment = AddFamilyUsersFragment()
@@ -210,6 +210,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
         txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
 

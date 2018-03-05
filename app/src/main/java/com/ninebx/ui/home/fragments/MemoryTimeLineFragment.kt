@@ -185,7 +185,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         edtLocation.isEnabled = true
         edtContacts.isEnabled = true
         edtNotes.isEnabled = true
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         toolbar.show()
         ivHome.hide()
         txtSaveMemory.show()
@@ -200,7 +200,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
         edtLocation.isEnabled = true
         edtContacts.isEnabled = true
         edtNotes.isEnabled = true
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         toolbar.show()
         ivHome.hide()
         txtSaveMemory.show()
@@ -322,7 +322,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         return super.onBackPressed()
     }

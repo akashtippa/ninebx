@@ -103,7 +103,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
 
 //        changeToolbarTitleAndAddInfo(fragmentValue)
 
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(categoryName)
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(categoryName)
 
         layoutAddList.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -162,7 +162,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
         return super.onBackPressed()
     }
 

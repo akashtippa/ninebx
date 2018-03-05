@@ -86,7 +86,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
 
         currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
@@ -95,6 +95,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
         fromWhichClass = arguments!!.getString("fromClass")
+
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
+        ivCompleteHome.setOnClickListener{ NineBxApplication.instance.activityInstance!!.onBackPressed() }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -132,9 +135,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             CountryPickerDialog(context!!, ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            //AppLogger.e("Selected Country ", " is " + strCountry)
-            //countryPicker.setCountrySelectionListener()
-            //fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -147,19 +147,23 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
 
         txtSaveCompletedProfile.setOnClickListener {
-
+            if (checkValidations()) {
+                updateTheUserInfo()
+            }
         }
         txtCountry.text = strCountry
 
         when (fromWhichClass) {
             "Home" -> {
-                NineBxApplication.instance.activityInstance!!.hideToolbar()
+                toolbarProfile.hide()
                 toolbarCompleteProfile.show()
-                imgEdit.callOnClick()
+                enableEditing()
                 imgEdit.hide()
             }
             "Account" -> {
-
+                toolbarProfile.show()
+                toolbarCompleteProfile.hide()
+                imgEdit.show()
             }
         }
     }
@@ -221,8 +225,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     }
 
     private fun enableEditing() {
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
-        toolbarProfile.show()
+
+        if( fromWhichClass == "Account" )
+            toolbarProfile.show()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
@@ -332,10 +337,12 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 users.country = strCountry.encryptString()
                 users.completeProfile = true
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
-                users.insertOrUpdate(realm)
+                realm.insertOrUpdate(users)
                 realm.commitTransaction()
+
                 context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
+                NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
             }
         })
 
@@ -343,9 +350,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
+
+
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 

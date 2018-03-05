@@ -73,7 +73,6 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
         if (NineBxApplication.instance.activityInstance != null) {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
-            NineBxApplication.instance.activityInstance!!.showBackIcon()
         }
 
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
@@ -129,8 +128,6 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 

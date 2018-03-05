@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.AdapterClickListener
 import com.ninebx.ui.base.kotlin.hide
@@ -141,6 +142,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
     private var isYearChange = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         mCalendarPresenter = CalendarPresenter(this)
     }
 

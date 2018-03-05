@@ -21,7 +21,7 @@ class SearchLocationFragment : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
 
         ivBackSearch.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
@@ -32,7 +32,7 @@ class SearchLocationFragment : FragmentBackHelper() {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
 
         return super.onBackPressed()
     }
