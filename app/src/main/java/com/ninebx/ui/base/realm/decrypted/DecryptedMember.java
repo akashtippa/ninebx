@@ -670,4 +670,21 @@ public class DecryptedMember implements Parcelable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedMember member = (DecryptedMember) o;
+
+        return userId.equals(member.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return userId.hashCode();
+    }
+
+
+
 }

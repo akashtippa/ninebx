@@ -10,12 +10,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptString
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>?, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {

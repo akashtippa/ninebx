@@ -37,6 +37,7 @@ import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
 import javax.crypto.spec.SecretKeySpec
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 02/02/18.
@@ -410,6 +411,37 @@ fun encryptUsers(currentUser: Users): Users {
 
     return currentUser
 
+}
+
+fun encryptMembers(decryptedMembers: ArrayList<DecryptedMember>): ArrayList<Member>? {
+    val members = ArrayList<Member>()
+    for (i in 0 until members.size) {
+        encryptMember(members[i]!!)
+    }
+    return members
+}
+
+fun encryptMember(decryptedMember: DecryptedMember): Member? {
+
+    val member = Member()
+    member.firstName = decryptedMember.firstName.encryptString()
+    member.lastName = decryptedMember.lastName.encryptString()
+    member.relationship = decryptedMember.relationship.encryptString()
+    member.role = decryptedMember.role.encryptString()
+    member.email = decryptedMember.email.encryptString()
+    member.userId = decryptedMember.userId
+    member.dateOfBirth = decryptedMember.dateOfBirth.encryptString()
+    member.anniversary = decryptedMember.anniversary.encryptString()
+    member.gender = decryptedMember.gender
+    member.mobileNumber = decryptedMember.mobileNumber.encryptString()
+    member.street_1 = decryptedMember.street_1.encryptString()
+    member.street_2 = decryptedMember.street_2.encryptString()
+    member.city = decryptedMember.city.encryptString()
+    member.state = decryptedMember.state.encryptString()
+    member.zipCode = decryptedMember.zipCode.encryptString()
+    member.country = decryptedMember.country.encryptString()
+
+    return member
 }
 
 fun encryptMembers(members: RealmList<Member>): RealmList<Member>? {
