@@ -73,6 +73,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         if( selectedDocument != null )
             when( selectedDocument ) {
+                //Home&Banking
                 is DecryptedFinancial -> {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
@@ -107,6 +108,37 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
                     etTitle.setText(decryptedFinancial.title)
                     etTitleValue.setText(decryptedFinancial.taxPayer)
+                }
+                //Personal
+                is DecryptedCertificate -> {
+                    val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
+                    etTitle.setText(decryptedCertificate.nameOnCertificate)
+                    etTitleValue.setText(decryptedCertificate.nameOnCertificate)
+                }
+                is DecryptedGovernment -> {
+                    val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
+                    etTitle.setText(decryptedGovernment.name)
+                    etTitleValue.setText(decryptedGovernment.nameOnId)
+                }
+                is DecryptedLicense ->{
+                    val decryptedLicense : DecryptedLicense = selectedDocument as DecryptedLicense
+                    etTitle.setText(decryptedLicense.nameOnLicense)
+                    etTitleValue.setText(decryptedLicense.lic_description)
+                }
+                is DecryptedPersonal -> {
+                    val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
+                    etTitle.setText(decryptedPersonal.userName)
+                    etTitleValue.setText(decryptedPersonal.nameOnAccount)
+                }
+                is DecryptedSocial -> {
+                    val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
+                    etTitle.setText(decryptedSocial.nameOnCard)
+                    etTitleValue.setText(decryptedSocial.cardName)
+                }
+                is DecryptedTaxID -> {
+                    val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
+                    etTitle.setText(decryptedTaxID.name)
+                    etTitleValue.setText(decryptedTaxID.taxIdName)
                 }
             }
 
@@ -544,8 +576,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.hint = "Physician name"
                 toolbarTitle.text = "Add Visit"
             }
-
-
         }
     }
 

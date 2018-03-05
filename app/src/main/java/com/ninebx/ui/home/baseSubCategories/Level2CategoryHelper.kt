@@ -3071,7 +3071,7 @@ class Level2CategoryHelper(
 
     private fun setSocialSecurityCard(level2Category: Level2SubCategory) {
         when (level2Category.title) {
-            "Card name" -> decryptedSocial!!.cardName = level2Category.titleValue
+            "Card name" -> decryptedSocial!!.nameOnCard = level2Category.titleValue
             "Name on card" -> decryptedSocial!!.nameOnCard = level2Category.titleValue
             "Social security number" -> decryptedSocial!!.socialSecurityNumber = level2Category.titleValue
             else -> {
@@ -3085,8 +3085,8 @@ class Level2CategoryHelper(
 
     private fun setTaxID(level2Category: Level2SubCategory) {
         when (level2Category.title) {
-            "Tax ID name" -> decryptedTAX_ID!!.taxIdName = level2Category.titleValue
-            "Name on ID" -> decryptedTAX_ID!!.name = level2Category.titleValue
+            "Tax ID name" -> decryptedTAX_ID!!.name = level2Category.titleValue
+            "Name on ID" -> decryptedTAX_ID!!.taxIdName = level2Category.titleValue
             "Tax ID number" -> decryptedTAX_ID!!.taxIdNumber = level2Category.titleValue
             "Issuing country" -> decryptedTAX_ID!!.issuingCountry = level2Category.titleValue
             else -> {
@@ -3899,16 +3899,16 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if(decryptedSocial != null){
+        if(decryptedSocial != null) {
             decryptedSocial!!.selectionType = categoryID
             decryptedSocial!!.nameOnCard = title
-            if(decryptedSocial!!.id.toInt() == 0){
+            if (decryptedSocial!!.id.toInt() == 0) {
                 decryptedSocial!!.id = getUniqueId()
             }
             var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val social = encryptSocial(decryptedSocial!!)
@@ -3927,14 +3927,14 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal : DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
+                            val combinePersonal: DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
                             var realmSocial = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
-                            if (realmSocial == null){
+                            if (realmSocial == null) {
                                 realmSocial = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
                             realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
@@ -3943,6 +3943,7 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
                 override fun onPostExecute(result: Unit?) {
                     if (isSaveComplete) {
                         isSaveComplete = true
@@ -3951,7 +3952,7 @@ class Level2CategoryHelper(
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
+        }
             if(decryptedTAX_ID != null){
                 decryptedTAX_ID!!.selectionType = categoryID
                 decryptedTAX_ID!!.name = title
@@ -4004,7 +4005,7 @@ class Level2CategoryHelper(
                     }
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
             }
-        }
+
         if(decryptedOtherGovernment != null){
             decryptedOtherGovernment!!.selectionType = categoryID
             decryptedOtherGovernment!!.name = title
@@ -4169,8 +4170,8 @@ class Level2CategoryHelper(
                         categoryView.savedToRealm()
                     }
                 }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
             }
-        }
 
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID
