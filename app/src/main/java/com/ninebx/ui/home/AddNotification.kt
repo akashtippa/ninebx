@@ -272,24 +272,28 @@ class AddNotification : HomeView {
         for(i in 0 until decryptedInsurance.size){
             insuranceExpiryDate = decryptedInsurance[i].policyExpirationDate
             insuranceType = decryptedInsurance[i].selectionType
-            var insuranceExpiryDate = dateFormat.parse(insuranceExpiryDate)
-            var insuranceDateDifference: Long = insuranceExpiryDate.getTime() - date.getTime()
-            var insuranceDaysBetween = (insuranceDateDifference / (1000 * 60 * 60 * 24)).toInt()
-            if(insuranceType.equals("Life"))
-            {
-                if(insuranceDaysBetween == 90){
-                    val schecduledDate = Calendar.getInstance()
-                    schecduledDate.timeInMillis = insuranceExpiryDate.time - (insuranceDaysBetween * (1000 * 60 * 60 * 24))
-                    newNotification(decryptedInsurance[i].id, schecduledDate.time, insuranceExpiryDate, insuranceType, boxName)
-                }
+            try{
+                var insuranceExpiryDate = dateFormat.parse(insuranceExpiryDate)
+                var insuranceDateDifference: Long = insuranceExpiryDate.getTime() - date.getTime()
+                var insuranceDaysBetween = (insuranceDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                if(insuranceType.equals("Life"))
+                {
+                    if(insuranceDaysBetween == 90){
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = insuranceExpiryDate.time - (insuranceDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedInsurance[i].id, schecduledDate.time, insuranceExpiryDate, insuranceType, boxName)
+                    }
 
-            }
-            else{
-                if(insuranceDaysBetween == 30){
-                    val schecduledDate = Calendar.getInstance()
-                    schecduledDate.timeInMillis = insuranceExpiryDate.time - (insuranceDaysBetween * (1000 * 60 * 60 * 24))
-                    newNotification(decryptedInsurance[i].id, schecduledDate.time, insuranceExpiryDate, insuranceType, boxName)
                 }
+                else{
+                    if(insuranceDaysBetween == 30){
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = insuranceExpiryDate.time - (insuranceDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedInsurance[i].id, schecduledDate.time, insuranceExpiryDate, insuranceType, boxName)
+                    }
+                }
+            }catch (e : Exception){
+                e.printStackTrace()
             }
         }
     }

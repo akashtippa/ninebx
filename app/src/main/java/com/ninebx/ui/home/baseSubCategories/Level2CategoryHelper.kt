@@ -3842,8 +3842,9 @@ class Level2CategoryHelper(
             if (decryptedIdentification!!.id.toInt() == 0) {
                 decryptedIdentification!!.id = getUniqueId()
             }
+            var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -3853,11 +3854,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
             object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -3870,6 +3884,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
@@ -3879,8 +3902,9 @@ class Level2CategoryHelper(
             if (decryptedMedicalHistory!!.id.toInt() == 0) {
                 decryptedMedicalHistory!!.id = getUniqueId()
             }
+            var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -3890,12 +3914,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
             object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -3908,6 +3944,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
@@ -3917,8 +3962,10 @@ class Level2CategoryHelper(
             if (decryptedHealthcareProviders!!.id.toInt() == 0) {
                 decryptedHealthcareProviders!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -3928,12 +3975,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -3946,6 +4005,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
@@ -3955,8 +4023,10 @@ class Level2CategoryHelper(
             if (decryptedEmergencyContacts!!.id.toInt() == 0) {
                 decryptedEmergencyContacts!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -3966,12 +4036,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -3984,16 +4066,28 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedMedications != null) {
             decryptedMedications!!.selectionType = categoryID
             decryptedMedications!!.name = title
             if (decryptedMedications!!.id.toInt() == 0) {
                 decryptedMedications!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -4003,12 +4097,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -4021,6 +4127,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedMedicalConditions != null) {
@@ -4029,8 +4144,10 @@ class Level2CategoryHelper(
             if (decryptedMedicalConditions!!.id.toInt() == 0) {
                 decryptedMedicalConditions!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -4040,11 +4157,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -4057,6 +4187,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedEyeglassPrescriptions != null) {
@@ -4065,8 +4204,9 @@ class Level2CategoryHelper(
             if (decryptedEyeglassPrescriptions!!.id.toInt() == 0) {
                 decryptedEyeglassPrescriptions!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -4076,11 +4216,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -4093,6 +4246,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedVitalNumbers != null) {
@@ -4101,8 +4263,10 @@ class Level2CategoryHelper(
             if (decryptedVitalNumbers!!.id.toInt() == 0) {
                 decryptedVitalNumbers!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -4112,11 +4276,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -4129,6 +4306,15 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedCheckups != null) {
@@ -4137,8 +4323,9 @@ class Level2CategoryHelper(
             if (decryptedCheckups!!.id.toInt() == 0) {
                 decryptedCheckups!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
@@ -4148,11 +4335,24 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>(){
-                override fun doInBackground(vararg params: Void?) {
+
+            object : AsyncTask<Void, Void, Unit>() {
+
+                override fun doInBackground(vararg p0: Void?) {
+
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -4164,6 +4364,15 @@ class Level2CategoryHelper(
                             realm.commitTransaction()
                         }
                     })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    if (isSaveComplete) {
+                        isSaveComplete = true
+                    } else {
+                        categoryView.savedToRealm()
+                    }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
