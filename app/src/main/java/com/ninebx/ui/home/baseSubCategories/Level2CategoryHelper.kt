@@ -9,6 +9,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
+import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -26,24 +27,37 @@ class Level2CategoryHelper(
         val classType: String?
 ) {
     // For Home & Money
-    private var decryptedFinancial: DecryptedFinancial ?= null // DecryptedFinancial()
-    private var decryptedPayment: DecryptedPayment ?= null // DecryptedPayment()
-    private var decryptedProperty: DecryptedProperty ?= null // DecryptedProperty()
-    private var decryptedVehicle: DecryptedVehicle ?= null // DecryptedVehicle()
-    private var decryptedAssets: DecryptedAsset ?= null // DecryptedAsset()
-    private var decryptedInsurance: DecryptedInsurance ?= null // DecryptedInsurance()
-    private var decryptedTaxes: DecryptedTax ?= null // DecryptedTax()
+    private var decryptedFinancial: DecryptedFinancial? = null // DecryptedFinancial()
+    private var decryptedPayment: DecryptedPayment? = null // DecryptedPayment()
+    private var decryptedProperty: DecryptedProperty? = null // DecryptedProperty()
+    private var decryptedVehicle: DecryptedVehicle? = null // DecryptedVehicle()
+    private var decryptedAssets: DecryptedAsset? = null // DecryptedAsset()
+    private var decryptedInsurance: DecryptedInsurance? = null // DecryptedInsurance()
+    private var decryptedTaxes: DecryptedTax? = null // DecryptedTax()
 
     // For Travel
-    private var decryptedLoyaltyPrograms: DecryptedLoyaltyPrograms ?= null // DecryptedLoyaltyPrograms()
-    private var decryptedTravel: DecryptedTravel ?= null // DecryptedTravel()
+    private var decryptedLoyalty: DecryptedLoyalty? = null // decryptedLoyalty()
+    private var decryptedTravel: DecryptedTravel? = null // DecryptedTravel()
+    private var decryptedDocuments: DecryptedDocuments? = null // DecryptedTravel()
+    private var decryptedVacations: DecryptedVacations? = null // DecryptedTravel()
 
     // For Personal
-    private var decryptedDriversLicense: DecryptedLicense ?= null // DecryptedLicense()
-    private var decryptedSocial: DecryptedSocial ?= null // DecryptedSocial()
-    private var decryptedTAX_ID: DecryptedTaxID ?= null // DecryptedTaxID()
-    private var decryptedCertificate: DecryptedCertificate ?= null // DecryptedCertificate()
-    private var decryptedOtherGovernment: DecryptedGovernment ?= null // DecryptedGovernment()
+    private var decryptedDriversLicense: DecryptedLicense? = null // DecryptedLicense()
+    private var decryptedSocial: DecryptedSocial? = null // DecryptedSocial()
+    private var decryptedTAX_ID: DecryptedTaxID? = null // DecryptedTaxID()
+    private var decryptedCertificate: DecryptedCertificate? = null // DecryptedCertificate()
+    private var decryptedOtherGovernment: DecryptedGovernment? = null // DecryptedGovernment()
+
+    //For Wellness
+    private var decryptedIdentification: DecryptedIdentification? = null
+    private var decryptedMedicalHistory: DecryptedMedicalHistory? = null
+    private var decryptedHealthcareProviders: DecryptedHealthcareProviders? = null
+    private var decryptedEmergencyContacts: DecryptedEmergencyContacts? = null
+    private var decryptedMedications: DecryptedMedications? = null
+    private var decryptedMedicalConditions: DecryptedMedicalConditions? = null
+    private var decryptedEyeglassPrescriptions: DecryptedEyeglassPrescriptions? = null
+    private var decryptedVitalNumbers: DecryptedVitalNumbers? = null
+    private var decryptedCheckups: DecryptedCheckups? = null
 
     init {
         extractObject()
@@ -264,7 +278,7 @@ class Level2CategoryHelper(
 
 
     private fun extractObject() {
-        if( selectedDocument == null ) {
+        if (selectedDocument == null) {
             return
         }
         when (classType) {
@@ -302,11 +316,17 @@ class Level2CategoryHelper(
             }
 
         // For Travel
-            DecryptedLoyaltyPrograms::class.java.simpleName -> {
-                decryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+            DecryptedLoyalty::class.java.simpleName -> {
+                decryptedLoyalty = selectedDocument as DecryptedLoyalty
             }
             DecryptedTravel::class.java.simpleName -> {
                 decryptedTravel = selectedDocument as DecryptedTravel
+            }
+            DecryptedDocuments::class.java.simpleName -> {
+                decryptedDocuments = selectedDocument as DecryptedDocuments
+            }
+            DecryptedVacations::class.java.simpleName -> {
+                decryptedVacations = selectedDocument as DecryptedVacations
             }
 
         // For Personal
@@ -331,6 +351,7 @@ class Level2CategoryHelper(
             }
         }
     }
+
     private fun getBabysSizes() {
         val categoryList = ArrayList<Level2Category>()
 
@@ -1428,7 +1449,7 @@ class Level2CategoryHelper(
 
     private fun getOtherPaymentAccounts() {
         val categoryList = ArrayList<Level2Category>()
-        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
+        if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 2002
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1446,7 +1467,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1470,7 +1491,7 @@ class Level2CategoryHelper(
 
     private fun getCardDebitCardDetails() {
         val categoryList = ArrayList<Level2Category>()
-        if( decryptedPayment == null ) decryptedPayment = DecryptedPayment()
+        if (decryptedPayment == null) decryptedPayment = DecryptedPayment()
         var categoryIndex = 2001
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1513,7 +1534,7 @@ class Level2CategoryHelper(
 
     private fun getOtherFinancialAccounts() {
         val categoryList = ArrayList<Level2Category>()
-        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
+        if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1004
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1533,7 +1554,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1556,7 +1577,7 @@ class Level2CategoryHelper(
 
     private fun getLoadMortgages() {
         val categoryList = ArrayList<Level2Category>()
-        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
+        if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1003
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1574,7 +1595,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1598,7 +1619,7 @@ class Level2CategoryHelper(
 
     private fun getInvestments() {
         val categoryList = ArrayList<Level2Category>()
-        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
+        if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1002
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1606,7 +1627,7 @@ class Level2CategoryHelper(
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "" , Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
 
@@ -1616,7 +1637,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory(decryptedFinancial!!.password, "" , "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory(decryptedFinancial!!.password, "", "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -1640,7 +1661,7 @@ class Level2CategoryHelper(
 
     private fun getBanking() {
         val categoryList = ArrayList<Level2Category>()
-        if( decryptedFinancial == null ) decryptedFinancial = DecryptedFinancial()
+        if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
         var categoryIndex = 1001
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1660,7 +1681,7 @@ class Level2CategoryHelper(
         category.title = "Online Access"
         category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "" , Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "", Constants.LEVEL2_PASSWORD))
         category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
@@ -2686,40 +2707,40 @@ class Level2CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    fun setValue( level2Category: Level2SubCategory ) {
+    fun setValue(level2Category: Level2SubCategory) {
         when (category_name) {
             "Banking" -> {
-                setBanking( level2Category )
+                setBanking(level2Category)
             }
             "Investments/Retirement" -> {
-                setBanking( level2Category )
+                setBanking(level2Category)
             }
             "Loans/Mortgages" -> {
-                setBanking( level2Category )
+                setBanking(level2Category)
             }
             "Other financial accounts" -> {
-                setBanking( level2Category )
+                setBanking(level2Category)
             }
             "Credit/Debit cards" -> {
-                setCardDebitCardDetails( level2Category )
+                setCardDebitCardDetails(level2Category)
             }
             "Other payment accounts" -> {
-                setBanking( level2Category )
+                setBanking(level2Category)
             }
             "Primary home (owned)" -> {
-                setProperty( level2Category )
+                setProperty(level2Category)
             }
             "Property (rented for own use)" -> {
-                setProperty( level2Category )
+                setProperty(level2Category)
             }
             "Vacation home" -> {
-                setProperty( level2Category )
+                setProperty(level2Category)
             }
             "Investment/Rental property" -> {
-                setProperty( level2Category )
+                setProperty(level2Category)
             }
             "Vehicles" -> {
-                setVehicles( level2Category )
+                setVehicles(level2Category)
             }
 
             "Maintenance" -> {
@@ -2727,24 +2748,39 @@ class Level2CategoryHelper(
             }
 
             "Jewelry" -> {
-                setAssets( level2Category )
+                setAssets(level2Category)
 
             }
             "Art and collectibles" -> {
-                setAssets( level2Category )
+                setAssets(level2Category)
             }
             "Computers and electronics" -> {
-                setAssets( level2Category )
+                setAssets(level2Category)
             }
             "Furniture" -> {
-                setAssets( level2Category )
+                setAssets(level2Category)
             }
             "Others" -> {
-                setAssets( level2Category )
+                setAssets(level2Category)
+            }
+            "Auto insurance" -> {
+                getAutoInsurance()
+            }
+            "Life insurance" -> {
+                getLifeInsurance()
+            }
+            "Health insurance" -> {
+                getHealthInsurance()
+            }
+            "Umbrella insurance" -> {
+                getUmbrellaInsurance()
+            }
+            "Homeowners/Renters insurance" -> {
+                gtHomeOwnerRentersInsurance()
             }
 
         //Check from here
-        // Insurance Left
+
 
             "Past returns" -> {
                 getPastReturns()
@@ -2777,32 +2813,43 @@ class Level2CategoryHelper(
                 setOtherGovernmentIssuedID(level2Category)
             }
 
+        // Travel
+
             "Airline" -> {
-                getAirline()
+                setLoyalty(level2Category)
             }
             "Hotel" -> {
-                getHotel()
+                setLoyalty(level2Category)
             }
             "Car Rental" -> {
-                getCarRental()
+                setLoyalty(level2Category)
             }
             "Cruiseline" -> {
-                getCruiseline()
+                setLoyalty(level2Category)
             }
             "Railway" -> {
-                getRailway()
+                setLoyalty(level2Category)
             }
             "Other" -> {
-                getOther()
+                setLoyalty(level2Category)
             }
             "Passport" -> {
-                getPassport()
+                getTravelDocuments(level2Category)
             }
             "Visa" -> {
-                getVisa()
+                getTravelDocuments(level2Category)
             }
             "Other travel document" -> {
-                getOtherTravelDocuments()
+                getTravelDocuments(level2Category)
+            }
+            "Vacation" -> {
+                getVacationItems(level2Category)
+            }
+            "Travel" -> {
+                getTravelItems(level2Category)
+            }
+            "TravelInstitution" -> {
+                getTravelItems(level2Category)
             }
 
         // Common View
@@ -2811,10 +2858,6 @@ class Level2CategoryHelper(
             }
             "Other Attachments" -> {
                 getOtherAttachments()
-            }
-
-            "Loyalty Programs" -> {
-                getLoyaltyPrograms()
             }
 
             "Recent Purchases" -> {
@@ -2828,53 +2871,35 @@ class Level2CategoryHelper(
             "Add person" -> {
                 getWork()
             }
-            "Travel Dates And Plans" -> {
-                getTravelDatesAndPlans()
-            }
-            "Homeowners/Renters insurance" -> {
-                gtHomeOwnerRentersInsurance()
-            }
-            "Auto insurance" -> {
-                getAutoInsurance()
-            }
-            "Life insurance" -> {
-                getLifeInsurance()
-            }
-            "Health insurance" -> {
-                getHealthInsurance()
-            }
-            "Umbrella insurance" -> {
-                getUmbrellaInsurance()
-            }
 
         // Wellness
 
             "Identification" -> {
-                getIdentification()
+                setIdentification(level2Category)
             }
             "Medical history" -> {
-                getMedicalHistory()
+                setMedicalHistory(level2Category)
             }
             "Healthcare providers" -> {
-                getHealthCareProviders()
+                setHealthCareProviders(level2Category)
             }
             "Emergency contacts" -> {
-
+                setEmergencyContacts(level2Category)
             }
             "Medications" -> {
-                getMedications()
+                setMedications(level2Category)
             }
             "Medical conditions/Allergies" -> {
-                getMedicalConditions()
+                setMedicalConditions(level2Category)
             }
             "Eyeglass prescriptions" -> {
-                getEyeGlassPrescriptions()
+                setEyeGlassPrescriptions(level2Category)
             }
             "Vital numbers" -> {
-                getVitalNumbers()
+                setVitalNumbers(level2Category)
             }
             "Checkups and visits" -> {
-                getCheckUps()
+                setCheckUps(level2Category)
             }
 
         // Clothing Sizes
@@ -2897,37 +2922,37 @@ class Level2CategoryHelper(
     }
 
     private fun setAssets(level2Category: Level2SubCategory) {
-        when( level2Category.title ) {
-            "Estimated current market value"-> decryptedAssets!!.estimatedMarketValue = level2Category.titleValue //, "", Constants.LEVEL2_USD))
-            "Serial number"-> decryptedAssets!!.serialNumber= level2Category.titleValue //, "", Constants.LEVEL2_NORMAL))
-            "Purchase date"-> decryptedAssets!!.purchaseDate= level2Category.titleValue //, "", Constants.LEVEL2_PICKER))
-            "Purchase price"-> decryptedAssets!!.purchasePrice= level2Category.titleValue //, "", Constants.LEVEL2_USD))
-            "Contacts"-> decryptedAssets!!.contacts= level2Category.titleValue //, "", Constants.LEVEL2_SPINNER))
+        when (level2Category.title) {
+            "Estimated current market value" -> decryptedAssets!!.estimatedMarketValue = level2Category.titleValue //, "", Constants.LEVEL2_USD))
+            "Serial number" -> decryptedAssets!!.serialNumber = level2Category.titleValue //, "", Constants.LEVEL2_NORMAL))
+            "Purchase date" -> decryptedAssets!!.purchaseDate = level2Category.titleValue //, "", Constants.LEVEL2_PICKER))
+            "Purchase price" -> decryptedAssets!!.purchasePrice = level2Category.titleValue //, "", Constants.LEVEL2_USD))
+            "Contacts" -> decryptedAssets!!.contacts = level2Category.titleValue //, "", Constants.LEVEL2_SPINNER))
             else -> {
-                when( level2Category.type ) {
-                    Constants.LEVEL2_NOTES -> decryptedAssets!!.notes= level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedAssets!!.attachmentNames= level2Category.titleValue
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedAssets!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedAssets!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
 
     private fun setMaintenance(level2Category: Level2SubCategory) {
-        when( level2Category.title ) {
-            "Name of service provider"-> decryptedVehicle!!.maintenanceEvent = level2Category.titleValue
-            "Date of service"-> decryptedVehicle!!.dateOfService = level2Category.titleValue
+        when (level2Category.title) {
+            "Name of service provider" -> decryptedVehicle!!.maintenanceEvent = level2Category.titleValue
+            "Date of service" -> decryptedVehicle!!.dateOfService = level2Category.titleValue
             "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
             else -> {
-                when( level2Category.type ) {
-                    Constants.LEVEL2_NOTES -> decryptedVehicle!!.notes= level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedVehicle!!.attachmentNames= level2Category.titleValue
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedVehicle!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedVehicle!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
 
     private fun setVehicles(level2Category: Level2SubCategory) {
-        when( level2Category.titleValue ) {
+        when (level2Category.titleValue) {
             "Vehicle identification number (VIN)" -> decryptedVehicle!!.vehicle = level2Category.titleValue//stants.LEVEL2_NORMAL))
             "Make" -> decryptedVehicle!!.make = level2Category.titleValue//stants.LEVEL2_NORMAL))
             "Model" -> decryptedVehicle!!.model = level2Category.titleValue//stants.LEVEL2_NORMAL))
@@ -2941,86 +2966,86 @@ class Level2CategoryHelper(
             "Financed through loan" -> decryptedVehicle!!.financedThroughLoan = level2Category.titleValue//stants.LEVEL2_SWITCH))
             "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
             else -> {
-                when( level2Category.type ) {
-                    Constants.LEVEL2_NOTES -> decryptedVehicle!!.notes= level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedVehicle!!.attachmentNames= level2Category.titleValue
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedVehicle!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedVehicle!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
 
     private fun setProperty(level2Category: Level2SubCategory) {
-        when( level2Category.title ) {
+        when (level2Category.title) {
             "Name of landlord" -> decryptedProperty!!.tenantName = level2Category.titleValue
-            "Street address 1"-> decryptedProperty!!.streetAddressOne= level2Category.titleValue
-            "Street address 2"-> decryptedProperty!!.streetAddressTwo= level2Category.titleValue
-            "City"-> decryptedProperty!!.city= level2Category.titleValue//.LEVEL2_NORMAL))
-            "State"-> decryptedProperty!!.state= level2Category.titleValue//.LEVEL2_NORMAL))
-            "Zip Code"-> decryptedProperty!!.zipCode= level2Category.titleValue//.LEVEL2_NUMBER))
-            "Country"-> decryptedProperty!!.country= level2Category.titleValue//.LEVEL2_NORMAL))
+            "Street address 1" -> decryptedProperty!!.streetAddressOne = level2Category.titleValue
+            "Street address 2" -> decryptedProperty!!.streetAddressTwo = level2Category.titleValue
+            "City" -> decryptedProperty!!.city = level2Category.titleValue//.LEVEL2_NORMAL))
+            "State" -> decryptedProperty!!.state = level2Category.titleValue//.LEVEL2_NORMAL))
+            "Zip Code" -> decryptedProperty!!.zipCode = level2Category.titleValue//.LEVEL2_NUMBER))
+            "Country" -> decryptedProperty!!.country = level2Category.titleValue//.LEVEL2_NORMAL))
             "Currently rented" -> decryptedProperty!!.currentlyRented = level2Category.isValueSet
 
-            "Name(s) on title"-> decryptedProperty!!.propertyName= level2Category.titleValue//.LEVEL2_SPINNER))
-            "Purchase date"-> decryptedProperty!!.purchaseDate= level2Category.titleValue//.LEVEL2_PICKER))
-            "Purchase price"-> decryptedProperty!!.purchasePrice= level2Category.titleValue//.LEVEL2_USD))
-            "Estimated market value"-> decryptedProperty!!.estimatedMarketValue= level2Category.titleValue//.LEVEL2_USD))
-            "Contacts"-> decryptedProperty!!.contacts= level2Category.titleValue//.LEVEL2_SPINNER))
+            "Name(s) on title" -> decryptedProperty!!.propertyName = level2Category.titleValue//.LEVEL2_SPINNER))
+            "Purchase date" -> decryptedProperty!!.purchaseDate = level2Category.titleValue//.LEVEL2_PICKER))
+            "Purchase price" -> decryptedProperty!!.purchasePrice = level2Category.titleValue//.LEVEL2_USD))
+            "Estimated market value" -> decryptedProperty!!.estimatedMarketValue = level2Category.titleValue//.LEVEL2_USD))
+            "Contacts" -> decryptedProperty!!.contacts = level2Category.titleValue//.LEVEL2_SPINNER))
 
             else -> {
-                when( level2Category.type ) {
-                    Constants.LEVEL2_NOTES -> decryptedProperty!!.notes= level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedProperty!!.attachmentNames= level2Category.titleValue
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedProperty!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedProperty!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
 
     private fun setCardDebitCardDetails(level2Category: Level2SubCategory) {
-        when( level2Category.title ) {
-
-            "Card number"-> decryptedPayment!!.cardNumber = level2Category.titleValue
-            "Card type"-> decryptedPayment!!.cardType = level2Category.titleValue
-            "Card holder"-> decryptedPayment!!.cardHolder = level2Category.titleValue
-            "Expiry date"-> decryptedPayment!!.expiryDate = level2Category.titleValue
-            "CVV code"-> decryptedPayment!!.cvvCode = level2Category.titleValue
-            "Issuing bank"-> decryptedPayment!!.issuingBank = level2Category.titleValue
-            "Website"-> decryptedPayment!!.website = level2Category.titleValue
-            "Username/login"-> decryptedPayment!!.userName = level2Category.titleValue
-            "Password"-> decryptedPayment!!.password = level2Category.titleValue
-            "PIN"-> decryptedPayment!!.pin = level2Category.titleValue
+        when (level2Category.title) {
+            "Card number" -> decryptedPayment!!.cardNumber = level2Category.titleValue
+            "Card type" -> decryptedPayment!!.cardType = level2Category.titleValue
+            "Card holder" -> decryptedPayment!!.cardHolder = level2Category.titleValue
+            "Expiry date" -> decryptedPayment!!.expiryDate = level2Category.titleValue
+            "CVV code" -> decryptedPayment!!.cvvCode = level2Category.titleValue
+            "Issuing bank" -> decryptedPayment!!.issuingBank = level2Category.titleValue
+            "Website" -> decryptedPayment!!.website = level2Category.titleValue
+            "Username/login" -> decryptedPayment!!.userName = level2Category.titleValue
+            "Password" -> decryptedPayment!!.password = level2Category.titleValue
+            "PIN" -> decryptedPayment!!.pin = level2Category.titleValue
 
             else -> {
-                when( level2Category.type ) {
-                    Constants.LEVEL2_NOTES -> decryptedPayment!!.notes= level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedPayment!!.attachmentNames= level2Category.titleValue
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedPayment!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedPayment!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
 
     private fun setBanking(level2Category: Level2SubCategory) {
-        when( level2Category.title ) {
-            "Loan type","Account type"-> decryptedFinancial!!.accountType = level2Category.titleValue
-            "Name(s) on account"-> decryptedFinancial!!.accountName= level2Category.titleValue
-            "Account number"-> decryptedFinancial!!.accountNumber= level2Category.titleValue
-            "Location"-> decryptedFinancial!!.location= level2Category.titleValue
-            "SWIFT/other code"-> decryptedFinancial!!.swiftCode= level2Category.titleValue
-            "ABA routing number"-> decryptedFinancial!!.abaRoutingNumber= level2Category.titleValue
-            "Contacts"-> decryptedFinancial!!.contacts = level2Category.titleValue
-            "Website"-> decryptedFinancial!!.website = level2Category.titleValue
-            "Username/login"-> decryptedFinancial!!.userName= level2Category.titleValue
-            "Password"-> decryptedFinancial!!.password= level2Category.titleValue
-            "PIN"-> decryptedFinancial!!.pin= level2Category.titleValue
+        when (level2Category.title) {
+            "Loan type", "Account type" -> decryptedFinancial!!.accountType = level2Category.titleValue
+            "Name(s) on account" -> decryptedFinancial!!.accountName = level2Category.titleValue
+            "Account number" -> decryptedFinancial!!.accountNumber = level2Category.titleValue
+            "Location" -> decryptedFinancial!!.location = level2Category.titleValue
+            "SWIFT/other code" -> decryptedFinancial!!.swiftCode = level2Category.titleValue
+            "ABA routing number" -> decryptedFinancial!!.abaRoutingNumber = level2Category.titleValue
+            "Contacts" -> decryptedFinancial!!.contacts = level2Category.titleValue
+            "Website" -> decryptedFinancial!!.website = level2Category.titleValue
+            "Username/login" -> decryptedFinancial!!.userName = level2Category.titleValue
+            "Password" -> decryptedFinancial!!.password = level2Category.titleValue
+            "PIN" -> decryptedFinancial!!.pin = level2Category.titleValue
             else -> {
-                when( level2Category.type ) {
-                    Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes= level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames= level2Category.titleValue
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
+
     private fun setDriversLicense(level2Category: Level2SubCategory) {
-        when(level2Category.title){
+        when (level2Category.title) {
             "Description" -> decryptedDriversLicense!!.lic_description = level2Category.titleValue
             "Name on license" -> decryptedDriversLicense!!.nameOnLicense = level2Category.titleValue
             "Issuing country" -> decryptedDriversLicense!!.issuingCountry = level2Category.titleValue
@@ -3028,40 +3053,43 @@ class Level2CategoryHelper(
             "Date issued" -> decryptedDriversLicense!!.dateIssued = level2Category.titleValue
             "Expiration date" -> decryptedDriversLicense!!.expirationDate = level2Category.titleValue
             else -> {
-                when(level2Category.type){
+                when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedDriversLicense!!.notes = level2Category.titleValue
                     Constants.LEVEL2_ATTACHMENTS -> decryptedDriversLicense!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
+
     private fun setSocialSecurityCard(level2Category: Level2SubCategory) {
-        when(level2Category.title){
+        when (level2Category.title) {
             "Card name" -> decryptedSocial!!.cardName = level2Category.titleValue
             "Name on card" -> decryptedSocial!!.nameOnCard = level2Category.titleValue
             "Social security number" -> decryptedSocial!!.socialSecurityNumber = level2Category.titleValue
             else -> {
-                when(level2Category.type){
+                when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedSocial!!.notes = level2Category.titleValue
                     Constants.LEVEL2_ATTACHMENTS -> decryptedSocial!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
+
     private fun setTaxID(level2Category: Level2SubCategory) {
-        when(level2Category.title){
+        when (level2Category.title) {
             "Tax ID name" -> decryptedTAX_ID!!.taxIdName = level2Category.titleValue
             "Name on ID" -> decryptedTAX_ID!!.name = level2Category.titleValue
             "Tax ID number" -> decryptedTAX_ID!!.taxIdNumber = level2Category.titleValue
             "Issuing country" -> decryptedTAX_ID!!.issuingCountry = level2Category.titleValue
             else -> {
-                when(level2Category.type){
+                when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedTAX_ID!!.notes = level2Category.titleValue
                     Constants.LEVEL2_ATTACHMENTS -> decryptedTAX_ID!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
+
     private fun setCertificate(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Description" -> decryptedCertificate!!.cer_description = level2Category.titleValue
@@ -3075,15 +3103,16 @@ class Level2CategoryHelper(
             "Date of marriage" -> decryptedCertificate!!.dateOfMarriage = level2Category.titleValue
             "Place of marriage" -> decryptedCertificate!!.placeOfMarriage = level2Category.titleValue
             else -> {
-                when(level2Category.type){
+                when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedCertificate!!.notes = level2Category.titleValue
                     Constants.LEVEL2_ATTACHMENTS -> decryptedCertificate!!.attachmentNames = level2Category.titleValue
                 }
+            }
         }
     }
-    }
+
     private fun setOtherGovernmentIssuedID(level2Category: Level2SubCategory) {
-        when(level2Category.title){
+        when (level2Category.title) {
             "ID name" -> decryptedOtherGovernment!!.idName = level2Category.titleValue
             "Name on ID" -> decryptedOtherGovernment!!.nameOnId = level2Category.titleValue
             "Issuing country" -> decryptedOtherGovernment!!.issuingCountry = level2Category.titleValue
@@ -3091,27 +3120,307 @@ class Level2CategoryHelper(
             "Date issued" -> decryptedOtherGovernment!!.dateIssued = level2Category.titleValue
             "Expiration date" -> decryptedOtherGovernment!!.expirationDate = level2Category.titleValue
             else -> {
-                when(level2Category.type){
+                when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedOtherGovernment!!.notes = level2Category.titleValue
                     Constants.LEVEL2_ATTACHMENTS -> decryptedOtherGovernment!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
     }
+
+    private fun setLoyalty(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Airline" -> decryptedLoyalty!!.airLine = level2Category.titleValue
+            "Hotel" -> decryptedLoyalty!!.hotel = level2Category.titleValue
+            "Car Rental Company" -> decryptedLoyalty!!.carRentalCompany = level2Category.titleValue
+            "Cruiseline" -> decryptedLoyalty!!.cruiseline = level2Category.titleValue
+            "Railway" -> decryptedLoyalty!!.railway = level2Category.titleValue
+            "Account name" -> decryptedLoyalty!!.accountName = level2Category.titleValue
+            "Other" -> decryptedLoyalty!!.other = level2Category.titleValue
+            "Account name" -> decryptedLoyalty!!.accountName = level2Category.titleValue
+            "Name on account" -> decryptedLoyalty!!.nameOnAccount = level2Category.titleValue
+            "Account number" -> decryptedLoyalty!!.accountNumber = level2Category.titleValue
+            "Website" -> decryptedLoyalty!!.website = level2Category.titleValue
+            "Username/login" -> decryptedLoyalty!!.userName = level2Category.titleValue
+            "Password" -> decryptedLoyalty!!.password = level2Category.titleValue
+            "pin" -> decryptedLoyalty!!.pin = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedLoyalty!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedLoyalty!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun getTravelDocuments(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Passport name" -> decryptedDocuments!!.passportName = level2Category.titleValue
+            "Name on passport" -> decryptedDocuments!!.nameOnPassport = level2Category.titleValue
+            "Issuing country" -> decryptedDocuments!!.issuingCountry = level2Category.titleValue
+            "Passport number" -> decryptedDocuments!!.passportNumber = level2Category.titleValue
+            "Place issued" -> decryptedDocuments!!.placeIssued = level2Category.titleValue
+            "Date issued" -> decryptedDocuments!!.dateIssued = level2Category.titleValue
+            "Visa name" -> decryptedDocuments!!.visaName = level2Category.titleValue
+            "Name on visa" -> decryptedDocuments!!.nameOnVisa = level2Category.titleValue
+            "Visa type" -> decryptedDocuments!!.visaType = level2Category.titleValue
+            "Visa number" -> decryptedDocuments!!.visaNumber = level2Category.titleValue
+            "Travel document title" -> decryptedDocuments!!.travelDocumentTitle = level2Category.titleValue
+            "Name on travel document" -> decryptedDocuments!!.nameOnTravelDocument = level2Category.titleValue
+            "Travel document type" -> decryptedDocuments!!.travelDocumentType = level2Category.titleValue
+            "Travel document number" -> decryptedDocuments!!.travelDocumentNumber = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedDocuments!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedDocuments!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun getVacationItems(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Description" -> decryptedVacations!!.vac_description = level2Category.titleValue
+            "Start date" -> decryptedVacations!!.startDate = level2Category.titleValue
+            "End date" -> decryptedVacations!!.endDate = level2Category.titleValue
+            "Places to visit/consider 1" -> decryptedVacations!!.placesToVisit_1 = level2Category.titleValue
+            "Places to visit/consider 2" -> decryptedVacations!!.placesToVisit_2 = level2Category.titleValue
+            "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
+            "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedVacations!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedDocuments!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun getTravelItems(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Institution name" -> decryptedTravel!!.institutionName = level2Category.titleValue
+            "Account name" -> decryptedTravel!!.accountName = level2Category.titleValue
+            "Account type" -> decryptedTravel!!.accountType = level2Category.titleValue
+            "Location" -> decryptedTravel!!.location = level2Category.titleValue
+            "Name(s) on account" -> decryptedTravel!!.nameOnAccount = level2Category.titleValue
+            "SWIFT/other code" -> decryptedTravel!!.swiftCode = level2Category.titleValue
+            "ABA routing number" -> decryptedTravel!!.abaRoutingNumber = level2Category.titleValue
+            "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
+            "Website" -> decryptedTravel!!.website = level2Category.titleValue
+            "Username/login" -> decryptedTravel!!.userName = level2Category.titleValue
+            "Password" -> decryptedTravel!!.password = level2Category.titleValue
+            "PIN" -> decryptedTravel!!.pin = level2Category.titleValue
+            "Payment method on file" -> decryptedTravel!!.paymentMethodOnFile = level2Category.titleValue
+            "Title" -> decryptedTravel!!.title = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedTravel!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedTravel!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setIdentification(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Name" -> decryptedIdentification!!.name = level2Category.titleValue
+            "Gender" -> decryptedIdentification!!.gender = level2Category.titleValue
+            "Age" -> decryptedIdentification!!.age = level2Category.titleValue
+            "Date of birth" -> decryptedIdentification!!.dateofBirth = level2Category.titleValue
+            "Height (ft, in)" -> decryptedIdentification!!.height = level2Category.titleValue
+            "Weight (lbs)" -> decryptedIdentification!!.weight = level2Category.titleValue
+            "Hair color" -> decryptedIdentification!!.hairColor = level2Category.titleValue
+            "Eye color" -> decryptedIdentification!!.eyeColor = level2Category.titleValue
+            "Visible marks" -> decryptedIdentification!!.visibleMarks = level2Category.titleValue
+            "Blood type" -> decryptedIdentification!!.bloodType = level2Category.titleValue
+            "Organ donor" -> decryptedIdentification!!.orgonDonor = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedIdentification!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedIdentification!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setMedicalHistory(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "History" -> decryptedMedicalHistory!!.history = level2Category.titleValue
+            "pastConditions" -> decryptedMedicalHistory!!.treatmentDiscription = level2Category.titleValue
+            "immunications" -> decryptedMedicalHistory!!.immunizationDiscription = level2Category.titleValue
+            "family" -> decryptedMedicalHistory!!.familyDiscription = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedMedicalHistory!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedMedicalHistory!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setHealthCareProviders(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Name" -> decryptedHealthcareProviders!!.name = level2Category.titleValue
+            "Type of physician" -> decryptedHealthcareProviders!!.physicianType = level2Category.titleValue
+            "Practice/Group name" -> decryptedHealthcareProviders!!.practiceName = level2Category.titleValue
+            "Phone number 1" -> decryptedHealthcareProviders!!.phoneNumberOne = level2Category.titleValue
+            "Phone number 2" -> decryptedHealthcareProviders!!.phoneNumberTwo = level2Category.titleValue
+            "Email address" -> decryptedHealthcareProviders!!.emailAddress = level2Category.titleValue
+            "Street Address 1" -> decryptedHealthcareProviders!!.streetAddressOne = level2Category.titleValue
+            "Street Address 2" -> decryptedHealthcareProviders!!.streetAddressTwo = level2Category.titleValue
+            "City" -> decryptedHealthcareProviders!!.city = level2Category.titleValue
+            "State" -> decryptedHealthcareProviders!!.state = level2Category.titleValue
+            "Zip code" -> decryptedHealthcareProviders!!.zipCode = level2Category.titleValue
+            "Country" -> decryptedHealthcareProviders!!.country = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedHealthcareProviders!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedHealthcareProviders!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setEmergencyContacts(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Name" -> decryptedEmergencyContacts!!.name = level2Category.titleValue
+            "Relationship" -> decryptedEmergencyContacts!!.relationShip = level2Category.titleValue
+            "Phone number 1" -> decryptedEmergencyContacts!!.phoneNumberOne = level2Category.titleValue
+            "Phone number 2" -> decryptedEmergencyContacts!!.phoneNumberTwo = level2Category.titleValue
+            "Email address" -> decryptedEmergencyContacts!!.emailAddress = level2Category.titleValue
+            "Street Address 1" -> decryptedEmergencyContacts!!.streetAddressOne = level2Category.titleValue
+            "Street Address 2" -> decryptedEmergencyContacts!!.streetAddressTwo = level2Category.titleValue
+            "City" -> decryptedEmergencyContacts!!.city = level2Category.titleValue
+            "State" -> decryptedEmergencyContacts!!.state = level2Category.titleValue
+            "Zip code" -> decryptedEmergencyContacts!!.zipCode = level2Category.titleValue
+            "Country" -> decryptedEmergencyContacts!!.country = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedEmergencyContacts!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedEmergencyContacts!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setMedications(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Name" -> decryptedMedications!!.name = level2Category.titleValue
+            "Dose/strength" -> decryptedMedications!!.strength = level2Category.titleValue
+            "Frequency" -> decryptedMedications!!.frequency = level2Category.titleValue
+            "Start date" -> decryptedMedications!!.startDate = level2Category.titleValue
+            "End date" -> decryptedMedications!!.endDate = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedMedications!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedMedications!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setMedicalConditions(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Condition" -> decryptedMedicalConditions!!.condition = level2Category.titleValue
+            "Date diagnosed" -> decryptedMedicalConditions!!.dateDiagnosed = level2Category.titleValue
+            "Description" -> decryptedMedicalConditions!!.medi_description = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedMedicalConditions!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedMedicalConditions!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setEyeGlassPrescriptions(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Physician name" -> decryptedEyeglassPrescriptions!!.physicianName = level2Category.titleValue
+            "Date prescribed" -> decryptedEyeglassPrescriptions!!.datePrescribed = level2Category.titleValue
+
+            "odSphereValue" -> decryptedEyeglassPrescriptions!!.odSphereValue = level2Category.titleValue
+            "osSphereValue" -> decryptedEyeglassPrescriptions!!.osSphereValue = level2Category.titleValue
+
+            "odCylinderValue" -> decryptedEyeglassPrescriptions!!.odCylinderValue = level2Category.titleValue
+            "osCylinderValue" -> decryptedEyeglassPrescriptions!!.osCylinderValue = level2Category.titleValue
+
+            "odAxisValue" -> decryptedEyeglassPrescriptions!!.odAxisValue = level2Category.titleValue
+            "osAxisValue" -> decryptedEyeglassPrescriptions!!.osAxisValue = level2Category.titleValue
+
+            "odPrismValue" -> decryptedEyeglassPrescriptions!!.odPrismValue = level2Category.titleValue
+            "osPrismValue" -> decryptedEyeglassPrescriptions!!.osPrismValue = level2Category.titleValue
+
+            "odAddValue" -> decryptedEyeglassPrescriptions!!.odAddValue = level2Category.titleValue
+            "osAddValue" -> decryptedEyeglassPrescriptions!!.osAddValue = level2Category.titleValue
+
+            "odBaseValue" -> decryptedEyeglassPrescriptions!!.odBaseValue = level2Category.titleValue
+            "osBaseValue" -> decryptedEyeglassPrescriptions!!.osBaseValue = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedEyeglassPrescriptions!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedEyeglassPrescriptions!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setVitalNumbers(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Description" -> decryptedVitalNumbers!!.vital_description = level2Category.titleValue
+            "Measurement date" -> decryptedVitalNumbers!!.measurementDate = level2Category.titleValue
+            "Height (ft, in)" -> decryptedVitalNumbers!!.height = level2Category.titleValue
+            "Weight (lbs)" -> decryptedVitalNumbers!!.weight = level2Category.titleValue
+            "Waist (in)" -> decryptedVitalNumbers!!.waist = level2Category.titleValue
+            "Body fat (%)" -> decryptedVitalNumbers!!.bodyFat = level2Category.titleValue
+            "Body mass index (BMI kg/m2)" -> decryptedVitalNumbers!!.bodyMassIndex = level2Category.titleValue
+            "Blood pressure (xx/yy)" -> decryptedVitalNumbers!!.bloodPressure = level2Category.titleValue
+            "Heart rate (bpm)" -> decryptedVitalNumbers!!.heartRate = level2Category.titleValue
+            "Total cholesterol (mg/dL)" -> decryptedVitalNumbers!!.totalCholesterol = level2Category.titleValue
+            "HDL cholesterol (mg/dL)" -> decryptedVitalNumbers!!.hdlCholesterol = level2Category.titleValue
+            "LDL cholesterol (mg/dL)" -> decryptedVitalNumbers!!.ldlCholesterol = level2Category.titleValue
+            "Cholesterol ratio (Total cholesterol/HDL)" -> decryptedVitalNumbers!!.cholesterolRatio = level2Category.titleValue
+            "Triglycerides (mg/dL)" -> decryptedVitalNumbers!!.triglycerides = level2Category.titleValue
+            "Blood glucose (mg/dL)" -> decryptedVitalNumbers!!.bloodGlucose = level2Category.titleValue
+            "Hemoglobin A1C (%)" -> decryptedVitalNumbers!!.hemoglobin = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedVitalNumbers!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedVitalNumbers!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
+    private fun setCheckUps(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Description" -> decryptedCheckups!!.checkup_description = level2Category.titleValue
+            "Physician name" -> decryptedCheckups!!.physicianName = level2Category.titleValue
+            "Type of physician" -> decryptedCheckups!!.physicianType = level2Category.titleValue
+            "Reason" -> decryptedCheckups!!.reason = level2Category.titleValue
+            "Date of visit" -> decryptedCheckups!!.dateOfVisit = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedCheckups!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedCheckups!!.attachmentNames = level2Category.titleValue
+                }
+            }
+        }
+    }
+
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title : String ) {
-        if( decryptedFinancial != null ) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
+        if (decryptedFinancial != null) {
             decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.accountName = title
             var isSaveComplete = false
-            if( decryptedFinancial!!.id.toInt() == 0 ) {
+            if (decryptedFinancial!!.id.toInt() == 0) {
                 decryptedFinancial!!.id = getUniqueId()
             }
             AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val financial = encryptFinancial(decryptedFinancial!!)
@@ -3123,10 +3432,9 @@ class Level2CategoryHelper(
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
-                    if( isSaveComplete ) {
+                    if (isSaveComplete) {
                         isSaveComplete = true
-                    }
-                    else {
+                    } else {
                         categoryView.savedToRealm()
                     }
                 }
@@ -3136,13 +3444,13 @@ class Level2CategoryHelper(
 
                 override fun doInBackground(vararg p0: Void?) {
 
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
@@ -3156,26 +3464,25 @@ class Level2CategoryHelper(
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
-                    if( isSaveComplete ) {
+                    if (isSaveComplete) {
                         isSaveComplete = true
-                    }
-                    else {
+                    } else {
                         categoryView.savedToRealm()
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if( decryptedPayment!= null ) {
+        if (decryptedPayment != null) {
             decryptedPayment!!.cardType = categoryID
             decryptedPayment!!.cardNumber = title
             decryptedPayment!!.selectionType = categoryID
-            if( decryptedPayment!!.id.toInt() == 0 ) {
+            if (decryptedPayment!!.id.toInt() == 0) {
                 decryptedPayment!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val payment = encryptPayment(decryptedPayment!!)
@@ -3187,14 +3494,14 @@ class Level2CategoryHelper(
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.paymentItems.add(encryptPayment(decryptedPayment!!))
@@ -3202,19 +3509,19 @@ class Level2CategoryHelper(
                             realm.commitTransaction()
                         }
                     })
-                    }
+                }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if( decryptedProperty!= null ) {
+        if (decryptedProperty != null) {
             decryptedProperty!!.selectionType = categoryID
             decryptedProperty!!.propertyName = title
-            if( decryptedProperty!!.id.toInt() == 0 ) {
+            if (decryptedProperty!!.id.toInt() == 0) {
                 decryptedProperty!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val property = encryptProperty(decryptedProperty!!)
@@ -3226,14 +3533,14 @@ class Level2CategoryHelper(
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.propertyItems.add(encryptProperty(decryptedProperty!!))
@@ -3245,15 +3552,15 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if( decryptedVehicle!= null ) {
+        if (decryptedVehicle != null) {
             decryptedVehicle!!.vehicleName = title
             decryptedVehicle!!.selectionType = categoryID
-            if( decryptedVehicle!!.id.toInt() == 0 ) {
+            if (decryptedVehicle!!.id.toInt() == 0) {
                 decryptedVehicle!!.id = getUniqueId()
             }
-            object  : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val vehicle = encryptVehicle(decryptedVehicle!!)
@@ -3263,14 +3570,14 @@ class Level2CategoryHelper(
                     })
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.vehicleItems.add(encryptVehicle(decryptedVehicle!!))
@@ -3282,15 +3589,15 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if( decryptedAssets!= null ) {
+        if (decryptedAssets != null) {
             decryptedAssets!!.selectionType = categoryID
             decryptedAssets!!.assetName = title
-            if( decryptedAssets!!.id.toInt() == 0 ) {
+            if (decryptedAssets!!.id.toInt() == 0) {
                 decryptedAssets!!.id = getUniqueId()
             }
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val assets = encryptAsset(decryptedAssets!!)
@@ -3300,14 +3607,14 @@ class Level2CategoryHelper(
                     })
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.assetItems.add(encryptAsset(decryptedAssets!!))
@@ -3319,14 +3626,15 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if( decryptedInsurance!= null ) {
+        if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
-            if( decryptedInsurance!!.id.toInt() == 0 ) {
-                decryptedInsurance!!.id = getUniqueId() }
-            object : AsyncTask<Void, Void, Unit>(){
+            if (decryptedInsurance!!.id.toInt() == 0) {
+                decryptedInsurance!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
                             val insurance = encryptInsurance(decryptedInsurance!!)
@@ -3337,14 +3645,14 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
@@ -3356,33 +3664,33 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if( decryptedTaxes!= null ) {
+        if (decryptedTaxes != null) {
             decryptedTaxes!!.selectionType = categoryID
             decryptedTaxes!!.returnName = title
-            if( decryptedTaxes!!.id.toInt() == 0 ) {
+            if (decryptedTaxes!!.id.toInt() == 0) {
                 decryptedTaxes!!.id = getUniqueId()
             }
-           object : AsyncTask<Void, Void, Unit>(){
-               override fun doInBackground(vararg params: Void?) {
-                   prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                       override fun onSuccess(realm: Realm?) {
-                           realm!!.beginTransaction()
-                           val insurance = encryptInsurance(decryptedInsurance!!)
-                           realm.insertOrUpdate(insurance)
-                           realm.commitTransaction()
-                       }
-                   })
-               }
-           }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>(){
+            object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections( context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine : DecryptedCombine = combineItem as DecryptedCombine
+                            realm!!.beginTransaction()
+                            val insurance = encryptInsurance(decryptedInsurance!!)
+                            realm.insertOrUpdate(insurance)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combine: DecryptedCombine = combineItem as DecryptedCombine
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if( combineRealm == null ) {
+                            if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
                             combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
@@ -3391,7 +3699,339 @@ class Level2CategoryHelper(
                         }
                     })
                 }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if (decryptedIdentification != null) {
+            decryptedIdentification!!.selectionType = categoryID
+            decryptedIdentification!!.name = title
+            if (decryptedIdentification!!.id.toInt() == 0) {
+                decryptedIdentification!!.id = getUniqueId()
             }
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val identification = encryptIdentification(decryptedIdentification!!)
+                            realm.insertOrUpdate(identification)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.identificationItems.add(encryptIdentification(decryptedIdentification!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if (decryptedMedicalHistory != null) {
+            decryptedMedicalHistory!!.selectionType = categoryID
+            decryptedMedicalHistory!!.attachmentNames = title
+            if (decryptedMedicalHistory!!.id.toInt() == 0) {
+                decryptedMedicalHistory!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val medicalHistory = encryptMedicalHistory(decryptedMedicalHistory!!)
+                            realm.insertOrUpdate(medicalHistory)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.medicalHistoryItems.add(encryptMedicalHistory(decryptedMedicalHistory!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if (decryptedHealthcareProviders != null) {
+            decryptedHealthcareProviders!!.selectionType = categoryID
+            decryptedHealthcareProviders!!.name = title
+            if (decryptedHealthcareProviders!!.id.toInt() == 0) {
+                decryptedHealthcareProviders!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val healthcareProviders = encryptHealthCareProviders(decryptedHealthcareProviders!!)
+                            realm.insertOrUpdate(healthcareProviders)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.healthcareProvidersItems.add(encryptHealthCareProviders(decryptedHealthcareProviders!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if (decryptedEmergencyContacts != null) {
+            decryptedEmergencyContacts!!.selectionType = categoryID
+            decryptedEmergencyContacts!!.name = title
+            if (decryptedEmergencyContacts!!.id.toInt() == 0) {
+                decryptedEmergencyContacts!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val emergencyConatcts = encryptEmergencyContacts(decryptedEmergencyContacts!!)
+                            realm.insertOrUpdate(emergencyConatcts)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.emergencyContactsItems.add(encryptEmergencyContacts(decryptedEmergencyContacts!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+        if (decryptedMedications != null) {
+            decryptedMedications!!.selectionType = categoryID
+            decryptedMedications!!.name = title
+            if (decryptedMedications!!.id.toInt() == 0) {
+                decryptedMedications!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val medications = encryptMedications(decryptedMedications!!)
+                            realm.insertOrUpdate(medications)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.medicationsItems.add(encryptMedications(decryptedMedications!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+        if (decryptedMedicalConditions != null) {
+            decryptedMedicalConditions!!.selectionType = categoryID
+            decryptedMedicalConditions!!.attachmentNames = title
+            if (decryptedMedicalConditions!!.id.toInt() == 0) {
+                decryptedMedicalConditions!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val medicalConditions = encryptMedicalConditions(decryptedMedicalConditions!!)
+                            realm.insertOrUpdate(medicalConditions)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.medicalConditionsItems.add(encryptMedicalConditions(decryptedMedicalConditions!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+        if (decryptedEyeglassPrescriptions != null) {
+            decryptedEyeglassPrescriptions!!.selectionType = categoryID
+            decryptedEyeglassPrescriptions!!.attachmentNames = title
+            if (decryptedEyeglassPrescriptions!!.id.toInt() == 0) {
+                decryptedEyeglassPrescriptions!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val eyeglassPrescriptions = encryptEyeGlassPrescriptions(decryptedEyeglassPrescriptions!!)
+                            realm.insertOrUpdate(eyeglassPrescriptions)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.eyeglassPrescriptionsItems.add(encryptEyeGlassPrescriptions(decryptedEyeglassPrescriptions!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+        if (decryptedVitalNumbers != null) {
+            decryptedVitalNumbers!!.selectionType = categoryID
+            decryptedVitalNumbers!!.attachmentNames = title
+            if (decryptedVitalNumbers!!.id.toInt() == 0) {
+                decryptedVitalNumbers!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val vitalNumbers = encryptVitalNumbers(decryptedVitalNumbers!!)
+                            realm.insertOrUpdate(vitalNumbers)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.vitalNumbersItems.add(encryptVitalNumbers(decryptedVitalNumbers!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+        if (decryptedCheckups != null) {
+            decryptedCheckups!!.selectionType = categoryID
+            decryptedCheckups!!.attachmentNames = title
+            if (decryptedCheckups!!.id.toInt() == 0) {
+                decryptedCheckups!!.id = getUniqueId()
+            }
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val checkUps = encryptCheckUps(decryptedCheckups!!)
+                            realm.insertOrUpdate(checkUps)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if (combineRealm == null) {
+                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            combineRealm!!.checkupsItems.add(encryptCheckUps(decryptedCheckups!!))
+                            realm.insertOrUpdate(combineRealm)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
     }
 }
