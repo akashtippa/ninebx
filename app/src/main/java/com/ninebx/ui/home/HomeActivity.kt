@@ -101,8 +101,8 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
 
             prefrences.userID = currentUsers[0]!!.userId
-            prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
-            prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
+            prefrences.userFirstName = currentUsers[0]!!.firstName
+            prefrences.userLastName = currentUsers[0]!!.lastName
 
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                 NineBxApplication.getPreferences().currentStep = ALL_COMPLETE

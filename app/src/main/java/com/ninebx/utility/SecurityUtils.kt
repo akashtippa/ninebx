@@ -390,6 +390,7 @@ fun String.decryptString(): String {
 
 fun encryptUsers(currentUser: Users): Users {
 
+    AppLogger.d("EncryptedUser", "User : " + currentUser.toString())
     currentUser.fullName = currentUser.fullName.encryptString()
     currentUser.firstName = currentUser.firstName.encryptString()
     currentUser.lastName = currentUser.lastName.encryptString()
@@ -415,7 +416,7 @@ fun encryptUsers(currentUser: Users): Users {
 
 fun encryptMembers(decryptedMembers: ArrayList<DecryptedMember>): ArrayList<Member>? {
     val members = ArrayList<Member>()
-    for (i in 0 until members.size) {
+    for (i in 0 until decryptedMembers.size) {
         encryptMember(members[i]!!)
     }
     return members
@@ -474,7 +475,7 @@ fun encryptMember(member: Member): Member? {
 }
 
 fun decryptUsers(currentUser: Users): DecryptedUsers {
-
+    AppLogger.d("Decrypt", "Users : " + currentUser)
     val decryptedUsers = DecryptedUsers()
     decryptedUsers.id = currentUser.id
     decryptedUsers.fullName = currentUser.fullName.decryptString()

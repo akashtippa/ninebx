@@ -25,20 +25,22 @@ class PassCodeFragment : BaseAuthFragment() {
 
     override fun validate(): Boolean {
         return when( isCreatePassCode ) {
-            PASSCODE_RESET -> {
-                val currentPassCode = etPassCode.text.toString().trim()
-                passCode = NineBxApplication.getPreferences().passCode!!
-                if( currentPassCode != passCode ) context!!.showToast(R.string.error_passcodes_dont_match)
-                !(currentPassCode.length != 6 || currentPassCode != passCode)
-            }
             PASSCODE_CREATE -> {
                 etPassCode.text.toString().trim().length == 6
             }
             else -> {
+
                 val currentPassCode = etPassCode.text.toString().trim()
+                if( currentPassCode.length != 6 ) {
+                    context!!.showToast(R.string.error_passcode_6)
+                    return false
+                }
                 passCode = NineBxApplication.getPreferences().passCode!!
-                if( currentPassCode != passCode ) context!!.showToast(R.string.error_passcodes_dont_match)
-                !(currentPassCode.length != 6 || currentPassCode != passCode)
+                if( currentPassCode != passCode ) {
+                    context!!.showToast(R.string.error_passcodes_dont_match)
+                    return false
+                }
+                return true
             }
         }
     }
@@ -137,29 +139,30 @@ class PassCodeFragment : BaseAuthFragment() {
                         ivOtp5.isSelected = true
                         ivOtp6.isSelected = true
 
-                        when( isCreatePassCode ) {
-                            PASSCODE_CONFIRM -> {
-                                KeyboardUtil.hideKeyboard(etPassCode)
-                                if( fromPassCodeReset ) {
-                                    context!!.showToast(R.string.passcode_changed)
-                                    activity!!.finish()
-                                }
-                                else {
-                                    mAuthView.navigateToFingerPrint(false)
-                                }
+                        if( validate( ) ) {
+                            when( isCreatePassCode ) {
+                                PASSCODE_CONFIRM -> {
+                                    KeyboardUtil.hideKeyboard(etPassCode)
+                                    if( fromPassCodeReset ) {
+                                        context!!.showToast(R.string.passcode_changed)
+                                        activity!!.finish()
+                                    }
+                                    else {
+                                        mAuthView.navigateToFingerPrint(false)
+                                    }
 
-                            }
-                            PASSCODE_RESET -> {
-                                if( validate() ) {
+                                }
+                                PASSCODE_RESET -> {
                                     fromPassCodeReset = true
                                     mAuthView.navigateToCreatePassCode(PASSCODE_CREATE, "")
                                 }
-                            }
-                            PASSCODE_CREATE -> {
-                                //KeyboardUtil.hideSoftKeyboard(activity!!)
-                                mAuthView.navigateToCreatePassCode(PASSCODE_CONFIRM, etPassCode.text.toString().trim())
+                                PASSCODE_CREATE -> {
+                                    //KeyboardUtil.hideSoftKeyboard(activity!!)
+                                    mAuthView.navigateToCreatePassCode(PASSCODE_CONFIRM, etPassCode.text.toString().trim())
+                                }
                             }
                         }
+
 
                     }
                 }
