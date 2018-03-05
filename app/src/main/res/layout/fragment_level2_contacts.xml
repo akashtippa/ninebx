@@ -72,7 +72,7 @@
                     android:layout_alignRight="@+id/txtSaveContacts"
                     android:layout_gravity="end"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/search_bx"
                     android:visibility="visible" />
             </RelativeLayout>
 
