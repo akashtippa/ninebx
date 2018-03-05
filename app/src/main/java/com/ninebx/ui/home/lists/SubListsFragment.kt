@@ -25,7 +25,6 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.ui.home.search.Level3SearchItem

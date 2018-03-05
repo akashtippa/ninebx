@@ -35,24 +35,26 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:id="@+id/tvTapABox"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_14sdp"
-        android:text="@string/tap_a_box"
-        android:textSize="@dimen/_18sdp" />
+
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTapABox"
+        android:layout_below="@+id/toolbarLayout"
+        android:padding="@dimen/default_mini_padding"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:weightSum="3">
+        <TextView
+            android:id="@+id/tvTapABox"
+            android:gravity="center"
+            android:padding="@dimen/default_mini_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:text="@string/tap_a_box"
+            android:textSize="@dimen/_18sdp" />
 
         <LinearLayout
             android:layout_width="match_parent"
