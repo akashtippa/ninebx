@@ -4153,7 +4153,7 @@ class Level2CategoryHelper(
                             if(realmIdentification == null){
                                 realmIdentification = realm.createObject(CombineWellness::class.java, getUniqueId())
                             }
-                            realmIdentification.identificationItems.add(encryptIdentification(decryptedIdentification!!))
+                            realmIdentification!!.identificationItems.add(encryptIdentification(decryptedIdentification!!))
                             realm.insertOrUpdate(realmIdentification)
                             realm.commitTransaction()
                         }
