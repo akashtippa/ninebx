@@ -60,8 +60,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
     override fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel) {
-        addNotification.onCombineTravelFetched(mDecryptCombineTravel)
-    }
+        addNotification.onCombineTravelFetched(mDecryptCombineTravel)  }
 
     override fun onCombineContactsFetched(mDecryptCombineContacts: DecryptedCombineContacts) {
         addNotification.onCombineContactsFetched(mDecryptCombineContacts)
@@ -90,6 +89,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {}
 
 
+
     override fun setCurrentUsers(currentUsers: ArrayList<DecryptedUsers>?) {
         this.currentUsers = currentUsers
         addNotification.setCurrentUsers(currentUsers)
@@ -97,20 +97,22 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         if (currentUsers != null) {
             AppLogger.d("HomeActivity", "Users found")
             this@HomeActivity.hideProgressDialog()
-            AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+            //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+            //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
 
             prefrences.userID = currentUsers[0]!!.userId
-            prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
-            prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
+            prefrences.userFirstName = currentUsers[0]!!.firstName
+            prefrences.userLastName = currentUsers[0]!!.lastName
 
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                 NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
                 toggleCheck(true)
                 bottomNavigationView.menu.getItem(4).isChecked = true
                 callBottomViewFragment(getString(R.string.account))
-                if (currentUsers!![0]!!.completeProfile) {
+                if( currentUsers!![0]!!.completeProfile ) {
                     navigateToAddMembers()
-                } else {
+                }
+                else {
                     navigateToMyProfile()
                 }
             }
