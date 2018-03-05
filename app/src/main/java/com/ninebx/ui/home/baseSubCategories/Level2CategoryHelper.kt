@@ -4142,6 +4142,34 @@ class Level2CategoryHelper(
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            var combineWellness : DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var realmIdentification = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
+                            realm.beginTransaction()
+                            if(realmIdentification == null){
+                                realmIdentification = realm.createObject(CombineWellness::class.java, getUniqueId())
+                            }
+                            realmIdentification.identificationItems.add(encryptIdentification(decryptedIdentification!!))
+                            realm.insertOrUpdate(realmIdentification)
+                            realm.commitTransaction()
+                        }
+
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if(isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }
         }
 
         if (decryptedMedicalHistory != null) {
