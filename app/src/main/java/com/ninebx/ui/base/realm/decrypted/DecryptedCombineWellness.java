@@ -15,17 +15,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineWellness implements Parcelable {
 
-    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
-        @Override
-        public DecryptedCombineWellness createFromParcel(Parcel in) {
-            return new DecryptedCombineWellness(in);
-        }
-
-        @Override
-        public DecryptedCombineWellness[] newArray(int size) {
-            return new DecryptedCombineWellness[size];
-        }
-    };
     @PrimaryKey //@Required
     private long id = 0;
     @Required
@@ -73,6 +62,18 @@ public class DecryptedCombineWellness implements Parcelable {
     public DecryptedCombineWellness() {
 
     }
+
+    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
+        @Override
+        public DecryptedCombineWellness createFromParcel(Parcel in) {
+            return new DecryptedCombineWellness(in);
+        }
+
+        @Override
+        public DecryptedCombineWellness[] newArray(int size) {
+            return new DecryptedCombineWellness[size];
+        }
+    };
 
     public  long getId() {
         return id;

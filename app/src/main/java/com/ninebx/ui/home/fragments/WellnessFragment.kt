@@ -17,7 +17,6 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.layoutPersonalHealthRecord -> {
-
             }
         }
     }
@@ -131,7 +130,6 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-
 
         return super.onBackPressed()
     }
