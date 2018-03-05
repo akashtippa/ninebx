@@ -96,8 +96,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         fromWhichClass = arguments!!.getString("fromClass")
 
-
-
         imgEdit.setOnClickListener {
             enableEditing()
         }

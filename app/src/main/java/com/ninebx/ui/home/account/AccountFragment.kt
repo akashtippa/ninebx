@@ -12,12 +12,10 @@ import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
-import com.ninebx.ui.base.realm.Users
-import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
-import com.ninebx.ui.home.account.subscriptionPlan.SubscriptionHolderFragment
+import com.ninebx.ui.home.account.subscriptionPlan.SubscriptionActivity
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
 import com.ninebx.utility.*
@@ -97,10 +95,8 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
     }
 
     private fun navigateToSubscriptionPlan() {
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val masterPasswordFragment = SubscriptionHolderFragment()
-        fragmentTransaction.replace(R.id.frameLayout, masterPasswordFragment).commit()
+        val intent = Intent(context, SubscriptionActivity::class.java)
+        startActivity(intent)
     }
 
     // Single method to open static page dialog,

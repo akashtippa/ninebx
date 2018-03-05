@@ -391,7 +391,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 allContacts = getCurrentContactList(realm!!)
                 if (allContacts != null) {
                     context!!.hideProgressDialog()
-                    //AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
+                    AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
 
                     val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
@@ -126,13 +127,14 @@
                 android:background="@color/account_bg"
                 android:padding="@dimen/_9sdp">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <ImageView
                     android:id="@+id/imgEditProfile"
                     android:layout_width="@dimen/_95sdp"
                     android:layout_height="@dimen/_95sdp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/splash_screen" />
+                    android:src="@drawable/ic_icon_no_picture"
+                    tools:ignore="VectorDrawableCompat" />
 
                 <ImageView
                     android:id="@+id/imgEdit"
@@ -314,7 +316,7 @@
                 android:layout_marginTop="@dimen/_9sdp"
                 android:clickable="false"
                 android:singleLine="true"
-                android:text="01/12/1212"
+                android:hint="Date of Birth"
                 android:textColor="@color/black" />
 
             <View
@@ -346,7 +348,7 @@
                 android:layout_marginTop="@dimen/_9sdp"
                 android:clickable="false"
                 android:singleLine="true"
-                android:text="12/12/1212"
+                android:hint="Anniversary"
                 android:textColor="@color/black" />
 
             <View
