@@ -111,6 +111,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         ListsPresenter(this, 0, -1).fetchDataInBackground()
 
 

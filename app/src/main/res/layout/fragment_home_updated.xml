@@ -39,7 +39,7 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
         android:padding="@dimen/default_mini_padding"
@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="@dimen/_14sdp"
             android:orientation="horizontal"
             android:weightSum="3">
 

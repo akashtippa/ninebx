@@ -205,6 +205,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
         txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
 

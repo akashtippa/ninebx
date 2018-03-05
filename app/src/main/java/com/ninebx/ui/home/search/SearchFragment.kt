@@ -130,7 +130,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
         showProgress(R.string.loading)
 

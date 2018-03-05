@@ -399,7 +399,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
 
-    private fun callHomeFragment() {
+    fun callHomeFragment() {
         toggleCheck(false)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
