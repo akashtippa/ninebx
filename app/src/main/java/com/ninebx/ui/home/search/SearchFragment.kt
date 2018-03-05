@@ -295,7 +295,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 categoryFragment = CategoryFragment()
                 categoryFragment!!.arguments = bundle
 
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )

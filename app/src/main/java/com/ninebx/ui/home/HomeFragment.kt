@@ -8,11 +8,8 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseCategories.CategoryFragment
-import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.utility.NineBxPreferences
-import com.ninebx.utility.parseDateForCreatedUser
 import kotlinx.android.synthetic.main.fragment_home_updated.*
-import java.util.*
 
 /***
  * Created by TechnoBlogger on 08/01/18.
@@ -75,12 +72,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
+        val categoryFragment = CategoryFragment()
         val bundle = Bundle()
         bundle.putInt("category", option)
-        val categoryFragment = CategoryFragment()
         categoryFragment.arguments = bundle
 
-        NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
 
         when (option) {
             (R.string.home_amp_money) -> {
@@ -126,7 +123,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             (R.string.memories) -> {
                 //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
                 prefrences.currentBox = getString(R.string.memories)
-
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.shopping) -> {

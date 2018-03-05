@@ -96,7 +96,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         fromWhichClass = arguments!!.getString("fromClass")
 
-
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
+        ivCompleteHome.setOnClickListener{ NineBxApplication.instance.activityInstance!!.onBackPressed() }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -134,9 +135,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             CountryPickerDialog(context!!, ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            //AppLogger.e("Selected Country ", " is " + strCountry)
-            //countryPicker.setCountrySelectionListener()
-            //fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -157,13 +155,15 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         when (fromWhichClass) {
             "Home" -> {
-
+                toolbarProfile.hide()
                 toolbarCompleteProfile.show()
                 enableEditing()
                 imgEdit.hide()
             }
             "Account" -> {
-
+                toolbarProfile.show()
+                toolbarCompleteProfile.hide()
+                imgEdit.show()
             }
         }
     }

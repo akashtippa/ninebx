@@ -53,6 +53,7 @@ import kotlin.collections.ArrayList
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
 
+    private var fragmentTag = ""
     private var addNotification = AddNotification()
 
     override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
@@ -387,19 +388,17 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             cvAttachments.show()
         } else {
 
-            if ( mImagesList.size == 0 )
+            if ( fragmentTag == "Home" && mImagesList.size == 0 )
                 layoutQuickAdd.show()
+            else
+                layoutQuickAdd.hide()
 
             cvAttachments.hide()
         }
     }
 
-    fun pxFromDp(dp: Float, mContext: Context): Float {
-        return dp * mContext.resources.displayMetrics.density
-    }
-
-
     fun callHomeFragment() {
+        fragmentTag = "Home"
         toggleCheck(false)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
@@ -463,7 +462,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         layoutQuickAdd.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
-
+        fragmentTag = option
         when (option) {
             getString(R.string.search) -> {
                 fragmentTransaction.replace(R.id.frameLayout, SearchFragment.getSearchInstance()).commit()
@@ -527,12 +526,8 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
     }
 
-    fun showHomeNhideQuickAdd() {
+    fun hideQuickAdd() {
         layoutQuickAdd.hide()
-    }
-
-    fun hideHomeNShowQuickAdd() {
-        layoutQuickAdd.show()
     }
 
 
@@ -555,13 +550,9 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         hideShowAttachments()
     }
 
-    fun hideQuickAdd() {
-        layoutQuickAdd.hide()
-    }
 
     fun showQuickAdd() {
         imgCameraNineBx.setImageResource(R.drawable.ic_icon_add_photo_memories)
-
         tvQuickAdd.show()
         layoutQuickAdd.show()
     }

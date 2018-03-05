@@ -41,7 +41,6 @@ import kotlin.collections.ArrayList
  */
 class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
-
     var strAddItem = ""
     var fragmentValue = ""
     var listOption = ""
@@ -59,7 +58,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
+        ivBack.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        }
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
@@ -69,7 +72,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         listOption = arguments!!.getString("listOption")
         fragmentValue = arguments!!.getString("homeScreen")
         categoryName = arguments!!.getInt("categoryName")
-
+        toolbarTitle.text = getString(categoryName)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
@@ -354,8 +357,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
         } else if (fragmentValue == "bottom") {
             //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.showBottomView()
-
         }
         return super.onBackPressed()
     }

@@ -31,12 +31,10 @@ import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
-import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
-import io.realm.RealmObject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_category.*
 
@@ -289,22 +287,16 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
         showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
         fromWhichBox = arguments!!.getInt("category")
-
+        toolbarTitle.text = getString(fromWhichBox!!)
+        ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
-        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
     }
 
     override fun onBackPressed(): Boolean {
-
-        NineBxApplication.instance.activityInstance!!.showQuickAdd()
-        NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
+        //NineBxApplication.instance.activityInstance!!.showQuickAdd()
+        //NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val toolbarTitle = prefrences.currentBox
-        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
     }
 
     private fun getLists() {

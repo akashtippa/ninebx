@@ -1,48 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:clickable="true"
     android:fillViewport="true"
     android:focusable="true"
     android:orientation="vertical">
-
-    <FrameLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <LinearLayout
-            android:id="@+id/layoutCategory"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <LinearLayout
-            android:id="@+id/layoutProgress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            tools:visibility="gone">
 
-            <ProgressBar
-                android:id="@+id/pbCategory"
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_mini_padding"
+                android:paddingBottom="@dimen/default_mini_padding"
+                android:paddingRight="@dimen/default_mini_padding"
+                android:id="@+id/ivBack"
+                app:srcCompat="@drawable/ic_icon_arrow_left"
+                android:paddingEnd="@dimen/default_mini_padding" />
 
             <TextView
-                android:id="@+id/tvProgress"
-                android:layout_width="match_parent"
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/calendar"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_launcher"
+                android:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layoutCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/layoutProgress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/default_margin"
-                android:text="@string/loading" />
+                android:orientation="vertical"
+                tools:visibility="gone">
 
-        </LinearLayout>
-    </FrameLayout>
+                <ProgressBar
+                    android:id="@+id/pbCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/default_margin"
+                    android:text="@string/loading" />
+
+            </LinearLayout>
+        </FrameLayout>
 
 
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>
+
+
+

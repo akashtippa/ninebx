@@ -11,9 +11,7 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.decrypted.*
 
-import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.BaseHomeFragment
-import io.realm.RealmResults
 
 import kotlinx.android.synthetic.main.fragment_lists.*
 
@@ -114,7 +112,6 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         ListsPresenter(this, 0, -1).fetchDataInBackground()
 
-
         fragmentValue = arguments!!.getString("homeScreen")
         categoryName = arguments!!.getInt("categoryName")
 
@@ -128,11 +125,9 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         layHome.setOnClickListener {
 
-            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
-
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -149,7 +144,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -167,7 +162,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -185,7 +180,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -203,7 +198,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -222,7 +217,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -241,7 +236,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -260,7 +255,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -279,7 +274,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.hideBottomView()
 
             val bundle = Bundle()
@@ -301,7 +296,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -318,7 +313,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -335,7 +330,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -352,7 +347,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -369,7 +364,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -386,7 +381,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -404,7 +399,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -421,7 +416,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
@@ -438,7 +433,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
                 val bundle = Bundle()
