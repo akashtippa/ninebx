@@ -74,7 +74,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         if (NineBxApplication.instance.activityInstance != null) {
             NineBxApplication.instance.activityInstance!!.hideBottomView()
         }
-
+        ivHome.setOnClickListener {   NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
         currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         myList.addAll(currentUsers!!.get(0).members)

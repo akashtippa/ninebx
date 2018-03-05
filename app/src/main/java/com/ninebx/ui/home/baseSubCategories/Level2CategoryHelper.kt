@@ -4171,7 +4171,7 @@ class Level2CategoryHelper(
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
+            }
 
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID

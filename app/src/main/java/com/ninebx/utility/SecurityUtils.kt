@@ -378,7 +378,7 @@ fun securityTest() {
 }
 
 fun String.encryptString(): String {
-    return encryptAESKey(this, NineBxApplication.getPreferences().privateKey!!)
+    return encryptAESKey(this.trim(), NineBxApplication.getPreferences().privateKey!!)
 }
 
 fun String.decryptString(): String {

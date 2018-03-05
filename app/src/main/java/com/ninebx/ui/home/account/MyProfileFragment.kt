@@ -170,6 +170,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
 
     private fun populateUserInfo(users: DecryptedUsers?) {
+        AppLogger.d("MyProfile", "User : " + users)
         idUser = users!!.id
         idUserID = users.userId
 

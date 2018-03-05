@@ -179,7 +179,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             if( validate() ) {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
-
             }
 
         }
