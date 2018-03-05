@@ -342,6 +342,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
                 context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
+                NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
             }
         })
 
