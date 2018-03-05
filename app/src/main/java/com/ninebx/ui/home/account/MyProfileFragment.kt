@@ -149,7 +149,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
 
         txtSaveCompletedProfile.setOnClickListener {
-
+            if (checkValidations()) {
+                updateTheUserInfo()
+            }
         }
         txtCountry.text = strCountry
 
@@ -157,7 +159,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             "Home" -> {
                 NineBxApplication.instance.activityInstance!!.hideToolbar()
                 toolbarCompleteProfile.show()
-                imgEdit.callOnClick()
+                enableEditing()
                 imgEdit.hide()
             }
             "Account" -> {
@@ -224,7 +226,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     private fun enableEditing() {
         NineBxApplication.instance.activityInstance!!.hideToolbar()
-        toolbarProfile.show()
+        if( fromWhichClass == "Account" )
+            toolbarProfile.show()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
@@ -334,8 +337,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 users.country = strCountry.encryptString()
                 users.completeProfile = true
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
-                users.insertOrUpdate(realm)
+                realm.insertOrUpdate(users)
                 realm.commitTransaction()
+
                 context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
             }
