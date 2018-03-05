@@ -72,6 +72,7 @@
                     android:layout_alignRight="@+id/txtSaveContacts"
                     android:layout_gravity="end"
                     android:contentDescription="@string/app_name"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/search_bx"
                     android:visibility="visible" />
             </RelativeLayout>
