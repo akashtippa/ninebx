@@ -351,12 +351,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             }
             val preferences = NineBxPreferences()
             val toolbarTitle = preferences.currentBox
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
 
         } else if (fragmentValue == "bottom") {
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
             NineBxApplication.instance.activityInstance!!.showBottomView()
-            NineBxApplication.instance.activityInstance!!.hideBackIcon()
+
         }
         return super.onBackPressed()
     }

@@ -86,7 +86,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
 
         currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
@@ -157,7 +157,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         when (fromWhichClass) {
             "Home" -> {
-                NineBxApplication.instance.activityInstance!!.hideToolbar()
+
                 toolbarCompleteProfile.show()
                 enableEditing()
                 imgEdit.hide()
@@ -225,7 +225,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     }
 
     private fun enableEditing() {
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         if( fromWhichClass == "Account" )
             toolbarProfile.show()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
@@ -350,9 +350,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
+
+
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 

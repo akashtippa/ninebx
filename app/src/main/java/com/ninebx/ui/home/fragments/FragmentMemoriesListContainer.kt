@@ -83,7 +83,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Memory timeline")
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Memory timeline")
 
         currentMemoriesList = arguments!!.getParcelableArrayList<MemoryTimeline>(Constants.REALM_MEMORY_VIEW)
 
@@ -153,7 +153,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
         return super.onBackPressed()
     }
 

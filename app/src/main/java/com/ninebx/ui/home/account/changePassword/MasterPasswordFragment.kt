@@ -62,10 +62,10 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.hideHomeIcon()
+
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account_password))
+
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account_password))
         btnSubmit.setOnClickListener {
             if( validate() ) {
                 updatePassword()
@@ -154,10 +154,10 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
-        NineBxApplication.instance.activityInstance!!.showHomeIcon()
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
+
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
+
         return super.onBackPressed()
     }
 }

@@ -127,7 +127,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         layHome.setOnClickListener {
 
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -145,7 +145,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         }
 
         layTravel.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
@@ -162,7 +162,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         }
 
         layContact.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -180,7 +180,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         }
 
         layEducation.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -198,7 +198,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         }
 
         layPersonal.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -217,7 +217,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         layInterests.setOnClickListener {
 
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -236,7 +236,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         layWellness.setOnClickListener {
 
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -255,7 +255,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         layMemories.setOnClickListener {
 
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -274,7 +274,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         layShopping.setOnClickListener {
 
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
 
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -297,7 +297,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
         when (whichBox) {
             R.string.home_amp_money -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.home_amp_money))
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
@@ -314,7 +314,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             }
 
             R.string.travel -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
@@ -330,7 +330,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             R.string.contacts -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.contacts))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -347,7 +347,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             R.string.education_work -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.education_work))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -364,7 +364,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             R.string.personal -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.personal))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -381,7 +381,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             R.string.interests -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.interests))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -399,7 +399,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             }
             R.string.wellness -> {
 
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.wellness))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -416,7 +416,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             R.string.memories -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.memories))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
@@ -433,7 +433,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             R.string.shopping -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.shopping))
 
                 val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)

@@ -91,7 +91,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         }
         if( mSelectedDateIndex == -1 ) mSelectedDateIndex = 0
 
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         ivBack.setOnClickListener { goBack() }
@@ -703,8 +703,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     fun goBack() {
         NineBxApplication.getPreferences().isPasswordEnabled = false
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.calendar))
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.calendar))
+
         NineBxApplication.instance.activityInstance!!.showBottomView()
         NineBxApplication.instance.activityInstance!!.onBackPressed()
     }

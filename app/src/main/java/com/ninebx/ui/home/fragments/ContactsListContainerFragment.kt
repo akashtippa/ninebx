@@ -98,7 +98,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contacts")
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contacts")
 
         contactsList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
         myList.reverse()
@@ -156,7 +156,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
         return super.onBackPressed()
     }
 

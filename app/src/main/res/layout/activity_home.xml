@@ -6,76 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.ninebx.ui.home.HomeActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/grey_100"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="start"
-                android:padding="@dimen/default_micro_padding"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_icon_arrow_left"
-                tools:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/imgToolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/logo"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_16"
-                android:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/ivHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/default_mini_margin"
-                android:layout_marginRight="@dimen/default_mini_margin"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_launcher"
-                android:visibility="visible" />
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomLayout"
-        android:layout_below="@+id/toolbarLayout"
         android:background="@color/white" />
 
     <RelativeLayout

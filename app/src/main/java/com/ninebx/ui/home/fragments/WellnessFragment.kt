@@ -131,7 +131,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
 
         return super.onBackPressed()
     }

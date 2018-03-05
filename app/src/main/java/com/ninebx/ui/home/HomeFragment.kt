@@ -84,53 +84,53 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         when (option) {
             (R.string.home_amp_money) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.home_amp_money))
                 prefrences.currentBox = getString(R.string.home_amp_money)
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.travel) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.travel))
                 prefrences.currentBox = getString(R.string.travel)
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.contacts) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.contacts))
                 prefrences.currentBox = getString(R.string.contacts)
 
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.education_work) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.education_work))
                 prefrences.currentBox = getString(R.string.education_work)
 
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.personal) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.personal))
                 prefrences.currentBox = getString(R.string.personal)
 
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.interests) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.interests))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.interests))
                 prefrences.currentBox = getString(R.string.interests)
 
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.wellness) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.wellness))
                 prefrences.currentBox = getString(R.string.wellness)
 
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.memories) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.memories))
                 prefrences.currentBox = getString(R.string.memories)
 
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }
             (R.string.shopping) -> {
-                NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
+                //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.shopping))
                 prefrences.currentBox = getString(R.string.shopping)
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
             }

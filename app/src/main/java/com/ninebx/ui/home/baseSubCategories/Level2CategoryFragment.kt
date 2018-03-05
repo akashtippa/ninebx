@@ -131,7 +131,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)
 
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()
 
         boxValue = prefrences.currentBox!!
@@ -552,9 +552,9 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         return super.onBackPressed()
     }

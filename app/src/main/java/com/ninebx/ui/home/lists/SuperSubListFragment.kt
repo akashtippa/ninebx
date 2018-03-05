@@ -872,7 +872,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
         return super.onBackPressed()
     }
 

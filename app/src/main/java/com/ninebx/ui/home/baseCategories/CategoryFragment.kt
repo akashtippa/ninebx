@@ -295,7 +295,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.toggleToolbarImage()
+
         NineBxApplication.instance.activityInstance!!.showQuickAdd()
         NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
@@ -304,7 +304,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     override fun onResume() {
         super.onResume()
         val toolbarTitle = prefrences.currentBox
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
     }
 
     private fun getLists() {

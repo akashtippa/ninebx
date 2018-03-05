@@ -102,8 +102,8 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
+
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
 
         mContacts = arguments!!.getParcelable(Constants.CONTACTS_VIEW)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
@@ -282,7 +282,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
     }
 
     private fun enableEditing() {
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
