@@ -11,6 +11,7 @@ import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import java.text.SimpleDateFormat
@@ -231,6 +232,17 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             })
             rvDayEvents.adapter = mDayEventsAdapter
         }
+
+    }
+
+    companion object {
+        fun getCalendarInstance() : CalendarFragment {
+            if( instance == null ) {
+                instance = CalendarFragment()
+            }
+            return instance!!
+        }
+        var instance : CalendarFragment? = null
 
     }
 }

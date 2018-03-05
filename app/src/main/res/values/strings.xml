@@ -977,5 +977,6 @@
     <string name="saving_user">Saving profile details</string>
     <string name="saving_data">Saving data</string>
     <string name="otp_expired">OTP expired</string>
+    <string name="error_passcode_6">Passcode needs to have 6 digits</string>
 
 </resources>

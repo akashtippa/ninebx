@@ -101,8 +101,8 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
 
             prefrences.userID = currentUsers[0]!!.userId
-            prefrences.userFirstName = currentUsers[0]!!.firstName.decryptString()
-            prefrences.userLastName = currentUsers[0]!!.lastName.decryptString()
+            prefrences.userFirstName = currentUsers[0]!!.firstName
+            prefrences.userLastName = currentUsers[0]!!.lastName
 
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                 NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
@@ -426,7 +426,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     private fun callHomeFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
-        fragmentTransaction.replace(R.id.frameLayout, HomeFragment()).commit()
+        fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
     }
 
     private fun toggleCheck(isCheckable: Boolean) {
@@ -505,11 +505,11 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         when (option) {
             getString(R.string.search) -> {
                 toolbarTitle.text = getString(R.string.search)
-                fragmentTransaction.replace(R.id.frameLayout, SearchFragment()).commit()
+                fragmentTransaction.replace(R.id.frameLayout, SearchFragment.getSearchInstance()).commit()
             }
             getString(R.string.calendar) -> {
                 toolbarTitle.text = getString(R.string.calendar)
-                fragmentTransaction.replace(R.id.frameLayout, CalendarFragment()).commit()
+                fragmentTransaction.replace(R.id.frameLayout, CalendarFragment.getCalendarInstance()).commit()
             }
             getString(R.string.lists) -> {
                 val listsFragment = ListsFragment()

@@ -147,6 +147,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
             if (NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         }
+
+        if( passCode.isNotEmpty() )
+            NineBxApplication.getPreferences().passCode = passCode
+
         mCurrentTag = "PassCode"
         if( passCodeFragment == null ) {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -154,9 +158,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
             passCodeFragment = PassCodeFragment()
             fragmentTransaction.replace(R.id.container, passCodeFragment).commit()
         }
-
-        if( passCode.isNotEmpty() )
-            NineBxApplication.getPreferences().passCode = passCode
 
         passCodeFragment!!.setCreatePassCode( isCreatePassCode )
 
