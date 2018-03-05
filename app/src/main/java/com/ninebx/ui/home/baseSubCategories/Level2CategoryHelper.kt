@@ -4143,63 +4143,6 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
-    /*    if (decryptedIdentification != null) {
-            decryptedIdentification!!.selectionType = categoryID
-            decryptedIdentification!!.name = title
-            if (decryptedIdentification!!.id.toInt() == 0) {
-                decryptedIdentification!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg p0: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            val identification = encryptIdentification(decryptedIdentification!!)
-                            realm.insertOrUpdate(identification)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-                override fun onPostExecute(result: Unit?) {
-                    super.onPostExecute(result)
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm()
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-
-                override fun doInBackground(vararg p0: Void?) {
-
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combineWellness : DecryptedCombineWellness = combineItem as DecryptedCombineWellness
-                            var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
-                            realm.beginTransaction()
-                            if (combineRealm == null) {
-                                combineRealm = realm.createObject(CombineWellness::class.java, getUniqueId())
-                            }
-                            combineRealm!!.identificationItems.add(encryptIdentification(decryptedIdentification!!))
-                            realm.insertOrUpdate(combineRealm)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    super.onPostExecute(result)
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm()
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }*/
 
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID
