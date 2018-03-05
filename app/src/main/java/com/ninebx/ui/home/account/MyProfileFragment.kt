@@ -103,7 +103,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 imgEdit.hide()
             }
             "Account" -> {
-
+                NineBxApplication.instance.activityInstance!!.showToolbar()
             }
         }
 
@@ -143,9 +143,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             CountryPickerDialog(context!!, ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            //AppLogger.e("Selected Country ", " is " + strCountry)
-            //countryPicker.setCountrySelectionListener()
-            //fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -213,11 +210,11 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (users.state.isNotEmpty())
             edtState.setText(users.state)
 
-        if (users.zipCode.isNotEmpty())
-            edtZipCode.setText(users.zipCode)
-
         if (users.country.isNotEmpty())
             txtCountry.text = users.country
+
+        if (users.zipCode.isNotEmpty())
+            edtZipCode.setText(users.zipCode)
 
         //mAWSFileTransferHelper.setFileTransferListener(this)
         /*val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
@@ -309,7 +306,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         }
 
         return true
-//        updateTheUserInfo() // Updating the User Info to Realm
 
     }
 
@@ -339,8 +335,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 users.zipCode = strZipCode.encryptString()
                 users.country = strCountry.encryptString()
                 users.completeProfile = true
-                //                realm.copyToRealmOrUpdate(updatingUserInfo)
-                users.insertOrUpdate(realm)
+                realm.copyToRealmOrUpdate(users)
+//                users.insertOrUpdate(realm)
                 realm.commitTransaction()
                 context!!.hideProgressDialog()
                 NineBxApplication.instance.activityInstance!!.onBackPressed()

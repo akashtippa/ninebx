@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ninebx.R;
+import com.ninebx.ui.home.account.subscriptionPlan.ChoosePlanFragment;
+import com.ninebx.ui.home.account.subscriptionPlan.ComparePlanFragment;
 
 public class SubscriptionPlanAdapter extends PagerAdapter {
 
@@ -22,16 +24,23 @@ public class SubscriptionPlanAdapter extends PagerAdapter {
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         switch (position) {
+//            case 0:
+//                resId = R.layout.pager_choose_plan;
+//                break;
+//            case 1:
+//                resId = R.layout.pager_compare_plan;
+//                break;
+
             case 0:
-                resId = R.layout.pager_choose_plan;
-                break;
+                return ChoosePlanFragment.Companion.newInstance();
             case 1:
-                resId = R.layout.pager_compare_plan;
-                break;
+                return ComparePlanFragment.Companion.newInstance();
+            default:
+                return ChoosePlanFragment.Companion.newInstance();
         }
-        ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
-        collection.addView(layout);
-        return layout;
+//        ViewGroup layout = (ViewGroup) inflater.inflate(resId, collection, false);
+//        collection.addView(layout);
+//        return layout;
     }
 
     @Override

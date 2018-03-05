@@ -17,9 +17,6 @@ import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.country_picker.*
 import java.util.*
 
-/**
- * Created by mukesh on 25/04/16.
- */
 class CountryPicker : FragmentBackHelper() {
 
 

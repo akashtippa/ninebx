@@ -17,6 +17,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
+import com.ninebx.ui.home.account.subscriptionPlan.SubscriptionHolderFragment
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
 import com.ninebx.utility.*
@@ -47,7 +48,8 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             }
 
             R.id.txtSubscriptionPlan -> {
-                openStaticLayoutDialog(getString(R.string.subscription_plan))
+//                openStaticLayoutDialog(getString(R.string.subscription_plan))
+                navigateToSubscriptionPlan()
             }
 
             R.id.txtSecurityOverview -> {
@@ -91,6 +93,13 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         val bundle = Bundle()
         bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         masterPasswordFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, masterPasswordFragment).commit()
+    }
+
+    private fun navigateToSubscriptionPlan() {
+        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val masterPasswordFragment = SubscriptionHolderFragment()
         fragmentTransaction.replace(R.id.frameLayout, masterPasswordFragment).commit()
     }
 
@@ -224,7 +233,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
         txtPersonalPassCode.setOnClickListener {
             //AppLogger.d("Auth", "From AccountFragment")
-            startActivity( Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
+            startActivity(Intent(context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
         }
         layoutLogOut.setOnClickListener {
             NineBxApplication.getPreferences().clearPreferences()
@@ -237,10 +246,9 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
         switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         switchTouchId.setOnCheckedChangeListener { _, isChecked ->
-            if( !fromFingerPrint ) {
-                startActivityForResult(Intent( context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true).putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
-            }
-            else fromFingerPrint = false
+            if (!fromFingerPrint) {
+                startActivityForResult(Intent(context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true).putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
+            } else fromFingerPrint = false
         }
 
 
@@ -254,13 +262,12 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
     private var fromFingerPrint = false
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if( requestCode == Constants.FINGER_PRINT_COMPLETE && resultCode == Activity.RESULT_OK ) {
+        if (requestCode == Constants.FINGER_PRINT_COMPLETE && resultCode == Activity.RESULT_OK) {
             fromFingerPrint = true
             switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
             switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             fromFingerPrint = false
-        }
-        else
+        } else
             super.onActivityResult(requestCode, resultCode, data)
 
     }
