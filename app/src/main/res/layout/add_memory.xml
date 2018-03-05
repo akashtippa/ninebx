@@ -67,10 +67,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/default_mini_margin"
                 android:layout_marginRight="@dimen/default_mini_margin"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/search_bx"
                 android:visibility="visible" />
 
         </RelativeLayout>

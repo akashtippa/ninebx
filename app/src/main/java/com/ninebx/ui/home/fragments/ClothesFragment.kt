@@ -23,7 +23,7 @@ class ClothesFragment : FragmentBackHelper() {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Select Category")
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Select Category")
         layoutWomens.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -89,7 +89,7 @@ class ClothesFragment : FragmentBackHelper() {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
 
         return super.onBackPressed()
     }

@@ -25,7 +25,6 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.home.lists.adapter.ListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -41,7 +40,6 @@ import kotlin.collections.ArrayList
  * Created by Alok on 03/01/18.
  */
 class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
-
 
     var strAddItem = ""
     var fragmentValue = ""
@@ -60,7 +58,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
+        ivBack.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        }
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
@@ -70,7 +72,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         listOption = arguments!!.getString("listOption")
         fragmentValue = arguments!!.getString("homeScreen")
         categoryName = arguments!!.getInt("categoryName")
-
+        toolbarTitle.text = getString(categoryName)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
@@ -351,12 +353,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             }
             val preferences = NineBxPreferences()
             val toolbarTitle = preferences.currentBox
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
 
         } else if (fragmentValue == "bottom") {
-            NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
+            //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.lists))
+            NineBxApplication.instance.activityInstance!!.hideQuickAdd()
             NineBxApplication.instance.activityInstance!!.showBottomView()
-            NineBxApplication.instance.activityInstance!!.hideBackIcon()
         }
         return super.onBackPressed()
     }

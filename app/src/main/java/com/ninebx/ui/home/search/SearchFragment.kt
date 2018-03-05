@@ -130,7 +130,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
         showProgress(R.string.loading)
 
@@ -295,7 +295,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 categoryFragment = CategoryFragment()
                 categoryFragment!!.arguments = bundle
 
-                NineBxApplication.instance.activityInstance!!.showHomeNhideQuickAdd()
+                NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )

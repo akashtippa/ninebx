@@ -14,7 +14,7 @@ import android.provider.MediaStore
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Html
+
 import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
@@ -53,6 +53,7 @@ import kotlin.collections.ArrayList
 @Suppress("DEPRECATION")
 class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
 
+    private var fragmentTag = ""
     private var addNotification = AddNotification()
 
     override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
@@ -88,8 +89,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {}
 
-
-
     override fun setCurrentUsers(currentUsers: ArrayList<DecryptedUsers>?) {
         this.currentUsers = currentUsers
         addNotification.setCurrentUsers(currentUsers)
@@ -120,7 +119,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
     fun navigateToAddMembers() {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
+
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val addFamilyUsersFragment = AddFamilyUsersFragment()
@@ -132,7 +131,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
     private fun navigateToMyProfile() {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
+
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
@@ -202,6 +201,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         homePresenter = HomePresenter(this)
         NotificationsPresenter(this)
 
@@ -212,7 +212,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
-        ivHome.hide()
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView)
 
         NineBxApplication.instance.init(this)
@@ -240,23 +239,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             true
         }
 
-
-        toggleToolbarImage()
-        ivHome.setOnClickListener {
-            layoutQuickAdd.show()
-            ivHome.hide()
-            toggleCheck(false)
-            toggleToolbarImage()
-            callHomeFragment()
-            showBottomView()
-            ivBack.hide()
-            prefrences.currentBox = getString(R.string.home_amp_money)
-        }
-
-        ivBack.setOnClickListener {
-            onBackPressed()
-            KeyboardUtil.hideSoftKeyboard(this)
-        }
 
         layoutQuickAdd.setOnClickListener {
             startCameraIntent()
@@ -406,27 +388,23 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             cvAttachments.show()
         } else {
 
-            if (imgToolbar.isVisible() && mImagesList.size == 0)
+            if ( fragmentTag == "Home" && mImagesList.size == 0 )
                 layoutQuickAdd.show()
+            else
+                layoutQuickAdd.hide()
 
             cvAttachments.hide()
         }
     }
 
-    fun pxFromDp(dp: Float, mContext: Context): Float {
-        return dp * mContext.resources.displayMetrics.density
-    }
-
-    fun toggleToolbarImage() {
-        imgToolbar.show()
-        toolbarTitle.hide()
-
-    }
-
-    private fun callHomeFragment() {
+    fun callHomeFragment() {
+        fragmentTag = "Home"
+        toggleCheck(false)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
         fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
+        prefrences.currentBox = getString(R.string.home_amp_money)
+        showBottomView()
     }
 
     private fun toggleCheck(isCheckable: Boolean) {
@@ -435,20 +413,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         bottomNavigationView.menu.getItem(2).isCheckable = isCheckable
         bottomNavigationView.menu.getItem(3).isCheckable = isCheckable
         bottomNavigationView.menu.getItem(4).isCheckable = isCheckable
-    }
-
-    fun changeToolbarTitle(title: String) {
-        toolbarTitle.show()
-        toolbarTitle.text = Html.fromHtml(title)
-        imgToolbar.hide()
-    }
-
-    fun hideToolbar() {
-        toolbar.hide()
-    }
-
-    fun showToolbar() {
-        toolbar.show()
     }
 
 
@@ -495,26 +459,19 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
     private fun callBottomViewFragment(option: String) {
-        ivHome.show()
         layoutQuickAdd.hide()
-        toolbarTitle.show()
-        imgToolbar.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
-
+        fragmentTag = option
         when (option) {
             getString(R.string.search) -> {
-                toolbarTitle.text = getString(R.string.search)
                 fragmentTransaction.replace(R.id.frameLayout, SearchFragment.getSearchInstance()).commit()
             }
             getString(R.string.calendar) -> {
-                toolbarTitle.text = getString(R.string.calendar)
                 fragmentTransaction.replace(R.id.frameLayout, CalendarFragment.getCalendarInstance()).commit()
             }
             getString(R.string.lists) -> {
                 val listsFragment = ListsFragment()
-
-                toolbarTitle.text = getString(R.string.lists)
                 val bundle = Bundle()
                 bundle.putString("homeScreen", "bottomScreen")
                 bundle.putInt("category", 0)
@@ -522,11 +479,9 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 fragmentTransaction.replace(R.id.frameLayout, listsFragment).commit()
             }
             getString(R.string.notifications) -> {
-                toolbarTitle.text = getString(R.string.notifications)
                 fragmentTransaction.replace(R.id.frameLayout, NotificationsFragment()).commit()
             }
             getString(R.string.account) -> {
-                toolbarTitle.text = getString(R.string.account)
                 fragmentTransaction.replace(R.id.frameLayout, AccountFragment()).commit()
             }
         }
@@ -538,7 +493,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
     override fun onBackPressed() {
         var isToWorkOnBack = true
-        showToolbar()
         showBottomView()
         if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack()) {
             val list = supportFragmentManager.fragments
@@ -572,16 +526,8 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
     }
 
-    fun showHomeNhideQuickAdd() {
+    fun hideQuickAdd() {
         layoutQuickAdd.hide()
-        ivHome.show()
-        ivBack.show()
-    }
-
-    fun hideHomeNShowQuickAdd() {
-        layoutQuickAdd.show()
-        ivHome.hide()
-        ivBack.hide()
     }
 
 
@@ -604,29 +550,9 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         hideShowAttachments()
     }
 
-    fun hideHomeIcon() {
-        ivHome.hide()
-    }
-
-    fun showHomeIcon() {
-        ivHome.show()
-    }
-
-    fun hideBackIcon() {
-        ivBack.hide()
-    }
-
-    fun showBackIcon() {
-        ivBack.show()
-    }
-
-    fun hideQuickAdd() {
-        layoutQuickAdd.hide()
-    }
 
     fun showQuickAdd() {
         imgCameraNineBx.setImageResource(R.drawable.ic_icon_add_photo_memories)
-
         tvQuickAdd.show()
         layoutQuickAdd.show()
     }

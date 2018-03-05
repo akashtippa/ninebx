@@ -43,7 +43,7 @@ class CountryPicker : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
 
         ivBackFromSelectCountry.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.onBackPressed()
@@ -124,7 +124,7 @@ class CountryPicker : FragmentBackHelper() {
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+
         return super.onBackPressed()
     }
 

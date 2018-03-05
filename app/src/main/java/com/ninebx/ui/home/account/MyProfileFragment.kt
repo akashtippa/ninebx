@@ -86,7 +86,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
 
         currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
@@ -96,7 +96,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         fromWhichClass = arguments!!.getString("fromClass")
 
-
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
+        ivCompleteHome.setOnClickListener{ NineBxApplication.instance.activityInstance!!.onBackPressed() }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -134,9 +135,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             CountryPickerDialog(context!!, ICountrySelected { strCountry -> txtCountry.text = strCountry })
-            //AppLogger.e("Selected Country ", " is " + strCountry)
-            //countryPicker.setCountrySelectionListener()
-            //fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
         }
 
         imgEditProfile.setOnClickListener {
@@ -157,13 +155,15 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         when (fromWhichClass) {
             "Home" -> {
-                NineBxApplication.instance.activityInstance!!.hideToolbar()
+                toolbarProfile.hide()
                 toolbarCompleteProfile.show()
                 enableEditing()
                 imgEdit.hide()
             }
             "Account" -> {
-
+                toolbarProfile.show()
+                toolbarCompleteProfile.hide()
+                imgEdit.show()
             }
         }
     }
@@ -225,7 +225,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     }
 
     private fun enableEditing() {
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
         if( fromWhichClass == "Account" )
             toolbarProfile.show()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
@@ -350,9 +350,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
+
+
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 
