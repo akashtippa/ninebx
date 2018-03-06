@@ -109,10 +109,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 toggleCheck(true)
                 bottomNavigationView.menu.getItem(4).isChecked = true
                 callBottomViewFragment(getString(R.string.account))
-                if( currentUsers!![0]!!.completeProfile ) {
-                    navigateToAddMembers()
-                }
-                else {
+                if( !currentUsers!![0]!!.completeProfile ) {
                     navigateToMyProfile()
                 }
             }
