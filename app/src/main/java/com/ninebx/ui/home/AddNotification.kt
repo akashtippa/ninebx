@@ -622,7 +622,7 @@ class AddNotification : HomeView {
         //AppLogger.d("AddNewNotification", "Method invoked")
         addNotification(id, expiryDate, currentDate, subTitle, boxName)
         val mBuilder = NotificationCompat.Builder(context).setSmallIcon(logo_nine)
-                .setContentTitle("NineBx").setContentText(subTitle).setDefaults(Notification.DEFAULT_ALL)
+                .setContentTitle("NineBx").setContentText(subTitle)
         val mNotificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mNotificationManager.notify(1, mBuilder.build())
         /*  var intent : Intent = Intent(context, HomeActivity::class.java)
