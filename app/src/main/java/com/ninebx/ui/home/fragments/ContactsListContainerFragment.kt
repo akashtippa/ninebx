@@ -189,7 +189,9 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                         contacts.firstName = firstName.encryptString()
                         contacts.lastName = lastName.encryptString()
                         contacts.mobileOne = strMobileNumber.encryptString()
+                        contacts.selectionType = "Contacts".encryptString()
                         contacts.insertOrUpdate(realm!!)
+//                        contactsRealm!!.refresh()
                     }
 
                 })
