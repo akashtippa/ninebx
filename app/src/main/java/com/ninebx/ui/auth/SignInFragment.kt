@@ -12,6 +12,8 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.Constants
 import com.ninebx.utility.isValidPassword
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -30,6 +32,13 @@ class SignInFragment : BaseAuthFragment() {
 
         btnLogin.setOnClickListener {
             if (validate()) {
+                AppLogger.d("Signin", "Comparing : " + edtEmailAddress.text.toString().toLowerCase().trim() + " : " + NineBxApplication.getPreferences().userEmail)
+                if( !edtEmailAddress.text.toString().toLowerCase().trim().equals(NineBxApplication.getPreferences().userEmail, true)) {
+                    NineBxApplication.getPreferences().clearPreferences()
+                }
+                else {
+                    NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
+                }
                 mAuthView.setAccountEmail(edtEmailAddress.text.toString().toLowerCase().trim())
                 mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().toLowerCase().trim(), edtPassword.text.toString())
             }
@@ -45,8 +54,8 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("android@yopmail.com")
-            edtPassword.setText("Android.24")
+            edtEmailAddress.setText("alok.g@cognitiveclouds.com")
+            edtPassword.setText("Password14.")
         }
 
 
@@ -118,7 +127,13 @@ class SignInFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        mAuthView.navigateToOTP(true)
+        if( NineBxApplication.getPreferences().currentStep == Constants.ALL_COMPLETE ) {
+            mAuthView.navigateToHome()
+        }
+        else {
+            mAuthView.navigateToOTP(true)
+        }
+
     }
 
     private fun openStaticLayoutDialog(option: Int) {

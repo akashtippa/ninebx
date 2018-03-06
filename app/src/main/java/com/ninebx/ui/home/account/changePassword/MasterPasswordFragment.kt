@@ -10,10 +10,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.encryptKey
-import com.ninebx.utility.isValidPassword
+import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_master_account_password.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -150,6 +147,7 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
     private fun validateMasterPassword(): Boolean {
         val password = etCurrentPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
+        AppLogger.d("Email", "MasterPassword - validateMP " + NineBxApplication.getPreferences().userEmail!!)
         return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, preferences.userEmail!!)))
     }
 

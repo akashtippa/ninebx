@@ -151,8 +151,10 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     }
 
     override fun showProgress(message: Int) {
-        layoutProgress.show()
-        tvProgress.text = getString(message)
+        if( layoutProgress != null  ) {
+            layoutProgress.show()
+            tvProgress.text = getString(message)
+        }
     }
 
     private fun setupUI() {
@@ -170,12 +172,14 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     private var allContacts: RealmResults<Contacts>? = null
 
     override fun hideProgress() {
-        layoutProgress.hide()
+        if( layoutProgress != null )
+            layoutProgress.hide()
     }
 
     override fun onError(error: Int) {
         hideProgress()
-        Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+        if( context != null )
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
     private lateinit var categories: ArrayList<Category>
@@ -383,7 +387,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 allContacts = getCurrentContactList(realm!!)
                 if (allContacts != null) {
                     context!!.hideProgressDialog()
-                    //AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
+                    AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
 
                     val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)

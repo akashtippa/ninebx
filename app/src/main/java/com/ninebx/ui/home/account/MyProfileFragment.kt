@@ -134,7 +134,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtCountry.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            CountryPickerDialog(context!!, ICountrySelected { strCountry -> txtCountry.text = strCountry })
+            CountryPickerDialog(context!!, ICountrySelected {
+                strCountry -> txtCountry.text = strCountry
+                this.strCountry = strCountry
+            })
         }
 
         imgEditProfile.setOnClickListener {
@@ -151,7 +154,6 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 updateTheUserInfo()
             }
         }
-        txtCountry.text = strCountry
 
         when (fromWhichClass) {
             "Home" -> {
@@ -180,6 +182,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (users.lastName.isNotEmpty())
             edtLastName.setText(users.lastName)
 
+        if( users.emailAddress.isEmpty() ) users.emailAddress = NineBxApplication.getPreferences().userEmail
+
         if (users.emailAddress.isNotEmpty())
             edtEmail.setText(users.emailAddress)
 
@@ -187,7 +191,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             edtRelationship.setText(users.relationship)
 
         if (users.gender.isNotEmpty())
-            txtGender.prompt = users.gender
+            txtGender.setSelection( context!!.resources.getStringArray(R.array.gender).indexOf(users.gender) )
 
         if (users.dateOfBirth.isNotEmpty())
             txtDOB.text = users.dateOfBirth
@@ -229,6 +233,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         if( fromWhichClass == "Account" )
             toolbarProfile.show()
+        txtSave.show()
+        ivHome.hide()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
@@ -248,7 +254,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         strFirstName = edtFirstName.text.toString()
         strLastName = edtLastName.text.toString()
+        strEmail = edtEmail.text.toString()
+        strRelationship = edtRelationship.text.toString()
         strDOB = txtDOB.text.toString()
+        strGender = txtGender.selectedItem.toString()
         strAnniversary = txtAnniversary.text.toString()
         strMobileNumber = edtMobileNumber.text.toString()
         strStreetAddress1 = edtAddress1.text.toString()
@@ -257,6 +266,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         strState = edtState.text.toString()
         strZipCode = edtZipCode.text.toString()
         strCountry = txtCountry.text.toString()
+
 
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
@@ -270,7 +280,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             return false
         }
 
-        if (!(txtGender != null && txtGender.selectedItem.toString() != null)) {
+        if (!(txtGender != null && txtGender.selectedItem.toString() != "Gender")) {
             Toast.makeText(context, "Please enter 'Gender'", Toast.LENGTH_LONG).show()
             txtGender.requestFocus()
             return false
@@ -340,10 +350,13 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
                 realm.insertOrUpdate(users)
                 realm.commitTransaction()
-
+                val isCompleteProfile = toolbarCompleteProfile.isVisible()
+                NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0] = decryptUsers(users)
                 context!!.hideProgressDialog()
+
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
-                NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
+                if( isCompleteProfile )
+                    NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
             }
         })
 

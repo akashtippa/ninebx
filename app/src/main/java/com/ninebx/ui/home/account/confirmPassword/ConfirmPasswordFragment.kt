@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.account.addmembers.MemberView
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.encryptKey
 import kotlinx.android.synthetic.main.fragment_confirm_password.*
 import java.util.*
@@ -49,6 +50,7 @@ class ConfirmPasswordFragment : Fragment() {
     private fun validate(): Boolean {
         password = etConfirmPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
+        AppLogger.d("Email", "ConfirmPassword validate " + NineBxApplication.getPreferences().userEmail!!)
         return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, preferences.userEmail!!)))
     }
 }

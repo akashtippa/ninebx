@@ -15,6 +15,7 @@ import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Constants.PASSCODE_CREATE
 import io.realm.SyncUser
@@ -136,6 +137,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         if( mEmail.isEmpty() )
             mEmail = NineBxApplication.getPreferences().userEmail!!
 
+        AppLogger.d("Email", "Auth - OTP " + NineBxApplication.getPreferences().userEmail!!)
         bundle.putString("email", mEmail)
         otpFragment!!.arguments = bundle
         fragmentTransaction.replace(R.id.container, otpFragment).commit()
@@ -147,7 +149,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
             if (NineBxApplication.getPreferences().currentStep < Constants.OTP_COMPLETE)
                 NineBxApplication.getPreferences().currentStep = Constants.OTP_COMPLETE
         }
-
+        if( getAccountEmail().isNotEmpty() ) {
+            NineBxApplication.getPreferences().userEmail = getAccountEmail()
+            AppLogger.d("Email", "navigateToCreatePassCode : " + NineBxApplication.getPreferences().userEmail)
+        }
         if( passCode.isNotEmpty() )
             NineBxApplication.getPreferences().passCode = passCode
 
@@ -208,13 +213,16 @@ class AuthActivity : AppCompatActivity(), AuthView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+        if( intent.hasExtra(Constants.USER_EMAIL) ) {
+            NineBxApplication.getPreferences().userEmail = intent.getStringExtra(Constants.USER_EMAIL)
+        }
         navigateToScreen()
     }
 
     private fun navigateToScreen() {
         mAuthPresenter = AuthPresenter(this)
         val bundle = intent.extras
-        if( bundle == null ) {
+        if( intent.extras == null || intent.hasExtra(Constants.USER_EMAIL) ) {
             when (NineBxApplication.getPreferences().currentStep) {
                 Constants.ACCOUNT_PASSWORD_COMPLETE -> {
                     navigateToOTP(false)
