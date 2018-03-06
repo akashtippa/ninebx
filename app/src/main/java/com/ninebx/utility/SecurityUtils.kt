@@ -388,6 +388,33 @@ fun String.decryptString(): String {
     return decryptAESKEY(this.toByteArray(), NineBxApplication.getPreferences().privateKey!!.trim())
 }
 
+fun createUserObject(users: DecryptedUsers, members: java.util.ArrayList<DecryptedMember>): Users {
+
+    val newUser = Users()
+    newUser.anniversary = (users.anniversary).encryptString()
+    newUser.city = (users.city).encryptString()
+    newUser.completeProfile = users.completeProfile
+    newUser.country = (users.country).encryptString()
+    newUser.userId = users.userId
+    newUser.id = users.id
+    newUser.dateOfBirth = (users.dateOfBirth).encryptString()
+    newUser.zipCode = (users.zipCode).encryptString()
+    newUser.emailAddress = (users.emailAddress).encryptString()
+    newUser.firstName = (users.firstName).encryptString()
+    newUser.fullName = (users.fullName).encryptString()
+    newUser.lastName = (users.lastName).encryptString()
+    newUser.gender = (users.gender).encryptString()
+    newUser.street_1 = (users.street_1).encryptString()
+    newUser.street_2 = (users.street_2).encryptString()
+    newUser.state = (users.state).encryptString()
+    newUser.mobileNumber = (users.mobileNumber).encryptString()
+    newUser.profilePhoto = users.profilePhoto
+    newUser.members.addAll(encryptMembers(members)!!.asIterable())
+    newUser.relationship = (users.relationship).encryptString()
+    return newUser
+
+}
+
 fun encryptUsers(currentUser: Users): Users {
 
     AppLogger.d("EncryptedUser", "User : " + currentUser.toString())
