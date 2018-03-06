@@ -18,8 +18,6 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
-import static com.ninebx.utility.SecurityUtilsKt.encryptMembers;
-
 /**
  * Created by Alok on 11/01/18.
  */
@@ -175,33 +173,7 @@ public class Users extends RealmObject implements Parcelable {
 
     }
 
-    @NotNull
-    public static Users createUserObject(@NotNull DecryptedUsers users, ArrayList<DecryptedMember> members) {
 
-        Users newUser = new Users();
-        newUser.setAnniversary(users.getAnniversary());
-        newUser.setCity(users.getCity());
-        newUser.setCompleteProfile(users.getCompleteProfile());
-        newUser.setCountry(users.getCountry());
-        newUser.setUserId(users.getUserId());
-        newUser.setId(users.getId());
-        newUser.setDateOfBirth(users.getDateOfBirth());
-        newUser.setZipCode(users.getZipCode());
-        newUser.setEmailAddress(users.getEmailAddress());
-        newUser.setFirstName(users.getFirstName());
-        newUser.setFullName(users.getFullName());
-        newUser.setLastName(users.getLastName());
-        newUser.setGender(users.getGender());
-        newUser.setStreet_1(users.getStreet_1());
-        newUser.setStreet_2(users.getStreet_2());
-        newUser.setState(users.getState());
-        newUser.setMobileNumber(users.getMobileNumber());
-        newUser.setProfilePhoto(users.getProfilePhoto());
-        newUser.members.addAll(encryptMembers(members));
-        newUser.setRelationship(users.getRelationship());
-        return newUser;
-
-    }
 
     public String getUserId() {
         return userId;

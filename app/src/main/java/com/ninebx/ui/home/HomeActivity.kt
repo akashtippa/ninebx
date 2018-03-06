@@ -94,6 +94,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         addNotification.setCurrentUsers(currentUsers)
         //homePresenter.fetchDataInBackground()
         if (currentUsers != null) {
+            AppLogger.d("HomeActivity", "Users : " + currentUsers)
             AppLogger.d("HomeActivity", "Users found")
             this@HomeActivity.hideProgressDialog()
             //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())

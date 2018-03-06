@@ -120,7 +120,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     }
 
     private fun saveUserObject() {
-        val userObject = Users.createUserObject(currentUsers!![0], myList)
+        val userObject = createUserObject(currentUsers!![0], myList)
         userObject.insertOrUpdate(usersRealm!!)
         context!!.hideProgressDialog()
         mListsAdapter!!.notifyDataSetChanged()
