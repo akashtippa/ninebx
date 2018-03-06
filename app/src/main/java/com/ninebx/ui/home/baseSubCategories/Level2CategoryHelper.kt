@@ -10,6 +10,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
+import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.home.wellness.Wellness
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
@@ -1935,6 +1936,7 @@ class Level2CategoryHelper(
 
     private fun getAirline() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
         var categoryIndex = 1001
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -1973,6 +1975,7 @@ class Level2CategoryHelper(
 
     private fun getHotel() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
         var categoryIndex = 1002
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2011,6 +2014,7 @@ class Level2CategoryHelper(
 
     private fun getCarRental() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
         var categoryIndex = 1003
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2049,6 +2053,7 @@ class Level2CategoryHelper(
 
     private fun getCruiseline() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
         var categoryIndex = 1004
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2087,6 +2092,7 @@ class Level2CategoryHelper(
 
     private fun getRailway() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
         var categoryIndex = 1005
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2125,6 +2131,7 @@ class Level2CategoryHelper(
 
     private fun getOther() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
         var categoryIndex = 1006
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2163,6 +2170,7 @@ class Level2CategoryHelper(
 
     private fun getPassport() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
         var categoryIndex = 2001
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2194,6 +2202,7 @@ class Level2CategoryHelper(
 
     private fun getVisa() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
         var categoryIndex = 2002
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -2226,6 +2235,7 @@ class Level2CategoryHelper(
 
     private fun getOtherTravelDocuments() {
         val categoryList = ArrayList<Level2Category>()
+        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
         var categoryIndex = 2003
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
@@ -4172,7 +4182,6 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
             }
-
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID
             decryptedMedicalHistory!!.attachmentNames = title
@@ -4231,7 +4240,6 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
-
         if (decryptedHealthcareProviders != null) {
             decryptedHealthcareProviders!!.selectionType = categoryID
             decryptedHealthcareProviders!!.name = title
@@ -4292,7 +4300,6 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
-
         if (decryptedEmergencyContacts != null) {
             decryptedEmergencyContacts!!.selectionType = categoryID
             decryptedEmergencyContacts!!.name = title
@@ -4351,7 +4358,6 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
-
         if (decryptedMedications != null) {
             decryptedMedications!!.selectionType = categoryID
             decryptedMedications!!.name = title
@@ -4635,6 +4641,233 @@ class Level2CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if(decryptedLoyalty != null){
+            decryptedLoyalty!!.selectionType = categoryID
+            decryptedLoyalty!!.userName = title
+            if(decryptedLoyalty!!.id.toInt() == 0){
+                decryptedLoyalty!!.id = getUniqueId()
+            }
+            var isSaveComplete = false
+            object : AsyncTask<Void,Void,Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                     override fun onSuccess(realm: Realm?) {
+                         realm!!.beginTransaction()
+                         val loyalty = encryptLoyalty(decryptedLoyalty!!)
+                         realm.insertOrUpdate(loyalty)
+                         realm.commitTransaction()
+                     }
+                 })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combineTravel : DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            var realmLoyaty = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
+                            realm.beginTransaction()
+                            if (realmLoyaty == null){
+                                realmLoyaty = realm.createObject(CombineTravel::class.java, getUniqueId())
+                            }
+                            realmLoyaty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
+                            realm.copyToRealmOrUpdate(realmLoyaty)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if(decryptedTravel != null){
+            decryptedTravel!!.selectionType = categoryID
+            decryptedTravel!!.nameOnAccount = title
+            if(decryptedTravel!!.id.toInt() == 0){
+                decryptedTravel!!.id = getUniqueId()
+            }
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            var travel = encryptTravel(decryptedTravel!!)
+                            realm!!.insertOrUpdate(travel)
+                            realm!!.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combineTravel : DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            var realmTravel = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
+                            realm.beginTransaction()
+                            if (realmTravel == null){
+                                realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
+                            }
+                            realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                            realm.copyToRealmOrUpdate(realmTravel)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
+        if(decryptedDocuments != null){
+            decryptedDocuments!!.selectionType = categoryID
+            decryptedDocuments!!.nameOnPassport = title
+            if(decryptedDocuments!!.id.toInt() == 0){
+                decryptedDocuments!!.id = getUniqueId()
+            }
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            var documents = encryptDocuments(decryptedDocuments!!)
+                            realm!!.insertOrUpdate(documents)
+                            realm!!.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combineTravel : DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            var realmDocument = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
+                            realm.beginTransaction()
+                            if (realmDocument == null){
+                                realmDocument = realm.createObject(CombineTravel::class.java, getUniqueId())
+                            }
+                            realmDocument!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
+                            realm.copyToRealmOrUpdate(realmDocument)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+        if(decryptedVacations != null){
+            decryptedVacations!!.selectionType = categoryID
+            decryptedVacations!!.attachmentNames = title
+            if(decryptedVacations!!.id.toInt() == 0){
+                decryptedVacations!!.id = getUniqueId()
+            }
+            var isSaveComplete = false
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            val vacations = encryptVacations(decryptedVacations!!)
+                            realm!!.insertOrUpdate(vacations)
+                            realm!!.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
+                        categoryView.savedToRealm()
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            object : AsyncTask<Void, Void, Unit>(){
+                override fun doInBackground(vararg params: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback(){
+                        override fun onSuccess(realm: Realm?) {
+                            val combineTravel : DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            var realmVacations = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
+                            realm.beginTransaction()
+                            if (realmVacations == null){
+                                realmVacations = realm.createObject(CombineTravel::class.java, getUniqueId())
+                            }
+                            realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
+                            realm.copyToRealmOrUpdate(realmVacations)
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    if (isSaveComplete){
+                        isSaveComplete = true
+                    }
+                    else{
                         categoryView.savedToRealm()
                     }
                 }

@@ -338,22 +338,27 @@ class AddNotification : HomeView {
         for(i in 0 until decryptedTravelDocuments.size){
             docExpirationDate = decryptedTravelDocuments[i].expirationDate
             docType = decryptedTravelDocuments[i].travelDocumentType
-            var docExpiry = dateFormat.parse(docExpirationDate)
-            var docDateDifference: Long = docExpiry.getTime() - date.getTime()
-            var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24)).toInt()
-            if(docType.equals("Visa")){
-                if(docDaysBetween == 180){
-                    val schecduledDate = Calendar.getInstance()
-                    schecduledDate.timeInMillis = docExpiry.time - (docDaysBetween * (1000 * 60 * 60 * 24))
-                    newNotification(decryptedTravelDocuments[i].id, schecduledDate.time, docExpiry, docType, boxName)
+            try{
+                var docExpiry = dateFormat.parse(docExpirationDate)
+                var docDateDifference: Long = docExpiry.getTime() - date.getTime()
+                var docDaysBetween = (docDateDifference / (1000 * 60 * 60 * 24)).toInt()
+                if(docType.equals("Visa")){
+                    if(docDaysBetween == 180){
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = docExpiry.time - (docDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedTravelDocuments[i].id, schecduledDate.time, docExpiry, docType, boxName)
+                    }
+                }else{
+                    if (docDaysBetween == 270){
+                        val schecduledDate = Calendar.getInstance()
+                        schecduledDate.timeInMillis = docExpiry.time - (docDaysBetween * (1000 * 60 * 60 * 24))
+                        newNotification(decryptedTravelDocuments[i].id,schecduledDate.time, docExpiry, docType, boxName)
+                    }
                 }
-            }else{
-                if (docDaysBetween == 270){
-                    val schecduledDate = Calendar.getInstance()
-                    schecduledDate.timeInMillis = docExpiry.time - (docDaysBetween * (1000 * 60 * 60 * 24))
-                    newNotification(decryptedTravelDocuments[i].id,schecduledDate.time, docExpiry, docType, boxName)
-                }
+            } catch (e : Exception){
+                e.printStackTrace()
             }
+
         }
     }
 

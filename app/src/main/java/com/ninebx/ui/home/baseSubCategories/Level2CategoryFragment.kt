@@ -140,6 +140,69 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     etTitle.setText(decryptedTaxID.name)
                     etTitleValue.setText(decryptedTaxID.taxIdName)
                 }
+                is DecryptedIdentification -> {
+                    val decryptedIdentification : DecryptedIdentification = selectedDocument as DecryptedIdentification
+                    etTitle.setText(decryptedIdentification.name)
+                    etTitleValue.setText(decryptedIdentification.name)
+                }
+                is DecryptedMedicalHistory -> {
+                    val decryptedMedicalHistory : DecryptedMedicalHistory = selectedDocument as DecryptedMedicalHistory
+                    etTitle.setText(decryptedMedicalHistory.history)
+                }
+                is DecryptedCheckups -> {
+                    val decryptedCheckups : DecryptedCheckups = selectedDocument as DecryptedCheckups
+                    etTitle.setText(decryptedCheckups.checkup_description)
+                    etTitleValue.setText(decryptedCheckups.physicianName)
+                }
+                is DecryptedEmergencyContacts -> {
+                    val decryptedEmergencyContacts : DecryptedEmergencyContacts = selectedDocument as DecryptedEmergencyContacts
+                }
+                is DecryptedEyeglassPrescriptions -> {
+                    val decryptedEyeglassPrescriptions : DecryptedEyeglassPrescriptions = selectedDocument as DecryptedEyeglassPrescriptions
+                    etTitle.setText(decryptedEyeglassPrescriptions.physicianName)
+                    etTitleValue.setText(decryptedEyeglassPrescriptions.datePrescribed)
+                }
+                is DecryptedHealthcareProviders -> {
+                    val decryptedHealthcareProviders : DecryptedHealthcareProviders= selectedDocument as DecryptedHealthcareProviders
+                    etTitle.setText(decryptedHealthcareProviders.name)
+                    etTitleValue.setText(decryptedHealthcareProviders.physicianType)
+                }
+                is DecryptedMedicalConditions -> {
+                    val decryptedMedicalCOnditions : DecryptedMedicalConditions= selectedDocument as DecryptedMedicalConditions
+                    etTitle.setText(decryptedMedicalCOnditions.condition)
+                    etTitleValue.setText(decryptedMedicalCOnditions.dateDiagnosed)
+                }
+                is DecryptedMedications ->{
+                    val decryptedMedications : DecryptedMedications= selectedDocument as DecryptedMedications
+                    etTitle.setText(decryptedMedications.name)
+                    etTitleValue.setText(decryptedMedications.strength)
+                }
+                is DecryptedVitalNumbers -> {
+                    val decryptedVitalNumbers : DecryptedVitalNumbers= selectedDocument as DecryptedVitalNumbers
+                    etTitle.setText(decryptedVitalNumbers.vital_description)
+                    etTitleValue.setText(decryptedVitalNumbers.measurementDate)
+                }
+                //Travel
+                is DecryptedDocuments -> {
+                    val decryptedDocuments : DecryptedDocuments = selectedDocument as DecryptedDocuments
+                    etTitle.setText(decryptedDocuments.nameOnPassport)
+                    etTitleValue.setText(decryptedDocuments.nameOnVisa)
+                }
+                is DecryptedLoyalty -> {
+                    val decryptedLoyalty : DecryptedLoyalty = selectedDocument as DecryptedLoyalty
+                    etTitle.setText(decryptedLoyalty.accountName)
+                    etTitleValue.setText(decryptedLoyalty.nameOnAccount)
+                }
+                is DecryptedTravel -> {
+                    val decryptedTravel : DecryptedTravel = selectedDocument as DecryptedTravel
+                    etTitle.setText(decryptedTravel.userName)
+                    etTitleValue.setText(decryptedTravel.nameOnAccount)
+                }
+                is DecryptedVacations -> {
+                    val decryptedVacations : DecryptedVacations = selectedDocument as DecryptedVacations
+                    etTitle.setText(decryptedVacations.vac_description)
+                    etTitleValue.setText(decryptedVacations.vac_description)
+                }
             }
 
     }
