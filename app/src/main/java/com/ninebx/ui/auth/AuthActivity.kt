@@ -222,7 +222,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
     private fun navigateToScreen() {
         mAuthPresenter = AuthPresenter(this)
         val bundle = intent.extras
-        if( !intent.hasExtra(Constants.USER_EMAIL) ) {
+        if( intent.extras == null || intent.hasExtra(Constants.USER_EMAIL) ) {
             when (NineBxApplication.getPreferences().currentStep) {
                 Constants.ACCOUNT_PASSWORD_COMPLETE -> {
                     navigateToOTP(false)
