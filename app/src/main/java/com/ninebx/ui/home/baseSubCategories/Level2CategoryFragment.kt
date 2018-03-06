@@ -140,6 +140,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     etTitle.setText(decryptedTaxID.name)
                     etTitleValue.setText(decryptedTaxID.taxIdName)
                 }
+                //Wellness
                 is DecryptedIdentification -> {
                     val decryptedIdentification : DecryptedIdentification = selectedDocument as DecryptedIdentification
                     etTitle.setText(decryptedIdentification.name)
@@ -202,6 +203,28 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedVacations : DecryptedVacations = selectedDocument as DecryptedVacations
                     etTitle.setText(decryptedVacations.vac_description)
                     etTitleValue.setText(decryptedVacations.vac_description)
+                }
+
+                //Shopping
+                is DecryptedLoyaltyPrograms -> {
+                    val decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+                    etTitle.setText(decryptedLoyaltyPrograms.brandName)
+                    etTitleValue.setText(decryptedLoyaltyPrograms.accountName)
+                }
+                is DecryptedRecentPurchase -> {
+                    val decryptedRecentPurchase : DecryptedRecentPurchase = selectedDocument as DecryptedRecentPurchase
+                    etTitle.setText(decryptedRecentPurchase.itemName)
+                    etTitleValue.setText(decryptedRecentPurchase.brandName)
+                }
+                is DecryptedClothingSizes -> {
+                    val decryptedClothingSizes : DecryptedClothingSizes = selectedDocument as DecryptedClothingSizes
+                    etTitle.setText(decryptedClothingSizes.personName)
+                    etTitleValue.setText(decryptedClothingSizes.sizeName)
+                }
+                is DecryptedShopping -> {
+                    val decryptedShopping : DecryptedShopping = selectedDocument as DecryptedShopping
+                    etTitle.setText(decryptedShopping.institutionName)
+                    etTitle.setText(decryptedShopping.accountName)
                 }
             }
     }
