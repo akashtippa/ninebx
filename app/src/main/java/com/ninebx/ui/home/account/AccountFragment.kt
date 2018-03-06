@@ -233,11 +233,13 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             startActivity(Intent(context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
         }
         layoutLogOut.setOnClickListener {
-            NineBxApplication.getPreferences().clearPreferences()
+           /* AppLogger.d("Logout", "Email : " + NineBxApplication.getPreferences().userEmail)*/
+            NineBxApplication.getPreferences().clearLogOutPreferences( txtUserEmail.text.toString() )
             SyncUser.currentUser().logout()
+            AppLogger.d("Logout", "Email : clearLogOutPreferences : " + NineBxApplication.getPreferences().userEmail)
             closeAllConnections()
             //AppLogger.d("Auth", "From AccountFragment")
-            startActivity(Intent(context, AuthActivity::class.java))
+            startActivity(Intent(context, AuthActivity::class.java).putExtra(Constants.USER_EMAIL, NineBxApplication.getPreferences().userEmail))
             activity!!.finish()
         }
         switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled

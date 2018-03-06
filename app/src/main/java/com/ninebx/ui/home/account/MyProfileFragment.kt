@@ -182,6 +182,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         if (users.lastName.isNotEmpty())
             edtLastName.setText(users.lastName)
 
+        if( users.emailAddress.isEmpty() ) users.emailAddress = NineBxApplication.getPreferences().userEmail
+
         if (users.emailAddress.isNotEmpty())
             edtEmail.setText(users.emailAddress)
 
@@ -348,11 +350,13 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
                 realm.insertOrUpdate(users)
                 realm.commitTransaction()
-
+                val isCompleteProfile = toolbarCompleteProfile.isVisible()
                 NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0] = decryptUsers(users)
                 context!!.hideProgressDialog()
+
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
-                NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
+                if( isCompleteProfile )
+                    NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
             }
         })
 

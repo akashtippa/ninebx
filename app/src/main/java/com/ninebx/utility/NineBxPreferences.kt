@@ -1,5 +1,6 @@
 package com.ninebx.utility
 
+import com.ninebx.NineBxApplication
 import com.ninebx.utility.Constants.NONE_COMPLETE
 
 
@@ -28,8 +29,8 @@ class NineBxPreferences : Preferences() {
     var userPasswordUINT8 by stringPref(Constants.USER_PASSWORD_UINT, "")
 
     var forTestingBackPress by stringPref(Constants.USER_FOR_TESTING, "")
-    var countrySelected by stringPref(Constants.COUNTRY_SELECTED)
     var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)
+
     fun clearPreferences() {
         firstRun = false
         isPasswordRequired = false
@@ -39,7 +40,6 @@ class NineBxPreferences : Preferences() {
         passCode = ""
         privateKey = ""
         currentBox = ""
-        countrySelected = ""
         isFingerPrintEnabled = false
         userID = ""
         userFirstName = ""
@@ -49,5 +49,21 @@ class NineBxPreferences : Preferences() {
         userPasswordUINT8 = ""
     }
 
+    fun clearLogOutPreferences(email: String) {
+        firstRun = false
+        isPasswordRequired = false
+        isPasswordEnabled = false
+        currentStep = NONE_COMPLETE
+        privateKey = ""
+        currentBox = ""
+        userID = ""
+        userEmail = email
+        userFirstName = ""
+        userLastName = ""
+        created = ""
+        userPassword = ""
+        userPasswordUINT8 = ""
+        AppLogger.d("Email", "Email : in clearLogOutPreferences : " + NineBxApplication.getPreferences().userEmail)
+    }
 
 }

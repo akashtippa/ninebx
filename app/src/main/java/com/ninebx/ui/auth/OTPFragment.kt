@@ -48,7 +48,10 @@ class OTPFragment : BaseAuthFragment() {
                             override fun onSuccess(realm: Realm?) {
                                 val currentUsers = getCurrentUsers( realm!! )
                                 if (currentUsers != null && currentUsers.size > 0) {
-                                    NineBxApplication.getPreferences().userEmail = currentUsers[0]!!.emailAddress.decryptString()
+                                    val email = currentUsers[0]!!.emailAddress.decryptString()
+                                    if( email.isNotEmpty() )
+                                    NineBxApplication.getPreferences().userEmail = email
+                                    AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
                                 }
                                 else {
                                     onPostExecute(R.string.unable_to_find_user)
@@ -63,6 +66,7 @@ class OTPFragment : BaseAuthFragment() {
                         super.onPostExecute(result)
                         context!!.hideProgressDialog()
                         mAuthView.navigateToCreatePassCode(PASSCODE_CREATE, "")
+
                         if( result != -1 ) mAuthView.onError(result)
                     }
 

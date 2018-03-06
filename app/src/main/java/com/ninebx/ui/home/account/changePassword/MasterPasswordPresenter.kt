@@ -88,6 +88,7 @@ class MasterPasswordPresenter(private val masterPasswordView: MasterPasswordView
         //let myDict:NSDictionary = ["user_id": userKey, "admin_id": userKey, "email": hashUserName, "hash": finalHashKey, "is_admin": true, "secure_key":secureKey]
         userMap.put("user_id", result.identity)
         userMap.put("admin_id", result.identity)
+        AppLogger.d("Email", "Master Password - saveResult " + NineBxApplication.getPreferences().userEmail!!)
         userMap.put("email", NineBxApplication.getPreferences().userEmail!!)
         userMap.put("hash", encryptedPassword)
         userMap.put("is_admin", true)
@@ -154,6 +155,7 @@ class MasterPasswordPresenter(private val masterPasswordView: MasterPasswordView
         val password = masterPasswordView.getNewPassword()
 
         encryptedPasswordByteArray = (encryptKey(password, NineBxApplication.getPreferences().userEmail!!))
+        AppLogger.d("Email", "Master Password - changePassword " + NineBxApplication.getPreferences().userEmail!!)
         encryptedPassword = convertToUInt8IntArray(encryptedPasswordByteArray)
 
         masterPasswordView.showProgress(R.string.loading)

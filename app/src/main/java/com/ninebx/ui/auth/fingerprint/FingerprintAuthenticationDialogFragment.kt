@@ -28,6 +28,7 @@ import com.ninebx.R
 import com.ninebx.ui.auth.AuthView
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.utility.AppLogger
 import kotlinx.android.synthetic.main.fingerprint_dialog_content.*
 
 /**
@@ -90,6 +91,7 @@ class FingerprintAuthenticationDialogFragment : DialogFragment(),
         useFingerprintFutureCheckBox = view.findViewById(R.id.use_fingerprint_in_future_check)
 
         fingerprint_description.text = getString(R.string.fingerprint_description) + " " + NineBxApplication.getPreferences().userEmail
+        AppLogger.d("Email", "FingerPrint Auth " + NineBxApplication.getPreferences().userEmail!!)
         cancelButton.setOnClickListener {
             authView!!.fingerPrintCancelled()
             dismiss()
