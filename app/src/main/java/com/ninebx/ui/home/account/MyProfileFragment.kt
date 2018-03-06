@@ -229,6 +229,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         if( fromWhichClass == "Account" )
             toolbarProfile.show()
+        txtSave.show()
+        ivHome.hide()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true

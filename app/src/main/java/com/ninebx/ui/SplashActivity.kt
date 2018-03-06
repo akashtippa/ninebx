@@ -40,7 +40,7 @@ class SplashActivity : AppCompatActivity() {
                 .subscribe {
 
                     when {
-                        !prefrences.firstRun -> {
+                        prefrences.firstRun -> {
                             val intent = Intent(this@SplashActivity, WalkThroughActivity::class.java)
                             startActivity(intent)
                             disposables.clear()

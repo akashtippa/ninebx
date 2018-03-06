@@ -73,7 +73,7 @@ class WalkThroughActivity : AppCompatActivity() {
         })
 
         txtGetStarted.setOnClickListener({
-            prefrences.firstRun = true
+            prefrences.firstRun = false
             val intent = Intent(this@WalkThroughActivity, AuthActivity::class.java)
             startActivity(intent)
             finish()
