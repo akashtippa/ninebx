@@ -12,7 +12,6 @@ import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
-import com.ninebx.ui.base.realm.home.wellness.Wellness
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -61,6 +60,11 @@ class Level2CategoryHelper(
     private var decryptedEyeglassPrescriptions: DecryptedEyeglassPrescriptions? = null
     private var decryptedVitalNumbers: DecryptedVitalNumbers? = null
     private var decryptedCheckups: DecryptedCheckups? = null
+
+    //For Shopping
+    private var decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms ?= null
+    private var decryptedRecentPurchase : DecryptedRecentPurchase ?= null
+    private var decryptedClothingSizes : DecryptedClothingSizes ?= null
 
     init {
         extractObject()
@@ -218,6 +222,22 @@ class Level2CategoryHelper(
             "Recent Purchases" -> {
                 getRecentPurchases()
             }
+        // Clothing Sizes
+            "Womens sizes" -> {
+                getWomensSizes()
+            }
+            "Mens sizes" -> {
+                getMenSizes()
+            }
+            "Girls sizes" -> {
+                getGirlsSizes()
+            }
+            "Boy's sizes" -> {
+                getBoysSizes()
+            }
+            "Baby's sizes" -> {
+                getBabysSizes()
+            }
 
             "Add Person" -> {
                 getEducation()
@@ -257,23 +277,6 @@ class Level2CategoryHelper(
             }
             "Checkups and visits" -> {
                 getCheckUps()
-            }
-
-        // Clothing Sizes
-            "Womens sizes" -> {
-                getWomensSizes()
-            }
-            "Mens sizes" -> {
-                getMenSizes()
-            }
-            "Girls sizes" -> {
-                getGirlsSizes()
-            }
-            "Boy's sizes" -> {
-                getBoysSizes()
-            }
-            "Baby's sizes" -> {
-                getBabysSizes()
             }
         }
     }
@@ -348,6 +351,45 @@ class Level2CategoryHelper(
                 decryptedOtherGovernment = selectedDocument as DecryptedGovernment
             }
 
+        // For Wellness
+            DecryptedCheckups::class.java.simpleName -> {
+                decryptedCheckups = selectedDocument as DecryptedCheckups
+            }
+            DecryptedEmergencyContacts::class.java.simpleName -> {
+                decryptedEmergencyContacts = selectedDocument as DecryptedEmergencyContacts
+            }
+            DecryptedEyeglassPrescriptions::class.java.simpleName -> {
+                decryptedEyeglassPrescriptions = selectedDocument as DecryptedEyeglassPrescriptions
+            }
+            DecryptedHealthcareProviders::class.java.simpleName -> {
+                decryptedHealthcareProviders = selectedDocument as DecryptedHealthcareProviders
+            }
+            DecryptedIdentification::class.java.simpleName -> {
+                decryptedIdentification = selectedDocument as DecryptedIdentification
+            }
+            DecryptedMedicalConditions::class.java.simpleName -> {
+                decryptedMedicalConditions = selectedDocument as DecryptedMedicalConditions
+            }
+            DecryptedMedicalHistory::class.java.simpleName -> {
+                decryptedMedicalHistory = selectedDocument as DecryptedMedicalHistory
+            }
+            DecryptedMedications::class.java.simpleName -> {
+                decryptedMedications = selectedDocument as DecryptedMedications
+            }
+            DecryptedVitalNumbers::class.java.simpleName -> {
+                decryptedVitalNumbers = selectedDocument as DecryptedVitalNumbers
+            }
+
+            //For Shopping
+            DecryptedLoyaltyPrograms::class.java.simpleName -> {
+                decryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+            }
+            DecryptedRecentPurchase::class.java.simpleName -> {
+                decryptedRecentPurchase = selectedDocument as DecryptedRecentPurchase
+            }
+            DecryptedClothingSizes::class.java.simpleName -> {
+                decryptedClothingSizes = selectedDocument as DecryptedClothingSizes
+            }
             else -> {
                 //TODO
             }
@@ -2852,22 +2894,22 @@ class Level2CategoryHelper(
                 setLoyalty(level2Category)
             }
             "Passport" -> {
-                getTravelDocuments(level2Category)
+                setTravelDocuments(level2Category)
             }
             "Visa" -> {
-                getTravelDocuments(level2Category)
+                setTravelDocuments(level2Category)
             }
             "Other travel document" -> {
-                getTravelDocuments(level2Category)
+                setTravelDocuments(level2Category)
             }
             "Vacation" -> {
-                getVacationItems(level2Category)
+                setVacationItems(level2Category)
             }
             "Travel" -> {
-                getTravelItems(level2Category)
+                setTravelItems(level2Category)
             }
             "TravelInstitution" -> {
-                getTravelItems(level2Category)
+                setTravelItems(level2Category)
             }
 
         // Common View
@@ -3171,7 +3213,7 @@ class Level2CategoryHelper(
         }
     }
 
-    private fun getTravelDocuments(level2Category: Level2SubCategory) {
+    private fun setTravelDocuments(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Passport name" -> decryptedDocuments!!.passportName = level2Category.titleValue
             "Name on passport" -> decryptedDocuments!!.nameOnPassport = level2Category.titleValue
@@ -3196,7 +3238,7 @@ class Level2CategoryHelper(
         }
     }
 
-    private fun getVacationItems(level2Category: Level2SubCategory) {
+    private fun setVacationItems(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Description" -> decryptedVacations!!.vac_description = level2Category.titleValue
             "Start date" -> decryptedVacations!!.startDate = level2Category.titleValue
@@ -3214,7 +3256,7 @@ class Level2CategoryHelper(
         }
     }
 
-    private fun getTravelItems(level2Category: Level2SubCategory) {
+    private fun setTravelItems(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Institution name" -> decryptedTravel!!.institutionName = level2Category.titleValue
             "Account name" -> decryptedTravel!!.accountName = level2Category.titleValue
@@ -4649,7 +4691,20 @@ class Level2CategoryHelper(
 
         if(decryptedLoyalty != null){
             decryptedLoyalty!!.selectionType = categoryID
-            decryptedLoyalty!!.userName = title
+            if(decryptedLoyalty!!.selectionType.equals("travel_1001"))
+                decryptedLoyalty!!.airLine = title
+            if(decryptedLoyalty!!.selectionType.equals("travel_1002"))
+                decryptedLoyalty!!.hotel = title
+            if(decryptedLoyalty!!.selectionType.equals("travel_1003"))
+                decryptedLoyalty!!.carRentalCompany = title
+            if(decryptedLoyalty!!.selectionType.equals("travel_1004"))
+                decryptedLoyalty!!.cruiseline = title
+            if(decryptedLoyalty!!.selectionType.equals("travel_1005"))
+                decryptedLoyalty!!.railway = title
+            if(decryptedLoyalty!!.selectionType.equals("travel_1006"))
+                decryptedLoyalty!!.other = title
+            AppLogger.d("LoyaltySelectionType", " " + decryptedLoyalty!!.selectionType)
+
             if(decryptedLoyalty!!.id.toInt() == 0){
                 decryptedLoyalty!!.id = getUniqueId()
             }
@@ -4763,7 +4818,16 @@ class Level2CategoryHelper(
 
         if(decryptedDocuments != null){
             decryptedDocuments!!.selectionType = categoryID
-            decryptedDocuments!!.nameOnPassport = title
+            if(decryptedDocuments!!.selectionType.equals("travel_2001"))
+                decryptedDocuments!!.passportName = title
+            if(decryptedDocuments!!.selectionType.equals("travel_2002"))
+                decryptedDocuments!!.visaName = title
+            if(decryptedDocuments!!.selectionType.equals("travel_2003"))
+                decryptedDocuments!!.nameOnTravelDocument
+            AppLogger.d("SelectionType", " " + decryptedDocuments!!.selectionType)
+            AppLogger.d("SelectionType", " Visa Name " + decryptedDocuments!!.visaName)
+            AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
+            AppLogger.d("SelectionType", " Travel Document " + decryptedDocuments!!.selectionType)
             if(decryptedDocuments!!.id.toInt() == 0){
                 decryptedDocuments!!.id = getUniqueId()
             }

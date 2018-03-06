@@ -204,7 +204,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     etTitleValue.setText(decryptedVacations.vac_description)
                 }
             }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -217,7 +216,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
-        if( arguments!!.containsKey("selectedDocument") ) {
+        if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
             classType = arguments!!.getString("classType")
             //AppLogger.d("Level2", "Selected Document : " + selectedDocument)
@@ -261,7 +260,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun setTitle() {
         val bundleValue = arguments!!.getString("categoryName")
-
         when (bundleValue) {
 
         // Common Items in Every
