@@ -2,6 +2,7 @@ package com.ninebx.ui.home.account.addmembers
 
 import com.ninebx.ui.base.BaseView
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import io.realm.SyncUser
 
 /**
@@ -9,7 +10,7 @@ import io.realm.SyncUser
  */
 interface MemberView : BaseView {
     fun onMemberSignup(user: SyncUser)
-    fun onNewMember(member: Member)
+    fun onNewMember(member: DecryptedMember)
     fun onConfirmPassword(password: String)
     fun showError(error: String)
 }

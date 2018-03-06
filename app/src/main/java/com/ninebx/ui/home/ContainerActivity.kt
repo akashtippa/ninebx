@@ -11,6 +11,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
@@ -54,7 +55,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         this.showToast(error)
     }
 
-    override fun onNewMember(member: Member) {
+    override fun onNewMember(member: DecryptedMember) {
         val intent = Intent()
         intent.putExtra(Constants.MEMBER, member)
         setResult(Activity.RESULT_OK, intent)

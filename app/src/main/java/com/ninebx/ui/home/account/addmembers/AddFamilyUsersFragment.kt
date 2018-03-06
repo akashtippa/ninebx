@@ -88,7 +88,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
         layAddFamilyMembers.setOnClickListener {
             val bundle = Bundle()
-            bundle.putParcelable(Constants.MEMBER, Member())
+            bundle.putParcelable(Constants.MEMBER, DecryptedMember())
             bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
             bundle.putString(Constants.FROM_CLASS, "AddMember")
 
@@ -123,6 +123,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     private fun saveUserObject() {
         val userObject = createUserObject(currentUsers!![0], myList)
         userObject.insertOrUpdate(usersRealm!!)
+        NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0] = decryptUsers(userObject)
         context!!.hideProgressDialog()
         mListsAdapter!!.notifyDataSetChanged()
     }
@@ -134,7 +135,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK) {
-            memberAdded(data!!.getParcelableExtra(Constants.MEMBER))
+            memberAdded((data!!.getParcelableExtra(Constants.MEMBER)))
         } else
             super.onActivityResult(requestCode, resultCode, data)
 
