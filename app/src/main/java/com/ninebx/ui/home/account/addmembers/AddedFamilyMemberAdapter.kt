@@ -16,7 +16,7 @@ import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptString
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>?, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -27,8 +27,7 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
-        val member = myList!![position]
-        //AppLogger.d("Decrypt", "Decrypting : " + member.toString())
+        val member = myList[position]
         holder.txtProfileName.text = member.firstName + " " + member.lastName
         holder.txtAccountHolder.text = member.relationship
         holder.txtRole.text = member.role
@@ -37,9 +36,8 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
     }
 
     override fun getItemCount(): Int {
-        return if (null != myList) myList!!.size else 0
+        return myList.size
     }
-
 
     internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent), View.OnClickListener {
         override fun onClick(view: View?) {
@@ -47,10 +45,10 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
             if( position != RecyclerView.NO_POSITION ) {
                 when( view!!.id ) {
                     R.id.imgEdit -> {
-                        iMemberAdded.onMemberEdit(myList!![position])
+                        iMemberAdded.onMemberEdit(myList[position])
                     }
                     R.id.imgDelete -> {
-                        val member = myList!![position]
+                        val member = myList[position]
                         iMemberAdded.onMemberDelete(member)
                     }
                 }
@@ -79,7 +77,7 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
     }
 
     fun deleteItem(member: DecryptedMember?) {
-        myList!!.remove(member)
+        myList.remove(member)
         notifyDataSetChanged()
     }
 

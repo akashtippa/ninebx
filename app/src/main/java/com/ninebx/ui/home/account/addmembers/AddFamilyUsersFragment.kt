@@ -159,7 +159,9 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         else if ( requestCode == DELETE_MEMBER && resultCode == Activity.RESULT_OK ) {
             val member = data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER)
             val results = usersRealm!!.where(Member::class.java).equalTo("userId", member!!.userId).findAll()
+            usersRealm!!.beginTransaction()
             results.deleteAllFromRealm()
+            usersRealm!!.commitTransaction()
             mListsAdapter!!.deleteItem( member )
         }
         else
