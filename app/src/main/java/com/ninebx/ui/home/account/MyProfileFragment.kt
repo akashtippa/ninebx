@@ -239,8 +239,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
         edtLastName.isEnabled = true
-        txtDOB.isClickable = true
-        txtAnniversary.isClickable = true
+        txtDOB.isEnabled = true
+        txtAnniversary.isEnabled = true
         edtMobileNumber.isEnabled = true
         edtAddress1.isEnabled = true
         edtAddress2.isEnabled = true
