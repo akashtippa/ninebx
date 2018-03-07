@@ -113,10 +113,11 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                 NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
-                toggleCheck(true)
-                bottomNavigationView.menu.getItem(4).isChecked = true
-                callBottomViewFragment(getString(R.string.account))
+
                 if( !currentUsers!![0]!!.completeProfile ) {
+                    toggleCheck(true)
+                    bottomNavigationView.menu.getItem(4).isChecked = true
+                    callBottomViewFragment(getString(R.string.account))
                     navigateToMyProfile()
                 }
             }
