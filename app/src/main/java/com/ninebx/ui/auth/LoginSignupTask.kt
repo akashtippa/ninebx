@@ -53,7 +53,7 @@ class LoginSignupTask(private var userName: String,
                 val privateKey = randomString(16)
                 NineBxApplication.getPreferences().privateKey = privateKey.trim()
 
-                val encryptedPrivateKey = encryptAESKeyPassword(privateKey.trim(), encryptedPasswordByteArray)
+                /*val encryptedPrivateKey = encryptAESKeyPassword(privateKey.trim(), encryptedPasswordByteArray)
 
                 //AppLogger.d(TAG, "Encrypted Key : " + encryptedPrivateKey)
 
@@ -61,7 +61,7 @@ class LoginSignupTask(private var userName: String,
                 //AppLogger.d(TAG, "UserMap : Random Key " + privateKey)
                 //AppLogger.d(TAG, "UserMap : " + userMap)
 
-                val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
+                val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)*/
                 //AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
 
                 NineBxApplication.getUserAPI()!!.postUserDetails(userMap)

@@ -255,6 +255,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         //SearchUtils.search()
         this.showProgressDialog(getString(R.string.loading))
         homePresenter.fetchCurrentUsers()
+        val awsSecureFileTransfer = AWSSecureFileTransfer(this@HomeActivity)
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment

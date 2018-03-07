@@ -86,7 +86,7 @@ fun encryptAESKeyPassword(inputString: String, privateKey: ByteArray): String {
 
     val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
 
-    return String(cipherTextBase64)
+    return String(cipherTextBase64).trim()
 
 }
 

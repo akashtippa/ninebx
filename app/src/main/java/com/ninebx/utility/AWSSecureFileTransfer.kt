@@ -11,6 +11,10 @@ import com.amazonaws.services.s3.model.*
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
 import java.io.*
+import java.security.Security
+import java.util.*
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 
 /**
@@ -28,15 +32,16 @@ class AWSSecureFileTransfer( val context: Context ) {
     private val TAG = "SecureTransfer"
     init {
         s3client = AmazonS3Client(Util.getCredProvider(context))
+
         AppLogger.d(TAG, "Private KEy : " + NineBxApplication.getPreferences().privateKey)
         val privateKeyInt8 = convertToUInt8(NineBxApplication.getPreferences().privateKey!!.toByteArray())
         AppLogger.d(TAG, "Private KEy UINT8: " + privateKeyInt8)
-        val encryptedPrivateKey = privateKeyInt8.encryptPrivateKeyForDownloadString()
-        AppLogger.d(TAG, "Private KEy Encrypted UINT8: " + encryptedPrivateKey)
-        privateKeyArrayBase64 =
-                            Base64.encodeToString(
-                NineBxApplication.getPreferences().privateKey!!.encryptString().toByteArray(), Base64.DEFAULT)
-        AppLogger.d(TAG, "Private KEy : " + privateKeyArrayBase64)
+        privateKeyArrayBase64 = encryptAESKey(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
+        AppLogger.d(TAG, "Private KEy Encrypted: " + privateKeyArrayBase64)
+
+        val md5Data = MD5Helper.getMD5(privateKeyArrayBase64)
+        AppLogger.d(TAG, "Private KEy MD5 String : " + privateKeyArrayBase64)
+        AppLogger.d(TAG, "Private KEy MD5 convertToUInt8 : " + convertToUInt8(privateKeyArrayBase64.toByteArray(Charsets.UTF_8)))
     }
 
     fun downloadSecureFile( filePath : String ) {
