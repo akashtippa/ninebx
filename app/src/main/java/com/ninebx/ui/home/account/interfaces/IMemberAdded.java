@@ -11,4 +11,6 @@ public interface IMemberAdded {
     void memberAdded(DecryptedMember member);
 
     void onMemberEdit(DecryptedMember member);
+
+    void onMemberDelete(DecryptedMember member);
 }

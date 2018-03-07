@@ -165,6 +165,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             "Account" -> {
                 toolbarProfile.show()
                 toolbarCompleteProfile.hide()
+                txtGender.isEnabled = false
                 imgEdit.show()
             }
         }
@@ -221,9 +222,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             txtCountry.text = users.country
 
         //mAWSFileTransferHelper.setFileTransferListener(this)
-        /*val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
         awsSecureFileTransfer.setFileTransferListener(this)
-        if (users.profilePhoto.isNotEmpty()) {
+        /*if (users.profilePhoto.isNotEmpty()) {
             awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
         }*/
         //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
@@ -239,8 +240,9 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
         edtLastName.isEnabled = true
-        txtDOB.isClickable = true
-        txtAnniversary.isClickable = true
+        txtDOB.isEnabled = true
+        txtAnniversary.isEnabled = true
+        txtGender.isEnabled = true
         edtMobileNumber.isEnabled = true
         edtAddress1.isEnabled = true
         edtAddress2.isEnabled = true
@@ -305,8 +307,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         }
 
         if (strState.trim().isEmpty()) {
-            Toast.makeText(context, "Please enter 'State'", Toast.LENGTH_LONG).show()
-            edtState.requestFocus()
+            Toast.makeText(context, "Please enter 'Street address 2'", Toast.LENGTH_LONG).show()
+            edtAddress2.requestFocus()
             return false
         }
 

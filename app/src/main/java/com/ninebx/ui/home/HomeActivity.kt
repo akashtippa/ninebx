@@ -96,8 +96,12 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         if (currentUsers != null) {
             AppLogger.d("HomeActivity", "Users : " + currentUsers)
             AppLogger.d("HomeActivity", "Users found")
+            for( member in currentUsers[0].members) {
+                AppLogger.d("HomeActivity", "Members : " + member)
+            }
             if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && currentUsers[0].emailAddress.isNotEmpty() ) {
                 NineBxApplication.getPreferences().userEmail = currentUsers[0].emailAddress
+                AppLogger.d("Email", "HomeActivity + setCurrentUsers : " + NineBxApplication.getPreferences().userEmail)
             }
             this@HomeActivity.hideProgressDialog()
             //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
@@ -109,10 +113,11 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
 
             if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
                 NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
-                toggleCheck(true)
-                bottomNavigationView.menu.getItem(4).isChecked = true
-                callBottomViewFragment(getString(R.string.account))
+
                 if( !currentUsers!![0]!!.completeProfile ) {
+                    toggleCheck(true)
+                    bottomNavigationView.menu.getItem(4).isChecked = true
+                    callBottomViewFragment(getString(R.string.account))
                     navigateToMyProfile()
                 }
             }

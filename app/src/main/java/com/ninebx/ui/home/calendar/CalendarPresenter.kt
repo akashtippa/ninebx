@@ -62,7 +62,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
         calendarView.showProgress(R.string.loading)
         calendarEvents = calendarRealm!!.where(CalendarEvents::class.java).findAll()
         calendarEventsList = ArrayList()
-        calendarEventsList!!.addAll(calendarEvents!!.asIterable())
+        calendarEventsList!!.addAll(calendarEvents!!.toList())
         for( event in calendarEventsList!! ) {
             val eventCount = event.startsDate.count()
             for( i in 0 until eventCount ) {

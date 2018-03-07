@@ -2,7 +2,9 @@ package com.ninebx.ui.home.account
 
 import android.app.Activity
 import android.app.Dialog
+import android.app.KeyguardManager
 import android.content.Intent
+import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -214,8 +216,9 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
         txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
 
-        if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() ) {
+        if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && txtUserEmail.text.toString().isNotEmpty() ) {
              NineBxApplication.getPreferences().userEmail = txtUserEmail.text.toString().trim()
+            AppLogger.d("Email", "Account Fragment set Email : " + NineBxApplication.getPreferences().userEmail)
         }
 
         txtProfile.setOnClickListener(this)
@@ -250,15 +253,28 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         switchTouchId.setOnCheckedChangeListener { _, isChecked ->
             if (!fromFingerPrint) {
-                startActivityForResult(Intent(context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true).putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
+
+                if( isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    val fingerprintManager = context!!.getSystemService(FingerprintManager::class.java)
+                    if (!fingerprintManager.hasEnrolledFingerprints()) {
+                        // This happens when no fingerprints are registered.
+                        onError((R.string.register_fingerprint))
+                        switchTouchId.isChecked = false
+                        return@setOnCheckedChangeListener
+                    }
+
+                }
+                startActivityForResult(Intent(context, AuthActivity::class.java)
+                        .putExtra(Constants.RESET_FINGER_PRINT, true)
+                        .putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
             } else fromFingerPrint = false
         }
 
 
-        /*val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
         awsSecureFileTransfer.setFileTransferListener(this)
         val profilePhoto = mHomeView.getCurrentUsers()[0]!!.profilePhoto
-        if (profilePhoto.isNotEmpty()) {
+        /*if (profilePhoto.isNotEmpty()) {
             awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + profilePhoto)
         }*/
     }

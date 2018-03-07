@@ -92,15 +92,23 @@ class OTPFragment : BaseAuthFragment() {
         setupOtp()
     }
 
+    var isPaused = false
     override fun onPause() {
         super.onPause()
+        isPaused = true
         handler.removeCallbacks(runnable)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isPaused = false
     }
 
     private var handler: Handler = Handler()
     private var runnable: Runnable = Runnable {
         if (tvResend != null) {
-            context!!.showToast(R.string.otp_expired)
+            if( !isPaused )
+                context!!.showToast(R.string.otp_expired)
             emailOtp = ""
             tvResend.isEnabled = true
         }

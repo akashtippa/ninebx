@@ -26,6 +26,7 @@ import com.ninebx.ui.base.realm.home.travel.*
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
+import io.realm.RealmResults
 import org.spongycastle.crypto.digests.SHA256Digest
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -69,7 +70,7 @@ fun encryptAESKeyPassword(inputString: String, privateKey: ByteArray): String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    val input = inputString.toByteArray()
+    val input = inputString.trim().toByteArray()
     val keyBytes = privateKey
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
@@ -119,7 +120,7 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    val input = inputString.toByteArray()
+    val input = inputString.trim().toByteArray()
     val keyBytes = (privateKey.toByteArray(Charsets.UTF_8))
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
@@ -185,7 +186,7 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
 
 }
 
-fun encryptDecryptAESKey(masterPassword: String): String {
+/*fun encryptDecryptAESKey(masterPassword: String): String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
@@ -255,10 +256,10 @@ fun encryptAESKey(masterPassword: String): String {
 
     return ""
 
-}
+}*/
 
 
-fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
+/*fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
 
     val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
     val key = SecretKeySpec(keyBytes, "AES")
@@ -280,7 +281,7 @@ fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
     //AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
     //AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
     //AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
-}
+}*/
 
 /**
  *
@@ -377,8 +378,12 @@ fun securityTest() {
     //AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
 }
 
+fun String.encryptPrivateKeyForDownloadString(): String {
+    return encryptAESKey(this.trim(), convertToUInt8(NineBxApplication.getPreferences().privateKey!!.trim().toByteArray()))
+}
+
 fun String.encryptString(): String {
-    return encryptAESKey(this.trim(), NineBxApplication.getPreferences().privateKey!!)
+    return encryptAESKey(this.trim(), NineBxApplication.getPreferences().privateKey!!.trim())
 }
 
 fun String.decryptString(): String {
@@ -409,7 +414,7 @@ fun createUserObject(users: DecryptedUsers, members: java.util.ArrayList<Decrypt
     newUser.state = (users.state).encryptString()
     newUser.mobileNumber = (users.mobileNumber).encryptString()
     newUser.profilePhoto = users.profilePhoto
-    newUser.members.addAll(encryptMembers(members)!!.asIterable())
+    newUser.members.addAll(encryptMembers(members)!!.toList())
     newUser.relationship = (users.relationship).encryptString()
     return newUser
 
@@ -528,6 +533,17 @@ fun decryptUsers(currentUser: Users): DecryptedUsers {
     //AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers)
     return decryptedUsers
 }
+
+fun decryptMembers(members: RealmResults<Member>): RealmList<DecryptedMember>? {
+    val decryptedMembers = RealmList<DecryptedMember>()
+    for (i in 0 until members.size) {
+        val member = members[i]
+        val decryptedMember = decryptMember(member!!)
+        decryptedMembers.add(decryptedMember)
+    }
+    return decryptedMembers
+}
+
 
 fun decryptMembers(members: RealmList<Member>): RealmList<DecryptedMember>? {
     val decryptedMembers = RealmList<DecryptedMember>()

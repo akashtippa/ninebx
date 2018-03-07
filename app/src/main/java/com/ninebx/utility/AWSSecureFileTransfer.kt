@@ -22,15 +22,21 @@ class AWSSecureFileTransfer( val context: Context ) {
     private var s3client: AmazonS3? = null
 
     private var privateKey: CharArray = NineBxApplication.getPreferences().privateKey!!.toCharArray()
-    private lateinit var privateKeyArrayBase64 : String
+    private var privateKeyArrayBase64 : String
 
     private var fileOperationsListener : AWSFileTransferHelper.FileOperationsCompletionListener ?= null
-
+    private val TAG = "SecureTransfer"
     init {
         s3client = AmazonS3Client(Util.getCredProvider(context))
+        AppLogger.d(TAG, "Private KEy : " + NineBxApplication.getPreferences().privateKey)
+        val privateKeyInt8 = convertToUInt8(NineBxApplication.getPreferences().privateKey!!.toByteArray())
+        AppLogger.d(TAG, "Private KEy UINT8: " + privateKeyInt8)
+        val encryptedPrivateKey = privateKeyInt8.encryptPrivateKeyForDownloadString()
+        AppLogger.d(TAG, "Private KEy Encrypted UINT8: " + encryptedPrivateKey)
         privateKeyArrayBase64 =
                             Base64.encodeToString(
                 NineBxApplication.getPreferences().privateKey!!.encryptString().toByteArray(), Base64.DEFAULT)
+        AppLogger.d(TAG, "Private KEy : " + privateKeyArrayBase64)
     }
 
     fun downloadSecureFile( filePath : String ) {

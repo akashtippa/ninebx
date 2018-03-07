@@ -16,8 +16,8 @@ class NineBxPreferences : Preferences() {
     var isPasswordRequired by booleanPref(Constants.IS_PASSWORD_REQUIRED)
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP, NONE_COMPLETE)
-    var userEmail by stringPref(Constants.USER_EMAIL, "")
-    var passCode by stringPref(Constants.PASSCODE, "")
+    var userEmail by stringPref(Constants.USER_EMAIL)
+    var passCode by stringPref(Constants.PASSCODE)
     var privateKey by stringPref(Constants.PRIVATE_KEY)
     var currentBox by stringPref(Constants.CURRENT_BOX)
 
@@ -25,10 +25,10 @@ class NineBxPreferences : Preferences() {
     var userFirstName by stringPref(Constants.USER_FIRST_NAME)
     var userLastName by stringPref(Constants.USER_LAST_NAME)
     var created by stringPref(Constants.USER_LAST_NAME)
-    var userPassword by stringPref(Constants.USER_PASSWORD, "")
-    var userPasswordUINT8 by stringPref(Constants.USER_PASSWORD_UINT, "")
+    var userPassword by stringPref(Constants.USER_PASSWORD)
+    var userPasswordUINT8 by stringPref(Constants.USER_PASSWORD_UINT)
 
-    var forTestingBackPress by stringPref(Constants.USER_FOR_TESTING, "")
+    var forTestingBackPress by stringPref(Constants.USER_FOR_TESTING)
     var isFingerPrintEnabled by booleanPref(Constants.FINGER_PRINT)
 
     fun clearPreferences() {
@@ -47,6 +47,7 @@ class NineBxPreferences : Preferences() {
         created = ""
         userPassword = ""
         userPasswordUINT8 = ""
+        AppLogger.d("Email", "Email : in clearPreferences : " + NineBxApplication.getPreferences().userEmail)
     }
 
     fun clearLogOutPreferences(email: String) {

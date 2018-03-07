@@ -16,7 +16,7 @@ import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptString
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>?, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -27,29 +27,34 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
-        val member = myList!![position]
-        //AppLogger.d("Decrypt", "Decrypting : " + member.toString())
+        val member = myList[position]
         holder.txtProfileName.text = member.firstName + " " + member.lastName
         holder.txtAccountHolder.text = member.relationship
         holder.txtRole.text = member.role
         holder.txtProfileEmail.text = member.email
 
-        holder.imgEdit.setOnClickListener {
-            iMemberAdded.onMemberEdit(member)
-        }
-
-        holder.imgDelete.setOnClickListener {
-            myList!!.removeAt(holder.position)
-        }
-
     }
 
     override fun getItemCount(): Int {
-        return if (null != myList) myList!!.size else 0
+        return myList.size
     }
 
+    internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent), View.OnClickListener {
+        override fun onClick(view: View?) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                when( view!!.id ) {
+                    R.id.imgEdit -> {
+                        iMemberAdded.onMemberEdit(myList[position])
+                    }
+                    R.id.imgDelete -> {
+                        val member = myList[position]
+                        iMemberAdded.onMemberDelete(member)
+                    }
+                }
+            }
 
-    internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
+        }
 
         val imgProfilePic: ImageView = parent.findViewById<View>(R.id.imgProfilePic) as ImageView
         val txtProfileName: TextView = parent.findViewById<View>(R.id.txtProfileName) as TextView
@@ -60,10 +65,20 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
 
         val imgEdit: ImageView = parent.findViewById<View>(R.id.imgEdit) as ImageView
         val imgDelete: ImageView = parent.findViewById<View>(R.id.imgDelete) as ImageView
+
+        init {
+            imgEdit.setOnClickListener(this)
+            imgDelete.setOnClickListener(this)
+        }
     }
 
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
+    }
+
+    fun deleteItem(member: DecryptedMember?) {
+        myList.remove(member)
+        notifyDataSetChanged()
     }
 
 
