@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.home.homeBanking.*
 import com.ninebx.ui.base.realm.lists.HomeList
+import com.ninebx.ui.base.realm.lists.TravelList
 import io.realm.RealmResults
 
 /**
@@ -24,6 +25,7 @@ class CategoryPresenter(private val categoryId: Int, private val combineItems: P
     var insuranceList   : RealmResults<Insurance> ?= null
     var taxList         : RealmResults<Taxes> ?= null
     var homeList        : RealmResults<HomeList> ?= null
+    var travelList      : RealmResults<TravelList> ?= null
 
     fun setDataForCombine(combine: RealmResults<Combine>) {
 

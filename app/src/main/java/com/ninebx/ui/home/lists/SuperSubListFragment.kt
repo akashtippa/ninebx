@@ -79,7 +79,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     fun setCombineFetched(combineFetched: ArrayList<DecryptedTravelList>?) {
         this.combineTravelFetched = combineFetched
-        searchItems.clear()
+        //searchItems.clear()
         for (item in combineFetched!!) {
             searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
@@ -638,7 +638,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                                 .equalTo("selectionType", "Travel".encryptString())
                                 .endGroup()
                                 .findAll()
-
+                        AppLogger.d("SuperSubListFragment", "Travel List" + checkItem)
                         if (checkItem.isValid) {
                             realm.executeTransaction({
                                 var homeList = HomeList()

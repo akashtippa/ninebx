@@ -117,7 +117,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedGovernment -> {
                     val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
-                    etTitle.setText(decryptedGovernment.name)
+                    etTitle.setText(decryptedGovernment.idName)
                     etTitleValue.setText(decryptedGovernment.nameOnId)
                 }
                 is DecryptedLicense ->{
@@ -132,16 +132,128 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedSocial -> {
                     val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
-                    etTitle.setText(decryptedSocial.nameOnCard)
+                    etTitle.setText(decryptedSocial.cardName)
                     etTitleValue.setText(decryptedSocial.cardName)
                 }
                 is DecryptedTaxID -> {
                     val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
-                    etTitle.setText(decryptedTaxID.name)
+                    etTitle.setText(decryptedTaxID.taxIdName)
                     etTitleValue.setText(decryptedTaxID.taxIdName)
                 }
-            }
+                //Wellness
+                is DecryptedIdentification -> {
+                    val decryptedIdentification : DecryptedIdentification = selectedDocument as DecryptedIdentification
+                    etTitle.setText(decryptedIdentification.name)
+                    etTitleValue.setText(decryptedIdentification.name)
+                }
+                is DecryptedMedicalHistory -> {
+                    val decryptedMedicalHistory : DecryptedMedicalHistory = selectedDocument as DecryptedMedicalHistory
+                    etTitle.setText(decryptedMedicalHistory.history)
+                }
+                is DecryptedCheckups -> {
+                    val decryptedCheckups : DecryptedCheckups = selectedDocument as DecryptedCheckups
+                    etTitle.setText(decryptedCheckups.checkup_description)
+                    etTitleValue.setText(decryptedCheckups.physicianName)
+                }
+                is DecryptedEmergencyContacts -> {
+                    val decryptedEmergencyContacts : DecryptedEmergencyContacts = selectedDocument as DecryptedEmergencyContacts
+                }
+                is DecryptedEyeglassPrescriptions -> {
+                    val decryptedEyeglassPrescriptions : DecryptedEyeglassPrescriptions = selectedDocument as DecryptedEyeglassPrescriptions
+                    etTitle.setText(decryptedEyeglassPrescriptions.physicianName)
+                    etTitleValue.setText(decryptedEyeglassPrescriptions.datePrescribed)
+                }
+                is DecryptedHealthcareProviders -> {
+                    val decryptedHealthcareProviders : DecryptedHealthcareProviders= selectedDocument as DecryptedHealthcareProviders
+                    etTitle.setText(decryptedHealthcareProviders.name)
+                    etTitleValue.setText(decryptedHealthcareProviders.physicianType)
+                }
+                is DecryptedMedicalConditions -> {
+                    val decryptedMedicalCOnditions : DecryptedMedicalConditions= selectedDocument as DecryptedMedicalConditions
+                    etTitle.setText(decryptedMedicalCOnditions.condition)
+                    etTitleValue.setText(decryptedMedicalCOnditions.dateDiagnosed)
+                }
+                is DecryptedMedications ->{
+                    val decryptedMedications : DecryptedMedications= selectedDocument as DecryptedMedications
+                    etTitle.setText(decryptedMedications.name)
+                    etTitleValue.setText(decryptedMedications.strength)
+                }
+                is DecryptedVitalNumbers -> {
+                    val decryptedVitalNumbers : DecryptedVitalNumbers= selectedDocument as DecryptedVitalNumbers
+                    etTitle.setText(decryptedVitalNumbers.vital_description)
+                    etTitleValue.setText(decryptedVitalNumbers.measurementDate)
+                }
+                //Travel
+                is DecryptedDocuments -> {
+                    val decryptedDocuments : DecryptedDocuments = selectedDocument as DecryptedDocuments
+                    etTitle.setText(decryptedDocuments.nameOnPassport)
+                    etTitleValue.setText(decryptedDocuments.nameOnVisa)
+                }
+                is DecryptedLoyalty -> {
+                    val decryptedLoyalty : DecryptedLoyalty = selectedDocument as DecryptedLoyalty
+                    AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
+                    when( decryptedLoyalty.selectionType ) {
+                        "travel_1001" -> {
+                            etTitle.setText(decryptedLoyalty.airLine)
+                        }
+                        "travel_1002" -> {
+                            etTitle.setText(decryptedLoyalty.hotel)
+                        }
+                        "travel_1003" -> {
+                            etTitle.setText(decryptedLoyalty.carRentalCompany)
+                        }
+                        "travel_1004" -> {
+                            etTitle.setText(decryptedLoyalty.cruiseline)
+                        }
+                        "travel_1005" -> {
+                            etTitle.setText(decryptedLoyalty.railway)
+                        }
+                        "travel_1006" -> {
+                            etTitle.setText(decryptedLoyalty.other)
+                        }
+                    }
 
+                    /*etTitleValue.setText(decryptedLoyalty.nameOnAccount)*/
+                }
+                is DecryptedTravel -> {
+                    val decryptedTravel : DecryptedTravel = selectedDocument as DecryptedTravel
+                    etTitle.setText(decryptedTravel.userName)
+                    etTitleValue.setText(decryptedTravel.nameOnAccount)
+                }
+                is DecryptedVacations -> {
+                    val decryptedVacations : DecryptedVacations = selectedDocument as DecryptedVacations
+                    etTitle.setText(decryptedVacations.vac_description)
+                    etTitleValue.setText(decryptedVacations.vac_description)
+                }
+
+                //Shopping
+                is DecryptedLoyaltyPrograms -> {
+                    val decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+                    etTitle.setText(decryptedLoyaltyPrograms.brandName)
+                    etTitleValue.setText(decryptedLoyaltyPrograms.accountName)
+                }
+                is DecryptedRecentPurchase -> {
+                    val decryptedRecentPurchase : DecryptedRecentPurchase = selectedDocument as DecryptedRecentPurchase
+                    etTitle.setText(decryptedRecentPurchase.itemName)
+                    etTitleValue.setText(decryptedRecentPurchase.brandName)
+                }
+                is DecryptedClothingSizes -> {
+                    val decryptedClothingSizes : DecryptedClothingSizes = selectedDocument as DecryptedClothingSizes
+                    etTitle.setText(decryptedClothingSizes.personName)
+                    etTitleValue.setText(decryptedClothingSizes.sizeName)
+                }
+                is DecryptedShopping -> {
+                    val decryptedShopping : DecryptedShopping = selectedDocument as DecryptedShopping
+                    etTitle.setText(decryptedShopping.institutionName)
+                    etTitle.setText(decryptedShopping.accountName)
+                }
+                //Interests
+                is DecryptedInterests -> {
+                    val decryptedInterests : DecryptedInterests = selectedDocument as DecryptedInterests
+                    etTitle.setText(decryptedInterests.institutionName)
+                    etTitleValue.setText(decryptedInterests.accountName)
+                }
+            }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -154,7 +266,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
-        if( arguments!!.containsKey("selectedDocument") ) {
+        if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
             classType = arguments!!.getString("classType")
             //AppLogger.d("Level2", "Selected Document : " + selectedDocument)
@@ -180,7 +292,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
             }
-
         }
     }
 
@@ -198,7 +309,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun setTitle() {
         val bundleValue = arguments!!.getString("categoryName")
-
         when (bundleValue) {
 
         // Common Items in Every

@@ -447,6 +447,4 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             }
         }
     }
-
-
 }
