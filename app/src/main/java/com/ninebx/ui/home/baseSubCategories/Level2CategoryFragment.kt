@@ -186,8 +186,17 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 //Travel
                 is DecryptedDocuments -> {
                     val decryptedDocuments : DecryptedDocuments = selectedDocument as DecryptedDocuments
-                    etTitle.setText(decryptedDocuments.nameOnPassport)
-                    etTitleValue.setText(decryptedDocuments.nameOnVisa)
+                    when(decryptedDocuments.selectionType){
+                        "travel_2001" -> {
+                            etTitle.setText(decryptedDocuments.passportName)
+                        }
+                        "travel_2002"->{
+                            etTitle.setText(decryptedDocuments.visaName)
+                        }
+                        "travel_2003" -> {
+                            etTitle.setText(decryptedDocuments.travelDocumentTitle)
+                        }
+                    }
                 }
                 is DecryptedLoyalty -> {
                     val decryptedLoyalty : DecryptedLoyalty = selectedDocument as DecryptedLoyalty

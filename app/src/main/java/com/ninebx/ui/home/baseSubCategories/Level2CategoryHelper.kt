@@ -318,10 +318,6 @@ class Level2CategoryHelper(
                 decryptedTaxes = selectedDocument as DecryptedTax
             }
 
-            DecryptedTravel::class.java.simpleName -> {
-                decryptedTravel = selectedDocument as DecryptedTravel
-            }
-
         // For Travel
             DecryptedLoyalty::class.java.simpleName -> {
                 decryptedLoyalty = selectedDocument as DecryptedLoyalty
@@ -2022,7 +2018,6 @@ class Level2CategoryHelper(
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
-
     }
 
     private fun getHotel() {
@@ -2913,9 +2908,7 @@ class Level2CategoryHelper(
             "Other travel document" -> {
                 setTravelDocuments(level2Category)
             }
-            "Vacation" -> {
-                setVacationItems(level2Category)
-            }
+            
             "Travel" -> {
                 setTravelItems(level2Category)
             }
@@ -2924,7 +2917,7 @@ class Level2CategoryHelper(
             }
             "Travel Dates And Plans" ->
             {
-                setTravelItems(level2Category)
+                setVacationItems(level2Category)
             }
 
 
@@ -4956,7 +4949,7 @@ class Level2CategoryHelper(
             if (decryptedDocuments!!.selectionType.equals("travel_2002"))
                 decryptedDocuments!!.visaName = title
             if (decryptedDocuments!!.selectionType.equals("travel_2003"))
-                decryptedDocuments!!.nameOnTravelDocument
+                decryptedDocuments!!.travelDocumentTitle = title
             AppLogger.d("SelectionType", " " + decryptedDocuments!!.selectionType)
             AppLogger.d("SelectionType", " Visa Name " + decryptedDocuments!!.visaName)
             AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
@@ -5014,7 +5007,7 @@ class Level2CategoryHelper(
         }
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
-            decryptedVacations!!.attachmentNames = title
+            decryptedVacations!!.vac_description = title
             if (decryptedVacations!!.id.toInt() == 0) {
                 decryptedVacations!!.id = getUniqueId()
             }
