@@ -305,8 +305,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         }
 
         if (strState.trim().isEmpty()) {
-            Toast.makeText(context, "Please enter 'State'", Toast.LENGTH_LONG).show()
-            edtState.requestFocus()
+            Toast.makeText(context, "Please enter 'Street address 2'", Toast.LENGTH_LONG).show()
+            edtAddress2.requestFocus()
             return false
         }
 

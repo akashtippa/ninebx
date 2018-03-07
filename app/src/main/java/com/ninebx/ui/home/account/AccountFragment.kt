@@ -255,14 +255,6 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             if (!fromFingerPrint) {
 
                 if( isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    val keyguardManager = context!!.getSystemService(KeyguardManager::class.java)
-                    if (!keyguardManager.isKeyguardSecure) {
-                        // Show a message that the user hasn't set up a fingerprint or lock screen.
-                        onError((R.string.setup_lock_screen))
-                        switchTouchId.isChecked = false
-                        return@setOnCheckedChangeListener
-                    }
-
                     val fingerprintManager = context!!.getSystemService(FingerprintManager::class.java)
                     if (!fingerprintManager.hasEnrolledFingerprints()) {
                         // This happens when no fingerprints are registered.
