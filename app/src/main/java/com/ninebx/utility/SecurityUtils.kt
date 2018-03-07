@@ -70,7 +70,7 @@ fun encryptAESKeyPassword(inputString: String, privateKey: ByteArray): String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    val input = inputString.toByteArray()
+    val input = inputString.trim().toByteArray()
     val keyBytes = privateKey
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
@@ -120,7 +120,7 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    val input = inputString.toByteArray()
+    val input = inputString.trim().toByteArray()
     val keyBytes = (privateKey.toByteArray(Charsets.UTF_8))
     val key = SecretKeySpec(keyBytes, "AES")
     val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
@@ -186,7 +186,7 @@ fun decryptAESKEY(cipherTextBase64: ByteArray?, masterPassword: String): String 
 
 }
 
-fun encryptDecryptAESKey(masterPassword: String): String {
+/*fun encryptDecryptAESKey(masterPassword: String): String {
 
     Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
 
@@ -256,10 +256,10 @@ fun encryptAESKey(masterPassword: String): String {
 
     return ""
 
-}
+}*/
 
 
-fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
+/*fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
 
     val keyBytes = (masterPassword.toByteArray(Charsets.UTF_8))
     val key = SecretKeySpec(keyBytes, "AES")
@@ -281,7 +281,7 @@ fun decryptAESKey(cipherTextBase64: ByteArray?, masterPassword: String) {
     //AppLogger.d("decryptAESKey", "Plain Text : " + String(plainText).substring(0, ptLength))
     //AppLogger.d("decryptAESKey", "Plain Text Bytes : " + Arrays.toString(plainText))
     //AppLogger.d("decryptAESKey", "ptLength : " + plainText.size)
-}
+}*/
 
 /**
  *
@@ -378,8 +378,12 @@ fun securityTest() {
     //AppLogger.d("securityTest", "Decrypted Key : " + decryptedKey)
 }
 
+fun String.encryptPrivateKeyForDownloadString(): String {
+    return encryptAESKey(this.trim(), convertToUInt8(NineBxApplication.getPreferences().privateKey!!.trim().toByteArray()))
+}
+
 fun String.encryptString(): String {
-    return encryptAESKey(this.trim(), NineBxApplication.getPreferences().privateKey!!)
+    return encryptAESKey(this.trim(), NineBxApplication.getPreferences().privateKey!!.trim())
 }
 
 fun String.decryptString(): String {
