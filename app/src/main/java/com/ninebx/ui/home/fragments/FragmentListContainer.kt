@@ -101,6 +101,9 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
 
+        toolbarTitle.text = categoryName
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment()  }
+        ivBack.setOnClickListener {  NineBxApplication.instance.activityInstance!!.onBackPressed() }
 //        changeToolbarTitleAndAddInfo(fragmentValue)
 
         //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(categoryName)

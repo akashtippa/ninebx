@@ -2,7 +2,9 @@ package com.ninebx.ui.home.account
 
 import android.app.Activity
 import android.app.Dialog
+import android.app.KeyguardManager
 import android.content.Intent
+import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -251,7 +253,28 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         switchTouchId.setOnCheckedChangeListener { _, isChecked ->
             if (!fromFingerPrint) {
-                startActivityForResult(Intent(context, AuthActivity::class.java).putExtra(Constants.RESET_FINGER_PRINT, true).putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
+
+                if( isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    val keyguardManager = context!!.getSystemService(KeyguardManager::class.java)
+                    if (!keyguardManager.isKeyguardSecure) {
+                        // Show a message that the user hasn't set up a fingerprint or lock screen.
+                        onError((R.string.setup_lock_screen))
+                        switchTouchId.isChecked = false
+                        return@setOnCheckedChangeListener
+                    }
+
+                    val fingerprintManager = context!!.getSystemService(FingerprintManager::class.java)
+                    if (!fingerprintManager.hasEnrolledFingerprints()) {
+                        // This happens when no fingerprints are registered.
+                        onError((R.string.register_fingerprint))
+                        switchTouchId.isChecked = false
+                        return@setOnCheckedChangeListener
+                    }
+
+                }
+                startActivityForResult(Intent(context, AuthActivity::class.java)
+                        .putExtra(Constants.RESET_FINGER_PRINT, true)
+                        .putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
             } else fromFingerPrint = false
         }
 

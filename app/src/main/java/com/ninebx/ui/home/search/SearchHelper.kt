@@ -280,7 +280,7 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(travel in searchDecryptCombineTravel.travelItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, travel.nameOnAccount, "travel", travel.selectionType, itemIndex++, travel.id))
+            mSearchTravelItems.add(Level3SearchItem(R.string.travel, travel.nameOnAccount, "travel", travel.selectionType, itemIndex++, travel.id))
         }
         itemIndex = 0
         for(vacation in searchDecryptCombineTravel.vacationsItems){
