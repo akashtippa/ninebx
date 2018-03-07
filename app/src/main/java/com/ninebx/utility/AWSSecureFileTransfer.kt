@@ -40,8 +40,8 @@ class AWSSecureFileTransfer( val context: Context ) {
         AppLogger.d(TAG, "Private KEy Encrypted: " + privateKeyArrayBase64)
 
         val md5Data = MD5Helper.getMD5(privateKeyArrayBase64)
-        AppLogger.d(TAG, "Private KEy MD5 String : " + privateKeyArrayBase64)
-        AppLogger.d(TAG, "Private KEy MD5 convertToUInt8 : " + convertToUInt8(privateKeyArrayBase64.toByteArray(Charsets.UTF_8)))
+        AppLogger.d(TAG, "Private KEy MD5 String : " + md5Data)
+        AppLogger.d(TAG, "Private KEy MD5 convertToUInt8 : " + convertToUInt8(md5Data.toByteArray(Charsets.UTF_8)))
     }
 
     fun downloadSecureFile( filePath : String ) {
