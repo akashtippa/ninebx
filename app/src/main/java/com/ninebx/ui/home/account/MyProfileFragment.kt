@@ -165,6 +165,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             "Account" -> {
                 toolbarProfile.show()
                 toolbarCompleteProfile.hide()
+                txtGender.isEnabled = false
                 imgEdit.show()
             }
         }
@@ -241,6 +242,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         edtLastName.isEnabled = true
         txtDOB.isEnabled = true
         txtAnniversary.isEnabled = true
+        txtGender.isEnabled = true
         edtMobileNumber.isEnabled = true
         edtAddress1.isEnabled = true
         edtAddress2.isEnabled = true
