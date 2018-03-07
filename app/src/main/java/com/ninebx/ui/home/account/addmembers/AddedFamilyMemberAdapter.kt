@@ -29,10 +29,10 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
 
         val member = myList!![position]
         //AppLogger.d("Decrypt", "Decrypting : " + member.toString())
-        holder.txtProfileName.text = member.firstName.decryptString() + " " + member.lastName.decryptString()
-        holder.txtAccountHolder.text = member.relationship.decryptString()
-        holder.txtRole.text = member.role.decryptString()
-        holder.txtProfileEmail.text = member.email.decryptString()
+        holder.txtProfileName.text = member.firstName + " " + member.lastName
+        holder.txtAccountHolder.text = member.relationship
+        holder.txtRole.text = member.role
+        holder.txtProfileEmail.text = member.email
 
         holder.imgEdit.setOnClickListener {
             iMemberAdded.onMemberEdit(member)

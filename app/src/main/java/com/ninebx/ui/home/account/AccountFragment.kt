@@ -214,6 +214,10 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
         txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
 
+        if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() ) {
+             NineBxApplication.getPreferences().userEmail = txtUserEmail.text.toString().trim()
+        }
+
         txtProfile.setOnClickListener(this)
         txtSecurityOverview.setOnClickListener(this)
         txtTermsOfUse.setOnClickListener(this)

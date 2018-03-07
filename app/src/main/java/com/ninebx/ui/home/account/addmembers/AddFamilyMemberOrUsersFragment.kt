@@ -20,12 +20,10 @@ import com.bumptech.glide.Glide
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.home.account.permissions.PermissionDialog
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
-import com.ninebx.utility.Constants
-import com.ninebx.utility.FragmentBackHelper
-import com.ninebx.utility.decryptString
-import com.ninebx.utility.encryptString
+import com.ninebx.utility.*
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
 import java.util.*
@@ -98,7 +96,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
         }
 
-        member = arguments!!.getParcelable(Constants.MEMBER)
+        member = encryptMember(arguments!!.getParcelable<DecryptedMember>(Constants.MEMBER))!!
         isNewAccount = arguments!!.getBoolean(Constants.IS_NEW_ACCOUNT, false)
         selectedRelation = txtRelationship.selectedItem.toString()
         selectedRole = txtsRole.selectedItem.toString()
@@ -158,7 +156,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
         else {
             saveUpdatedMember(this@AddFamilyMemberOrUsersFragment.member.userId)
-            memberView.onNewMember(updateMember!!)
+            memberView.onNewMember(decryptMember(updateMember!!)!!)
         }
     }
 
@@ -417,7 +415,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     fun onAccountCreated(user: SyncUser) {
         saveUpdatedMember(user.identity)
-        memberView.onNewMember(updateMember!!)
+        memberView.onNewMember(decryptMember(updateMember!!)!!)
         //update user and member permissions
         user.logout()
     }

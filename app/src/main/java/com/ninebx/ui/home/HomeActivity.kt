@@ -96,6 +96,9 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         if (currentUsers != null) {
             AppLogger.d("HomeActivity", "Users : " + currentUsers)
             AppLogger.d("HomeActivity", "Users found")
+            if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && currentUsers[0].emailAddress.isNotEmpty() ) {
+                NineBxApplication.getPreferences().userEmail = currentUsers[0].emailAddress
+            }
             this@HomeActivity.hideProgressDialog()
             //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
             //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
@@ -109,10 +112,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 toggleCheck(true)
                 bottomNavigationView.menu.getItem(4).isChecked = true
                 callBottomViewFragment(getString(R.string.account))
-                if( currentUsers!![0]!!.completeProfile ) {
-                    navigateToAddMembers()
-                }
-                else {
+                if( !currentUsers!![0]!!.completeProfile ) {
                     navigateToMyProfile()
                 }
             }
