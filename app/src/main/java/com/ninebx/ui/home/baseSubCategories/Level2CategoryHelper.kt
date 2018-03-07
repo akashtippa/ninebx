@@ -248,7 +248,7 @@ class Level2CategoryHelper(
             "Add person" -> {
                 getWork()
             }
-            "Travel Dates And Plans" -> {
+             "Travel Dates And Plans"-> {
                 getTravelDatesAndPlans()
             }
 
@@ -2922,6 +2922,11 @@ class Level2CategoryHelper(
             "TravelInstitution" -> {
                 setTravelItems(level2Category)
             }
+            "Travel Dates And Plans" ->
+            {
+                setTravelItems(level2Category)
+            }
+
 
         // Common View
             "Services/Other Accounts" -> {
@@ -3371,29 +3376,35 @@ class Level2CategoryHelper(
     }
 
     private fun setTravelItems(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Institution name" -> decryptedTravel!!.institutionName = level2Category.titleValue
-            "Account name" -> decryptedTravel!!.accountName = level2Category.titleValue
-            "Account type" -> decryptedTravel!!.accountType = level2Category.titleValue
-            "Location" -> decryptedTravel!!.location = level2Category.titleValue
-            "Name(s) on account" -> decryptedTravel!!.nameOnAccount = level2Category.titleValue
-            "SWIFT/other code" -> decryptedTravel!!.swiftCode = level2Category.titleValue
-            "ABA routing number" -> decryptedTravel!!.abaRoutingNumber = level2Category.titleValue
-            "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
-            "Website" -> decryptedTravel!!.website = level2Category.titleValue
-            "Username/login" -> decryptedTravel!!.userName = level2Category.titleValue
-            "Password" -> decryptedTravel!!.password = level2Category.titleValue
-            "PIN" -> decryptedTravel!!.pin = level2Category.titleValue
-            "Payment method on file" -> decryptedTravel!!.paymentMethodOnFile = level2Category.titleValue
-            "Title" -> decryptedTravel!!.title = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedTravel!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedTravel!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
+         when(level2Category.title){
+             "Institution name" -> decryptedTravel!!.institutionName = level2Category.titleValue
+             "Account name" -> decryptedTravel!!.accountName = level2Category.titleValue
+             "Account type" -> decryptedTravel!!.accountType = level2Category.titleValue
+             "Name(s) on account" -> decryptedTravel!!.nameOnAccount = level2Category.titleValue
+
+             "Location" -> decryptedTravel!!.location = level2Category.titleValue
+             "SWIFT/other code" -> decryptedTravel!!.swiftCode = level2Category.titleValue
+             "ABA routing number" -> decryptedTravel!!.abaRoutingNumber = level2Category.titleValue
+             "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
+             "Account number" -> decryptedTravel!!.accountNumber = level2Category.titleValue
+
+             "Website" -> decryptedTravel!!.website = level2Category.titleValue
+             "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
+             "Username/login" -> decryptedTravel!!.userName = level2Category.titleValue
+             "Password" -> decryptedTravel!!.password = level2Category.titleValue
+             "PIN" -> decryptedTravel!!.pin = level2Category.titleValue
+             "Payment method on file" -> decryptedTravel!!.paymentMethodOnFile = level2Category.titleValue
+             "Notes" -> decryptedTravel!!.notes = level2Category.titleValue
+             "Title" -> decryptedTravel!!.title = level2Category.titleValue
+             else -> {
+                 when (level2Category.type) {
+                     Constants.LEVEL2_NOTES -> decryptedTravel!!.notes = level2Category.titleValue
+                     Constants.LEVEL2_ATTACHMENTS -> decryptedTravel!!.attachmentNames = level2Category.titleValue
+                 }
+             }
+         }
     }
+    
 
     private fun setIdentification(level2Category: Level2SubCategory) {
         when (level2Category.title) {
@@ -4072,7 +4083,7 @@ class Level2CategoryHelper(
 
         if (decryptedSocial != null) {
             decryptedSocial!!.selectionType = categoryID
-            decryptedSocial!!.nameOnCard = title
+            decryptedSocial!!.cardName = title
             if (decryptedSocial!!.id.toInt() == 0) {
                 decryptedSocial!!.id = getUniqueId()
             }
@@ -4126,7 +4137,7 @@ class Level2CategoryHelper(
         }
         if (decryptedTAX_ID != null) {
             decryptedTAX_ID!!.selectionType = categoryID
-            decryptedTAX_ID!!.name = title
+            decryptedTAX_ID!!.taxIdName = title
             if (decryptedTAX_ID!!.id.toInt() == 0) {
                 decryptedTAX_ID!!.id = getUniqueId()
             }
@@ -4180,7 +4191,7 @@ class Level2CategoryHelper(
 
         if (decryptedOtherGovernment != null) {
             decryptedOtherGovernment!!.selectionType = categoryID
-            decryptedOtherGovernment!!.name = title
+            decryptedOtherGovernment!!.idName = title
             if (decryptedOtherGovernment!!.id.toInt() == 0) {
                 decryptedOtherGovernment!!.id = getUniqueId()
             }
@@ -4829,6 +4840,7 @@ class Level2CategoryHelper(
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
             AppLogger.d("LoyaltySelectionType", " " + decryptedLoyalty!!.selectionType)
+            AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
 
             if (decryptedLoyalty!!.id.toInt() == 0) {
                 decryptedLoyalty!!.id = getUniqueId()

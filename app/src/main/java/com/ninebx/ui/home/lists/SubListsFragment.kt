@@ -193,7 +193,6 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     }
 
                 })
-
             }
             R.string.contacts -> {
                 savingTheCreatedTime()
@@ -210,9 +209,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
                     }
-
                 })
-
             }
             R.string.education_work -> {
                 savingTheCreatedTime()
@@ -250,7 +247,6 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     }
 
                 })
-
             }
             R.string.interests -> {
                 savingTheCreatedTime()
@@ -428,7 +424,6 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
             searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
-
     }
 
     private var combineWellnessFetched: ArrayList<DecryptedWellnessList>? = null

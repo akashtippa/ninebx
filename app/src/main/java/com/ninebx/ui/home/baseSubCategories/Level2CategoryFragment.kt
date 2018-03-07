@@ -117,7 +117,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedGovernment -> {
                     val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
-                    etTitle.setText(decryptedGovernment.name)
+                    etTitle.setText(decryptedGovernment.idName)
                     etTitleValue.setText(decryptedGovernment.nameOnId)
                 }
                 is DecryptedLicense ->{
@@ -132,12 +132,12 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedSocial -> {
                     val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
-                    etTitle.setText(decryptedSocial.nameOnCard)
+                    etTitle.setText(decryptedSocial.cardName)
                     etTitleValue.setText(decryptedSocial.cardName)
                 }
                 is DecryptedTaxID -> {
                     val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
-                    etTitle.setText(decryptedTaxID.name)
+                    etTitle.setText(decryptedTaxID.taxIdName)
                     etTitleValue.setText(decryptedTaxID.taxIdName)
                 }
                 //Wellness
@@ -191,8 +191,29 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedLoyalty -> {
                     val decryptedLoyalty : DecryptedLoyalty = selectedDocument as DecryptedLoyalty
-                    etTitle.setText(decryptedLoyalty.accountName)
-                    etTitleValue.setText(decryptedLoyalty.nameOnAccount)
+                    AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
+                    when( decryptedLoyalty.selectionType ) {
+                        "travel_1001" -> {
+                            etTitle.setText(decryptedLoyalty.airLine)
+                        }
+                        "travel_1002" -> {
+                            etTitle.setText(decryptedLoyalty.hotel)
+                        }
+                        "travel_1003" -> {
+                            etTitle.setText(decryptedLoyalty.carRentalCompany)
+                        }
+                        "travel_1004" -> {
+                            etTitle.setText(decryptedLoyalty.cruiseline)
+                        }
+                        "travel_1005" -> {
+                            etTitle.setText(decryptedLoyalty.railway)
+                        }
+                        "travel_1006" -> {
+                            etTitle.setText(decryptedLoyalty.other)
+                        }
+                    }
+
+                    /*etTitleValue.setText(decryptedLoyalty.nameOnAccount)*/
                 }
                 is DecryptedTravel -> {
                     val decryptedTravel : DecryptedTravel = selectedDocument as DecryptedTravel
@@ -225,6 +246,12 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedShopping : DecryptedShopping = selectedDocument as DecryptedShopping
                     etTitle.setText(decryptedShopping.institutionName)
                     etTitle.setText(decryptedShopping.accountName)
+                }
+                //Interests
+                is DecryptedInterests -> {
+                    val decryptedInterests : DecryptedInterests = selectedDocument as DecryptedInterests
+                    etTitle.setText(decryptedInterests.institutionName)
+                    etTitleValue.setText(decryptedInterests.accountName)
                 }
             }
     }
@@ -265,7 +292,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
             }
-
         }
     }
 
