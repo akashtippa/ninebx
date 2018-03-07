@@ -169,55 +169,55 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
         combineFetched = ArrayList()
-        combineFetched!!.addAll(decryptCombine!!.asIterable())
+        combineFetched!!.addAll(decryptCombine!!.toList())
         setCombine(combineFetched)
     }
 
     override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
         combineTravelFetched = ArrayList()
-        combineTravelFetched!!.addAll(decryptCombine!!.asIterable())
+        combineTravelFetched!!.addAll(decryptCombine!!.toList())
         setCombineFetched(combineTravelFetched)
     }
 
     override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
         combineContactsFetched = ArrayList()
-        combineContactsFetched!!.addAll(decryptCombine!!.asIterable())
+        combineContactsFetched!!.addAll(decryptCombine!!.toList())
         setCombineContacts(combineContactsFetched)
     }
 
     override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
         combineEducationFetched = ArrayList()
-        combineEducationFetched!!.addAll(decryptCombine!!.asIterable())
+        combineEducationFetched!!.addAll(decryptCombine!!.toList())
         setCombineEduction(combineEducationFetched)
     }
 
     override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
         combineInterestsFetched = ArrayList()
-        combineInterestsFetched!!.addAll(decryptCombine!!.asIterable())
+        combineInterestsFetched!!.addAll(decryptCombine!!.toList())
         setCombineInterests(combineInterestsFetched)
     }
 
     override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
         combinePersonalFetched = ArrayList()
-        combinePersonalFetched!!.addAll(decryptCombine!!.asIterable())
+        combinePersonalFetched!!.addAll(decryptCombine!!.toList())
         setCombinePersonal(combinePersonalFetched)
     }
 
     override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
         combineWellnessFetched = ArrayList()
-        combineWellnessFetched!!.addAll(decryptCombine!!.asIterable())
+        combineWellnessFetched!!.addAll(decryptCombine!!.toList())
         setCombineWellness(combineWellnessFetched)
     }
 
     override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
         combineMemoriesFetched = ArrayList()
-        combineMemoriesFetched!!.addAll(decryptCombine!!.asIterable())
+        combineMemoriesFetched!!.addAll(decryptCombine!!.toList())
         setCombineMemories(combineMemoriesFetched)
     }
 
     override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
         combineShoppingFetched = ArrayList()
-        combineShoppingFetched!!.addAll(decryptCombine!!.asIterable())
+        combineShoppingFetched!!.addAll(decryptCombine!!.toList())
         setCombineShopping(combineShoppingFetched)
     }
 

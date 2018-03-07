@@ -74,17 +74,20 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginRight="@dimen/default_margin">
+        android:layout_marginRight="@dimen/default_mini_margin"
+        android:layout_marginEnd="@dimen/default_mini_margin">
 
 
         <ImageView
             android:id="@+id/imgEdit"
+            android:padding="@dimen/default_mini_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_icon_edit" />
 
         <ImageView
             android:id="@+id/imgDelete"
+            android:padding="@dimen/default_mini_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_icon_delete_icon" />

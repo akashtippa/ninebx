@@ -96,6 +96,9 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         if (currentUsers != null) {
             AppLogger.d("HomeActivity", "Users : " + currentUsers)
             AppLogger.d("HomeActivity", "Users found")
+            for( member in currentUsers[0].members) {
+                AppLogger.d("HomeActivity", "Members : " + member)
+            }
             if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && currentUsers[0].emailAddress.isNotEmpty() ) {
                 NineBxApplication.getPreferences().userEmail = currentUsers[0].emailAddress
             }

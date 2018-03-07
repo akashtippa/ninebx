@@ -34,14 +34,6 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
         holder.txtRole.text = member.role
         holder.txtProfileEmail.text = member.email
 
-        holder.imgEdit.setOnClickListener {
-            iMemberAdded.onMemberEdit(member)
-        }
-
-        holder.imgDelete.setOnClickListener {
-            myList!!.removeAt(holder.position)
-        }
-
     }
 
     override fun getItemCount(): Int {
@@ -49,7 +41,22 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
     }
 
 
-    internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
+    internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent), View.OnClickListener {
+        override fun onClick(view: View?) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                when( view!!.id ) {
+                    R.id.imgEdit -> {
+                        iMemberAdded.onMemberEdit(myList!![position])
+                    }
+                    R.id.imgDelete -> {
+                        val member = myList!![position]
+                        iMemberAdded.onMemberDelete(member)
+                    }
+                }
+            }
+
+        }
 
         val imgProfilePic: ImageView = parent.findViewById<View>(R.id.imgProfilePic) as ImageView
         val txtProfileName: TextView = parent.findViewById<View>(R.id.txtProfileName) as TextView
@@ -60,10 +67,20 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
 
         val imgEdit: ImageView = parent.findViewById<View>(R.id.imgEdit) as ImageView
         val imgDelete: ImageView = parent.findViewById<View>(R.id.imgDelete) as ImageView
+
+        init {
+            imgEdit.setOnClickListener(this)
+            imgDelete.setOnClickListener(this)
+        }
     }
 
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
+    }
+
+    fun deleteItem(member: DecryptedMember?) {
+        myList!!.remove(member)
+        notifyDataSetChanged()
     }
 
 

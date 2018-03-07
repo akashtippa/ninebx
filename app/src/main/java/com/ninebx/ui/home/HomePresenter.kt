@@ -12,6 +12,7 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmChangeListener
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 
@@ -221,9 +222,27 @@ class HomePresenter( val homeView : HomeView ) {
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
                 homeView.setCurrentUsers(currentUsers!!)
+                registerUsersChangeListener()
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+    }
+
+    fun registerUsersChangeListener() {
+        prepareRealmConnections(homeView.getContextForScreen(), false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                realm!!.where(Users::class.java).findAll().addChangeListener( object : RealmChangeListener<RealmResults<Users>> {
+                    override fun onChange(t: RealmResults<Users>?) {
+                        currentUsers = ArrayList()
+                        for( user in t!! ) {
+                            currentUsers!!.add( decryptUsers(user) )
+                        }
+                        homeView.setCurrentUsers(currentUsers)
+                    }
+                } )
+            }
+
+        })
     }
 /*
     fun addNotification(expirationDate: String, date: Date, subTitle: String, box_Name : String) {

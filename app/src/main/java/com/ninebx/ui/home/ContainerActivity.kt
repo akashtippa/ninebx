@@ -82,15 +82,26 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
     private var addFamilyMemberOrUsersFragment: AddFamilyMemberOrUsersFragment? = null
 
     override fun onConfirmPassword(password: String) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
-        val bundle = intent.extras
-        bundle.putString(Constants.USER_PASSWORD, password)
-        addFamilyMemberOrUsersFragment!!.arguments = bundle
-        fragmentTransaction.replace(R.id.fragmentContainer, addFamilyMemberOrUsersFragment).commit()
+        when( fromWhichClass ) {
+            "AddMember" -> {
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.addToBackStack(null)
+                addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
+                val bundle = intent.extras
+                bundle.putString(Constants.USER_PASSWORD, password)
+                addFamilyMemberOrUsersFragment!!.arguments = bundle
+                fragmentTransaction.replace(R.id.fragmentContainer, addFamilyMemberOrUsersFragment).commit()
+            }
+            "DeleteMember" -> {
+                onNewMember(intent.getParcelableExtra(Constants.MEMBER))
+            }
+        }
+
+
     }
 
+
+    private lateinit var fromWhichClass: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +109,6 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
 
         if (NineBxApplication.getPreferences().currentStep < ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
-        var fromWhichClass = ""
 
         val intent = intent
         fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
@@ -107,7 +117,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "MemoryView" -> {
                 loadMemoryTimeLine()
             }
-            "AddMember" -> {
+            "AddMember", "DeleteMember" -> {
                 loadMasterPasswordFragment()
             }
             "Contacts" -> {

@@ -30,6 +30,7 @@ import java.io.File
 class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransferHelper.FileOperationsCompletionListener {
 
     private val ADD_EDIT_MEMBER = 4324
+    private val DELETE_MEMBER = 4325
 
     override fun onMemberEdit(member: DecryptedMember?) {
         myList.remove(member)
@@ -39,6 +40,13 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         bundle.putString(Constants.FROM_CLASS, "AddMember")
         bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
+    }
+
+    override fun onMemberDelete(member: DecryptedMember?) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.MEMBER, member)
+        bundle.putString(Constants.FROM_CLASS, "DeleteMember")
+        startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), DELETE_MEMBER)
     }
 
     override fun onSuccess(outputFile: File?) {
@@ -91,7 +99,6 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
             bundle.putParcelable(Constants.MEMBER, DecryptedMember())
             bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
             bundle.putString(Constants.FROM_CLASS, "AddMember")
-
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
         }
 
@@ -113,7 +120,14 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         prepareRealmConnectionsRealmThread(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 usersRealm = realm
-                saveUserObject()
+                val results = usersRealm!!.where(Member::class.java).distinctValues("userId").findAll()
+                myList.clear()
+                myList.addAll(decryptMembers(results!!)!!.toList())
+                for( member in myList ) {
+                    AppLogger.d("Member", "List : " + member)
+                }
+                mListsAdapter!!.notifyDataSetChanged()
+                //saveUserObject()
             }
 
         })
@@ -122,10 +136,15 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     private fun saveUserObject() {
         val userObject = createUserObject(currentUsers!![0], myList)
-        userObject.insertOrUpdate(usersRealm!!)
-        NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0] = decryptUsers(userObject)
+        usersRealm!!.beginTransaction()
+        usersRealm!!.insertOrUpdate(userObject)
+        val usersList = NineBxApplication.instance.activityInstance!!.getCurrentUsers()
+        usersList[0] = decryptUsers(userObject)
+        NineBxApplication.instance.activityInstance!!.setCurrentUsers(usersList)
+
         context!!.hideProgressDialog()
         mListsAdapter!!.notifyDataSetChanged()
+        usersRealm!!.commitTransaction()
     }
 
     override fun onBackPressed(): Boolean {
@@ -136,7 +155,14 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK) {
             memberAdded((data!!.getParcelableExtra(Constants.MEMBER)))
-        } else
+        }
+        else if ( requestCode == DELETE_MEMBER && resultCode == Activity.RESULT_OK ) {
+            val member = data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER)
+            val results = usersRealm!!.where(Member::class.java).equalTo("userId", member!!.userId).findAll()
+            results.deleteAllFromRealm()
+            mListsAdapter!!.deleteItem( member )
+        }
+        else
             super.onActivityResult(requestCode, resultCode, data)
 
     }

@@ -26,6 +26,7 @@ import com.ninebx.ui.base.realm.home.travel.*
 import com.ninebx.ui.base.realm.home.wellness.*
 import com.ninebx.ui.base.realm.lists.*
 import io.realm.RealmList
+import io.realm.RealmResults
 import org.spongycastle.crypto.digests.SHA256Digest
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -409,7 +410,7 @@ fun createUserObject(users: DecryptedUsers, members: java.util.ArrayList<Decrypt
     newUser.state = (users.state).encryptString()
     newUser.mobileNumber = (users.mobileNumber).encryptString()
     newUser.profilePhoto = users.profilePhoto
-    newUser.members.addAll(encryptMembers(members)!!.asIterable())
+    newUser.members.addAll(encryptMembers(members)!!.toList())
     newUser.relationship = (users.relationship).encryptString()
     return newUser
 
@@ -528,6 +529,17 @@ fun decryptUsers(currentUser: Users): DecryptedUsers {
     //AppLogger.d("Decrypt", "decryptUSers : " + decryptedUsers)
     return decryptedUsers
 }
+
+fun decryptMembers(members: RealmResults<Member>): RealmList<DecryptedMember>? {
+    val decryptedMembers = RealmList<DecryptedMember>()
+    for (i in 0 until members.size) {
+        val member = members[i]
+        val decryptedMember = decryptMember(member!!)
+        decryptedMembers.add(decryptedMember)
+    }
+    return decryptedMembers
+}
+
 
 fun decryptMembers(members: RealmList<Member>): RealmList<DecryptedMember>? {
     val decryptedMembers = RealmList<DecryptedMember>()

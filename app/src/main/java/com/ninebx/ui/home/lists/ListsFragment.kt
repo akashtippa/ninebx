@@ -23,55 +23,55 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
     override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
         txtHomeNumber.text = contactsUpdating.toString()
         combineFetched!!.clear()
-        this.combineFetched!!.addAll(decryptCombine!!.asIterable())
+        this.combineFetched!!.addAll(decryptCombine!!.toList())
     }
 
     override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
         txtTravelNumber.text = contactsUpdating.toString()
         combineTravelFetched!!.clear()
-        this.combineTravelFetched!!.addAll(decryptCombine.asIterable())
+        this.combineTravelFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
         txtContactNumber.text = contactsUpdating.toString()
         combineContactsFetched!!.clear()
-        this.combineContactsFetched!!.addAll(decryptCombine.asIterable())
+        this.combineContactsFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
         txtEducationNumber.text = contactsUpdating.toString()
         combineEducationFetched!!.clear()
-        this.combineEducationFetched!!.addAll(decryptCombine.asIterable())
+        this.combineEducationFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
         txtInterestsNumber.text = contactsUpdating.toString()
         combineInterestsFetched!!.clear()
-        this.combineInterestsFetched!!.addAll(decryptCombine.asIterable())
+        this.combineInterestsFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
         txtPersonalNumber.text = contactsUpdating.toString()
         combinePersonalFetched!!.clear()
-        this.combinePersonalFetched!!.addAll(decryptCombine.asIterable())
+        this.combinePersonalFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
         txtWellnessNumber.text = contactsUpdating.toString()
         combineWellnessFetched!!.clear()
-        this.combineWellnessFetched!!.addAll(decryptCombine.asIterable())
+        this.combineWellnessFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
         txtMemoriesNumber.text = contactsUpdating.toString()
         combineMemoriesFetched!!.clear()
-        this.combineMemoriesFetched!!.addAll(decryptCombine.asIterable())
+        this.combineMemoriesFetched!!.addAll(decryptCombine.toList())
     }
 
     override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
         txtShoppingNumber.text = contactsUpdating.toString()
         combineShoppingFetched!!.clear()
-        this.combineShoppingFetched!!.addAll(decryptCombine.asIterable())
+        this.combineShoppingFetched!!.addAll(decryptCombine.toList())
     }
 
     val combineFetched: ArrayList<DecryptedHomeList>? = ArrayList()
