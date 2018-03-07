@@ -101,6 +101,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             }
             if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && currentUsers[0].emailAddress.isNotEmpty() ) {
                 NineBxApplication.getPreferences().userEmail = currentUsers[0].emailAddress
+                AppLogger.d("Email", "HomeActivity + setCurrentUsers : " + NineBxApplication.getPreferences().userEmail)
             }
             this@HomeActivity.hideProgressDialog()
             //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())

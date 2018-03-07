@@ -214,8 +214,9 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
         txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
 
-        if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() ) {
+        if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && txtUserEmail.text.toString().isNotEmpty() ) {
              NineBxApplication.getPreferences().userEmail = txtUserEmail.text.toString().trim()
+            AppLogger.d("Email", "Account Fragment set Email : " + NineBxApplication.getPreferences().userEmail)
         }
 
         txtProfile.setOnClickListener(this)

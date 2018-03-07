@@ -215,6 +215,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         setContentView(R.layout.activity_auth)
         if( intent.hasExtra(Constants.USER_EMAIL) ) {
             NineBxApplication.getPreferences().userEmail = intent.getStringExtra(Constants.USER_EMAIL)
+            AppLogger.d("Email", "AuthActivity onCreate : " + NineBxApplication.getPreferences().userEmail)
         }
         navigateToScreen()
     }

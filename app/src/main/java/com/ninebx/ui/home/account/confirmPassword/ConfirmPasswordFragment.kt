@@ -42,6 +42,9 @@ class ConfirmPasswordFragment : Fragment() {
                 memberView.showError(getString(R.string.check_password))
             }
         }
+        ivBackPass.setOnClickListener {
+            activity!!.finish()
+        }
         if (NineBxApplication.autoTestMode) {
             etConfirmPassword.setText("Password14.")
         }
@@ -51,6 +54,9 @@ class ConfirmPasswordFragment : Fragment() {
         password = etConfirmPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
         AppLogger.d("Email", "ConfirmPassword validate " + NineBxApplication.getPreferences().userEmail!!)
+        if( NineBxApplication.getPreferences().userEmail!!.isEmpty() && NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress.isNotEmpty() ) {
+            NineBxApplication.getPreferences().userEmail = NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+        }
         return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, preferences.userEmail!!)))
     }
 }
