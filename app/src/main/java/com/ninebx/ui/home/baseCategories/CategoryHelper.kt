@@ -62,6 +62,8 @@ class CategoryHelper(
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
+        category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+
 
         categoryList.add(category)
 
