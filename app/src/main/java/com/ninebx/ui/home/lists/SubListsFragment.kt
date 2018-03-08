@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.home.lists.adapter.SubListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
 import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -50,6 +52,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     private lateinit var mListsAdapter: SearchAdapter
     private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
     private var contactsRealm: Realm? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sub_list, container, false)
@@ -100,17 +103,17 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         txtDone.setOnClickListener {
             strAddItem = edtAddList.text.toString()
             txtDone.hide()
-
             if (strAddItem == "") {
                 Toast.makeText(context, getString(R.string.please_enter_title_of_the_list), Toast.LENGTH_SHORT).show()
                 edtAddList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
-                val mLog = AddedItem()
-                mLog.strAddedItem = strAddItem
+                aadToParticularRealmList(categoryName)
+                val mLog = Level3SearchItem()
+                mLog.itemName = strAddItem
+                searchItems.add(mLog)
                 mListsAdapter!!.notifyDataSetChanged()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
-                aadToParticularRealmList(categoryName)
                 edtAddList.text.clear()
             }
         }
@@ -398,7 +401,6 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineEducationFetched = combineEducationFetched
         searchItems.clear()
         for (item in combineEducationFetched!!) {
-
             searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
