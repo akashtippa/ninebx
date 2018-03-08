@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseSubCategories
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,7 +71,9 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
         layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType ))
-
+        //Saved data is loaded to the forms in this method.
+        //If selected document is not null load saved data.
+        //Else set the edit Text hint values.
         if( selectedDocument != null )
             when( selectedDocument ) {
                 //Home&Banking
@@ -78,6 +81,10 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
                     etTitleValue.setText(decryptedFinancial.accountName)
+                    modifiedValue.setText(decryptedFinancial.modified)
+                    Log.d("AccountName",decryptedFinancial.accountName)
+                    Log.d("Modified",decryptedFinancial.modified)
+
                 }
                 is DecryptedPayment -> {
                     val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
@@ -299,6 +306,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         tvSave.setOnClickListener {
             if( validate() ) {
                 context!!.showProgressDialog(getString(R.string.saving_data))
+                //On clicking save
                 mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
             }
         }

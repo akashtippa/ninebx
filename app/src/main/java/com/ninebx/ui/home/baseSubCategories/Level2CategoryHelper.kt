@@ -2,6 +2,7 @@ package com.ninebx.ui.home.baseSubCategories
 
 import android.annotation.SuppressLint
 import android.content.Context
+
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
@@ -18,6 +19,10 @@ import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
 import io.realm.Realm
+import java.text.SimpleDateFormat
+
+import java.util.*
+
 
 /***
  * Created by TechnoBlogger on 23/01/18.
@@ -3591,6 +3596,11 @@ class Level2CategoryHelper(
             decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.accountName = title
+            val c = Calendar.getInstance().getTime()
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(c)
+            val currentUsers = NineBxApplication.getPreferences().userFirstName
+            val currentDateandTime = c.time
+            decryptedFinancial!!.modified = currentDateandTime.toString()
             var isSaveComplete = false
             if (decryptedFinancial!!.id.toInt() == 0) {
                 decryptedFinancial!!.id = getUniqueId()
