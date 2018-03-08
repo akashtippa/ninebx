@@ -11,7 +11,7 @@ import com.ninebx.utility.Constants
 /**
  * Created by Alok on 12/01/18.
  */
-class SubCategoryAdapter(val subCategories: ArrayList<SubCategory>, val actionClickListener: CategoryItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SubCategoryAdapter(var subCategories: ArrayList<SubCategory>, val actionClickListener: CategoryItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val subCategory = getItemAtPosition(position)
@@ -72,6 +72,11 @@ class SubCategoryAdapter(val subCategories: ArrayList<SubCategory>, val actionCl
 
     override fun getItemViewType(position: Int): Int {
         return subCategories[position].type
+    }
+
+    fun updateList(categories: ArrayList<SubCategory>) {
+        subCategories = categories
+        notifyDataSetChanged()
     }
 
     inner class ItemViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {

@@ -4440,8 +4440,8 @@ class Level2CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
-                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
+                            //val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            //AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
