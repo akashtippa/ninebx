@@ -61,12 +61,14 @@ class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
         }
 
         textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
+        else if( isEventPresent && isCurrentDay ) mCurrentEventDrawable
         else if( isEventPresent ) mEventDrawable
         else if( isCurrentDay ) mCurrentDayDrawable
         else mUnSelectedDrawable
 
 
         textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
+        else if( isEventPresent && isCurrentDay ) mBlackColor
         else if( isEventPresent ) mBlackColor
         else if( isCurrentDay ) mBlackColor
         else mBlackColor)
@@ -76,6 +78,7 @@ class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
     private lateinit var mSelectedDrawable : Drawable
     private lateinit var mUnSelectedDrawable : Drawable
     private lateinit var mCurrentDayDrawable : Drawable
+    private lateinit var mCurrentEventDrawable : Drawable
 
     private var mBlackColor : Int = 0
     private var mWhiteColor : Int = 0
@@ -86,6 +89,7 @@ class WeekDaysRecyclerViewAdapter (val weekDates : ArrayList<Int>,
         mSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.selected_day)!!
         mUnSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.unselected_day)!!
         mCurrentDayDrawable = ContextCompat.getDrawable(parent.context, R.drawable.current_day)!!
+        mCurrentEventDrawable = ContextCompat.getDrawable(parent.context, R.drawable.current_event_day)!!
 
         mBlackColor = ContextCompat.getColor(parent.context, R.color.black)
         mWhiteColor = ContextCompat.getColor(parent.context, R.color.white)
