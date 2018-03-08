@@ -59,9 +59,6 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Personal Health Record"
         category.drawableString = "ic_icon_health_records"
-
-        category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
-
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
 
