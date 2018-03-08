@@ -17,6 +17,7 @@ import com.ninebx.ui.tutorial.view.CirclePageIndicator
 import com.ninebx.utility.Constants
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_account.*
+import kotlinx.android.synthetic.main.pager_choose_plan.*
 
 
 /**
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_account.*
 class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
 
     override fun onClick(v: View?) {
+
         when (v!!.id) {
             R.id.txtProfile -> {
                 navigateToMyProfile()
@@ -101,6 +103,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
                 val pager = dialog.findViewById<View>(R.id.viewpager) as ViewPager
                 pager.adapter = adapter
                 dialog.show()
+                setClickListeners(dialog)
                 val circleIndicator = dialog.findViewById<View>(R.id.activity_help_view_page_indicator) as CirclePageIndicator
                 circleIndicator.setViewPager(pager)
             }
@@ -122,6 +125,18 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
         imgBack.setOnClickListener {
             dialog.cancel()
         }
+    }
+
+    private fun setClickListeners(dialog: Dialog) {
+
+        dialog.subscriptionFreeBtn.setOnClickListener(this)
+        dialog.subscriptionOnePlusMonthBtn.setOnClickListener(this)
+        dialog.subscriptionOnePlusYearBtn.setOnClickListener(this)
+        dialog.subscriptionFamilyMonthBtn.setOnClickListener(this)
+        dialog.subscriptionFamilyYearBtn.setOnClickListener(this)
+        dialog.subscriptionFamilyPlusMonthBtn.setOnClickListener(this)
+        dialog.subscriptionFamilyPlusYearBtn.setOnClickListener(this)
+
     }
 
     // Single method to open operational dialog,
