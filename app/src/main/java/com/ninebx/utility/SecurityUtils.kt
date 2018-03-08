@@ -127,7 +127,6 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
     //AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
     //AppLogger.d("encryptAESKey", "Input : " + String(input))
     //AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
-
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
     val cipherText = ByteArray(cipher.getOutputSize(input.size))

@@ -36,19 +36,22 @@ class AWSSecureFileTransfer( val context: Context ) {
         AppLogger.d(TAG, "Private KEy : " + NineBxApplication.getPreferences().privateKey)
         val privateKeyInt8 = convertToUInt8(NineBxApplication.getPreferences().privateKey!!.toByteArray())
         AppLogger.d(TAG, "Private KEy UINT8: " + privateKeyInt8)
+        var iOS = "[53, 227, 113, 50, 233, 182, 31, 28, 117, 97, 185, 84, 7, 131, 112, 224, 119, 53, 235, 88, 59, 50, 89, 134, 196, 111, 210, 77, 111, 206, 188, 122]"
         privateKeyArrayBase64 = encryptAESKey(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
+        var privateKeyMD5 = MD5Helper.getMD5(privateKeyArrayBase64)
         AppLogger.d(TAG, "Private KEy Encrypted: " + privateKeyArrayBase64)
+        AppLogger.d(TAG, "Private KEy iOS: " + iOS)
+        AppLogger.d(TAG, "Private Key encrypted UINT8 " + convertToUInt8(privateKeyArrayBase64.toByteArray(Charsets.UTF_8)))
+        AppLogger.d(TAG, "Private Key encrypted MD5 " + convertToUInt8(privateKeyMD5.toByteArray(Charsets.UTF_8)))
 
-        val md5Data = MD5Helper.getMD5(privateKeyArrayBase64)
-        AppLogger.d(TAG, "Private KEy MD5 String : " + md5Data)
-        AppLogger.d(TAG, "Private KEy MD5 convertToUInt8 : " + convertToUInt8(md5Data.toByteArray(Charsets.UTF_8)))
 
-        val md5Private = MD5Helper.getMD5(privateKey.toString())
+        /*val md5Private = MD5Helper.getMD5(privateKey.toString())
         var md5Encrypt = encryptAESKey(md5Private, md5Private)
         val md5UInt8 = convertToUInt8(md5Encrypt.toByteArray(Charsets.UTF_8))
         AppLogger.d(TAG, "private key MD5 " + md5Private)
         AppLogger.d(TAG, "private key MD5 encrypted " + md5Encrypt)
-        AppLogger.d(TAG, "private key MD5 encrypted convertToUInt8" + md5UInt8)
+        AppLogger.d(TAG, "private key MD5 encrypted convertToUInt8" + md5UInt8)*/
+
     }
 
     fun downloadSecureFile( filePath : String ) {
