@@ -139,9 +139,9 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
 
 
         textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
-        else if( isEventPresent && isCurrentDay ) mBlackColor
+        else if( isEventPresent && isCurrentDay ) mWhiteColor
         else if( isEventPresent ) mBlackColor
-        else if( isCurrentDay ) mBlackColor
+        else if( isCurrentDay ) mWhiteColor
         else mBlackColor)
 
     }
