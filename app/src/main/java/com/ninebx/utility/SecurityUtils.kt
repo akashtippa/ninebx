@@ -339,7 +339,6 @@ fun convertToUInt8IntArray(key: ByteArray?): IntArray {
         }
     }
     return (intArray)
-
 }
 
 fun convertToUInt8(key: ByteArray?): String {
@@ -356,7 +355,6 @@ fun convertToUInt8(key: ByteArray?): String {
         }
     }
     return Arrays.toString(intArray)
-
 }
 
 private fun convertToByte(key: CharArray): String {

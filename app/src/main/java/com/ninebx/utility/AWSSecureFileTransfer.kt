@@ -66,6 +66,14 @@ class AWSSecureFileTransfer( val context: Context ) {
         val sampleMD5 = "[212, 82, 54, 202, 160, 144, 250, 242, 255, 168, 30, 5, 79, 86, 98, 66]"
         AppLogger.d(TAG, "MD5Base64 sample : " + String(Base64.encode(sampleMD5.toByteArray(Charsets.UTF_8), Base64.DEFAULT)).trim())
 
+
+
+        var encrypt = encryptAESKeyMD5(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
+        AppLogger.d("EncryptPrivate ", "private key encrypted " + encrypt)
+        AppLogger.d("EncryptPrivate ", "private key Byte Array " + Arrays.toString(encrypt.toByteArray(Charsets.UTF_8)))
+        AppLogger.d("EncryptPrivate ", "private key MD5 format " + MD5Helper.getMD5(Arrays.toString(encrypt.toByteArray(Charsets.UTF_8))))
+       // AppLogger.d("EncryptPrivate ", "private key MD5 format " + MD5Helper.getMD5(encrypt))
+        AppLogger.d("EncryptPrivate ", "private key Byte Array MD5 format ByteArray " + Arrays.toString(MD5Helper.getMD5(Arrays.toString(encrypt.toByteArray(Charsets.UTF_8))).toByteArray(Charsets.UTF_8)))
     }
 
     fun downloadSecureFile( filePath : String ) {
@@ -100,7 +108,6 @@ class AWSSecureFileTransfer( val context: Context ) {
                     val outStream = FileOutputStream(file)
                     outStream.write(fileBytes)
                     buf.close()
-
                     return file
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block
@@ -149,7 +156,6 @@ class AWSSecureFileTransfer( val context: Context ) {
             else
                 return decryptFileIOS( File( filePath ), privateKey )
         }
-
     }
 
     private fun decryptFileTask(file: File) {
@@ -159,7 +165,6 @@ class AWSSecureFileTransfer( val context: Context ) {
                     fileOperationsListener!!.onSuccess(outputFile)
                 }
             }
-
         }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
     }
 }

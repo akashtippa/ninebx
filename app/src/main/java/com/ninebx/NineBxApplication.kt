@@ -70,7 +70,7 @@ class NineBxApplication : MultiDexApplication() {
             return nineBxPreferences!!
         }
 
-        var autoTestMode = false
+        var autoTestMode = true
 
         private var getUserAPI: NetModule.GetUsersAPI? = null
         fun getUserAPI(): NetModule.GetUsersAPI? {
@@ -115,5 +115,4 @@ class NineBxApplication : MultiDexApplication() {
     fun getCountrySelected(name: String): ICountrySelected? {
         return iCountryselected
     }
-
 }

@@ -1718,7 +1718,7 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", decryptedFinancial!!.swiftCode, "", Constants.LEVEL2_NORMAL))
@@ -3588,9 +3588,9 @@ class Level2CategoryHelper(
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
         if (decryptedFinancial != null) {
-            decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.accountName = title
+            AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
             var isSaveComplete = false
             if (decryptedFinancial!!.id.toInt() == 0) {
                 decryptedFinancial!!.id = getUniqueId()
@@ -3652,9 +3652,10 @@ class Level2CategoryHelper(
         }
 
         if (decryptedPayment != null) {
-            decryptedPayment!!.cardType = categoryID
-            decryptedPayment!!.cardNumber = title
+            decryptedPayment!!.cardName = title
             decryptedPayment!!.selectionType = categoryID
+            AppLogger.d("SelectionType ", "DecryptedPayment" + decryptedPayment!!.selectionType)
+
             var isSaveComplete = false
             if (decryptedPayment!!.id.toInt() == 0) {
                 decryptedPayment!!.id = getUniqueId()

@@ -203,6 +203,4 @@ class LoginSignupTask(private var userName: String,
 
         return SyncCredentials.usernamePassword(userName, Arrays.toString(encryptedPassword), isSignup)
     }
-
-
 }
