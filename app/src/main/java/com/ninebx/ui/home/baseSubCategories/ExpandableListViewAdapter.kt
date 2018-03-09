@@ -31,7 +31,12 @@ import kotlin.collections.ArrayList
  * Created by TechnoBlogger on 23/01/18.
  */
 
-class ExpandableListViewAdapter(private val _context: Context, private val categories: ArrayList<Level2Category>, private val level2CategoryPresenter: Level2CategoryView, val categoryName: String, val classType: String) : BaseExpandableListAdapter() {
+class ExpandableListViewAdapter(private val _context: Context,
+                                private val categories: ArrayList<Level2Category>,
+                                private val level2CategoryPresenter: Level2CategoryView,
+                                val categoryName: String,
+                                val classType: String,
+                                val membersList : ArrayList<DecryptedMember> ) : BaseExpandableListAdapter() {
 
     // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
 
@@ -338,6 +343,7 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
 
             }
             Constants.LEVEL2_SPINNER -> {
+
                 childView = infalInflater.inflate(R.layout.level2_spinner, null)
                 childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
@@ -347,6 +353,8 @@ class ExpandableListViewAdapter(private val _context: Context, private val categ
                     openContactList()
                 } else {
                     //TODO -
+                    val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, membersList)
+                    childView.findViewById<Spinner>(R.id.spinnerUsers).adapter = arrayAdapter
                     childView.findViewById<Spinner>(R.id.spinnerUsers).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(p0: AdapterView<*>?) {
 
