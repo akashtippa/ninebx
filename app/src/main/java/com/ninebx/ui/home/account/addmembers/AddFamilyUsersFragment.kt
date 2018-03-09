@@ -54,7 +54,6 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     override fun memberAdded(member: DecryptedMember?) {
         //AppLogger.d("Member", "onMemberAdded" + member)
-        myList.add(member!!)
         mListsAdapter!!.notifyDataSetChanged()
         saveUserObject()
     }
@@ -152,7 +151,9 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK) {
-            memberAdded((data!!.getParcelableExtra(Constants.MEMBER)))
+            val member = data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER)
+            mListsAdapter!!.insertMember(member)
+            memberAdded(data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER))
         }
         else if ( requestCode == DELETE_MEMBER && resultCode == Activity.RESULT_OK ) {
             val member = data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER)
