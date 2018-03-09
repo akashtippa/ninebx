@@ -108,12 +108,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 edtAddList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
-                aadToParticularRealmList(categoryName)
                 val mLog = Level3SearchItem()
                 mLog.itemName = strAddItem
-                searchItems.add(mLog)
+                mListsAdapter!!.add(mListsAdapter.itemCount,mLog)
                 mListsAdapter!!.notifyDataSetChanged()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
+                aadToParticularRealmList(categoryName)
                 edtAddList.text.clear()
             }
         }
@@ -174,6 +174,15 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedHomeList = DecryptedHomeList()
+                        decryptedHomeList.listName = strAddItem
+                        decryptedHomeList.id = getUniqueId()
+                        decryptedHomeList.detailsId = 0
+                        decryptedHomeList.selectionType ="HomeBanking".encryptString()
+                        decryptedHomeList.created = createdDate
+                        decryptedHomeList.createdUser = preferences.userID
+                        combineFetched?.add(decryptedHomeList)
                     }
 
                 })
@@ -193,6 +202,15 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedTravelList = DecryptedTravelList()
+                        decryptedTravelList.listName = strAddItem
+                        decryptedTravelList.id = getUniqueId()
+                        decryptedTravelList.detailsId = 0
+                        decryptedTravelList.selectionType = "Travel".encryptString()
+                        decryptedTravelList.created = createdDate
+                        decryptedTravelList.createdUser = preferences.userID
+                        combineTravelFetched?.add(decryptedTravelList)
                     }
 
                 })
@@ -211,6 +229,15 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedContactsList = DecryptedContactsList()
+                        decryptedContactsList.listName = strAddItem
+                        decryptedContactsList.id = getUniqueId()
+                        decryptedContactsList.detailsId = 0
+                        decryptedContactsList.selectionType = "Contacts".encryptString()
+                        decryptedContactsList.created = createdDate
+                        decryptedContactsList.createdUser = preferences.userID
+                        combineContactsFetched?.add(decryptedContactsList)
                     }
                 })
             }
@@ -228,6 +255,16 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedEducation = DecryptedEducationList()
+                        decryptedEducation.listName = strAddItem
+                        decryptedEducation.id = getUniqueId()
+                        decryptedEducation.detailsId = 0
+                        decryptedEducation.selectionType = "Education".encryptString()
+                        decryptedEducation.created = createdDate
+                        decryptedEducation.createdUser = preferences.userID
+                        combineEducationFetched?.add(decryptedEducation)
+
                     }
 
                 })
@@ -247,6 +284,16 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedPersonalList = DecryptedPersonalList()
+                        decryptedPersonalList.listName = strAddItem
+                        decryptedPersonalList.id = getUniqueId()
+                        decryptedPersonalList.detailsId = 0
+                        decryptedPersonalList.selectionType = "Personal".encryptString()
+                        decryptedPersonalList.created = createdDate
+                        decryptedPersonalList.createdUser = preferences.userID
+                        combinePersonalFetched?.add(decryptedPersonalList)
+
                     }
 
                 })
@@ -265,6 +312,16 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedInterestsList = DecryptedInterestsList()
+                        decryptedInterestsList.listName = strAddItem
+                        decryptedInterestsList.id = getUniqueId()
+                        decryptedInterestsList.detailsId = 0
+                        decryptedInterestsList.selectionType = "Interests".encryptString()
+                        decryptedInterestsList.created = createdDate
+                        decryptedInterestsList.createdUser = preferences.userID
+                        combineInterestsFetched?.add(decryptedInterestsList)
+
                     }
 
                 })
@@ -284,6 +341,16 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedWellnessList = DecryptedWellnessList()
+                        decryptedWellnessList.listName = strAddItem
+                        decryptedWellnessList.id = getUniqueId()
+                        decryptedWellnessList.detailsId = 0
+                        decryptedWellnessList.selectionType = "Wellness".encryptString()
+                        decryptedWellnessList.created = createdDate
+                        decryptedWellnessList.createdUser = preferences.userID
+                        combineWellnessFetched?.add(decryptedWellnessList)
+
                     }
 
                 })
@@ -303,6 +370,15 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedMemoriesList = DecryptedMemoriesList()
+                        decryptedMemoriesList.listName = strAddItem
+                        decryptedMemoriesList.id = getUniqueId()
+                        decryptedMemoriesList.detailsId = 0
+                        decryptedMemoriesList.selectionType = "Memories".encryptString()
+                        decryptedMemoriesList.created = createdDate
+                        decryptedMemoriesList.createdUser = preferences.userID
+                        combineMemoriesFetched?.add(decryptedMemoriesList)
                     }
 
                 })
@@ -323,6 +399,15 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         listItems.created = createdDate
                         listItems.createdUser = preferences.userID
                         listItems.insertOrUpdate(realm!!)
+
+                        var decryptedShoppingList = DecryptedShoppingList()
+                        decryptedShoppingList.listName = strAddItem
+                        decryptedShoppingList.id = getUniqueId()
+                        decryptedShoppingList.detailsId = 0
+                        decryptedShoppingList.selectionType = "Shopping".encryptString()
+                        decryptedShoppingList.created = createdDate
+                        decryptedShoppingList.createdUser = preferences.userID
+                        combineShoppingFetched?.add(decryptedShoppingList)
                     }
 
                 })
@@ -434,7 +519,6 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineWellnessFetched = combineWellnessFetched
         searchItems.clear()
         for (item in combineWellnessFetched!!) {
-
             searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
 
@@ -513,8 +597,8 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 superSubListFragment.setMemoriesList(listItem)
             }
             R.string.shopping -> {
-                val listItem = combineShoppingFetched!![itemPosition]
-                superSubListFragment.setShoppingList(listItem)
+                    val listItem = combineShoppingFetched!![itemPosition]
+                    superSubListFragment.setShoppingList(listItem)
             }
         }
         fragmentTransaction.replace(R.id.frameLayout, superSubListFragment).commit()

@@ -142,6 +142,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         }
 
         layTravel.setOnClickListener {
+
             //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Lists - " + getString(R.string.travel))
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
