@@ -368,9 +368,7 @@ class SearchPresenter {
                 super.onPostExecute(result)
                 searchView!!.onCombineFetched(mDecryptCombine)
             }
-
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
     }
 
 
