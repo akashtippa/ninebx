@@ -3208,6 +3208,7 @@ class Level2CategoryHelper(
             "Username/login" -> decryptedFinancial!!.userName = level2Category.titleValue
             "Password" -> decryptedFinancial!!.password = level2Category.titleValue
             "PIN" -> decryptedFinancial!!.pin = level2Category.titleValue
+            "Account name" -> decryptedFinancial!!.accountName = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes = level2Category.titleValue
@@ -3589,7 +3590,6 @@ class Level2CategoryHelper(
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
         if (decryptedFinancial != null) {
-            decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.institutionName = title
             var isSaveComplete = false
