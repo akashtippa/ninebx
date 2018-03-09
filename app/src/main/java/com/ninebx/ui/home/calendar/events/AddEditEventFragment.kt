@@ -29,8 +29,11 @@ import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.*
+import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.home.calendar.CalendarFragment.Companion.getCalendarInstance
 import com.ninebx.ui.home.customView.CalendarBottomFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.REALM_END_POINT_CALENDAR_EVENTS
 import io.realm.Realm
 import java.io.File
 import java.util.*
@@ -123,6 +126,26 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/ios_normal.jpeg"), "nB8hEnaqppfWOp5L".toCharArray())
             //decryptFileIOS( File("/storage/emulated/0/ios_normal.jpeg"), "nB8hEnaqppfWOp5L".toCharArray())
         }
+
+        deleteBtn.setOnClickListener {
+
+            AlarmJob.cancelJob(mCalendarEvent.id.toString()) //cancel alarm
+            val instance = getCalendarInstance()// remove from recylerview
+            instance.mDayEventsAdapter.remove(mCalendarEvent)
+            removeCalenderEvent() // remove event from database
+            goBack()
+        }
+
+
+        /*editBtn.setOnClickListener {
+
+            if(editBtn.isActivated){
+
+            }else{
+
+            }
+        }*/
+
         layoutEndRepeat.hide()
         setValues( )
 
@@ -148,7 +171,6 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         }
 
         cvAttachment.setOnClickListener { startCameraIntent() }
-
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
         layoutEndRepeat.setOnClickListener {
 
@@ -200,6 +222,18 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 mAWSFileTransferHelper.beginDownload(imageFilePath.stringValue)
             }
         }
+    }
+
+    private fun removeCalenderEvent() {
+
+        prepareRealmConnections(context, false, REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                realm?.beginTransaction()
+                mCalendarEvent.deleteFromRealm()
+                realm?.commitTransaction()
+            }
+        })
+
     }
 
     private fun downloadImageAws() {
@@ -298,13 +332,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
                 intervals.add("None")
 
-                if( switchAllDay.isSelected ) {
-                    intervals.add("On day of event(9:00 AM)")
-                    intervals.add("One day before(9:00 AM)")
-                    intervals.add("Two days before(9:00 AM)")
-                    intervals.add("1 week before")
-                }
-                else {
+                if( !switchAllDay.isChecked ) {
                     intervals.add("At time of event")
                     intervals.add("5 minutes before")
                     intervals.add("15 minutes before")
@@ -315,8 +343,13 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     intervals.add("2 day before")
                     intervals.add("1 week before")
                 }
+                else {
+                    intervals.add("On day of event(9:00 AM)")
+                    intervals.add("One day before(9:00 AM)")
+                    intervals.add("Two days before(9:00 AM)")
+                    intervals.add("1 week before")
 
-
+                }
             }
         }
 
@@ -676,6 +709,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 mCalendarEvent.endRepeat.add(endRepeatEvent)
                 mCalendarEvent.eventID.add("0")
                 mCalendarEvent.isAllDay.add(isAllDay)
+                AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
+
             }
         }
         else {
@@ -691,8 +726,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             mCalendarEvent.endRepeat.add(endRepeatEvent)
             mCalendarEvent.eventID.add("0")
             mCalendarEvent.isAllDay.add(isAllDay)
+            AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
         }
-
 
         uploadImageAws()
         calendarRealm.copyToRealmOrUpdate(mCalendarEvent)

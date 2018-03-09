@@ -63,7 +63,6 @@ class CategoryHelper(
         for(wellness in decryptedCombine.wellnessItems) {
             category.subCategories.add(SubCategory(wellness.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
         }
-
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
 

@@ -631,7 +631,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             return instance!!
         }
         var instance : SearchFragment? = null
-
     }
 }
 

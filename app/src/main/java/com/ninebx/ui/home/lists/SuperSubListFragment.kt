@@ -71,7 +71,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         for (item in combineFetched!!) {
             searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-
     }
 
     private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
@@ -348,25 +347,25 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         txtUnCheckAll.buttonDrawable = transparentDrawable
 
         txtCheckAll.setOnClickListener {
-            mSubListAdapter!!.selectAll()
+            mSubListAdapter?.selectAll()
             txtUnCheckAll.visibility = View.VISIBLE
             txtCheckAll.visibility = View.GONE
         }
 
         txtUnCheckAll.setOnClickListener {
-            mSubListAdapter!!.deSelectAll()
+            mSubListAdapter?.deSelectAll()
             txtCheckAll.visibility = View.VISIBLE
             txtUnCheckAll.visibility = View.GONE
         }
 
         txtHideCompleted.setOnClickListener {
-            mSubListAdapter!!.showSelected()
+            mSubListAdapter?.showSelected()
             txtHideCompleted.visibility = View.GONE
             txtShowCompleted.visibility = View.VISIBLE
         }
 
         txtShowCompleted.setOnClickListener {
-            mSubListAdapter!!.hideSelected()
+            mSubListAdapter?.hideSelected()
             txtHideCompleted.visibility = View.VISIBLE
             txtShowCompleted.visibility = View.GONE
         }
@@ -588,8 +587,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                 })
 
             }
-
-
         }
     }
 
@@ -921,6 +918,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     }
 
     override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
-
+        //TODO
     }
 }

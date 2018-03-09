@@ -31,6 +31,7 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
                               val adapterClickListener: DaysAdapterClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
     var dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+    var mCurrentDateCalendar = Calendar.getInstance()
     override fun getItemCount(): Int {
         return 1
     }
@@ -115,6 +116,7 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
     private fun setDrawable(textView: TextView?) {
 
         var isEventPresent = false
+        var isCurrentDay = false
         var dateInt = 0
 
         dateInt = if( textView!!.text.toString().isEmpty() ) 0 else textView.text.toString().toInt()
@@ -123,19 +125,23 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
             calendarDay.set(Calendar.DAY_OF_MONTH, dateInt)
             calendarDay.set(Calendar.MONTH, month)
             calendarDay.set(Calendar.YEAR, year)
-
+            isCurrentDay = (mCurrentDateCalendar.get(Calendar.DAY_OF_MONTH) == calendarDay.get(Calendar.DAY_OF_MONTH) &&
+                    mCurrentDateCalendar.get(Calendar.MONTH) == calendarDay.get(Calendar.MONTH) &&
+                    mCurrentDateCalendar.get(Calendar.YEAR) == calendarDay.get(Calendar.YEAR))
             isEventPresent = eventDateStrings.contains(dateFormat.format(calendarDay.time))
         }
 
-
-
         textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
+                              else if( isEventPresent && isCurrentDay ) mCurrentEventDrawable
                               else if( isEventPresent ) mEventDrawable
+                              else if( isCurrentDay ) mCurrentDayDrawable
                               else mUnSelectedDrawable
 
 
         textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
+        else if( isEventPresent && isCurrentDay ) mWhiteColor
         else if( isEventPresent ) mBlackColor
+        else if( isCurrentDay ) mWhiteColor
         else mBlackColor)
 
     }
@@ -147,6 +153,8 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
     private lateinit var mEventDrawable : Drawable
     private lateinit var mSelectedDrawable : Drawable
     private lateinit var mUnSelectedDrawable : Drawable
+    private lateinit var mCurrentDayDrawable : Drawable
+    private lateinit var mCurrentEventDrawable : Drawable
 
     private var mBlackColor : Int = 0
     private var mWhiteColor : Int = 0
@@ -156,6 +164,8 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
         mEventDrawable = ContextCompat.getDrawable(parent!!.context, R.drawable.event_day)!!
         mSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.selected_day)!!
         mUnSelectedDrawable = ContextCompat.getDrawable(parent.context, R.drawable.unselected_day)!!
+        mCurrentDayDrawable = ContextCompat.getDrawable(parent.context, R.drawable.current_day)!!
+        mCurrentEventDrawable = ContextCompat.getDrawable(parent.context, R.drawable.current_event_day)!!
 
         mBlackColor = ContextCompat.getColor(parent.context, R.color.black)
         mWhiteColor = ContextCompat.getColor(parent.context, R.color.white)

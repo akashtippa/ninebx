@@ -127,7 +127,6 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
     //AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
     //AppLogger.d("encryptAESKey", "Input : " + String(input))
     //AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
-
     // encryption pass
     cipher.init(Cipher.ENCRYPT_MODE, key)
     val cipherText = ByteArray(cipher.getOutputSize(input.size))
@@ -136,6 +135,33 @@ fun encryptAESKey(inputString: String, privateKey: String): String {
 
     val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
     return String(cipherTextBase64).trim()
+
+}
+
+fun encryptAESKeyMD5(inputString: String, privateKey: String): String {
+
+    Security.addProvider(org.bouncycastle.jce.provider.BouncyCastleProvider())
+
+    val input = inputString.trim().toByteArray()
+    val keyBytes = (privateKey.toByteArray(Charsets.UTF_8))
+    val key = SecretKeySpec(keyBytes, "AES")
+    val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC")
+    //AppLogger.d("encryptAESKey", "Private Key : " + Arrays.toString(keyBytes))
+    //AppLogger.d("encryptAESKey", "Input : " + String(input))
+    //AppLogger.d("encryptAESKey", "Input Bytes : " + Arrays.toString(input))
+
+    // encryption pass
+    cipher.init(Cipher.ENCRYPT_MODE, key)
+    val cipherText = ByteArray(cipher.getOutputSize(input.size))
+    var ctLength = cipher.update(input, 0, input.size, cipherText, 0)
+    ctLength += cipher.doFinal(cipherText, ctLength)
+    AppLogger.d("SecureTransfer", "Cipher : " + Arrays.toString(cipherText))
+    val cipherTextBase64 = Base64.encode(cipherText, Base64.DEFAULT)
+    AppLogger.d("SecureTransfer", "Converted Base 64 : " + Arrays.toString(cipherTextBase64))
+    val convertedBase64 = convertToUInt8(cipherTextBase64)
+    AppLogger.d("SecureTransfer", "Converted Base 64 UINT8 : " + convertedBase64)
+    val cipherMd5 = MD5Helper.md5(convertedBase64.trim())
+    return cipherMd5
 
 }
 

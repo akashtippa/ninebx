@@ -53,10 +53,11 @@ class ConfirmPasswordFragment : Fragment() {
     private fun validate(): Boolean {
         password = etConfirmPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
-        AppLogger.d("Email", "ConfirmPassword validate " + NineBxApplication.getPreferences().userEmail!!)
-        if( NineBxApplication.getPreferences().userEmail!!.isEmpty() && NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress.isNotEmpty() ) {
+        /*AppLogger.d("Email", "ConfirmPassword validate " + NineBxApplication.getPreferences().userEmail!!)
+        if( NineBxApplication.getPreferences().userEmail!!.isEmpty() &&
+                NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress.isNotEmpty()  ) {
             NineBxApplication.getPreferences().userEmail = NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
-        }
-        return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, preferences.userEmail!!)))
+        }*/
+        return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress)))
     }
 }

@@ -217,6 +217,7 @@
                     android:textColor="@color/blue_400"
                     android:id="@+id/tvSaturday"/>
             </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -237,6 +238,7 @@
                 android:layout_below="@id/rvDays"
                 android:layout_height="@dimen/divider_height"
                 android:background="@color/divider_color" />
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -248,6 +250,7 @@
                 android:id="@+id/rvDayEvents"/>
 
         </RelativeLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
     <TextView

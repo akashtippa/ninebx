@@ -218,7 +218,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
 
     }
 
-    private lateinit var mDayEventsAdapter: DayEventsRecyclerViewAdapter
+     lateinit var mDayEventsAdapter: DayEventsRecyclerViewAdapter
 
     override fun onDayClick(dayOfMonth: Int) {
         if( mCalendarPresenter != null && rvDayEvents != null ) {
@@ -234,7 +234,6 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             })
             rvDayEvents.adapter = mDayEventsAdapter
         }
-
     }
 
     companion object {
