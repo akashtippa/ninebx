@@ -12,7 +12,9 @@ import java.io.IOException
 /**
  * Created by Alok on 30/01/18.
  */
-class SendEmailTask( private val emailOtp : String, private val emailId : String, private val authView : AuthView ) : AsyncTask<Void, Void, String>() {
+class SendEmailTask( private val emailOtp : String,
+                     private val emailId : String,
+                     private val authView : AuthView ) : AsyncTask<Void, Void, String>() {
 
     private val TAG = SendEmailTask::class.java.simpleName
 
@@ -55,9 +57,6 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
         } catch (e: IOException) {
             Log.e(TAG, e.toString())
         }
-
         return ""
-
-
     }
 }
