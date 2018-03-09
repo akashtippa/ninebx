@@ -11,10 +11,7 @@ import com.amazonaws.services.s3.model.*
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
 import java.io.*
-import java.security.Security
 import java.util.*
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 
 
 /**

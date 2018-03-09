@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.search
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,12 +41,18 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
         notifyItemRemoved(position)
     }
 
+    fun add(position: Int , item: Level3SearchItem) {
+        searchItems!!.add(position,item)
+        notifyItemInserted(position)
+    }
+
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         override fun onClick(view: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position]) }
+                adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position])
+            }
         }
 
         val textView: TextView = view.findViewById<View>(R.id.txtListSearch) as TextView

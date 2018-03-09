@@ -25,6 +25,7 @@ class DayEventsRecyclerViewAdapter( val calendarEvents : ArrayList<CalendarEvent
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val event = getItemAtPosition( position )
         val selectedDateIndex = event.getPositionForDay( selectedDate )
+
         if( selectedDateIndex != -1 && event.isAllDay[selectedDateIndex]!! ) {
             holder!!.tvEvent.text = ALL_DAY
         }
@@ -39,11 +40,15 @@ class DayEventsRecyclerViewAdapter( val calendarEvents : ArrayList<CalendarEvent
         return calendarEvents[position]
     }
 
+    fun remove(item : CalendarEvents){
+        calendarEvents.remove(item)
+    }
     fun getSelectedDateForEvent() : Date {
         return selectedDate
     }
 
     private lateinit var ALL_DAY : String
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         ALL_DAY = parent!!.context.getString(R.string.all_day)
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false))
