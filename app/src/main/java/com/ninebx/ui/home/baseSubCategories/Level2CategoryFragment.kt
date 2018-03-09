@@ -68,14 +68,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         inflateLayout(categories)
     }
 
-    var categoryView: LinearLayout?= null
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-        val inflater = LayoutInflater.from(context)
-
-        for (category in categories) {
-
-            categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
 
             layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType,
                     ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) ))
@@ -99,7 +93,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                         etTitle.setText(decryptedFinancial.titleName)
                         etTitleValue.setText(decryptedFinancial.propertyName)
                     }
-                    is  DecryptedVehicle-> {
+                    is DecryptedVehicle-> {
                         val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
                         etTitle.setText(decryptedFinancial.titleName)
                         etTitleValue.setText(decryptedFinancial.vehicleName)
@@ -273,7 +267,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                         etTitleValue.setText(decryptedInterests.accountName)
                     }
                 }
-        }
+
 
     }
 

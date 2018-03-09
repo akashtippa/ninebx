@@ -153,7 +153,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     private fun saveDetails() {
         if (isNewAccount)
-            if( layNonUser.isVisible() || layoutOtherViews.isVisible() )
+            if( strEmail.isNotEmpty() )
                 memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
             else {
                 saveUpdatedMember(getUniqueIdString())
@@ -303,10 +303,13 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
         if( layoutOtherViews.isVisible() )
             strRole = txtsRole.selectedItem.toString()
+        else
+            strRole = ""
 
         if( layNonUser.isVisible() )
             strEmail = edtEmailAddress.text.toString()
-
+        else
+            strEmail = ""
 
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()

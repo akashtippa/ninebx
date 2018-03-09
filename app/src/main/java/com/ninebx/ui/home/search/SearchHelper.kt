@@ -366,6 +366,9 @@ class SearchHelper() {
             if( !level3Items.contains(item) ) {
                 level3Items.add(item)
             }
+            else {
+                level3Items[level3Items.indexOf(item)] = item
+            }
         }
         return level3Items
     }

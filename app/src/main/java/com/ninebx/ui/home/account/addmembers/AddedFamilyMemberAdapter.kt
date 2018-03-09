@@ -81,5 +81,15 @@ class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>, p
         notifyDataSetChanged()
     }
 
+    fun insertMember(member: DecryptedMember?) {
+        val position = myList.indexOf(member)
+        if( position != -1 ) {
+            myList[position] = (member!!)
+        }
+        else
+            myList.add(member!!)
+        notifyDataSetChanged()
+    }
+
 
 }
