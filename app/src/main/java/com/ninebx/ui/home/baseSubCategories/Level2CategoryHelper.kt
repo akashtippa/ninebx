@@ -1586,12 +1586,13 @@ class Level2CategoryHelper(
     private fun getOtherFinancialAccounts() {
         val categoryList = ArrayList<Level2Category>()
         if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
+        AppLogger.d("Document", "Details : " + decryptedFinancial.toString())
         var categoryIndex = 1004
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", decryptedFinancial!!.swiftCode, "", Constants.LEVEL2_NORMAL))
@@ -3197,10 +3198,10 @@ class Level2CategoryHelper(
     private fun setBanking(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Loan type", "Account type" -> decryptedFinancial!!.accountType = level2Category.titleValue
-            "Name(s) on account" -> decryptedFinancial!!.accountName = level2Category.titleValue
+            "Name(s) on account" -> decryptedFinancial!!.nameOnAccount = level2Category.titleValue
             "Account number" -> decryptedFinancial!!.accountNumber = level2Category.titleValue
             "Location" -> decryptedFinancial!!.location = level2Category.titleValue
-            "SWIFT/other code" -> decryptedFinancial!!.swiftCode = level2Category.titleValue
+            "SWIFT/other code" -> decryptedFinancial!!. swiftCode = level2Category.titleValue
             "ABA routing number" -> decryptedFinancial!!.abaRoutingNumber = level2Category.titleValue
             "Contacts" -> decryptedFinancial!!.contacts = level2Category.titleValue
             "Website" -> decryptedFinancial!!.website = level2Category.titleValue
@@ -3590,7 +3591,7 @@ class Level2CategoryHelper(
         if (decryptedFinancial != null) {
             decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
-            decryptedFinancial!!.accountName = title
+            decryptedFinancial!!.institutionName = title
             var isSaveComplete = false
             if (decryptedFinancial!!.id.toInt() == 0) {
                 decryptedFinancial!!.id = getUniqueId()
@@ -3652,8 +3653,7 @@ class Level2CategoryHelper(
         }
 
         if (decryptedPayment != null) {
-            decryptedPayment!!.cardType = categoryID
-            decryptedPayment!!.cardNumber = title
+            decryptedPayment!!.cardName = title
             decryptedPayment!!.selectionType = categoryID
             var isSaveComplete = false
             if (decryptedPayment!!.id.toInt() == 0) {
@@ -4440,8 +4440,8 @@ class Level2CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
-                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
+                            //val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            //AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
