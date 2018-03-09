@@ -163,13 +163,19 @@
                                 android:layout_margin="@dimen/default_micro_padding">
 
                                 <TextView
+                                    android:id="@+id/created"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_alignParentStart="true"
                                     android:text="Created :"
                                     android:textColor="@color/colorPrimary" />
-
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/created"
+                                    android:id="@+id/createdValue"
+                                    android:textStyle="italic"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -198,8 +204,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/modified"
-                                    android:layout_margin="4dp"
-                                    android:textColor="@color/colorPrimary"/>
+                                    android:layout_marginTop="4dp"
+                                    android:textColor="@color/black"
+                                    android:textStyle = "italic|normal"/>
 
                                 <Switch
                                     android:layout_width="wrap_content"
