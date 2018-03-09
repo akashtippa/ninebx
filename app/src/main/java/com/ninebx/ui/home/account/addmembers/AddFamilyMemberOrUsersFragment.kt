@@ -153,7 +153,13 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     private fun saveDetails() {
         if (isNewAccount)
-            memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
+            if( layNonUser.isVisible() || layoutOtherViews.isVisible() )
+                memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
+            else {
+                saveUpdatedMember(getUniqueIdString())
+                memberView.onNewMember(decryptMember(updateMember!!)!!)
+            }
+
         else {
             saveUpdatedMember(this@AddFamilyMemberOrUsersFragment.member.userId)
             memberView.onNewMember(decryptMember(updateMember!!)!!)
@@ -294,8 +300,12 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         strFirstName = txtFirstName.text.toString()
         strLastName = txtLastName.text.toString()
         strAccountHolder = txtRelationship.selectedItem.toString()
-        strRole = txtsRole.selectedItem.toString()
-        strEmail = edtEmailAddress.text.toString()
+
+        if( layoutOtherViews.isVisible() )
+            strRole = txtsRole.selectedItem.toString()
+
+        if( layNonUser.isVisible() )
+            strEmail = edtEmailAddress.text.toString()
 
 
         if (strFirstName.trim().isEmpty()) {
@@ -345,9 +355,15 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         updateMember!!.firstName = strFirstName.encryptString()
         updateMember!!.lastName = strLastName.encryptString()
         updateMember!!.relationship = strAccountHolder.encryptString()
-        updateMember!!.email = strEmail.encryptString()
+
+        if( layNonUser.isVisible() )
+            updateMember!!.email = strEmail.encryptString()
+
         updateMember!!.role = strRole.encryptString()
-        updateMember!!.relationship = txtRelationship.selectedItem.toString().encryptString()
+
+        if( layNonUser.isVisible() )
+            updateMember!!.relationship = txtRelationship.selectedItem.toString().encryptString()
+
         memberPresenter.setPermissionsForMember(updateMember!!, strRole)
 
         /***
