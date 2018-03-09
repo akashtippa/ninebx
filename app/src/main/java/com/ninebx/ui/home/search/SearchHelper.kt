@@ -36,7 +36,7 @@ class SearchHelper() {
 
         return when( combineItems ) {
             is DecryptedCombine -> {
-                searchDecryptCombine = combineItems
+                searchDecryptCombine = combineItems //institution not saved for finance
                 setupHomeItems()
             }
             is DecryptedCombineMemories -> {
@@ -314,8 +314,7 @@ class SearchHelper() {
         mSearchHomeList.clear()
         var itemIndex = 0
         for( finance in searchDecryptCombine.financialItems ) {
-            //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance", finance.selectionType, itemIndex, finance.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance", finance.selectionType, itemIndex++, finance.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance", finance.selectionType, itemIndex++, finance.id))
         }
         itemIndex = 0
         for( payment in searchDecryptCombine.paymentItems ) {

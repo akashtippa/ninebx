@@ -54,6 +54,12 @@
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false" />
 
+    <!--<Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/memberListSpinner"
+        android:visibility="gone"/>-->
+
     <View
         android:id="@+id/dividerView"
         android:layout_width="match_parent"

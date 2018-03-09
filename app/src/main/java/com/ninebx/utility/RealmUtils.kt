@@ -205,6 +205,9 @@ fun getUniqueId(): Long {
     return UUID.randomUUID().hashCode().toLong()
 }
 
+fun getUniqueIdString(): String {
+    return UUID.randomUUID().toString()
+}
 
 fun generateAttachmentFileName(): String {
     return UUID.randomUUID().toString()

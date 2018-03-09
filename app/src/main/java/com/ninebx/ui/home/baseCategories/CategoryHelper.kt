@@ -59,6 +59,10 @@ class CategoryHelper(
         var category = Category(category_id)
         category.title = "Personal Health Record"
         category.drawableString = "ic_icon_health_records"
+
+        for(wellness in decryptedCombine.wellnessItems) {
+            category.subCategories.add(SubCategory(wellness.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+        }
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
 
@@ -488,7 +492,11 @@ class CategoryHelper(
         category.title = "Clothing sizes"
         category.drawableString = "ic_icon_clothing_sizes"
 
-        category.subCategories.add(SubCategory("Add Person.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+        for(shoppingItem in decryptedCombine.shoppingItems) {
+            category.subCategories.add(SubCategory(shoppingItem.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+        }
+
+        category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
         category.category_id = "shopping_3001"
 
         categoryList.add(category)
@@ -626,7 +634,12 @@ class CategoryHelper(
         category.title = "Education"
         category.drawableString = "ic_icon_education"
         category.category_id = "edu_1001"
-        category.subCategories.add(SubCategory("Add Person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+
+        for(educationItem in decryptedCombine.educationItems) {
+            category.subCategories.add(SubCategory(educationItem.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+        }
+
+        category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
         categoryList.add(category)
 
@@ -637,7 +650,11 @@ class CategoryHelper(
         category.drawableString = "ic_icon_work"
         category.category_id = "edu_2001"
 
-        category.subCategories.add(SubCategory("Add person", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
+        for(workItem in decryptedCombine.workItems) {
+            category.subCategories.add(SubCategory(workItem.name, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+        }
+
+        category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
         categoryList.add(category)
 
