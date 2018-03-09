@@ -33,8 +33,6 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
     private val DELETE_MEMBER = 4325
 
     override fun onMemberEdit(member: DecryptedMember?) {
-        myList.remove(member)
-        mListsAdapter!!.notifyDataSetChanged()
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
         bundle.putString(Constants.FROM_CLASS, "AddMember")
