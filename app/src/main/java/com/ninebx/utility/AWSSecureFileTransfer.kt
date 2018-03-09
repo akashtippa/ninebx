@@ -32,12 +32,10 @@ class AWSSecureFileTransfer( val context: Context ) {
     private val TAG = "SecureTransfer"
     init {
         s3client = AmazonS3Client(Util.getCredProvider(context))
-
         AppLogger.d(TAG, "Private KEy : " + NineBxApplication.getPreferences().privateKey)
         val privateKeyInt8 = convertToUInt8(NineBxApplication.getPreferences().privateKey!!.toByteArray())
         AppLogger.d(TAG, "Private KEy UINT8: " + privateKeyInt8)
         privateKeyArrayBase64 = encryptAESKey(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
-
         AppLogger.d(TAG, "Private KEy Encrypted base 64 : " + privateKeyArrayBase64)
         AppLogger.d(TAG, "Private KEy Encrypted base 64 Arrays : " + Arrays.toString(privateKeyArrayBase64.toByteArray(Charsets.UTF_8)))
         val encryptedMd5 = encryptAESKeyMD5(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
@@ -50,9 +48,12 @@ class AWSSecureFileTransfer( val context: Context ) {
         AppLogger.d(TAG, "Private KEy MD5 convertToUInt8 : " + convertToUInt8(md5Data.toByteArray(Charsets.UTF_8)))
         val sampleMD5 = "[212, 82, 54, 202, 160, 144, 250, 242, 255, 168, 30, 5, 79, 86, 98, 66]"
         AppLogger.d(TAG, "MD5Base64 sample : " + String(Base64.encode(sampleMD5.toByteArray(Charsets.UTF_8), Base64.DEFAULT)).trim())
-
-
-
+        val md5Private = MD5Helper.getMD5(privateKey.toString())
+        var md5Encrypt = encryptAESKey(md5Private, md5Private)
+        val md5UInt8 = convertToUInt8(md5Encrypt.toByteArray(Charsets.UTF_8))
+        AppLogger.d(TAG, "private key MD5 " + md5Private)
+        AppLogger.d(TAG, "private key MD5 encrypted " + md5Encrypt)
+        AppLogger.d(TAG, "private key MD5 encrypted convertToUInt8" + md5UInt8)
     }
 
     fun downloadSecureFile( filePath : String ) {
@@ -149,6 +150,4 @@ class AWSSecureFileTransfer( val context: Context ) {
 
         }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
     }
-
-
 }

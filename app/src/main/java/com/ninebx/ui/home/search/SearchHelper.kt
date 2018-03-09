@@ -228,11 +228,11 @@ class SearchHelper() {
         mSearchShoppingItems.clear()
         var itemIndex = 0
         for(loyaltyPrograms in searchDecryptedCombineShopping.loyaltyProgramsItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, loyaltyPrograms.accountName, "loyaltyPrograms", loyaltyPrograms.selectionType, itemIndex++, loyaltyPrograms.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, loyaltyPrograms.brandName, "loyaltyPrograms", loyaltyPrograms.selectionType, itemIndex++, loyaltyPrograms.id))
         }
         itemIndex = 0
         for(recentPurchase in searchDecryptedCombineShopping.recentPurchaseItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, recentPurchase.brandName, "recentPurchase", recentPurchase.selectionType, itemIndex++, recentPurchase.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, recentPurchase.itemName, "recentPurchase", recentPurchase.selectionType, itemIndex++, recentPurchase.id))
         }
         itemIndex = 0
         for(shopping in searchDecryptedCombineShopping.shoppingItems){
@@ -272,11 +272,27 @@ class SearchHelper() {
         mSearchTravelItems.clear()
         var itemIndex = 0
         for(documents in searchDecryptCombineTravel.documentsItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.nameOnTravelDocument, "documents", documents.selectionType, itemIndex++, documents.id))
+            if (documents!!.selectionType.equals("travel_2001"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.passportName, "documents", documents.selectionType, itemIndex++, documents.id))
+            if (documents!!.selectionType.equals("travel_2002"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.visaName, "documents", documents.selectionType, itemIndex++, documents.id))
+            if (documents!!.selectionType.equals("travel_2003"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.travelDocumentTitle, "documents", documents.selectionType, itemIndex++, documents.id))
         }
         itemIndex = 0
         for(loyalty in searchDecryptCombineTravel.loyaltyItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.nameOnAccount, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+            if (loyalty!!.selectionType.equals("travel_1001"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.airLine, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+            if (loyalty!!.selectionType.equals("travel_1002"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.hotel, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+            if (loyalty!!.selectionType.equals("travel_1003"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.carRentalCompany, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+            if (loyalty!!.selectionType.equals("travel_1004"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.cruiseline, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+            if (loyalty!!.selectionType.equals("travel_1005"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.railway, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+            if (loyalty!!.selectionType.equals("travel_1006"))
+                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.other, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
         }
         itemIndex = 0
         for(travel in searchDecryptCombineTravel.travelItems){

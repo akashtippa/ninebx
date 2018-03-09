@@ -128,7 +128,7 @@ fun isMediaDocument(uri: Uri): Boolean {
 fun saveFileTask(imageUri: Uri, imageFile : File, fileOperationsCompletionListener: AWSFileTransferHelper.FileOperationsCompletionListener ) {
 
 
-    object : AsyncTask<Void, Void, File>() {
+       object : AsyncTask<Void, Void, File>() {
         override fun doInBackground(vararg p0: Void?): File {
 
                 val sourceFile = File( imageUri.path )

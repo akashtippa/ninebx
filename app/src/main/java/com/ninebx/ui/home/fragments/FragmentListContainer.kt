@@ -342,5 +342,4 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         result.append(prefix)
         result.append(displayName + "\n")
     }
-
 }

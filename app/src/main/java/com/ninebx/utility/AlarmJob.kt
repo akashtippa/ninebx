@@ -16,6 +16,7 @@ import com.evernote.android.job.JobRequest
 import com.evernote.android.job.util.support.PersistableBundleCompat
 import com.google.gson.Gson
 import com.ninebx.R
+import com.ninebx.R.string.reminder
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Notifications
@@ -29,44 +30,44 @@ class AlarmJob : Job() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onRunJob(params: Params): Result {
         val gson = Gson()
-        val extraModel = params.extras["reminder"] as String
-        val reminder = gson.fromJson(extraModel, CalendarEvents::class.java)
-        val title: String
-        val desc: String
+        if( params.extras.containsKey("reminder") ) {
+            val extraModel = params.extras["reminder"] as String
+            val reminder = gson.fromJson(extraModel, CalendarEvents::class.java)
+            val title: String
+            val desc: String
 
-        val extraNotification = params.extras["notification"] as String
-        val notify = gson.fromJson(extraNotification, Notifications::class.java)
-        val notificationTitle : String
-        val notificationDesc : String
+            title = "This is a reminder notification"
+            //title = "Reminder : ${reminder.title[0]!!}"
+            if( reminder.reminder.size > 0 )
+                desc = reminder.title[0]!! + "event is scheduled"
+            else {
+                // desc = reminder.title[0]!!
+                desc = reminder.title[0]!! + "event is scheduled"
+            }
 
-           /*if (reminder.action == Reminders.ACTION_PREGAME || reminder.action == Reminders.ACTION_POSTGAME) {
-            val testDateTime = getGameDateTime(reminder.date + " , " + reminder.time)
-            title = "Reminder : You have an event - ${reminder.title}"
-            desc = "${testDateTime.toString("dd MMM ")} at ${testDateTime.toString("hh:mm a")}"
-            if (!reminder.endsDate.time < )
-                updateReminderForGame(reminder)
-            pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
-        } else {
-            title = "Reminder : ${reminder.title}"
-            desc = reminder.reminder
-            pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
-        }*/
-        title = "Reminder : ${reminder.title[0]!!}"
-        if( reminder.reminder.size > 0 )
-            desc = reminder.reminder[0]!!
-        else desc = reminder.title[0]!!
-        
-        showNotification( title, desc )
+            AppLogger.d(TAG, "Notification : " + title + " : " + desc)
+            showNotification( title, desc )
 
-        notificationTitle = "NineBx : ${notify.subTitle[0]}"
-        notificationDesc =notify.message
-        showNotification(notificationTitle, notificationDesc)
+        }
+        else if( params.extras.containsKey("notification") ) {
+
+            val extraNotification = params.extras["notification"] as String
+            val notify = gson.fromJson(extraNotification, Notifications::class.java)
+            val notificationTitle : String
+            val notificationDesc : String
+
+            notificationTitle = "NineBx : ${notify.subTitle[0]}"
+            notificationDesc =notify.message
+            showNotification(notificationTitle, notificationDesc)
+        }
+
 
         return Result.SUCCESS
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showNotification(title: String, desc: String?) {
+        AppLogger.d(TAG, "showNotification : " + title + " : " + desc)
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, HomeActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -80,7 +81,7 @@ class AlarmJob : Job() {
             val name = title
             // The user-visible description of the channel.
             val description = desc
-            val mChannel = NotificationChannel(channelId, name, NotificationManager.IMPORTANCE_DEFAULT)
+            val mChannel = NotificationChannel(channelId, name, NotificationManager.IMPORTANCE_HIGH)
             // Configure the notification channel.
             mChannel.description = description
             mChannel.enableLights(true)
@@ -97,7 +98,7 @@ class AlarmJob : Job() {
                     .setContentIntent(pendingIntent)
                     .setContentTitle(title)
                     .setContentText(desc)
-                    .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                    .setPriority(NotificationManager.IMPORTANCE_HIGH)
                     .setChannelId(channelId)
                     .setWhen(0)
                     .setSound(defaultSoundUri)
@@ -111,7 +112,7 @@ class AlarmJob : Job() {
                         .setContentIntent(pendingIntent)
                         .setContentTitle(title)
                         .setContentText(desc)
-                        .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                        .setPriority(NotificationManager.IMPORTANCE_HIGH)
                         .setWhen(0)
                         .setSound(defaultSoundUri)
             } else {
