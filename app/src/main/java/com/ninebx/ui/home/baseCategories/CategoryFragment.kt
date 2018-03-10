@@ -1,21 +1,22 @@
 package com.ninebx.ui.home.baseCategories
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
@@ -29,6 +30,8 @@ import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
+import com.ninebx.ui.home.account.addmembers.AddedFamilyMemberAdapter
+import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -37,12 +40,12 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.layout_category_view.view.*
 
 /**
  * Created by Alok on 12/01/18.
  */
 class CategoryFragment : FragmentBackHelper(), CategoryView {
-
 
     private var combine: RealmResults<Combine> ?= null
     private var combineMemories : RealmResults<CombineMemories> ?= null
@@ -192,17 +195,31 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     val prefrences = NineBxPreferences()
 
+    lateinit var rvSubCategory: RecyclerView
+    lateinit var subCategoryAdapter: SubCategoryAdapter
+    var peopleCategory: Category ?= null
+    var peopleCategoryView: LinearLayout ?= null
+    var peopleSubCategoryAdapter: SubCategoryAdapter ?= null
+    var categoryView: LinearLayout ?= null
     private fun inflateLayout(categories: ArrayList<Category>) {
 
         val inflater = LayoutInflater.from(context)
 
         for (category in categories) {
 
-            val categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
+            categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
 
-            val tvCategory = categoryView.findViewById<TextView>(R.id.tvCategory)
-            val tvCount = categoryView.findViewById<TextView>(R.id.tvCount)
-            val rvSubCategory = categoryView.findViewById<RecyclerView>(R.id.rvSubCategory)
+
+            if(category.title == "Personal Health Record" || category.title == "Education"
+                    || category.title == "Work" || category.title == "Clothing sizes") {
+                peopleCategoryView = categoryView
+                peopleCategory = category
+            }
+
+            val tvCategory = categoryView!!.findViewById<TextView>(R.id.tvCategory)
+            val tvCount = categoryView!!.findViewById<TextView>(R.id.tvCount)
+            rvSubCategory = categoryView!!.findViewById<RecyclerView>(R.id.rvSubCategory)
+            //val personSpinner = categoryView.findViewById<Spinner>(R.id.memberListSpinner)
             val id = context!!.resources.getIdentifier(category.drawableString, "drawable", context!!.packageName)
             tvCategory.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context!!, id), null, null, null)
 
@@ -214,7 +231,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 tvCount.text = ""
                 tvCount.setCompoundDrawables(null, null, null, null)
             }
-            rvSubCategory.layoutManager = LinearLayoutManager(context)
+            rvSubCategory.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
             tvCategory.setOnClickListener {
                 categoryName = category.title
@@ -239,44 +256,131 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 }
             }
 
-            val subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
-                override fun onItemClick(category: SubCategory, action: String) {
+            subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
+                override fun onItemClick(subCategory: SubCategory, action: String) {
 
                     val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                     fragmentTransaction.addToBackStack(null)
                     val bundle = Bundle()
-                    categoryName = category.title
-                    categoryID = category.subCategoryId
+                    categoryName = subCategory.title
+                    categoryID = subCategory.subCategoryId
 
                     bundle.putString("categoryName", categoryName)
                     bundle.putString("categoryId", categoryID)
+                    bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                     when {
-                        category.title == "Add Persons." -> {
-                            val categoryFragment = WellnessFragment()
-                            categoryFragment.arguments = bundle
-                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                        subCategory.title == "Add Persons." -> {
+                            if(!memberList.isEmpty()) {
+                                if(peopleCategory != null)
+                                CustomDropDown(peopleCategory!!.subCategories)
+                            }
+                            else {
+                                Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
+                            }
                         }
-                        category.title == "Add Person." -> {
+                        subCategory.title == "Add Person." -> {
                             val categoryFragment = ClothesFragment()
                             categoryFragment.arguments = bundle
                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                         }
                         else -> {
 
-                            val categoryFragment = FragmentListContainer()
-                            bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-                            categoryFragment.arguments = bundle
-                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                            //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                            if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
+                                when(category.title) {
+                                    "Work" -> {
+                                        val categoryFragment = WellnessFragment()
+                                        categoryFragment.arguments = bundle
+                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                    }
+                                    "Education" -> {
+                                        val categoryFragment = WellnessFragment()
+                                        categoryFragment.arguments = bundle
+                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                    }
+                                    "Personal Health Record" -> {
+                                        val categoryFragment = WellnessFragment()
+                                        categoryFragment.arguments = bundle
+                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                    }
+                                    "Clothing sizes" -> {
+                                        val categoryFragment = ClothesFragment()
+                                        categoryFragment.arguments = bundle
+                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                    }
+                                }
+                            } else {
+                                val categoryFragment = FragmentListContainer()
+                                categoryFragment.arguments = bundle
+                                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                            }
                             Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
 
                         }
                     }
                 }
             })
-
             rvSubCategory.adapter = subCategoryAdapter
+            if(category.title == "Personal Health Record" || category.title == "Education"
+                || category.title == "Work" || category.title == "Clothing sizes") {
+                peopleSubCategoryAdapter = subCategoryAdapter
+            }
             layoutCategory.addView(categoryView)
         }
+    }
+
+    var addedPersonList: ArrayList<DecryptedMember> = ArrayList()
+    var memberListAdapter: MemberListAdapter ?= null
+    var levelDialog: AlertDialog ?= null
+    private fun CustomDropDown(subCategories: ArrayList<SubCategory>) {
+        //todo
+        val dialogView: View = LayoutInflater.from(context).inflate(R.layout.layout_members, null)
+        val cancelTextView: TextView = dialogView.findViewById(R.id.cancelTextView)
+        val dialogTitleTextView : TextView = dialogView.findViewById(R.id.titleTextView)
+        val membersRecyclerView : RecyclerView = dialogView.findViewById(R.id.membersRecyclerView)
+        levelDialog = AlertDialog.Builder(context!!)
+                .setView(dialogView)
+                .create()
+        dialogTitleTextView.setText("Family/Users")
+        membersRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        memberListAdapter = MemberListAdapter(memberList, object: AdapterClickListener {
+            override fun onItemClick(position: Int) {
+                val member = memberListAdapter!!.getItem(position)
+                addedPersonList.add(member)
+                subCategories.add(SubCategory(member.firstName + " " + member.lastName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, Constants.SUB_CATEGORY_DISPLAY_PERSON.toString()))
+                peopleSubCategoryAdapter?.updateList(subCategories)
+                peopleCategoryView!!.rvSubCategory.adapter = peopleSubCategoryAdapter
+                memberListAdapter!!.removeItem(position)
+                memberListAdapter!!.notifyDataSetChanged()
+                levelDialog?.dismiss()
+            }
+
+        })
+        membersRecyclerView.adapter = memberListAdapter
+        cancelTextView.setOnClickListener{
+            levelDialog?.dismiss()
+        }
+        levelDialog?.show()
+    }
+
+    private var usersRealm: Realm? = null
+    var memberList: ArrayList<DecryptedMember> = ArrayList()
+
+    fun fetchMembers() {
+        prepareRealmConnectionsRealmThread(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                usersRealm = realm
+                val results = usersRealm!!.where(Member::class.java).distinctValues("userId").findAll()
+                memberList.clear()
+                memberList.addAll(decryptMembers(results!!)!!.toList())
+                for( member in memberList ) {
+                    AppLogger.d("Member", "List : " + member)
+                }
+                //mListsAdapter!!.notifyDataSetChanged()
+                //saveUserObject()
+            }
+
+        })
     }
 
     private lateinit var mCategoryPresenter: CategoryPresenter
@@ -289,6 +393,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgress(R.string.loading)
+        fetchMembers()
         mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
         fromWhichBox = arguments!!.getInt("category")
         toolbarTitle.text = getString(fromWhichBox!!)

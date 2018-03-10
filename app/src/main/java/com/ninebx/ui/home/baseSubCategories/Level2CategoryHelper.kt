@@ -2,9 +2,11 @@ package com.ninebx.ui.home.baseSubCategories
 
 import android.annotation.SuppressLint
 import android.content.Context
+
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
@@ -18,6 +20,10 @@ import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
 import io.realm.Realm
+import java.text.SimpleDateFormat
+
+import java.util.*
+
 
 /***
  * Created by TechnoBlogger on 23/01/18.
@@ -1586,12 +1592,13 @@ class Level2CategoryHelper(
     private fun getOtherFinancialAccounts() {
         val categoryList = ArrayList<Level2Category>()
         if (decryptedFinancial == null) decryptedFinancial = DecryptedFinancial()
+        AppLogger.d("Document", "Details : " + decryptedFinancial.toString())
         var categoryIndex = 1004
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", decryptedFinancial!!.swiftCode, "", Constants.LEVEL2_NORMAL))
@@ -1718,7 +1725,7 @@ class Level2CategoryHelper(
         var category = Level2Category(category_id)
         category.title = "Account Details"
         category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, Constants.BANK_ACCOUNT_TYPE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.accountName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("SWIFT/other code", decryptedFinancial!!.swiftCode, "", Constants.LEVEL2_NORMAL))
@@ -2908,7 +2915,7 @@ class Level2CategoryHelper(
             "Other travel document" -> {
                 setTravelDocuments(level2Category)
             }
-            
+
             "Travel" -> {
                 setTravelItems(level2Category)
             }
@@ -3197,16 +3204,17 @@ class Level2CategoryHelper(
     private fun setBanking(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Loan type", "Account type" -> decryptedFinancial!!.accountType = level2Category.titleValue
-            "Name(s) on account" -> decryptedFinancial!!.accountName = level2Category.titleValue
+            "Name(s) on account" -> decryptedFinancial!!.nameOnAccount = level2Category.titleValue
             "Account number" -> decryptedFinancial!!.accountNumber = level2Category.titleValue
             "Location" -> decryptedFinancial!!.location = level2Category.titleValue
-            "SWIFT/other code" -> decryptedFinancial!!.swiftCode = level2Category.titleValue
+            "SWIFT/other code" -> decryptedFinancial!!. swiftCode = level2Category.titleValue
             "ABA routing number" -> decryptedFinancial!!.abaRoutingNumber = level2Category.titleValue
             "Contacts" -> decryptedFinancial!!.contacts = level2Category.titleValue
             "Website" -> decryptedFinancial!!.website = level2Category.titleValue
             "Username/login" -> decryptedFinancial!!.userName = level2Category.titleValue
             "Password" -> decryptedFinancial!!.password = level2Category.titleValue
             "PIN" -> decryptedFinancial!!.pin = level2Category.titleValue
+            "Account name" -> decryptedFinancial!!.accountName = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes = level2Category.titleValue
@@ -3397,7 +3405,7 @@ class Level2CategoryHelper(
              }
          }
     }
-    
+
 
     private fun setIdentification(level2Category: Level2SubCategory) {
         when (level2Category.title) {
@@ -3587,10 +3595,18 @@ class Level2CategoryHelper(
 
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
+        val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
+        val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
+        val currentDateandTime = sdf.format( Date())
         if (decryptedFinancial != null) {
-            decryptedFinancial!!.accountType = categoryID
             decryptedFinancial!!.selectionType = categoryID
+
+            decryptedFinancial!!.institutionName = title
+            AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
+
             decryptedFinancial!!.accountName = title
+            decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
+
             var isSaveComplete = false
             if (decryptedFinancial!!.id.toInt() == 0) {
                 decryptedFinancial!!.id = getUniqueId()
@@ -3652,9 +3668,12 @@ class Level2CategoryHelper(
         }
 
         if (decryptedPayment != null) {
-            decryptedPayment!!.cardType = categoryID
-            decryptedPayment!!.cardNumber = title
+            decryptedPayment!!.cardName = title
             decryptedPayment!!.selectionType = categoryID
+            AppLogger.d("SelectionType ", "DecryptedPayment" + decryptedPayment!!.selectionType)
+
+            decryptedPayment!!.modified = currentUsers + " " + currentDateandTime
+
             var isSaveComplete = false
             if (decryptedPayment!!.id.toInt() == 0) {
                 decryptedPayment!!.id = getUniqueId()
@@ -3716,6 +3735,7 @@ class Level2CategoryHelper(
         if (decryptedProperty != null) {
             decryptedProperty!!.selectionType = categoryID
             decryptedProperty!!.propertyName = title
+            decryptedProperty!!.modified = currentUsers + " " + currentDateandTime
             var isSaveComplete = false
             if (decryptedProperty!!.id.toInt() == 0) {
                 decryptedProperty!!.id = getUniqueId()
@@ -3779,6 +3799,7 @@ class Level2CategoryHelper(
             decryptedVehicle!!.vehicleName = title
             var isSaveComplete = false
             decryptedVehicle!!.selectionType = categoryID
+            decryptedVehicle!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVehicle!!.id.toInt() == 0) {
                 decryptedVehicle!!.id = getUniqueId()
             }
@@ -3838,6 +3859,8 @@ class Level2CategoryHelper(
         if (decryptedAssets != null) {
             decryptedAssets!!.selectionType = categoryID
             decryptedAssets!!.assetName = title
+            decryptedAssets!!.modified = currentUsers + " " + currentDateandTime
+
             if (decryptedAssets!!.id.toInt() == 0) {
                 decryptedAssets!!.id = getUniqueId()
             }
@@ -3898,6 +3921,7 @@ class Level2CategoryHelper(
         if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
+            decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedInsurance!!.id.toInt() == 0) {
                 decryptedInsurance!!.id = getUniqueId()
             }
@@ -3959,6 +3983,7 @@ class Level2CategoryHelper(
         if (decryptedTaxes != null) {
             decryptedTaxes!!.selectionType = categoryID
             decryptedTaxes!!.returnName = title
+            decryptedTaxes!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedTaxes!!.id.toInt() == 0) {
                 decryptedTaxes!!.id = getUniqueId()
             }
@@ -4020,6 +4045,7 @@ class Level2CategoryHelper(
         if (decryptedDriversLicense != null) {
             decryptedDriversLicense!!.selectionType = categoryID
             decryptedDriversLicense!!.nameOnLicense = title
+            decryptedDriversLicense!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedDriversLicense!!.id.toInt() == 0) {
                 decryptedDriversLicense!!.id = getUniqueId()
             }
@@ -4077,6 +4103,7 @@ class Level2CategoryHelper(
         if (decryptedSocial != null) {
             decryptedSocial!!.selectionType = categoryID
             decryptedSocial!!.cardName = title
+            decryptedSocial!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedSocial!!.id.toInt() == 0) {
                 decryptedSocial!!.id = getUniqueId()
             }
@@ -4131,6 +4158,8 @@ class Level2CategoryHelper(
         if (decryptedTAX_ID != null) {
             decryptedTAX_ID!!.selectionType = categoryID
             decryptedTAX_ID!!.taxIdName = title
+            decryptedTAX_ID!!.modified = currentUsers + " " + currentDateandTime
+
             if (decryptedTAX_ID!!.id.toInt() == 0) {
                 decryptedTAX_ID!!.id = getUniqueId()
             }
@@ -4185,6 +4214,7 @@ class Level2CategoryHelper(
         if (decryptedOtherGovernment != null) {
             decryptedOtherGovernment!!.selectionType = categoryID
             decryptedOtherGovernment!!.idName = title
+            decryptedOtherGovernment!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedOtherGovernment!!.id.toInt() == 0) {
                 decryptedOtherGovernment!!.id = getUniqueId()
             }
@@ -4239,6 +4269,7 @@ class Level2CategoryHelper(
         if (decryptedCertificate != null) {
             decryptedCertificate!!.selectionType = categoryID
             decryptedCertificate!!.nameOnCertificate = title
+            decryptedCertificate!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedCertificate!!.id.toInt() == 0) {
                 decryptedCertificate!!.id = getUniqueId()
             }
@@ -4293,6 +4324,7 @@ class Level2CategoryHelper(
         if (decryptedIdentification != null) {
             decryptedIdentification!!.selectionType = categoryID
             decryptedIdentification!!.name = title
+            decryptedIdentification!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedIdentification!!.id.toInt() == 0) {
                 decryptedIdentification!!.id = getUniqueId()
             }
@@ -4348,6 +4380,7 @@ class Level2CategoryHelper(
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID
             decryptedMedicalHistory!!.attachmentNames = title
+            decryptedMedicalHistory!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedMedicalHistory!!.id.toInt() == 0) {
                 decryptedMedicalHistory!!.id = getUniqueId()
             }
@@ -4407,6 +4440,7 @@ class Level2CategoryHelper(
         if (decryptedHealthcareProviders != null) {
             decryptedHealthcareProviders!!.selectionType = categoryID
             decryptedHealthcareProviders!!.name = title
+            decryptedHealthcareProviders!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedHealthcareProviders!!.id.toInt() == 0) {
                 decryptedHealthcareProviders!!.id = getUniqueId()
             }
@@ -4440,8 +4474,8 @@ class Level2CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
-                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
+                            //val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            //AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
@@ -4468,6 +4502,7 @@ class Level2CategoryHelper(
         if (decryptedEmergencyContacts != null) {
             decryptedEmergencyContacts!!.selectionType = categoryID
             decryptedEmergencyContacts!!.name = title
+            decryptedEmergencyContacts!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedEmergencyContacts!!.id.toInt() == 0) {
                 decryptedEmergencyContacts!!.id = getUniqueId()
             }
@@ -4527,6 +4562,7 @@ class Level2CategoryHelper(
         if (decryptedMedications != null) {
             decryptedMedications!!.selectionType = categoryID
             decryptedMedications!!.name = title
+            decryptedMedications!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedMedications!!.id.toInt() == 0) {
                 decryptedMedications!!.id = getUniqueId()
             }
@@ -4586,6 +4622,7 @@ class Level2CategoryHelper(
         if (decryptedMedicalConditions != null) {
             decryptedMedicalConditions!!.selectionType = categoryID
             decryptedMedicalConditions!!.attachmentNames = title
+            decryptedMedicalConditions!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedMedicalConditions!!.id.toInt() == 0) {
                 decryptedMedicalConditions!!.id = getUniqueId()
             }
@@ -4645,6 +4682,7 @@ class Level2CategoryHelper(
         if (decryptedEyeglassPrescriptions != null) {
             decryptedEyeglassPrescriptions!!.selectionType = categoryID
             decryptedEyeglassPrescriptions!!.attachmentNames = title
+            decryptedEyeglassPrescriptions!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedEyeglassPrescriptions!!.id.toInt() == 0) {
                 decryptedEyeglassPrescriptions!!.id = getUniqueId()
             }
@@ -4703,6 +4741,7 @@ class Level2CategoryHelper(
         if (decryptedVitalNumbers != null) {
             decryptedVitalNumbers!!.selectionType = categoryID
             decryptedVitalNumbers!!.attachmentNames = title
+            decryptedVitalNumbers!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVitalNumbers!!.id.toInt() == 0) {
                 decryptedVitalNumbers!!.id = getUniqueId()
             }
@@ -4762,6 +4801,7 @@ class Level2CategoryHelper(
         if (decryptedCheckups != null) {
             decryptedCheckups!!.selectionType = categoryID
             decryptedCheckups!!.attachmentNames = title
+            decryptedCheckups!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedCheckups!!.id.toInt() == 0) {
                 decryptedCheckups!!.id = getUniqueId()
             }
@@ -4832,6 +4872,8 @@ class Level2CategoryHelper(
                 decryptedLoyalty!!.railway = title
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
+            decryptedLoyalty!!.modified = currentUsers + " " + currentDateandTime
+
             AppLogger.d("LoyaltySelectionType", " " + decryptedLoyalty!!.selectionType)
             AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
 
@@ -4890,6 +4932,7 @@ class Level2CategoryHelper(
         if (decryptedTravel != null) {
             decryptedTravel!!.selectionType = categoryID
             decryptedTravel!!.nameOnAccount = title
+            decryptedTravel!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedTravel!!.id.toInt() == 0) {
                 decryptedTravel!!.id = getUniqueId()
             }
@@ -4954,9 +4997,11 @@ class Level2CategoryHelper(
             AppLogger.d("SelectionType", " Visa Name " + decryptedDocuments!!.visaName)
             AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
             AppLogger.d("SelectionType", " Travel Document " + decryptedDocuments!!.selectionType)
+            decryptedDocuments!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedDocuments!!.id.toInt() == 0) {
                 decryptedDocuments!!.id = getUniqueId()
             }
+
             var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
@@ -5008,6 +5053,7 @@ class Level2CategoryHelper(
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
+            decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVacations!!.id.toInt() == 0) {
                 decryptedVacations!!.id = getUniqueId()
             }
@@ -5063,6 +5109,7 @@ class Level2CategoryHelper(
         if (decryptedLoyaltyPrograms != null) {
             decryptedLoyaltyPrograms!!.selectionType = categoryID
             decryptedLoyaltyPrograms!!.brandName = title
+            decryptedLoyaltyPrograms!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedLoyaltyPrograms!!.id.toInt() == 0) {
                 decryptedLoyaltyPrograms!!.id = getUniqueId()
             }
@@ -5116,6 +5163,7 @@ class Level2CategoryHelper(
         if (decryptedRecentPurchase != null) {
             decryptedRecentPurchase!!.selectionType = categoryID
             decryptedRecentPurchase!!.itemName = title
+            decryptedRecentPurchase!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedRecentPurchase!!.id.toInt() == 0) {
                 decryptedRecentPurchase!!.id = getUniqueId()
             }
@@ -5169,6 +5217,7 @@ class Level2CategoryHelper(
         if(decryptedClothingSizes != null){
             decryptedClothingSizes!!.selectionType = categoryID
             decryptedClothingSizes!!.personName = title
+            decryptedClothingSizes!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedClothingSizes!!.id.toInt() == 0) {
                 decryptedClothingSizes!!.id = getUniqueId()
             }
@@ -5222,6 +5271,7 @@ class Level2CategoryHelper(
         if(decryptedShopping != null){
             decryptedShopping!!.selectionType = categoryID
             decryptedShopping!!.userName = title
+            decryptedShopping!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedShopping!!.id.toInt() == 0) {
                 decryptedShopping!!.id = getUniqueId()
             }
@@ -5273,4 +5323,5 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
     }
+
 }

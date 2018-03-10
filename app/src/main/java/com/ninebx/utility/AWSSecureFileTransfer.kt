@@ -11,10 +11,7 @@ import com.amazonaws.services.s3.model.*
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
 import java.io.*
-import java.security.Security
 import java.util.*
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 
 
 /**
@@ -32,10 +29,27 @@ class AWSSecureFileTransfer( val context: Context ) {
     private val TAG = "SecureTransfer"
     init {
         s3client = AmazonS3Client(Util.getCredProvider(context))
+
         AppLogger.d(TAG, "Private KEy : " + NineBxApplication.getPreferences().privateKey)
         val privateKeyInt8 = convertToUInt8(NineBxApplication.getPreferences().privateKey!!.toByteArray())
         AppLogger.d(TAG, "Private KEy UINT8: " + privateKeyInt8)
+        var iOS = "[53, 227, 113, 50, 233, 182, 31, 28, 117, 97, 185, 84, 7, 131, 112, 224, 119, 53, 235, 88, 59, 50, 89, 134, 196, 111, 210, 77, 111, 206, 188, 122]"
         privateKeyArrayBase64 = encryptAESKey(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
+
+        var privateKeyMD5 = MD5Helper.getMD5(privateKeyArrayBase64)
+        AppLogger.d(TAG, "Private KEy Encrypted: " + privateKeyArrayBase64)
+        AppLogger.d(TAG, "Private KEy iOS: " + iOS)
+        AppLogger.d(TAG, "Private Key encrypted UINT8 " + convertToUInt8(privateKeyArrayBase64.toByteArray(Charsets.UTF_8)))
+        AppLogger.d(TAG, "Private Key encrypted MD5 " + convertToUInt8(privateKeyMD5.toByteArray(Charsets.UTF_8)))
+
+
+        /*val md5Private = MD5Helper.getMD5(privateKey.toString())
+        var md5Encrypt = encryptAESKey(md5Private, md5Private)
+        val md5UInt8 = convertToUInt8(md5Encrypt.toByteArray(Charsets.UTF_8))
+        AppLogger.d(TAG, "private key MD5 " + md5Private)
+        AppLogger.d(TAG, "private key MD5 encrypted " + md5Encrypt)
+        AppLogger.d(TAG, "private key MD5 encrypted convertToUInt8" + md5UInt8)*/
+
         AppLogger.d(TAG, "Private KEy Encrypted base 64 : " + privateKeyArrayBase64)
         AppLogger.d(TAG, "Private KEy Encrypted base 64 Arrays : " + Arrays.toString(privateKeyArrayBase64.toByteArray(Charsets.UTF_8)))
         val encryptedMd5 = encryptAESKeyMD5(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
@@ -48,12 +62,15 @@ class AWSSecureFileTransfer( val context: Context ) {
         AppLogger.d(TAG, "Private KEy MD5 convertToUInt8 : " + convertToUInt8(md5Data.toByteArray(Charsets.UTF_8)))
         val sampleMD5 = "[212, 82, 54, 202, 160, 144, 250, 242, 255, 168, 30, 5, 79, 86, 98, 66]"
         AppLogger.d(TAG, "MD5Base64 sample : " + String(Base64.encode(sampleMD5.toByteArray(Charsets.UTF_8), Base64.DEFAULT)).trim())
-        val md5Private = MD5Helper.getMD5(privateKey.toString())
-        var md5Encrypt = encryptAESKey(md5Private, md5Private)
-        val md5UInt8 = convertToUInt8(md5Encrypt.toByteArray(Charsets.UTF_8))
-        AppLogger.d(TAG, "private key MD5 " + md5Private)
-        AppLogger.d(TAG, "private key MD5 encrypted " + md5Encrypt)
-        AppLogger.d(TAG, "private key MD5 encrypted convertToUInt8" + md5UInt8)
+
+
+
+        var encrypt = encryptAESKeyMD5(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
+        AppLogger.d("EncryptPrivate ", "private key encrypted " + encrypt)
+        AppLogger.d("EncryptPrivate ", "private key Byte Array " + Arrays.toString(encrypt.toByteArray(Charsets.UTF_8)))
+        AppLogger.d("EncryptPrivate ", "private key MD5 format " + MD5Helper.getMD5(Arrays.toString(encrypt.toByteArray(Charsets.UTF_8))))
+       // AppLogger.d("EncryptPrivate ", "private key MD5 format " + MD5Helper.getMD5(encrypt))
+        AppLogger.d("EncryptPrivate ", "private key Byte Array MD5 format ByteArray " + Arrays.toString(MD5Helper.getMD5(Arrays.toString(encrypt.toByteArray(Charsets.UTF_8))).toByteArray(Charsets.UTF_8)))
     }
 
     fun downloadSecureFile( filePath : String ) {
@@ -88,7 +105,6 @@ class AWSSecureFileTransfer( val context: Context ) {
                     val outStream = FileOutputStream(file)
                     outStream.write(fileBytes)
                     buf.close()
-
                     return file
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block
@@ -137,7 +153,6 @@ class AWSSecureFileTransfer( val context: Context ) {
             else
                 return decryptFileIOS( File( filePath ), privateKey )
         }
-
     }
 
     private fun decryptFileTask(file: File) {
@@ -147,7 +162,6 @@ class AWSSecureFileTransfer( val context: Context ) {
                     fileOperationsListener!!.onSuccess(outputFile)
                 }
             }
-
         }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
     }
 }

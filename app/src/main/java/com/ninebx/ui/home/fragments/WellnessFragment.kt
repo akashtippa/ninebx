@@ -28,12 +28,12 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-
+        val bundle = arguments
         layoutPersonalHealthRecord.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Identification")
+
+            bundle!!.putString("categoryName", "Identification")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -44,8 +44,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutMedicalHistory.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Medical history")
+
+            bundle!!.putString("categoryName", "Medical history")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -56,8 +56,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutHealthCare.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Healthcare providers")
+
+            bundle!!.putString("categoryName", "Healthcare providers")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -68,8 +68,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutMedications.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Medications")
+
+            bundle!!.putString("categoryName", "Medications")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -80,8 +80,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutMedicalConditions.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Medical conditions/Allergies")
+
+            bundle!!.putString("categoryName", "Medical conditions/Allergies")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -92,8 +92,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutEye.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Eyeglass prescriptions")
+
+            bundle!!.putString("categoryName", "Eyeglass prescriptions")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -104,8 +104,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutVitalNumber.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Vital numbers")
+
+            bundle!!.putString("categoryName", "Vital numbers")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()
@@ -116,8 +116,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutCheckUps.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Checkups and visits")
+
+            bundle!!.putString("categoryName", "Checkups and visits")
             bundle.putString("categoryId", "1")
 
             val categoryFragment = Level2CategoryFragment()

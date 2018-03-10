@@ -71,7 +71,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         for (item in combineFetched!!) {
             searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
         }
-
     }
 
     private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
@@ -588,8 +587,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                 })
 
             }
-
-
         }
     }
 
@@ -921,6 +918,6 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     }
 
     override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
-
+        //TODO
     }
 }

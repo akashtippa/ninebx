@@ -16,7 +16,7 @@ import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptString
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -39,7 +39,7 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
         return myList.size
     }
 
-    internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent), View.OnClickListener {
+    inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent), View.OnClickListener {
         override fun onClick(view: View?) {
             val position = adapterPosition
             if( position != RecyclerView.NO_POSITION ) {
@@ -78,6 +78,16 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedM
 
     fun deleteItem(member: DecryptedMember?) {
         myList.remove(member)
+        notifyDataSetChanged()
+    }
+
+    fun insertMember(member: DecryptedMember?) {
+        val position = myList.indexOf(member)
+        if( position != -1 ) {
+            myList[position] = (member!!)
+        }
+        else
+            myList.add(member!!)
         notifyDataSetChanged()
     }
 

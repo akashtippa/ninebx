@@ -459,14 +459,12 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
 
-
-    fun setCombineFetched(combineFetched: ArrayList<DecryptedTravelList>?) {
-        this.combineTravelFetched = combineFetched
+    fun setCombineFetched(combineTravelFetched: ArrayList<DecryptedTravelList>?) {
+        this.combineTravelFetched = combineTravelFetched
         searchItems.clear()
         for (item in combineFetched!!) {
             searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
-
     }
 
     private var combineContactsFetched: ArrayList<DecryptedContactsList>? = null
@@ -544,13 +542,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         for (item in combineShoppingFetched!!) {
             searchItems.add(Level3SearchItem(categoryName, item.listName))
         }
-
     }
 
     override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-
         // For now managing in a bad way, just to make it work.
         if (fragmentValue == "HomeScreen") {
             preferences.forTestingBackPress = "Home"

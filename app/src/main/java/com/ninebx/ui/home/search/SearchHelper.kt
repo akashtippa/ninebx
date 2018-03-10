@@ -36,7 +36,7 @@ class SearchHelper() {
 
         return when( combineItems ) {
             is DecryptedCombine -> {
-                searchDecryptCombine = combineItems
+                searchDecryptCombine = combineItems //institution not saved for finance
                 setupHomeItems()
             }
             is DecryptedCombineMemories -> {
@@ -314,13 +314,17 @@ class SearchHelper() {
         mSearchHomeList.clear()
         var itemIndex = 0
         for( finance in searchDecryptCombine.financialItems ) {
-            //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance", finance.selectionType, itemIndex, finance.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.accountName, "finance", finance.selectionType, itemIndex++, finance.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.institutionName, "finance", finance.selectionType, itemIndex++, finance.id))
         }
         itemIndex = 0
         for( payment in searchDecryptCombine.paymentItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  payment.cardName, "payment", payment.selectionType, itemIndex, payment.id)))
+            if(payment.selectionType.equals("home_2001")){
                 mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.cardName, "payment", payment.selectionType, itemIndex++, payment.id))
+            }
+            else{
+                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.cardName, "payment", payment.selectionType, itemIndex++, payment.id))
+            }
         }
         itemIndex = 0
         for( asset in searchDecryptCombine.assetItems ) {
@@ -361,6 +365,9 @@ class SearchHelper() {
         for( item in mSearchList ) {
             if( !level3Items.contains(item) ) {
                 level3Items.add(item)
+            }
+            else {
+                level3Items[level3Items.indexOf(item)] = item
             }
         }
         return level3Items

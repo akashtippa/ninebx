@@ -115,5 +115,4 @@ class NineBxApplication : MultiDexApplication() {
     fun getCountrySelected(name: String): ICountrySelected? {
         return iCountryselected
     }
-
 }

@@ -42,8 +42,18 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
 
             email.addTo(emailId)
             email.from = "ninebx.support@nineBx.com"
-            email.subject = "OTP confirmation alert for your NineBx Application!"
-            email.text = emailOtp
+            email.subject = "NineBx - Authentication code"
+            email.text = "Dear User,\n" +
+                    "\n" +
+                    "Here is your one-time, time-based code to authenticate your device.\n" +
+                    "\n" +
+                    "Authentication code: "+emailOtp+"\n" + //TODO - Change the color
+                    "\n" +
+                    "This is a time-sensitive code. Please enter it immediately to complete sign in.\n" +
+                    "\n" +
+                    "Thanks!\n" +
+                    "\n" +
+                    "The NineBx Team"
 
             // Send email, execute http request
             val response = sendgrid.send(email)
