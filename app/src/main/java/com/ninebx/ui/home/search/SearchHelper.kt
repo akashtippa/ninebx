@@ -664,5 +664,4 @@ class SearchHelper() {
             mOnDocumentSelection!!.onDocumentSelected( selectedDocument, classType )
         }
     }
-
 }
