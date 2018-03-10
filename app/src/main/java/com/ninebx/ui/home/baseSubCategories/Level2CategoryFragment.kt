@@ -82,6 +82,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
                     etTitleValue.setText(decryptedFinancial.accountName)
+                    AppLogger.d("AccountName" , " " + decryptedFinancial.accountName)
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     Log.d("AccountName",decryptedFinancial.accountName)
@@ -257,21 +258,33 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     when( decryptedLoyalty.selectionType ) {
                         "travel_1001" -> {
                             etTitle.setText(decryptedLoyalty.airLine)
+                            etTitleValue.setText(decryptedLoyalty.accountName)
+                            AppLogger.d("AccountName" , " " + decryptedLoyalty.accountName)
                         }
                         "travel_1002" -> {
                             etTitle.setText(decryptedLoyalty.hotel)
+                            etTitleValue.setText(decryptedLoyalty.accountName)
+                            AppLogger.d("AccountName" , " " + decryptedLoyalty.accountName)
                         }
                         "travel_1003" -> {
                             etTitle.setText(decryptedLoyalty.carRentalCompany)
+                            etTitleValue.setText(decryptedLoyalty.accountName)
+                            AppLogger.d("AccountName" , " " + decryptedLoyalty.accountName)
                         }
                         "travel_1004" -> {
                             etTitle.setText(decryptedLoyalty.cruiseline)
+                            etTitleValue.setText(decryptedLoyalty.accountName)
+                            AppLogger.d("AccountName" , " " + decryptedLoyalty.accountName)
                         }
                         "travel_1005" -> {
                             etTitle.setText(decryptedLoyalty.railway)
+                            etTitleValue.setText(decryptedLoyalty.accountName)
+                            AppLogger.d("AccountName" , " " + decryptedLoyalty.accountName)
                         }
                         "travel_1006" -> {
                             etTitle.setText(decryptedLoyalty.other)
+                            etTitleValue.setText(decryptedLoyalty.accountName)
+                            AppLogger.d("AccountName" , " " + decryptedLoyalty.accountName)
                         }
                     }
                     modifiedValue.setText(decryptedLoyalty.modified)

@@ -3309,6 +3309,7 @@ class Level2CategoryHelper(
     }
 
     private fun setLoyalty(level2Category: Level2SubCategory) {
+        AppLogger.d("Level2Category", " " + level2Category)
         when (level2Category.title) {
             "Airline" -> decryptedLoyalty!!.airLine = level2Category.titleValue
             "Hotel" -> decryptedLoyalty!!.hotel = level2Category.titleValue
@@ -4152,6 +4153,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedTAX_ID != null) {
             decryptedTAX_ID!!.selectionType = categoryID
             decryptedTAX_ID!!.taxIdName = title
@@ -4374,6 +4376,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID
             decryptedMedicalHistory!!.attachmentNames = title
@@ -4434,6 +4437,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedHealthcareProviders != null) {
             decryptedHealthcareProviders!!.selectionType = categoryID
             decryptedHealthcareProviders!!.name = title
@@ -4496,6 +4500,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedEmergencyContacts != null) {
             decryptedEmergencyContacts!!.selectionType = categoryID
             decryptedEmergencyContacts!!.name = title
@@ -4556,6 +4561,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedMedications != null) {
             decryptedMedications!!.selectionType = categoryID
             decryptedMedications!!.name = title
@@ -4616,6 +4622,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedMedicalConditions != null) {
             decryptedMedicalConditions!!.selectionType = categoryID
             decryptedMedicalConditions!!.attachmentNames = title
@@ -4676,6 +4683,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedEyeglassPrescriptions != null) {
             decryptedEyeglassPrescriptions!!.selectionType = categoryID
             decryptedEyeglassPrescriptions!!.attachmentNames = title
@@ -4735,6 +4743,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedVitalNumbers != null) {
             decryptedVitalNumbers!!.selectionType = categoryID
             decryptedVitalNumbers!!.attachmentNames = title
@@ -4795,6 +4804,7 @@ class Level2CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedCheckups != null) {
             decryptedCheckups!!.selectionType = categoryID
             decryptedCheckups!!.attachmentNames = title
@@ -4885,6 +4895,7 @@ class Level2CategoryHelper(
                             realm!!.beginTransaction()
                             val loyalty = encryptLoyalty(decryptedLoyalty!!)
                             realm.insertOrUpdate(loyalty)
+                           /* realm.copyToRealmOrUpdate(loyalty)*/
                             realm.commitTransaction()
                         }
                     })
