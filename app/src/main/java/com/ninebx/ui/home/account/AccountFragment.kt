@@ -5,15 +5,21 @@ import android.app.Dialog
 import android.app.KeyguardManager
 import android.content.Intent
 import android.hardware.fingerprint.FingerprintManager
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
+import com.ninebx.ui.auth.email.SendEmailTask
+import com.ninebx.ui.auth.email.SendFeedbackTask
+import com.ninebx.ui.auth.email.ShowDialog
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
@@ -21,7 +27,9 @@ import com.ninebx.ui.home.account.subscriptionPlan.SubscriptionActivity
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
 import com.ninebx.utility.*
+import com.sendgrid.SendGrid
 import io.realm.SyncUser
+import kotlinx.android.synthetic.main.dialog_feedback.*
 import kotlinx.android.synthetic.main.fragment_account.*
 import java.io.File
 
@@ -128,6 +136,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             }
             getString(R.string.give_us_feedback) -> {
                 dialog.setContentView(R.layout.dialog_feedback)
+                sendFeedbackmail(dialog)
             }
         }
 
@@ -146,7 +155,85 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
     }
 
-    // Single method to open operational dialog,
+    private fun sendFeedbackmail(dialog: Dialog) {
+        dialog.btnLogin.setOnClickListener {
+            var StringOne = ""
+            var StringTwo = ""
+            var StringThree = ""
+            var StringFour = ""
+            val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+
+
+//            AppLogger.d("significantIsChecked",""+dialog.radioSignificant.isChecked)
+//            AppLogger.d("significantIsSelected",""+dialog.radioSignificant.isSelected)
+//            AppLogger.d("significantIsActivated",""+dialog.radioSignificant.isActivated)
+//            AppLogger.d("significantIsEnabled",""+dialog.radioSignificant.isEnabled)
+
+            if(dialog.radioSignificant.isChecked){
+                var significant = dialog.radioSignificant.text
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (significant)
+                Log.d("stringOne",""+StringOne)
+            }
+            if(dialog.radioQuiteOrdinary.isChecked){
+                var quiteOrdinary =dialog.radioQuiteOrdinary.text
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (quiteOrdinary)
+
+            }
+            if(dialog.radioLoveTheLook.isChecked){
+                var loveTheLook =dialog.radioLoveTheLook.text
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (loveTheLook)
+
+            }
+            if(dialog.radioSignificantRoom.isChecked){
+                var siginficatRoom =dialog.radioSignificantRoom.text
+                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (siginficatRoom)
+
+            }
+            if(dialog.radio.isChecked){
+                var tookSomeTime=dialog.radio.text
+                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (tookSomeTime)
+            }
+            if(dialog.radioThree.isChecked){
+                var veryIntutive=dialog.radioThree.text
+                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (veryIntutive)
+            }
+            if(dialog.radioISeeNo.isChecked){
+                var iSeeNo=dialog.radioISeeNo.text
+                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (iSeeNo)
+            }
+            if(dialog.radioIMightUse.isChecked){
+                var iMightUse=dialog.radioIMightUse.text
+                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (iMightUse)
+            }
+            if(dialog.radioCanEasily.isChecked){
+                var canEasily=dialog.radioCanEasily.text
+                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (canEasily)
+
+            }
+
+            if(dialog.edtComments.text.isNotEmpty() && dialog.edtComments != null){
+
+                var comments = dialog.edtComments.text
+                StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + (comments)
+
+            }else{
+                StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + ("No Comments")
+            }
+
+            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+email
+            AppLogger.d("emailBody",finalEmailBody.toString())
+            AppLogger.d("SendingEmailbody","Finished sending email"+finalEmailBody)
+            sendFeedback(dialog ,finalEmailBody)
+        }
+    }
+
+    private fun sendFeedback( dialogFragment : Dialog ,emailBody : String ) {
+        var listener : ShowDialog
+        SendFeedbackTask(dialogFragment , context!!,
+                NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress,
+                emailBody).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR, null )
+    }
+    // Single method to open operational dialog,Feed
     // like "Share", "Recommend", "Settings Screen"
     private fun openOperationDialog(option: String) {
         when (option) {
@@ -255,7 +342,11 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             if (!fromFingerPrint) {
 
                 if( isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    val fingerprintManager = context!!.getSystemService(FingerprintManager::class.java)
+                    val fingerprintManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        context!!.getSystemService(FingerprintManager::class.java)
+                    } else {
+                        TODO("VERSION.SDK_INT < M")
+                    }
                     if (!fingerprintManager.hasEnrolledFingerprints()) {
                         // This happens when no fingerprints are registered.
                         onError((R.string.register_fingerprint))

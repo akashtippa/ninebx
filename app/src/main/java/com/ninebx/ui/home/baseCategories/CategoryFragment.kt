@@ -231,7 +231,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 tvCount.text = ""
                 tvCount.setCompoundDrawables(null, null, null, null)
             }
-            rvSubCategory.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, true)
+            rvSubCategory.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
             tvCategory.setOnClickListener {
                 categoryName = category.title

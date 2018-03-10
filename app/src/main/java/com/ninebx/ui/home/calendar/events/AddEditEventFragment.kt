@@ -46,7 +46,6 @@ import kotlin.collections.ArrayList
 class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.BottomSheetSelectedListener, AWSFileTransferHelper.FileOperationsCompletionListener {
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_calendar_every, container, false)
     }
@@ -62,6 +61,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
     private var isAddEvent = false
     private lateinit var mSelectedDate : Date
+
+    var editEnabled : Boolean = false
 
     private var mSelectedDateIndex = 0
 
@@ -94,6 +95,13 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         }
         if( mSelectedDateIndex == -1 ) mSelectedDateIndex = 0
 
+
+        if(isAddEvent){
+            enableEdit()
+        }
+        else{
+            disableEdit()
+        }
 
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
@@ -129,22 +137,19 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
         deleteBtn.setOnClickListener {
 
-            AlarmJob.cancelJob(mCalendarEvent.id.toString()) //cancel alarm
-            val instance = getCalendarInstance()// remove from recylerview
-            instance.mDayEventsAdapter.remove(mCalendarEvent)
-            removeCalenderEvent() // remove event from database
-            goBack()
+            if(mCalendarEvent.id != null) {
+                AlarmJob.cancelJob(mCalendarEvent.id.toString()) //cancel alarm
+                val instance = getCalendarInstance()// remove from recylerview
+                instance.mDayEventsAdapter.remove(mCalendarEvent)
+                removeCalenderEvent() // remove event from database
+                goBack()
+            }
         }
 
 
-        /*editBtn.setOnClickListener {
-
-            if(editBtn.isActivated){
-
-            }else{
-
-            }
-        }*/
+        editBtn.setOnClickListener {
+                enableEdit()
+        }
 
         layoutEndRepeat.hide()
         setValues( )
@@ -222,6 +227,37 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 mAWSFileTransferHelper.beginDownload(imageFilePath.stringValue)
             }
         }
+    }
+
+    private fun disableEdit() {
+        editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit))
+        etTitle.isEnabled = false
+        etLocation.isEnabled = false
+        tvStarts.isEnabled = false
+        tvEnds.isEnabled = false
+        switchAllDay.isEnabled = false
+        etNotes.isEnabled = false
+        layoutRepeat.isEnabled = false
+        layoutEndRepeat.isEnabled = false
+        layoutReminder.isEnabled = false
+        cvAttachment.isEnabled = false
+        etAttachment.isEnabled = false
+    }
+
+    private fun enableEdit() {
+        editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit_blue))
+        etTitle.isEnabled = true
+        etLocation.isEnabled = true
+        tvStarts.isEnabled = true
+        tvEnds.isEnabled = true
+        switchAllDay.isEnabled = true
+        etNotes.isEnabled = true
+        layoutRepeat.isEnabled = true
+        layoutEndRepeat.isEnabled = true
+        layoutReminder.isEnabled = true
+        cvAttachment.isEnabled = true
+        etAttachment.isEnabled = true
+
     }
 
     private fun removeCalenderEvent() {

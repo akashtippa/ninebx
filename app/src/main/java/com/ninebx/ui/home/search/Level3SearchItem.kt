@@ -60,6 +60,4 @@ class Level3SearchItem(
             override fun newArray(size: Int): Array<Level3SearchItem?> = arrayOfNulls(size)
         }
     }
-
-
 }
