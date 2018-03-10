@@ -125,7 +125,6 @@ class NotificationsFragment : BaseHomeFragment(), NotificationsView {
         var TO = arrayOf("")
         var CC = arrayOf("")
         var emailIntent = Intent(Intent.ACTION_SEND)
-
         var emailBody : String = boxName + "\n" + message + "\n" + subTitle + "\t" + dueDate
         emailIntent.data = Uri.parse("mailto:")
         emailIntent.type = "text/plain"

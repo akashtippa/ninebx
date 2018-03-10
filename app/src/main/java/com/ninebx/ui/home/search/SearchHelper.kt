@@ -329,32 +329,32 @@ class SearchHelper() {
         itemIndex = 0
         for( asset in searchDecryptCombine.assetItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset", asset.selectionType, itemIndex, asset.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset", asset.selectionType, itemIndex++, asset.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset", asset.selectionType, itemIndex++, asset.id))
         }
         itemIndex = 0
         for( insurance in searchDecryptCombine.insuranceItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  insurance.insuranceCompany, "insurance", insurance.selectionType, itemIndex, insurance.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  insurance.insuranceCompany, "insurance", insurance.selectionType, itemIndex++, insurance.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  insurance.insuranceCompany, "insurance", insurance.selectionType, itemIndex++, insurance.id))
         }
         itemIndex = 0
         for( tax in searchDecryptCombine.taxesItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  tax.returnName, "tax", tax.selectionType, itemIndex, tax.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  tax.returnName, "tax", tax.selectionType, itemIndex++, tax.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  tax.returnName, "tax", tax.selectionType, itemIndex++, tax.id))
         }
         itemIndex = 0
         for( vehicle in searchDecryptCombine.vehicleItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  vehicle.vehicleName, "vehicle", vehicle.selectionType, itemIndex, vehicle.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.vehicleName, "vehicle", vehicle.selectionType, itemIndex++, vehicle.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.vehicleName, "vehicle", vehicle.selectionType, itemIndex++, vehicle.id))
         }
         itemIndex = 0
         for( property in searchDecryptCombine.propertyItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  property.propertyName, "property", property.selectionType, itemIndex, property.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  property.propertyName, "property", property.selectionType, itemIndex++, property.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  property.propertyName, "property", property.selectionType, itemIndex++, property.id))
         }
         itemIndex = 0
         for( home in searchDecryptCombine.listItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  home.listName, "home", home.selectionType, itemIndex, home.id)))
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  home.listName, "home", home.selectionType, itemIndex++, home.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  home.listName, "home", home.selectionType, itemIndex++, home.id))
         }
         mSearchHomeList = filterDuplicates( mSearchHomeList )
         return mSearchHomeList
@@ -382,7 +382,7 @@ class SearchHelper() {
             R.string.home_amp_money -> {
                 switchHomeItems( position, searchItem )
             }
-            (R.string.travel) -> {
+            R.string.travel -> {
                 switchTravelItems( position, searchItem )
             }
             (R.string.contacts) -> {
