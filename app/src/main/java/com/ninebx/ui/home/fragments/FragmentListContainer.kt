@@ -26,6 +26,7 @@ import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
@@ -136,7 +137,8 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         searchHelper = SearchHelper()
         searchHelper.setOnDocumentSelection(this)
         //TODO - change hard coded value
-        val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!) )
+        val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
+        AppLogger.d("SearchItems" , " " + searchItems)
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         rvCommonList!!.adapter = SearchAdapter(searchItems, this )
         rvCommonList!!.adapter.notifyDataSetChanged()
