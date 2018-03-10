@@ -137,7 +137,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
         if( mEmail.isEmpty() )
             mEmail = NineBxApplication.getPreferences().userEmail!!
 
-        AppLogger.d("Email", "Auth - OTP " + NineBxApplication.getPreferences().userEmail!!)
         bundle.putString("email", mEmail)
         otpFragment!!.arguments = bundle
         fragmentTransaction.replace(R.id.container, otpFragment).commit()
