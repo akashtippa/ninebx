@@ -222,17 +222,17 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody","Finished sending email"+finalEmailBody)
-            sendFeedback(finalEmailBody)
+            sendFeedback(dialog ,finalEmailBody)
         }
     }
 
-    private fun sendFeedback( emailBody : String ) {
+    private fun sendFeedback( dialogFragment : Dialog ,emailBody : String ) {
         var listener : ShowDialog
-        SendFeedbackTask(context!!,
+        SendFeedbackTask(dialogFragment , context!!,
                 NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress,
                 emailBody).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR, null )
     }
-    // Single method to open operational dialog,
+    // Single method to open operational dialog,Feed
     // like "Share", "Recommend", "Settings Screen"
     private fun openOperationDialog(option: String) {
         when (option) {

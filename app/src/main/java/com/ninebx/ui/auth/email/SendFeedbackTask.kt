@@ -2,6 +2,9 @@ package com.ninebx.ui.auth.email
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
+import android.app.DialogFragment
+import android.app.FragmentManager
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
@@ -14,12 +17,18 @@ import java.io.IOException
 import android.widget.Toast
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import android.content.DialogInterface
+import com.ninebx.NineBxApplication
+import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.utility.AppLogger
 
 /**
  * Created by Sourav on 09-03-2018.
  */
 @SuppressLint("StaticFieldLeak")
-class SendFeedbackTask ( private val context: Context,
+class SendFeedbackTask (
+                        val dialogFragment: Dialog,
+                        private val context: Context,
                          private val emailUser : String,
                          private val emailBody : String ) : AsyncTask<Void, Void, String>(), ShowDialog {
 
@@ -33,7 +42,7 @@ class SendFeedbackTask ( private val context: Context,
         try {
             val sendgrid = SendGrid("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")
             val email = SendGrid.Email()
-            email.addTo("feedback@ninebx.com")
+            email.addTo("souravax@gmail.com")
             email.from = emailUser
             email.subject = "NineBx Feedback - Version 1.00"
             email.text = emailBody
@@ -56,26 +65,19 @@ class SendFeedbackTask ( private val context: Context,
         super.onPostExecute(result)
         context.hideProgressDialog()
         showFeedbackDialog()
+        AppLogger.e("on post execute" , "true")
     }
 
     override fun showFeedbackDialog() {
-        val alertDialog = AlertDialog.Builder(context).create()
-
-        alertDialog.setTitle("NineBx")
-
-        // Setting Dialog Message
-        alertDialog.setMessage("Thank you for your valuable feedback")
-
-        // Setting Icon to Dialog
-       // alertDialog.setIcon(R.drawable.tick)
-
-        // Setting OK Button
-        alertDialog.setButton("OK", DialogInterface.OnClickListener { dialog, which ->
-            // Write your code here to execute after dialog closed
-            Toast.makeText(getApplicationContext(), "You clicked on OK", Toast.LENGTH_SHORT).show()
-        })
-
-        // Showing Alert Message
-        alertDialog.show()
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("NineBx")
+        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setPositiveButton("OK") { p0, p1 ->
+            //NineBxApplication.instance.activityInstance!!.onBackPressed()
+           // NineBxApplication.instance.activityInstance!!.onBackPressed()
+            dialogFragment.cancel()
+        }
+        builder.setMessage("Thank you for your valuable feedback!")
+        builder.show()
     }
 }
