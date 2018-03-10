@@ -446,7 +446,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
         object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
-                    prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                    prepareMemberRealmConnections(context, true, user, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             var mCurrentUser = Users()
                             mCurrentUser.id = getUniqueId()
