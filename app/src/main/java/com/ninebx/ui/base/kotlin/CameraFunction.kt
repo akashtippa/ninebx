@@ -131,13 +131,21 @@ fun saveFileTask(imageUri: Uri, imageFile : File, fileOperationsCompletionListen
        object : AsyncTask<Void, Void, File>() {
         override fun doInBackground(vararg p0: Void?): File {
 
-                val sourceFile = File( imageUri.path )
+            val sourceFile = File( imageUri.path )
+
+            try{
                 val src =  FileInputStream(sourceFile).channel;
                 val dst =  FileOutputStream(imageFile).channel;
                 dst.transferFrom( src, 0, src.size() )
                 src.close()
                 dst.close()
-                return sourceFile
+            }
+            catch(e:Exception){
+                print(e)
+
+            }
+            return sourceFile
+
         }
 
         override fun onPostExecute(result: File?) {

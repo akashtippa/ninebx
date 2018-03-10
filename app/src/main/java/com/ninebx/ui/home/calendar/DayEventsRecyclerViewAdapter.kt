@@ -1,6 +1,8 @@
 package com.ninebx.ui.home.calendar
 
+import android.app.Application
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.AdapterClickListener
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.home.calendar.DayEventsRecyclerViewAdapter.ViewHolder
+import com.ninebx.utility.AppLogger
 import java.util.*
 
 /**
@@ -18,22 +21,63 @@ import java.util.*
 class DayEventsRecyclerViewAdapter( val calendarEvents : ArrayList<CalendarEvents>,
                                     val selectedDate : Date,
                                     val adapterClickListener: AdapterClickListener ) : RecyclerView.Adapter<ViewHolder>()  {
+
     override fun getItemCount(): Int {
         return calendarEvents.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+
         val event = getItemAtPosition( position )
         val selectedDateIndex = event.getPositionForDay( selectedDate )
+
+        var eventStartDate = event.startsDate.toString().substringAfter(" ").substring(0,2)
+        var eventEndDate = event.endsDate.toString().substringAfter(" ").substring(0,2)
+        var selecteddateDate = selectedDate.date.toString()
+
+        var selectedDateMonth = selectedDate.toString().substringAfter(" ").substring(0,3)
+        var eventStartMonth = event.startsDate.toString().substringAfter("[").substring(0,3)
+        var eventEndMonth = event.endsDate.toString().substringAfter("[").substring(0,3)
+
+        var selectedDateYear = selectedDate.toString().substring(selectedDate.toString().length - 4)
+        var eventStartYear = event.startsDate.toString().substringAfter(", ").substring(0,4)
+        var eventEndYear = event.endsDate.toString().substringAfter(", ").substring(0,4)
 
         if( selectedDateIndex != -1 && event.isAllDay[selectedDateIndex]!! ) {
             holder!!.tvEvent.text = ALL_DAY
         }
-        else {
-            holder!!.tvEvent.text = event.startsDate[selectedDateIndex] + "\n-\n" + event.endsDate[selectedDateIndex]
+
+
+        if(!event.isAllDay[selectedDateIndex]!!){
+            holder!!.tvEvent.text = ALL_DAY
         }
-        holder.tvTitle.text = event.title[selectedDateIndex]
-        holder.tvSubTitle.text = event.location[selectedDateIndex]
+
+        AppLogger.e("selected date month", selecteddateDate +"," + eventStartDate+",")
+
+        AppLogger.e("selected date month", selectedDateMonth + "," + eventStartMonth+",")
+
+        AppLogger.e("selected date year", selectedDateYear + "," + eventStartYear+",")
+
+
+        if(eventStartDate.equals(selecteddateDate) &&
+                selectedDateMonth.equals(eventStartMonth,true) &&
+                selectedDateYear.equals(eventStartYear) && !event.isAllDay[selectedDateIndex]!!) {
+
+            var formattedString = "Starts\n" + event.startsDate[selectedDateIndex]!!.substring(event.startsDate[selectedDateIndex]!!.length - 8);
+            holder!!.tvEvent.text = formattedString
+        }
+
+        if(eventEndDate.equals(selecteddateDate) &&
+                selectedDateMonth.equals(eventEndMonth,true) &&
+                selectedDateYear.equals(eventEndYear) && !event.isAllDay[selectedDateIndex]!!) {
+
+            var formattedString = "Ends\n" + event.endsDate[selectedDateIndex]!!.substring(event.endsDate[selectedDateIndex]!!.length - 8);
+            holder!!.tvEvent.text = formattedString
+        }
+
+
+        holder!!.tvTitle.text = event.title[selectedDateIndex]
+        holder!!.tvSubTitle.text = event.location[selectedDateIndex]
     }
 
     fun getItemAtPosition(position: Int): CalendarEvents {
