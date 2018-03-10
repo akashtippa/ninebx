@@ -3600,11 +3600,8 @@ class Level2CategoryHelper(
         val currentDateandTime = sdf.format( Date())
         if (decryptedFinancial != null) {
             decryptedFinancial!!.selectionType = categoryID
-
             decryptedFinancial!!.institutionName = title
             AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
-
-            decryptedFinancial!!.accountName = title
             decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
 
             var isSaveComplete = false

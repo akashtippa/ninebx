@@ -65,9 +65,6 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
         } catch (e: IOException) {
             Log.e(TAG, e.toString())
         }
-
         return ""
-
-
     }
 }
