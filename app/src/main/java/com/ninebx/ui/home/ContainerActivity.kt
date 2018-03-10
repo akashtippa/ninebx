@@ -2,6 +2,7 @@ package com.ninebx.ui.home
 
 import android.app.Activity
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ninebx.NineBxApplication
@@ -21,8 +22,9 @@ import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
-import com.ninebx.utility.Constants
+import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
+import io.realm.Realm
 import io.realm.SyncUser
 
 /**
@@ -65,7 +67,11 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
     override fun onMemberSignup(user: SyncUser) {
         if (addFamilyMemberOrUsersFragment != null)
             addFamilyMemberOrUsersFragment!!.onAccountCreated(user)
+
+
     }
+
+
 
     override fun showProgress(message: Int) {
         this.showProgressDialog(getString(message))

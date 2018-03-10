@@ -1,12 +1,14 @@
 package com.ninebx.ui.home.account.addmembers
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,10 +22,12 @@ import com.bumptech.glide.Glide
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.home.account.permissions.PermissionDialog
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
+import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
 import java.util.*
@@ -380,7 +384,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         "Memories",
         "Shopping"
          */
-        
+
         if( permissionsMember != null ) {
 
             updateMember!!.homeAdd = permissionsMember!!.homeAdd
@@ -418,10 +422,10 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             updateMember!!.contactsAdd = permissionsMember!!.contactsAdd
             updateMember!!.contactsEdit = permissionsMember!!.contactsEdit
             updateMember!!.contactsView = permissionsMember!!.contactsView
-            
+
             updateMember!!.addingRemovingMember = permissionsMember!!.addingRemovingMember
         }
-         
+
     }
 
 
@@ -433,11 +437,46 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     private var updateMember: Member? = null
 
     fun onAccountCreated(user: SyncUser) {
-        saveUpdatedMember(user.identity)
-        memberView.onNewMember(decryptMember(updateMember!!)!!)
-        //update user and member permissions
-        user.logout()
+        saveUser(user)
+
     }
+
+    @SuppressLint("StaticFieldLeak")
+        private fun saveUser(user: SyncUser) {
+
+        object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
+                    prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            var mCurrentUser = Users()
+                            mCurrentUser.id = getUniqueId()
+                            mCurrentUser.completeProfile = false
+                            mCurrentUser.fullName = strFirstName + " " + strLastName
+                            mCurrentUser.emailAddress = strEmail
+                            mCurrentUser.firstName = strFirstName
+                            mCurrentUser.lastName = strLastName
+                            mCurrentUser.userId = user.identity
+                            mCurrentUser.relationship = selectedRelation
+                            mCurrentUser = encryptUsers(mCurrentUser)
+                            mCurrentUser.insertOrUpdate(realm!!)
+
+                        }
+                    })
+
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    context!!.hideProgressDialog()
+                    saveUpdatedMember(user.identity)
+                    memberView.onNewMember(decryptMember(updateMember!!)!!)
+                    //update user and member permissions
+                    user.logout()
+                }
+
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+
 
 
 }
