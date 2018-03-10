@@ -66,9 +66,6 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
         userMap.put("secure_key", encryptedPrivateKey)
         //AppLogger.d(TAG, "UserMap : " + userMap)
 
-        val decryptedKey = decryptAESKEYPassword(encryptedPrivateKey.toByteArray(), encryptedPasswordByteArray)
-        //AppLogger.d(TAG, "Decrypted Key : " + decryptedKey)
-
         NineBxApplication.getUserAPI()!!.postUserDetails(userMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
@@ -89,7 +86,8 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
             override fun onNext(t: ResponseBody) {
                 //User details saved successfully - save user object to realm
                 //AppLogger.d(TAG, "Successfully saved userMap : " + String(t.bytes()))
-                memberView.onMemberSignup(mCurrentUser!!)
+                //memberView.onMemberSignup(mCurrentUser!!)
+                setUserPermissions()
             }
 
             override fun onError(e: Throwable) {
@@ -98,7 +96,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
 
             override fun onComplete() {
                 //AppLogger.d(TAG, "GetUserAPI : onComplete")
-                memberView.hideProgress()
+                //memberView.hideProgress()
             }
 
             override fun onSubscribe(d: Disposable) {
