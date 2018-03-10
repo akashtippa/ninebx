@@ -139,6 +139,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!) )
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         rvCommonList!!.adapter = SearchAdapter(searchItems, this )
+        rvCommonList!!.adapter.notifyDataSetChanged()
     }
 
     private fun changeToolbarTitleAndAddInfo(fragmentValue: String?) {

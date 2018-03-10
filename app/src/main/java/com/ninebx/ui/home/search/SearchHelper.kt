@@ -368,11 +368,14 @@ class SearchHelper() {
 
     fun switchAndSearch( searchItem: Level3SearchItem ) {
         val position = searchItem.itemIndex
+        switchTravelItems( position, searchItem )
+
         when( searchItem.searchCategory ) {
+
             R.string.home_amp_money -> {
                 switchHomeItems( position, searchItem )
             }
-            (R.string.travel) -> {
+            (R.string.loyalty) -> {
                 switchTravelItems( position, searchItem )
             }
             (R.string.contacts) -> {
