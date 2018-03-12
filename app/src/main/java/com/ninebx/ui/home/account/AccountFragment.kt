@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.KeyguardManager
+import android.content.DialogInterface
 import android.content.Intent
 import android.hardware.fingerprint.FingerprintManager
 import android.net.Uri
@@ -163,6 +164,8 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var StringThree = ""
             var StringFour = ""
             val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName
+
             var validate =false
             if(!dialog.radioSignificant.isChecked &&
                     !dialog.radioQuiteOrdinary.isChecked &&
@@ -228,16 +231,19 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                 StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + ("No Comments")
             }
 
-            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+email
+            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+fullName+ ("\n")+email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody",""+finalEmailBody)
             if(validate) {
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("NineBx")
                 builder.setIcon(R.mipmap.ic_launcher)
-                builder.setPositiveButton("OK") { p0, p1 ->
-                    dialog.cancel()
-                }
+                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0?.cancel()
+                    }
+
+                })
                 builder.setMessage("Please give your valuable feedback!")
                 builder.show()
             }
