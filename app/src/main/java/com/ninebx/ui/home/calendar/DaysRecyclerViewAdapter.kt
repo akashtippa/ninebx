@@ -131,14 +131,16 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
             isEventPresent = eventDateStrings.contains(dateFormat.format(calendarDay.time))
         }
 
-        textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mSelectedDrawable
+        textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate
+                && mCurrentDateCalendar.get(Calendar.MONTH) == month && mCurrentDateCalendar.get(Calendar.YEAR) == year ) mSelectedDrawable
                               else if( isEventPresent && isCurrentDay ) mCurrentEventDrawable
                               else if( isEventPresent ) mEventDrawable
                               else if( isCurrentDay ) mCurrentDayDrawable
                               else mUnSelectedDrawable
 
 
-        textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate ) mWhiteColor
+        textView.setTextColor(if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate  &&
+                mCurrentDateCalendar.get(Calendar.MONTH) == month && mCurrentDateCalendar.get(Calendar.YEAR) == year) mWhiteColor
         else if( isEventPresent && isCurrentDay ) mWhiteColor
         else if( isEventPresent ) mBlackColor
         else if( isCurrentDay ) mWhiteColor
