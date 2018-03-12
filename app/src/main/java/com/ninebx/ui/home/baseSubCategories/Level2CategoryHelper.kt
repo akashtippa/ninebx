@@ -19,6 +19,7 @@ import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmResults
 import java.text.SimpleDateFormat
 
 import java.util.*
@@ -3611,18 +3612,6 @@ class Level2CategoryHelper(
                 AppLogger.d("saveDocument", "id" + decryptedFinancial!!.id)
             }
 
-           /* if(decryptedFinancial!!.id.toInt() != 0){
-                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback(){
-                    override fun onSuccess(realm: Realm?) {
-                        var deleteFinancial : RealmResults<Financial> ?= null
-                        realm!!.beginTransaction()
-                        deleteFinancial!![decryptedFinancial!!.id.toInt()]!!.deleteFromRealm()
-                        AppLogger.d("CombineLevel2 ", "Deleted ")
-                        realm.commitTransaction()
-                    }
-                })
-            }*/
-
             AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
             AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
             object : AsyncTask<Void, Void, Unit>() {
@@ -4891,6 +4880,7 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
+
         if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
             if (decryptedLoyalty!!.selectionType.equals("travel_1001"))
@@ -4922,7 +4912,7 @@ class Level2CategoryHelper(
                             realm!!.beginTransaction()
                             val loyalty = encryptLoyalty(decryptedLoyalty!!)
                             realm.insertOrUpdate(loyalty)
-                           /* realm.copyToRealmOrUpdate(loyalty)*/
+                            realm.copyToRealmOrUpdate(loyalty)
                             realm.commitTransaction()
                         }
                     })
@@ -4942,13 +4932,21 @@ class Level2CategoryHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineTravel: DecryptedCombineTravel = combineItem as DecryptedCombineTravel
-                            var realmLoyaty = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
+                            var realmLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
                             realm.beginTransaction()
-                            if (realmLoyaty == null) {
-                                realmLoyaty = realm.createObject(CombineTravel::class.java, getUniqueId())
+
+                            if (realmLoyalty == null) {
+                                realmLoyalty = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            realmLoyaty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
-                            realm.copyToRealmOrUpdate(realmLoyaty)
+                            for(loyaltyItems in realmLoyalty!!.loyaltyItems){
+                                if (loyaltyItems!!.id.toInt() == decryptedLoyalty!!.id.toInt() ){
+                                    var deleteLoyalty : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
+                                    deleteLoyalty!![loyaltyItems!!.id.toInt()]!!.deleteFromRealm()
+                                    realm.commitTransaction()
+                                }
+                            }
+                            realmLoyalty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
+                            realm.copyToRealmOrUpdate(realmLoyalty)
                             realm.commitTransaction()
                         }
                     })
