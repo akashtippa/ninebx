@@ -93,6 +93,9 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             if( permissionsValidate() ) {
 
                 var tempMember = Member()
+                tempMember.firstName = strFirstName
+                tempMember.lastName = strLastName
+                tempMember.role = strRole
                 setPermissionsForMember(tempMember, txtsRole.selectedItem.toString().trim())
                 if( permissionsMember != null ) {
                     tempMember = permissionsMember!!

@@ -73,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_micro_padding"
+            android:id="@+id/tvName"
             android:text="Sample User"
             android:textColor="@color/colorPrimary" />
 
@@ -80,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_micro_padding"
+            android:id="@+id/tvRole"
             android:text="Sample Role" />
 
 
