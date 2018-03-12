@@ -17,6 +17,8 @@ import java.io.IOException
 import android.widget.Toast
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import android.content.DialogInterface
+import android.os.Build
+import com.ninebx.BuildConfig
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.AccountFragment
@@ -38,13 +40,14 @@ class SendFeedbackTask (
         context.showProgressDialog(context.getString(R.string.sending_feedback))
     }
     private val TAG = "SendFeedback"
+    var versionCode=BuildConfig.VERSION_CODE
     override fun doInBackground(vararg p0: Void?): String {
         try {
             val sendgrid = SendGrid("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")
             val email = SendGrid.Email()
-            email.addTo("varun.badarinath@cognitiveclouds.com")
+            email.addTo("souravstudy@gmail.com")
             email.from = emailUser
-            email.subject = "NineBx Feedback - Version 1.00"
+            email.subject = "NineBx Feedback - "+versionCode
             email.text = emailBody
 
             // Send email, execute http request
