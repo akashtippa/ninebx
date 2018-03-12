@@ -52,11 +52,11 @@ class DayEventsRecyclerViewAdapter( val calendarEvents : ArrayList<CalendarEvent
             holder!!.tvEvent.text = ALL_DAY
         }
 
-        AppLogger.e("selected date month", selecteddateDate +"," + eventStartDate+",")
+        /*AppLogger.e("selected date month", selecteddateDate +"," + eventStartDate+",")
 
         AppLogger.e("selected date month", selectedDateMonth + "," + eventStartMonth+",")
 
-        AppLogger.e("selected date year", selectedDateYear + "," + eventStartYear+",")
+        AppLogger.e("selected date year", selectedDateYear + "," + eventStartYear+",")*/
 
 
         if(eventStartDate.equals(selecteddateDate) &&

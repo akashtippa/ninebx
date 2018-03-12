@@ -97,9 +97,13 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
 
         if(isAddEvent){
+            editBtn.hide()
+            deleteBtn.hide()
             enableEdit()
         }
         else{
+            editBtn.show()
+            deleteBtn.show()
             disableEdit()
         }
 
@@ -256,7 +260,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         layoutEndRepeat.isEnabled = true
         layoutReminder.isEnabled = true
         cvAttachment.isEnabled = true
-        etAttachment.isEnabled = true
+        etAttachment.isEnabled = false
 
     }
 
@@ -335,10 +339,10 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun setDateTime(dateTimeTextView: TextView?, selectedDate: Calendar, allDay: Boolean) {
 
         if( allDay ) {
-            dateTimeTextView!!.text = getDateMonthYearFormat(selectedDate.time)
+            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time, DATE_FORMAT)
         }
         else
-            dateTimeTextView!!.text = getDateMonthYearTimeFormat(selectedDate.time)
+            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time , DATE_FORMAT)
 
     }
 
@@ -575,6 +579,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private fun setValues() {
+
         if( !isAddEvent ) {
 
             if( mCalendarEvent.startsDate.size > 0 ) {

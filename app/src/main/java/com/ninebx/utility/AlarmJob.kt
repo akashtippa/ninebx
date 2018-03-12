@@ -116,13 +116,13 @@ class AlarmJob : Job() {
                         .setWhen(0)
                         .setSound(defaultSoundUri)
             } else {
-                notificationBuilder = NotificationCompat.Builder(context,channelId)
+                    notificationBuilder = NotificationCompat.Builder(context,channelId)
                         .setAutoCancel(true)   //Automatically delete the notification
                         .setSmallIcon(R.mipmap.ic_launcher) //NotificationModel icon
                         .setContentIntent(pendingIntent)
                         .setContentTitle(title)
                         .setContentText(desc)
-                        .setPriority(android.app.Notification.PRIORITY_HIGH)
+                        .setPriority(NotificationManager.IMPORTANCE_HIGH)
                         .setWhen(0)
                         .setSound(defaultSoundUri)
             }
