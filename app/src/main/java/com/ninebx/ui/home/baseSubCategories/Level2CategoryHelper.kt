@@ -3645,7 +3645,17 @@ class Level2CategoryHelper(
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
+                            val encryptedObject = encryptFinancial( decryptedFinancial!!)
+                            if( combineRealm!!.financialItems.contains(encryptedObject) ) {
+                                val index = combineRealm!!.financialItems.indexOf(encryptedObject)
+                                if( index != -1 ) {
+                                    combineRealm!!.financialItems[index] = (encryptedObject)
+                                }
+                            }
+                            else {
+                                combineRealm!!.financialItems.add(encryptedObject)
+                            }
+
                             /*combine.financialItems.add( decryptedFinancial )
                             val encryptedCombine = encryptCombine(combine)*/
                             realm.insertOrUpdate(combineRealm)
