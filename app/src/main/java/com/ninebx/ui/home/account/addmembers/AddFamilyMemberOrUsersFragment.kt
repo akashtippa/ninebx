@@ -24,13 +24,16 @@ import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.DecryptedMember
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.account.permissions.PermissionDialog
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /***
@@ -52,6 +55,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     private lateinit var memberPresenter: MemberPresenter
     private lateinit var memberView: MemberView
     private lateinit var adminId: String
+    private lateinit var mAdminUser : DecryptedUsers
 
     private var strFirstName = ""
     private var strLastName = ""
@@ -78,19 +82,18 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         memberPresenter = MemberPresenter(memberView, SyncUser.currentUser(), adminId)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
+        mAdminUser = arguments!!.getParcelable(Constants.CURRENT_USER)
 
         ivBackAddOthers.setOnClickListener {
             onBackPressed()
         }
 
         txtPermissions.setOnClickListener {
-            if ((txtsRole.selectedItem.toString().trim() == "Role" || txtsRole.selectedItem.toString().trim().isEmpty())) {
-                Toast.makeText(context, "Please enter 'Role'", Toast.LENGTH_LONG).show()
-            }
-            else {
+
+            if( permissionsValidate() ) {
 
                 var tempMember = Member()
-                memberPresenter.setPermissionsForMember(tempMember, txtsRole.selectedItem.toString().trim())
+                setPermissionsForMember(tempMember, txtsRole.selectedItem.toString().trim())
                 if( permissionsMember != null ) {
                     tempMember = permissionsMember!!
                 }
@@ -153,6 +156,44 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         }
 
         populateView(member)
+    }
+
+    private fun permissionsValidate(): Boolean {
+        strFirstName = txtFirstName.text.toString()
+        strLastName = txtLastName.text.toString()
+        strAccountHolder = txtRelationship.selectedItem.toString()
+
+        if( layoutOtherViews.isVisible() )
+            strRole = txtsRole.selectedItem.toString()
+        else
+            strRole = ""
+
+        if( layNonUser.isVisible() )
+            strEmail = edtEmailAddress.text.toString()
+        else
+            strEmail = ""
+
+        if (strFirstName.trim().isEmpty()) {
+            Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
+            txtFirstName.requestFocus()
+            return false
+        }
+
+        if (strLastName.trim().isEmpty()) {
+            Toast.makeText(context, "Please enter 'Last name'", Toast.LENGTH_LONG).show()
+            txtLastName.requestFocus()
+            return false
+        }
+
+        if ((txtRelationship.selectedItem.toString().trim() == "Relationship" || txtRelationship.selectedItem.toString().trim().isEmpty())) {
+            Toast.makeText(context, "Please enter 'Relationship'", Toast.LENGTH_LONG).show()
+            return false
+        }
+        if ((txtsRole.selectedItem.toString().trim() == "Role" || txtsRole.selectedItem.toString().trim().isEmpty())) {
+            Toast.makeText(context, "Please enter 'Role'", Toast.LENGTH_LONG).show()
+            return false
+        }
+        return true
     }
 
     private fun saveDetails() {
@@ -355,7 +396,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     }
 
-    private fun saveUpdatedMember(userId: String?) {
+    private fun saveUpdatedMember(userId: String?) : Member {
 
         updateMember = Member()
         updateMember!!.userId = userId
@@ -371,7 +412,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         if( layNonUser.isVisible() )
             updateMember!!.relationship = txtRelationship.selectedItem.toString().encryptString()
 
-        memberPresenter.setPermissionsForMember(updateMember!!, strRole)
+        setPermissionsForMember(updateMember!!, strRole)
 
         /***
          * "Home & Money",
@@ -426,6 +467,8 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
             updateMember!!.addingRemovingMember = permissionsMember!!.addingRemovingMember
         }
 
+        return updateMember!!
+
     }
 
 
@@ -446,7 +489,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
         object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
-                    prepareMemberRealmConnections(context, true, user, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                    prepareRealmConnections(context, true, /*user,*/ Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             var mCurrentUser = Users()
                             mCurrentUser.id = getUniqueId()
@@ -457,6 +500,9 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                             mCurrentUser.lastName = strLastName
                             mCurrentUser.userId = user.identity
                             mCurrentUser.relationship = selectedRelation
+                            mCurrentUser.members.addAll(encryptMembers(ArrayList( mAdminUser.members.toList()))!!.asIterable())
+                            mCurrentUser.members.add(saveUpdatedMember(user.identity))
+
                             mCurrentUser = encryptUsers(mCurrentUser)
                             mCurrentUser.insertOrUpdate(realm!!)
 

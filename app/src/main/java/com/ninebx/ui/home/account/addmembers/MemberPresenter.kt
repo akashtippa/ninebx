@@ -139,47 +139,6 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
         }
     }
 
-    fun setPermissionsForMember(updateMember: Member, memberRole: String) {
 
-        updateMember.homeAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.homeEdit = memberRole == "Co-administrator"
-        updateMember.homeView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.travelAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.travelEdit = memberRole == "Co-administrator"
-        updateMember.travelView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.contactsAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.contactsEdit = memberRole == "Co-administrator"
-        updateMember.contactsView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.educationlAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.educationlEdit = memberRole == "Co-administrator"
-        updateMember.educationlView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.personalAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.personalEdit = memberRole == "Co-administrator"
-        updateMember.personalView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.interestsAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.interestsEdit = memberRole == "Co-administrator"
-        updateMember.interestsView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.wellnessAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.wellnessEdit = memberRole == "Co-administrator"
-        updateMember.wellnessView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.memoriesAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.memoriesEdit = memberRole == "Co-administrator"
-        updateMember.memoriesView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.shoppingAdd = memberRole == "Co-administrator" || memberRole == "User"
-        updateMember.shoppingEdit = memberRole == "Co-administrator"
-        updateMember.shoppingView = memberRole == "Co-administrator" || memberRole == "User"
-
-        updateMember.addingRemovingMember = memberRole == "Co-administrator"
-        updateMember.changingMasterPassword = false
-
-    }
 
 }
