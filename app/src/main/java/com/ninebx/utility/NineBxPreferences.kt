@@ -11,8 +11,8 @@ import com.ninebx.utility.Constants.NONE_COMPLETE
 class NineBxPreferences : Preferences() {
 
 
-    var firstRun by booleanPref(Constants.FIRST_RUN)
-    var isLogin by booleanPref(Constants.IS_LOGIN)
+    var firstRun by booleanPref(Constants.FIRST_RUN, true)
+    var isLogin by booleanPref(Constants.IS_LOGIN, false)
     var isPasswordRequired by booleanPref(Constants.IS_PASSWORD_REQUIRED)
     var isPasswordEnabled by booleanPref(Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(Constants.CURRENT_STEP, NONE_COMPLETE)

@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.home.account.addmembers.MemberPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.SyncUser
@@ -69,6 +71,25 @@ class AccountPasswordFragment : BaseAuthFragment() {
                     override fun onSuccess(realm: Realm?) {
                         mCurrentUser.id = getUniqueId()
                         mCurrentUser = encryptUsers(mCurrentUser)
+                        val adminMember = Member()
+                        adminMember.userId = mCurrentUser.userId
+                        adminMember.country = mCurrentUser.country
+                        adminMember.firstName = mCurrentUser.firstName
+                        adminMember.lastName = mCurrentUser.lastName
+                        adminMember.relationship = mCurrentUser.relationship
+                        adminMember.zipCode = mCurrentUser.zipCode
+                        adminMember.city = mCurrentUser.city
+                        adminMember.state = mCurrentUser.state
+                        adminMember.role = "Administrator"
+                        adminMember.email = mCurrentUser.emailAddress
+                        adminMember.street_1 = mCurrentUser.street_1
+                        adminMember.street_2 = mCurrentUser.street_2
+                        adminMember.anniversary = mCurrentUser.anniversary
+                        adminMember.mobileNumber = mCurrentUser.mobileNumber
+                        adminMember.completeProfile = mCurrentUser.completeProfile
+                        adminMember.dateOfBirth = mCurrentUser.dateOfBirth
+                        setPermissionsForMember(adminMember, adminMember.role)
+                        mCurrentUser.members.add(adminMember)
                         //AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
                         mCurrentUser.insertOrUpdate(realm!!)
 

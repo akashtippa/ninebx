@@ -36,6 +36,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
         bundle.putString(Constants.FROM_CLASS, "AddMember")
+        bundle.putParcelable(Constants.CURRENT_USER, currentUsers!![0])
         bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
     }
@@ -84,7 +85,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
         currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         myList.addAll(currentUsers!!.get(0).members)
-
+        myList.remove(DecryptedMember(currentUsers!!.get(0).userId))
         mListsAdapter = AddedFamilyMemberAdapter(myList, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -120,6 +121,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
                 val results = usersRealm!!.where(Member::class.java).distinctValues("userId").findAll()
                 myList.clear()
                 myList.addAll(decryptMembers(results!!)!!.toList())
+                myList.remove(DecryptedMember(currentUsers!!.get(0).userId))
                 for( member in myList ) {
                     AppLogger.d("Member", "List : " + member)
                 }

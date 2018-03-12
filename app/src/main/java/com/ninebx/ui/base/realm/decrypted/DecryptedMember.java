@@ -85,6 +85,10 @@ public class DecryptedMember implements Parcelable {
     public DecryptedMember() {
     }
 
+    public DecryptedMember(String userId) {
+        this.userId = userId;
+    }
+
     public DecryptedMember(String firstName, String lastName, String relationship, String role, String email, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, Boolean homeAdd, Boolean homeEdit, Boolean homeView, Boolean travelAdd, Boolean travelEdit, Boolean travelView, Boolean contactsAdd, Boolean contactsEdit, Boolean contactsView, Boolean educationlAdd, Boolean educationlEdit, Boolean educationlView, Boolean personalAdd, Boolean personalEdit, Boolean personalView, Boolean interestsAdd, Boolean interestsEdit, Boolean interestsView, Boolean wellnessAdd, Boolean wellnessEdit, Boolean wellnessView, Boolean memoriesAdd, Boolean memoriesEdit, Boolean memoriesView, Boolean shoppingAdd, Boolean shoppingEdit, Boolean shoppingView, Boolean addingRemovingMember, Boolean changingMasterPassword, Boolean isCompleteProfile, String profilePhoto) {
         this.firstName = firstName;
         this.lastName = lastName;
