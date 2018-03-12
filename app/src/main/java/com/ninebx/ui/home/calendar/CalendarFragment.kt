@@ -196,6 +196,8 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             //mDaysRecyclerAdapter!!.toggleWeekView( selectedDate, weekOfMonth, isWeekView )
         }
         else {
+
+            AppLogger.e("datesWithEvents: ",datesWithEvents.toString() + " dateStringWithEvents:" + dateStringWithEvents)
             val monthStartDate = mCalendar
             monthStartDate.set(Calendar.DAY_OF_MONTH, 1)
             mDaysRecyclerAdapter = DaysRecyclerViewAdapter(
