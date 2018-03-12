@@ -322,9 +322,6 @@ class SearchHelper() {
             if(payment.selectionType.equals("home_2001")){
                 mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.cardName, "payment", payment.selectionType, itemIndex++, payment.id))
             }
-            else{
-                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  payment.cardName, "payment", payment.selectionType, itemIndex++, payment.id))
-            }
         }
         itemIndex = 0
         for( asset in searchDecryptCombine.assetItems ) {
@@ -344,7 +341,12 @@ class SearchHelper() {
         itemIndex = 0
         for( vehicle in searchDecryptCombine.vehicleItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  vehicle.vehicleName, "vehicle", vehicle.selectionType, itemIndex, vehicle.id)))
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.vehicleName, "vehicle", vehicle.selectionType, itemIndex++, vehicle.id))
+            if(vehicle.selectionType.equals("home_4001")){
+                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.vehicleName, "vehicle", vehicle.selectionType, itemIndex++, vehicle.id))
+            }
+            if (vehicle.selectionType.equals("home_4002")){
+                mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  vehicle.maintenanceEvent, "vehicle", vehicle.selectionType, itemIndex++, vehicle.id))
+            }
         }
         itemIndex = 0
         for( property in searchDecryptCombine.propertyItems ) {
