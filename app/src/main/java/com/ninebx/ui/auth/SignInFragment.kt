@@ -58,7 +58,6 @@ class SignInFragment : BaseAuthFragment() {
             edtPassword.setText("Qwerty123.")
         }
 
-
         // For First Name
         edtEmailAddress.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -163,5 +162,4 @@ class SignInFragment : BaseAuthFragment() {
             dialog.cancel()
         }
     }
-
 }

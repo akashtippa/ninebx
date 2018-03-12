@@ -209,7 +209,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
             categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
 
-
             if(category.title == "Personal Health Record" || category.title == "Education"
                     || category.title == "Work" || category.title == "Clothing sizes") {
                 peopleCategoryView = categoryView

@@ -10,7 +10,6 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
@@ -20,8 +19,6 @@ import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
 import io.realm.Realm
-import io.realm.RealmResults
-import io.realm.kotlin.where
 import java.text.SimpleDateFormat
 
 import java.util.*
@@ -4910,6 +4907,7 @@ class Level2CategoryHelper(
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
             decryptedLoyalty!!.modified = currentUsers + " " + currentDateandTime
+            decryptedLoyalty!!.accountName = subTitle
 
             AppLogger.d("LoyaltySelectionType", " " + decryptedLoyalty!!.selectionType)
             AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
@@ -4970,6 +4968,7 @@ class Level2CategoryHelper(
         if (decryptedTravel != null) {
             decryptedTravel!!.selectionType = categoryID
             decryptedTravel!!.nameOnAccount = title
+            decryptedTravel!!.accountName = subTitle
             decryptedTravel!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedTravel!!.id.toInt() == 0) {
                 decryptedTravel!!.id = getUniqueId()
@@ -5031,6 +5030,7 @@ class Level2CategoryHelper(
                 decryptedDocuments!!.visaName = title
             if (decryptedDocuments!!.selectionType.equals("travel_2003"))
                 decryptedDocuments!!.travelDocumentTitle = title
+
             AppLogger.d("SelectionType", " " + decryptedDocuments!!.selectionType)
             AppLogger.d("SelectionType", " Visa Name " + decryptedDocuments!!.visaName)
             AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
@@ -5091,6 +5091,7 @@ class Level2CategoryHelper(
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
+
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVacations!!.id.toInt() == 0) {
                 decryptedVacations!!.id = getUniqueId()

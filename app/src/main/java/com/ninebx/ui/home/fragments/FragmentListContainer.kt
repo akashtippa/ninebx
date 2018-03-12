@@ -305,7 +305,6 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         } catch (e: Exception) {
             result.append(e.message)
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
