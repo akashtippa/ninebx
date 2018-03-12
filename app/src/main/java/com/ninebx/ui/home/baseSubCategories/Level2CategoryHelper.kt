@@ -3606,8 +3606,10 @@ class Level2CategoryHelper(
             decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
 
             var isSaveComplete = false
-            if (decryptedFinancial!!.id.equals(0)) {
+            /*if (decryptedFinancial!!.id.equals(0))*/
+            if (decryptedFinancial!!.id.toInt() == 0) {
                 decryptedFinancial!!.id = getUniqueId()
+                AppLogger.d("saveDocument", "id" + decryptedFinancial!!.id)
             }
             AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
             AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
