@@ -97,9 +97,13 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
 
         if(isAddEvent){
+            editBtn.hide()
+            deleteBtn.hide()
             enableEdit()
         }
         else{
+            editBtn.show()
+            deleteBtn.show()
             disableEdit()
         }
 
@@ -256,7 +260,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         layoutEndRepeat.isEnabled = true
         layoutReminder.isEnabled = true
         cvAttachment.isEnabled = true
-        etAttachment.isEnabled = true
+        etAttachment.isEnabled = false
 
     }
 
