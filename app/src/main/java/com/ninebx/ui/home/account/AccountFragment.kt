@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.account
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.KeyguardManager
 import android.content.Intent
@@ -162,12 +163,19 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var StringThree = ""
             var StringFour = ""
             val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
-
-
-//            AppLogger.d("significantIsChecked",""+dialog.radioSignificant.isChecked)
-//            AppLogger.d("significantIsSelected",""+dialog.radioSignificant.isSelected)
-//            AppLogger.d("significantIsActivated",""+dialog.radioSignificant.isActivated)
-//            AppLogger.d("significantIsEnabled",""+dialog.radioSignificant.isEnabled)
+            var validate =false
+            if(!dialog.radioSignificant.isChecked &&
+                    !dialog.radioQuiteOrdinary.isChecked &&
+                    !dialog.radioLoveTheLook.isChecked &&
+                    !dialog.radioSignificantRoom.isChecked &&
+                    !dialog.radio.isChecked&&
+                    !dialog.radioThree.isChecked  &&
+                    !dialog.radioISeeNo.isChecked &&
+                    !dialog.radioIMightUse.isChecked &&
+                    !dialog.radioCanEasily.isChecked &&
+                    dialog.edtComments.text.isEmpty() ) {
+                    validate=true
+            }
 
             if(dialog.radioSignificant.isChecked){
                 var significant = dialog.radioSignificant.text
@@ -222,8 +230,20 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
             var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+email
             AppLogger.d("emailBody",finalEmailBody.toString())
-            AppLogger.d("SendingEmailbody","Finished sending email"+finalEmailBody)
-            sendFeedback(dialog ,finalEmailBody)
+            AppLogger.d("SendingEmailbody",""+finalEmailBody)
+            if(validate) {
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("NineBx")
+                builder.setIcon(R.mipmap.ic_launcher)
+                builder.setPositiveButton("OK") { p0, p1 ->
+                    dialog.cancel()
+                }
+                builder.setMessage("Please give your valuable feedback!")
+                builder.show()
+            }
+            else{
+                sendFeedback(dialog, finalEmailBody)
+            }
         }
     }
 
