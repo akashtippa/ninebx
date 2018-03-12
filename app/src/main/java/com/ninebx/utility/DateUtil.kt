@@ -109,7 +109,7 @@ fun getDaysBetweenDates(startDate: Date, endDate: Date): List<Date> {
     val dates = ArrayList<Date>()
     val calendar = GregorianCalendar()
     calendar.time = startDate
-    val newEndDate = Date(endDate.time + ( 1000 * 60 * 60 * 24 ))
+    val newEndDate = Date(endDate.time /*+ ( 1000 * 60 * 60 * 24 )*/)
 
     while (calendar.time.before(newEndDate)) {
         val result = calendar.time
@@ -129,7 +129,7 @@ fun getDayStringForDates(startDate: Date, endDate: Date): Collection<String> {
     val dates = ArrayList<String>()
     val calendar = GregorianCalendar()
     calendar.time = startDate
-    val newEndDate = Date(endDate.time + ( 1000 * 60 * 60 * 24 ))
+    val newEndDate = Date(endDate.time /*+ ( 1000 * 60 * 60 * 24 )*/)
     while (calendar.time.before(newEndDate)) {
         val result = calendar.time
         dates.add(dateFormat.format(result))

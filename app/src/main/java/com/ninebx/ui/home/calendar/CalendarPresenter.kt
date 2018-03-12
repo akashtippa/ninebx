@@ -67,10 +67,16 @@ class CalendarPresenter( val calendarView: CalendarView)  {
             val eventCount = event.startsDate.count()
             for( i in 0 until eventCount ) {
 
+
                 val startDate = getDateForString(event.startsDate[i])
                 val endDate = getDateForString(event.endsDate[i])
 
+                AppLogger.e(TAG , "START-END" + startDate.toString() + "," +endDate.toString())
+
                 val daysCount = getDateDifference( startDate, endDate )
+
+                AppLogger.e(TAG , "DAYSCOUNT" + daysCount)
+
                 if( daysCount > 0 ) {
                     datesWithEvents.addAll(getDaysBetweenDates(startDate, endDate))
                     event.allDays.addAll(getDayStringForDates( startDate, endDate ))
@@ -89,6 +95,8 @@ class CalendarPresenter( val calendarView: CalendarView)  {
                 }
 
             }
+
+            AppLogger.e(TAG , dateStringWithEvents.toString())
             //AppLogger.d(TAG, "Calendar Event : " + event)
             //AppLogger.d(TAG, "Calendar Event Days : " + event.allDays)
         }
