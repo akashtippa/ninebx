@@ -55,7 +55,7 @@ class SignInFragment : BaseAuthFragment() {
 
         if (NineBxApplication.autoTestMode) {
             edtEmailAddress.setText("smriti.sateesh@cognitiveclouds.com")
-            edtPassword.setText("Android.24")
+            edtPassword.setText("Qwerty123.")
         }
 
 
