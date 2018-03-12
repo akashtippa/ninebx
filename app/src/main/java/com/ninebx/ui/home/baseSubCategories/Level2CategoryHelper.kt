@@ -4948,12 +4948,65 @@ class Level2CategoryHelper(
                             if (realmLoyaty == null) {
                                 realmLoyaty = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
+                            val encryptedLoyaltyObject = encryptLoyalty( decryptedLoyalty!!)
+                            if( realmLoyaty!!.loyaltyItems.contains(encryptedLoyaltyObject) ) {
+                                val index = realmLoyaty!!.loyaltyItems.indexOf(encryptedLoyaltyObject)
+                                if( index != -1 ) {
+                                    realmLoyaty!!.loyaltyItems[index] = (encryptedLoyaltyObject)
+                                }
+                            }
+                            else {
+                                realmLoyaty!!.loyaltyItems.add(encryptedLoyaltyObject)
+                            }
+                          /*  combineTravel.loyaltyItems.add(decryptedLoyalty)*/
                             realmLoyaty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
                             realm.copyToRealmOrUpdate(realmLoyaty)
                             realm.commitTransaction()
                         }
                     })
                 }
+
+              /*  object : AsyncTask<Void, Void, Unit>() {
+
+                    override fun doInBackground(vararg p0: Void?) {
+
+                        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                            override fun onSuccess(realm: Realm?) {
+                                val combine: DecryptedCombine = combineItem as DecryptedCombine
+                                AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
+                                var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                                realm.beginTransaction()
+                                if (combineRealm == null) {
+                                    combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                                }
+                                val encryptedObject = encryptFinancial( decryptedFinancial!!)
+                                if( combineRealm!!.financialItems.contains(encryptedObject) ) {
+                                    val index = combineRealm!!.financialItems.indexOf(encryptedObject)
+                                    if( index != -1 ) {
+                                        combineRealm!!.financialItems[index] = (encryptedObject)
+                                    }
+                                }
+                                else {
+                                    combineRealm!!.financialItems.add(encryptedObject)
+                                }
+
+                                *//*combine.financialItems.add( decryptedFinancial )
+                                val encryptedCombine = encryptCombine(combine)*//*
+                                realm.insertOrUpdate(combineRealm)
+                                realm.commitTransaction()
+                            }
+                        })
+                    }
+
+                    override fun onPostExecute(result: Unit?) {
+                        super.onPostExecute(result)
+                        if (isSaveComplete) {
+                            isSaveComplete = true
+                        } else {
+                            categoryView.savedToRealm()
+                        }
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)*/
 
                 override fun onPostExecute(result: Unit?) {
                     if (isSaveComplete) {

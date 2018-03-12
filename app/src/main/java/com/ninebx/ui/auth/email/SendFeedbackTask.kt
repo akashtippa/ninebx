@@ -72,6 +72,7 @@ class SendFeedbackTask (
         val builder = AlertDialog.Builder(context)
         builder.setTitle("NineBx")
         builder.setIcon(R.mipmap.ic_launcher)
+        builder.setCancelable(false)
         builder.setPositiveButton("OK") { p0, p1 ->
             //NineBxApplication.instance.activityInstance!!.onBackPressed()
            // NineBxApplication.instance.activityInstance!!.onBackPressed()
