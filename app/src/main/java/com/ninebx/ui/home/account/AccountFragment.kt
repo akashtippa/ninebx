@@ -231,7 +231,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                 StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + ("No Comments")
             }
 
-            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+fullName+ ("\n")+email
+            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n")+fullName+ "\n" +email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody",""+finalEmailBody)
             if(validate) {
