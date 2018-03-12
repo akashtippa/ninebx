@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
@@ -3595,21 +3594,23 @@ class Level2CategoryHelper(
     }
 
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
         if (decryptedFinancial != null) {
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.institutionName = title
+            decryptedFinancial!!.accountName = subTitle
             AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
             decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
 
             var isSaveComplete = false
-            if (decryptedFinancial!!.id.toInt() == 0) {
+            if (decryptedFinancial!!.id.equals(0)) {
                 decryptedFinancial!!.id = getUniqueId()
             }
             AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
+            AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
@@ -3645,7 +3646,17 @@ class Level2CategoryHelper(
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.financialItems.add(encryptFinancial(decryptedFinancial!!))
+                            val encryptedObject = encryptFinancial( decryptedFinancial!!)
+                            if( combineRealm!!.financialItems.contains(encryptedObject) ) {
+                                val index = combineRealm!!.financialItems.indexOf(encryptedObject)
+                                if( index != -1 ) {
+                                    combineRealm!!.financialItems[index] = (encryptedObject)
+                                }
+                            }
+                            else {
+                                combineRealm!!.financialItems.add(encryptedObject)
+                            }
+
                             /*combine.financialItems.add( decryptedFinancial )
                             val encryptedCombine = encryptCombine(combine)*/
                             realm.insertOrUpdate(combineRealm)
@@ -3673,7 +3684,7 @@ class Level2CategoryHelper(
             decryptedPayment!!.modified = currentUsers + " " + currentDateandTime
 
             var isSaveComplete = false
-            if (decryptedPayment!!.id.toInt() == 0) {
+            if (decryptedPayment!!.id.equals(0)) {
                 decryptedPayment!!.id = getUniqueId()
             }
 
@@ -3735,7 +3746,7 @@ class Level2CategoryHelper(
             decryptedProperty!!.propertyName = title
             decryptedProperty!!.modified = currentUsers + " " + currentDateandTime
             var isSaveComplete = false
-            if (decryptedProperty!!.id.toInt() == 0) {
+            if (decryptedProperty!!.id.equals(0)) {
                 decryptedProperty!!.id = getUniqueId()
             }
 
@@ -3798,7 +3809,7 @@ class Level2CategoryHelper(
             var isSaveComplete = false
             decryptedVehicle!!.selectionType = categoryID
             decryptedVehicle!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedVehicle!!.id.toInt() == 0) {
+            if (decryptedVehicle!!.id.equals(0)) {
                 decryptedVehicle!!.id = getUniqueId()
             }
             object : AsyncTask<Void, Void, Unit>() {
@@ -3859,7 +3870,7 @@ class Level2CategoryHelper(
             decryptedAssets!!.assetName = title
             decryptedAssets!!.modified = currentUsers + " " + currentDateandTime
 
-            if (decryptedAssets!!.id.toInt() == 0) {
+            if (decryptedAssets!!.id.equals(0)) {
                 decryptedAssets!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -3920,7 +3931,7 @@ class Level2CategoryHelper(
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
             decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedInsurance!!.id.toInt() == 0) {
+            if (decryptedInsurance!!.id.equals(0)) {
                 decryptedInsurance!!.id = getUniqueId()
             }
 
@@ -3982,7 +3993,7 @@ class Level2CategoryHelper(
             decryptedTaxes!!.selectionType = categoryID
             decryptedTaxes!!.returnName = title
             decryptedTaxes!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedTaxes!!.id.toInt() == 0) {
+            if (decryptedTaxes!!.id.equals(0)) {
                 decryptedTaxes!!.id = getUniqueId()
             }
 
@@ -4044,7 +4055,7 @@ class Level2CategoryHelper(
             decryptedDriversLicense!!.selectionType = categoryID
             decryptedDriversLicense!!.nameOnLicense = title
             decryptedDriversLicense!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedDriversLicense!!.id.toInt() == 0) {
+            if (decryptedDriversLicense!!.id.equals(0)) {
                 decryptedDriversLicense!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4102,7 +4113,7 @@ class Level2CategoryHelper(
             decryptedSocial!!.selectionType = categoryID
             decryptedSocial!!.cardName = title
             decryptedSocial!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedSocial!!.id.toInt() == 0) {
+            if (decryptedSocial!!.id.equals(0)) {
                 decryptedSocial!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4159,7 +4170,7 @@ class Level2CategoryHelper(
             decryptedTAX_ID!!.taxIdName = title
             decryptedTAX_ID!!.modified = currentUsers + " " + currentDateandTime
 
-            if (decryptedTAX_ID!!.id.toInt() == 0) {
+            if (decryptedTAX_ID!!.id.equals(0)) {
                 decryptedTAX_ID!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4214,7 +4225,7 @@ class Level2CategoryHelper(
             decryptedOtherGovernment!!.selectionType = categoryID
             decryptedOtherGovernment!!.idName = title
             decryptedOtherGovernment!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedOtherGovernment!!.id.toInt() == 0) {
+            if (decryptedOtherGovernment!!.id.equals(0)) {
                 decryptedOtherGovernment!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4269,7 +4280,7 @@ class Level2CategoryHelper(
             decryptedCertificate!!.selectionType = categoryID
             decryptedCertificate!!.nameOnCertificate = title
             decryptedCertificate!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedCertificate!!.id.toInt() == 0) {
+            if (decryptedCertificate!!.id.equals(0)) {
                 decryptedCertificate!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4324,7 +4335,7 @@ class Level2CategoryHelper(
             decryptedIdentification!!.selectionType = categoryID
             decryptedIdentification!!.name = title
             decryptedIdentification!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedIdentification!!.id.toInt() == 0) {
+            if (decryptedIdentification!!.id.equals(0)) {
                 decryptedIdentification!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4381,7 +4392,7 @@ class Level2CategoryHelper(
             decryptedMedicalHistory!!.selectionType = categoryID
             decryptedMedicalHistory!!.attachmentNames = title
             decryptedMedicalHistory!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedMedicalHistory!!.id.toInt() == 0) {
+            if (decryptedMedicalHistory!!.id.equals(0)) {
                 decryptedMedicalHistory!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4442,7 +4453,7 @@ class Level2CategoryHelper(
             decryptedHealthcareProviders!!.selectionType = categoryID
             decryptedHealthcareProviders!!.name = title
             decryptedHealthcareProviders!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedHealthcareProviders!!.id.toInt() == 0) {
+            if (decryptedHealthcareProviders!!.id.equals(0)) {
                 decryptedHealthcareProviders!!.id = getUniqueId()
             }
 
@@ -4505,7 +4516,7 @@ class Level2CategoryHelper(
             decryptedEmergencyContacts!!.selectionType = categoryID
             decryptedEmergencyContacts!!.name = title
             decryptedEmergencyContacts!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedEmergencyContacts!!.id.toInt() == 0) {
+            if (decryptedEmergencyContacts!!.id.equals(0)) {
                 decryptedEmergencyContacts!!.id = getUniqueId()
             }
 
@@ -4566,7 +4577,7 @@ class Level2CategoryHelper(
             decryptedMedications!!.selectionType = categoryID
             decryptedMedications!!.name = title
             decryptedMedications!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedMedications!!.id.toInt() == 0) {
+            if (decryptedMedications!!.id.equals(0)) {
                 decryptedMedications!!.id = getUniqueId()
             }
 
@@ -4627,7 +4638,7 @@ class Level2CategoryHelper(
             decryptedMedicalConditions!!.selectionType = categoryID
             decryptedMedicalConditions!!.attachmentNames = title
             decryptedMedicalConditions!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedMedicalConditions!!.id.toInt() == 0) {
+            if (decryptedMedicalConditions!!.id.equals(0)) {
                 decryptedMedicalConditions!!.id = getUniqueId()
             }
 
@@ -4688,7 +4699,7 @@ class Level2CategoryHelper(
             decryptedEyeglassPrescriptions!!.selectionType = categoryID
             decryptedEyeglassPrescriptions!!.attachmentNames = title
             decryptedEyeglassPrescriptions!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedEyeglassPrescriptions!!.id.toInt() == 0) {
+            if (decryptedEyeglassPrescriptions!!.id.equals(0)) {
                 decryptedEyeglassPrescriptions!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4748,7 +4759,7 @@ class Level2CategoryHelper(
             decryptedVitalNumbers!!.selectionType = categoryID
             decryptedVitalNumbers!!.attachmentNames = title
             decryptedVitalNumbers!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedVitalNumbers!!.id.toInt() == 0) {
+            if (decryptedVitalNumbers!!.id.equals(0)) {
                 decryptedVitalNumbers!!.id = getUniqueId()
             }
 
@@ -4809,7 +4820,7 @@ class Level2CategoryHelper(
             decryptedCheckups!!.selectionType = categoryID
             decryptedCheckups!!.attachmentNames = title
             decryptedCheckups!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedCheckups!!.id.toInt() == 0) {
+            if (decryptedCheckups!!.id.equals(0)) {
                 decryptedCheckups!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4884,7 +4895,7 @@ class Level2CategoryHelper(
             AppLogger.d("LoyaltySelectionType", " " + decryptedLoyalty!!.selectionType)
             AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
 
-            if (decryptedLoyalty!!.id.toInt() == 0) {
+            if (decryptedLoyalty!!.id.equals(0)) {
                 decryptedLoyalty!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -4941,7 +4952,7 @@ class Level2CategoryHelper(
             decryptedTravel!!.selectionType = categoryID
             decryptedTravel!!.nameOnAccount = title
             decryptedTravel!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedTravel!!.id.toInt() == 0) {
+            if (decryptedTravel!!.id.equals(0)) {
                 decryptedTravel!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -5006,7 +5017,7 @@ class Level2CategoryHelper(
             AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
             AppLogger.d("SelectionType", " Travel Document " + decryptedDocuments!!.selectionType)
             decryptedDocuments!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedDocuments!!.id.toInt() == 0) {
+            if (decryptedDocuments!!.id.equals(0)) {
                 decryptedDocuments!!.id = getUniqueId()
             }
 
@@ -5062,7 +5073,7 @@ class Level2CategoryHelper(
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedVacations!!.id.toInt() == 0) {
+            if (decryptedVacations!!.id.equals(0)) {
                 decryptedVacations!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -5118,7 +5129,7 @@ class Level2CategoryHelper(
             decryptedLoyaltyPrograms!!.selectionType = categoryID
             decryptedLoyaltyPrograms!!.brandName = title
             decryptedLoyaltyPrograms!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedLoyaltyPrograms!!.id.toInt() == 0) {
+            if (decryptedLoyaltyPrograms!!.id.equals(0)) {
                 decryptedLoyaltyPrograms!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -5172,7 +5183,7 @@ class Level2CategoryHelper(
             decryptedRecentPurchase!!.selectionType = categoryID
             decryptedRecentPurchase!!.itemName = title
             decryptedRecentPurchase!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedRecentPurchase!!.id.toInt() == 0) {
+            if (decryptedRecentPurchase!!.id.equals(0)) {
                 decryptedRecentPurchase!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -5226,7 +5237,7 @@ class Level2CategoryHelper(
             decryptedClothingSizes!!.selectionType = categoryID
             decryptedClothingSizes!!.personName = title
             decryptedClothingSizes!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedClothingSizes!!.id.toInt() == 0) {
+            if (decryptedClothingSizes!!.id.equals(0)) {
                 decryptedClothingSizes!!.id = getUniqueId()
             }
             var isSaveComplete = false
@@ -5280,7 +5291,7 @@ class Level2CategoryHelper(
             decryptedShopping!!.selectionType = categoryID
             decryptedShopping!!.userName = title
             decryptedShopping!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedShopping!!.id.toInt() == 0) {
+            if (decryptedShopping!!.id.equals(0)) {
                 decryptedShopping!!.id = getUniqueId()
             }
             var isSaveComplete = false

@@ -35,7 +35,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun saveDocument(context: Context?) {
-        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim())
+        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim())
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
@@ -75,7 +75,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType,
                 ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) ))
 
-        if( selectedDocument != null )
+        if( selectedDocument != null ) {
+            AppLogger.d("Level2Category", "Selected Document : " + selectedDocument)
             when( selectedDocument ) {
             //Home&Banking
                 is DecryptedFinancial -> {
@@ -131,7 +132,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                 }
-                //Personal
+            //Personal
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
@@ -174,7 +175,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setText(decryptedTaxID.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                 }
-                //Wellness
+            //Wellness
                 is DecryptedIdentification -> {
                     val decryptedIdentification : DecryptedIdentification = selectedDocument as DecryptedIdentification
                     etTitle.setText(decryptedIdentification.name)
@@ -306,7 +307,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                 }
 
-                //Shopping
+            //Shopping
                 is DecryptedLoyaltyPrograms -> {
                     val decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
                     etTitle.setText(decryptedLoyaltyPrograms.brandName)
@@ -335,7 +336,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setText(decryptedShopping.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                 }
-                //Interests
+            //Interests
                 is DecryptedInterests -> {
                     val decryptedInterests : DecryptedInterests = selectedDocument as DecryptedInterests
                     etTitle.setText(decryptedInterests.institutionName)
@@ -344,6 +345,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                 }
             }
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -381,7 +384,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             if( validate() ) {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
-                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim()  )
             }
         }
     }

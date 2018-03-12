@@ -274,4 +274,19 @@ public class Financial extends RealmObject {
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Financial financial = (Financial) o;
+
+        return id == financial.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }
