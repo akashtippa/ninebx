@@ -52,6 +52,9 @@ class PermissionDialog(val context : Context, private var tempMember: Member  ) 
         dialogView.findViewById<ImageView>(R.id.ivBackPermissions).setOnClickListener {
             dialog.dismiss()
         }
+        dialogView.findViewById<TextView>(R.id.tvName).text = tempMember.firstName + " " + tempMember.lastName
+        dialogView.findViewById<TextView>(R.id.tvRole).text = tempMember.role
+
         chkAddOrRemoveUsers = dialogView.findViewById(R.id.chkAddOrRemoveUsers)
 
         dialogView.findViewById<TextView>(R.id.txtSave).setOnClickListener {
