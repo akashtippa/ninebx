@@ -134,7 +134,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_RECENT_SEARCH, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val recentSearch = realm!!.where(RecentSearch::class.java).distinctValues("id").sort("createdDate", Sort.DESCENDING).findAll()
+                        val recentSearch = realm!!.where(RecentSearch::class.java)/*.distinctValues("id")*/.sort("createdDate", Sort.DESCENDING).findAll()
                         if (recentSearch.size > 0) {
                             for (i in 0 until recentSearch.size) {
                                 decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
@@ -156,7 +156,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
+                        val combineContacts = realm!!.where(CombineContacts::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineContacts.size > 0) {
                             for (i in 0 until combineContacts.size) {
                                 val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
@@ -183,7 +183,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineShopping = realm!!.where(CombineShopping::class.java).distinctValues("id").findAll()
+                        val combineShopping = realm!!.where(CombineShopping::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineShopping.size > 0) {
                             for (i in 0 until combineShopping.size) {
                                 val decryptedCombineShopping = decryptCombineShopping(combineShopping[i]!!)
@@ -207,7 +207,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combinePersonal = realm!!.where(CombinePersonal::class.java).distinctValues("id").findAll()
+                        val combinePersonal = realm!!.where(CombinePersonal::class.java)/*.distinctValues("id")*/.findAll()
                         if (combinePersonal.size > 0) {
                             for (i in 0 until combinePersonal.size) {
                                 val decryptedCombinePersonal = decryptCombinePersonal(combinePersonal[i]!!)
@@ -231,7 +231,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineWellness = realm!!.where(CombineWellness::class.java).distinctValues("id").findAll()
+                        val combineWellness = realm!!.where(CombineWellness::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineWellness.size > 0) {
                             for (i in 0 until combineWellness.size) {
                                 val decryptedCombineWellness = decryptCombineWellness(combineWellness[i]!!)
@@ -254,7 +254,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_INTERESTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineInterests = realm!!.where(CombineInterests::class.java).distinctValues("id").findAll()
+                        val combineInterests = realm!!.where(CombineInterests::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineInterests.size > 0) {
                             for (i in 0 until combineInterests.size) {
                                 val decryptedCombineInterests = decryptCombineInterests(combineInterests[i]!!)
@@ -279,7 +279,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineEducation = realm!!.where(CombineEducation::class.java).distinctValues("id").findAll()
+                        val combineEducation = realm!!.where(CombineEducation::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineEducation.size > 0) {
                             for (i in 0 until combineEducation.size) {
                                 val decryptedCombineEducation = decryptCombineEducation(combineEducation[i]!!)
@@ -306,7 +306,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineMemories = realm!!.where(CombineMemories::class.java).distinctValues("id").findAll()
+                        val combineMemories = realm!!.where(CombineMemories::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineMemories.size > 0) {
                             for (i in 0 until combineMemories.size) {
                                 val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
@@ -329,7 +329,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineTravel = realm!!.where(CombineTravel::class.java).distinctValues("id").findAll()
+                        val combineTravel = realm!!.where(CombineTravel::class.java)/*.distinctValues("id")*/.findAll()
                         if (combineTravel.size > 0) {
                             for (i in 0 until combineTravel.size) {
                                 val decryptedCombineTravel = decryptCombineTravel(combineTravel[i]!!)
@@ -353,7 +353,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineResult = realm!!.where(Combine::class.java).distinctValues("id").findAll()
+                        val combineResult = realm!!.where(Combine::class.java)/*.distinctValues("id")*/.findAll()
                         if( combineResult.size > 0 ) {
                             for (i in 0 until combineResult.size) {
                                 val decryptedCombine = decryptCombine(combineResult[i]!!)

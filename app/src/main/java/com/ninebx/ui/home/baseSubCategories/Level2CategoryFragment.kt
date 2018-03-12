@@ -35,7 +35,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun saveDocument(context: Context?) {
-        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim())
+        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim())
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
@@ -384,7 +384,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             if( validate() ) {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
-                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim()  )
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim()  )
             }
         }
     }

@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
@@ -3595,13 +3594,14 @@ class Level2CategoryHelper(
     }
 
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
         if (decryptedFinancial != null) {
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.institutionName = title
+            decryptedFinancial!!.accountName = subTitle
             AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
             decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
 
@@ -3610,6 +3610,7 @@ class Level2CategoryHelper(
                 decryptedFinancial!!.id = getUniqueId()
             }
             AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
+            AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
