@@ -1812,12 +1812,12 @@ class Level2CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on ID", "Name on ID", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", "Issuing country", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Issuing state", "Issuing state", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("ID number", "ID number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Name on ID", decryptedOtherGovernment!!.nameOnId, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedOtherGovernment!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing state", decryptedOtherGovernment!!.issuingState, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("ID number", "ID number", decryptedOtherGovernment!!.idNumber, Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", decryptedOtherGovernment!!.dateIssued, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", decryptedOtherGovernment!!.expirationDate, Constants.LEVEL2_PICKER))
 
         categoryList.add(category)
 
@@ -1825,7 +1825,7 @@ class Level2CategoryHelper(
         category_id = "other_certificate_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedOtherGovernment!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1846,17 +1846,17 @@ class Level2CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name 1 on certificate", "Name 1 on certificate", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Name 2 on certificate", "Name 2 on certificate", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of marriage", "Date of marriage", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Place of marriage", "Place of marriage", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name 1 on certificate", decryptedCertificate!!.nameOneCertificate, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name 2 on certificate", decryptedCertificate!!.nameTwoCertificate, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of marriage", decryptedCertificate!!.dateOfMarriage, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Place of marriage", decryptedCertificate!!.placeOfMarriage, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2020
         category_id = "birth_certificate_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedCertificate!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1877,18 +1877,18 @@ class Level2CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on certificate", "Name on certificate", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Gender", "Gender", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of birth", "Date of birth", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Time of birth", "Time of birth", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place of birth", "Place of birth", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on certificate", decryptedCertificate!!.nameOnCertificate, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Gender", decryptedCertificate!!.gender, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Time of birth", decryptedCertificate!!.timeOfBirth, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Place of birth", decryptedCertificate!!.placeOfBirth, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2020
         category_id = "birth_certificate_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedCertificate!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1909,16 +1909,16 @@ class Level2CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on ID", "Name on ID", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", "Issuing country", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Tax ID number", "Tax ID number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on ID", decryptedTAX_ID!!.taxIdName, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedTAX_ID!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Tax ID number", decryptedTAX_ID!!.taxIdNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2020
         category_id = "tax_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedTAX_ID!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -1931,15 +1931,15 @@ class Level2CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on card", "Name on card", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Social security number", "Social security number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on card", decryptedSocial!!.nameOnCard, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Social security number", decryptedSocial!!.socialSecurityNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2019
         category_id = "social_security_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedSocial!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -1960,19 +1960,19 @@ class Level2CategoryHelper(
         var category_id = "personal_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on license", "Name on license", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", "Issuing country", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Issuing state", "Issuing state", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("License number", "License number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Data issued", "Data issued", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Name on license", decryptedDriversLicense!!.nameOnLicense, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDriversLicense!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing state", decryptedDriversLicense!!.issuingState, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("License number", decryptedDriversLicense!!.licenseNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDriversLicense!!.dateIssued, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDriversLicense!!.expirationDate, "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2018
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedDriversLicense!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 

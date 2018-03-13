@@ -378,7 +378,7 @@ class SearchHelper() {
         val position = searchItem.itemIndex
         /*switchTravelItems( position, searchItem )*/
 
-        if(searchItem.categoryName.equals("documents") || searchItem.categoryName.equals("loyalty")){
+        if(searchItem.categoryName.equals("documents") || searchItem.categoryName.equals("loyalty") || searchItem.categoryName.equals("vacation")){
             switchTravelItems( position, searchItem )
         }
 
