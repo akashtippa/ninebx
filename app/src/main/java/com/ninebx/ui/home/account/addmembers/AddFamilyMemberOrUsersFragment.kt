@@ -207,11 +207,13 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                 memberPresenter.saveToUserAccount(strEmail, arguments!!.getString(Constants.USER_PASSWORD))
             else {
                 saveUpdatedMember(getUniqueIdString())
+                memberPresenter.setPermissionsForMember(updateMember)
                 memberView.onNewMember(decryptMember(updateMember!!)!!)
             }
 
         else {
             saveUpdatedMember(this@AddFamilyMemberOrUsersFragment.member.userId)
+            memberPresenter.setPermissionsForMember(updateMember)
             memberView.onNewMember(decryptMember(updateMember!!)!!)
         }
     }
@@ -492,10 +494,20 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     @SuppressLint("StaticFieldLeak")
         private fun saveUser(user: SyncUser) {
 
+
+
         object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg p0: Void?) {
-                    prepareMemberRealmConnections(context, true, mAdminSyncUser, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+
+            override fun onPreExecute() {
+                super.onPreExecute()
+                //update user and member permissions
+                user.logout()
+            }
+
+            override fun doInBackground(vararg p0: Void?) {
+                    prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+
                             var mCurrentUser = Users()
                             mCurrentUser.id = getUniqueId()
                             mCurrentUser.completeProfile = false
@@ -520,9 +532,9 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                     super.onPostExecute(result)
                     context!!.hideProgressDialog()
                     saveUpdatedMember(user.identity)
+                    memberPresenter.setPermissionsForMember(updateMember)
                     memberView.onNewMember(decryptMember(updateMember!!)!!)
-                    //update user and member permissions
-                    user.logout()
+
                 }
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
