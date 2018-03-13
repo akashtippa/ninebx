@@ -40,8 +40,6 @@ class SendEmailTask( private val emailOtp : String,
 
         try {
             val sendgrid = SendGrid("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")
-            var  emailOtp = "<font color=#4285F4>Blue Color</font>"
-           // yourtextview.setText(Html.fromHtml(emailOtp));
             val email = SendGrid.Email()
             email.addTo(emailId)
             email.from = "ninebx.support@nineBx.com"
@@ -50,7 +48,7 @@ class SendEmailTask( private val emailOtp : String,
                     "\n" +
                     "Here is your one-time, time-based code to authenticate your device.\n" +
                     "\n" +
-                    "Authentication code: "+Html.fromHtml(emailOtp)+"\n"  //TODO - Change the color
+                    "Authentication code: "+emailOtp+"\n"  //TODO - Change the color
                     "\n" +
                     "This is a time-sensitive code. Please enter it immediately to complete sign in.\n" +
                     "\n" +
