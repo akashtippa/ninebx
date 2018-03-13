@@ -29,10 +29,8 @@ import com.ninebx.ui.home.account.permissions.PermissionDialog
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import io.realm.Realm
-import io.realm.RealmList
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_add_family_member.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -60,7 +58,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     private var strFirstName = ""
     private var strLastName = ""
-    private var strAccountHolder = ""
+    private var strRelationShip = ""
     private var strRole = ""
     private var strEmail = ""
 
@@ -166,7 +164,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     private fun permissionsValidate(): Boolean {
         strFirstName = txtFirstName.text.toString()
         strLastName = txtLastName.text.toString()
-        strAccountHolder = txtRelationship.selectedItem.toString()
+        strRelationShip = txtRelationship.selectedItem.toString()
 
         if( layoutOtherViews.isVisible() )
             strRole = txtsRole.selectedItem.toString()
@@ -351,7 +349,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
         strFirstName = txtFirstName.text.toString()
         strLastName = txtLastName.text.toString()
-        strAccountHolder = txtRelationship.selectedItem.toString()
+        strRelationShip = txtRelationship.selectedItem.toString()
 
         if( layoutOtherViews.isVisible() )
             strRole = txtsRole.selectedItem.toString()
@@ -409,7 +407,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
         updateMember!!.userId = userId
         updateMember!!.firstName = strFirstName.encryptString()
         updateMember!!.lastName = strLastName.encryptString()
-        updateMember!!.relationship = strAccountHolder.encryptString()
+        updateMember!!.relationship = strRelationShip.encryptString()
 
         if( layNonUser.isVisible() )
             updateMember!!.email = strEmail.encryptString()
@@ -516,7 +514,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
                             mCurrentUser.firstName = strFirstName
                             mCurrentUser.lastName = strLastName
                             mCurrentUser.userId = user.identity
-                            mCurrentUser.relationship = selectedRelation
+                            mCurrentUser.relationship = strRelationShip
                             mCurrentUser.members.addAll(encryptMembers(ArrayList( mAdminUser.members.toList()))!!.asIterable())
                             mCurrentUser.members.add(saveUpdatedMember(user.identity))
 
