@@ -157,7 +157,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         if (requestCode == ADD_EDIT_MEMBER && resultCode == Activity.RESULT_OK) {
             val member = data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER)
             mListsAdapter!!.insertMember(member)
-            memberAdded(data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER))
+            memberAdded(member)
         }
         else if ( requestCode == DELETE_MEMBER && resultCode == Activity.RESULT_OK ) {
             val member = data!!.getParcelableExtra<DecryptedMember>(Constants.MEMBER)

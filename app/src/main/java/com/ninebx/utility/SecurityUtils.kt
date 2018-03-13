@@ -464,8 +464,6 @@ fun encryptUsers(currentUser: Users): Users {
     currentUser.zipCode = currentUser.zipCode.encryptString()
     currentUser.country = currentUser.country.encryptString()
 
-    currentUser.decryptedMembers = encryptMembers(currentUser.members)
-
     return currentUser
 
 }
