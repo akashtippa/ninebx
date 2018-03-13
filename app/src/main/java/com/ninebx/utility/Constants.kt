@@ -73,6 +73,7 @@ object Constants {
 
     // Just for Testing
     val USER_EMAIL_ID: String = "user_email"
+    val ADMIN: String = "admin"
     val USER_FIRST_NAME: String = "user_first_name"
     val USER_LAST_NAME: String = "user_last_name"
     val CREATED: String = "created"

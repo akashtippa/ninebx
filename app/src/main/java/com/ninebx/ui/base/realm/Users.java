@@ -58,7 +58,6 @@ public class Users extends RealmObject implements Parcelable {
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
     @Required private RealmList<Member> members = new RealmList<Member>();
-    @Ignore private RealmList<Member> decryptedMembers = new RealmList<Member>();
 
     public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, long id, RealmList<Member> members) {
         this.fullName = fullName;
@@ -123,8 +122,6 @@ public class Users extends RealmObject implements Parcelable {
         this.profilePhoto = in.readString();
         this.members = new RealmList<>();
         this.members.addAll(in.createTypedArrayList(Member.CREATOR));
-        this.decryptedMembers = new RealmList<>();
-        this.decryptedMembers.addAll(in.createTypedArrayList(Member.CREATOR));
     }
 
     @NotNull
@@ -335,13 +332,6 @@ public class Users extends RealmObject implements Parcelable {
         this.profilePhoto = profilePhoto;
     }
 
-    public RealmList<Member> getDecryptedMembers() {
-        return decryptedMembers;
-    }
-
-    public void setDecryptedMembers(RealmList<Member> decryptedMembers) {
-        this.decryptedMembers = decryptedMembers;
-    }
 
     @Override
     public int describeContents() {
@@ -370,7 +360,6 @@ public class Users extends RealmObject implements Parcelable {
         dest.writeValue(this.isCompleteProfile);
         dest.writeString(this.profilePhoto);
         dest.writeTypedList(this.members);
-        dest.writeTypedList(this.decryptedMembers);
     }
 
     @Override

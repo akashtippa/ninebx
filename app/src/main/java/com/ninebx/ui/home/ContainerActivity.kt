@@ -94,6 +94,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
                 fragmentTransaction.addToBackStack(null)
                 addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
                 val bundle = intent.extras
+                AppLogger.d("AddMember", "Is user present : " + intent.getParcelableExtra(Constants.CURRENT_USER) )
                 bundle.putString(Constants.USER_PASSWORD, password)
                 addFamilyMemberOrUsersFragment!!.arguments = bundle
                 fragmentTransaction.replace(R.id.fragmentContainer, addFamilyMemberOrUsersFragment).commit()

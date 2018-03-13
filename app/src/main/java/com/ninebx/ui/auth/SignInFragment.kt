@@ -37,7 +37,8 @@ class SignInFragment : BaseAuthFragment() {
                     NineBxApplication.getPreferences().clearPreferences()
                 }
                 else {
-                    NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
+                    if( NineBxApplication.getPreferences().currentStep > Constants.OTP_COMPLETE )
+                        NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
                 }
                 mAuthView.setAccountEmail(edtEmailAddress.text.toString().toLowerCase().trim())
                 mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().toLowerCase().trim(), edtPassword.text.toString())

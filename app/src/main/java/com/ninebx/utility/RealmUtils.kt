@@ -1,6 +1,7 @@
 package com.ninebx.utility
 
 import android.content.Context
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
@@ -224,7 +225,12 @@ private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
 
     val user = SyncUser.currentUser()
     AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_URL + realmEndPoint)
-    val config = SyncConfiguration.Builder(user, Constants.SERVER_URL + realmEndPoint)
+    var serverEndPoint = Constants.SERVER_URL + realmEndPoint
+    val adminId = NineBxApplication.getPreferences().adminId
+    if( adminId != null ) {
+        serverEndPoint = Constants.SERVER_ADDRESS + adminId + "/" + realmEndPoint
+    }
+    val config = SyncConfiguration.Builder(user, serverEndPoint)
             .waitForInitialRemoteData()
             .build()
     callback.onSuccess(Realm.getInstance(config))
@@ -235,7 +241,12 @@ private fun getRealmInstanceRealmThread(realmEndPoint: String, callback: Realm.C
 
     val user = SyncUser.currentUser()
     AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_URL + realmEndPoint)
-    val config = SyncConfiguration.Builder(user, Constants.SERVER_URL + realmEndPoint)
+    var serverEndPoint = Constants.SERVER_URL + realmEndPoint
+    val adminId = NineBxApplication.getPreferences().adminId
+    if( adminId != null ) {
+        serverEndPoint = Constants.SERVER_ADDRESS + adminId + "/" + realmEndPoint
+    }
+    val config = SyncConfiguration.Builder(user, serverEndPoint)
             .waitForInitialRemoteData()
             .build()
     Realm.getInstanceAsync(config, callback)

@@ -22,6 +22,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,6 +37,7 @@ import com.ninebx.utility.*
 import com.ninebx.utility.Constants.REALM_END_POINT_CALENDAR_EVENTS
 import io.realm.Realm
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -234,6 +236,10 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private fun disableEdit() {
+        var appIcon = context!!.resources.getDrawable(R.drawable.search_bx)
+        appIcon.setBounds(0,0,120,120)
+        tvSave.text = ""
+        tvSave.setCompoundDrawables(null, null, appIcon, null)
         editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit))
         etTitle.isEnabled = false
         etLocation.isEnabled = false
@@ -249,6 +255,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private fun enableEdit() {
+        tvSave.text = "Save"
+        tvSave.setCompoundDrawables(null,null,null,null)
         editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit_blue))
         etTitle.isEnabled = true
         etLocation.isEnabled = true
@@ -311,7 +319,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, isAllDay: Boolean) {
 
         if( isAllDay ) {
-            calendar!!.set(Calendar.HOUR_OF_DAY, 0)
+            calendar!!.set(Calendar.HOUR_OF_DAY, 9)
             calendar.set(Calendar.MINUTE, 0)
         }
 

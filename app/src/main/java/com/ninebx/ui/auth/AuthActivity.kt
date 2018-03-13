@@ -224,7 +224,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
         val bundle = intent.extras
         if( intent.extras == null || intent.hasExtra(Constants.USER_EMAIL) ) {
             when (NineBxApplication.getPreferences().currentStep) {
-                Constants.ACCOUNT_PASSWORD_COMPLETE -> {
+                /*Constants.ACCOUNT_PASSWORD_COMPLETE -> {
                     navigateToOTP(false)
                 }
                 Constants.OTP_COMPLETE -> {
@@ -238,7 +238,7 @@ class AuthActivity : AppCompatActivity(), AuthView {
                         else {
                             navigateToInvitePeople()
                         }
-                }
+                }*/
                 Constants.FINGER_PRINT_COMPLETE ->{
                     navigateToInvitePeople()
                     //navigateToHome()
