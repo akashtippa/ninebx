@@ -140,6 +140,9 @@ class AlarmJob : Job() {
             AppLogger.d(TAG, "scheduleJob : Json : " + reminderString)
             val extras = PersistableBundleCompat()
             extras.putString("reminder", reminderString)
+
+
+
             val reminderTimeInMillis: Long = calendar.timeInMillis
             val id: String = "Calendar_Event_" + reminder.id
 

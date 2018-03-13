@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import com.ninebx.NineBxApplication
+import com.ninebx.ui.base.realm.CalendarEvents
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -137,3 +138,89 @@ fun getDayStringForDates(startDate: Date, endDate: Date): Collection<String> {
     }
     return dates
 }
+
+
+///set local notification
+/*
+fun findRepeatAndReminder(calendarModel: CalendarEvents ) {
+
+    for ( i in (0..calendarModel.startsDate.size - 1) ) {
+
+        val dateFormat = if ( calendarModel.isAllDay[i]!! ) {
+            "MMMM dd, yyyy"
+        } else {
+            "MMMM dd, yyyy  hh:mm a"
+        }
+
+
+        let content = UNMutableNotificationContent()
+        content.title = "This is a reminder notification"
+        //content.subtitle = "Event is scheduled"
+        content.body = calendarModel.title[i] + " event is scheduled"
+        content.categoryIdentifier = "actionCategory"
+        content.sound = UNNotificationSound.default()
+        // content.badge = 1
+
+        // other settings...
+        content.userInfo = ["NotificationID": calendarModel.id]
+        content.setValue(true, forKey: "shouldAlwaysAlertWhileAppIsForeground")
+
+        //nextTriggerDate?.startOfDay
+        var dateToFire = Date() //Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from:  sDate)
+
+        if !calendarModel.isAllDay[i] {
+            //find the reminder
+            switch calendarModel.reminder[i]  {
+                case "At time of event" :
+                dateToFire = sDate
+                case Repeaters.k5MinutesBefore :
+                dateToFire =  Calendar.current.date(byAdding: .minute, value: -5, to: sDate)!
+                case Repeaters.k15MinutesBefore :
+                dateToFire =  Calendar.current.date(byAdding: .minute, value: -15, to: sDate)!
+                case Repeaters.k30MinutesBefore :
+                dateToFire =  Calendar.current.date(byAdding: .minute, value: -30, to: sDate)!
+                case Repeaters.k1HourBefore :
+                dateToFire =  Calendar.current.date(byAdding: .hour, value: -1, to: sDate)!
+                case Repeaters.k2HourBefore:
+                dateToFire =  Calendar.current.date(byAdding: .hour, value: -2, to: sDate)!
+                case Repeaters.k1DayBefore :
+                dateToFire =  Calendar.current.date(byAdding: .day, value: -1, to: sDate)!
+                case Repeaters.k2DayBefore :
+                dateToFire =  Calendar.current.date(byAdding: .day, value: -2, to: sDate)!
+                case Repeaters.k1WeekBefore :
+                dateToFire =  Calendar.current.date(byAdding: .day, value: -7, to: sDate)!
+                default:
+                print("")
+            }
+
+        } else {
+            switch calendarModel.reminder[i]  {
+                case "On day of event (9:00 AM)" :
+                dateToFire = sDate //Calendar.current.date(byAdding: .hour, value: 9, to: )!
+                case Repeaters.kOneDayBefore :
+                dateToFire = Calendar.current.date(byAdding: .day, value: -1, to: sDate)!
+                case Repeaters.kTwoDayBefore :
+                dateToFire = Calendar.current.date(byAdding: .day, value: -2, to: sDate)!
+                case Repeaters.k1WeekBeforeForAllDay :
+                dateToFire = Calendar.current.date(byAdding: .day, value: -7, to: sDate)!
+                default:
+                print("")
+            }
+        }
+
+        var comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from:  dateToFire)
+        if calendarModel.isAllDay[i] {
+            comps.hour = 9
+        }
+
+        var trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+        trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { (error:Error?) in
+            if error != nil {
+                // print(error?.localizedDescription ?? "")
+            }
+            // print("Notification Register Success")
+        }
+    }*/
