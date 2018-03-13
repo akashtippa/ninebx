@@ -299,7 +299,7 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(vacation in searchDecryptCombineTravel.vacationsItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.vacation_home, vacation.placesToVisit_1, "vacation", vacation.selectionType, itemIndex++, vacation.id))
+            mSearchTravelItems.add(Level3SearchItem(R.string.vacation_home, vacation.vac_description, "vacation", vacation.selectionType, itemIndex++, vacation.id))
         }
         itemIndex = 0
         for(travelList in searchDecryptCombineTravel.listItems){

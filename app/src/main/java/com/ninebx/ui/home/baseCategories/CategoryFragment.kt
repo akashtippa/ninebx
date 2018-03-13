@@ -170,7 +170,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
 
     var fromWhichBox: Int? = null
 
-
     private var allMemoryView: RealmResults<MemoryTimeline>? = null
     private var allContacts: RealmResults<Contacts>? = null
 

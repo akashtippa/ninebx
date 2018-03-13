@@ -5109,7 +5109,7 @@ class Level2CategoryHelper(
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
-
+            AppLogger.d("SelectionType", "decryptedVacations" + decryptedVacations!!.selectionType)
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVacations!!.id.toInt() == 0) {
                 decryptedVacations!!.id = getUniqueId()
