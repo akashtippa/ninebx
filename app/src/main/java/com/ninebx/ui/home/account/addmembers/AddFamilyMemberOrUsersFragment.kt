@@ -56,6 +56,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
     private lateinit var memberView: MemberView
     private lateinit var adminId: String
     private lateinit var mAdminUser : DecryptedUsers
+    private lateinit var mAdminSyncUser : SyncUser
 
     private var strFirstName = ""
     private var strLastName = ""
@@ -78,6 +79,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mAdminSyncUser = SyncUser.currentUser()
         adminId = SyncUser.currentUser().identity
         memberPresenter = MemberPresenter(memberView, SyncUser.currentUser(), adminId)
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
@@ -492,7 +494,7 @@ class AddFamilyMemberOrUsersFragment : FragmentBackHelper(), CustomBottomSheetPr
 
         object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
-                    prepareRealmConnections(context, true, /*user,*/ Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                    prepareMemberRealmConnections(context, true, mAdminSyncUser, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             var mCurrentUser = Users()
                             mCurrentUser.id = getUniqueId()

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -16,17 +17,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedUsers implements Parcelable {
 
-    public static final Parcelable.Creator<DecryptedUsers> CREATOR = new Parcelable.Creator<DecryptedUsers>() {
-        @Override
-        public DecryptedUsers createFromParcel(Parcel source) {
-            return new DecryptedUsers(source);
-        }
-
-        @Override
-        public DecryptedUsers[] newArray(int size) {
-            return new DecryptedUsers[size];
-        }
-    };
     @Ignore public String searchField = "";
     @Required
     private String fullName             = "";
@@ -100,31 +90,7 @@ public class DecryptedUsers implements Parcelable {
         this.decryptedMembers = decryptedMembers;
     }
 
-    protected DecryptedUsers(Parcel in) {
-        this.fullName = in.readString();
-        this.firstName = in.readString();
-        this.lastName = in.readString();
-        this.emailAddress = in.readString();
-        this.relationship = in.readString();
-        this.dateOfBirth = in.readString();
-        this.anniversary = in.readString();
-        this.gender = in.readString();
-        this.mobileNumber = in.readString();
-        this.street_1 = in.readString();
-        this.street_2 = in.readString();
-        this.city = in.readString();
-        this.state = in.readString();
-        this.zipCode = in.readString();
-        this.country = in.readString();
-        this.userId = in.readString();
-        this.id = in.readLong();
-        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.profilePhoto = in.readString();
-        this.members = new RealmList<>();
-        this.members.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
-        this.decryptedMembers = new RealmList<>();
-        this.decryptedMembers.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
-    }
+
 
     public String getUserId() {
         return userId;
@@ -294,35 +260,6 @@ public class DecryptedUsers implements Parcelable {
         this.decryptedMembers = decryptedMembers;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.fullName);
-        dest.writeString(this.firstName);
-        dest.writeString(this.lastName);
-        dest.writeString(this.emailAddress);
-        dest.writeString(this.relationship);
-        dest.writeString(this.dateOfBirth);
-        dest.writeString(this.anniversary);
-        dest.writeString(this.gender);
-        dest.writeString(this.mobileNumber);
-        dest.writeString(this.street_1);
-        dest.writeString(this.street_2);
-        dest.writeString(this.city);
-        dest.writeString(this.state);
-        dest.writeString(this.zipCode);
-        dest.writeString(this.country);
-        dest.writeString(this.userId);
-        dest.writeValue(this.id);
-        dest.writeValue(this.isCompleteProfile);
-        dest.writeString(this.profilePhoto);
-        dest.writeTypedList(this.members);
-        dest.writeTypedList(this.decryptedMembers);
-    }
 
     @Override
     public String toString() {
@@ -349,4 +286,73 @@ public class DecryptedUsers implements Parcelable {
                 ", members=" + decryptedMembers +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fullName);
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.emailAddress);
+        dest.writeString(this.relationship);
+        dest.writeString(this.dateOfBirth);
+        dest.writeString(this.anniversary);
+        dest.writeString(this.gender);
+        dest.writeString(this.mobileNumber);
+        dest.writeString(this.street_1);
+        dest.writeString(this.street_2);
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.zipCode);
+        dest.writeString(this.country);
+        dest.writeString(this.userId);
+        dest.writeLong(this.id);
+        dest.writeValue(this.isCompleteProfile);
+        dest.writeString(this.profilePhoto);
+        dest.writeTypedList(this.members);
+        dest.writeTypedList(this.decryptedMembers);
+    }
+
+    protected DecryptedUsers(Parcel in) {
+        this.fullName = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.emailAddress = in.readString();
+        this.relationship = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.gender = in.readString();
+        this.mobileNumber = in.readString();
+        this.street_1 = in.readString();
+        this.street_2 = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.userId = in.readString();
+        this.id = in.readLong();
+        this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.profilePhoto = in.readString();
+        this.members = new RealmList<DecryptedMember>();
+        this.members.addAll(in.createTypedArrayList(DecryptedMember.CREATOR));
+        this.decryptedMembers = new RealmList<DecryptedMember>();
+        this.decryptedMembers.addAll( in.createTypedArrayList(DecryptedMember.CREATOR));
+    }
+
+    public static final Creator<DecryptedUsers> CREATOR = new Creator<DecryptedUsers>() {
+        @Override
+        public DecryptedUsers createFromParcel(Parcel source) {
+            return new DecryptedUsers(source);
+        }
+
+        @Override
+        public DecryptedUsers[] newArray(int size) {
+            return new DecryptedUsers[size];
+        }
+    };
 }
