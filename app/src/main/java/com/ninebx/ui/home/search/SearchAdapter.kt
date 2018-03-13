@@ -33,7 +33,7 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
     fun restoreAt(position: Int, iItem: Level3SearchItem) {
         searchItems!!.add(position, iItem)
         notifyItemRemoved(position)
-    }
+}
 
 
     fun removeAt(position: Int) {

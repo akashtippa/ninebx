@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat
 
 import java.util.*
 
-
 /***
  * Created by TechnoBlogger on 23/01/18.
  */
@@ -1996,25 +1995,25 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2023
         category_id = "online_access" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2018
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes , "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -2034,25 +2033,25 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2024
         category_id = "online_access" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName,  "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2024
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2024
@@ -2073,25 +2072,25 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2025
         category_id = "online_access" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2025
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2025
@@ -2112,25 +2111,25 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2026
         category_id = "online_access" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2026
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2026
@@ -2151,25 +2150,26 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2027
         category_id = "online_access" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2027
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2027
@@ -2190,25 +2190,25 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", "Name on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2028
         category_id = "online_access" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2028
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2028
@@ -2229,19 +2229,19 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Passport Details"
-        category.subCategories.add(Level2SubCategory("Name on passport", "Name on passport", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", "Account number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Passport number", "Passport number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", "Place issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Name on passport", decryptedDocuments!!.nameOnPassport, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Passport number", decryptedDocuments!!.passportNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2029
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2029
@@ -2261,20 +2261,20 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Visa Details"
-        category.subCategories.add(Level2SubCategory("Name on visa", "Name on visa", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", "Account number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visa type", "Visa type", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visa number", "Visa number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", "Place issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Name on visa", decryptedDocuments!!.nameOnVisa, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Visa type", decryptedDocuments!!.visaType, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Visa number", decryptedDocuments!!.visaNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2030
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2030
@@ -2294,20 +2294,20 @@ class Level2CategoryHelper(
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Travel Document Details"
-        category.subCategories.add(Level2SubCategory("Name on travel document", "Name on travel document", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", "Account number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Travel document type", "Travel document type", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Travel document number", "Travel document number", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", "Place issued", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Name on travel document", decryptedDocuments!!.nameOnTravelDocument, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Travel document type", decryptedDocuments!!.travelDocumentType, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Travel document number", decryptedDocuments!!.travelDocumentNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2031
         category_id = "other_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2031
@@ -2481,24 +2481,24 @@ class Level2CategoryHelper(
 
     private fun getTravelDatesAndPlans() {
         val categoryList = ArrayList<Level2Category>()
-
+        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
         var categoryIndex = 3001
         var category_id = "travel_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH))
-        category.subCategories.add(Level2SubCategory("Start date", "Start date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", "Plans to visit/consider 1", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", "Plans to visit/consider 2", "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", "Plans to visit/consider 3", "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
+        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
         categoryList.add(category)
 
         categoryIndex += 2035
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -3324,7 +3324,7 @@ class Level2CategoryHelper(
             "Website" -> decryptedLoyalty!!.website = level2Category.titleValue
             "Username/login" -> decryptedLoyalty!!.userName = level2Category.titleValue
             "Password" -> decryptedLoyalty!!.password = level2Category.titleValue
-            "pin" -> decryptedLoyalty!!.pin = level2Category.titleValue
+            "PIN" -> decryptedLoyalty!!.pin = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedLoyalty!!.notes = level2Category.titleValue
@@ -3367,11 +3367,10 @@ class Level2CategoryHelper(
             "Places to visit/consider 1" -> decryptedVacations!!.placesToVisit_1 = level2Category.titleValue
             "Places to visit/consider 2" -> decryptedVacations!!.placesToVisit_2 = level2Category.titleValue
             "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
-            "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedVacations!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedDocuments!!.attachmentNames = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedVacations!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
@@ -3618,7 +3617,6 @@ class Level2CategoryHelper(
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-
                             realm!!.beginTransaction()
                             val financial = encryptFinancial(decryptedFinancial!!)
                             realm.insertOrUpdate(financial)
@@ -4880,7 +4878,6 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-
         if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
             if (decryptedLoyalty!!.selectionType.equals("travel_1001"))
@@ -4909,6 +4906,7 @@ class Level2CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
+                            AppLogger.d("saveDocument", "decryptedLoyalty" + decryptedLoyalty!!)
                             realm!!.beginTransaction()
                             val loyalty = encryptLoyalty(decryptedLoyalty!!)
                             realm.insertOrUpdate(loyalty)
@@ -4931,20 +4929,26 @@ class Level2CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+
                             var realmLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
-                            realm.beginTransaction()
 
                             if (realmLoyalty == null) {
+                                realm.beginTransaction()
                                 realmLoyalty = realm.createObject(CombineTravel::class.java, getUniqueId())
+                                realm.commitTransaction()
                             }
                             for(loyaltyItems in realmLoyalty!!.loyaltyItems){
                                 if (loyaltyItems!!.id.toInt() == decryptedLoyalty!!.id.toInt() ){
-                                    var deleteLoyalty : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteLoyalty!![loyaltyItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteLoyalty : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", loyaltyItems.id)
+                                            .findAll()
+                                    realm.beginTransaction()
+                                    if( deleteLoyalty != null )
+                                        deleteLoyalty.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }
+                            realm.beginTransaction()
                             realmLoyalty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
                             realm.copyToRealmOrUpdate(realmLoyalty)
                             realm.commitTransaction()
@@ -5004,8 +5008,9 @@ class Level2CategoryHelper(
                             }
                             for(travelItems in realmTravel!!.travelItems){
                                 if (travelItems!!.id.toInt() == decryptedTravel!!.id.toInt() ){
-                                    var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteTravel!![travelItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", decryptedLoyalty!!.id).findAll()
+                                    deleteTravel.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }
@@ -5028,6 +5033,7 @@ class Level2CategoryHelper(
 
         if (decryptedDocuments != null) {
             decryptedDocuments!!.selectionType = categoryID
+            decryptedDocuments!!.nameOnTravelDocument = subTitle
             if (decryptedDocuments!!.selectionType.equals("travel_2001"))
                 decryptedDocuments!!.passportName = title
             if (decryptedDocuments!!.selectionType.equals("travel_2002"))
@@ -5078,8 +5084,9 @@ class Level2CategoryHelper(
                             }
                             for(documentItems in realmDocument!!.documentsItems){
                                 if (documentItems!!.id.toInt() == decryptedDocuments!!.id.toInt() ){
-                                    var deleteDocuments : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteDocuments!![documentItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteDocuments : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", decryptedDocuments!!.id).findAll()
+                                    deleteDocuments.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }
@@ -5102,7 +5109,7 @@ class Level2CategoryHelper(
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
-
+            AppLogger.d("SelectionType", "decryptedVacations" + decryptedVacations!!.selectionType)
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVacations!!.id.toInt() == 0) {
                 decryptedVacations!!.id = getUniqueId()
@@ -5141,8 +5148,9 @@ class Level2CategoryHelper(
                             }
                             for(vacationItems in realmVacations!!.vacationsItems){
                                 if (vacationItems!!.id.toInt() == decryptedVacations!!.id.toInt() ){
-                                    var deleteVacations : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteVacations!![vacationItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteVacations : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", decryptedVacations!!.id).findAll()
+                                    deleteVacations.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }

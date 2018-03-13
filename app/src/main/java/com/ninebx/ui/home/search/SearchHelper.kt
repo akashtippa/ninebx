@@ -74,7 +74,6 @@ class SearchHelper() {
             else -> {
                 return ArrayList()
             }
-
         }
     }
 
@@ -300,7 +299,7 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(vacation in searchDecryptCombineTravel.vacationsItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.vacation_home, vacation.placesToVisit_1, "vacation", vacation.selectionType, itemIndex++, vacation.id))
+            mSearchTravelItems.add(Level3SearchItem(R.string.vacation_home, vacation.vac_description, "vacation", vacation.selectionType, itemIndex++, vacation.id))
         }
         itemIndex = 0
         for(travelList in searchDecryptCombineTravel.listItems){
@@ -377,7 +376,11 @@ class SearchHelper() {
 
     fun switchAndSearch( searchItem: Level3SearchItem ) {
         val position = searchItem.itemIndex
-        switchTravelItems( position, searchItem )
+        /*switchTravelItems( position, searchItem )*/
+
+        if(searchItem.categoryName.equals("documents") || searchItem.categoryName.equals("loyalty")){
+            switchTravelItems( position, searchItem )
+        }
 
         when( searchItem.searchCategory ) {
 
@@ -589,7 +592,7 @@ class SearchHelper() {
 
     private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
-            "document" -> {
+            "documents" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }

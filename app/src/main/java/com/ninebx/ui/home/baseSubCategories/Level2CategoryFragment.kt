@@ -359,10 +359,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
+
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
             classType = arguments!!.getString("classType")
-            //AppLogger.d("Level2", "Selected Document : " + selectedDocument)
+            AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)
@@ -602,14 +603,12 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Passport name"
                 etTitleValue.hint = ""
                 toolbarTitle.text = "Add Passport"
-
             }
 
             "Visa" -> {
                 etTitle.hint = "Visa name"
                 etTitleValue.hint = ""
                 toolbarTitle.text = "Add Visa"
-
             }
 
             "Other travel document" -> {
@@ -694,13 +693,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 toolbarTitle.text = "Add Purchase"
             }
 
-
             "Womens sizes" -> {
                 etTitle.hint = "User name"
                 etTitleValue.hint = "Size name"
                 toolbarTitle.text = "Add Women's sizes"
             }
-
 
             "Mens sizes" -> {
                 etTitle.hint = "User name"
@@ -731,13 +728,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 toolbarTitle.text = "Add Identification"
             }
 
-
             "Medical history" -> {
                 etTitle.hint = "History"
                 etTitleValue.hint = ""
                 toolbarTitle.text = "Add History"
             }
-
 
             "Healthcare providers" -> {
                 etTitle.hint = "Name"
@@ -745,10 +740,8 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 toolbarTitle.text = "Add Providers"
             }
 
-
             "Emergency contacts" -> {
             }
-
 
             "Medications" -> {
                 etTitle.hint = "Name"
@@ -774,7 +767,6 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 toolbarTitle.text = "Add Record"
             }
 
-
             "Checkups and visits" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = "Physician name"
@@ -791,5 +783,4 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
         return super.onBackPressed()
     }
-
 }
