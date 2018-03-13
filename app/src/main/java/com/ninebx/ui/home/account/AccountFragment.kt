@@ -164,7 +164,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var StringThree = ""
             var StringFour = ""
             val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
-            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName + "\n"
+            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName
 
             var validate =false
             if(!dialog.radioSignificant.isChecked &&
@@ -182,56 +182,54 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
             if(dialog.radioSignificant.isChecked){
                 var significant = dialog.radioSignificant.text
-                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (significant)
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal).toUpperCase())+ (" : ") + (significant)+ ("\n" + "\n")
                 Log.d("stringOne",""+StringOne)
             }
             if(dialog.radioQuiteOrdinary.isChecked){
                 var quiteOrdinary =dialog.radioQuiteOrdinary.text
-                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (quiteOrdinary)
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal).toUpperCase())+ (" : ") + (quiteOrdinary)+ "\n" + "\n"
 
             }
             if(dialog.radioLoveTheLook.isChecked){
                 var loveTheLook =dialog.radioLoveTheLook.text
-                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (loveTheLook)
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal).toUpperCase())+ (" : ") + (loveTheLook)+ ("\n" + "\n")
 
             }
             if(dialog.radioSignificantRoom.isChecked){
                 var siginficatRoom =dialog.radioSignificantRoom.text
-                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (siginficatRoom)
+                StringTwo = (getString(R.string.how_was_it_to_navigate).toUpperCase())+ (" : ") + (siginficatRoom)+ ("\n" + "\n")
 
             }
             if(dialog.radio.isChecked){
                 var tookSomeTime=dialog.radio.text
-                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (tookSomeTime)
+                StringTwo = (getString(R.string.how_was_it_to_navigate).toUpperCase())+ (" : ") + (tookSomeTime)+ ("\n" + "\n")
             }
             if(dialog.radioThree.isChecked){
                 var veryIntutive=dialog.radioThree.text
-                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (veryIntutive)
+                StringTwo = (getString(R.string.how_was_it_to_navigate).toUpperCase())+ (" : ") + (veryIntutive)+ ("\n" + "\n")
             }
             if(dialog.radioISeeNo.isChecked){
                 var iSeeNo=dialog.radioISeeNo.text
-                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (iSeeNo)
+                StringThree = (getString(R.string.overall_how_useful_did_you_find).toUpperCase())+ (" : ") + (iSeeNo)+ ("\n" + "\n")
             }
             if(dialog.radioIMightUse.isChecked){
                 var iMightUse=dialog.radioIMightUse.text
-                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (iMightUse)
+                StringThree = (getString(R.string.overall_how_useful_did_you_find).toUpperCase())+ (" : ") + (iMightUse)+ ("\n" + "\n")
             }
             if(dialog.radioCanEasily.isChecked){
                 var canEasily=dialog.radioCanEasily.text
-                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (canEasily)
+                StringThree = (getString(R.string.overall_how_useful_did_you_find).toUpperCase())+ (" : ") + (canEasily)+ ("\n" + "\n")
 
             }
 
-            if(dialog.edtComments.text.isNotEmpty() && dialog.edtComments != null){
-
+            StringFour = if( dialog.edtComments != null && dialog.edtComments.text.isNotEmpty() ){
                 var comments = dialog.edtComments.text
-                StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + (comments)
+                (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
 
             }else{
-                StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + ("No Comments")
+                (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + ("No Comments")
             }
-
-            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n") +fullName + email
+            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+("\n"+"\n")+email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody",""+finalEmailBody)
             if(validate) {
@@ -242,7 +240,6 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         p0?.cancel()
                     }
-
                 })
                 builder.setMessage("Please give your valuable feedback!")
                 builder.show()
@@ -253,7 +250,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
         }
     }
 
-    private fun sendFeedback( dialogFragment : Dialog ,emailBody : String ) {
+    private fun sendFeedback( dialogFragment : Dialog, emailBody : String ) {
         var listener : ShowDialog
         SendFeedbackTask(dialogFragment , context!!,
                 NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress,
