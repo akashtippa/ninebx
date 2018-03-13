@@ -22,7 +22,7 @@ class RecentSearchAdapter(private val mRecentSearch: ArrayList<DecryptedRecentSe
     }
 
     override fun onBindViewHolder(holder: RecentSearchAdapter.ViewHolder, position: Int) {
-        holder.tvRecentSearch.text = mRecentSearch[position].listName
+        holder.tvRecentSearch.text = mRecentSearch[position].mainCategory
     }
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {

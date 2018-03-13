@@ -5002,6 +5002,13 @@ class Level2CategoryHelper(
                             if (realmTravel == null) {
                                 realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
+                            for(travelItems in realmTravel!!.travelItems){
+                                if (travelItems!!.id.toInt() == decryptedTravel!!.id.toInt() ){
+                                    var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
+                                    deleteTravel!![travelItems!!.id.toInt()]!!.deleteFromRealm()
+                                    realm.commitTransaction()
+                                }
+                            }
                             realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
                             realm.copyToRealmOrUpdate(realmTravel)
                             realm.commitTransaction()
@@ -5069,6 +5076,13 @@ class Level2CategoryHelper(
                             if (realmDocument == null) {
                                 realmDocument = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
+                            for(documentItems in realmDocument!!.documentsItems){
+                                if (documentItems!!.id.toInt() == decryptedDocuments!!.id.toInt() ){
+                                    var deleteDocuments : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
+                                    deleteDocuments!![documentItems!!.id.toInt()]!!.deleteFromRealm()
+                                    realm.commitTransaction()
+                                }
+                            }
                             realmDocument!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
                             realm.copyToRealmOrUpdate(realmDocument)
                             realm.commitTransaction()
@@ -5124,6 +5138,13 @@ class Level2CategoryHelper(
                             realm.beginTransaction()
                             if (realmVacations == null) {
                                 realmVacations = realm.createObject(CombineTravel::class.java, getUniqueId())
+                            }
+                            for(vacationItems in realmVacations!!.vacationsItems){
+                                if (vacationItems!!.id.toInt() == decryptedVacations!!.id.toInt() ){
+                                    var deleteVacations : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
+                                    deleteVacations!![vacationItems!!.id.toInt()]!!.deleteFromRealm()
+                                    realm.commitTransaction()
+                                }
                             }
                             realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
                             realm.copyToRealmOrUpdate(realmVacations)
