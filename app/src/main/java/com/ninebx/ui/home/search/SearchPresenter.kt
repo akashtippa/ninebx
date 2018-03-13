@@ -162,10 +162,7 @@ class SearchPresenter {
                                 val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
                                 appendToDecryptCombineContacts(decryptedCombineContacts)
                                 //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
-
                             }
-
-
                             //AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                         }
                     }

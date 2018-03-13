@@ -3618,7 +3618,6 @@ class Level2CategoryHelper(
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-
                             realm!!.beginTransaction()
                             val financial = encryptFinancial(decryptedFinancial!!)
                             realm.insertOrUpdate(financial)
@@ -4880,7 +4879,6 @@ class Level2CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-
         if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
             if (decryptedLoyalty!!.selectionType.equals("travel_1001"))
@@ -4931,20 +4929,26 @@ class Level2CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+
                             var realmLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
-                            realm.beginTransaction()
 
                             if (realmLoyalty == null) {
+                                realm.beginTransaction()
                                 realmLoyalty = realm.createObject(CombineTravel::class.java, getUniqueId())
+                                realm.commitTransaction()
                             }
                             for(loyaltyItems in realmLoyalty!!.loyaltyItems){
                                 if (loyaltyItems!!.id.toInt() == decryptedLoyalty!!.id.toInt() ){
-                                    var deleteLoyalty : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteLoyalty!![loyaltyItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteLoyalty : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", loyaltyItems.id)
+                                            .findAll()
+                                    realm.beginTransaction()
+                                    if( deleteLoyalty != null )
+                                        deleteLoyalty.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }
+                            realm.beginTransaction()
                             realmLoyalty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
                             realm.copyToRealmOrUpdate(realmLoyalty)
                             realm.commitTransaction()
@@ -5004,8 +5008,9 @@ class Level2CategoryHelper(
                             }
                             for(travelItems in realmTravel!!.travelItems){
                                 if (travelItems!!.id.toInt() == decryptedTravel!!.id.toInt() ){
-                                    var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteTravel!![travelItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", decryptedLoyalty!!.id).findAll()
+                                    deleteTravel.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }
@@ -5078,8 +5083,9 @@ class Level2CategoryHelper(
                             }
                             for(documentItems in realmDocument!!.documentsItems){
                                 if (documentItems!!.id.toInt() == decryptedDocuments!!.id.toInt() ){
-                                    var deleteDocuments : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteDocuments!![documentItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteDocuments : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", decryptedDocuments!!.id).findAll()
+                                    deleteDocuments.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }
@@ -5141,8 +5147,9 @@ class Level2CategoryHelper(
                             }
                             for(vacationItems in realmVacations!!.vacationsItems){
                                 if (vacationItems!!.id.toInt() == decryptedVacations!!.id.toInt() ){
-                                    var deleteVacations : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java).findAll()
-                                    deleteVacations!![vacationItems!!.id.toInt()]!!.deleteFromRealm()
+                                    var deleteVacations : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
+                                            .equalTo("id", decryptedVacations!!.id).findAll()
+                                    deleteVacations.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
                             }

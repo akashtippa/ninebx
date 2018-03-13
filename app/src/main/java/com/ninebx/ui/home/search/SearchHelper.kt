@@ -74,7 +74,6 @@ class SearchHelper() {
             else -> {
                 return ArrayList()
             }
-
         }
     }
 
