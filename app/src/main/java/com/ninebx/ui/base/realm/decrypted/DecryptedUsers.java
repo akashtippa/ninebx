@@ -117,7 +117,7 @@ public class DecryptedUsers implements Parcelable {
         this.zipCode = in.readString();
         this.country = in.readString();
         this.userId = in.readString();
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.id = in.readLong();
         this.isCompleteProfile = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.profilePhoto = in.readString();
         this.members = new RealmList<>();

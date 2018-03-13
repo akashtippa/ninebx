@@ -36,7 +36,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
         bundle.putString(Constants.FROM_CLASS, "AddMember")
-        bundle.putParcelable(Constants.CURRENT_USER, currentUsers!![0])
+        bundle.putParcelable(Constants.CURRENT_USER, NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0])
         bundle.putBoolean(Constants.IS_NEW_ACCOUNT, false)
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
     }
@@ -45,6 +45,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMBER, member)
         bundle.putString(Constants.FROM_CLASS, "DeleteMember")
+        bundle.putParcelable(Constants.CURRENT_USER,  NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0])
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), DELETE_MEMBER)
     }
 
@@ -97,6 +98,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
             bundle.putParcelable(Constants.MEMBER, DecryptedMember())
             bundle.putBoolean(Constants.IS_NEW_ACCOUNT, true)
             bundle.putString(Constants.FROM_CLASS, "AddMember")
+            bundle.putParcelable(Constants.CURRENT_USER, NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0])
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_EDIT_MEMBER)
         }
 
