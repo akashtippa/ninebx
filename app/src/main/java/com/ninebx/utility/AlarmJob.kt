@@ -16,7 +16,6 @@ import com.evernote.android.job.JobRequest
 import com.evernote.android.job.util.support.PersistableBundleCompat
 import com.google.gson.Gson
 import com.ninebx.R
-import com.ninebx.R.string.reminder
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.base.realm.CalendarEvents
 import com.ninebx.ui.base.realm.Notifications
@@ -39,10 +38,10 @@ class AlarmJob : Job() {
             title = "This is a reminder notification"
             //title = "Reminder : ${reminder.title[0]!!}"
             if( reminder.reminder.size > 0 )
-                desc = reminder.title[0]!! + "event is scheduled"
+                desc = reminder.title[0]!! + " event is scheduled"
             else {
                 // desc = reminder.title[0]!!
-                desc = reminder.title[0]!! + "event is scheduled"
+                desc = reminder.title[0]!! + " event is scheduled"
             }
 
             AppLogger.d(TAG, "Notification : " + title + " : " + desc)
@@ -141,24 +140,111 @@ class AlarmJob : Job() {
             val extras = PersistableBundleCompat()
             extras.putString("reminder", reminderString)
 
+            scheduleRecurringEvent(reminder, calendar, extras)
 
 
-            val reminderTimeInMillis: Long = calendar.timeInMillis
-            val id: String = "Calendar_Event_" + reminder.id
+        }
 
-            var jobId: Int = -1
-            val currentCalendar = Calendar.getInstance()
-            if (reminderTimeInMillis > currentCalendar.timeInMillis ) {
-                /*if (repeatDaily)
-                    jobId = JobRequest.Builder(id)
-                            .setPeriodic(TimeUnit.DAYS.toDays(1))
-                            //.setExact(reminderTimeInMillis)
-                            .setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
-                            .setRequiresDeviceIdle(false)
-                            .setExtras(extras)
-                            .build()
-                            .schedule()
-                else*/
+        private fun scheduleRecurringEvent(events: CalendarEvents, calendar: Calendar, extras: PersistableBundleCompat) {
+            for( i in 0..events.startsDate.size -1) {
+
+                if (!events.isAllDay[i]!!) {
+                    //find the reminder
+                    when( events.reminder[i] )  {
+                        "At time of event" -> {
+                            calendar.timeInMillis = calendar.timeInMillis
+                        }
+                        "5 minutes before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (5*60*1000)
+                        }
+                        "15 minutes before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (15*60*1000)
+                        }
+                        "30 minutes before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (30*60*1000)
+                        }
+                        "1 hour before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (60*60*1000)
+                        }
+                        "2 hour before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (120*60*1000)
+                        }
+                        "1 day before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (24*60*60*1000)
+                        }
+                        "2 day before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (48*60*60*1000)
+                        }
+                        "1 week before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (7*24*60*60*1000)
+                        }
+                        /*dateToFire = sDate
+                        case Repeaters.k5MinutesBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .minute, value: -5, to: sDate)!
+                        case Repeaters.k15MinutesBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .minute, value: -15, to: sDate)!
+                        case Repeaters.k30MinutesBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .minute, value: -30, to: sDate)!
+                        case Repeaters.k1HourBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .hour, value: -1, to: sDate)!
+                        case Repeaters.k2HourBefore:
+                        dateToFire =  Calendar.current.date(byAdding: .hour, value: -2, to: sDate)!
+                        case Repeaters.k1DayBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .day, value: -1, to: sDate)!
+                        case Repeaters.k2DayBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .day, value: -2, to: sDate)!
+                        case Repeaters.k1WeekBefore :
+                        dateToFire =  Calendar.current.date(byAdding: .day, value: -7, to: sDate)!
+                        default:
+                        print("")*/
+                    }
+
+                } else {
+                    when( events.reminder[i]) {
+                        "On day of event(9:00 AM)" -> {
+                            calendar.timeInMillis = calendar.timeInMillis
+                        }
+                        "One day before(9:00 AM)" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (24*60*60*1000)
+                        }
+                        "Two days before(9:00 AM)" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (48*60*60*1000)
+                        }
+                        "1 week before" -> {
+                            calendar.timeInMillis = calendar.timeInMillis - (7*24*60*60*1000)
+                        }
+                    }
+
+                    /*switch calendarModel.reminder[i]  {
+                        case "On day of event (9:00 AM)" :
+                        dateToFire = sDate //Calendar.current.date(byAdding: .hour, value: 9, to: )!
+                        case Repeaters.kOneDayBefore :
+                        dateToFire = Calendar.current.date(byAdding: .day, value: -1, to: sDate)!
+                        case Repeaters.kTwoDayBefore :
+                        dateToFire = Calendar.current.date(byAdding: .day, value: -2, to: sDate)!
+                        case Repeaters.k1WeekBeforeForAllDay :
+                        dateToFire = Calendar.current.date(byAdding: .day, value: -7, to: sDate)!
+                        default:
+                        print("")
+                    }*/
+                }
+
+                val reminderTimeInMillis: Long = calendar.timeInMillis
+                val id: String = "Calendar_Event_" + events.id + "_" + calendar.timeInMillis
+
+                var jobId: Int = -1
+                val currentCalendar = Calendar.getInstance()
+                if (reminderTimeInMillis > currentCalendar.timeInMillis ) {
+                    /*if (repeatDaily)
+                        jobId = JobRequest.Builder(id)
+                                .setPeriodic(TimeUnit.DAYS.toDays(1))
+                                //.setExact(reminderTimeInMillis)
+                                .setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
+                                .setRequiresDeviceIdle(false)
+                                .setExtras(extras)
+                                .build()
+                                .schedule()
+                    else*/
                     jobId = JobRequest.Builder(id)
                             .setExact((reminderTimeInMillis - currentCalendar.timeInMillis))
                             //.setExecutionWindow(reminderTimeInMillis - currentCalendar.timeInMillis, (reminderTimeInMillis + 300) - currentCalendar.timeInMillis)
@@ -167,6 +253,10 @@ class AlarmJob : Job() {
                             .build()
                             .schedule()
             }
+
+
+            }
+
         }
 
         fun cancelJob(remindJobId: String) {
