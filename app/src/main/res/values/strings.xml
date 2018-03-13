@@ -980,4 +980,6 @@
     <string name="error_passcode_6">Passcode needs to have 6 digits</string>
     <string name="sending_feedback">Sending Feedback</string>
 
+    <string name="documents">documents</string>
+
 </resources>

@@ -359,10 +359,11 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
+
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
             classType = arguments!!.getString("classType")
-            //AppLogger.d("Level2", "Selected Document : " + selectedDocument)
+            AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)

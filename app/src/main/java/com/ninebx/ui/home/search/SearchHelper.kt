@@ -376,7 +376,11 @@ class SearchHelper() {
 
     fun switchAndSearch( searchItem: Level3SearchItem ) {
         val position = searchItem.itemIndex
-        switchTravelItems( position, searchItem )
+        /*switchTravelItems( position, searchItem )*/
+
+        if(searchItem.categoryName.equals("documents") || searchItem.categoryName.equals("loyalty")){
+            switchTravelItems( position, searchItem )
+        }
 
         when( searchItem.searchCategory ) {
 
@@ -588,7 +592,7 @@ class SearchHelper() {
 
     private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
-            "document" -> {
+            "documents" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
