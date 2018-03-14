@@ -333,6 +333,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 else {
                     getTimeFromPicker( context!!, selectedDate, object  : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
+                            selectedDate.set(Calendar.SECOND, 0)
                             setDateTime(dateTimeTextView, selectedDate, isAllDay)
                         }
 
