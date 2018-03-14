@@ -1,10 +1,8 @@
 package com.ninebx.ui.home.search
 
-import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
 import com.ninebx.utility.AppLogger
 
 /**

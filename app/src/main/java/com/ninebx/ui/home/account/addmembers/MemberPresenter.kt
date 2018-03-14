@@ -107,6 +107,7 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
     }
 
     private fun setUserPermissions() {
+
         val permissionManager = adminUser.permissionManager
         // Create request
         val condition = UserCondition.userId(mCurrentUser!!.identity)
@@ -139,6 +140,91 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
         }
     }
 
+    fun setPermissionsForMember(updateMember: Member?) {
+
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_TRAVEL)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_MEMORIES)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_EDUCATION)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_INTERESTS)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_WELLNESS)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_PERSONAL)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_PERSONAL)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_COMBINE_CONTACTS)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_RECENT_SEARCH)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_NOTIFICATIONS)
+        setPermissionsForCategory(updateMember, Constants.REALM_END_POINT_CALENDAR_EVENTS)
+
+    }
+
+    private fun setPermissionsForCategory(updateMember: Member?, endPoint: String) {
+
+        val permissionManager = adminUser.permissionManager
+        // Create request
+        val condition = UserCondition.userId(mCurrentUser!!.identity)
+        var accessLevel = AccessLevel.READ
+        when(endPoint) {
+            Constants.REALM_END_POINT_COMBINE -> {
+                if( updateMember!!.homeAdd && updateMember.homeEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_CONTACTS -> {
+                if( updateMember!!.contactsAdd && updateMember.contactsEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_PERSONAL -> {
+                if( updateMember!!.personalAdd && updateMember.personalEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_WELLNESS -> {
+                if( updateMember!!.wellnessAdd && updateMember.wellnessEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_INTERESTS -> {
+                if( updateMember!!.interestsAdd && updateMember.interestsEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_EDUCATION -> {
+                if( updateMember!!.educationlAdd && updateMember.educationlEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_MEMORIES -> {
+                if( updateMember!!.memoriesAdd && updateMember.memoriesEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_TRAVEL -> {
+                if( updateMember!!.travelAdd && updateMember.travelEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+            Constants.REALM_END_POINT_COMBINE_SHOPPING -> {
+                if( updateMember!!.shoppingAdd && updateMember.shoppingEdit ) {
+                    accessLevel = AccessLevel.WRITE
+                }
+            }
+
+        }
+
+        val request = PermissionRequest(condition, "/~/" + endPoint, accessLevel)
+
+        permissionManager.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
+            override fun onSuccess() {
+
+            }
+
+            override fun onError(error: ObjectServerError) {
+                error.printStackTrace()
+//                memberView.onError(R.string.error_permissions)
+            }
+        })
+    }
 
 
 }

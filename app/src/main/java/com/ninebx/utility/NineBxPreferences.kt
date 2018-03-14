@@ -10,7 +10,7 @@ import com.ninebx.utility.Constants.NONE_COMPLETE
 
 class NineBxPreferences : Preferences() {
 
-
+    var adminId by stringPref(Constants.ADMIN)
     var firstRun by booleanPref(Constants.FIRST_RUN, true)
     var isLogin by booleanPref(Constants.IS_LOGIN, false)
     var isPasswordRequired by booleanPref(Constants.IS_PASSWORD_REQUIRED)
@@ -66,5 +66,7 @@ class NineBxPreferences : Preferences() {
         userPasswordUINT8 = ""
         AppLogger.d("Email", "Email : in clearLogOutPreferences : " + NineBxApplication.getPreferences().userEmail)
     }
+
+
 
 }

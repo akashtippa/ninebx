@@ -21,8 +21,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.adapter.ContactsAdapter
-import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -45,7 +44,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection {
+class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection {
 
     override fun onDocumentSelected(selectedDocument: Parcelable?, classType : String ) {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -56,7 +55,7 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         bundle.putParcelable( "selectedDocument", selectedDocument )
         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
         bundle.putString("classType", classType)
-        val categoryFragment = Level2CategoryFragment()
+        val categoryFragment = Level3CategoryFragment()
         categoryFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
     }
@@ -105,9 +104,6 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         toolbarTitle.text = categoryName
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment()  }
         ivBack.setOnClickListener {  NineBxApplication.instance.activityInstance!!.onBackPressed() }
-//        changeToolbarTitleAndAddInfo(fragmentValue)
-
-        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(categoryName)
 
         layoutAddList.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
@@ -128,9 +124,9 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
                 bundle.putString("categoryId", categoryID)
                 bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
 
-                val categoryFragment = Level2CategoryFragment()
-                categoryFragment.arguments = bundle
-                fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                val level3CategoryFragment = Level3CategoryFragment()
+                level3CategoryFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()
             }
         }
 
@@ -142,16 +138,6 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         rvCommonList!!.adapter = SearchAdapter(searchItems, this )
         rvCommonList!!.adapter.notifyDataSetChanged()
-    }
-
-    private fun changeToolbarTitleAndAddInfo(fragmentValue: String?) {
-        when (fragmentValue) {
-            "Shared Contacts" -> {
-                txtAdd.text = "Add Shared Contact"
-                fetchTheContactListFromRealm()
-            }
-
-        }
     }
 
     override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
@@ -329,14 +315,6 @@ class FragmentListContainer : FragmentBackHelper(), SearchItemClickListener, Sea
             outState.putSerializable(EXTRA_CONTACTS, mContacts as Serializable)
         }
     }
-/*
-    private fun setContactsList() {
-        mListsAdapter = ContactsAdapter(contacts, this)
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvCommonList!!.layoutManager = layoutManager
-        rvCommonList!!.adapter = mListsAdapter
-    }*/
 
     private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
         //int start = result.length();

@@ -29,6 +29,5 @@ class CategoryPresenter(private val categoryId: Int, private val combineItems: P
 
     fun setDataForCombine(combine: RealmResults<Combine>) {
 
-
     }
 }

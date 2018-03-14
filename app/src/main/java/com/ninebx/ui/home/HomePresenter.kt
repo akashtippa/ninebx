@@ -14,6 +14,7 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
+import io.realm.SyncUser
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 
 /**
@@ -212,7 +213,10 @@ class HomePresenter( val homeView : HomeView ) {
                         object : Realm.Callback() {
                             override fun onSuccess(realm: Realm?) {
                                 currentUsers = ArrayList()
-                                for( user in realm!!.where(Users::class.java).findAll() ) {
+                                for( user in realm!!.where(Users::class.java).equalTo("userId", SyncUser.currentUser().identity).findAll() ) {
+                                    currentUsers!!.add( decryptUsers(user) )
+                                }
+                                for( user in realm.where(Users::class.java).notEqualTo("userId", SyncUser.currentUser().identity).findAll() ) {
                                     currentUsers!!.add( decryptUsers(user) )
                                 }
                             }

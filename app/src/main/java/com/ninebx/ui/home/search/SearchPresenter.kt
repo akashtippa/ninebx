@@ -90,7 +90,6 @@ class SearchPresenter {
             R.string.contacts -> {
                 fetchCombineContacts()
 //                gettingContactsList()
-
             }
             R.string.education_work -> {
                 fetchCombineEducation()
@@ -120,7 +119,8 @@ class SearchPresenter {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_RECENT_SEARCH, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname.encryptString(), subCategory.encryptString(), mainCategory.encryptString(), Date(), classType.encryptString())
-                        updateRecent.insertOrUpdate(realm!!)
+                       // updateRecent.insertOrUpdate(realm!!)
+                        realm!!.copyToRealmOrUpdate(updateRecent)
                         //AppLogger.d("RecentSearch", "Update successful " + encryptRecentSearch(updateRecent))
                     }
                 })
@@ -162,10 +162,7 @@ class SearchPresenter {
                                 val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
                                 appendToDecryptCombineContacts(decryptedCombineContacts)
                                 //AppLogger.d("Recent Search", "Decrypted Recent Search " + decryptCombineContacts(combineContacts[i]!!))
-
                             }
-
-
                             //AppLogger.d("Combine", "CombineContacts : " + mDecryptedCombineContacts)
                         }
                     }
@@ -468,7 +465,6 @@ class SearchPresenter {
                 financeItems.searchField = searchResult.searchFieldName
                 searchFinanceItems.add(financeItems)
             }
-
         }
 
         searchDecryptCombine.financialItems.addAll(searchFinanceItems)
@@ -891,6 +887,7 @@ class SearchPresenter {
         val searchContacts = ArrayList<DecryptedContacts>()
         val searchMainContacts = ArrayList<DecryptedMainContacts>()
         val searchContactsList = ArrayList<DecryptedContactsList>()
+
         for (contactsItems in mDecryptedCombineContacts.contactsItems) {
             val searchResult = performSearchForResult(contactsItems, text)
             if (performSearch(contactsItems, text))
@@ -920,11 +917,13 @@ class SearchPresenter {
             return mDecryptCombineShopping
         }
         val searchDecryptCombineShopping = DecryptedCombineShopping()
+
         val searchLoyaltyPrograms = ArrayList<DecryptedLoyaltyPrograms>()
         val searchRecentPurchase = ArrayList<DecryptedRecentPurchase>()
         val searchShopping = ArrayList<DecryptedShopping>()
         val searchClothingSize = ArrayList<DecryptedClothingSizes>()
         val searchShoppingList = ArrayList<DecryptedShoppingList>()
+
         for (loyaltyProgramsItems in mDecryptCombineShopping.loyaltyProgramsItems) {
             if (performSearch(loyaltyProgramsItems, text))
                 searchLoyaltyPrograms.add(loyaltyProgramsItems)
