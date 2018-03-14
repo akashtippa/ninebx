@@ -9,19 +9,19 @@ import com.ninebx.R
  */
 class Level2CategoryPresenter(private val categoryName: String, private val categoryID: String, private val selectedDocument : Parcelable?, private val classType : String?, private val categoryView: Level2CategoryView) {
 
-    private var level2CategoryHelper: Level2CategoryHelper
+    private var level3CategoryHelper: Level3CategoryHelper
 
     init {
         categoryView.showProgress(R.string.loading)
-        level2CategoryHelper = Level2CategoryHelper(categoryName, categoryID, categoryView, selectedDocument, classType )
+        level3CategoryHelper = Level3CategoryHelper(categoryName, categoryID, categoryView, selectedDocument, classType )
     }
 
     fun setValueToDocument( level2Category: Level2SubCategory ) {
-        level2CategoryHelper.setValue( level2Category )
+        level3CategoryHelper.setValue( level2Category )
     }
 
     fun saveDocument(context: Context?, combineItem: Parcelable?, title: String, subTitle: String) {
-        level2CategoryHelper.saveDocument( context!!, combineItem, title, subTitle )
+        level3CategoryHelper.saveDocument( context!!, combineItem, title, subTitle )
     }
 
 }

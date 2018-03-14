@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_wellness.*
 
@@ -36,7 +36,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Identification")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -48,7 +48,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Medical history")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -60,7 +60,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Healthcare providers")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -72,7 +72,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Medications")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -84,7 +84,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Medical conditions/Allergies")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -96,7 +96,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Eyeglass prescriptions")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -108,7 +108,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Vital numbers")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -120,7 +120,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle!!.putString("categoryName", "Checkups and visits")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }

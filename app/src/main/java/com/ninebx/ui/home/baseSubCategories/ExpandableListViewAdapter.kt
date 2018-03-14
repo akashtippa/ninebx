@@ -365,8 +365,6 @@ class ExpandableListViewAdapter(private val _context: Context,
                             childView!!.findViewById<EditText>(R.id.etSubHeader).setText(newValue)
 
                         }
-
-
                     }
                 }
 
@@ -847,8 +845,6 @@ class ExpandableListViewAdapter(private val _context: Context,
             level2SubCategory.titleValue = selectionArray[p2]
             level2CategoryPresenter.setValueToDocument(level2SubCategory)
         }
-
     }
-
 }
 

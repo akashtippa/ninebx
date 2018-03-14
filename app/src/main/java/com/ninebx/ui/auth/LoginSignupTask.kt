@@ -49,7 +49,7 @@ class LoginSignupTask(private var userName: String,
                 userMap.put("email", userName)
                 userMap.put("hash", encryptedPassword)
                 userMap.put("is_admin", type == "Signup")
-
+                NineBxApplication.getPreferences().adminId = result.identity
                 val privateKey = randomString(16)
                 NineBxApplication.getPreferences().privateKey = privateKey.trim()
 
@@ -131,6 +131,7 @@ class LoginSignupTask(private var userName: String,
                 val privateKey = decryptAESKEYPassword(responseList[0].secureKey.toByteArray(), encryptedPasswordByteArray)
                 //AppLogger.d(TAG, "Save user secure key : " + privateKey)
                 NineBxApplication.getPreferences().privateKey = privateKey.trim()
+                NineBxApplication.getPreferences().adminId = responseList[0].adminId
                 authView.onSuccess(mCurrentUser)
             }
 
