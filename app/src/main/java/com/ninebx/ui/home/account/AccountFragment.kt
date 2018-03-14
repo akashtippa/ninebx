@@ -163,8 +163,8 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var StringTwo = ""
             var StringThree = ""
             var StringFour = ""
-            val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
-            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName + "\n"
+            val email= "\n" + NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName
 
             var validate =false
             if(!dialog.radioSignificant.isChecked &&
@@ -230,9 +230,9 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                 (getString(R.string.null_character))
             }
 
-            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+("\n")+email
+            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName) + "\n" + email
             AppLogger.d("emailBody",finalEmailBody.toString())
-            AppLogger.d("SendingEmailbody",""+finalEmailBody)
+            AppLogger.d("SendingEmailbody","" + finalEmailBody)
             if(validate) {
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("NineBx")
