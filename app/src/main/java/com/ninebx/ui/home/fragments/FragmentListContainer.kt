@@ -300,5 +300,4 @@ class FragmentListContainer : FragmentBackHelper() {
         result.append(prefix)
         result.append(displayName + "\n")
     }
-
 }
