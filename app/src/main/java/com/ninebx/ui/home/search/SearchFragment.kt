@@ -21,7 +21,7 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.home.baseCategories.CategoryFragment
+import com.ninebx.ui.home.baseCategories.Level1Fragment
 import kotlin.collections.ArrayList
 
 /**
@@ -275,7 +275,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             setupAdapter( rvHomeMoney, homeLayout, mSearchHomeList )
     }
 
-    private var categoryFragment: CategoryFragment ?= null
+    private var level1Fragment: Level1Fragment?= null
     private var bundle: Bundle ?= null
 
     private var fragmentTransaction: FragmentTransaction? = null
@@ -292,8 +292,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
                 bundle = Bundle()
                 bundle!!.putInt("category", R.string.home_amp_money)
-                categoryFragment = CategoryFragment()
-                categoryFragment!!.arguments = bundle
+                level1Fragment = Level1Fragment()
+                level1Fragment!!.arguments = bundle
 
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 when( searchItem.searchCategory ) {
@@ -620,7 +620,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     private fun goToCategoryFragment(selectedDocument: Parcelable?) {
         bundle!!.putParcelable("selectedDocument", selectedDocument)
-        fragmentTransaction!!.add(R.id.frameLayout, categoryFragment).commit()
+        fragmentTransaction!!.add(R.id.frameLayout, level1Fragment).commit()
     }
 
     companion object {

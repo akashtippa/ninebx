@@ -16,13 +16,13 @@ import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.*
-import kotlinx.android.synthetic.main.fragment_level2_category.*
+import kotlinx.android.synthetic.main.fragment_level3_category.*
 
 /***
  * Created by TechnoBlogger on 23/01/18.
  */
 
-class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
+class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun savedToRealm() {
         if( context != null ) {
             context!!.hideProgressDialog()
@@ -350,7 +350,7 @@ class Level2CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_level2_category, container, false)
+        return inflater.inflate(R.layout.fragment_level3_category, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -27,7 +27,7 @@ import java.util.*
 /***
  * Created by TechnoBlogger on 23/01/18.
  */
-class Level2CategoryHelper(
+class Level3CategoryHelper(
         val category_name: String,
         val categoryID: String,
         val categoryView: Level2CategoryView,

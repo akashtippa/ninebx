@@ -1,6 +1,5 @@
 package com.ninebx.ui.home.baseCategories
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
@@ -30,8 +29,6 @@ import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
-import com.ninebx.ui.home.account.addmembers.AddedFamilyMemberAdapter
-import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -45,7 +42,7 @@ import kotlinx.android.synthetic.main.layout_category_view.view.*
 /**
  * Created by Alok on 12/01/18.
  */
-class CategoryFragment : FragmentBackHelper(), CategoryView {
+class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     private var combine: RealmResults<Combine> ?= null
     private var combineMemories : RealmResults<CombineMemories> ?= null
@@ -246,9 +243,9 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
-                        val categoryFragment = FragmentListContainer()
-                        categoryFragment.arguments = bundle
-                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                        val level2Fragment = Level2Fragment()
+                        level2Fragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frameLayout, level2Fragment).commit()
                         Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
                     }
                 }
@@ -308,7 +305,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                                     }
                                 }
                             } else {
-                                val categoryFragment = FragmentListContainer()
+                                val categoryFragment = Level2Fragment()
                                 categoryFragment.arguments = bundle
                                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                             }
@@ -409,7 +406,7 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
     private fun getLists() {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        val categoryFragment = ListsFragment()
+        val listsFragment = ListsFragment()
 
         val bundle = Bundle()
         bundle.putString("homeScreen", "HomeScreen")
@@ -423,10 +420,6 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
             R.string.travel -> {
                 bundle.putString("listOption", "Travel")
                 bundle.putInt("categoryName", (R.string.travel))
-            }
-            R.string.contacts -> {
-                bundle.putString("listOption", "Contacts")
-                bundle.putInt("categoryName", (R.string.contacts))
             }
             R.string.education_work -> {
                 bundle.putString("listOption", "Education")
@@ -444,18 +437,14 @@ class CategoryFragment : FragmentBackHelper(), CategoryView {
                 bundle.putString("listOption", "Wellness")
                 bundle.putInt("categoryName", (R.string.wellness))
             }
-            R.string.memories -> {
-                bundle.putString("listOption", "Memories")
-                bundle.putInt("categoryName", (R.string.memories))
-            }
             R.string.shopping -> {
                 bundle.putString("listOption", "Shopping")
                 bundle.putInt("categoryName", (R.string.shopping))
             }
         }
 
-        categoryFragment.arguments = bundle
-        fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+        listsFragment.arguments = bundle
+        fragmentTransaction.add(R.id.frameLayout, listsFragment).commit()
     }
 
     private fun gettingMemoryTimeLineView() {

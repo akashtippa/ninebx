@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.home.baseSubCategories.Level2CategoryFragment
+import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_clothes.*
 
@@ -31,7 +31,7 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putString("categoryName", "Womens sizes")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -43,7 +43,7 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putString("categoryName", "Mens sizes")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -55,7 +55,7 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putString("categoryName", "Girls sizes")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -67,7 +67,7 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putString("categoryName", "Boy's sizes")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
@@ -79,7 +79,7 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putString("categoryName", "Baby's sizes")
             bundle.putString("categoryId", "1")
 
-            val categoryFragment = Level2CategoryFragment()
+            val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
