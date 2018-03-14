@@ -221,15 +221,11 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                 StringThree = (getString(R.string.overall_how_useful_did_you_find).toUpperCase())+ (" : ") + (canEasily)+ ("\n" + "\n")
 
             }
-
-            StringFour = if( dialog.edtComments != null && dialog.edtComments.text.isNotEmpty() ){
-                var comments = dialog.edtComments.text
-
-                (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
-
-            }else{
-                (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + ("No Comments")
+            var comments = dialog.edtComments.text
+            if(comments != null){
+                StringFour = (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
             }
+
             var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+("\n"+"\n")+email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody",""+finalEmailBody)

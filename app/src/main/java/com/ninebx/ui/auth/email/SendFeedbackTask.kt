@@ -45,7 +45,8 @@ class SendFeedbackTask (
         try {
             val sendgrid = SendGrid("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")
             val email = SendGrid.Email()
-            email.addTo("varun.badarinath@cognitiveclouds.com")
+            //email.addTo("varun.badarinath@cognitiveclouds.com")
+            email.addTo("souravstudy@gmail.com")
             email.from = emailUser
             email.subject = "NineBx Feedback - "+versionCode
             email.text = emailBody
