@@ -71,7 +71,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-
         layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType,
                 ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) ))
 
@@ -561,7 +560,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Airline"
                 etTitleValue.hint = "Account name"
                 toolbarTitle.text = "Add Account"
-
             }
 
             "Hotel" -> {
