@@ -130,17 +130,25 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        rvRecentSearch.visibility = View.VISIBLE
+        setRecentSearchAdapter()
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
         showProgress(R.string.loading)
-        setRecentSearchAdapter()
-        edtSearch.setText("")
 
         mSearchPresenter = SearchPresenter(this)
 
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                rvRecentSearch.visibility = View.GONE
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                rvRecentSearch.visibility = View.VISIBLE
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+               // rvRecentSearch.visibility = View.GONE
 
                 val text = edtSearch.text.toString().trim()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems( text )
@@ -154,19 +162,10 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 searchDecryptedCombineShopping = mSearchPresenter.searchShoppingItems(text)
                 setAdapter()
             }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
         })
     }
 
     private fun setRecentSearchAdapter() {
-
         if( rvRecentSearch == null ) return
 
         var linearLayoutManager = LinearLayoutManager(context)

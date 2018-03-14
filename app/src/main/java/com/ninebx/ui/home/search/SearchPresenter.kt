@@ -119,12 +119,10 @@ class SearchPresenter {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_RECENT_SEARCH, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
                         var updateRecent = RecentSearch(getUniqueId(), getUniqueId(), getUniqueId(), listname.encryptString(), subCategory.encryptString(), mainCategory.encryptString(), Date(), classType.encryptString())
-                       // updateRecent.insertOrUpdate(realm!!)
-                        realm!!.copyToRealmOrUpdate(updateRecent)
+                         updateRecent.insertOrUpdate(realm!!)
                         //AppLogger.d("RecentSearch", "Update successful " + encryptRecentSearch(updateRecent))
                     }
                 })
-
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }

@@ -48,7 +48,7 @@ class SendEmailTask( private val emailOtp : String,
                     "\n" +
                     "Here is your one-time, time-based code to authenticate your device.\n" +
                     "\n" +
-                    "Authentication code: "+"<b><font color=\"1975b7\">" +emailOtp+"\n"
+                    "Authentication code: " + emailOtp +"\n"  //TODO - Change the color
                     "\n" +
                     "This is a time-sensitive code. Please enter it immediately to complete sign in.\n" +
                     "\n" +
