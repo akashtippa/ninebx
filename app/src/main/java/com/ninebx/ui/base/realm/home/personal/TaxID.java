@@ -21,19 +21,16 @@ import io.realm.annotations.Required;
 public class TaxID extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
-
-    @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private long id = 0;
 
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -76,8 +73,15 @@ public class TaxID extends RealmObject {
     @Required private Boolean isPrivate = false;
 
     @Required private String attachmentNames = "";
+    @Required private String createdUser = "";
 
-    public TaxID(String selectionType, String taxIdName, String taxIdNumber, String issuingCountry, String name, String notes, String created, String modified, Boolean isPrivate, String attachmentNames) {
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
+
+    public TaxID(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String taxIdName, String taxIdNumber, String issuingCountry, String name, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, RealmList<RealmString> backingImages1) {
+        this.id = id;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
         this.selectionType = selectionType;
         this.taxIdName = taxIdName;
         this.taxIdNumber = taxIdNumber;
@@ -88,6 +92,16 @@ public class TaxID extends RealmObject {
         this.modified = modified;
         this.isPrivate = isPrivate;
         this.attachmentNames = attachmentNames;
+        this.createdUser = createdUser;
+        this.backingImages = backingImages1;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
     }
 
     public String getSelectionType() {

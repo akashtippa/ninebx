@@ -1,13 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutFragmentSuperSubList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_mini_padding"
+                android:paddingBottom="@dimen/default_mini_padding"
+                android:paddingRight="@dimen/default_mini_padding"
+                android:id="@+id/ivBack"
+                app:srcCompat="@drawable/ic_icon_arrow_left"
+                android:paddingEnd="@dimen/default_mini_padding" />
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/calendar"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/search_bx"
+                android:layout_centerVertical="true"
+                android:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressBar"
+            android:gravity="center"
+            android:text="@string/loading" />
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_above="@+id/layoutAddList">
 
 
@@ -67,14 +143,37 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/txtSubListName"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_32sdp"
+                android:layout_height="@dimen/margin_48"
                 android:background="@color/grey_100"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/colorPrimary" />
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/txtSubListName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_48"
+                    android:background="@color/grey_100"
+                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txtDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:hint="Done"
+                    android:padding="@dimen/default_margin"
+                    android:textColorHint="@color/colorPrimary"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvAddedSubLists"
@@ -175,7 +274,8 @@
             android:drawableLeft="@drawable/ic_icon_add_list"
             android:drawablePadding="@dimen/_5sdp"
             android:drawableStart="@drawable/ic_icon_add_list"
-            android:hint="@string/add_list" />
+            android:hint="@string/add_list"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/txtSubListDone"

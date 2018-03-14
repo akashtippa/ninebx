@@ -1,5 +1,7 @@
 package com.ninebx.ui.auth
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -8,7 +10,9 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.home.account.addmembers.MemberPresenter
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.SyncUser
@@ -57,18 +61,50 @@ class AccountPasswordFragment : BaseAuthFragment() {
     }
 
     var mSyncUser: SyncUser? = null
+    @SuppressLint("StaticFieldLeak")
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
 
-        prepareRealmConnections(context, true, "Users", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                mCurrentUser.id = getUniqueId()
-                mCurrentUser = encryptUsers(mCurrentUser)
-                AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
-                mCurrentUser.insertOrUpdate(realm!!)
+        object : AsyncTask<Void, Void, Unit>() {
+            override fun doInBackground(vararg p0: Void?) {
+                prepareRealmConnections(context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        mCurrentUser.id = getUniqueId()
+                        mCurrentUser = encryptUsers(mCurrentUser)
+                        val adminMember = Member()
+                        adminMember.userId = mCurrentUser.userId
+                        adminMember.country = mCurrentUser.country
+                        adminMember.firstName = mCurrentUser.firstName
+                        adminMember.lastName = mCurrentUser.lastName
+                        adminMember.relationship = mCurrentUser.relationship
+                        adminMember.zipCode = mCurrentUser.zipCode
+                        adminMember.city = mCurrentUser.city
+                        adminMember.state = mCurrentUser.state
+                        adminMember.role = "Administrator"
+                        adminMember.email = mCurrentUser.emailAddress
+                        adminMember.street_1 = mCurrentUser.street_1
+                        adminMember.street_2 = mCurrentUser.street_2
+                        adminMember.anniversary = mCurrentUser.anniversary
+                        adminMember.mobileNumber = mCurrentUser.mobileNumber
+                        adminMember.completeProfile = mCurrentUser.completeProfile
+                        adminMember.dateOfBirth = mCurrentUser.dateOfBirth
+                        setPermissionsForMember(adminMember, adminMember.role)
+                        mCurrentUser.members.add(adminMember)
+                        //AppLogger.d("Encrypted", "Encrypted USer : " + mCurrentUser.toString())
+                        mCurrentUser.insertOrUpdate(realm!!)
+
+                    }
+                })
+
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
                 mAuthView.navigateToOTP(false)
             }
-        })
+
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
     }
 
     override fun validate(): Boolean {
@@ -106,6 +142,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 etCreatePassword.requestFocus()
                 isValid = false
             }
+            
             if (etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8) {
                 context!!.showToast(R.string.password_length_8)
                 etConfirmPassword.requestFocus()

@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class Financial extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -27,11 +27,11 @@ public class Financial extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -86,7 +86,10 @@ public class Financial extends RealmObject {
 
     @Required private String attachmentNames = "";
 
-    public Financial(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+    public Financial(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+        this.id = id;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
         this.selectionType = selectionType;
         this.institutionName = institutionName;
         this.accountName = accountName;
@@ -270,5 +273,20 @@ public class Financial extends RealmObject {
 
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Financial financial = (Financial) o;
+
+        return id == financial.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

@@ -3,6 +3,9 @@ package com.ninebx.ui.base.realm;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember;
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -51,13 +54,13 @@ public class Users extends RealmObject implements Parcelable {
     @Required private String country              = "";
     @Required private String userId               = "";
     @PrimaryKey //@Required
-    private int id                  = 0;
+    private long id                  = 0;
     @Required private Boolean isCompleteProfile   = false;
     @Required private String profilePhoto         = "";
     @Required private RealmList<Member> members = new RealmList<Member>();
     @Ignore private RealmList<Member> decryptedMembers = new RealmList<Member>();
 
-    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, int id, RealmList<Member> members) {
+    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, long id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -79,7 +82,7 @@ public class Users extends RealmObject implements Parcelable {
     }
 
 
-    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, int id, RealmList<Member> members) {
+    public Users(String fullName, String emailAddress, String relationship, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, long id, RealmList<Member> members) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.relationship = relationship;
@@ -169,6 +172,8 @@ public class Users extends RealmObject implements Parcelable {
         return newUser;
 
     }
+
+
 
     public String getUserId() {
         return userId;
@@ -282,11 +287,11 @@ public class Users extends RealmObject implements Parcelable {
         this.country = country;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class Loyalty extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,11 +29,11 @@ public class Loyalty extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -87,8 +87,9 @@ public class Loyalty extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public Loyalty(String selectionType, String airLine, String hotel, String carRentalCompany, String cruiseline, String railway, String other, String accountName, String nameOnAccount, String accountNumber, String website, String userName, String password, String pin, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
+    public Loyalty(long id, String selectionType, String airLine, String hotel, String carRentalCompany, String cruiseline, String railway, String other, String accountName, String nameOnAccount, String accountNumber, String website, String userName, String password, String pin, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
+        this.id = id;
         this.airLine = airLine;
         this.hotel = hotel;
         this.carRentalCompany = carRentalCompany;

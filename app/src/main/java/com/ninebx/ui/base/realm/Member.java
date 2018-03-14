@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
@@ -25,54 +26,100 @@ public class Member extends RealmObject implements Parcelable {
         }
     };
     @Required
-    private String  firstName            = "";
-    @Required private String  lastName             = "";
-    @Required private String  relationship         = "";
-    @Required private String  role                 = "";
-    @Required private String  email                = "";
-    @Required private String dateOfBirth         = "";
-    @Required private String anniversary         = "";
-    @Required private String gender              = "";
-    @Required private String mobileNumber        = "";
-    @Required private String street_1            = "";
-    @Required private String street_2            = "";
-    @Required private String city                = "";
-    @Required private String state               = "";
-    @Required private String zipCode             = "";
-    @Required private String country             = "";
-    @Required private String userId              = "";
+    private String firstName = "";
+    @Required
+    private String lastName = "";
+    @Required
+    private String relationship = "";
+    @Required
+    private String role = "";
+    @Required
+    private String email = "";
+    @Required
+    private String dateOfBirth = "";
+    @Required
+    private String anniversary = "";
+    @Required
+    private String gender = "";
+    @Required
+    private String mobileNumber = "";
+    @Required
+    private String street_1 = "";
+    @Required
+    private String street_2 = "";
+    @Required
+    private String city = "";
+    @Required
+    private String state = "";
+    @Required
+    private String zipCode = "";
+    @Required
+    private String country = "";
+    @Required
+    private String userId = "";
     ///For permissions
-    @Required private Boolean homeAdd                = true;
-    @Required private Boolean homeEdit               = false;
-    @Required private Boolean homeView               = true;
-    @Required private Boolean travelAdd              = true;
-    @Required private Boolean travelEdit             = false;
-    @Required private Boolean travelView             = true;
-    @Required private Boolean contactsAdd              = true;
-    @Required private Boolean contactsEdit             = false;
-    @Required private Boolean contactsView             = true;
-    @Required private Boolean educationlAdd              = true;
-    @Required private Boolean educationlEdit             = false;
-    @Required private Boolean educationlView             = true;
-    @Required private Boolean personalAdd              = true;
-    @Required private Boolean personalEdit             = false;
-    @Required private Boolean personalView             = true;
-    @Required private Boolean interestsAdd              = true;
-    @Required private Boolean interestsEdit             = false;
-    @Required private Boolean interestsView             = true;
-    @Required private Boolean wellnessAdd              = true;
-    @Required private Boolean wellnessEdit             = false;
-    @Required private Boolean wellnessView             = true;
-    @Required private Boolean memoriesAdd              = true;
-    @Required private Boolean memoriesEdit             = false;
-    @Required private Boolean memoriesView             = true;
-    @Required private Boolean shoppingAdd              = true;
-    @Required private Boolean shoppingEdit             = false;
-    @Required private Boolean shoppingView             = true;
-    @Required private Boolean addingRemovingMember    = false;
-    @Required private Boolean changingMasterPassword  = false;
-    @Required private Boolean isCompleteProfile     = false;
-    @Required private String profilePhoto        = "";
+    @Required
+    private Boolean homeAdd = true;
+    @Required
+    private Boolean homeEdit = false;
+    @Required
+    private Boolean homeView = true;
+    @Required
+    private Boolean travelAdd = true;
+    @Required
+    private Boolean travelEdit = false;
+    @Required
+    private Boolean travelView = true;
+    @Required
+    private Boolean contactsAdd = true;
+    @Required
+    private Boolean contactsEdit = false;
+    @Required
+    private Boolean contactsView = true;
+    @Required
+    private Boolean educationlAdd = true;
+    @Required
+    private Boolean educationlEdit = false;
+    @Required
+    private Boolean educationlView = true;
+    @Required
+    private Boolean personalAdd = true;
+    @Required
+    private Boolean personalEdit = false;
+    @Required
+    private Boolean personalView = true;
+    @Required
+    private Boolean interestsAdd = true;
+    @Required
+    private Boolean interestsEdit = false;
+    @Required
+    private Boolean interestsView = true;
+    @Required
+    private Boolean wellnessAdd = true;
+    @Required
+    private Boolean wellnessEdit = false;
+    @Required
+    private Boolean wellnessView = true;
+    @Required
+    private Boolean memoriesAdd = true;
+    @Required
+    private Boolean memoriesEdit = false;
+    @Required
+    private Boolean memoriesView = true;
+    @Required
+    private Boolean shoppingAdd = true;
+    @Required
+    private Boolean shoppingEdit = false;
+    @Required
+    private Boolean shoppingView = true;
+    @Required
+    private Boolean addingRemovingMember = false;
+    @Required
+    private Boolean changingMasterPassword = false;
+    @Required
+    private Boolean isCompleteProfile = false;
+    @Required
+    private String profilePhoto = "";
 
     public Member(String firstName, String lastName, String relationship, String role, String email) {
         this.firstName = firstName;

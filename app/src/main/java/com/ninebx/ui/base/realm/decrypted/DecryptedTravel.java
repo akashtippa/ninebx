@@ -30,10 +30,11 @@ public class DecryptedTravel implements Parcelable {
             return new DecryptedTravel[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -144,7 +145,7 @@ public class DecryptedTravel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
@@ -176,19 +177,19 @@ public class DecryptedTravel implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -390,5 +391,37 @@ public class DecryptedTravel implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedTravel{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", nameOnAccount='" + nameOnAccount + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", swiftCode='" + swiftCode + '\'' +
+                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", paymentMethodOnFile='" + paymentMethodOnFile + '\'' +
+                ", notes='" + notes + '\'' +
+                ", imageName='" + imageName + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", title='" + title + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

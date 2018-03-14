@@ -2,11 +2,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_mini_padding"
+                android:paddingBottom="@dimen/default_mini_padding"
+                android:paddingEnd="@dimen/default_mini_padding"
+                android:id="@+id/ivBack"
+                app:srcCompat="@drawable/ic_icon_arrow_left"
+                android:paddingRight="@dimen/default_mini_padding" />
+
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/family_users"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:contentDescription="@string/app_name"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_bx"
+                android:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_mini_margin"
         android:orientation="vertical">
@@ -95,6 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:singleLine="true"
             android:drawablePadding="@dimen/_9sdp"
             android:drawableRight="@drawable/ic_icon_add_list"
             android:gravity="center"

@@ -19,95 +19,33 @@ import io.realm.annotations.Required;
 public class Payment extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
-
-    @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
-
-    @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public RealmList<RealmString> getBackingImages() {
-        return backingImages;
-    }
-
-    public void setBackingImages(RealmList<RealmString> backingImages) {
-        this.backingImages = backingImages;
-    }
-
-    public Payment() {
-    }
-
-    public List<String> getPhotosId() {
-        photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
-        }
-        return photosId;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
-        backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
-        }
-    }
-
-    @Required private String selectionType = "";
-
-    @Required private String insuranceCompany = "";
-    @Required private String insuredProperty = "";
-    @Required private String insuredVehicle = "";
-    @Required private String insuredPerson = "";
-
-    @Required private String policyNumber = "";
-    @Required private String policyEffectiveDate = "";
-    @Required private String policyExpirationDate = "";
-    @Required private String contacts = "";
-
+    private long id = 0;
+    @Required private String selectionType = "";;
+    @Required private String cardNumber = "";
+    @Required private String cardName = "";
+    @Required private String cardType = "";
+    @Required private String cardHolder = "";
+    @Required private String expiryDate = "";
+    @Required private String cvvCode = "";
+    @Required private String cardPin = "";
+    @Required private String issuingBank = "";
     @Required private String website = "";
     @Required private String userName = "";
     @Required private String password = "";
     @Required private String pin = "";
-
     @Required private String created = "";
     @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
+    private boolean isPrivate = false;
     @Required private String createdUser = "";
-
     @Required private String notes = "";
-
     @Required private String attachmentNames = "";
 
-    public Payment(String selectionType, String insuranceCompany, String insuredProperty, String insuredVehicle, String insuredPerson, String policyNumber, String policyEffectiveDate, String policyExpirationDate, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
-        this.selectionType = selectionType;
-        this.insuranceCompany = insuranceCompany;
-        this.insuredProperty = insuredProperty;
-        this.insuredVehicle = insuredVehicle;
-        this.insuredPerson = insuredPerson;
-        this.policyNumber = policyNumber;
-        this.policyEffectiveDate = policyEffectiveDate;
-        this.policyExpirationDate = policyExpirationDate;
-        this.contacts = contacts;
-        this.website = website;
-        this.userName = userName;
-        this.password = password;
-        this.pin = pin;
-        this.created = created;
-        this.modified = modified;
-        this.isPrivate = isPrivate;
-        this.createdUser = createdUser;
-        this.notes = notes;
-        this.attachmentNames = attachmentNames;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getSelectionType() {
@@ -118,68 +56,68 @@ public class Payment extends RealmObject {
         this.selectionType = selectionType;
     }
 
-    public String getInsuranceCompany() {
-        return insuranceCompany;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setInsuranceCompany(String insuranceCompany) {
-        this.insuranceCompany = insuranceCompany;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public String getInsuredProperty() {
-        return insuredProperty;
+    public String getCardName() {
+        return cardName;
     }
 
-    public void setInsuredProperty(String insuredProperty) {
-        this.insuredProperty = insuredProperty;
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
     }
 
-    public String getInsuredVehicle() {
-        return insuredVehicle;
+    public String getCardType() {
+        return cardType;
     }
 
-    public void setInsuredVehicle(String insuredVehicle) {
-        this.insuredVehicle = insuredVehicle;
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
     }
 
-    public String getInsuredPerson() {
-        return insuredPerson;
+    public String getCardHolder() {
+        return cardHolder;
     }
 
-    public void setInsuredPerson(String insuredPerson) {
-        this.insuredPerson = insuredPerson;
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
     }
 
-    public String getPolicyNumber() {
-        return policyNumber;
+    public String getExpiryDate() {
+        return expiryDate;
     }
 
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
-    public String getPolicyEffectiveDate() {
-        return policyEffectiveDate;
+    public String getCvvCode() {
+        return cvvCode;
     }
 
-    public void setPolicyEffectiveDate(String policyEffectiveDate) {
-        this.policyEffectiveDate = policyEffectiveDate;
+    public void setCvvCode(String cvvCode) {
+        this.cvvCode = cvvCode;
     }
 
-    public String getPolicyExpirationDate() {
-        return policyExpirationDate;
+    public String getCardPin() {
+        return cardPin;
     }
 
-    public void setPolicyExpirationDate(String policyExpirationDate) {
-        this.policyExpirationDate = policyExpirationDate;
+    public void setCardPin(String cardPin) {
+        this.cardPin = cardPin;
     }
 
-    public String getContacts() {
-        return contacts;
+    public String getIssuingBank() {
+        return issuingBank;
     }
 
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
+    public void setIssuingBank(String issuingBank) {
+        this.issuingBank = issuingBank;
     }
 
     public String getWebsite() {
@@ -230,11 +168,11 @@ public class Payment extends RealmObject {
         this.modified = modified;
     }
 
-    public Boolean getPrivate() {
+    public boolean isPrivate() {
         return isPrivate;
     }
 
-    public void setPrivate(Boolean aPrivate) {
+    public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
     }
 
@@ -260,5 +198,57 @@ public class Payment extends RealmObject {
 
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
+    }
+
+    public Payment(long id, String selectionType, String cardNumber, String cardName, String cardType, String cardHolder, String expiryDate, String cvvCode, String cardPin, String issuingBank, String website, String userName, String password, String pin, String created, String modified, boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+        this.id = id;
+        this.selectionType = selectionType;
+        this.cardNumber = cardNumber;
+        this.cardName = cardName;
+        this.cardType = cardType;
+        this.cardHolder = cardHolder;
+        this.expiryDate = expiryDate;
+        this.cvvCode = cvvCode;
+        this.cardPin = cardPin;
+        this.issuingBank = issuingBank;
+        this.website = website;
+        this.userName = userName;
+        this.password = password;
+        this.pin = pin;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+        this.notes = notes;
+        this.attachmentNames = attachmentNames;
+    }
+
+    public Payment() {
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", cardName='" + cardName + '\'' +
+                ", cardType='" + cardType + '\'' +
+                ", cardHolder='" + cardHolder + '\'' +
+                ", expiryDate='" + expiryDate + '\'' +
+                ", cvvCode='" + cvvCode + '\'' +
+                ", cardPin='" + cardPin + '\'' +
+                ", issuingBank='" + issuingBank + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                '}';
     }
 }

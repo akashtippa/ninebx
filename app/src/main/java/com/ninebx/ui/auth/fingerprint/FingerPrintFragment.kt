@@ -1,6 +1,8 @@
 package com.ninebx.ui.auth.fingerprint
 
 import android.Manifest
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.SharedPreferences
@@ -27,6 +29,7 @@ import com.ninebx.R
 import com.ninebx.ui.auth.BaseAuthFragment
 import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.Constants
 import kotlinx.android.synthetic.main.fragment_finger_print.*
 import java.io.IOException
 import java.security.*
@@ -49,6 +52,12 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
         if( context != null )
             context!!.showToast("Verified successfully")
+
+        if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            NineBxApplication.getPreferences().isFingerPrintEnabled = arguments!!.getBoolean(Constants.FINGER_PRINT)
+            activity!!.setResult(RESULT_OK, Intent())
+            activity!!.finish()
+        }
 
         tvSkip.setText(R.string.save)
 
@@ -106,13 +115,7 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
-
-            NineBxApplication.getPreferences().isFingerPrintEnabled = isChecked
-            if (isChecked)
-                checkPermissions()
-
-        }
+        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
         tvSkip.setOnClickListener {
             if (tvSkip.text.toString() == "Skip") {
                 mAuthView.navigateToHome()
@@ -120,12 +123,22 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
                 mAuthView.navigateToInvitePeople()
             }
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             tvQuickAccess.text = Html.fromHtml(getString(R.string.allow_quicker_access), Html.FROM_HTML_MODE_LEGACY)
         } else {
             tvQuickAccess.text = Html.fromHtml(getString(R.string.allow_quicker_access))
         }
 
+
+        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
+            NineBxApplication.getPreferences().isFingerPrintEnabled = isChecked
+            if (isChecked)
+                checkPermissions()
+        }
+        if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            checkPermissions()
+        }
 
     }
 
@@ -185,13 +198,13 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
             // Show the fingerprint dialog. The user has the option to use the fingerprint with
             // crypto, or can fall back to using a server-side verified password.
-            val useFingerprintPreference = sharedPreferences
-                    .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key), true)
-            if (useFingerprintPreference) {
+            /*val useFingerprintPreference = sharedPreferences
+                    .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key), true)*/
+            //if (useFingerprintPreference) {
                 fragment.setStage(Stage.FINGERPRINT)
-            } else {
+            /*} else {
                 fragment.setStage(Stage.PASSWORD)
-            }
+            }*/
         } else {
             // This happens if the lock screen has been disabled or or a fingerprint was
             // enrolled. Thus, show the dialog to authenticate with their password first and ask
@@ -306,5 +319,11 @@ class FingerPrintFragment : BaseAuthFragment(), FingerprintAuthenticationDialogF
 
     fun fingerPrintCancelled() {
         if (switchTouchId != null) switchTouchId.isChecked = false
+
+        if( arguments != null && arguments!!.getBoolean(Constants.RESET_FINGER_PRINT) ) {
+            NineBxApplication.getPreferences().isFingerPrintEnabled = !arguments!!.getBoolean(Constants.FINGER_PRINT)
+            activity!!.setResult(RESULT_OK, Intent())
+            activity!!.finish()
+        }
     }
 }

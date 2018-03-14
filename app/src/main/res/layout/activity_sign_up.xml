@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -35,7 +35,6 @@
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_icon_arrow_left"
                 tools:visibility="visible" />
-
 
 
             <TextView
@@ -75,26 +74,125 @@
             android:orientation="vertical"
             android:padding="@dimen/_4sdp">
 
-            <EditText
-                android:id="@+id/edtFirstName"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/first_name"
-                android:inputType="textPersonName" />
+                android:layout_height="@dimen/margin_32"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <EditText
-                android:id="@+id/edtLastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/last_name"
-                android:inputType="textPersonName" />
+                <EditText
+                    android:id="@+id/edtFirstName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.9"
+                    android:background="@null"
+                    android:hint="@string/first_name"
+                    android:inputType="textPersonName"
+                    android:textColorHint="@color/color_text_hint" />
 
-            <EditText
-                android:id="@+id/edtEmailAddress"
+                <ImageView
+                    android:id="@+id/imgDelFirstName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:src="@android:drawable/ic_notification_clear_all"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_address"
-                android:inputType="textEmailAddress" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/default_circle_indicator_radius"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_circle_indicator_radius"
+                android:background="#AAAAAA" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_32"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/edtLastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.9"
+                    android:background="@null"
+                    android:hint="@string/last_name"
+                    android:inputType="textPersonName"
+                    android:textColorHint="@color/color_text_hint" />
+
+                <ImageView
+                    android:id="@+id/imgDelLastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:src="@android:drawable/ic_notification_clear_all"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/default_circle_indicator_radius"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_circle_indicator_radius"
+                android:background="#AAAAAA" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_32"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_micro_padding"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/edtEmailAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.9"
+                    android:background="@null"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/color_text_hint" />
+
+                <ImageView
+                    android:id="@+id/imgDelEmailName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:src="@android:drawable/ic_notification_clear_all"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/default_circle_indicator_radius"
+                android:layout_marginLeft="@dimen/default_micro_padding"
+                android:layout_marginStart="@dimen/default_micro_padding"
+                android:layout_marginTop="@dimen/default_circle_indicator_radius"
+                android:background="#AAAAAA" />
 
             <Button
                 android:id="@+id/btnSubmit"
@@ -102,7 +200,7 @@
                 android:layout_height="@dimen/_32sdp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/_48sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/margin_32"
                 android:background="@drawable/login_btn"
                 android:text="@string/submit"
                 android:textColor="@color/colorWhite"
@@ -118,7 +216,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/layoutTerms"
         android:layout_centerHorizontal="true"
-        android:text="@string/by_signing_up_you_agree_to_our" />
+        android:text="@string/by_signing_up_you_agree_to_our"
+        android:textColor="@color/color_gray" />
 
     <LinearLayout
         android:id="@+id/layoutTerms"
@@ -135,7 +234,8 @@
             android:autoLink="all"
             android:linksClickable="false"
             android:selectAllOnFocus="false"
-            android:text="@string/terms_of_use" />
+            android:text="@string/terms_of_use"
+            android:textColor="@color/color_gray" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -146,7 +246,8 @@
             android:id="@+id/txtPrivacyPolicy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/privacy_policy" />
+            android:text="@string/privacy_policy"
+            android:textColor="@color/color_gray" />
 
     </LinearLayout>
 

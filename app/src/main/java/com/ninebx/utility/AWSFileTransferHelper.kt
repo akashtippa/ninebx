@@ -1,4 +1,4 @@
-package com.ninebx.ui.home.calendar.events
+package com.ninebx.utility
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,14 +10,13 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferType
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.Constants
 import com.ninebx.utility.Util.fillMap
 import com.ninebx.utility.Util.getTransferUtility
-import com.ninebx.utility.decryptFileIOS
-import com.ninebx.utility.encryptFileIOS
 import java.io.File
 import java.util.*
+import com.amazonaws.services.s3.model.ObjectMetadata
+import com.ninebx.utility.Util.getSecureTransferUtility
+
 
 /**
  * Created by Alok on 19/01/18.
@@ -33,21 +32,78 @@ class AWSFileTransferHelper( private val context : Context? ) {
      */
     private var transferRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
     private var transferDownloadRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
+
+    private var transferSecureRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
+    private var transferSecureDownloadRecordMaps: ArrayList<HashMap<String, Any>> = ArrayList()
+
     private val transferUtility = getTransferUtility(context!!)
+    private val transferSecureUtility = getSecureTransferUtility(context!!)
 
     // A List of all transfers
     private var observers: MutableList<TransferObserver>? = null
     private var downloadObservers: MutableList<TransferObserver>? = null
 
+    private var secureObservers: MutableList<TransferObserver>? = null
+    private var secureDownloadObservers: MutableList<TransferObserver>? = null
+
     // Which row in the UI is currently checked (if any)
     private var checkedIndex: Int = Constants.INDEX_NOT_CHECKED
     private var downloadCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
+
+    private var secureCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
+    private var secureDownloadCheckedIndex: Int = Constants.INDEX_NOT_CHECKED
+
     private var privateKey: CharArray = NineBxApplication.getPreferences().privateKey!!.toCharArray()
+    private var privateKeyArrayBase64 : String = encryptAESKey(NineBxApplication.getPreferences().privateKey!!, NineBxApplication.getPreferences().privateKey!!)
     private var fileOperationsCompletionListener: FileOperationsCompletionListener? = null
 
     init {
         initUploadData()
+        initSecureUploadData()
         initDownloadData()
+        initSecureDownloadData()
+    }
+
+    private fun initSecureDownloadData() {
+        transferSecureDownloadRecordMaps.clear()
+        // Uses TransferUtility to get all previous download records.
+        secureDownloadObservers = transferUtility.getTransfersWithType(TransferType.DOWNLOAD)
+        val listener = FileTransferListener("secureDownload")
+        for (observer in secureDownloadObservers!!) {
+            val map = HashMap<String, Any>()
+            fillMap(map, observer, false)
+            transferSecureDownloadRecordMaps.add(map)
+
+            // Sets listeners to in progress transfers
+            if (TransferState.WAITING == observer.state
+                    || TransferState.WAITING_FOR_NETWORK == observer.state
+                    || TransferState.IN_PROGRESS == observer.state) {
+                observer.setTransferListener(listener)
+            }
+        }
+    }
+
+    private fun initSecureUploadData() {
+        transferSecureRecordMaps.clear()
+        // Use TransferUtility to get all upload transfers.
+        secureObservers = transferUtility.getTransfersWithType(TransferType.UPLOAD)
+        val listener = FileTransferListener("secureUpload")
+        for ( observer in secureObservers!! ) {
+
+            // For each transfer we will will create an entry in
+            // transferRecordMaps which will display
+            // as a single row in the UI
+            val map = HashMap<String, Any>()
+            fillMap(map, observer, false)
+            transferSecureRecordMaps.add(map)
+
+            // Sets listeners to in progress transfers
+            if (TransferState.WAITING == observer.state
+                    || TransferState.WAITING_FOR_NETWORK == observer.state
+                    || TransferState.IN_PROGRESS == observer.state) {
+                observer.setTransferListener(listener)
+            }
+        }
     }
 
     fun setFileTransferListener(fileTransferListener: FileOperationsCompletionListener) {
@@ -144,6 +200,40 @@ class AWSFileTransferHelper( private val context : Context? ) {
                 observer.cleanTransferListener()
             }
         }
+        if (secureObservers != null && !secureObservers!!.isEmpty()) {
+            for (observer in secureObservers!!) {
+                observer.cleanTransferListener()
+            }
+        }
+
+        if (secureDownloadObservers != null && !secureDownloadObservers!!.isEmpty()) {
+            for (observer in secureDownloadObservers!!) {
+                observer.cleanTransferListener()
+            }
+        }
+    }
+
+    /*
+    * Begins to download the file specified by the key in the bucket.
+    */
+    fun beginSecureDownload(key: String) {
+        // Location to download files from S3 to. You can choose any accessible
+        // file.
+        val file = File(Environment.getExternalStorageDirectory().toString() + "/" + key)
+
+        // Initiate the download
+        val observer = transferSecureUtility.download(Constants.BUCKET_NAME, key, file)
+        /*
+         * Note that usually we set the transfer listener after initializing the
+         * transfer. However it isn't required in this sample app. The flow is
+         * click upload button -> start an activity for image selection
+         * startActivityForResult -> onActivityResult -> beginUpload -> onResume
+         * -> set listeners to in progress transfers.
+         */
+        observer.setTransferListener( FileTransferListener( "secureDownload"))
+
+
+
     }
 
     /*
@@ -167,6 +257,42 @@ class AWSFileTransferHelper( private val context : Context? ) {
 
 
 
+    }
+
+    fun beginEncryptedUpload( filePath: String? ) {
+        val myObjectMetadata = ObjectMetadata()
+
+        //create a map to store user metadata
+        val userMetadata = HashMap<String, String>()
+        userMetadata.put("sseCustomerKey", privateKeyArrayBase64)
+        userMetadata.put("sseCustomerKeyMD5", MD5Helper.getMD5(privateKeyArrayBase64))
+        userMetadata.put("sseCustomerAlgorithm", "AES256")
+
+        //call setUserMetadata on our ObjectMetadata object, passing it our map
+        myObjectMetadata.userMetadata = userMetadata
+
+        if (filePath == null) {
+            AppLogger.e( TAG, "Could not find the filepath of the selected file" )
+            context?.showToast("Could not find the filepath of the selected file")
+            return
+        }
+
+        FileOperationsTask( "Encryption", filePath, privateKey, object : FileOperationsCompletionListener {
+            override fun onSuccess(outputFile: File?) {
+
+                val observer = transferUtility.upload(Constants.BUCKET_NAME, outputFile!!.name,
+                        outputFile, myObjectMetadata)
+                /*
+                 * Note that usually we set the transfer listener after initializing the
+                 * transfer. However it isn't required in this sample app. The flow is
+                 * click upload button -> start an activity for image selection
+                 * startActivityForResult -> onActivityResult -> beginUpload -> onResume
+                 * -> set listeners to in progress transfers.
+                 */
+                observer.setTransferListener(FileTransferListener("upload"))
+            }
+
+        }).execute()
     }
 
     /*
@@ -205,13 +331,32 @@ class AWSFileTransferHelper( private val context : Context? ) {
                 fillMap(map, observer, i == checkedIndex)
             }
         }
-        else {
+        else if( type == "download" ) {
             var downloadObserver: TransferObserver?
             var downloadMap: HashMap<String, Any>? = null
             for (i in downloadObservers!!.indices) {
                 downloadObserver = downloadObservers!!.get(i)
                 downloadMap = transferDownloadRecordMaps[i]
                 fillMap(downloadMap, downloadObserver, i == downloadCheckedIndex)
+            }
+            decryptFiles( downloadMap )
+        }
+        else if ( type == "secureUpload" ) {
+            var observer: TransferObserver?
+            var map: HashMap<String, Any>?
+            for (i in secureObservers!!.indices) {
+                observer = secureObservers!!.get(i)
+                map = transferSecureRecordMaps[i]
+                fillMap(map, observer, i == secureCheckedIndex)
+            }
+        }
+        else {
+            var downloadObserver: TransferObserver?
+            var downloadMap: HashMap<String, Any>? = null
+            for (i in secureDownloadObservers!!.indices) {
+                downloadObserver = secureDownloadObservers!!.get(i)
+                downloadMap = transferSecureDownloadRecordMaps[i]
+                fillMap(downloadMap, downloadObserver, i == secureDownloadCheckedIndex)
             }
             decryptFiles( downloadMap )
         }
@@ -224,7 +369,9 @@ class AWSFileTransferHelper( private val context : Context? ) {
                 if( key == "fileName" ) {
                     FileOperationsTask("Decryption", downloadMap.get("fileName").toString(), privateKey, object : FileOperationsCompletionListener {
                         override fun onSuccess(outputFile: File?) {
-
+                            if( fileOperationsCompletionListener != null ) {
+                                fileOperationsCompletionListener!!.onSuccess(outputFile)
+                            }
                         }
 
                     })
@@ -242,7 +389,7 @@ class AWSFileTransferHelper( private val context : Context? ) {
     inner class FileOperationsTask( private val operationType : String,
                                     private val filePath : String,
                                     private val privateKey : CharArray,
-                                    private val fileOperationsCompletionListener: FileOperationsCompletionListener ) : AsyncTask<Void, Void, File>() {
+                                    private val fileOperationsCompletionListener: FileOperationsCompletionListener) : AsyncTask<Void, Void, File>() {
 
 
         override fun onPostExecute(result: File?) {

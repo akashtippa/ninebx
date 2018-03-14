@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1975b7</color>
+    <color name="colorPrimary">#1A88C5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#1975b7</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="toolbarColor">#FFDDDDDD</color>
-    <color name="textColorGreen">#24c4b6</color>
+    <color name="textColorGreen">#2EA392</color>
     <color name="textColorRed">#E57373</color>
 
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
@@ -32,5 +32,10 @@
     <color name="primary_text">#757575</color>
 
     <color name="background_dark">#263238</color>
+    <color name="color_timeline">#913B88</color>
+
+    <color name="color_purple">#6D65C0</color>
+    <color name="color_gray">#929292</color>
+    <color name="color_text_hint">#C7C7CD</color>
 
 </resources>

@@ -6,15 +6,14 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import com.ninebx.NineBxApplication
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import com.ninebx.utility.AWSFileTransferHelper
+import java.io.*
 import java.net.URISyntaxException
 import java.util.*
 
@@ -124,4 +123,38 @@ fun isDownloadsDocument(uri: Uri): Boolean {
 fun isMediaDocument(uri: Uri): Boolean {
     return "com.android.providers.media.documents" == uri.authority
 }
+
+@SuppressLint("StaticFieldLeak")
+fun saveFileTask(imageUri: Uri, imageFile : File, fileOperationsCompletionListener: AWSFileTransferHelper.FileOperationsCompletionListener ) {
+
+
+       object : AsyncTask<Void, Void, File>() {
+        override fun doInBackground(vararg p0: Void?): File {
+
+            val sourceFile = File( imageUri.path )
+
+            try{
+                val src =  FileInputStream(sourceFile).channel;
+                val dst =  FileOutputStream(imageFile).channel;
+                dst.transferFrom( src, 0, src.size() )
+                src.close()
+                dst.close()
+            }
+            catch(e:Exception){
+                print(e)
+
+            }
+            return sourceFile
+
+        }
+
+        override fun onPostExecute(result: File?) {
+            super.onPostExecute(result)
+            fileOperationsCompletionListener.onSuccess(result)
+        }
+    }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
+
+}
+
+
 

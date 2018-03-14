@@ -2,12 +2,18 @@ package com.ninebx.ui.auth
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.*
 import android.widget.ImageView
+import com.ninebx.BuildConfig
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.Constants
 import com.ninebx.utility.isValidPassword
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -26,8 +32,15 @@ class SignInFragment : BaseAuthFragment() {
 
         btnLogin.setOnClickListener {
             if (validate()) {
-                mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
-                mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().trim(), edtPassword.text.toString())
+                AppLogger.d("Signin", "Comparing : " + edtEmailAddress.text.toString().toLowerCase().trim() + " : " + NineBxApplication.getPreferences().userEmail)
+                if( !edtEmailAddress.text.toString().toLowerCase().trim().equals(NineBxApplication.getPreferences().userEmail, true)) {
+                    NineBxApplication.getPreferences().clearPreferences()
+                }
+                else {
+                    NineBxApplication.getPreferences().currentStep = Constants.ALL_COMPLETE
+                }
+                mAuthView.setAccountEmail(edtEmailAddress.text.toString().toLowerCase().trim())
+                mAuthView.getAuthPresenter().signIn(edtEmailAddress.text.toString().toLowerCase().trim(), edtPassword.text.toString())
             }
         }
         btnSignUp.setOnClickListener {
@@ -41,10 +54,33 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("luciferMorningStar@yopmail.com")
-            edtPassword.setText("Password14.")
+            edtEmailAddress.setText("smriti.sateesh@cognitiveclouds.com")
+            edtPassword.setText("Qwerty123.")
         }
 
+        // For First Name
+        edtEmailAddress.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.trim().isEmpty()) {
+                    imgDelEmail.visibility = View.INVISIBLE
+                } else {
+                    imgDelEmail.show()
+                }
+            }
+        })
+
+
+        imgDelEmail.setOnClickListener {
+            edtEmailAddress.setText("")
+        }
     }
 
     override fun validate(): Boolean {
@@ -68,13 +104,13 @@ class SignInFragment : BaseAuthFragment() {
             context!!.showToast(R.string.error_empty_password)
         }
 
-        if( edtPassword.text.toString().isNotEmpty() && edtPassword.text.toString().trim().length < 8 ) {
+        if (edtPassword.text.toString().isNotEmpty() && edtPassword.text.toString().trim().length < 8) {
             context!!.showToast(R.string.password_length_8)
             edtPassword.requestFocus()
             isValid = false
         }
 
-        if( edtPassword.text.toString().isNotEmpty() && !isValidPassword(edtPassword.text.toString().trim()) ) {
+        if (edtPassword.text.toString().isNotEmpty() && !isValidPassword(edtPassword.text.toString().trim())) {
             context!!.showToast(R.string.password_rules)
             edtPassword.requestFocus()
             isValid = false
@@ -90,7 +126,13 @@ class SignInFragment : BaseAuthFragment() {
     var mSyncUser: SyncUser? = null
     fun onSuccess(syncUser: SyncUser?) {
         mSyncUser = syncUser
-        mAuthView.navigateToOTP(true)
+        if( NineBxApplication.getPreferences().currentStep == Constants.ALL_COMPLETE ) {
+            mAuthView.navigateToHome()
+        }
+        else {
+            mAuthView.navigateToOTP(true)
+        }
+
     }
 
     private fun openStaticLayoutDialog(option: Int) {
@@ -120,5 +162,4 @@ class SignInFragment : BaseAuthFragment() {
             dialog.cancel()
         }
     }
-
 }

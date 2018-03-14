@@ -3,13 +3,19 @@ package com.ninebx.ui.auth
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.*
 import android.widget.ImageView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
 
 
 /**
@@ -25,8 +31,8 @@ class SignUpFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
         btnSubmit.setOnClickListener {
             if (validate()) {
-                mAuthView.setAccountEmail(edtEmailAddress.text.toString().trim())
-                mAuthView.createUser( edtFirstName.text.toString().trim(), edtLastName.text.toString().trim(), edtEmailAddress.text.toString().trim() )
+                mAuthView.setAccountEmail(edtEmailAddress.text.toString().toLowerCase().trim())
+                mAuthView.createUser(edtFirstName.text.toString().trim(), edtLastName.text.toString().trim(), edtEmailAddress.text.toString().toLowerCase().trim())
             }
         }
 
@@ -47,6 +53,113 @@ class SignUpFragment : BaseAuthFragment() {
         ivBackSignUp.setOnClickListener {
             activity!!.onBackPressed()
         }
+
+
+        // For First Name
+        edtFirstName.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                imgDelLastName.hide()
+                imgDelEmailName.hide()
+                if (s.trim().isEmpty()) {
+                    imgDelFirstName.visibility = View.INVISIBLE
+                } else {
+                    imgDelFirstName.show()
+                }
+            }
+        })
+
+        // For Last Name
+        edtLastName.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                imgDelFirstName.hide()
+                imgDelEmailName.hide()
+                if (s.trim().isEmpty()) {
+                    imgDelLastName.visibility = View.INVISIBLE
+                } else {
+                    imgDelLastName.show()
+                }
+            }
+        })
+
+        edtFirstName.setOnTouchListener { _, _ ->
+            if (edtFirstName.text.toString().isNotEmpty())
+                imgDelFirstName.show()
+            imgDelLastName.hide()
+            imgDelEmailName.hide()
+            false
+        }
+        edtLastName.setOnTouchListener { _, _ ->
+            if (edtFirstName.text.toString().isNotEmpty())
+                imgDelFirstName.hide()
+            imgDelLastName.show()
+            imgDelEmailName.hide()
+            false
+        }
+        edtEmailAddress.setOnTouchListener { _, _ ->
+            if (edtFirstName.text.toString().isNotEmpty())
+                imgDelFirstName.hide()
+            imgDelLastName.hide()
+            imgDelEmailName.show()
+            false
+        }
+
+
+        // For Email
+        edtEmailAddress.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                imgDelFirstName.hide()
+                imgDelLastName.hide()
+                if (s.trim().isEmpty()) {
+                    imgDelEmailName.visibility = View.INVISIBLE
+                } else {
+                    imgDelEmailName.show()
+                }
+            }
+        })
+
+
+        imgDelFirstName.setOnClickListener {
+            edtFirstName.setText("")
+        }
+
+        imgDelLastName.setOnClickListener {
+            edtLastName.setText("")
+        }
+
+        imgDelEmailName.setOnClickListener {
+            edtEmailAddress.setText("")
+        }
+
+    }
+
+    private fun managingTheClearButtonOnEditText() {
+        if (!edtFirstName.text.toString().isEmpty()) {
+
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -65,30 +178,37 @@ class SignUpFragment : BaseAuthFragment() {
 
         if (edtFirstName.text.toString().isEmpty()) {
             isValid = false
-            edtFirstName.requestFocus()
             context!!.showToast(R.string.error_empty_first_name)
+            edtFirstName.requestFocus()
+            return false
         }
 
-        if (edtLastName.text.toString().isEmpty()) {
-            isValid = false
-            edtLastName.requestFocus()
-            context!!.showToast(R.string.error_empty_last_name)
-        }
+        // There is no validation on Last Name
+
+//        if (edtLastName.text.toString().isEmpty()) {
+//            isValid = false
+//            context!!.showToast(R.string.error_empty_last_name)
+//            edtLastName.requestFocus()
+//            return false
+//        }
 
         if (edtEmailAddress.text.toString().isEmpty()) {
             isValid = false
-            edtEmailAddress.requestFocus()
             context!!.showToast(R.string.error_empty_email)
+            edtEmailAddress.requestFocus()
+            return false
         } else {
             if (!isValidEmail(edtEmailAddress.text.toString().trim())) {
                 isValid = false
                 edtEmailAddress.requestFocus()
                 mAuthView.onError(R.string.invalid_email_format)
+                return false
             }
         }
 
         return isValid
     }
+
 
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()

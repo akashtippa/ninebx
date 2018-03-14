@@ -3,6 +3,7 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -22,6 +23,8 @@ public class DecryptedSignUp implements Parcelable {
             return new DecryptedSignUp[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @Required
     private String fullName = "";
     @Required
@@ -31,9 +34,9 @@ public class DecryptedSignUp implements Parcelable {
     @Required
     private String user_id = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
-    public DecryptedSignUp(String fullName, String emailAddress, String password, String user_id, int id) {
+    public DecryptedSignUp(String fullName, String emailAddress, String password, String user_id, long id) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.password = password;
@@ -58,7 +61,7 @@ public class DecryptedSignUp implements Parcelable {
         dest.writeString(emailAddress);
         dest.writeString(password);
         dest.writeString(user_id);
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -98,11 +101,11 @@ public class DecryptedSignUp implements Parcelable {
         this.user_id = user_id;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 

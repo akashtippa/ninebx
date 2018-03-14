@@ -10,12 +10,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.home.account.interfaces.IMemberAdded
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.decryptString
 import java.util.*
 
-internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
+class AddedFamilyMemberAdapter(private var myList: ArrayList<DecryptedMember>, private val iMemberAdded: IMemberAdded) : RecyclerView.Adapter<AddedFamilyMemberAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -26,29 +27,34 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?, 
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
-        val member = myList!![position]
-        AppLogger.d("Decrypt", "Decrypting : " + member.toString())
-        holder.txtProfileName.text = member.firstName.decryptString() + " " + member.lastName.decryptString()
-        holder.txtAccountHolder.text = member.relationship.decryptString()
-        holder.txtRole.text = member.role.decryptString()
-        holder.txtProfileEmail.text = member.email.decryptString()
-
-        holder.imgEdit.setOnClickListener {
-            iMemberAdded.onMemberEdit(member)
-        }
-
-        holder.imgDelete.setOnClickListener {
-            myList!!.removeAt(holder.position)
-        }
+        val member = myList[position]
+        holder.txtProfileName.text = member.firstName + " " + member.lastName
+        holder.txtAccountHolder.text = member.relationship
+        holder.txtRole.text = member.role
+        holder.txtProfileEmail.text = member.email
 
     }
 
     override fun getItemCount(): Int {
-        return if (null != myList) myList!!.size else 0
+        return myList.size
     }
 
+    inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent), View.OnClickListener {
+        override fun onClick(view: View?) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                when( view!!.id ) {
+                    R.id.imgEdit -> {
+                        iMemberAdded.onMemberEdit(myList[position])
+                    }
+                    R.id.imgDelete -> {
+                        val member = myList[position]
+                        iMemberAdded.onMemberDelete(member)
+                    }
+                }
+            }
 
-    internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
+        }
 
         val imgProfilePic: ImageView = parent.findViewById<View>(R.id.imgProfilePic) as ImageView
         val txtProfileName: TextView = parent.findViewById<View>(R.id.txtProfileName) as TextView
@@ -59,10 +65,30 @@ internal class AddedFamilyMemberAdapter(private var myList: ArrayList<Member>?, 
 
         val imgEdit: ImageView = parent.findViewById<View>(R.id.imgEdit) as ImageView
         val imgDelete: ImageView = parent.findViewById<View>(R.id.imgDelete) as ImageView
+
+        init {
+            imgEdit.setOnClickListener(this)
+            imgDelete.setOnClickListener(this)
+        }
     }
 
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
+    }
+
+    fun deleteItem(member: DecryptedMember?) {
+        myList.remove(member)
+        notifyDataSetChanged()
+    }
+
+    fun insertMember(member: DecryptedMember?) {
+        val position = myList.indexOf(member)
+        if( position != -1 ) {
+            myList[position] = (member!!)
+        }
+        else
+            myList.add(member!!)
+        notifyDataSetChanged()
     }
 
 

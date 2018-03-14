@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/grey_100"
+            android:visibility="visible"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
@@ -39,6 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
+                android:ellipsize="marquee"
+                android:maxLength="25"
                 android:text="Add Memory"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16" />
@@ -55,6 +58,20 @@
                 android:padding="@dimen/default_margin"
                 android:text="@string/save"
                 android:textColor="@color/colorPrimary"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/search_bx"
                 android:visibility="visible" />
 
         </RelativeLayout>
@@ -74,10 +91,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_mini_padding"
+            android:layout_toLeftOf="@+id/layoutEditOrDelete"
             android:background="@null"
+            android:enabled="false"
             android:hint="@string/title"
             android:textColor="@color/black"
             android:textSize="@dimen/text_16" />
+
+        <LinearLayout
+            android:id="@+id/layoutEditOrDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorGrey"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_micro_padding"
+                app:srcCompat="@drawable/ic_icon_edit" />
+
+            <ImageView
+                android:id="@+id/imgDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_micro_padding"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_icon_delete_icon" />
+
+        </LinearLayout>
 
 
         <TextView
@@ -86,6 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edtTitle"
             android:layout_margin="@dimen/default_mini_padding"
+            android:enabled="false"
             android:hint="@string/date"
             android:textColor="@color/black" />
 
@@ -125,6 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_mini_padding"
+                android:clickable="false"
                 android:visibility="visible">
 
                 <LinearLayout
@@ -160,7 +207,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_mini_padding"
-                    android:text="Location" />
+                    android:text="Location"
+                    android:textSize="@dimen/text_16" />
 
                 <EditText
                     android:id="@+id/edtLocation"
@@ -169,10 +217,12 @@
                     android:layout_below="@+id/txtHeader"
                     android:layout_margin="@dimen/default_mini_padding"
                     android:background="@null"
-                    android:drawableEnd="@drawable/ic_icon_search_normal"
-                    android:drawableRight="@drawable/ic_icon_search_normal"
+                    android:drawableEnd="@drawable/ic_icon_search_selected"
+                    android:drawableRight="@drawable/ic_icon_search_selected"
+                    android:enabled="false"
                     android:hint="@string/location"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"
+                    android:textSize="@dimen/text_16" />
 
             </RelativeLayout>
 
@@ -195,7 +245,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/default_mini_padding"
-                    android:text="Contacts" />
+                    android:text="Contacts"
+                    android:textSize="@dimen/text_16" />
 
 
                 <EditText
@@ -209,10 +260,12 @@
                     android:background="@null"
                     android:drawableEnd="@drawable/ic_add_circle_outline_blue_300_24dp"
                     android:drawableRight="@drawable/ic_add_circle_outline_blue_300_24dp"
+                    android:enabled="false"
                     android:gravity="center_vertical"
                     android:hint="@string/contacts"
                     android:padding="@dimen/default_mini_padding"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_16" />
 
             </RelativeLayout>
 
@@ -233,16 +286,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/default_mini_padding"
-                    android:text="Notes" />
+                    android:text="Notes"
+                    android:textSize="@dimen/text_16" />
 
                 <EditText
                     android:id="@+id/edtNotes"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_72"
                     android:background="@null"
+                    android:enabled="false"
                     android:gravity="top|left"
                     android:hint="Notes"
-                    android:padding="@dimen/default_mini_padding" />
+                    android:padding="@dimen/default_mini_padding"
+                    android:textSize="@dimen/text_16" />
             </LinearLayout>
 
 

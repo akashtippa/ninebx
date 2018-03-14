@@ -30,10 +30,11 @@ public class DecryptedCertificate implements Parcelable {
             return new DecryptedCertificate[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -75,7 +76,7 @@ public class DecryptedCertificate implements Parcelable {
     public DecryptedCertificate() {
     }
 
-    public DecryptedCertificate(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public DecryptedCertificate(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String cer_description, String nameOnCertificate, String gender, String dateOfBirth, String timeOfBirth, String placeOfBirth, String dateOfMarriage, String placeOfMarriage, String nameOneCertificate, String nameTwoCertificate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -123,7 +124,7 @@ public class DecryptedCertificate implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(cer_description);
@@ -149,19 +150,19 @@ public class DecryptedCertificate implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -307,5 +308,31 @@ public class DecryptedCertificate implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedCertificate{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", cer_description='" + cer_description + '\'' +
+                ", nameOnCertificate='" + nameOnCertificate + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", timeOfBirth='" + timeOfBirth + '\'' +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", dateOfMarriage='" + dateOfMarriage + '\'' +
+                ", placeOfMarriage='" + placeOfMarriage + '\'' +
+                ", nameOneCertificate='" + nameOneCertificate + '\'' +
+                ", nameTwoCertificate='" + nameTwoCertificate + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

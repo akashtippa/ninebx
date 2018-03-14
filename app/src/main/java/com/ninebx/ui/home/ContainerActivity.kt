@@ -2,14 +2,17 @@ package com.ninebx.ui.home
 
 import android.app.Activity
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Member
+import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.account.addmembers.AddFamilyMemberOrUsersFragment
@@ -19,10 +22,9 @@ import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.Constants
+import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
-import com.ninebx.utility.decryptString
+import io.realm.Realm
 import io.realm.SyncUser
 
 /**
@@ -30,10 +32,16 @@ import io.realm.SyncUser
  */
 class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsView {
 
+    override fun onContactsDelete(contacts: Contacts) {
+        val intent = Intent()
+        intent.putExtra(Constants.CONTACTS_DELETE, contacts)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
     override fun onContacts(contacts: Contacts) {
         val intent = Intent()
         intent.putExtra(Constants.CONTACTS_VIEW, contacts)
-        AppLogger.e("Contacts ", " is " + contacts.lastName.decryptString())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -49,7 +57,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         this.showToast(error)
     }
 
-    override fun onNewMember(member: Member) {
+    override fun onNewMember(member: DecryptedMember) {
         val intent = Intent()
         intent.putExtra(Constants.MEMBER, member)
         setResult(Activity.RESULT_OK, intent)
@@ -59,7 +67,11 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
     override fun onMemberSignup(user: SyncUser) {
         if (addFamilyMemberOrUsersFragment != null)
             addFamilyMemberOrUsersFragment!!.onAccountCreated(user)
+
+
     }
+
+
 
     override fun showProgress(message: Int) {
         this.showProgressDialog(getString(message))
@@ -76,15 +88,26 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
     private var addFamilyMemberOrUsersFragment: AddFamilyMemberOrUsersFragment? = null
 
     override fun onConfirmPassword(password: String) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
-        val bundle = intent.extras
-        bundle.putString(Constants.USER_PASSWORD, password)
-        addFamilyMemberOrUsersFragment!!.arguments = bundle
-        fragmentTransaction.replace(R.id.fragmentContainer, addFamilyMemberOrUsersFragment).commit()
+        when( fromWhichClass ) {
+            "AddMember" -> {
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.addToBackStack(null)
+                addFamilyMemberOrUsersFragment = AddFamilyMemberOrUsersFragment()
+                val bundle = intent.extras
+                bundle.putString(Constants.USER_PASSWORD, password)
+                addFamilyMemberOrUsersFragment!!.arguments = bundle
+                fragmentTransaction.replace(R.id.fragmentContainer, addFamilyMemberOrUsersFragment).commit()
+            }
+            "DeleteMember" -> {
+                onNewMember(intent.getParcelableExtra(Constants.MEMBER))
+            }
+        }
+
+
     }
 
+
+    private lateinit var fromWhichClass: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +115,6 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
 
         if (NineBxApplication.getPreferences().currentStep < ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
-        var fromWhichClass = ""
 
         val intent = intent
         fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
@@ -101,15 +123,13 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "MemoryView" -> {
                 loadMemoryTimeLine()
             }
-            "AddMember" -> {
+            "AddMember", "DeleteMember" -> {
                 loadMasterPasswordFragment()
             }
             "Contacts" -> {
                 loadSingleContactView()
             }
         }
-
-
     }
 
     private fun loadMasterPasswordFragment() {

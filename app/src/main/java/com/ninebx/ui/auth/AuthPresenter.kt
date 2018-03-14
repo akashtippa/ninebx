@@ -2,6 +2,7 @@ package com.ninebx.ui.auth
 
 import android.os.AsyncTask
 import com.ninebx.ui.auth.email.SendEmailTask
+import com.ninebx.ui.auth.email.SendFeedbackTask
 import com.ninebx.ui.base.realm.Users
 import com.ninebx.utility.generateRandomOTP
 
@@ -11,10 +12,6 @@ import com.ninebx.utility.generateRandomOTP
 class AuthPresenter(private val authView: AuthView) {
 
     private var TAG = AuthPresenter::class.java.simpleName
-
-    init {
-        authView.navigateToSignIn()
-    }
 
     fun signUp(userName: String, password: String) {
         LoginSignupTask(userName, password, authView, "Signup").executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
@@ -32,5 +29,7 @@ class AuthPresenter(private val authView: AuthView) {
         val emailOTP = generateRandomOTP()
         SendEmailTask(emailOTP, accountEmail, authView).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, null)
     }
+
+
 
 }

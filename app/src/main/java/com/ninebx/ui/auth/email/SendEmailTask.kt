@@ -12,7 +12,9 @@ import java.io.IOException
 /**
  * Created by Alok on 30/01/18.
  */
-class SendEmailTask( private val emailOtp : String, private val emailId : String, private val authView : AuthView ) : AsyncTask<Void, Void, String>() {
+class SendEmailTask( private val emailOtp : String,
+                     private val emailId : String,
+                     private val authView : AuthView ) : AsyncTask<Void, Void, String>() {
 
     private val TAG = SendEmailTask::class.java.simpleName
 
@@ -42,12 +44,21 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
 
             email.addTo(emailId)
             email.from = "ninebx.support@nineBx.com"
-            email.subject = "OTP confirmation alert for your NineBx Application!"
-            email.text = emailOtp
+            email.subject = "NineBx - Authentication code"
+            email.text = "Dear User,\n" +
+                    "\n" +
+                    "Here is your one-time, time-based code to authenticate your device.\n" +
+                    "\n" +
+                    "Authentication code: "+emailOtp+"\n" + //TODO - Change the color
+                    "\n" +
+                    "This is a time-sensitive code. Please enter it immediately to complete sign in.\n" +
+                    "\n" +
+                    "Thanks!\n" +
+                    "\n" +
+                    "The NineBx Team"
 
             // Send email, execute http request
             val response = sendgrid.send(email)
-
             Log.d(TAG, response.message)
             return response.message
         } catch (e: SendGridException) {
@@ -55,9 +66,6 @@ class SendEmailTask( private val emailOtp : String, private val emailId : String
         } catch (e: IOException) {
             Log.e(TAG, e.toString())
         }
-
         return ""
-
-
     }
 }

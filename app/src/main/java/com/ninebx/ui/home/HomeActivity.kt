@@ -1,6 +1,5 @@
 package com.ninebx.ui.home
 
-
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -12,17 +11,21 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.support.design.internal.BottomNavigationMenuView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Html
+
+import android.view.View
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.CalendarEvents
-import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.base.realm.Notifications
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.account.AccountFragment
+import com.ninebx.ui.home.account.MyProfileFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
@@ -32,26 +35,140 @@ import com.ninebx.ui.home.customView.BottomNavigationViewHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.notifications.NotificationsFragment
+import com.ninebx.ui.home.notifications.NotificationsPresenter
+import com.ninebx.ui.home.notifications.NotificationsView
 import com.ninebx.ui.home.passcode.PassCodeDialog
 import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.ALL_COMPLETE
 import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
-import io.realm.Realm
 import io.realm.RealmResults
-import io.realm.SyncCredentials
 import kotlinx.android.synthetic.main.activity_home.*
+import q.rorbin.badgeview.QBadgeView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @Suppress("DEPRECATION")
-class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
 
-    override fun getCurrentUsers(): RealmResults<Users> {
+    private var fragmentTag = ""
+    private var addNotification = AddNotification()
+
+    override fun onCombineHomeFetched(mDecryptCombineHome: DecryptedCombine) {
+        addNotification.onCombineHomeFetched(mDecryptCombineHome)
+    }
+
+    override fun onCombineTravelFetched(mDecryptCombineTravel: DecryptedCombineTravel) {
+        addNotification.onCombineTravelFetched(mDecryptCombineTravel)  }
+
+    override fun onCombineContactsFetched(mDecryptCombineContacts: DecryptedCombineContacts) {
+        addNotification.onCombineContactsFetched(mDecryptCombineContacts)
+    }
+
+    override fun onCombinePersonalFetched(mDecryptCombinePersonal: DecryptedCombinePersonal) {
+        addNotification.onCombinePersonalFetched(mDecryptCombinePersonal)
+    }
+
+    override fun onCombineWellnessFetched(mDecryptCombineWellness: DecryptedCombineWellness) {
+        addNotification.onCombineWellnessFetched(mDecryptCombineWellness)
+    }
+
+    override fun onCombineEducationFetched(mDecryptCombineEducation: DecryptedCombineEducation) {
+        addNotification.onCombineEducationFetched(mDecryptCombineEducation)
+    }
+
+    override fun onNotificationsFetched(notifications: ArrayList<DecryptedNotifications>) {
+        count = 0
+        for (notification in notifications) {
+            count += if (notification.read) 0 else 1
+        }
+        setNotificationCount(count)
+    }
+
+    override fun onEncryptedNotifications(notifications: RealmResults<Notifications>) {}
+
+    override fun setCurrentUsers(currentUsers: ArrayList<DecryptedUsers>?) {
+        this.currentUsers = currentUsers
+        addNotification.setCurrentUsers(currentUsers)
+        //homePresenter.fetchDataInBackground()
+        if (currentUsers != null) {
+            AppLogger.d("HomeActivity", "Users : " + currentUsers)
+            AppLogger.d("HomeActivity", "Users found")
+            for( member in currentUsers[0].members) {
+                AppLogger.d("HomeActivity", "Members : " + member)
+            }
+            if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && currentUsers[0].emailAddress.isNotEmpty() ) {
+                NineBxApplication.getPreferences().userEmail = currentUsers[0].emailAddress
+                AppLogger.d("Email", "HomeActivity + setCurrentUsers : " + NineBxApplication.getPreferences().userEmail)
+            }
+            this@HomeActivity.hideProgressDialog()
+            //AppLogger.d("CurrentUser", "Users from Realm : " + currentUsers.toString())
+            //AppLogger.e("CurrentUser", "Users from Realm : " +  currentUsers[0]!!.userId)
+
+            prefrences.userID = currentUsers[0]!!.userId
+            prefrences.userFirstName = currentUsers[0]!!.firstName
+            prefrences.userLastName = currentUsers[0]!!.lastName
+
+            if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
+                NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
+
+                if( !currentUsers!![0]!!.completeProfile ) {
+                    toggleCheck(true)
+                    bottomNavigationView.menu.getItem(4).isChecked = true
+                    callBottomViewFragment(getString(R.string.account))
+                    navigateToMyProfile()
+                }
+            }
+        }
+    }
+
+    fun navigateToAddMembers() {
+
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val addFamilyUsersFragment = AddFamilyUsersFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, currentUsers!!)
+        addFamilyUsersFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+        hideQuickAdd()
+    }
+
+    private fun navigateToMyProfile() {
+
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val myProfileFragment = MyProfileFragment()
+        val bundle = Bundle()
+        bundle.putString("fromClass", "Home")
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, currentUsers!!)
+        myProfileFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
+        hideQuickAdd()
+    }
+
+    override fun getContextForScreen(): Context {
+        return this@HomeActivity
+    }
+
+    var count: Int = 0
+    override fun setNotificationCount(notificationCount: Int) {
+        if (count > 0) {
+            this.count = notificationCount
+            var bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+            var v: View = bottomNavigationMenuView.getChildAt(3)
+            QBadgeView(this).bindTarget(v).setBadgeNumber(count)
+        }
+    }
+
+    val prefrences = NineBxPreferences()
+
+    override fun getCurrentUsers(): ArrayList<DecryptedUsers> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
         return currentUsers!!
     }
-
 
     override fun showProgress(message: Int) {
         showProgressDialog(getString(message))
@@ -81,18 +198,18 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
-    var myCredentials: SyncCredentials? = null
-
-
     var backBtnCount = 0
 
-    val titleText = "<font color=#263238>nine</font><font color=#FF00B0FF>bx</font>"
+    private var currentUsers: ArrayList<DecryptedUsers>? = null
+    private lateinit var homePresenter: HomePresenter
 
-    private var currentUsers: RealmResults<Users>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        homePresenter = HomePresenter(this)
+        NotificationsPresenter(this)
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
@@ -101,10 +218,10 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
-        ivHome.hide()
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView)
 
         NineBxApplication.instance.init(this)
+        NotificationsPresenter(this)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             toggleCheck(true)
@@ -129,22 +246,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         }
 
 
-        toggleToolbarImage()
-        ivHome.setOnClickListener {
-            layoutQuickAdd.show()
-            ivHome.hide()
-            toggleCheck(false)
-            toggleToolbarImage()
-            callHomeFragment()
-            showBottomView()
-            ivBack.hide()
-        }
-
-        ivBack.setOnClickListener {
-            onBackPressed()
-            KeyboardUtil.hideSoftKeyboard(this)
-        }
-
         layoutQuickAdd.setOnClickListener {
             startCameraIntent()
         }
@@ -152,38 +253,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         callHomeFragment()
         toggleCheck(false)
         //SearchUtils.search()
-
-        prepareRealmConnections(this, true, "Users", object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-
-                currentUsers = getCurrentUsers(realm!!)
-                if (currentUsers != null) {
-                    this@HomeActivity.hideProgressDialog()
-                    AppLogger.e("CurrentUser", "Users from Realm : " + currentUsers.toString())
-                    for (member in currentUsers!![0]!!.members) {
-
-                        AppLogger.d("CurrentUser", "Members : " + member.toString())
-                        AppLogger.e("Name ", "is : " + member.firstName)
-                    }
-                    if (NineBxApplication.getPreferences().currentStep == FINGER_PRINT_COMPLETE) {
-
-                        toggleCheck(true)
-                        bottomNavigationView.menu.getItem(4).isChecked = true
-                        callBottomViewFragment(getString(R.string.account))
-
-                        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.add_others_to_account))
-                        val fragmentTransaction = supportFragmentManager.beginTransaction()
-                        fragmentTransaction.addToBackStack(null)
-                        val addFamilyUsersFragment = AddFamilyUsersFragment()
-                        val bundle = Bundle()
-                        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(currentUsers!!))
-                        addFamilyUsersFragment.arguments = bundle
-                        fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
-                        hideQuickAdd()
-                    }
-                }
-            }
-        })
+        this.showProgressDialog(getString(R.string.loading))
+        homePresenter.fetchCurrentUsers()
+        val awsSecureFileTransfer = AWSSecureFileTransfer(this@HomeActivity)
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
@@ -244,7 +316,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-
         if (requestCode == PERMISSIONS_REQUEST_CODE_CAMERA) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 beginCameraAttachmentFlow()
@@ -324,27 +395,23 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             cvAttachments.show()
         } else {
 
-            if (imgToolbar.isVisible() && mImagesList.size == 0)
+            if ( fragmentTag == "Home" && mImagesList.size == 0 )
                 layoutQuickAdd.show()
+            else
+                layoutQuickAdd.hide()
 
             cvAttachments.hide()
         }
     }
 
-    fun pxFromDp(dp: Float, mContext: Context): Float {
-        return dp * mContext.resources.displayMetrics.density
-    }
-
-    fun toggleToolbarImage() {
-        imgToolbar.show()
-        toolbarTitle.hide()
-
-    }
-
-    private fun callHomeFragment() {
+    fun callHomeFragment() {
+        fragmentTag = "Home"
+        toggleCheck(false)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
-        fragmentTransaction.replace(R.id.frameLayout, HomeFragment()).commit()
+        fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
+        prefrences.currentBox = getString(R.string.home_amp_money)
+        showBottomView()
     }
 
     private fun toggleCheck(isCheckable: Boolean) {
@@ -353,20 +420,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         bottomNavigationView.menu.getItem(2).isCheckable = isCheckable
         bottomNavigationView.menu.getItem(3).isCheckable = isCheckable
         bottomNavigationView.menu.getItem(4).isCheckable = isCheckable
-    }
-
-    fun changeToolbarTitle(title: String) {
-        toolbarTitle.show()
-        toolbarTitle.text = Html.fromHtml(title)
-        imgToolbar.hide()
-    }
-
-    fun hideToolbar() {
-        toolbar.hide()
-    }
-
-    fun showToolbar() {
-        toolbar.show()
     }
 
 
@@ -413,33 +466,29 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
     }
 
     private fun callBottomViewFragment(option: String) {
-//        toolbarTitle.textSize = pxFromDp(10F, this)
-        ivHome.show()
         layoutQuickAdd.hide()
-        toolbarTitle.show()
-        imgToolbar.hide()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.disallowAddToBackStack()
-
+        fragmentTag = option
         when (option) {
             getString(R.string.search) -> {
-                toolbarTitle.text = getString(R.string.search)
-                fragmentTransaction.replace(R.id.frameLayout, SearchFragment()).commit()
+                fragmentTransaction.replace(R.id.frameLayout, SearchFragment.getSearchInstance()).commit()
             }
             getString(R.string.calendar) -> {
-                toolbarTitle.text = getString(R.string.calendar)
-                fragmentTransaction.replace(R.id.frameLayout, CalendarFragment()).commit()
+                fragmentTransaction.replace(R.id.frameLayout, CalendarFragment.getCalendarInstance()).commit()
             }
             getString(R.string.lists) -> {
-                toolbarTitle.text = getString(R.string.lists)
-                fragmentTransaction.replace(R.id.frameLayout, ListsFragment()).commit()
+                val listsFragment = ListsFragment()
+                val bundle = Bundle()
+                bundle.putString("homeScreen", "bottomScreen")
+                bundle.putInt("category", 0)
+                listsFragment.arguments = bundle
+                fragmentTransaction.replace(R.id.frameLayout, listsFragment).commit()
             }
             getString(R.string.notifications) -> {
-                toolbarTitle.text = getString(R.string.notifications)
                 fragmentTransaction.replace(R.id.frameLayout, NotificationsFragment()).commit()
             }
             getString(R.string.account) -> {
-                toolbarTitle.text = getString(R.string.account)
                 fragmentTransaction.replace(R.id.frameLayout, AccountFragment()).commit()
             }
         }
@@ -451,7 +500,6 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
 
     override fun onBackPressed() {
         var isToWorkOnBack = true
-        showToolbar()
         showBottomView()
         if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack()) {
             val list = supportFragmentManager.fragments
@@ -485,17 +533,8 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         }
     }
 
-    fun showHomeNhideQuickAdd() {
+    fun hideQuickAdd() {
         layoutQuickAdd.hide()
-        ivHome.show()
-        ivBack.show()
-    }
-
-    fun hideHomeNShowQuickAdd() {
-        layoutQuickAdd.show()
-        ivHome.hide()
-        ivBack.hide()
-//        toolbarTitle.textSize = pxFromDp(16F, this)
     }
 
 
@@ -518,29 +557,9 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
         hideShowAttachments()
     }
 
-    fun hideHomeIcon() {
-        ivHome.hide()
-    }
-
-    fun showHomeIcon() {
-        ivHome.show()
-    }
-
-    fun hideBackIcon() {
-        ivBack.hide()
-    }
-
-    fun showBackIcon() {
-        ivBack.show()
-    }
-
-    fun hideQuickAdd() {
-        layoutQuickAdd.hide()
-    }
 
     fun showQuickAdd() {
         imgCameraNineBx.setImageResource(R.drawable.ic_icon_add_photo_memories)
-
         tvQuickAdd.show()
         layoutQuickAdd.show()
     }
@@ -579,6 +598,4 @@ class HomeActivity : AppCompatActivity(), HomeView, CustomBottomSheetProfileDial
             }
         }
     }
-
-
 }

@@ -12,10 +12,11 @@ import io.realm.annotations.Required;
 public class MainMemories extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private String selectionType = "";
+
     @Required private String institutionName = "";
     @Required private String accountName = "";
 
@@ -42,7 +43,16 @@ public class MainMemories extends RealmObject {
     @Required private String title = "";
     @Required private String createdUser = "";
 
-    public MainMemories(String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public MainMemories(long id, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String paymentMethodOnFile, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String title, String createdUser) {
+        this.id = id;
         this.selectionType = selectionType;
         this.institutionName = institutionName;
         this.accountName = accountName;

@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeView
-import com.ninebx.ui.base.realm.CalendarEvents
 import kotlinx.android.synthetic.main.fragment_add_calendar_every.*
 import android.content.Intent
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -23,16 +22,22 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.ninebx.ui.base.ActionClickListener
 import com.ninebx.ui.base.kotlin.*
+import com.ninebx.ui.base.realm.*
+import com.ninebx.ui.home.calendar.CalendarFragment
+import com.ninebx.ui.home.calendar.CalendarFragment.Companion.getCalendarInstance
 import com.ninebx.ui.home.customView.CalendarBottomFragment
-import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.REALM_END_POINT_CALENDAR_EVENTS
+import io.realm.Realm
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -40,7 +45,7 @@ import kotlin.collections.ArrayList
 /***
  * Created by Alok Omkar on 10/01/18.
  */
-class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.BottomSheetSelectedListener {
+class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.BottomSheetSelectedListener, AWSFileTransferHelper.FileOperationsCompletionListener {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,11 +64,25 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private var isAddEvent = false
     private lateinit var mSelectedDate : Date
 
+    var editEnabled : Boolean = false
+
     private var mSelectedDateIndex = 0
+
+    private lateinit var calendarRealm: Realm
+
+    private var startDateCalendar: Calendar?= null
+    private var endDateCalendar: Calendar?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+
+        prepareRealmConnections(context, true, Constants.REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                calendarRealm = realm!!
+                context!!.hideProgressDialog()
+            }
+        })
 
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
         optionsDialogFragment = CalendarBottomFragment()
@@ -76,8 +95,20 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
         if( !isAddEvent ) {
             mSelectedDateIndex = mCalendarEvent.startsDate.indexOf((getDateMonthYearTimeFormat(mSelectedDate)))
         }
+        if( mSelectedDateIndex == -1 ) mSelectedDateIndex = 0
 
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
+
+        if(isAddEvent){
+            editBtn.hide()
+            deleteBtn.hide()
+            enableEdit()
+        }
+        else{
+            editBtn.show()
+            deleteBtn.show()
+            disableEdit()
+        }
+
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         ivBack.setOnClickListener { goBack() }
@@ -109,27 +140,48 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             //mAWSFileTransferHelper.decryptEncryptedFile( File("/storage/emulated/0/ios_normal.jpeg"), "nB8hEnaqppfWOp5L".toCharArray())
             //decryptFileIOS( File("/storage/emulated/0/ios_normal.jpeg"), "nB8hEnaqppfWOp5L".toCharArray())
         }
+
+        deleteBtn.setOnClickListener {
+
+            if(mCalendarEvent.id != null) {
+                AlarmJob.cancelJob(mCalendarEvent.id.toString()) //cancel alarm
+                val instance = getCalendarInstance()// remove from recylerview
+                instance.mDayEventsAdapter.remove(mCalendarEvent)
+                removeCalenderEvent() // remove event from database
+                goBack()
+            }
+        }
+
+
+        editBtn.setOnClickListener {
+                enableEdit()
+        }
+
         layoutEndRepeat.hide()
-        setValues( mCalendarEvent )
+        setValues( )
 
         switchAllDay.setOnCheckedChangeListener { _, isChecked -> changeDateFormat(isChecked) }
 
         tvStarts.setOnClickListener {
-            val calendar = Calendar.getInstance()
+            startDateCalendar = Calendar.getInstance()
             if( mCalendarEvent.startsDate.size > 0 )
-                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
-            showDateTimeSelector( tvStarts, calendar, switchAllDay.isSelected )
+                startDateCalendar!!.time = parseDateForFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!, DATE_FORMAT)
+            showDateTimeSelector( tvStarts, startDateCalendar, switchAllDay.isChecked )
         }
 
         tvEnds.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            if( mCalendarEvent.endsDate.size > 0 )
-                calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
-            showDateTimeSelector(tvEnds, calendar, switchAllDay.isSelected)
+            if( startDateCalendar != null ) {
+                endDateCalendar = Calendar.getInstance()
+                if( mCalendarEvent.endsDate.size > 0 )
+                    endDateCalendar!!.time = parseDateForFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!, DATE_FORMAT)
+                showDateTimeSelector( tvEnds, endDateCalendar, startDateCalendar!!, switchAllDay.isChecked)
+            }
+            else {
+                 context!!.showToast(R.string.pick_start_date_for_event)
+            }
         }
 
         cvAttachment.setOnClickListener { startCameraIntent() }
-
         layoutRepeat.setOnClickListener { showSelectionDialog(tvRepeat.text.toString().trim(), "Repeat" ) }
         layoutEndRepeat.setOnClickListener {
 
@@ -161,11 +213,11 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                                 .build(activity)
                         startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE)
                     } catch (e: GooglePlayServicesRepairableException) {
-                        AppLogger.e(TAG, "GooglePlayServicesRepairableException: " + e.message)
+                        //AppLogger.e(TAG, "GooglePlayServicesRepairableException: " + e.message)
                         e.printStackTrace()
                         NineBxApplication.getPreferences().isPasswordEnabled = false
                     } catch (e: GooglePlayServicesNotAvailableException) {
-                        AppLogger.e(TAG, "GooglePlayServicesNotAvailableException: " + e.message)
+                        //AppLogger.e(TAG, "GooglePlayServicesNotAvailableException: " + e.message)
                         e.printStackTrace()
                         NineBxApplication.getPreferences().isPasswordEnabled = false
                     }
@@ -176,20 +228,74 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             }
             else false
         }
+        if( !isAddEvent ) {
+            for( imageFilePath in mCalendarEvent.backingImages ) {
+                mAWSFileTransferHelper.beginDownload(imageFilePath.stringValue)
+            }
+        }
+    }
+
+    private fun disableEdit() {
+        var appIcon = context!!.resources.getDrawable(R.drawable.search_bx)
+        appIcon.setBounds(0,0,120,120)
+        tvSave.text = ""
+        tvSave.setCompoundDrawables(null, null, appIcon, null)
+        editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit))
+        etTitle.isEnabled = false
+        etLocation.isEnabled = false
+        tvStarts.isEnabled = false
+        tvEnds.isEnabled = false
+        switchAllDay.isEnabled = false
+        etNotes.isEnabled = false
+        layoutRepeat.isEnabled = false
+        layoutEndRepeat.isEnabled = false
+        layoutReminder.isEnabled = false
+        cvAttachment.isEnabled = false
+        etAttachment.isEnabled = false
+    }
+
+    private fun enableEdit() {
+        tvSave.text = "Save"
+        tvSave.setCompoundDrawables(null,null,null,null)
+        editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit_blue))
+        etTitle.isEnabled = true
+        etLocation.isEnabled = true
+        tvStarts.isEnabled = true
+        tvEnds.isEnabled = true
+        switchAllDay.isEnabled = true
+        etNotes.isEnabled = true
+        layoutRepeat.isEnabled = true
+        layoutEndRepeat.isEnabled = true
+        layoutReminder.isEnabled = true
+        cvAttachment.isEnabled = true
+        etAttachment.isEnabled = false
+
+    }
+
+    private fun removeCalenderEvent() {
+
+        prepareRealmConnections(context, false, REALM_END_POINT_CALENDAR_EVENTS, object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                realm?.beginTransaction()
+                mCalendarEvent.deleteFromRealm()
+                realm?.commitTransaction()
+            }
+        })
+
     }
 
     private fun downloadImageAws() {
         mAWSFileTransferHelper.beginDownload("IMG-20180121-WA0000.jpg")
     }
 
-    private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, isAllDay: Boolean) {
+    private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, minDateCalendar : Calendar, isAllDay: Boolean) {
 
         if( isAllDay ) {
             calendar!!.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
         }
 
-        getDateFromPicker( context!!, calendar!!, object : DateTimeSelectionListener {
+        getDateFromPicker( context!!, calendar!!, minDateCalendar, object : DateTimeSelectionListener {
 
             override fun onDateTimeSelected(selectedDate: Calendar) {
 
@@ -210,28 +316,46 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     }
 
+    private fun showDateTimeSelector(dateTimeTextView: TextView?, calendar: Calendar?, isAllDay: Boolean) {
+
+        if( isAllDay ) {
+            calendar!!.set(Calendar.HOUR_OF_DAY, 9)
+            calendar.set(Calendar.MINUTE, 0)
+        }
+
+        getDateFromPicker( context!!, calendar!!, object : DateTimeSelectionListener {
+
+            override fun onDateTimeSelected(selectedDate: Calendar) {
+
+                if( isAllDay ) {
+                    setDateTime( dateTimeTextView, selectedDate, isAllDay )
+                }
+                else {
+                    getTimeFromPicker( context!!, selectedDate, object  : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            selectedDate.set(Calendar.SECOND, 0)
+                            setDateTime(dateTimeTextView, selectedDate, isAllDay)
+                        }
+
+                    })
+                }
+
+            }
+        })
+
+    }
+
     private fun setDateTime(dateTimeTextView: TextView?, selectedDate: Calendar, allDay: Boolean) {
 
         if( allDay ) {
-            dateTimeTextView!!.text = getDateMonthYearFormat(selectedDate.time)
+            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time, DATE_FORMAT)
         }
         else
-            dateTimeTextView!!.text = getDateMonthYearTimeFormat(selectedDate.time)
+            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time , DATE_FORMAT)
 
-        if( dateTimeTextView.id == tvStarts.id ) {
-            if( mCalendarEvent.startsDate.size > 0 )
-                mCalendarEvent.startsDate[mSelectedDateIndex] = (getDateMonthYearTimeFormat(selectedDate.time))
-            else
-                mCalendarEvent.startsDate.add( (getDateMonthYearTimeFormat(selectedDate.time)) )
-        }
-        else {
-            if( mCalendarEvent.endsDate.size > 0 )
-                mCalendarEvent.endsDate[mSelectedDateIndex] = (getDateMonthYearTimeFormat(selectedDate.time))
-            else
-                mCalendarEvent.endsDate.add( (getDateMonthYearTimeFormat(selectedDate.time)) )
-        }
     }
 
+    var endRepeatDate: Calendar = Calendar.getInstance()
     private fun showSelectionDialog( selectedInterval : String, selectionType : String ) {
         val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -258,13 +382,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
                 intervals.add("None")
 
-                if( switchAllDay.isSelected ) {
-                    intervals.add("On day of event(9:00 AM)")
-                    intervals.add("One day before(9:00 AM)")
-                    intervals.add("Two days before(9:00 AM)")
-                    intervals.add("1 week before")
-                }
-                else {
+                if( !switchAllDay.isChecked ) {
                     intervals.add("At time of event")
                     intervals.add("5 minutes before")
                     intervals.add("15 minutes before")
@@ -275,8 +393,13 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     intervals.add("2 day before")
                     intervals.add("1 week before")
                 }
+                else {
+                    intervals.add("On day of event(9:00 AM)")
+                    intervals.add("One day before(9:00 AM)")
+                    intervals.add("Two days before(9:00 AM)")
+                    intervals.add("1 week before")
 
-
+                }
             }
         }
 
@@ -304,6 +427,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
                         getDateFromPicker(context!!, calendar, object : DateTimeSelectionListener {
                             override fun onDateTimeSelected(selectedDate: Calendar) {
+                                endRepeatDate = selectedDate
                                 if (mCalendarEvent.endRepeat.size > 0)
                                     mCalendarEvent.endRepeat[mSelectedDateIndex] = (getDateMonthYearFormat(selectedDate.time))
                                 else
@@ -347,7 +471,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private val TAG: String = AddEditEventFragment::class.java.simpleName
-
+    private val DATE_FORMAT = "MMMM dd, yyyy hh:mm a"
     //a Uri object to store file path
     private var filePath: Uri? = null
     private var mImagesList : ArrayList<Uri> = ArrayList()
@@ -356,12 +480,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             NineBxApplication.getPreferences().isPasswordEnabled = false
             if (resultCode == RESULT_OK) {
                 val place = PlaceAutocomplete.getPlace(context, data)
-                AppLogger.i(TAG, "Place: " + place.name)
+                //AppLogger.i(TAG, "Place: " + place.name)
                 etLocation.setText( place.name )
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 val status = PlaceAutocomplete.getStatus(context, data)
                 // TODO: Handle the error.
-                AppLogger.i(TAG, status.statusMessage!!)
+                //AppLogger.i(TAG, status.statusMessage!!)
 
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
@@ -399,6 +523,9 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     private var attachmentRecyclerAdapter : AttachmentRecyclerViewAdapter?= null
     private fun setImagesAdapter() {
+        if( rvAttachments == null ) {
+            return
+        }
         attachmentRecyclerAdapter = AttachmentRecyclerViewAdapter(mImagesList, object : ActionClickListener {
             override fun onItemClick(position: Int, action: String) {
                 when (action) {
@@ -418,7 +545,21 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun uploadImageAws() {
         if( mImagesList.size > 0 ) {
             for( imageUri in mImagesList ) {
-                mAWSFileTransferHelper.beginUpload(getPath(imageUri))
+                val actualFilePath = getPath(imageUri)
+                val imageFile = File(actualFilePath)
+                val thumbFile = File( imageFile.parent + "/" + imageFile.nameWithoutExtension + "_thumb." + imageFile.extension )
+                saveFileTask( imageUri, thumbFile, object : AWSFileTransferHelper.FileOperationsCompletionListener {
+                    override fun onSuccess(outputFile: File?) {
+                        val renameFile = File(imageFile.parent + "/" + imageFile.nameWithoutExtension + "_normal." + imageFile.extension)
+                        //AppLogger.d(TAG, "New File Name : " + renameFile.absolutePath)
+                        imageFile.renameTo(renameFile)
+                        mCalendarEvent.backingImages.add(RealmString(thumbFile.name))
+                        mCalendarEvent.backingImages.add(RealmString(imageFile.name))
+                        mAWSFileTransferHelper.beginUpload(thumbFile.absolutePath)
+                        mAWSFileTransferHelper.beginUpload(imageFile.absolutePath)
+                    }
+
+                })
             }
         }
     }
@@ -427,36 +568,42 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     var PLACE_AUTOCOMPLETE_REQUEST_CODE : Int = 1
 
     private fun changeDateFormat(isAllDay: Boolean) {
-        val calendar = Calendar.getInstance()
+        if( startDateCalendar != null ) {
 
-        if( mCalendarEvent.startsDate.size > 0 )
-            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
+            if( isAllDay ) {
+                startDateCalendar!!.set(Calendar.HOUR_OF_DAY, 0)
+                startDateCalendar!!.set(Calendar.MINUTE, 0)
+            }
+            setDateTime(tvStarts, startDateCalendar!!, isAllDay)
 
-        if( isAllDay ) {
-            calendar.set(Calendar.HOUR_OF_DAY, 0)
-            calendar.set(Calendar.MINUTE, 0)
+            if( endDateCalendar != null ) {
+                if( isAllDay ) {
+                    endDateCalendar!!.set(Calendar.HOUR_OF_DAY, 0)
+                    endDateCalendar!!.set(Calendar.MINUTE, 0)
+                }
+                setDateTime(tvEnds, endDateCalendar!!, isAllDay)
+            }
+
+
         }
-        setDateTime(tvStarts, calendar, isAllDay)
-
-        if( mCalendarEvent.endsDate.size > 0 )
-            calendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!)
-
-        if( isAllDay ) {
-            calendar.set(Calendar.HOUR_OF_DAY, 0)
-            calendar.set(Calendar.MINUTE, 0)
-        }
-        setDateTime(tvEnds, calendar, isAllDay)
-        if( mCalendarEvent.isAllDay.size > 0 )
-            mCalendarEvent.isAllDay[mSelectedDateIndex] = isAllDay
-        else
-            mCalendarEvent.isAllDay.add( isAllDay )
 
     }
 
-    private fun setValues(mCalendarEvent: CalendarEvents) {
+    private fun setValues() {
+
         if( !isAddEvent ) {
 
-            etTitle.setText(  mCalendarEvent.alert[mSelectedDateIndex]!! )
+            if( mCalendarEvent.startsDate.size > 0 ) {
+                startDateCalendar = Calendar.getInstance()
+                startDateCalendar!!.time = parseDateForFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!, DATE_FORMAT)
+            }
+
+            if( mCalendarEvent.endsDate.size > 0 ) {
+                endDateCalendar = Calendar.getInstance()
+                endDateCalendar!!.time = parseDateForFormat(mCalendarEvent.endsDate[mSelectedDateIndex]!!, DATE_FORMAT)
+            }
+
+            etTitle.setText(  mCalendarEvent.title[mSelectedDateIndex]!! )
             etLocation.setText( mCalendarEvent.location[mSelectedDateIndex]!! )
             tvStarts.text = (mCalendarEvent.startsDate[mSelectedDateIndex]!!)
             tvEnds.text = (mCalendarEvent.endsDate[mSelectedDateIndex]!!)
@@ -471,6 +618,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             hideShowEndRepeat()
 
             tvReminder.text = mCalendarEvent.reminder[mSelectedDateIndex]!!
+            showAttachments()
+        }
+    }
+
+    private fun showAttachments() {
+        for( attachmentName in mCalendarEvent.backingImages ) {
 
         }
     }
@@ -489,43 +642,156 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             context!!.showToast(R.string.error_empty_title)
             return false
         }
-        if( mCalendarEvent.title.size > 0 )
-            mCalendarEvent.title[mSelectedDateIndex] = (etTitle.text.toString().trim())
-        else
-            mCalendarEvent.title.add( (etTitle.text.toString().trim()) )
 
         if( tvStarts.text.toString().isEmpty() ) {
             tvStarts.requestFocus()
             context!!.showToast(R.string.error_empty_start_date)
             return false
         }
-        //mCalendarEvent.startsDate[mSelectedDateIndex] = tvStarts.text.toString().trim()
 
         if( tvEnds.text.toString().isEmpty() ) {
             tvEnds.requestFocus()
             context!!.showToast(R.string.error_empty_end_date)
             return false
         }
-        //mCalendarEvent.endsDate[mSelectedDateIndex] = tvEnds.text.toString().trim()
 
         return true
     }
 
     private fun saveCalendarEvent() {
 
-        if( isAddEvent ) mCalendarEvent.id = getUniqueId()
+        calendarRealm.beginTransaction()
 
-        val eventCalendar = Calendar.getInstance()
-        eventCalendar.time = parseDateMonthYearTimeFormat(mCalendarEvent.startsDate[mSelectedDateIndex]!!)
-        AlarmJob.scheduleJob( mCalendarEvent, eventCalendar )
+        if( isAddEvent ) mCalendarEvent.id = getUniqueId()
+        else {
+            val id = mCalendarEvent.id
+            mCalendarEvent = CalendarEvents()
+            mCalendarEvent.id = id
+        }
+
+        val startRepeatEvent = tvRepeat.text.toString().trim()
+        val endRepeatEvent = tvEndRepeat.text.toString().trim()
+        val isAllDay = switchAllDay.isChecked
+        var maxRepeatDays = 60
+
+        val eventTitle = etTitle.text.toString().trim()
+        val eventLocation = etLocation.text.toString().trim()
+        val eventNotes = etNotes.text.toString().trim()
+        val eventReminder = tvReminder.text.toString().trim()
+        val eventReminderSet = tvReminder.text.toString().trim() != "None"
+
+        if( startRepeatEvent != "Never" ) {
+            //Set repeating events here
+            val startDate = startDateCalendar!!.time
+            if( endRepeatEvent != "Never" ) {
+
+                val endDate = endRepeatDate.time //endDateCalendar!!.time
+                val noOfDays = getDateDifference(startDate, endDate)
+                if( noOfDays > 0 ) {
+                    maxRepeatDays = when( startRepeatEvent ) {
+                        REMINDER_EveryDay -> noOfDays
+                        REMINDER_EveryWeek -> noOfDays / 7
+                        REMINDER_Every2Weeks -> noOfDays / 14
+                        REMINDER_EveryMonth -> noOfDays / 30
+                        REMINDER_EveryYear -> noOfDays / 365
+                        else -> maxRepeatDays
+                    }
+                }
+                for( index in 0..maxRepeatDays ) {
+
+                    var eventStartDate : Date ?= null
+                    var eventEndDate : Date ?= null
+
+                    when( startRepeatEvent ) {
+                         REMINDER_EveryDay -> {
+                            startDateCalendar!!.add( Calendar.DATE, index )
+                            eventStartDate = startDateCalendar!!.time
+                            endDateCalendar!!.add( Calendar.DATE, index )
+                            eventEndDate = startDateCalendar!!.time
+                        }
+                        REMINDER_EveryWeek -> {
+                            startDateCalendar!!.add( Calendar.DATE, index * 7 )
+                            eventStartDate = startDateCalendar!!.time
+                            endDateCalendar!!.add( Calendar.DATE, index * 7)
+                            eventEndDate = startDateCalendar!!.time
+                        }
+                        REMINDER_Every2Weeks -> {
+                            startDateCalendar!!.add( Calendar.DATE, index * 14 )
+                            eventStartDate = startDateCalendar!!.time
+                            endDateCalendar!!.add( Calendar.DATE, index * 14)
+                            eventEndDate = startDateCalendar!!.time
+                        }
+                        REMINDER_EveryMonth -> {
+                            startDateCalendar!!.add( Calendar.MONTH, index )
+                            eventStartDate = startDateCalendar!!.time
+                            endDateCalendar!!.add( Calendar.MONTH, index)
+                            eventEndDate = startDateCalendar!!.time
+                        }
+                        REMINDER_EveryYear -> {
+                            startDateCalendar!!.add( Calendar.YEAR, index )
+                            eventStartDate = startDateCalendar!!.time
+                            endDateCalendar!!.add( Calendar.YEAR, index)
+                            eventEndDate = startDateCalendar!!.time
+                        }
+                    }
+
+                    mCalendarEvent.title.add(eventTitle)
+                    mCalendarEvent.location.add(eventLocation)
+                    mCalendarEvent.notes.add(eventNotes)
+                    mCalendarEvent.reminder.add(eventReminder)
+                    mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
+                    mCalendarEvent.startsDate.add(parseDateForFormat(eventStartDate!!, DATE_FORMAT))
+                    mCalendarEvent.endsDate.add(parseDateForFormat(eventEndDate!!, DATE_FORMAT))
+                    mCalendarEvent.repeats.add(startRepeatEvent)
+                    mCalendarEvent.endRepeat.add(endRepeatEvent)
+                    mCalendarEvent.eventID.add(index.toString())
+                    mCalendarEvent.isAllDay.add(isAllDay)
+                    AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
+                }
+            }
+            else {
+                mCalendarEvent.title.add(eventTitle)
+                mCalendarEvent.location.add(eventLocation)
+                mCalendarEvent.notes.add(eventNotes)
+                mCalendarEvent.reminder.add(eventReminder)
+                mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
+                mCalendarEvent.startsDate.add(parseDateForFormat(startDateCalendar!!.time, DATE_FORMAT))
+                mCalendarEvent.endsDate.add(parseDateForFormat(endDateCalendar!!.time, DATE_FORMAT))
+                mCalendarEvent.repeats.add(startRepeatEvent)
+                mCalendarEvent.endRepeat.add(endRepeatEvent)
+                mCalendarEvent.eventID.add("0")
+                mCalendarEvent.isAllDay.add(isAllDay)
+                AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
+
+            }
+        }
+        else {
+            //Non repeating events here
+            mCalendarEvent.title.add(eventTitle)
+            mCalendarEvent.location.add(eventLocation)
+            mCalendarEvent.notes.add(eventNotes)
+            mCalendarEvent.reminder.add(eventReminder)
+            mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
+            mCalendarEvent.startsDate.add(parseDateForFormat(startDateCalendar!!.time, DATE_FORMAT))
+            mCalendarEvent.endsDate.add(parseDateForFormat(endDateCalendar!!.time, DATE_FORMAT))
+            mCalendarEvent.repeats.add(startRepeatEvent)
+            mCalendarEvent.endRepeat.add(endRepeatEvent)
+            mCalendarEvent.eventID.add("0")
+            mCalendarEvent.isAllDay.add(isAllDay)
+            AlarmJob.scheduleJob( mCalendarEvent, startDateCalendar!! )
+        }
+
         uploadImageAws()
-        //goBack()
+        calendarRealm.copyToRealmOrUpdate(mCalendarEvent)
+        //mCalendarEvent.insertOrUpdate( calendarRealm )
+        calendarRealm.commitTransaction()
+        goBack()
     }
 
     fun goBack() {
         NineBxApplication.getPreferences().isPasswordEnabled = false
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.calendar))
-        NineBxApplication.instance.activityInstance!!.showToolbar()
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.calendar))
+
         NineBxApplication.instance.activityInstance!!.showBottomView()
         NineBxApplication.instance.activityInstance!!.onBackPressed()
     }
@@ -597,6 +863,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             }
         }
 
+    }
+
+    override fun onSuccess(outputFile: File?) {
+        if( !mImagesList.contains(Uri.fromFile(outputFile)))
+            mImagesList.add(Uri.fromFile(outputFile))
+        setImagesAdapter()
     }
 
     fun setCalendarEvent(event: CalendarEvents) {

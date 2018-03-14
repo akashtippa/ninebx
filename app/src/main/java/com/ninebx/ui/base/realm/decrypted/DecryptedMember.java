@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.Ignore;
+
 /**
  * Created by Alok on 10/02/18.
  */
@@ -21,6 +23,8 @@ public class DecryptedMember implements Parcelable {
             return new DecryptedMember[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     public Boolean isCompleteProfile = false;
     private String firstName = "";
     private String lastName = "";
@@ -79,6 +83,10 @@ public class DecryptedMember implements Parcelable {
     }
 
     public DecryptedMember() {
+    }
+
+    public DecryptedMember(String userId) {
+        this.userId = userId;
     }
 
     public DecryptedMember(String firstName, String lastName, String relationship, String role, String email, String dateOfBirth, String anniversary, String gender, String mobileNumber, String street_1, String street_2, String city, String state, String zipCode, String country, String userId, Boolean homeAdd, Boolean homeEdit, Boolean homeView, Boolean travelAdd, Boolean travelEdit, Boolean travelView, Boolean contactsAdd, Boolean contactsEdit, Boolean contactsView, Boolean educationlAdd, Boolean educationlEdit, Boolean educationlView, Boolean personalAdd, Boolean personalEdit, Boolean personalView, Boolean interestsAdd, Boolean interestsEdit, Boolean interestsView, Boolean wellnessAdd, Boolean wellnessEdit, Boolean wellnessView, Boolean memoriesAdd, Boolean memoriesEdit, Boolean memoriesView, Boolean shoppingAdd, Boolean shoppingEdit, Boolean shoppingView, Boolean addingRemovingMember, Boolean changingMasterPassword, Boolean isCompleteProfile, String profilePhoto) {
@@ -615,55 +623,24 @@ public class DecryptedMember implements Parcelable {
 
     @Override
     public String toString() {
-        return "DecryptedMember{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", relationship='" + relationship + '\'' +
-                ", role='" + role + '\'' +
-                ", email='" + email + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", anniversary='" + anniversary + '\'' +
-                ", gender='" + gender + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", street_1='" + street_1 + '\'' +
-                ", street_2='" + street_2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", country='" + country + '\'' +
-                ", userId='" + userId + '\'' +
-                ", homeAdd=" + homeAdd +
-                ", homeEdit=" + homeEdit +
-                ", homeView=" + homeView +
-                ", travelAdd=" + travelAdd +
-                ", travelEdit=" + travelEdit +
-                ", travelView=" + travelView +
-                ", contactsAdd=" + contactsAdd +
-                ", contactsEdit=" + contactsEdit +
-                ", contactsView=" + contactsView +
-                ", educationlAdd=" + educationlAdd +
-                ", educationlEdit=" + educationlEdit +
-                ", educationlView=" + educationlView +
-                ", personalAdd=" + personalAdd +
-                ", personalEdit=" + personalEdit +
-                ", personalView=" + personalView +
-                ", interestsAdd=" + interestsAdd +
-                ", interestsEdit=" + interestsEdit +
-                ", interestsView=" + interestsView +
-                ", wellnessAdd=" + wellnessAdd +
-                ", wellnessEdit=" + wellnessEdit +
-                ", wellnessView=" + wellnessView +
-                ", memoriesAdd=" + memoriesAdd +
-                ", memoriesEdit=" + memoriesEdit +
-                ", memoriesView=" + memoriesView +
-                ", shoppingAdd=" + shoppingAdd +
-                ", shoppingEdit=" + shoppingEdit +
-                ", shoppingView=" + shoppingView +
-                ", addingRemovingMember=" + addingRemovingMember +
-                ", changingMasterPassword=" + changingMasterPassword +
-                ", isCompleteProfile=" + isCompleteProfile +
-                ", profilePhoto='" + profilePhoto + '\'' +
-                '}';
+        return firstName + " " + lastName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedMember member = (DecryptedMember) o;
+
+        return userId.equals(member.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return userId.hashCode();
+    }
+
+
 
 }

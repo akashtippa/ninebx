@@ -61,6 +61,13 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <FrameLayout
+        android:id="@+id/childContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone" />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -120,6 +127,7 @@
                 android:layout_marginTop="@dimen/default_mini_padding"
                 android:background="@null"
                 android:hint="First Name"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -151,6 +159,7 @@
                 android:layout_marginTop="@dimen/default_mini_padding"
                 android:background="@null"
                 android:hint="Last Name"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
 
@@ -245,6 +254,7 @@
                         android:layout_marginTop="@dimen/default_mini_padding"
                         android:background="@null"
                         android:hint="Email address"
+                        android:singleLine="true"
                         android:textSize="@dimen/_12sdp" />
 
                     <View

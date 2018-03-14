@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import com.ninebx.ui.base.realm.RealmString;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -15,20 +17,9 @@ import io.realm.annotations.Required;
  * Created by Alok on 11/01/18.
  */
 public class DecryptedCalendarEvents implements Parcelable {
-
-    public static final Creator<DecryptedCalendarEvents> CREATOR = new Creator<DecryptedCalendarEvents>() {
-        @Override
-        public DecryptedCalendarEvents createFromParcel(Parcel in) {
-            return new DecryptedCalendarEvents(in);
-        }
-
-        @Override
-        public DecryptedCalendarEvents[] newArray(int size) {
-            return new DecryptedCalendarEvents[size];
-        }
-    };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
+    @Ignore public String searchField = "";
     @Required
     private RealmList<String> eventID = new RealmList<>();
     @Required
@@ -73,15 +64,38 @@ public class DecryptedCalendarEvents implements Parcelable {
     public DecryptedCalendarEvents() {
     }
 
+    public DecryptedCalendarEvents(long id, RealmList<String> eventID, String classType, RealmList<String> title, RealmList<String> location, RealmList<Boolean> isAllDay, RealmList<String> notes, RealmList<String> startsDate, RealmList<String> endsDate, RealmList<String> repeats, RealmList<String> endRepeat, RealmList<String> reminder, RealmList<String> travelTime, RealmList<String> alert, RealmList<String> showAs, RealmList<String> url, RealmList<String> isReminderSet, String attachmentNames, RealmList<RealmString> backingImages, RealmList<String> photosId) {
+        this.id = id;
+        this.eventID = eventID;
+        this.classType = classType;
+        this.title = title;
+        this.location = location;
+        this.isAllDay = isAllDay;
+        this.notes = notes;
+        this.startsDate = startsDate;
+        this.endsDate = endsDate;
+        this.repeats = repeats;
+        this.endRepeat = endRepeat;
+        this.reminder = reminder;
+        this.travelTime = travelTime;
+        this.alert = alert;
+        this.showAs = showAs;
+        this.url = url;
+        this.isReminderSet = isReminderSet;
+        this.attachmentNames = attachmentNames;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
+    }
+
     protected DecryptedCalendarEvents(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         classType = in.readString();
         attachmentNames = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(classType);
         dest.writeString(attachmentNames);
     }
@@ -91,11 +105,23 @@ public class DecryptedCalendarEvents implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public static final Creator<DecryptedCalendarEvents> CREATOR = new Creator<DecryptedCalendarEvents>() {
+        @Override
+        public DecryptedCalendarEvents createFromParcel(Parcel in) {
+            return new DecryptedCalendarEvents(in);
+        }
+
+        @Override
+        public DecryptedCalendarEvents[] newArray(int size) {
+            return new DecryptedCalendarEvents[size];
+        }
+    };
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -251,6 +277,31 @@ public class DecryptedCalendarEvents implements Parcelable {
         this.photosId = photosId;
     }
 
+    @Override
+    public String toString() {
+        return "DecryptedCalendarEvents{" +
+                "id=" + id +
+                ", eventID=" + eventID +
+                ", classType='" + classType + '\'' +
+                ", title=" + title +
+                ", location=" + location +
+                ", isAllDay=" + isAllDay +
+                ", notes=" + notes +
+                ", startsDate=" + startsDate +
+                ", endsDate=" + endsDate +
+                ", repeats=" + repeats +
+                ", endRepeat=" + endRepeat +
+                ", reminder=" + reminder +
+                ", travelTime=" + travelTime +
+                ", alert=" + alert +
+                ", showAs=" + showAs +
+                ", url=" + url +
+                ", isReminderSet=" + isReminderSet +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
+    }
 }
 
 

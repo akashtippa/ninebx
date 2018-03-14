@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_mini_padding"
+        android:id="@+id/notificationLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tvSubTitle"
+            android:id="@+id/tvBoxName"
+            android:layout_marginRight="@dimen/default_mini_margin"
+            android:text="@string/title"
+            android:textSize="16sp"
+            android:textColor="@color/textColorBlue"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMessage"
+            android:layout_below="@+id/tvBoxName"
+            android:text="message"
+            android:textSize="14sp"
+            android:textColor="@color/grey_600"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSubTitle"
+            android:layout_toLeftOf="@+id/ivMore"
+            android:text="previous"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:textColor="@color/grey_400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDueDate"
+            android:layout_toLeftOf="@+id/ivMore"
+            android:layout_below="@+id/tvSubTitle"
+            android:text="DueDate"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:textColor="@color/grey_400" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/ivMore"
+            app:srcCompat="@drawable/ic_more_vert_grey_300_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/dividerView"
+        android:background="@color/divider_color"
+        android:layout_below="@+id/notificationLayout"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:id="@+id/optionsLayout"
+        android:layout_below="@+id/dividerView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:padding="@dimen/default_mini_padding"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/ivDeleteNotification"
+            android:background="@color/grid_9"
+            app:srcCompat="@drawable/ic_delete"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_mini_padding"
+            android:layout_weight="1"
+            android:id="@+id/ivShareNotification"
+            android:background="@color/grid_1"
+            app:srcCompat="@drawable/ic_share"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_mini_padding"
+            android:id="@+id/ivFlagNotification"
+            android:layout_weight="1"
+            android:background="@color/grid_4"
+            app:srcCompat="@drawable/ic_flag"/>
+    </LinearLayout>
+</RelativeLayout>

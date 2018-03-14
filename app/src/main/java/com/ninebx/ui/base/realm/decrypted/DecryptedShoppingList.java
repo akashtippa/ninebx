@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -24,8 +25,10 @@ public class DecryptedShoppingList implements Parcelable {
             return new DecryptedShoppingList[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -51,7 +54,7 @@ public class DecryptedShoppingList implements Parcelable {
     @Required
     private String createdUser = "";
 
-    public DecryptedShoppingList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public DecryptedShoppingList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -92,7 +95,7 @@ public class DecryptedShoppingList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(classType);
         dest.writeString(listName);
@@ -115,11 +118,11 @@ public class DecryptedShoppingList implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -219,4 +222,22 @@ public class DecryptedShoppingList implements Parcelable {
         this.createdUser = createdUser;
     }
 
+    @Override
+    public String toString() {
+        return "DecryptedShoppingList{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", listName='" + listName + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", detailsId=" + detailsId +
+                ", isSelected=" + isSelected +
+                ", selectedDate=" + selectedDate +
+                ", createdDate=" + createdDate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 }

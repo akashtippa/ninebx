@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class Insurance extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -27,11 +27,11 @@ public class Insurance extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -85,8 +85,9 @@ public class Insurance extends RealmObject {
 
     @Required private String attachmentNames = "";
 
-    public Insurance(String selectionType, String insuranceCompany, String insuredProperty, String insuredVehicle, String insuredPerson, String policyNumber, String policyEffectiveDate, String policyExpirationDate, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+    public Insurance(long id, String selectionType, String insuranceCompany, String insuredProperty, String insuredVehicle, String insuredPerson, String policyNumber, String policyEffectiveDate, String policyExpirationDate, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.selectionType = selectionType;
+        this.id = id;
         this.insuranceCompany = insuranceCompany;
         this.insuredProperty = insuredProperty;
         this.insuredVehicle = insuredVehicle;

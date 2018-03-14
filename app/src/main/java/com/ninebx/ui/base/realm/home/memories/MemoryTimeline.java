@@ -25,19 +25,9 @@ import io.realm.annotations.Required;
 @RealmClass
 public class MemoryTimeline extends RealmObject implements Parcelable {
 
-    public static final Creator<MemoryTimeline> CREATOR = new Creator<MemoryTimeline>() {
-        @Override
-        public MemoryTimeline createFromParcel(Parcel in) {
-            return new MemoryTimeline(in);
-        }
 
-        @Override
-        public MemoryTimeline[] newArray(int size) {
-            return new MemoryTimeline[size];
-        }
-    };
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
     @Ignore
@@ -68,22 +58,6 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected MemoryTimeline(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        title = in.readString();
-        date = in.readString();
-        place = in.readString();
-        contacts = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
 
     public MemoryTimeline(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
@@ -103,6 +77,36 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
     public MemoryTimeline() {
     }
 
+
+    protected MemoryTimeline(Parcel in) {
+        id = in.readLong();
+        photosId = in.createStringArrayList();
+        selectionType = in.readString();
+        title = in.readString();
+        date = in.readString();
+        place = in.readString();
+        contacts = in.readString();
+        notes = in.readString();
+        attachmentNames = in.readString();
+        created = in.readString();
+        modified = in.readString();
+        byte tmpIsPrivate = in.readByte();
+        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
+        createdUser = in.readString();
+    }
+
+    public static final Creator<MemoryTimeline> CREATOR = new Creator<MemoryTimeline>() {
+        @Override
+        public MemoryTimeline createFromParcel(Parcel in) {
+            return new MemoryTimeline(in);
+        }
+
+        @Override
+        public MemoryTimeline[] newArray(int size) {
+            return new MemoryTimeline[size];
+        }
+    };
+
     public static ArrayList<MemoryTimeline> createParcelableList(@NotNull RealmResults<MemoryTimeline> memoryTimelineRealmResults) {
         ArrayList memoryView = new ArrayList();
         memoryView.addAll(memoryTimelineRealmResults);
@@ -121,11 +125,11 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -256,7 +260,7 @@ public class MemoryTimeline extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(title);

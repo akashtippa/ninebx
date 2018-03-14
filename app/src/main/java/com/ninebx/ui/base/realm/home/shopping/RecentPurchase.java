@@ -21,7 +21,7 @@ import io.realm.annotations.Required;
 public class RecentPurchase extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -29,13 +29,10 @@ public class RecentPurchase extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public RealmList<RealmString> getBackingImages() {
         return backingImages;
@@ -80,7 +77,10 @@ public class RecentPurchase extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public RecentPurchase(String selectionType, String brandName, String itemName, String purchasedBy, String purchasedDate, String purchasedPrice, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public RecentPurchase(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String brandName, String itemName, String purchasedBy, String purchasedDate, String purchasedPrice, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+        this.id = id;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
         this.selectionType = selectionType;
         this.brandName = brandName;
         this.itemName = itemName;
@@ -192,5 +192,9 @@ public class RecentPurchase extends RealmObject {
     }
 
     public RecentPurchase() {
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

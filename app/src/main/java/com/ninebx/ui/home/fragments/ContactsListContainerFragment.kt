@@ -1,18 +1,26 @@
 package com.ninebx.ui.home.fragments
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IContactsAdded
@@ -35,8 +43,14 @@ import java.util.*
  */
 class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
+    override fun contactsDeleted(contacts: Contacts?) {
+        contactsRealm!!.beginTransaction()
+        contacts!!.deleteFromRealm()
+        contactsRealm!!.commitTransaction()
+    }
+
     override fun contactsAdded(contacts: Contacts?) {
-        AppLogger.d("Contacts", "are" + contacts)
+        //AppLogger.d("Contacts", "are" + contacts)
         myList.add(contacts!!)
         mListsAdapter!!.notifyDataSetChanged()
         saveContactsList()
@@ -47,10 +61,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         val bundle = Bundle()
         bundle.putParcelable(Constants.CONTACTS_VIEW, contacts)
         bundle.putString(Constants.FROM_CLASS, "Contacts")
-        bundle.putString("ContactOperation", "Edit")
-        bundle.putString("ID", contacts!!.id.toString())
-        AppLogger.e("ID ", " is " + contacts.id.toString())
-        AppLogger.e("ID ", " is " + contacts.mobileOne)
+        bundle.putLong("ID", contacts!!.id)
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
     }
 
@@ -65,7 +76,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     private var lastName = ""
     private var strMobileNumber = ""
 
-    //
+    private val PERMISSIONS_REQUEST_CODE_CONTACTS = 111
 
     private val REQUEST_CONTACT = 0
     private var mContacts: ArrayList<Contact>? = ArrayList()
@@ -87,9 +98,10 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contacts")
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contacts")
 
         contactsList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
+        myList.reverse()
         myList.addAll(contactsList!!)
 
         mListsAdapter = ContactsAdapter(myList, this)
@@ -99,19 +111,22 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         rvContactList!!.adapter = mListsAdapter
 
         layoutAddList.setOnClickListener {
-            //            val bundle = Bundle()
-//            bundle.putParcelable(Constants.CONTACTS_VIEW, Contacts())
-//            bundle.putString(Constants.FROM_CLASS, "Contacts")
-//            bundle.putString("ContactOperation", "Add")
-//            bundle.putString("ID", "0")
-//            startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)
-//
-            callForContact()
+            val permissionList = arrayListOf<String>(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (!handleMultiplePermission(context!!, permissionList)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CONTACTS)
+                } else {
+                    callForContact()
+                }
+            } else {
+                callForContact()
+            }
         }
 
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 contactsRealm = realm
+                context!!.hideProgressDialog()
                 saveContactsList()
             }
         })
@@ -120,21 +135,28 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
 
     private fun saveContactsList() {
-        val memoryObject = Contacts.createContacts(contactsList!![0])
-        memoryObject.insertOrUpdate(contactsRealm!!)
-        context!!.hideProgressDialog()
-//        myList.clear()
-        myList.add(memoryObject)
-//        val index: Int = myList.size - 1
-//        myList.removeAt(index)
-        mListsAdapter!!.notifyDataSetChanged()
+        if (contactsList!!.size != 0) {
+            val memoryObject = Contacts.createContacts(contactsList!![0])
+            if (memoryObject.id.toString().trim() != "0") {
+                memoryObject.insertOrUpdate(contactsRealm!!)
+                myList.add(memoryObject)
+                val index: Int = myList.size - 1
+                myList.removeAt(index)
+                mListsAdapter!!.notifyDataSetChanged()
+                context!!.hideProgressDialog()
+            } else {
+                context!!.hideProgressDialog()
+            }
+        } else {
+            context!!.hideProgressDialog()
+        }
     }
 
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
         return super.onBackPressed()
     }
 
@@ -148,52 +170,36 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
             for (contact in mContacts!!) {
                 val realmContacts = Contacts()
-                realmContacts.id = getUniqueId()
+                realmContacts.id = UUID.randomUUID().hashCode().toLong()
                 realmContacts.firstName = contact.firstName
                 realmContacts.lastName = contact.lastName
                 realmContacts.mobileOne = contact.getPhone(0)
 
                 firstName = contact.firstName
                 strMobileNumber = contact.getPhone(0)
-                AppLogger.e("First Name ", " is " + contact.firstName)
-                AppLogger.e("Mobile Number ", "0 is " + contact.getPhone(0))
-                AppLogger.e("Mobile Number ", "1 is " + contact.getPhone(1))
 
                 myList.add(realmContacts)
                 mListsAdapter!!.notifyDataSetChanged()
 
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
+                        contactsRealm = realm
                         var contacts = Contacts()
-                        contacts.id = getUniqueId()
-
-                        /*
-                        * If I'm sending like this,
-                        * contacts.firstName = firstName
-                        * It is showing some decrypted format in Android, but iOS is readable.
-                        * But, if I'm using like this
-                        * contacts.firstName = firstName.encryptString()
-                        * It is showing some decrypted format in iOS, but Android is readable.
-                        * */
-
+                        contacts.id = UUID.randomUUID().hashCode().toLong()
                         contacts.firstName = firstName.encryptString()
                         contacts.lastName = lastName.encryptString()
                         contacts.mobileOne = strMobileNumber.encryptString()
+                        contacts.selectionType = "Contacts".encryptString()
                         contacts.insertOrUpdate(realm!!)
-
-                        NineBxApplication.instance.activityInstance!!.onBackPressed()
+//                        contactsRealm!!.refresh()
                     }
 
                 })
 
             }
-
-//            setContactsList()
-
         } else
             super.onActivityResult(requestCode, resultCode, data)
     }
-
 
     private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
         //int start = result.length();
@@ -211,7 +217,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     private fun callContactPicker() {
         val intent = Intent(context, ContactPickerActivity::class.java)
-
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE,
                         ContactPictureType.ROUND.name)
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
@@ -264,12 +269,27 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         }
     }
 
-//    private fun setContactsList() {
-//        mListsAdapter = ContactsAdapter(contacts, this)
-//        val layoutManager = LinearLayoutManager(context)
-//        layoutManager.orientation = LinearLayoutManager.VERTICAL
-//        rvContactList!!.layoutManager = layoutManager
-//        rvContactList!!.adapter = mListsAdapter
-//    }
+    //
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        if (requestCode == PERMISSIONS_REQUEST_CODE_CONTACTS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                callForContact()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        } else if (requestCode == PERMISSIONS_REQUEST_CODE_CONTACTS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                callForContact()
+            } else {
+                Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
+
+
+    //
+
 
 }

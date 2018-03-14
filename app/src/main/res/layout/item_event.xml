@@ -15,6 +15,7 @@
             android:layout_weight="0.25"
             android:gravity="center"
             android:padding="@dimen/default_mini_padding"
+            android:id="@+id/tvEvent"
             android:text="@string/add_event"/>
 
         <View
@@ -55,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ivAlarm"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_alarm_add_blue_300_24dp"
+                app:srcCompat="@drawable/ic_notifications_none_grey_500_24dp"
                 android:padding="@dimen/default_mini_padding"
                 android:layout_marginRight="@dimen/default_mini_padding"
                 android:layout_alignParentEnd="true"

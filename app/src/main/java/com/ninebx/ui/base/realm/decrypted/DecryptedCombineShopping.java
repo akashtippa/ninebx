@@ -3,7 +3,10 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -24,23 +27,25 @@ public class DecryptedCombineShopping implements Parcelable {
             return new DecryptedCombineShopping[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems = new RealmList<>();
+    private ArrayList<DecryptedLoyaltyPrograms> loyaltyProgramsItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedRecentPurchase> recentPurchaseItems = new RealmList<>();
+    private ArrayList<DecryptedRecentPurchase> recentPurchaseItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedShopping> shoppingItems = new RealmList<>();
+    private ArrayList<DecryptedShopping> shoppingItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedClothingSizes> clothingSizesItems = new RealmList<>();
+    private ArrayList<DecryptedClothingSizes> clothingSizesItems = new ArrayList<>();
     @Required
-    private RealmList<DecryptedShoppingList> listItems = new RealmList<>();
+    private ArrayList<DecryptedShoppingList> listItems = new ArrayList<>();
 
     public DecryptedCombineShopping() {
     }
 
-    public DecryptedCombineShopping(int id, RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems, RealmList<DecryptedRecentPurchase> recentPurchaseItems, RealmList<DecryptedShopping> shoppingItems, RealmList<DecryptedClothingSizes> clothingSizesItems, RealmList<DecryptedShoppingList> listItems) {
+    public DecryptedCombineShopping(long id, ArrayList<DecryptedLoyaltyPrograms> loyaltyProgramsItems, ArrayList<DecryptedRecentPurchase> recentPurchaseItems, ArrayList<DecryptedShopping> shoppingItems, ArrayList<DecryptedClothingSizes> clothingSizesItems, ArrayList<DecryptedShoppingList> listItems) {
         this.id = id;
         this.loyaltyProgramsItems = loyaltyProgramsItems;
         this.recentPurchaseItems = recentPurchaseItems;
@@ -55,7 +60,7 @@ public class DecryptedCombineShopping implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -63,51 +68,51 @@ public class DecryptedCombineShopping implements Parcelable {
         return 0;
     }
 
-    public int getId() {
+    public  long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<DecryptedLoyaltyPrograms> getLoyaltyProgramsItems() {
+    public ArrayList<DecryptedLoyaltyPrograms> getLoyaltyProgramsItems() {
         return loyaltyProgramsItems;
     }
 
-    public void setLoyaltyProgramsItems(RealmList<DecryptedLoyaltyPrograms> loyaltyProgramsItems) {
+    public void setLoyaltyProgramsItems(ArrayList<DecryptedLoyaltyPrograms> loyaltyProgramsItems) {
         this.loyaltyProgramsItems = loyaltyProgramsItems;
     }
 
-    public RealmList<DecryptedRecentPurchase> getRecentPurchaseItems() {
+    public ArrayList<DecryptedRecentPurchase> getRecentPurchaseItems() {
         return recentPurchaseItems;
     }
 
-    public void setRecentPurchaseItems(RealmList<DecryptedRecentPurchase> recentPurchaseItems) {
+    public void setRecentPurchaseItems(ArrayList<DecryptedRecentPurchase> recentPurchaseItems) {
         this.recentPurchaseItems = recentPurchaseItems;
     }
 
-    public RealmList<DecryptedShopping> getShoppingItems() {
+    public ArrayList<DecryptedShopping> getShoppingItems() {
         return shoppingItems;
     }
 
-    public void setShoppingItems(RealmList<DecryptedShopping> shoppingItems) {
+    public void setShoppingItems(ArrayList<DecryptedShopping> shoppingItems) {
         this.shoppingItems = shoppingItems;
     }
 
-    public RealmList<DecryptedClothingSizes> getClothingSizesItems() {
+    public ArrayList<DecryptedClothingSizes> getClothingSizesItems() {
         return clothingSizesItems;
     }
 
-    public void setClothingSizesItems(RealmList<DecryptedClothingSizes> clothingSizesItems) {
+    public void setClothingSizesItems(ArrayList<DecryptedClothingSizes> clothingSizesItems) {
         this.clothingSizesItems = clothingSizesItems;
     }
 
-    public RealmList<DecryptedShoppingList> getListItems() {
+    public ArrayList<DecryptedShoppingList> getListItems() {
         return listItems;
     }
 
-    public void setListItems(RealmList<DecryptedShoppingList> listItems) {
+    public void setListItems(ArrayList<DecryptedShoppingList> listItems) {
         this.listItems = listItems;
     }
 
@@ -122,4 +127,37 @@ public class DecryptedCombineShopping implements Parcelable {
                 ", listItems=" + listItems +
                 '}';
     }
+
+    public int getLoyaltyPrograms(String selectionType) {
+        int count = 0;
+        for (DecryptedLoyaltyPrograms decryptedLicense : loyaltyProgramsItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getRecentPurchases(String selectionType) {
+        int count = 0;
+        for (DecryptedRecentPurchase decryptedLicense : recentPurchaseItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getShoppingLists(String selectionType, long detailsId ) {
+        int count = 0;
+        for (DecryptedShoppingList decryptedLicense : listItems) {
+            count += ( decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )  ? 1 : 0;
+        }
+        return count;
+    }
+
+    public int getServices(String selectionType) {
+        int count = 0;
+        for (DecryptedShopping decryptedLicense : shoppingItems) {
+            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        }
+        return count;
+    }
+
 }

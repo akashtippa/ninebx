@@ -120,10 +120,11 @@ class PassCodeDialog( val context : Context, val passCode : String, val passCode
 
                         val text = etPassCode.text.toString().trim()
 
-                        AppLogger.d(TAG, "Passcode : " + text)
+                        //AppLogger.d(TAG, "Passcode : " + text)
                         if( text.length == 6 ) {
                             if( text.equals(passCode) ) {
                                 passCodeListener.onSuccess()
+
                                 dialog.dismiss()
                             }
                             else {

@@ -1,5 +1,8 @@
 package com.ninebx.ui.base.realm.home.personal;
 
+import com.ninebx.ui.base.realm.RealmString;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -12,7 +15,7 @@ import io.realm.annotations.Required;
 public class License extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private String selectionType = "";
@@ -35,7 +38,14 @@ public class License extends RealmObject {
 
     @Required private String createdUser = "";
 
-    public License(String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
+
+    public License() {
+    }
+
+    public License(long id, String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, RealmList<RealmString> backingImages) {
+        this.id = id;
         this.selectionType = selectionType;
         this.lic_description = lic_description;
         this.nameOnLicense = nameOnLicense;
@@ -50,6 +60,23 @@ public class License extends RealmObject {
         this.isPrivate = isPrivate;
         this.attachmentNames = attachmentNames;
         this.createdUser = createdUser;
+        this.backingImages = backingImages;
+    }
+
+    public RealmList<RealmString> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(RealmList<RealmString> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getSelectionType() {
@@ -162,8 +189,5 @@ public class License extends RealmObject {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public License() {
     }
 }

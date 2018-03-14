@@ -30,10 +30,11 @@ public class DecryptedMedicalHistory implements Parcelable {
             return new DecryptedMedicalHistory[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -100,7 +101,7 @@ public class DecryptedMedicalHistory implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(classType);
@@ -121,19 +122,19 @@ public class DecryptedMedicalHistory implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -247,5 +248,26 @@ public class DecryptedMedicalHistory implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedMedicalHistory{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", history='" + history + '\'' +
+                ", treatmentDiscription='" + treatmentDiscription + '\'' +
+                ", immunizationDiscription='" + immunizationDiscription + '\'' +
+                ", familyDiscription='" + familyDiscription + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

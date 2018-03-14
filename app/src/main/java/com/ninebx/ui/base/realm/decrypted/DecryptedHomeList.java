@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -25,8 +26,10 @@ public class DecryptedHomeList implements Parcelable {
             return new DecryptedHomeList[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -35,8 +38,8 @@ public class DecryptedHomeList implements Parcelable {
     private String listName = "";
     @Required
     private String dueDate = "";
-    @Required
-    private Integer detailsId = 0;
+//    @Required
+    private long detailsId = 0;
     @Required
     private Boolean isSelected = false;
     @Required
@@ -56,7 +59,7 @@ public class DecryptedHomeList implements Parcelable {
     }
 
 
-    public DecryptedHomeList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public DecryptedHomeList(long id, String selectionType, String classType, String listName, String dueDate, long detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -78,11 +81,12 @@ public class DecryptedHomeList implements Parcelable {
         classType = in.readString();
         listName = in.readString();
         dueDate = in.readString();
-        if (in.readByte() == 0) {
-            detailsId = null;
-        } else {
-            detailsId = in.readInt();
-        }
+//        if (in.readByte() == 0) {
+//            detailsId = null;
+//        } else {
+//            detailsId = in.readInt();
+//        }
+        detailsId = in.readLong();
         byte tmpIsSelected = in.readByte();
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
         created = in.readString();
@@ -92,11 +96,11 @@ public class DecryptedHomeList implements Parcelable {
         createdUser = in.readString();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -132,11 +136,11 @@ public class DecryptedHomeList implements Parcelable {
         this.dueDate = dueDate;
     }
 
-    public Integer getDetailsId() {
+    public long getDetailsId() {
         return detailsId;
     }
 
-    public void setDetailsId(Integer detailsId) {
+    public void setDetailsId(long detailsId) {
         this.detailsId = detailsId;
     }
 
@@ -198,17 +202,18 @@ public class DecryptedHomeList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(classType);
         dest.writeString(listName);
         dest.writeString(dueDate);
-        if (detailsId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(detailsId);
-        }
+//        if (detailsId == null) {
+//            dest.writeByte((byte) 0);
+//        } else {
+//            dest.writeByte((byte) 1);
+//            dest.writeInt(detailsId);
+//        }
+        dest.writeLong(detailsId);
         dest.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
         dest.writeString(created);
         dest.writeString(modified);

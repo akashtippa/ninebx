@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/create_personal_passcode"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_16" />
 
         </android.support.v7.widget.Toolbar>
@@ -53,7 +53,7 @@
             android:paddingLeft="@dimen/default_mini_padding"
             android:paddingRight="@dimen/default_mini_padding"
             android:text="@string/create_your_pass_code"
-            android:textColor="@color/textColorBlue"
+            android:textColor="@color/color_purple"
             android:textSize="@dimen/text_16" />
 
 
@@ -155,6 +155,7 @@
             android:focusable="true"
             android:gravity="center"
             android:inputType="number"
+            android:maxLength="6"
             android:maxEms="6"
             android:textColor="@color/transparent_white"
             android:visibility="visible">
@@ -166,6 +167,7 @@
             android:id="@+id/tvSecurity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:text="@string/additional_security" />
 
 

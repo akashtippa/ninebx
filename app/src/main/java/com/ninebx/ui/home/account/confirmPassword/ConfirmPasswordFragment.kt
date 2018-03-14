@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.account.addmembers.MemberView
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.encryptKey
 import kotlinx.android.synthetic.main.fragment_confirm_password.*
 import java.util.*
@@ -20,6 +21,7 @@ class ConfirmPasswordFragment : Fragment() {
 
     private lateinit var memberView: MemberView
     private var password: String = ""
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is MemberView) {
@@ -40,6 +42,9 @@ class ConfirmPasswordFragment : Fragment() {
                 memberView.showError(getString(R.string.check_password))
             }
         }
+        ivBackPass.setOnClickListener {
+            activity!!.finish()
+        }
         if (NineBxApplication.autoTestMode) {
             etConfirmPassword.setText("Password14.")
         }
@@ -48,6 +53,11 @@ class ConfirmPasswordFragment : Fragment() {
     private fun validate(): Boolean {
         password = etConfirmPassword.text.toString().trim()
         val preferences = NineBxApplication.getPreferences()
-        return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, preferences.userEmail!!)))
+        /*AppLogger.d("Email", "ConfirmPassword validate " + NineBxApplication.getPreferences().userEmail!!)
+        if( NineBxApplication.getPreferences().userEmail!!.isEmpty() &&
+                NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress.isNotEmpty()  ) {
+            NineBxApplication.getPreferences().userEmail = NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+        }*/
+        return !password.isEmpty() && preferences.userPassword!!.equals(Arrays.toString(encryptKey(password, NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress)))
     }
 }

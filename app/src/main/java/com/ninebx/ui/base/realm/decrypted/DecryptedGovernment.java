@@ -31,9 +31,9 @@ public class DecryptedGovernment implements Parcelable {
         }
     };
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -41,6 +41,7 @@ public class DecryptedGovernment implements Parcelable {
     private String selectionType = "";
     @Required
     private String idName = "";
+    @Ignore public String searchField = "";
     @Required
     private String name = "";
     @Required
@@ -112,7 +113,7 @@ public class DecryptedGovernment implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(idName);
@@ -136,19 +137,19 @@ public class DecryptedGovernment implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -286,5 +287,29 @@ public class DecryptedGovernment implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedGovernment{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", idName='" + idName + '\'' +
+                ", name='" + name + '\'' +
+                ", nameOnId='" + nameOnId + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", issuingState='" + issuingState + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", dateIssued='" + dateIssued + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

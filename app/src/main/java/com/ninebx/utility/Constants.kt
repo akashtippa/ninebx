@@ -7,6 +7,8 @@ import com.amazonaws.regions.Regions
  */
 
 object Constants {
+
+
     val FIRST_RUN = "is_first_run"
     val FINGER_PRINT = "finger_print"
     val IS_LOGIN = "is_login"
@@ -29,13 +31,17 @@ object Constants {
     val FINGER_PRINT_COMPLETE = 5
     val INVITE_USERS_COMPLETE = 6
 
+    val PASSCODE_RESET = -1
+    val PASSCODE_CREATE = 0
+    val PASSCODE_CONFIRM = 1
+
 
     val SUB_CATEGORY_ADD_PERSON = 0
     val SUB_CATEGORY_ADD_ITEM = 1
     val SUB_CATEGORY_DISPLAY_PERSON = 2
     val COGNITO_POOL_ID: String = "us-west-2:c2651f16-d7e1-4c2f-9f1f-1100caf406e3"
     val COGNITO_POOL_REGION: Regions = Regions.US_WEST_2
-    val BUCKET_NAME: String? = "ninebxfiles"
+    val BUCKET_NAME: String = "ninebxfiles"
     val INDEX_NOT_CHECKED: Int = -1
 
     val LEVEL2_LOCATION = 10
@@ -56,6 +62,7 @@ object Constants {
     val KEYBOARD_SEARCH = "search"
     val KEYBOARD_PICKER = "picker"
     val CURRENT_USER: String = "current_user"
+    val LIST_HOME: String = "homeList"
     val REALM_MEMORY_VIEW: String = "memory_view"
     val REALM_CONTACTS: String = "realm_contacts"
     val USER_EMAIL: String = "user_email"
@@ -66,6 +73,9 @@ object Constants {
 
     // Just for Testing
     val USER_EMAIL_ID: String = "user_email"
+    val USER_FIRST_NAME: String = "user_first_name"
+    val USER_LAST_NAME: String = "user_last_name"
+    val CREATED: String = "created"
     val USER_PASSWORD: String = "user_password"
 
     val COUNTRY_SELECTED: String = "country_selected"
@@ -132,6 +142,8 @@ object Constants {
     val CONTACT: String = "contact"
     val FROM_CLASS = "fromClass"
     val CONTACTS_VIEW = "contactView"
+    val CONTACTS_DELETE = "contactDelete"
+    val PROFILE_VIEW = "profileView"
     val BUNDLE_CONTACT_NO = "contactNumber"
     val BUNDLE_CONTACT_NAME = "contactName"
     val IS_NEW_ACCOUNT: String = "is_new_account"
@@ -177,6 +189,16 @@ object Constants {
     val REALM_END_POINT_COMBINE_EDUCATION = "CombineEducation"
     val REALM_END_POINT_COMBINE_INTERESTS = "CombineInterests"
     val REALM_END_POINT_COMBINE_PERSONAL = "CombinePersonal"
+    val COMBINE_ITEMS: String = "combine_items"
+    val RESET_PASSCODE: String = "reset_passcode"
+    val RESET_FINGER_PRINT: String = "reset_fingerprint"
+    val USER_PASSWORD_UINT: String = "user_password_uint"
+    val USER_FOR_TESTING: String = "for_testing_backpress"
+    val SELECTED_ITEM: String = "selectedItem"
+
+
+    val BASE_64_ENCODED_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmoHRpmQiNoByTvobDr7Z/tz51YS7sxotF+BqA++tbm2Qu54Aqvd7JfvnX8blIs5bgYTHXbC6K1KK4V/OJmgZ6pZElyJD0cuf6sevUpZaMq2emDhKlYsM+4R9pHjYAUCP0hy3vLgQjspQN/GaT48JcBd8I/Sl1E1xqCmJXFfPcLuAak0QmcnksiIEvribbaPQWEu8VjeTdNTJ/VJtOtjaX2EptUR+9uKutAtvEQL5Dcjgf8c0Sq3C0EASwdMw61MEmr0nrGRDqMbTJ6+fwWOo4HNSsIJ5wCXG6Y2ivhlIqyoeux7FlJA+OEcQ+73yAtk2s+ChRJSUwVJkVLjowzxzQIDAQAB"
+
 
 
 }

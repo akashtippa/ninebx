@@ -19,48 +19,72 @@ import io.realm.annotations.Required;
 public class MainContacts extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
-    @Required private String selectionType = "";
+    @Required
+    private String selectionType = "";
 
-    @Required private String institutionName = "";
-    @Required private String accountName = "";
+    @Required
+    private String institutionName = "";
+    @Required
+    private String accountName = "";
 
-    @Required private String accountType = "";
-    @Required private String nameOnAccount = "";
-    @Required private String accountNumber = "";
-    @Required private String location = "";
-    @Required private String swiftCode = "";
-    @Required private String abaRoutingNumber = "";
-    @Required private String contacts = "";
+    @Required
+    private String accountType = "";
+    @Required
+    private String nameOnAccount = "";
+    @Required
+    private String accountNumber = "";
+    @Required
+    private String location = "";
+    @Required
+    private String swiftCode = "";
+    @Required
+    private String abaRoutingNumber = "";
+    @Required
+    private String contacts = "";
 
-    @Required private String website = "";
-    @Required private String userName = "";
-    @Required private String password = "";
-    @Required private String pin = "";
-    @Required private String paymentMethodOnFile = "";
+    @Required
+    private String website = "";
+    @Required
+    private String userName = "";
+    @Required
+    private String password = "";
+    @Required
+    private String pin = "";
+    @Required
+    private String paymentMethodOnFile = "";
 
-    @Required private String notes = "";
+    @Required
+    private String notes = "";
 
-    @Required private String attachmentNames = "";
+    @Required
+    private String attachmentNames = "";
 
-    @Required private String title = "";
+    @Required
+    private String title = "";
 
-    @Required private String created = "";
-    @Required private String modified = "";
-    @Required private Boolean isPrivate = false;
-    @Required private String createdUser = "";
+    @Required
+    private String created = "";
+    @Required
+    private String modified = "";
+    @Required
+    private Boolean isPrivate = false;
+    @Required
+    private String createdUser = "";
 
-    @Required private RealmList<RealmString> backingImages = new RealmList<>();
+    @Required
+    private RealmList<RealmString> backingImages = new RealmList<>();
 
     @Ignore
-    @Required private List<String> photosId = new ArrayList<>();
+    @Required
+    private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -250,8 +274,8 @@ public class MainContacts extends RealmObject {
 
     public List<String> getPhotosId() {
         photosId = new ArrayList<>();
-        for( RealmString realmString : backingImages ) {
-            photosId.add( realmString.getStringValue() );
+        for (RealmString realmString : backingImages) {
+            photosId.add(realmString.getStringValue());
         }
         return photosId;
     }
@@ -259,11 +283,42 @@ public class MainContacts extends RealmObject {
     public void setPhotosId(List<String> photosId) {
         this.photosId = photosId;
         backingImages.clear();
-        for( String string : photosId ) {
-            backingImages.add( new RealmString(string) );
+        for (String string : photosId) {
+            backingImages.add(new RealmString(string));
         }
     }
 
     public MainContacts() {
+    }
+
+    @Override
+    public String toString() {
+        return "MainContacts{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", institutionName='" + institutionName + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", nameOnAccount='" + nameOnAccount + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", swiftCode='" + swiftCode + '\'' +
+                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", website='" + website + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", paymentMethodOnFile='" + paymentMethodOnFile + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", title='" + title + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                '}';
     }
 }

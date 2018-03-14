@@ -22,42 +22,60 @@
             android:visibility="visible"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ivBackContactView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="start"
-                android:padding="@dimen/default_micro_padding"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_icon_arrow_left" />
 
-            <TextView
-                android:id="@+id/toolbarProfileTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:text="Shared Contact"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_16" />
+                <ImageView
+                    android:id="@+id/ivBackContactView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start"
+                    android:padding="@dimen/default_micro_padding"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_icon_arrow_left" />
 
-            <TextView
-                android:id="@+id/txtSaveContacts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/default_mini_margin"
-                android:layout_marginRight="@dimen/default_mini_margin"
-                android:padding="@dimen/default_margin"
-                android:text="@string/save"
-                android:textColor="@color/colorPrimary"
-                android:visibility="visible" />
+                <TextView
+                    android:id="@+id/toolbarProfileTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="Shared Contact"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_16" />
+
+                <TextView
+                    android:id="@+id/txtSaveContacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/default_mini_margin"
+                    android:layout_marginRight="@dimen/default_mini_margin"
+                    android:padding="@dimen/default_margin"
+                    android:text="@string/save"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/ivHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/txtSaveContacts"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignRight="@+id/txtSaveContacts"
+                    android:layout_gravity="end"
+                    android:contentDescription="@string/app_name"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/search_bx"
+                    android:visibility="visible" />
+            </RelativeLayout>
 
 
         </android.support.v7.widget.Toolbar>
@@ -139,6 +157,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="First Name"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -171,8 +190,8 @@
                 android:layout_marginTop="@dimen/_9sdp"
                 android:background="@null"
                 android:enabled="false"
-
                 android:hint="Last Name"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -202,6 +221,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+                android:clickable="false"
                 android:hint="Birthday" />
 
             <View
@@ -231,6 +251,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+                android:clickable="false"
                 android:hint="Anniversary" />
 
             <View
@@ -249,6 +270,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Phone 1"
                 android:textSize="@dimen/_9sdp" />
 
@@ -264,6 +286,7 @@
                 android:enabled="false"
                 android:hint="Phone 1"
                 android:inputType="number"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -283,6 +306,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Phone 2"
                 android:textSize="@dimen/_9sdp" />
 
@@ -298,6 +322,7 @@
                 android:enabled="false"
                 android:hint="Phone 2"
                 android:inputType="number"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -315,6 +340,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Email 1"
                 android:textSize="@dimen/_9sdp" />
 
@@ -329,6 +355,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Email 1"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -360,6 +387,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Email 2"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -378,6 +406,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Street Address 1"
                 android:textSize="@dimen/_9sdp" />
 
@@ -392,6 +421,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample Address 1"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -410,6 +440,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Street Address 2"
                 android:textSize="@dimen/_9sdp" />
 
@@ -424,6 +455,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample Address 2"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -456,6 +488,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample City"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -488,6 +521,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample State"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -521,6 +555,7 @@
                 android:enabled="false"
                 android:hint="560061"
                 android:inputType="number"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
             <View
@@ -553,6 +588,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="India"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp" />
 
 

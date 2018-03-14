@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
@@ -15,11 +16,60 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarProfile"
+            android:id="@+id/toolbarCompleteProfile"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/grey_100"
             android:visibility="gone"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Complete your profile"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txtSaveCompletedProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:padding="@dimen/default_margin"
+                android:text="@string/save"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivCompleteHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/search_bx"
+                android:visibility="gone" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarProfile"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            android:visibility="visible"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
@@ -57,6 +107,20 @@
                 android:padding="@dimen/default_margin"
                 android:text="@string/save"
                 android:textColor="@color/colorPrimary"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/default_mini_margin"
+                android:layout_marginRight="@dimen/default_mini_margin"
+                android:contentDescription="@string/app_name"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_bx"
                 android:visibility="visible" />
 
 
@@ -80,13 +144,14 @@
                 android:background="@color/account_bg"
                 android:padding="@dimen/_9sdp">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <ImageView
                     android:id="@+id/imgEditProfile"
                     android:layout_width="@dimen/_95sdp"
                     android:layout_height="@dimen/_95sdp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/splash_screen" />
+                    android:src="@drawable/ic_icon_no_picture"
+                    tools:ignore="VectorDrawableCompat" />
 
                 <ImageView
                     android:id="@+id/imgEdit"
@@ -133,6 +198,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="First Name"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -152,6 +218,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Last Name"
                 android:textSize="@dimen/_9sdp" />
 
@@ -166,6 +233,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Last Name"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -199,6 +267,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="sampleEmailAddress@nineBx.com"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -231,6 +300,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Self"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -250,6 +320,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:enabled="false"
                 android:text="Date of Birth"
                 android:textSize="@dimen/_9sdp" />
 
@@ -261,8 +332,9 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:clickable="false"
-                android:text="01/12/1212"
+                android:enabled="false"
+                android:singleLine="true"
+                android:hint="Date of Birth"
                 android:textColor="@color/black" />
 
             <View
@@ -293,7 +365,9 @@
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:clickable="false"
-                android:text="12/12/1212"
+                android:enabled="false"
+                android:singleLine="true"
+                android:hint="Anniversary"
                 android:textColor="@color/black" />
 
             <View
@@ -344,6 +418,7 @@
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginStart="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_14sdp"
+                android:singleLine="true"
                 android:text="Mobile Number"
                 android:textSize="@dimen/_9sdp" />
 
@@ -359,6 +434,7 @@
                 android:enabled="false"
                 android:hint="9876543210"
                 android:inputType="number"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -392,6 +468,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample Address 1"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -425,6 +502,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample Address 2"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -458,6 +536,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample City"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -491,6 +570,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Sample State"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -525,6 +605,7 @@
                 android:enabled="false"
                 android:hint="560061"
                 android:inputType="number"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -558,6 +639,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="Select Country"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 

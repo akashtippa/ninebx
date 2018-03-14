@@ -19,7 +19,7 @@ import io.realm.annotations.Required;
 public class Property extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<RealmString> backingImages = new RealmList<>();
@@ -27,11 +27,11 @@ public class Property extends RealmObject {
     @Ignore
     @Required private List<String> photosId = new ArrayList<>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -90,7 +90,10 @@ public class Property extends RealmObject {
 
     @Required private String attachmentNames = "";
 
-    public Property(String selectionType, String propertyName, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String titleName, String purchaseDate, String purchasePrice, String estimatedMarketValue, String contacts, Boolean currentlyRented, String tenantName, String leaseStartDate, String leaseEndDate, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+    public Property(long id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String propertyName, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String titleName, String purchaseDate, String purchasePrice, String estimatedMarketValue, String contacts, Boolean currentlyRented, String tenantName, String leaseStartDate, String leaseEndDate, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+        this.id = id;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
         this.selectionType = selectionType;
         this.propertyName = propertyName;
         this.streetAddressOne = streetAddressOne;

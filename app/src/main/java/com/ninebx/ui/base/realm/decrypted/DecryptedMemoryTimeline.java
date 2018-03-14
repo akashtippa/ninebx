@@ -30,10 +30,11 @@ public class DecryptedMemoryTimeline implements Parcelable {
             return new DecryptedMemoryTimeline[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -79,7 +80,10 @@ public class DecryptedMemoryTimeline implements Parcelable {
         createdUser = in.readString();
     }
 
-    public DecryptedMemoryTimeline(String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public DecryptedMemoryTimeline(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.id = id;
+        this.backingImages = backingImages;
+        this.photosId = photosId;
         this.selectionType = selectionType;
         this.title = title;
         this.date = date;
@@ -99,7 +103,7 @@ public class DecryptedMemoryTimeline implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(title);
@@ -119,19 +123,19 @@ public class DecryptedMemoryTimeline implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -245,5 +249,26 @@ public class DecryptedMemoryTimeline implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedMemoryTimeline{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", place='" + place + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", selectedDate=" + selectedDate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

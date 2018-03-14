@@ -22,9 +22,9 @@ public class CombinePersonal extends RealmObject {
     RealmList<TaxID> taxIDItems = new RealmList<>();
     RealmList<PersonalList> listItems = new RealmList<>();
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
-    public CombinePersonal(int id, RealmList<Certificate> certificateItems, RealmList<Government> governmentItems, RealmList<License> licenseItems, RealmList<Personal> personalItems, RealmList<Social> socialItems, RealmList<TaxID> taxIDItems, RealmList<PersonalList> listItems) {
+    public CombinePersonal(long id, RealmList<Certificate> certificateItems, RealmList<Government> governmentItems, RealmList<License> licenseItems, RealmList<Personal> personalItems, RealmList<Social> socialItems, RealmList<TaxID> taxIDItems, RealmList<PersonalList> listItems) {
         this.id = id;
         this.certificateItems = certificateItems;
         this.governmentItems = governmentItems;
@@ -38,11 +38,11 @@ public class CombinePersonal extends RealmObject {
     public CombinePersonal() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -94,7 +94,7 @@ public class CombinePersonal extends RealmObject {
         this.taxIDItems = taxIDItems;
     }
 
-    public RealmList getListItems() {
+    public RealmList<PersonalList> getListItems() {
         return listItems;
     }
 

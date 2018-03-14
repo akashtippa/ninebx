@@ -3,6 +3,12 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.ninebx.ui.base.realm.RealmString;
+
+import java.util.ArrayList;
+
+import io.realm.RealmList;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -10,20 +16,10 @@ import io.realm.annotations.Required;
  * Created by Alok on 24/01/18.
  */
 public class DecryptedLicense implements Parcelable {
-
-    public static final Creator<DecryptedLicense> CREATOR = new Creator<DecryptedLicense>() {
-        @Override
-        public DecryptedLicense createFromParcel(Parcel in) {
-            return new DecryptedLicense(in);
-        }
-
-        @Override
-        public DecryptedLicense[] newArray(int size) {
-            return new DecryptedLicense[size];
-        }
-    };
+    @Ignore
+    public String searchField = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
     private String selectionType = "";
     @Required
@@ -52,8 +48,14 @@ public class DecryptedLicense implements Parcelable {
     private String attachmentNames = "";
     @Required
     private String createdUser = "";
+    @Required
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
 
-    public DecryptedLicense(String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
+    public DecryptedLicense() {
+    }
+
+    public DecryptedLicense(long id, String selectionType, String lic_description, String nameOnLicense, String issuingCountry, String issuingState, String licenseNumber, String dateIssued, String expirationDate, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser, ArrayList<RealmString> backingImages) {
+        this.id = id;
         this.selectionType = selectionType;
         this.lic_description = lic_description;
         this.nameOnLicense = nameOnLicense;
@@ -68,6 +70,7 @@ public class DecryptedLicense implements Parcelable {
         this.isPrivate = isPrivate;
         this.attachmentNames = attachmentNames;
         this.createdUser = createdUser;
+        this.backingImages = backingImages;
     }
 
     protected DecryptedLicense(Parcel in) {
@@ -89,12 +92,9 @@ public class DecryptedLicense implements Parcelable {
         createdUser = in.readString();
     }
 
-    public DecryptedLicense() {
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(selectionType);
         dest.writeString(lic_description);
         dest.writeString(nameOnLicense);
@@ -114,6 +114,34 @@ public class DecryptedLicense implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public static final Creator<DecryptedLicense> CREATOR = new Creator<DecryptedLicense>() {
+        @Override
+        public DecryptedLicense createFromParcel(Parcel in) {
+            return new DecryptedLicense(in);
+        }
+
+        @Override
+        public DecryptedLicense[] newArray(int size) {
+            return new DecryptedLicense[size];
+        }
+    };
+
+    public long getId() {
+        return id;
+    }
+
+    public ArrayList<RealmString> getBackingImages() {
+        return backingImages;
+    }
+
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
+        this.backingImages = backingImages;
+    }
+
+    public void setId( long id ) {
+        this.id = id;
     }
 
     public String getSelectionType() {
@@ -226,5 +254,26 @@ public class DecryptedLicense implements Parcelable {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedLicense{" +
+                "id=" + id +
+                ", selectionType='" + selectionType + '\'' +
+                ", lic_description='" + lic_description + '\'' +
+                ", nameOnLicense='" + nameOnLicense + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", issuingState='" + issuingState + '\'' +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", dateIssued='" + dateIssued + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
     }
 }

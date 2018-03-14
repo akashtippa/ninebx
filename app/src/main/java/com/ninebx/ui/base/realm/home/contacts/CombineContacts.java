@@ -15,7 +15,7 @@ import io.realm.annotations.Required;
 public class CombineContacts extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required
     private RealmList<Contacts> contactsItems = new RealmList<>();
@@ -24,7 +24,7 @@ public class CombineContacts extends RealmObject {
     @Required
     private RealmList<ContactsList> listItems = new RealmList<>();
 
-    public CombineContacts(int id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
+    public CombineContacts(long id, RealmList<Contacts> contactsItems, RealmList<MainContacts> mainContactsItems, RealmList<ContactsList> listItems) {
         this.id = id;
         this.contactsItems = contactsItems;
         this.mainContactsItems = mainContactsItems;
@@ -34,11 +34,11 @@ public class CombineContacts extends RealmObject {
     public CombineContacts() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

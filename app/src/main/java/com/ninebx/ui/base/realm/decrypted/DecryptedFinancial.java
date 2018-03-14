@@ -30,10 +30,13 @@ public class DecryptedFinancial implements Parcelable {
             return new DecryptedFinancial[size];
         }
     };
+
+    @Ignore public String searchField = "";
+
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -81,7 +84,7 @@ public class DecryptedFinancial implements Parcelable {
     public DecryptedFinancial() {
     }
 
-    public DecryptedFinancial(int id, RealmList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
+    public DecryptedFinancial(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String institutionName, String accountName, String accountType, String nameOnAccount, String accountNumber, String location, String swiftCode, String abaRoutingNumber, String contacts, String website, String userName, String password, String pin, String created, String modified, Boolean isPrivate, String createdUser, String notes, String attachmentNames) {
         this.id = id;
         this.backingImages = backingImages;
         this.photosId = photosId;
@@ -133,19 +136,19 @@ public class DecryptedFinancial implements Parcelable {
         attachmentNames = in.readString();
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -329,34 +332,34 @@ public class DecryptedFinancial implements Parcelable {
     public String toString() {
         return "DecryptedFinancial{" +
                 "id=" + id +
-                ", backingImages=" + backingImages +
-                ", photosId=" + photosId +
-                ", selectionType='" + selectionType + '\'' +
-                ", institutionName='" + institutionName + '\'' +
-                ", accountName='" + accountName + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", nameOnAccount='" + nameOnAccount + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", location='" + location + '\'' +
-                ", swiftCode='" + swiftCode + '\'' +
-                ", abaRoutingNumber='" + abaRoutingNumber + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", website='" + website + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", pin='" + pin + '\'' +
-                ", created='" + created + '\'' +
-                ", modified='" + modified + '\'' +
-                ", isPrivate=" + isPrivate +
-                ", createdUser='" + createdUser + '\'' +
-                ", notes='" + notes + '\'' +
-                ", attachmentNames='" + attachmentNames + '\'' +
+                "\n, backingImages=" + backingImages +
+                "\n, photosId=" + photosId +
+                "\n, selectionType='" + selectionType + '\'' +
+                "\n, institutionName='" + institutionName + '\'' +
+                "\n, accountName='" + accountName + '\'' +
+                "\n, accountType='" + accountType + '\'' +
+                "\n, nameOnAccount='" + nameOnAccount + '\'' +
+                "\n, accountNumber='" + accountNumber + '\'' +
+                "\n, location='" + location + '\'' +
+                "\n, swiftCode='" + swiftCode + '\'' +
+                "\n, abaRoutingNumber='" + abaRoutingNumber + '\'' +
+                "\n, contacts='" + contacts + '\'' +
+                "\n, website='" + website + '\'' +
+                "\n, userName='" + userName + '\'' +
+                "\n, password='" + password + '\'' +
+                "\n, pin='" + pin + '\'' +
+                "\n, created='" + created + '\'' +
+                "\n, modified='" + modified + '\'' +
+                "\n, isPrivate=" + isPrivate +
+                "\n, createdUser='" + createdUser + '\'' +
+                "\n, notes='" + notes + '\'' +
+                "\n, attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(institutionName);
@@ -385,18 +388,4 @@ public class DecryptedFinancial implements Parcelable {
         return 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DecryptedFinancial financial = (DecryptedFinancial) o;
-
-        return id == financial.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
 }

@@ -64,9 +64,18 @@ fun Context.hideProgressDialog() {
 }
 
 fun Context.showToast(toastMessage : Int ) {
+    try {
     Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+    } catch( e: Exception ) {
+        e.printStackTrace()
+    }
 }
 
 fun Context.showToast(toastMessage : String ) {
-    Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+    try {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+    } catch( e: Exception ) {
+        e.printStackTrace()
+    }
+
 }

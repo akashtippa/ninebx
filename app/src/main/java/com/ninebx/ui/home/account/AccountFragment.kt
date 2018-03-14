@@ -1,28 +1,50 @@
 package com.ninebx.ui.home.account
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
+import android.app.KeyguardManager
+import android.content.DialogInterface
 import android.content.Intent
+import android.hardware.fingerprint.FingerprintManager
+import android.net.Uri
+import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
-import com.ninebx.ui.base.realm.Users
+import com.ninebx.ui.auth.email.SendEmailTask
+import com.ninebx.ui.auth.email.SendFeedbackTask
+import com.ninebx.ui.auth.email.ShowDialog
 import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
+import com.ninebx.ui.home.account.changePassword.MasterPasswordFragment
+import com.ninebx.ui.home.account.subscriptionPlan.SubscriptionActivity
 import com.ninebx.ui.home.adapter.SubscriptionPlanAdapter
 import com.ninebx.ui.tutorial.view.CirclePageIndicator
-import com.ninebx.utility.Constants
+import com.ninebx.utility.*
+import com.sendgrid.SendGrid
 import io.realm.SyncUser
+import kotlinx.android.synthetic.main.dialog_feedback.*
 import kotlinx.android.synthetic.main.fragment_account.*
+import java.io.File
 
 
 /**
  * Created by Alok on 03/01/18.
  */
-class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
+class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, AWSFileTransferHelper.FileOperationsCompletionListener {
+    override fun onSuccess(outputFile: File?) {
+        if (outputFile != null && imgProfile != null)
+            Glide.with(context).asBitmap().load(outputFile).into(imgProfile)
+    }
+
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -36,7 +58,8 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
             }
 
             R.id.txtSubscriptionPlan -> {
-                openStaticLayoutDialog(getString(R.string.subscription_plan))
+//                openStaticLayoutDialog(getString(R.string.subscription_plan))
+                navigateToSubscriptionPlan()
             }
 
             R.id.txtSecurityOverview -> {
@@ -76,7 +99,16 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
     private fun navigateToMasterPassword() {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.replace(R.id.frameLayout, MasterPasswordFragment()).commit()
+        val masterPasswordFragment = MasterPasswordFragment()
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
+        masterPasswordFragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout, masterPasswordFragment).commit()
+    }
+
+    private fun navigateToSubscriptionPlan() {
+        val intent = Intent(context, SubscriptionActivity::class.java)
+        startActivity(intent)
     }
 
     // Single method to open static page dialog,
@@ -106,6 +138,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
             }
             getString(R.string.give_us_feedback) -> {
                 dialog.setContentView(R.layout.dialog_feedback)
+                sendFeedbackmail(dialog)
             }
         }
 
@@ -124,7 +157,109 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
         }
     }
 
-    // Single method to open operational dialog,
+    private fun sendFeedbackmail(dialog: Dialog) {
+        dialog.btnLogin.setOnClickListener {
+            var StringOne = ""
+            var StringTwo = ""
+            var StringThree = ""
+            var StringFour = ""
+            val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName + "\n"
+
+            var validate =false
+            if(!dialog.radioSignificant.isChecked &&
+                    !dialog.radioQuiteOrdinary.isChecked &&
+                    !dialog.radioLoveTheLook.isChecked &&
+                    !dialog.radioSignificantRoom.isChecked &&
+                    !dialog.radio.isChecked&&
+                    !dialog.radioThree.isChecked  &&
+                    !dialog.radioISeeNo.isChecked &&
+                    !dialog.radioIMightUse.isChecked &&
+                    !dialog.radioCanEasily.isChecked &&
+                    dialog.edtComments.text.isEmpty() ) {
+                    validate=true
+            }
+
+            if(dialog.radioSignificant.isChecked){
+                var significant = dialog.radioSignificant.text
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (significant)
+                Log.d("stringOne",""+StringOne)
+            }
+            if(dialog.radioQuiteOrdinary.isChecked){
+                var quiteOrdinary =dialog.radioQuiteOrdinary.text
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (quiteOrdinary)
+
+            }
+            if(dialog.radioLoveTheLook.isChecked){
+                var loveTheLook =dialog.radioLoveTheLook.text
+                StringOne = (getString(R.string.how_was_it_in_terms_of_visual_appeal))+ (" : ") + (loveTheLook)
+
+            }
+            if(dialog.radioSignificantRoom.isChecked){
+                var siginficatRoom =dialog.radioSignificantRoom.text
+                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (siginficatRoom)
+
+            }
+            if(dialog.radio.isChecked){
+                var tookSomeTime=dialog.radio.text
+                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (tookSomeTime)
+            }
+            if(dialog.radioThree.isChecked){
+                var veryIntutive=dialog.radioThree.text
+                StringTwo = (getString(R.string.how_was_it_to_navigate))+ (" : ") + (veryIntutive)
+            }
+            if(dialog.radioISeeNo.isChecked){
+                var iSeeNo=dialog.radioISeeNo.text
+                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (iSeeNo)
+            }
+            if(dialog.radioIMightUse.isChecked){
+                var iMightUse=dialog.radioIMightUse.text
+                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (iMightUse)
+            }
+            if(dialog.radioCanEasily.isChecked){
+                var canEasily=dialog.radioCanEasily.text
+                StringThree = (getString(R.string.overall_how_useful_did_you_find))+ (" : ") + (canEasily)
+
+            }
+
+            if(dialog.edtComments.text.isNotEmpty() && dialog.edtComments != null){
+
+                var comments = dialog.edtComments.text
+                StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + (comments)
+
+            }else{
+                StringFour = (getString(R.string.other_comments_and_suggestions))+ (" : ") + ("No Comments")
+            }
+
+            var finalEmailBody =  (StringOne) + ("\n") + ("\n")+ (StringTwo) + ("\n") + ("\n")+ (StringThree) + ("\n") + ("\n")+ (StringFour)+ ("\n") + ("\n") + ("\n") +fullName + email
+            AppLogger.d("emailBody",finalEmailBody.toString())
+            AppLogger.d("SendingEmailbody",""+finalEmailBody)
+            if(validate) {
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("NineBx")
+                builder.setIcon(R.mipmap.ic_launcher)
+                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0?.cancel()
+                    }
+
+                })
+                builder.setMessage("Please give your valuable feedback!")
+                builder.show()
+            }
+            else{
+                sendFeedback(dialog, finalEmailBody)
+            }
+        }
+    }
+
+    private fun sendFeedback( dialogFragment : Dialog ,emailBody : String ) {
+        var listener : ShowDialog
+        SendFeedbackTask(dialogFragment , context!!,
+                NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress,
+                emailBody).executeOnExecutor( AsyncTask.SERIAL_EXECUTOR, null )
+    }
+    // Single method to open operational dialog,Feed
     // like "Share", "Recommend", "Settings Screen"
     private fun openOperationDialog(option: String) {
         when (option) {
@@ -151,25 +286,24 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
     }
 
     private fun navigateToMyProfile() {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.my_profile))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val myProfileFragment = MyProfileFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
+        bundle.putString("fromClass", "Account")
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         myProfileFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, myProfileFragment).commit()
-
-
     }
 
     private fun navigateToMyProfileUsers() {
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.family_users))
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val addFamilyUsersFragment = AddFamilyUsersFragment()
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Constants.CURRENT_USER, Users.createParcelableList(mHomeView.getCurrentUsers()))
+        bundle.putParcelableArrayList(Constants.CURRENT_USER, (mHomeView.getCurrentUsers()))
         addFamilyUsersFragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
     }
@@ -191,6 +325,15 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
+        txtUserName.text = mHomeView.getCurrentUsers()[0]!!.fullName
+        txtUserEmail.text = mHomeView.getCurrentUsers()[0]!!.emailAddress
+
+        if(  NineBxApplication.getPreferences().userEmail!!.isEmpty() && txtUserEmail.text.toString().isNotEmpty() ) {
+             NineBxApplication.getPreferences().userEmail = txtUserEmail.text.toString().trim()
+            AppLogger.d("Email", "Account Fragment set Email : " + NineBxApplication.getPreferences().userEmail)
+        }
+
         txtProfile.setOnClickListener(this)
         txtSecurityOverview.setOnClickListener(this)
         txtTermsOfUse.setOnClickListener(this)
@@ -205,12 +348,68 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener {
         layoutLock.setOnClickListener {
             //            NineBxApplication.instance.activityInstance!!.showPasswordDialog()
         }
-
+        txtPersonalPassCode.setOnClickListener {
+            //AppLogger.d("Auth", "From AccountFragment")
+            startActivity(Intent(context, AuthActivity::class.java).putExtra(Constants.RESET_PASSCODE, true))
+        }
         layoutLogOut.setOnClickListener {
-            NineBxApplication.getPreferences().clearPreferences()
+           /* AppLogger.d("Logout", "Email : " + NineBxApplication.getPreferences().userEmail)*/
+            NineBxApplication.getPreferences().clearLogOutPreferences( txtUserEmail.text.toString() )
             SyncUser.currentUser().logout()
-            startActivity(Intent(context, AuthActivity::class.java))
+            AppLogger.d("Logout", "Email : clearLogOutPreferences : " + NineBxApplication.getPreferences().userEmail)
+            closeAllConnections()
+            //AppLogger.d("Auth", "From AccountFragment")
+            startActivity(Intent(context, AuthActivity::class.java).putExtra(Constants.USER_EMAIL, NineBxApplication.getPreferences().userEmail))
             activity!!.finish()
         }
+        switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+        switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        switchTouchId.setOnCheckedChangeListener { _, isChecked ->
+            if (!fromFingerPrint) {
+
+                if( isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    val fingerprintManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        context!!.getSystemService(FingerprintManager::class.java)
+                    } else {
+                        TODO("VERSION.SDK_INT < M")
+                    }
+                    if (!fingerprintManager.hasEnrolledFingerprints()) {
+                        // This happens when no fingerprints are registered.
+                        onError((R.string.register_fingerprint))
+                        switchTouchId.isChecked = false
+                        return@setOnCheckedChangeListener
+                    }
+
+                }
+                startActivityForResult(Intent(context, AuthActivity::class.java)
+                        .putExtra(Constants.RESET_FINGER_PRINT, true)
+                        .putExtra(Constants.FINGER_PRINT, isChecked), Constants.FINGER_PRINT_COMPLETE)
+            } else fromFingerPrint = false
+        }
+
+
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        val profilePhoto = mHomeView.getCurrentUsers()[0]!!.profilePhoto
+        /*if (profilePhoto.isNotEmpty()) {
+            awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + profilePhoto)
+        }*/
+    }
+
+    private var fromFingerPrint = false
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == Constants.FINGER_PRINT_COMPLETE && resultCode == Activity.RESULT_OK) {
+            fromFingerPrint = true
+            switchTouchId.isChecked = NineBxApplication.getPreferences().isFingerPrintEnabled
+            switchTouchId.isEnabled = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            fromFingerPrint = false
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 }

@@ -14,7 +14,7 @@ import io.realm.annotations.Required;
 public class WellnessList extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private String selectionType = "";
     @Required private String classType = "WellnessList";
@@ -22,7 +22,7 @@ public class WellnessList extends RealmObject {
     @Required private String listName = "";
     @Required private String dueDate = "";
 
-    @Required private Integer detailsId = 0;
+    private long detailsId = 0;
     @Required private Boolean isSelected = false;
 
     @Required private Date selectedDate = new Date();
@@ -33,7 +33,7 @@ public class WellnessList extends RealmObject {
     @Required private Boolean isPrivate = false;
     @Required private String createdUser = "";
 
-    public WellnessList(int id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+    public WellnessList(long id, String selectionType, String classType, String listName, String dueDate, long detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.selectionType = selectionType;
         this.classType = classType;
@@ -52,11 +52,11 @@ public class WellnessList extends RealmObject {
     public WellnessList() {
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -92,11 +92,11 @@ public class WellnessList extends RealmObject {
         this.dueDate = dueDate;
     }
 
-    public Integer getDetailsId() {
+    public long getDetailsId() {
         return detailsId;
     }
 
-    public void setDetailsId(Integer detailsId) {
+    public void setDetailsId(long detailsId) {
         this.detailsId = detailsId;
     }
 

@@ -30,10 +30,11 @@ public class DecryptedTaxID implements Parcelable {
             return new DecryptedTaxID[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -92,7 +93,7 @@ public class DecryptedTaxID implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(taxIdName);
@@ -111,19 +112,19 @@ public class DecryptedTaxID implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 
@@ -221,5 +222,24 @@ public class DecryptedTaxID implements Parcelable {
 
     public void setAttachmentNames(String attachmentNames) {
         this.attachmentNames = attachmentNames;
+    }
+
+    @Override
+    public String toString() {
+        return "DecryptedTaxID{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", taxIdName='" + taxIdName + '\'' +
+                ", taxIdNumber='" + taxIdNumber + '\'' +
+                ", issuingCountry='" + issuingCountry + '\'' +
+                ", name='" + name + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                '}';
     }
 }

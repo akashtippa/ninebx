@@ -8,8 +8,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.R.string.contacts
+import com.ninebx.R.string.date
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.home.ContainerActivity
@@ -27,22 +30,33 @@ import java.util.*
  */
 class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
+    override fun onDateClicked(strDate: String?) {
+        //AppLogger.e("The Selected Date ", " is " + strDate)
+        Toast.makeText(context, " Date " + strDate, Toast.LENGTH_LONG).show()
+        var position: Int = 0
+        rvMemoryView.scrollToPosition(position)
+    }
+
+    override fun onMemoryDeleted(memoryTimeline: MemoryTimeline?) {
+        memoryRealm!!.beginTransaction()
+        memoryTimeline!!.deleteFromRealm()
+        memoryRealm!!.commitTransaction()
+    }
+
     override fun onMemoryEdit(memoryTimeLine: MemoryTimeline?) {
         mListsAdapter!!.notifyDataSetChanged()
         val bundle = Bundle()
         bundle.putParcelable(Constants.MEMORY_TIMELINE, memoryTimeLine)
         bundle.putString(Constants.FROM_CLASS, "MemoryView")
-        bundle.putString("ID", memoryTimeLine!!.id.toString())
-        bundle.putString("ContactOperation", "Edit")
-        bundle.putString("ID", memoryTimeLine.id.toString())
-
+        bundle.putString("Operation", "Edit")
         startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
     }
 
     override fun memoryAdded(memoryTimeLine: MemoryTimeline?) {
-        AppLogger.d("Memory", "memoryTimeLine" + memoryTimeLine)
         myList.add(memoryTimeLine!!)
+        myDateList.addAll(currentDateList!!)
         mListsAdapter!!.notifyDataSetChanged()
+        mListsDateAdapter!!.notifyDataSetChanged()
         saveMemoryTimeLine()
     }
 
@@ -57,6 +71,7 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
 
     private var mListsDateAdapter: MemoriesDateAdapter? = null
     var myDateList: ArrayList<Date> = ArrayList()
+    var test: ArrayList<Any> = ArrayList()
     private var currentDateList: ArrayList<Date>? = ArrayList()
 
 
@@ -68,15 +83,15 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Memory timeline")
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Memory timeline")
 
         currentMemoriesList = arguments!!.getParcelableArrayList<MemoryTimeline>(Constants.REALM_MEMORY_VIEW)
-
 
         for (contact in currentMemoriesList!!) {
             val dates = Date()
             dates.strDate
             dates.strDate = contact.date
+
             currentDateList!!.add(dates)
         }
 
@@ -89,19 +104,17 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
         rvMemoryView!!.layoutManager = layoutManager
         rvMemoryView!!.adapter = mListsAdapter
 
-        mListsDateAdapter = MemoriesDateAdapter(myDateList)
+        mListsDateAdapter = MemoriesDateAdapter(myDateList, this)
         val layoutManagerDate = LinearLayoutManager(context)
         layoutManagerDate.orientation = LinearLayoutManager.HORIZONTAL
-        rvMemoryView!!.layoutManager = layoutManager
-        rvMemoryView!!.adapter = mListsDateAdapter
+        rvDate!!.layoutManager = layoutManagerDate
+        rvDate!!.adapter = mListsDateAdapter
 
         layoutAddList.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(Constants.MEMORY_TIMELINE, MemoryTimeline())
             bundle.putString(Constants.FROM_CLASS, "MemoryView")
-            bundle.putString("ContactOperation", "Add")
-            bundle.putString("ID", "0")
-
+            bundle.putString("Operation", "Add")
             startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_MEMORY_TIMELINE)
         }
 
@@ -114,22 +127,33 @@ class FragmentMemoriesListContainer : FragmentBackHelper(), IMemoryAdded {
     }
 
 
+    private fun getCategoryPos(category: MemoryTimeline): Int {
+        return currentMemoriesList!!.indexOf(category)
+    }
+
     private fun saveMemoryTimeLine() {
-        val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
-        memoryObject.insertOrUpdate(memoryRealm!!)
-        context!!.hideProgressDialog()
-//        myList.clear()
-        val index: Int = myList.size - 1
-//        myList.removeAt(index)
-        myList.add(memoryObject)
-        mListsAdapter!!.notifyDataSetChanged()
+        if (currentMemoriesList!!.size != 0) {
+            val memoryObject = MemoryTimeline.createMemoryTimeLine(currentMemoriesList!![0])
+            if (memoryObject.id.toString().trim() != "0") {
+                memoryObject.insertOrUpdate(memoryRealm!!)
+                context!!.hideProgressDialog()
+                val index: Int = myList.size - 1
+                myList.removeAt(index)
+                myList.add(memoryObject)
+                mListsAdapter!!.notifyDataSetChanged()
+            } else {
+                context!!.hideProgressDialog()
+            }
+        } else {
+            context!!.hideProgressDialog()
+        }
     }
 
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
+
         return super.onBackPressed()
     }
 

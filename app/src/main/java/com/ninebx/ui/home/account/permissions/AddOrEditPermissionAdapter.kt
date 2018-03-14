@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.ninebx.R
+import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.home.account.model.AddEditPermissions
 import java.util.*
 
@@ -80,7 +81,6 @@ internal class AddOrEditPermissionAdapter(private val myList: ArrayList<AddEditP
             chkAdd.isChecked = addEditPermissions.isAdd
             chkEdit.isChecked = addEditPermissions.isEdit
             chkView.isChecked = addEditPermissions.isView
-
         }
 
         val layoutMenu: LinearLayout = parent.findViewById<View>(R.id.layoutMenu) as LinearLayout
@@ -100,6 +100,47 @@ internal class AddOrEditPermissionAdapter(private val myList: ArrayList<AddEditP
 
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
+    }
+
+    fun getPermissions(tempMember: Member) {
+        
+        var i = 0
+        
+        tempMember.homeView = myList[i].isView
+        tempMember.homeAdd = myList[i].isAdd
+        tempMember.homeEdit = myList[i++].isEdit
+
+        tempMember.travelView = myList[i].isView
+        tempMember.travelAdd = myList[i].isAdd
+        tempMember.travelEdit = myList[i++].isEdit
+
+        tempMember.contactsView = myList[i].isView
+        tempMember.contactsAdd = myList[i].isAdd
+        tempMember.contactsEdit = myList[i++].isEdit
+
+        tempMember.educationlView = myList[i].isView
+        tempMember.educationlAdd = myList[i].isAdd
+        tempMember.educationlEdit = myList[i++].isEdit
+
+        tempMember.personalView = myList[i].isView
+        tempMember.personalAdd = myList[i].isAdd
+        tempMember.personalEdit = myList[i++].isEdit
+
+        tempMember.interestsView = myList[i].isView
+        tempMember.interestsAdd = myList[i].isAdd
+        tempMember.interestsEdit = myList[i++].isEdit
+
+        tempMember.wellnessView = myList[i].isView
+        tempMember.wellnessAdd = myList[i].isAdd
+        tempMember.wellnessEdit = myList[i++].isEdit
+
+        tempMember.memoriesView = myList[i].isView
+        tempMember.memoriesAdd = myList[i].isAdd
+        tempMember.memoriesEdit = myList[i++].isEdit
+
+        tempMember.shoppingView = myList[i].isView
+        tempMember.shoppingAdd = myList[i].isAdd
+        tempMember.shoppingEdit = myList[i].isEdit
     }
 
 

@@ -30,10 +30,11 @@ public class DecryptedEmergencyContacts implements Parcelable {
             return new DecryptedEmergencyContacts[size];
         }
     };
+    @Ignore public String searchField = "";
     @PrimaryKey //@Required
-            int id = 0;
+            long id = 0;
     @Required
-    private RealmList<RealmString> backingImages = new RealmList<>();
+    private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
     @Required
     private List<String> photosId = new ArrayList<>();
@@ -75,6 +76,34 @@ public class DecryptedEmergencyContacts implements Parcelable {
     private String attachmentNames = "";
     @Required
     private String createdUser = "";
+
+    @Override
+    public String toString() {
+        return "DecryptedEmergencyContacts{" +
+                "id=" + id +
+                ", backingImages=" + backingImages +
+                ", photosId=" + photosId +
+                ", selectionType='" + selectionType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", name='" + name + '\'' +
+                ", relationShip='" + relationShip + '\'' +
+                ", phoneNumberOne='" + phoneNumberOne + '\'' +
+                ", phoneNumberTwo='" + phoneNumberTwo + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", streetAddressOne='" + streetAddressOne + '\'' +
+                ", streetAddressTwo='" + streetAddressTwo + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", notes='" + notes + '\'' +
+                ", attachmentNames='" + attachmentNames + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                '}';
+    }
 
     protected DecryptedEmergencyContacts(Parcel in) {
         id = in.readInt();
@@ -128,7 +157,7 @@ public class DecryptedEmergencyContacts implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeStringList(photosId);
         dest.writeString(selectionType);
         dest.writeString(classType);
@@ -156,19 +185,19 @@ public class DecryptedEmergencyContacts implements Parcelable {
         return 0;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
-    public RealmList<RealmString> getBackingImages() {
+    public ArrayList<RealmString> getBackingImages() {
         return backingImages;
     }
 
-    public void setBackingImages(RealmList<RealmString> backingImages) {
+    public void setBackingImages(ArrayList<RealmString> backingImages) {
         this.backingImages = backingImages;
     }
 

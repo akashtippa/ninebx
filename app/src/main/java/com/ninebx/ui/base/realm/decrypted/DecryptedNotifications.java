@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -24,6 +25,8 @@ public class DecryptedNotifications implements Parcelable {
             return new DecryptedNotifications[size];
         }
     };
+    @Ignore
+    public String searchField = "";
     @Required
     private String message = "";
     @Required
@@ -49,9 +52,9 @@ public class DecryptedNotifications implements Parcelable {
     @Required
     private Integer form_id = 0;
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
-    public DecryptedNotifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, int id) {
+    public DecryptedNotifications(String message, String boxName, String category, String dueDate, Date updatedDate, String subTitle, String notifyDate, Boolean isPrivate, String created, String modified, Boolean read, Integer form_id, long id) {
         this.message = message;
         this.boxName = boxName;
         this.category = category;
@@ -109,7 +112,7 @@ public class DecryptedNotifications implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(form_id);
         }
-        dest.writeInt(id);
+        dest.writeLong(id);
     }
 
     @Override
@@ -213,13 +216,30 @@ public class DecryptedNotifications implements Parcelable {
         this.form_id = form_id;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-
+    @Override
+    public String toString() {
+        return "DecryptedNotifications{" +
+                "message='" + message + '\'' +
+                ", boxName='" + boxName + '\'' +
+                ", category='" + category + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", updatedDate=" + updatedDate +
+                ", subTitle='" + subTitle + '\'' +
+                ", notifyDate='" + notifyDate + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", read=" + read +
+                ", form_id=" + form_id +
+                ", id=" + id +
+                '}';
+    }
 }

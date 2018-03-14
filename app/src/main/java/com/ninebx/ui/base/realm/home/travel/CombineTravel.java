@@ -15,7 +15,7 @@ import io.realm.annotations.Required;
 public class CombineTravel extends RealmObject {
 
     @PrimaryKey //@Required
-    private int id = 0;
+    private long id = 0;
 
     @Required private RealmList<Documents> documentsItems      = new RealmList<Documents>();
     @Required private RealmList<Loyalty> loyaltyItems        = new RealmList<Loyalty>();
@@ -24,7 +24,7 @@ public class CombineTravel extends RealmObject {
 
     @Required private RealmList<TravelList> listItems           = new RealmList<TravelList>();
 
-    public CombineTravel(int id, RealmList documentsItems, RealmList loyaltyItems, RealmList travelItems, RealmList vacationsItems, RealmList listItems) {
+    public CombineTravel(long id, RealmList documentsItems, RealmList loyaltyItems, RealmList travelItems, RealmList vacationsItems, RealmList listItems) {
         this.id = id;
         this.documentsItems = documentsItems;
         this.loyaltyItems = loyaltyItems;
@@ -36,11 +36,11 @@ public class CombineTravel extends RealmObject {
     public CombineTravel() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -1,11 +1,13 @@
 package com.ninebx.ui.home.account
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,15 +18,15 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.getImageUri
-import com.ninebx.ui.base.kotlin.handleMultiplePermission
-import com.ninebx.ui.base.kotlin.saveImage
-import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.Users
-import com.ninebx.ui.home.calendar.events.AWSFileTransferHelper
+import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
+import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.ui.home.customView.CustomBottomSheetProfileDialogFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.countryPicker.CountryPicker
+import com.ninebx.utility.countryPicker.CountryPickerDialog
 import io.realm.Realm
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.fragment_my_profile.*
@@ -36,14 +38,21 @@ import java.util.*
  * Created by TechnoBlogger on 15/01/18.
  */
 
-class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener {
+class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, CustomBottomSheetProfileDialogFragment.BottomSheetSelectedListener, ICountrySelected {
+
+    override fun onCountrySelected(strCountry: String?) {
+        Toast.makeText(context, "Selected Country is " + strCountry, Toast.LENGTH_LONG).show()
+        txtCountry.setText(strCountry)
+    }
 
     override fun onSuccess(outputFile: File?) {
         if (outputFile != null && imgEditProfile != null)
             Glide.with(context).asBitmap().load(outputFile).into(imgEditProfile)
     }
 
-    var strFullName = ""
+    var fromWhichClass = ""
+
+
     var strFirstName = ""
     var strLastName = ""
     var strEmail = ""
@@ -58,14 +67,14 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     var strState = ""
     var strZipCode = ""
     var strCountry = ""
-    var idUser: Int? = null
+    var idUser: Long? = null
     var idUserID = ""
 
     val prefrences = NineBxPreferences()
     var user: SyncUser? = null
     lateinit var realm: Realm
 
-    private var currentUsers: ArrayList<Users>? = ArrayList()
+    private var currentUsers: ArrayList<DecryptedUsers>? = ArrayList()
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
 
@@ -77,14 +86,18 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-        NineBxApplication.instance.activityInstance!!.showBackIcon()
 
-        currentUsers = arguments!!.getParcelableArrayList<Users>(Constants.CURRENT_USER)
+
+        currentUsers = arguments!!.getParcelableArrayList<DecryptedUsers>(Constants.CURRENT_USER)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
         bottomSheetDialogFragment = CustomBottomSheetProfileDialogFragment()
         bottomSheetDialogFragment.setBottomSheetSelectionListener(this)
 
+        fromWhichClass = arguments!!.getString("fromClass")
+
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
+        ivCompleteHome.setOnClickListener{ NineBxApplication.instance.activityInstance!!.onBackPressed() }
 
         imgEdit.setOnClickListener {
             enableEditing()
@@ -116,16 +129,15 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             NineBxApplication.instance.activityInstance!!.onBackPressed()
         }
 
+        NineBxApplication.instance.setCountrySelected(this)
+
         txtCountry.setOnClickListener {
-            //            var countrySelected = prefrences.countrySelected
-//            if (countrySelected.toString().trim().isEmpty()) {
-//                txtCountry.hint = "Select Country"
-//            } else {
-//                txtCountry.text = countrySelected
-//            }
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.replace(R.id.frameLayout, CountryPicker()).commit()
+            CountryPickerDialog(context!!, ICountrySelected {
+                strCountry -> txtCountry.text = strCountry
+                this.strCountry = strCountry
+            })
         }
 
         imgEditProfile.setOnClickListener {
@@ -137,68 +149,100 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         populateUserInfo(currentUsers!![0]) // Reading the User Data from Realm
 
+        txtSaveCompletedProfile.setOnClickListener {
+            if (checkValidations()) {
+                updateTheUserInfo()
+            }
+        }
+
+        when (fromWhichClass) {
+            "Home" -> {
+                toolbarProfile.hide()
+                toolbarCompleteProfile.show()
+                enableEditing()
+                imgEdit.hide()
+            }
+            "Account" -> {
+                toolbarProfile.show()
+                toolbarCompleteProfile.hide()
+                txtGender.isEnabled = false
+                imgEdit.show()
+            }
+        }
     }
 
-    private fun populateUserInfo(users: Users?) {
+
+    private fun populateUserInfo(users: DecryptedUsers?) {
+        AppLogger.d("MyProfile", "User : " + users)
         idUser = users!!.id
         idUserID = users.userId
 
         if (users.firstName.isNotEmpty())
-            edtFirstName.setText(users.firstName.decryptString())
+            edtFirstName.setText(users.firstName)
 
         if (users.lastName.isNotEmpty())
-            edtLastName.setText(users.lastName.decryptString())
+            edtLastName.setText(users.lastName)
+
+        if( users.emailAddress.isEmpty() ) users.emailAddress = NineBxApplication.getPreferences().userEmail
 
         if (users.emailAddress.isNotEmpty())
-            edtEmail.setText(users.emailAddress.decryptString())
+            edtEmail.setText(users.emailAddress)
 
         if (users.relationship.isNotEmpty())
-            edtRelationship.setText(users.relationship.decryptString())
+            edtRelationship.setText(users.relationship)
 
         if (users.gender.isNotEmpty())
-            txtGender.prompt = users.gender.decryptString()
+            txtGender.setSelection( context!!.resources.getStringArray(R.array.gender).indexOf(users.gender) )
 
         if (users.dateOfBirth.isNotEmpty())
-            txtDOB.text = users.dateOfBirth.decryptString()
+            txtDOB.text = users.dateOfBirth
 
         if (users.anniversary.isNotEmpty())
-            txtAnniversary.text = users.anniversary.decryptString()
+            txtAnniversary.text = users.anniversary
 
         if (users.mobileNumber.isNotEmpty())
-            edtMobileNumber.setText(users.mobileNumber.decryptString())
+            edtMobileNumber.setText(users.mobileNumber)
 
         if (users.street_1.isNotEmpty())
-            edtAddress1.setText(users.street_1.decryptString())
+            edtAddress1.setText(users.street_1)
 
         if (users.street_2.isNotEmpty())
-            edtAddress2.setText(users.street_2.decryptString())
+            edtAddress2.setText(users.street_2)
 
         if (users.city.isNotEmpty())
-            edtCity.setText(users.city.decryptString())
+            edtCity.setText(users.city)
 
         if (users.state.isNotEmpty())
-            edtState.setText(users.state.decryptString())
+            edtState.setText(users.state)
 
         if (users.zipCode.isNotEmpty())
-            edtZipCode.setText(users.zipCode.decryptString())
+            edtZipCode.setText(users.zipCode)
 
         if (users.country.isNotEmpty())
-            txtCountry.text = users.country.decryptString()
+            txtCountry.text = users.country
 
-        mAWSFileTransferHelper.setFileTransferListener(this)
-        if (users.profilePhoto.isNotEmpty())
-            mAWSFileTransferHelper.beginDownload("images/" + users.id + "/" + users.profilePhoto)
+        //mAWSFileTransferHelper.setFileTransferListener(this)
+        val awsSecureFileTransfer = AWSSecureFileTransfer(context!!)
+        awsSecureFileTransfer.setFileTransferListener(this)
+        /*if (users.profilePhoto.isNotEmpty()) {
+            awsSecureFileTransfer.downloadSecureFile("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
+        }*/
+        //mAWSFileTransferHelper.beginSecureDownload("images/" + SyncUser.currentUser().identity + "/" + users.profilePhoto)
     }
 
     private fun enableEditing() {
-        NineBxApplication.instance.activityInstance!!.hideToolbar()
-        toolbarProfile.show()
+
+        if( fromWhichClass == "Account" )
+            toolbarProfile.show()
+        txtSave.show()
+        ivHome.hide()
         imgEdit.setImageResource(R.drawable.ic_icon_save)
         txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
         edtFirstName.isEnabled = true
         edtLastName.isEnabled = true
-        txtDOB.isClickable = true
-        txtAnniversary.isClickable = true
+        txtDOB.isEnabled = true
+        txtAnniversary.isEnabled = true
+        txtGender.isEnabled = true
         edtMobileNumber.isEnabled = true
         edtAddress1.isEnabled = true
         edtAddress2.isEnabled = true
@@ -212,7 +256,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
         strFirstName = edtFirstName.text.toString()
         strLastName = edtLastName.text.toString()
+        strEmail = edtEmail.text.toString()
+        strRelationship = edtRelationship.text.toString()
         strDOB = txtDOB.text.toString()
+        strGender = txtGender.selectedItem.toString()
         strAnniversary = txtAnniversary.text.toString()
         strMobileNumber = edtMobileNumber.text.toString()
         strStreetAddress1 = edtAddress1.text.toString()
@@ -221,6 +268,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         strState = edtState.text.toString()
         strZipCode = edtZipCode.text.toString()
         strCountry = txtCountry.text.toString()
+
 
         if (strFirstName.trim().isEmpty()) {
             Toast.makeText(context, "Please enter 'First name'", Toast.LENGTH_LONG).show()
@@ -234,7 +282,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             return false
         }
 
-        if (!(txtGender != null && txtGender.selectedItem.toString() != null)) {
+        if (!(txtGender != null && txtGender.selectedItem.toString() != "Gender")) {
             Toast.makeText(context, "Please enter 'Gender'", Toast.LENGTH_LONG).show()
             txtGender.requestFocus()
             return false
@@ -259,8 +307,8 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
         }
 
         if (strState.trim().isEmpty()) {
-            Toast.makeText(context, "Please enter 'State'", Toast.LENGTH_LONG).show()
-            edtState.requestFocus()
+            Toast.makeText(context, "Please enter 'Street address 2'", Toast.LENGTH_LONG).show()
+            edtAddress2.requestFocus()
             return false
         }
 
@@ -275,69 +323,52 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     }
 
+    private val TAG = "Profile"
+    @SuppressLint("StaticFieldLeak")
     private fun updateTheUserInfo() {
-        /***
-         * If I was going with this, then it was creating a new Object in the realmOS.
-         *
-         */
-
-//
-//        var users = Users()
-////        users.id = idUser
-//        users.userId = idUserID
-//        users.firstName = edtFirstName.text.toString().encryptString()
-//        users.lastName = edtLastName.text.toString().encryptString()
-//        users.fullName = (edtFirstName.text.toString() + edtLastName.text.toString()).encryptString()
-//        users.emailAddress = edtEmail.text.toString().encryptString()
-//        users.relationship = edtRelationship.text.toString().encryptString()
-//        users.dateOfBirth = txtDOB.text.toString().encryptString()
-//        users.anniversary = txtAnniversary.text.toString().encryptString()
-//        users.gender = txtGender.selectedItem.toString().encryptString()
-//        users.mobileNumber = edtMobileNumber.text.toString().encryptString()
-//        users.street_1 = edtAddress1.text.toString().encryptString()
-//        users.street_2 = edtAddress2.text.toString().encryptString()
-//        users.city = edtCity.text.toString().encryptString()
-//        users.state = edtState.text.toString().encryptString()
-//        users.zipCode = edtZipCode.text.toString().encryptString()
-//        users.country = txtCountry.text.toString().encryptString()
-
-//        Private Key : [74, 86, 113, 112, 51, 110, 109, 102, 71, 118, 65, 77, 113, 103, 106, 70]
-
-
-        prepareRealmConnections(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
+        context!!.showProgressDialog(getString(R.string.saving_user))
+        prepareRealmConnectionsRealmThread(context, false, Constants.REALM_END_POINT_USERS, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
+
                 val users = realm!!.where(Users::class.java).equalTo("userId", idUserID).findFirst()
                 realm.beginTransaction()
 
-                users!!.firstName = edtFirstName.text.toString().encryptString()
-                users.lastName = edtLastName.text.toString().encryptString()
-                users.fullName = (edtFirstName.text.toString() + edtLastName.text.toString()).encryptString()
-                users.emailAddress = edtEmail.text.toString().encryptString()
-                users.relationship = edtRelationship.text.toString().encryptString()
-                users.dateOfBirth = txtDOB.text.toString().encryptString()
-                users.anniversary = txtAnniversary.text.toString().encryptString()
-                users.gender = txtGender.selectedItem.toString().encryptString()
-                users.mobileNumber = edtMobileNumber.text.toString().encryptString()
-                users.street_1 = edtAddress1.text.toString().encryptString()
-                users.street_2 = edtAddress2.text.toString().encryptString()
-                users.city = edtCity.text.toString().encryptString()
-                users.state = edtState.text.toString().encryptString()
-                users.zipCode = edtZipCode.text.toString().encryptString()
-                users.country = txtCountry.text.toString().encryptString()
+                users!!.firstName = strFirstName.encryptString()
+                users.lastName = strLastName.encryptString()
+                users.fullName = (strFirstName + " " + strLastName).encryptString()
+                users.emailAddress = strEmail.encryptString()
+                users.relationship = strRelationship.encryptString()
+                users.dateOfBirth = strDOB.encryptString()
+                users.anniversary = strAnniversary.encryptString()
+                users.gender = strGender.encryptString()
+                users.mobileNumber = strMobileNumber.encryptString()
+                users.street_1 = strStreetAddress1.encryptString()
+                users.street_2 = strStreetAddress2.encryptString()
+                users.city = strCity.encryptString()
+                users.state = strState.encryptString()
+                users.zipCode = strZipCode.encryptString()
+                users.country = strCountry.encryptString()
+                users.completeProfile = true
                 //                realm.copyToRealmOrUpdate(updatingUserInfo)
+                realm.insertOrUpdate(users)
                 realm.commitTransaction()
-                users.insertOrUpdate(realm)
+                val isCompleteProfile = toolbarCompleteProfile.isVisible()
+                NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0] = decryptUsers(users)
+                context!!.hideProgressDialog()
 
                 NineBxApplication.instance.activityInstance!!.onBackPressed()
+                if( isCompleteProfile )
+                    NineBxApplication.instance.activityInstance!!.navigateToAddMembers()
             }
         })
+
     }
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.showBottomView()
-        NineBxApplication.instance.activityInstance!!.hideBackIcon()
-        NineBxApplication.instance.activityInstance!!.showToolbar()
-        NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
+
+
+        //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(getString(R.string.account))
         return super.onBackPressed()
     }
 
@@ -450,6 +481,10 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
 
     private fun setProfileImage(imageUri: Uri) {
         Glide.with(context).load(imageUri).into(imgEditProfile)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }

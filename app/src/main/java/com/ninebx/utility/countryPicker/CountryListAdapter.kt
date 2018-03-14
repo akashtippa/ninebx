@@ -5,16 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.NineBxPreferences
 
 /**
  * Created by mukesh on 25/04/16.
  */
-class CountryListAdapter(private val mContext: Context, internal var countries: List<Country>) : BaseAdapter() {
+class CountryListAdapter(private val mContext: Context, internal var countries: List<Country>, private val iCountrySelected: ICountrySelected) : BaseAdapter() {
     internal var inflater: LayoutInflater
     internal var prefrences = NineBxPreferences()
-
 
     init {
         inflater = LayoutInflater.from(mContext)
@@ -25,11 +26,11 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
     }
 
     override fun getItem(arg0: Int): Any? {
-        return null
+        return countries[arg0]
     }
 
     override fun getItemId(arg0: Int): Long {
-        return 0
+        return arg0.toLong()
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View? {
@@ -46,13 +47,14 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
         if (country.flag != -1)
             cell.imageView.setImageResource(country.flag)
 
-        cell.layoutCountry.setOnClickListener {
-            Toast.makeText(mContext, "Selected Country is " + country.name, Toast.LENGTH_LONG).show()
-//            prefrences.countrySelected = country.name
-//            NineBxApplication.instance.activityInstance!!.onBackPressed()
-        }
+       /* cell.layoutCountry.setOnClickListener {
+            iCountrySelected.onCountrySelected(country.name)
+            NineBxApplication.instance.getCountrySelected(country.name)
+            NineBxApplication.instance.activityInstance!!.onBackPressed()
+        }*/
         return view
     }
+
 
     internal class Cell {
         lateinit var textView: TextView
@@ -78,4 +80,6 @@ class CountryListAdapter(private val mContext: Context, internal var countries: 
             }
         }
     }
+
+
 }
