@@ -164,7 +164,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var StringThree = ""
             var StringFour = ""
             val email=NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
-            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName
+            var fullName= mHomeView.getCurrentUsers()[0]!!.fullName + "\n"
 
             var validate =false
             if(!dialog.radioSignificant.isChecked &&
@@ -221,9 +221,13 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                 StringThree = (getString(R.string.overall_how_useful_did_you_find).toUpperCase())+ (" : ") + (canEasily)+ ("\n" + "\n")
 
             }
-            var comments = dialog.edtComments.text
-            if(comments.equals(null)){
-                StringFour = (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
+
+            StringFour = if( dialog.edtComments != null && dialog.edtComments.text.isNotEmpty() ){
+                var comments = dialog.edtComments.text
+                (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
+
+            }else{
+                (getString(R.string.null_character))
             }
 
             var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+("\n")+email

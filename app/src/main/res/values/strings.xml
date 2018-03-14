@@ -982,4 +982,6 @@
 
     <string name="documents">documents</string>
 
+    <string name="null_character"></string>
+
 </resources>
