@@ -34,7 +34,7 @@ class Level3CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
-   // private var fragmentListContainer = FragmentListContainer()
+
     // For Home & Money
     private var decryptedFinancial: DecryptedFinancial? = null // DecryptedFinancial()
     private var decryptedPayment: DecryptedPayment? = null // DecryptedPayment()
