@@ -222,11 +222,11 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
             }
             var comments = dialog.edtComments.text
-            if(comments != null){
+            if(comments.equals(null)){
                 StringFour = (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
             }
 
-            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+("\n"+"\n")+email
+            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+("\n")+email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody",""+finalEmailBody)
             if(validate) {
