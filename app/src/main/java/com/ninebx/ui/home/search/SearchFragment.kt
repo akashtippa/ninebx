@@ -133,8 +133,11 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
         showProgress(R.string.loading)
+        setRecentSearchAdapter()
+        edtSearch.setText("")
 
         mSearchPresenter = SearchPresenter(this)
+
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 rvRecentSearch.visibility = View.GONE
@@ -296,6 +299,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 categoryFragment!!.arguments = bundle
 
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+                if(searchItem.categoryName.equals("documents") || searchItem.categoryName.equals("loyalty") || searchItem.categoryName.equals("vacation")){
+                    switchTravelItems( position, searchItem )
+                }
                 when( searchItem.searchCategory ) {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
