@@ -38,232 +38,8 @@ class ExpandableListViewAdapter(private val _context: Context,
                                 val classType: String,
                                 val membersList : ArrayList<DecryptedMember> ) : BaseExpandableListAdapter() {
 
-    // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
-
-
-
-    var accountType = arrayOf("Account type", "Checking", "Savings", "Other")
-    var cardType = arrayOf("Card type", "Credit", "Debit")
-
-
-    // Constants for DropDown
-
-    // For Shopping List
-
-    var sizeCategoryArray = arrayOf("Size category (US)", "Regular", "Petite", "Tall")
-    var womenTopSize = arrayOf("Size (US)", "XXXS", "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL")
-    var menSizeCategories = arrayOf("Size category (US)", "Regular", "Short", "Tall")
-    var womenTopsNumericSizes = arrayOf("Numeric size (US)", "000", "00", "0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20")
-
-    var braBandSizes = arrayOf("30", "32", "34", "36", "38", "40", "42", "44", "46")
-    var braValues = arrayOf("AA", "A", "B", "C", "D", "DD", "DDD", "G", "H")
-
-    var womenShoeSizes = arrayOf("Size (US)", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12")
-    var womenShoeWidthSizes = arrayOf("Width", "4A", "3A", "2A", "B", "C/D", "E", "2E", "3E", "4E")
-    var womenAccessoriesBelts = arrayOf("Belts", "XS", "S", "M", "L", "XL")
-    var womenAccessoriesHats = arrayOf("Hats", "XS", "S", "M", "L", "XL")
-    var womenAccessoriesGloves = arrayOf("Gloves", "XS", "S", "M", "L", "XL")
-    var womenAccessoriesTights = arrayOf("Tights", "XS", "S", "M", "L", "XL")
-    var menTopsSizes = arrayOf("Size (US)", "XS", "S", "M", "L", "XL", "XXL")
-    var menTopsNumericSizes = arrayOf("Numeric size(US)", "32", "34", "36", "38", "40", "42", "44", "46", "48")
-    var menBottomsNumericSizes = arrayOf("Numeric size(US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
-    var menBottomsNumericSizesSuiting = arrayOf("Numeric (US)", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
-    var menJacketsNumericSizes = arrayOf("Numeric (size)", "34", "36", "38", "40", "42", "44", "46")
-    var menShoeSizes = arrayOf("Size (US)", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5", "16")
-    var menShoeWidthSizes = arrayOf("Width", "4A", "3A", "2A/B", "C", "D", "E/2E", "3E", "4E", "5E")
-    var menBelts = arrayOf("Belts", "S", "M", "L", "XL", "XXL")
-    var menBottomsNumericBeltsSizes = arrayOf("Belts (size)", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46")
-    var menHats = arrayOf("Hats", "XS", "S", "M", "L", "L", "XXL")
-    var menGloves = arrayOf("Gloves", "XS", "S", "M", "L", "L", "XXL")
-
-    var girlsNumericSizes = arrayOf("Numeric size (US)", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16")
-    var girlsBeltSizes = arrayOf("Belt", "XS", "S", "M", "L", "XL")
-    var girlsNumericBeltsSizes = arrayOf("Belts (Numeric size)", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16")
-    var girlsHatSizes = arrayOf("Hats", "XS", "S", "M", "L", "XL")
-    var girlsGlovesSizes = arrayOf("Gloves", "XS", "S", "M", "L", "XL")
-    var girlsTightsSizes = arrayOf("Tights", "XS", "S", "M", "L", "XL")
-    var girlsSocksSizes = arrayOf("Socks", "XS", "S", "M", "L", "XL")
-    var girlsShoeSizes = arrayOf("Toddler size (US)", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10")
-    var girlsShoesLittleAndBigKidSize = arrayOf("Little and big kid size (US)", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "1", "1.5", "2", "2.5", "3", "3.5", "4.0", "4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8")
-    var girlsShoeWidthSizes = arrayOf("Width", "N", "M", "W", "XW")
-
-    var babyClothings = arrayOf("Clothing", "New Born", "0-3 months", "3-6 months", "6-9 months", "9-12 months", "12-18 months", "18-24 months")
-    var babyShoeSizes = arrayOf("Shoes", "0", "1", "1.5", "2", "2.5", "3", "3.5")
-
-    var accountTypeOptions = arrayOf("Checking", "Savings", "Other")
-
-    var cardTypeOptions = arrayOf("Credit", "Debit")
-
-    var othersAccountTypeOptions = arrayOf("Cable/Satellite", "Phone", "Long Distance", "Wireless", "Internet", "Gas", "Electricity", "Water", "Trash", "Other")
-
-    var currencyType = arrayOf("USD",
-            "US Dollar - USD",
-            "Afghanistan Afghani - AFA",
-            "Albanian Lek - ALL",
-            "Algerian Dinar - DZD",
-            "Angolan Kwanza Reajustado - AOR",
-            "Argentine Peso - ARS",
-            "Armenian Dram - AMD",
-            "Aruban Guilder - AWG",
-            "Australian Dollar - AUD",
-            "Azerbaijanian New Manat - AZN",
-            "Bahamian Dollar - BSD",
-            "Bahraini Dinar - BHD",
-            "Bangladeshi Taka - BDT",
-            "Barbados Dollar - BBD",
-            "Belarusian Ruble - BYN",
-            "Belize Dollar - BZD",
-            "Bermudian Dollar - BMD",
-            "Bhutan Ngultrum - BTN",
-            "Bolivian Boliviano - BOB",
-            "Botswana Pula - BWP",
-            "Brazilian Real - BRL",
-            "British Pound - GBP",
-            "Brunei Dollar - BND",
-            "Bulgarian Lev - BGN",
-            "Burundi Franc - BIF",
-            "Cambodian Riel - KHR",
-            "Canadian Dollar - CAD",
-            "Cape Verde Escudo - CVE",
-            "Cayman Islands Dollar - KYD",
-            "CFA Franc BCEAO - XOF",
-            "CFA Franc BEAC - XAF",
-            "CFP Franc - XPF",
-            "Chilean Peso - CLP",
-            "Chinese Yuan Renminbi - CNY",
-            "Colombian Peso - COP",
-            "Comoros Franc - KMF",
-            "Congolese Franc - CDF",
-            "Costa Rican Colon - CRC",
-            "Croatian Kuna - HRK",
-            "Cuban Peso - CUP",
-            "Czech Koruna - CZK",
-            "Danish Krone - DKK",
-            "Djibouti Franc - DJF",
-            "Dominican Peso - DOP",
-            "East Caribbean Dollar - XCD",
-            "Egyptian Pound - EGP",
-            "El Salvador Colon - SVC",
-            "Eritrean Nakfa - ERN",
-            "Estonian Kroon - EEK",
-            "Ethiopian Birr - ETB",
-            "EU Euro - EUR",
-            "Falkland Islands Pound - FKP",
-            "Fiji Dollar - FJD",
-            "Gambian Dalasi - GMD",
-            "Georgian Lari - GEL",
-            "Ghanaian New Cedi - GHS",
-            "Gibraltar Pound - GIP",
-            "Gold (Ounce) - XAU",
-            "Gold Franc - XFO",
-            "Guatemalan Quetzal - GTQ",
-            "Guinean Franc - GNF",
-            "Guyana Dollar - GYD",
-            "Haitian Gourde - HTG",
-            "Honduran Lempira - HNL",
-            "Hong Kong SAR Dollar - HKD",
-            "Hungarian Forint - HUF",
-            "Icelandic Krona - ISK",
-            "IMF Special Drawing Right - XDR",
-            "Indian Rupee - INR",
-            "Indonesian Rupiah - IDR",
-            "Iranian Rial - IRR",
-            "Iraqi Dinar - IQD",
-            "Israeli New Shekel - ILS",
-            "Jamaican Dollar - JMD",
-            "Japanese Yen - JPY",
-            "Jordanian Dinar - JOD",
-            "Kazakh Tenge - KZT",
-            "Kenyan Shilling - KES",
-            "Kuwaiti Dinar - KWD",
-            "Kyrgyz Som - KGS",
-            "Lao Kip - LAK",
-            "Latvian Lats - LVL",
-            "Lebanese Pound - LBP",
-            "Lesotho Loti - LSL",
-            "Liberian Dollar - LRD",
-            "Libyan Dinar - LYD",
-            "Lithuanian Litas - LTL",
-            "Macao SAR Pataca - MOP",
-            "Macedonian Denar - MKD",
-            "Malagasy Ariary - MGA",
-            "Malawi Kwacha - MWK",
-            "Malaysian Ringgit - MYR",
-            "Maldivian Rufiyaa - MVR",
-            "Mauritanian Ouguiya - MRO",
-            "Mauritius Rupee - MUR",
-            "Mexican Peso - MXN",
-            "Moldovan Leu - MDL",
-            "Mongolian Tugrik - MNT",
-            "Moroccan Dirham - MAD",
-            "Mozambique New metical - MZN",
-            "Myanmar Kyat - MMK",
-            "Namibian Dollar - NAD",
-            "Nepalese Rupee - NPR",
-            "Netherlands Antillian Guilder - ANG",
-            "New Zealand Dollar - NZD",
-            "Nicaraguan Cordoba oro - NIO",
-            "Nigerian Naira - NGN",
-            "North Korean Won - KPW",
-            "Norwegian Krone - NOK",
-            "Omani Rial - OMR",
-            "Pakistani Rupee - PKR",
-            "Palladium (Ounce) - XPD",
-            "Panamanian Balboa - PAB",
-            "Papua New Guinea Kina - PGK",
-            "Paraguayan Guarani - PYG",
-            "Peruvian Nuevo Sol - PEN",
-            "Philippine Peso - PHP",
-            "Platinum (Ounce) - XPT",
-            "Polish Zloty - PLN",
-            "Qatari Rial - QAR",
-            "Romanian New Leu - RON",
-            "Russian Ruble - RUB",
-            "Rwandan Franc - RWF",
-            "Saint Helena Pound - SHP",
-            "Samoan Tala - WST",
-            "Sao Tome And Principe Dobra - STD",
-            "Saudi Riyal - SAR",
-            "Serbian Dinar - RSD",
-            "Seychelles Rupee - SCR",
-            "Sierra Leone Leone - SLL",
-            "Silver (Ounce) - XAG",
-            "Singapore Dollar - SGD",
-            "Solomon Islands Dollar - SBD",
-            "Somali Shilling - SOS",
-            "South African Rand - ZAR",
-            "South Korean Won - KRW",
-            "Sri Lanka Rupee - LKR",
-            "Sudanese Pound - SDG",
-            "Suriname Dollar - SRD",
-            "Swaziland Lilangeni - SZL",
-            "Swedish Krona - SEK",
-            "Swiss Franc - CHF",
-            "Syrian Pound - SYP",
-            "Taiwan New Dollar - TWD",
-            "Tajik Somoni - TJS",
-            "Tanzanian Shilling - TZS",
-            "Thai Baht - THB",
-            "Tongan Paanga - TOP",
-            "Trinidad And Tobago Dollar - TTD",
-            "Tunisian Dinar - TND",
-            "Turkish Lira - TRY",
-            "Turkmen New Manat - TMT",
-            "UAE Dirham - AED",
-            "Uganda New Shilling - UGX",
-            "UIC Franc - XFU",
-            "Ukrainian Hryvnia - UAH",
-            "Uruguayan Peso Uruguayo - UYU",
-            "US Dollar - USD",
-            "Uzbekistani Sum - UZS",
-            "Vanuatu Vatu - VUV",
-            "Venezuelan Bolivar Fuerte - VEF",
-            "Vietnamese Dong - VND",
-            "Yemeni Rial - YER",
-            "Zambian Kwacha - ZMK",
-            "Zimbabwe Dollar - ZWL")
-    // End Of Constants
-
+    private val infalInflater = this._context
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getChild(groupPosition: Int, childPosititon: Int): Any {
         return categories[groupPosition].subCategories[childPosititon]
@@ -273,18 +49,24 @@ class ExpandableListViewAdapter(private val _context: Context,
         return childPosition.toLong()
     }
 
+    private var level2LocationView: View? = null
+    private var level2PasswordView: View? = null
+    private var level2RadioView: View? = null
+    private var level2SpinnerView: View? = null
+    private var level2SwitchView: View? = null
+    private var level2USDView: View? = null
+    private var level2NotesView: View? = null
+    private var level2PickerView: View? = null
+    private var level2NumberView: View? = null
+    private var level2NormalView: View? = null
+    private var level2AttachmentsView: View? = null
+    private var level2NormalSpinnerView: View? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun getChildView(groupPosition: Int, childPosition: Int,
                               isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
 
-
-
         var childView = convertView
-
-        //if (childView == null) {
-
-        val infalInflater = this._context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         val level2SubCategory = (getChild(groupPosition, childPosition) as Level2SubCategory)
         val headerTitle = level2SubCategory.title
@@ -295,147 +77,172 @@ class ExpandableListViewAdapter(private val _context: Context,
         when (getItemType(groupPosition, childPosition)) {
 
             Constants.LEVEL2_LOCATION -> {
-                childView = infalInflater.inflate(R.layout.level2_item_location, null)
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
-                childView.findViewById<EditText>(R.id.etSubHeader).setOnTouchListener(OnTouchListener { _, event ->
+                
+                if( level2LocationView == null )
+                    level2LocationView = infalInflater.inflate(R.layout.level2_item_location, null)
+                
+                level2LocationView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
+                level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
+                level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).setOnTouchListener(OnTouchListener { _, event ->
                     val DRAWABLE_RIGHT = 2
 
                     if (event.action == MotionEvent.ACTION_UP) {
-                        if (event.rawX >= childView!!.findViewById<EditText>(R.id.etSubHeader).right - childView!!.findViewById<EditText>(R.id.etSubHeader).compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                            openStaticLayoutDialog(childView!!.findViewById<EditText>(R.id.etSubHeader))
+                        if (event.rawX >= level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).right - level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                            openStaticLayoutDialog(level2LocationView!!.findViewById<EditText>(R.id.etSubHeader))
 
                             return@OnTouchListener true
                         }
                     }
                     false
                 })
-                childView.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                childView = level2LocationView
 
             }
             Constants.LEVEL2_PASSWORD -> {
-                childView = infalInflater.inflate(R.layout.level2_password, null)
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<EditText>(R.id.etCurrentPassword).hint = headerTitle
-                childView.findViewById<EditText>(R.id.etCurrentPassword).setText(titleValue)
-                childView.findViewById<EditText>(R.id.etCurrentPassword).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                if( level2PasswordView == null )
+                    level2PasswordView = infalInflater.inflate(R.layout.level2_password, null)
+                
+                level2PasswordView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2PasswordView!!.findViewById<EditText>(R.id.etCurrentPassword).hint = headerTitle
+                level2PasswordView!!.findViewById<EditText>(R.id.etCurrentPassword).setText(titleValue)
+                level2PasswordView!!.findViewById<EditText>(R.id.etCurrentPassword).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                childView = level2PasswordView
             }
             Constants.LEVEL2_RADIO -> {
-                childView = infalInflater.inflate(R.layout.level2_radio, null)
+                if( level2RadioView == null )
+                    level2RadioView = infalInflater.inflate(R.layout.level2_radio, null)
 
-                childView.findViewById<CheckBox>(R.id.chkLeft).hint = headerTitle
-                childView.findViewById<CheckBox>(R.id.chkRight).hint = titleValue
+                level2RadioView!!.findViewById<CheckBox>(R.id.chkLeft).hint = headerTitle
+                level2RadioView!!.findViewById<CheckBox>(R.id.chkRight).hint = titleValue
 
                 if( titleValue.equals("purchased", true) ) {
-                    childView.findViewById<CheckBox>(R.id.chkLeft).text = "Purchased"
-                    childView.findViewById<CheckBox>(R.id.chkRight).text = "Leased"
-                    childView.findViewById<CheckBox>(R.id.chkLeft).isChecked = true
-                    childView.findViewById<CheckBox>(R.id.chkRight).isChecked = false
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkLeft).text = "Purchased"
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkRight).text = "Leased"
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkLeft).isChecked = true
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkRight).isChecked = false
                 }
                 else {
-                    childView.findViewById<CheckBox>(R.id.chkLeft).text = "Purchased"
-                    childView.findViewById<CheckBox>(R.id.chkRight).text = "Leased"
-                    childView.findViewById<CheckBox>(R.id.chkLeft).isChecked = false
-                    childView.findViewById<CheckBox>(R.id.chkRight).isChecked = true
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkLeft).text = "Purchased"
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkRight).text = "Leased"
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkLeft).isChecked = false
+                    level2RadioView!!.findViewById<CheckBox>(R.id.chkRight).isChecked = true
                 }
+                childView = level2RadioView
 
             }
             Constants.LEVEL2_SPINNER -> {
+                if( level2SpinnerView == null )
+                    level2SpinnerView = infalInflater.inflate(R.layout.level2_spinner, null)
 
-                childView = infalInflater.inflate(R.layout.level2_spinner, null)
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
-                childView.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                level2SpinnerView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2SpinnerView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
+                level2SpinnerView!!.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
+                level2SpinnerView!!.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
                 if (keyBoardType == Constants.CONTACT_SPINNER) {
                     openContactList()
                 } else {
                     //TODO -
                     val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, membersList)
-                    childView.findViewById<Spinner>(R.id.spinnerUsers).adapter = arrayAdapter
-                    childView.findViewById<Spinner>(R.id.spinnerUsers).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    level2SpinnerView!!.findViewById<Spinner>(R.id.spinnerUsers).adapter = arrayAdapter
+                    level2SpinnerView!!.findViewById<Spinner>(R.id.spinnerUsers).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(p0: AdapterView<*>?) {
 
                         }
 
                         override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                             val newValue = childView!!.findViewById<Spinner>(R.id.spinnerUsers).getItemAtPosition(position) as String
-                            childView!!.findViewById<EditText>(R.id.etSubHeader).setText(newValue)
+                            level2SpinnerView!!.findViewById<EditText>(R.id.etSubHeader).setText(newValue)
 
                         }
                     }
                 }
+                level2SpinnerView = childView
 
             }
             Constants.LEVEL2_SWITCH -> {
-                childView = infalInflater.inflate(R.layout.level2_switch, null)
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView!!.findViewById<Switch>(R.id.switchView).isChecked = isValueSet
+                if( level2SwitchView == null ) 
+                    level2SwitchView = infalInflater.inflate(R.layout.level2_switch, null)
+
+                level2SwitchView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2SwitchView!!.findViewById<Switch>(R.id.switchView).isChecked = isValueSet
+                childView = level2SwitchView
 
             }
             Constants.LEVEL2_USD -> {
-                childView = infalInflater.inflate(R.layout.level2_usd, null)
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
-                childView.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                val spinnerCurrency: Spinner = childView.findViewById<View>(R.id.spinnerCurrency) as Spinner
+                
+                if( level2USDView == null )
+                    level2USDView = infalInflater.inflate(R.layout.level2_usd, null)
+
+                level2USDView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2USDView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
+                level2USDView!!.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
+                level2USDView!!.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                val spinnerCurrency: Spinner = level2USDView!!.findViewById<View>(R.id.spinnerCurrency) as Spinner
 
                 val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, currencyType)
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerCurrency.adapter = arrayAdapter
                 spinnerCurrency.setSelection(currencyType.indexOf(titleValue))
                 spinnerCurrency.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, currencyType )
+                
+                childView = level2USDView
             }
             Constants.LEVEL2_NOTES -> {
-
-                childView = infalInflater.inflate(R.layout.level2_notes, null)
+                if( level2NotesView == null )
+                    level2NotesView = infalInflater.inflate(R.layout.level2_notes, null)
 
                 if (headerTitle.equals("")) {
-                    childView!!.findViewById<EditText>(R.id.edtNotes).hint = "Notes"
+                    level2NotesView!!.findViewById<EditText>(R.id.edtNotes).hint = "Notes"
                 } else {
-                    childView!!.findViewById<EditText>(R.id.edtNotes).hint = headerTitle
+                    level2NotesView!!.findViewById<EditText>(R.id.edtNotes).hint = headerTitle
                 }
-                childView!!.findViewById<EditText>(R.id.edtNotes).setText(titleValue)
-                childView!!.findViewById<EditText>(R.id.edtNotes).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                level2NotesView!!.findViewById<EditText>(R.id.edtNotes).setText(titleValue)
+                level2NotesView!!.findViewById<EditText>(R.id.edtNotes).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                childView = level2NotesView
             }
             Constants.LEVEL2_PICKER -> {
-                childView = infalInflater.inflate(R.layout.level2_item_picker, null)
+                if( level2PickerView == null )
+                    level2PickerView = infalInflater.inflate(R.layout.level2_item_picker, null)
 
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
-                childView!!.findViewById<TextView>(R.id.etSubHeader).text = titleValue
-                childView.findViewById<TextView>(R.id.etSubHeader).setOnClickListener {
+                level2PickerView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2PickerView!!.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
+                level2PickerView!!.findViewById<TextView>(R.id.etSubHeader).text = titleValue
+                level2PickerView!!.findViewById<TextView>(R.id.etSubHeader).setOnClickListener {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
-                            childView!!.findViewById<TextView>(R.id.etSubHeader).text = getDateMonthYearFormat(selectedDate.time)
+                            level2PickerView!!.findViewById<TextView>(R.id.etSubHeader).text = getDateMonthYearFormat(selectedDate.time)
                         }
                     })
                 }
+                childView = level2PickerView
             }
             Constants.LEVEL2_NUMBER -> {
-                childView = infalInflater.inflate(R.layout.level2_item_number, null)
+                if( level2NumberView == null )
+                    level2NumberView = infalInflater.inflate(R.layout.level2_item_number, null)
 
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
-                childView!!.findViewById<TextView>(R.id.etSubHeader).text = titleValue
-                childView!!.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
+                level2NumberView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2NumberView!!.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
+                level2NumberView!!.findViewById<TextView>(R.id.etSubHeader).text = titleValue
+                level2NumberView!!.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                level2NumberView!!.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
+                
+                childView = level2NumberView
             }
             Constants.LEVEL2_NORMAL -> {
-                childView = infalInflater.inflate(R.layout.level2_item_normal, null)
+                if( level2NormalView == null )
+                    level2NormalView = infalInflater.inflate(R.layout.level2_item_normal, null)
 
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
-                childView.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
-                childView.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                level2NormalView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
+                level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
+                level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).setText(titleValue)
+                level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
                 if (keyBoardType == Constants.KEYBOARD_NUMBER) {
-                    childView.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
+                    level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).inputType = InputType.TYPE_CLASS_NUMBER
                 } else if (keyBoardType == Constants.KEYBOARD_SPINNER) {
-                    childView.findViewById<EditText>(R.id.etSubHeader).hide()
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).show()
+                    level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).hide()
+                    level2NormalView!!.findViewById<Spinner>(R.id.spinnerAccountType).show()
 
                     val spinnerItems = when (classType) {
                         DecryptedFinancial::class.java.simpleName -> {
@@ -447,29 +254,31 @@ class ExpandableListViewAdapter(private val _context: Context,
                     }
                     val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).adapter = arrayAdapter
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).setSelection(spinnerItems.indexOf(titleValue))
-                    childView.findViewById<Spinner>(R.id.spinnerAccountType).onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, spinnerItems )
+                    level2NormalView!!.findViewById<Spinner>(R.id.spinnerAccountType).adapter = arrayAdapter
+                    level2NormalView!!.findViewById<Spinner>(R.id.spinnerAccountType).setSelection(spinnerItems.indexOf(titleValue))
+                    level2NormalView!!.findViewById<Spinner>(R.id.spinnerAccountType).onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, spinnerItems )
                 } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
-                            childView!!.findViewById<EditText>(R.id.etSubHeader).setText(getDateMonthYearFormat(selectedDate.time))
+                            level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).setText(getDateMonthYearFormat(selectedDate.time))
                         }
                     })
                 }
+                childView = level2NormalView
 
             }
             Constants.LEVEL2_ATTACHMENTS -> {
-                childView = infalInflater.inflate(R.layout.level2_atachments, null)
+                if( level2AttachmentsView == null )
+                    level2AttachmentsView = infalInflater.inflate(R.layout.level2_atachments, null)
+                childView = level2AttachmentsView
             }
-
             Constants.LEVEL_NORMAL_SPINNER -> {
+                if( level2NormalSpinnerView == null )
+                    level2NormalSpinnerView = infalInflater.inflate(R.layout.level2_item_spinner_value, null)
 
-                childView = infalInflater.inflate(R.layout.level2_item_spinner_value, null)
+                level2NormalSpinnerView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
 
-                childView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
-
-                val spinnerItem: Spinner = childView.findViewById<View>(R.id.spinnerValue) as Spinner
+                val spinnerItem: Spinner = level2NormalSpinnerView!!.findViewById<View>(R.id.spinnerValue) as Spinner
 
                 when (keyBoardType) {
                 // Women Shopping Category
@@ -741,7 +550,7 @@ class ExpandableListViewAdapter(private val _context: Context,
 
                 }
 
-
+                childView = level2NormalSpinnerView
 
             }
 
