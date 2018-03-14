@@ -34,7 +34,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     private val ADD_EDIT_MEMBER = 4324
     private val DELETE_MEMBER = 4325
-    private val adminUser : SyncUser
+    private val adminUser : SyncUser = SyncUser.currentUser()
 
     override fun onMemberEdit(member: DecryptedMember?) {
         val bundle = Bundle()
@@ -205,57 +205,8 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
         val permissionManager = adminUser.permissionManager
         // Create request
         val condition = UserCondition.userId(updateMember!!.userId)
-        var accessLevel = AccessLevel.NONE
-        when(endPoint) {
-            Constants.REALM_END_POINT_COMBINE -> {
-                    accessLevel = AccessLevel.NONE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_CONTACTS -> {
-                if( updateMember!!.contactsAdd && updateMember.contactsEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_PERSONAL -> {
-                if( updateMember!!.personalAdd && updateMember.personalEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_WELLNESS -> {
-                if( updateMember!!.wellnessAdd && updateMember.wellnessEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_INTERESTS -> {
-                if( updateMember!!.interestsAdd && updateMember.interestsEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_EDUCATION -> {
-                if( updateMember!!.educationlAdd && updateMember.educationlEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_MEMORIES -> {
-                if( updateMember!!.memoriesAdd && updateMember.memoriesEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_TRAVEL -> {
-                if( updateMember!!.travelAdd && updateMember.travelEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-            Constants.REALM_END_POINT_COMBINE_SHOPPING -> {
-                if( updateMember!!.shoppingAdd && updateMember.shoppingEdit ) {
-                    accessLevel = AccessLevel.WRITE
-                }
-            }
-
-        }
-
+        val accessLevel = AccessLevel.NONE
         val request = PermissionRequest(condition, "/~/" + endPoint, accessLevel)
-
         permissionManager.applyPermissions(request, object : PermissionManager.ApplyPermissionsCallback {
             override fun onSuccess() {
 
