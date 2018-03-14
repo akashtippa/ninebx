@@ -14,6 +14,7 @@ import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.home.fragments.FragmentListContainer
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -34,6 +35,7 @@ class Level2CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
+    private var fragmentListContainer = FragmentListContainer()
     // For Home & Money
     private var decryptedFinancial: DecryptedFinancial? = null // DecryptedFinancial()
     private var decryptedPayment: DecryptedPayment? = null // DecryptedPayment()
@@ -4907,11 +4909,25 @@ class Level2CategoryHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             AppLogger.d("saveDocument", "decryptedLoyalty" + decryptedLoyalty!!)
+                            var getDecryptedLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
+                            AppLogger.d("getDecryptedLoyalty", "DecryptedCombineTravel" + getDecryptedLoyalty)
+
+                            if(getDecryptedLoyalty!!.loyaltyItems.size != null){
+                                for(loyaltyItems in getDecryptedLoyalty!!.loyaltyItems){
+                                    var deleteLoyalty = realm!!.where(CombineTravel::class.java).equalTo("id", loyaltyItems.id).findAll()
+                                    realm.beginTransaction()
+                                    if( deleteLoyalty != null )
+                                        deleteLoyalty.deleteAllFromRealm()
+                                    realm.commitTransaction()
+                                }
+                            }
+
                             realm!!.beginTransaction()
                             val loyalty = encryptLoyalty(decryptedLoyalty!!)
                             realm.insertOrUpdate(loyalty)
                             realm.copyToRealmOrUpdate(loyalty)
                             realm.commitTransaction()
+                          //  fragmentListContainer!!.setRecyclerView()
                         }
                     })
                 }
@@ -5009,7 +5025,7 @@ class Level2CategoryHelper(
                             for(travelItems in realmTravel!!.travelItems){
                                 if (travelItems!!.id.toInt() == decryptedTravel!!.id.toInt() ){
                                     var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
-                                            .equalTo("id", decryptedLoyalty!!.id).findAll()
+                                            .equalTo("id", decryptedTravel!!.id).findAll()
                                     deleteTravel.deleteAllFromRealm()
                                     realm.commitTransaction()
                                 }
