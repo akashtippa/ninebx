@@ -355,6 +355,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     }
 
+    var endRepeatDate: Calendar = Calendar.getInstance()
     private fun showSelectionDialog( selectedInterval : String, selectionType : String ) {
         val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -426,6 +427,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
                         getDateFromPicker(context!!, calendar, object : DateTimeSelectionListener {
                             override fun onDateTimeSelected(selectedDate: Calendar) {
+                                endRepeatDate = selectedDate
                                 if (mCalendarEvent.endRepeat.size > 0)
                                     mCalendarEvent.endRepeat[mSelectedDateIndex] = (getDateMonthYearFormat(selectedDate.time))
                                 else
@@ -683,7 +685,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
             val startDate = startDateCalendar!!.time
             if( endRepeatEvent != "Never" ) {
 
-                val endDate = endDateCalendar!!.time
+                val endDate = endRepeatDate.time //endDateCalendar!!.time
                 val noOfDays = getDateDifference(startDate, endDate)
                 if( noOfDays > 0 ) {
                     maxRepeatDays = when( startRepeatEvent ) {
@@ -701,7 +703,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     var eventEndDate : Date ?= null
 
                     when( startRepeatEvent ) {
-                        REMINDER_EveryDay -> {
+                         REMINDER_EveryDay -> {
                             startDateCalendar!!.add( Calendar.DATE, index )
                             eventStartDate = startDateCalendar!!.time
                             endDateCalendar!!.add( Calendar.DATE, index )
