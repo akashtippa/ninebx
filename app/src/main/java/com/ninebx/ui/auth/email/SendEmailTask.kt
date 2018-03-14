@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth.email
 
 import android.os.AsyncTask
+import android.text.Html
 import android.util.Log
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthView
@@ -39,9 +40,7 @@ class SendEmailTask( private val emailOtp : String,
 
         try {
             val sendgrid = SendGrid("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")
-
             val email = SendGrid.Email()
-
             email.addTo(emailId)
             email.from = "ninebx.support@nineBx.com"
             email.subject = "NineBx - Authentication code"
@@ -49,7 +48,7 @@ class SendEmailTask( private val emailOtp : String,
                     "\n" +
                     "Here is your one-time, time-based code to authenticate your device.\n" +
                     "\n" +
-                    "Authentication code: "+emailOtp+"\n" + //TODO - Change the color
+                    "Authentication code: "+emailOtp+"\n"  //TODO - Change the color
                     "\n" +
                     "This is a time-sensitive code. Please enter it immediately to complete sign in.\n" +
                     "\n" +
