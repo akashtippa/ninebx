@@ -130,7 +130,7 @@
 
                 </LinearLayout>
 
-                <ScrollView
+                <android.support.v4.widget.NestedScrollView
                     android:id="@+id/layScroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -142,12 +142,14 @@
                         android:orientation="vertical">
 
 
-                        <com.ninebx.utility.NonScrollableListView
+                        <LinearLayout
                             android:id="@+id/layExpandable"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/default_mini_padding"
                             android:groupIndicator="@null"
+                            android:nestedScrollingEnabled="false"
                             android:scrollbars="none" />
 
                         <LinearLayout
@@ -227,7 +229,7 @@
 
                     </LinearLayout>
 
-                </ScrollView>
+                </android.support.v4.widget.NestedScrollView>
 
 
             </RelativeLayout>

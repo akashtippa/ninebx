@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
@@ -39,7 +42,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
-    private val adapterExpandable: ExpandableListViewAdapter? = null
 
     private var strTitle = ""
     private var strSubTitle = ""
@@ -71,8 +73,18 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-        layExpandable.setAdapter(ExpandableListViewAdapter( context!!, categories, this, categoryName, classType,
-                ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) ))
+        //layExpandable.layoutManager = LinearLayoutManager(context)
+        for( category in categories ) {
+            val level3ExpandableLayout = LayoutInflater.from(context).inflate(R.layout.layout_level3_expandable_recyclerview, null)
+            val lblListHeader : TextView = level3ExpandableLayout.findViewById(R.id.lblListHeader)
+            val rvLevel3 : RecyclerView = level3ExpandableLayout.findViewById(R.id.rvLevel3)
+            rvLevel3.layoutManager = LinearLayoutManager(context)
+            lblListHeader.text = category.title
+            rvLevel3.adapter = ExpandableRecyclerViewAdapter( context!!, category.subCategories, this, categoryName, classType,
+                    ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) )
+            layExpandable.addView(level3ExpandableLayout)
+
+        }
 
         if( selectedDocument != null ) {
             AppLogger.d("Level2Category", "Selected Document : " + selectedDocument)

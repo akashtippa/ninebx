@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/_10sdp"
-    android:layout_marginStart="@dimen/_10sdp"
-    android:layout_marginTop="@dimen/_10sdp"
+    android:paddingLeft="@dimen/default_mini_padding"
+    android:paddingStart="@dimen/default_mini_padding"
+    android:paddingTop="@dimen/default_mini_padding"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
@@ -18,6 +19,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/currencyLayout"
         android:layout_below="@+id/txtHeader"
         android:orientation="horizontal">
 
@@ -42,4 +44,9 @@
             android:visibility="visible" />
 
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@id/currencyLayout"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"/>
 </RelativeLayout>
