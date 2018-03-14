@@ -224,6 +224,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
 
             StringFour = if( dialog.edtComments != null && dialog.edtComments.text.isNotEmpty() ){
                 var comments = dialog.edtComments.text
+
                 (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
 
             }else{

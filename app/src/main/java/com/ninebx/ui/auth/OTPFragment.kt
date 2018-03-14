@@ -116,7 +116,6 @@ class OTPFragment : BaseAuthFragment() {
     }
 
     private fun setupOtp() {
-
         etOtp1.addTextChangedListener( object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
                 when( etOtp1.text.length ) {
