@@ -21,7 +21,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -47,19 +47,22 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection {
 
+    private val LEVEL_3: Int = 12312
+
     override fun onDocumentSelected(selectedDocument: Parcelable?, classType : String, action: String ) {
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val bundle = Bundle()
-        bundle.putString("categoryName", categoryName)
-        bundle.putString("categoryId", categoryID)
-        bundle.putString("action", action)
-        bundle.putParcelable( "selectedDocument", selectedDocument )
-        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-        bundle.putString("classType", classType)
-        val categoryFragment = Level3CategoryFragment()
-        categoryFragment.arguments = bundle
-        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+
+        startActivityForResult(
+                Intent(context, ContainerActivity::class.java)
+                        .putExtra(Constants.FROM_CLASS, "Level2Fragment")
+                        .putExtra("categoryName", categoryName)
+                        .putExtra("categoryId", categoryID)
+                        .putExtra("action", action)
+                        .putExtra( "selectedDocument", selectedDocument )
+                        .putExtra(Constants.COMBINE_ITEMS, combinedItems)
+                        .putExtra("classType", classType)
+                , LEVEL_3)
+
+
     }
 
 
@@ -121,20 +124,28 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
             } else {
-                val bundle = Bundle()
-                bundle.putString("categoryName", categoryName)
-                bundle.putString("categoryId", categoryID)
-                bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
 
-                val level3CategoryFragment = Level3CategoryFragment()
+                bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                bundle.putString("action", "add")
+                bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
+                /*val level3CategoryFragment = Level3CategoryFragment()
                 level3CategoryFragment.arguments = bundle
-                fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()
+                fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/
+                val intent = Intent( context, ContainerActivity::class.java)
+                intent.putExtras(bundle)
+                startActivityForResult(
+                        intent
+                        , LEVEL_3)
             }
         }
+        loadItems()
+    }
+
+    private fun loadItems() {
 
         searchHelper = SearchHelper()
         searchHelper.setOnDocumentSelection(this)
-        //TODO - change hard coded value
+
         val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
         AppLogger.d("SearchItems" , " " + searchItems)
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
@@ -142,7 +153,9 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         rvCommonList!!.adapter.notifyDataSetChanged()
     }
 
+    private var mCurrentSearchItem : Level3SearchItem ?= null
     override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String ) {
+        mCurrentSearchItem = searchItem
         searchHelper.switchAndSearch(searchItem, action)
     }
 
@@ -303,6 +316,20 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
 //            setContactsList()
+        }
+        else if( requestCode == LEVEL_3 && resultCode == Activity.RESULT_OK ) {
+            if( data!!.hasExtra("action") ) {
+                val action = data.getStringExtra("action")
+                when( action ) {
+                    "delete" -> {
+                        searchHelper.switchAndSearch(mCurrentSearchItem!!, action)
+                    }
+                    "add" -> {
+                        combinedItems = data.getParcelableExtra(Constants.COMBINE_ITEMS)
+                        loadItems()
+                    }
+                }
+            }
         }
     }
 

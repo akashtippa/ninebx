@@ -304,7 +304,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 fragmentTransaction!!.addToBackStack(null)
 
                 bundle = Bundle()
-                bundle!!.putInt("category", R.string.home_amp_money)
+                bundle!!.putInt("category", searchItem.searchCategory)
                 level1Fragment = Level1Fragment()
                 level1Fragment!!.arguments = bundle
 
@@ -317,9 +317,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
                     }
-                    /*(R.string.travel) -> {
+                    (R.string.travel) -> {
                         switchTravelItems( position, searchItem )
-                    }*/
+                    }
                     (R.string.contacts) -> {
                         switchContactsItems( position, searchItem )
                     }

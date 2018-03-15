@@ -461,7 +461,10 @@ class SearchHelper() {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections( NineBxApplication.instance, false, realmEndPoint, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        realm!!.where(clazz.javaClass).equalTo("id", selectedDocumentId).findAll().deleteAllFromRealm()
+                        realm!!.beginTransaction()
+                        realm.where(clazz.javaClass).equalTo("id", selectedDocumentId).findAll().deleteAllFromRealm()
+                        realm.commitTransaction()
+                        realm.close()
                     }
                 })
             }
@@ -827,9 +830,13 @@ class SearchHelper() {
     }
 
     private fun goToCategoryFragment( selectedDocument: Parcelable?, classType: String ) {
-        if( mOnDocumentSelection != null ) {
+        if( mOnDocumentSelection != null && mAction != "delete" ) {
             //AppLogger.d("ClassType", "Parcelable classType : " + classType )
             mOnDocumentSelection!!.onDocumentSelected( selectedDocument, classType, mAction )
         }
+    }
+
+    fun switchAndAdd(mCurrentSearchItem: Level3SearchItem, action: String?, parcelableExtra: Parcelable?) {
+
     }
 }

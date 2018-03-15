@@ -20,6 +20,8 @@ import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
 import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
+import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
+import com.ninebx.ui.home.fragments.Level2Fragment
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.utility.*
@@ -64,11 +66,16 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         finish()
     }
 
+    fun onLevel3Action( arguments : Bundle ) {
+        val intent = Intent()
+        intent.putExtras(arguments)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
     override fun onMemberSignup(user: SyncUser) {
         if (addFamilyMemberOrUsersFragment != null)
             addFamilyMemberOrUsersFragment!!.onAccountCreated(user)
-
-
     }
 
 
@@ -117,7 +124,6 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         if (NineBxApplication.getPreferences().currentStep < ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
 
-        val intent = intent
         fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
 
         when (fromWhichClass) {
@@ -130,7 +136,18 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "Contacts" -> {
                 loadSingleContactView()
             }
+            "Level2Fragment" -> {
+                loadLevel3Fragment()
+            }
         }
+    }
+
+    private fun loadLevel3Fragment() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val level3CategoryFragment = Level3CategoryFragment()
+        level3CategoryFragment.arguments = intent.extras
+        fragmentTransaction.replace(R.id.fragmentContainer, level3CategoryFragment).commit()
     }
 
     private fun loadMasterPasswordFragment() {
@@ -156,5 +173,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         fragmentTransaction.replace(R.id.fragmentContainer, contactsFragment).commit()
     }
 
-
+    override fun onBackPressed() {
+        finish()
+    }
 }
