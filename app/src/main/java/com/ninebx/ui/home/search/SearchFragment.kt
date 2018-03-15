@@ -133,6 +133,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         setRecentSearchAdapter()
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
+        edtSearch.clearFocus()
         showProgress(R.string.loading)
 
         mSearchPresenter = SearchPresenter(this)
@@ -140,6 +141,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 recentSearchLayout.visibility = View.GONE
+                clearSearch.visibility = View.VISIBLE
 
                 var text = edtSearch.getText().toString()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
@@ -161,6 +163,13 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
+        })
+
+        clearSearch.setOnClickListener(View.OnClickListener {
+            edtSearch.clearFocus()
+            hideAllLayouts()
+            setRecentSearchAdapter()
+            clearSearch.visibility = View.GONE
         })
     }
 

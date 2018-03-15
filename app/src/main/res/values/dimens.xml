@@ -27,4 +27,8 @@
     <dimen name="cp_dialog_width">1000dp</dimen>
     <dimen name="cp_dialog_height">1000dp</dimen>
     <dimen name="margin_12">12dp</dimen>
+
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+
 </resources>
