@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/default_mini_padding"
+    android:background="@color/colorGrey"
+    android:orientation="vertical"
+    android:padding="@dimen/default_mini_padding">
+
+    <TextView
+        android:id="@+id/lblListHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_arrow_five"
+        android:drawableRight="@drawable/ic_arrow_five"
+        android:text="@string/organized"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_16" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:id="@+id/rvLevel3"/>
+
+</LinearLayout>

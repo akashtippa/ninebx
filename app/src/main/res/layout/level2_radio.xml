@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?actionBarSize"
-    android:layout_marginTop="@dimen/_10sdp">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="@dimen/_10sdp">
 
     <CheckBox
         android:id="@+id/chkLeft"
@@ -30,5 +31,11 @@
         android:button="@drawable/custom_check"
         android:padding="@dimen/default_mini_padding"
         android:text="@string/organized" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@id/chkLeft"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"/>
 
 </RelativeLayout>

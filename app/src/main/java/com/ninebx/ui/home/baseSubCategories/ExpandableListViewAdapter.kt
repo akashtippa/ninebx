@@ -25,6 +25,7 @@ import com.ninebx.utility.getDateFromPicker
 import com.ninebx.utility.getDateMonthYearFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 /***
@@ -62,6 +63,10 @@ class ExpandableListViewAdapter(private val _context: Context,
     private var level2AttachmentsView: View? = null
     private var level2NormalSpinnerView: View? = null
 
+    private var viewMap : HashMap<Int, View> = HashMap()
+
+    private var groupView : View ?= null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun getChildView(groupPosition: Int, childPosition: Int,
                               isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
@@ -78,8 +83,12 @@ class ExpandableListViewAdapter(private val _context: Context,
 
             Constants.LEVEL2_LOCATION -> {
                 
-                if( level2LocationView == null )
-                    level2LocationView = infalInflater.inflate(R.layout.level2_item_location, null)
+                if( !viewMap.containsKey(R.layout.level2_item_location) ) {
+                    level2LocationView = infalInflater.inflate(R.layout.level2_item_location, parent, false)
+                    viewMap.put(R.layout.level2_item_location, level2LocationView!!)
+                }
+                else level2LocationView = viewMap.get(R.layout.level2_item_location)
+
                 
                 level2LocationView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2LocationView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
@@ -101,8 +110,12 @@ class ExpandableListViewAdapter(private val _context: Context,
 
             }
             Constants.LEVEL2_PASSWORD -> {
-                if( level2PasswordView == null )
-                    level2PasswordView = infalInflater.inflate(R.layout.level2_password, null)
+                if( !viewMap.containsKey(R.layout.level2_password) ) {
+                    level2PasswordView = infalInflater.inflate(R.layout.level2_password, parent, false)
+                    viewMap.put(R.layout.level2_password, level2PasswordView!!)
+                }
+                else level2PasswordView = viewMap.get(R.layout.level2_password)
+
                 
                 level2PasswordView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2PasswordView!!.findViewById<EditText>(R.id.etCurrentPassword).hint = headerTitle
@@ -111,8 +124,12 @@ class ExpandableListViewAdapter(private val _context: Context,
                 childView = level2PasswordView
             }
             Constants.LEVEL2_RADIO -> {
-                if( level2RadioView == null )
-                    level2RadioView = infalInflater.inflate(R.layout.level2_radio, null)
+                if( !viewMap.containsKey(R.layout.level2_radio) ) {
+                    level2RadioView = infalInflater.inflate(R.layout.level2_radio, parent, false)
+                    viewMap.put(R.layout.level2_radio, level2RadioView!!)
+                }
+                else level2RadioView = viewMap.get(R.layout.level2_radio)
+
 
                 level2RadioView!!.findViewById<CheckBox>(R.id.chkLeft).hint = headerTitle
                 level2RadioView!!.findViewById<CheckBox>(R.id.chkRight).hint = titleValue
@@ -133,8 +150,12 @@ class ExpandableListViewAdapter(private val _context: Context,
 
             }
             Constants.LEVEL2_SPINNER -> {
-                if( level2SpinnerView == null )
-                    level2SpinnerView = infalInflater.inflate(R.layout.level2_spinner, null)
+                if( !viewMap.containsKey(R.layout.level2_spinner) ) {
+                    level2SpinnerView = infalInflater.inflate(R.layout.level2_spinner, parent, false)
+                    viewMap.put(R.layout.level2_spinner, level2SpinnerView!!)
+                }
+                else level2SpinnerView = viewMap.get(R.layout.level2_spinner)
+
 
                 level2SpinnerView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2SpinnerView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
@@ -162,8 +183,12 @@ class ExpandableListViewAdapter(private val _context: Context,
 
             }
             Constants.LEVEL2_SWITCH -> {
-                if( level2SwitchView == null ) 
-                    level2SwitchView = infalInflater.inflate(R.layout.level2_switch, null)
+                if( !viewMap.containsKey(R.layout.level2_switch) ) {
+                    level2SwitchView = infalInflater.inflate(R.layout.level2_switch, parent, false)
+                    viewMap.put(R.layout.level2_switch, level2SwitchView!!)
+                }
+                else level2SwitchView = viewMap.get(R.layout.level2_switch)
+
 
                 level2SwitchView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2SwitchView!!.findViewById<Switch>(R.id.switchView).isChecked = isValueSet
@@ -172,8 +197,12 @@ class ExpandableListViewAdapter(private val _context: Context,
             }
             Constants.LEVEL2_USD -> {
                 
-                if( level2USDView == null )
-                    level2USDView = infalInflater.inflate(R.layout.level2_usd, null)
+                if( !viewMap.containsKey(R.layout.level2_usd) ) {
+                    level2USDView = infalInflater.inflate(R.layout.level2_usd, parent, false)
+                    viewMap.put(R.layout.level2_usd, level2USDView!!)
+                }
+                else level2USDView = viewMap.get(R.layout.level2_usd)
+
 
                 level2USDView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2USDView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
@@ -190,8 +219,12 @@ class ExpandableListViewAdapter(private val _context: Context,
                 childView = level2USDView
             }
             Constants.LEVEL2_NOTES -> {
-                if( level2NotesView == null )
-                    level2NotesView = infalInflater.inflate(R.layout.level2_notes, null)
+                if( !viewMap.containsKey(R.layout.level2_notes) ) {
+                    level2NotesView = infalInflater.inflate(R.layout.level2_notes, parent, false)
+                    viewMap.put(R.layout.level2_notes, level2NotesView!!)
+                }
+                else level2NotesView = viewMap.get(R.layout.level2_notes)
+
 
                 if (headerTitle.equals("")) {
                     level2NotesView!!.findViewById<EditText>(R.id.edtNotes).hint = "Notes"
@@ -203,8 +236,12 @@ class ExpandableListViewAdapter(private val _context: Context,
                 childView = level2NotesView
             }
             Constants.LEVEL2_PICKER -> {
-                if( level2PickerView == null )
-                    level2PickerView = infalInflater.inflate(R.layout.level2_item_picker, null)
+                if( !viewMap.containsKey(R.layout.level2_item_picker) ) {
+                    level2PickerView = infalInflater.inflate(R.layout.level2_item_picker, parent, false)
+                    viewMap.put(R.layout.level2_item_picker, level2PickerView!!)
+                }
+                else level2PickerView = viewMap.get(R.layout.level2_item_picker)
+
 
                 level2PickerView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2PickerView!!.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
@@ -219,8 +256,12 @@ class ExpandableListViewAdapter(private val _context: Context,
                 childView = level2PickerView
             }
             Constants.LEVEL2_NUMBER -> {
-                if( level2NumberView == null )
-                    level2NumberView = infalInflater.inflate(R.layout.level2_item_number, null)
+                if( !viewMap.containsKey(R.layout.level2_item_number) ) {
+                    level2NumberView = infalInflater.inflate(R.layout.level2_item_number, parent, false)
+                    viewMap.put(R.layout.level2_item_number, level2NumberView!!)
+                }
+                else level2NumberView = viewMap.get(R.layout.level2_item_number)
+
 
                 level2NumberView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2NumberView!!.findViewById<TextView>(R.id.etSubHeader).hint = headerTitle
@@ -231,8 +272,12 @@ class ExpandableListViewAdapter(private val _context: Context,
                 childView = level2NumberView
             }
             Constants.LEVEL2_NORMAL -> {
-                if( level2NormalView == null )
-                    level2NormalView = infalInflater.inflate(R.layout.level2_item_normal, null)
+                if( !viewMap.containsKey(R.layout.level2_item_normal) ) {
+                    level2NormalView = infalInflater.inflate(R.layout.level2_item_normal, parent, false)
+                    viewMap.put(R.layout.level2_item_normal, level2NormalView!!)
+                }
+                else level2NormalView = viewMap.get(R.layout.level2_item_normal)
+
 
                 level2NormalView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
                 level2NormalView!!.findViewById<EditText>(R.id.etSubHeader).hint = headerTitle
@@ -268,13 +313,21 @@ class ExpandableListViewAdapter(private val _context: Context,
 
             }
             Constants.LEVEL2_ATTACHMENTS -> {
-                if( level2AttachmentsView == null )
-                    level2AttachmentsView = infalInflater.inflate(R.layout.level2_atachments, null)
+                if( !viewMap.containsKey(R.layout.level2_atachments) ) {
+                    level2AttachmentsView = infalInflater.inflate(R.layout.level2_atachments, parent, false)
+                    viewMap.put(R.layout.level2_atachments, level2AttachmentsView!!)
+                }
+                else level2AttachmentsView = viewMap.get(R.layout.level2_atachments)
+
                 childView = level2AttachmentsView
             }
             Constants.LEVEL_NORMAL_SPINNER -> {
-                if( level2NormalSpinnerView == null )
-                    level2NormalSpinnerView = infalInflater.inflate(R.layout.level2_item_spinner_value, null)
+                if( !viewMap.containsKey(R.layout.level2_item_spinner_value) ) {
+                    level2NormalSpinnerView = infalInflater.inflate(R.layout.level2_item_spinner_value, parent, false)
+                    viewMap.put(R.layout.level2_item_spinner_value, level2NormalSpinnerView!!)
+                }
+                else level2NormalSpinnerView = viewMap.get(R.layout.level2_item_spinner_value)
+
 
                 level2NormalSpinnerView!!.findViewById<TextView>(R.id.txtHeader).text = headerTitle
 
@@ -560,16 +613,17 @@ class ExpandableListViewAdapter(private val _context: Context,
 
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean,
                               convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+
+        groupView = convertView
         val headerTitle = (getGroup(groupPosition) as Level2Category).title
-        if (convertView == null) {
+        if (groupView == null) {
             val infalInflater = this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = infalInflater.inflate(R.layout.list_header, null)
+            groupView = infalInflater.inflate(R.layout.list_header, null)
         }
 
 
-        val lblListHeader = convertView!!
+        val lblListHeader = groupView!!
                 .findViewById<View>(R.id.lblListHeader) as TextView
         lblListHeader.text = headerTitle
 
@@ -579,7 +633,7 @@ class ExpandableListViewAdapter(private val _context: Context,
             lblListHeader.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_five, 0)
         }
 
-        return convertView
+        return groupView!!
     }
 
     override fun hasStableIds(): Boolean {
