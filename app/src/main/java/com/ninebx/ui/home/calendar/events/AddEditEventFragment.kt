@@ -113,8 +113,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
         ivBack.setOnClickListener { goBack() }
         tvSave.setOnClickListener {
-            if( validate() ) {
-                saveCalendarEvent()
+            if(tvSave.text != "") {
+                if( validate() ) {
+                    saveCalendarEvent()
+                }
+            } else {
+                goBack()
             }
             //uploadImageAws()
             //downloadImageAws()
@@ -348,7 +352,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun setDateTime(dateTimeTextView: TextView?, selectedDate: Calendar, allDay: Boolean) {
 
         if( allDay ) {
-            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time, DATE_FORMAT)
+            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time, DATE_FORMAT_ALL_DAY)
         }
         else
             dateTimeTextView!!.text = parseDateForFormat(selectedDate.time , DATE_FORMAT)
@@ -470,6 +474,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     private val TAG: String = AddEditEventFragment::class.java.simpleName
     private val DATE_FORMAT = "MMMM dd, yyyy hh:mm a"
+    private val DATE_FORMAT_ALL_DAY = "MMMM dd, yyyy"
     //a Uri object to store file path
     private var filePath: Uri? = null
     private var mImagesList : ArrayList<Uri> = ArrayList()
