@@ -535,7 +535,8 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
-            init()
+            AppLogger.d("ActivityResult", "onActivityResult : Level1" )
+            activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         }
     }
 }

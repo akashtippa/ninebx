@@ -69,17 +69,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
 
     private fun callLevel1Fragment(option: Int) {
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-
-        val level1Fragment = Level1Fragment()
-        val bundle = Bundle()
-        bundle.putInt("category", option)
-        level1Fragment.arguments = bundle
-
-        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-        prefrences.currentBox = getString(option)
-        fragmentTransaction.add(R.id.frameLayout, level1Fragment).commit()
+        (activity as HomeActivity).callLevel1Fragment(option)
 
     }
 
