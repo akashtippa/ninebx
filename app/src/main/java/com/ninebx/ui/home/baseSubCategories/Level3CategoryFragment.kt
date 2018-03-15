@@ -11,13 +11,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.kotlin.showProgressDialog
-import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.utility.*
@@ -82,16 +80,21 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         inflateLayout(categories)
     }
 
+    private val visibilityMap : HashMap<String, Int> = HashMap()
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
         etTitle.isEnabled = isEditMode
         etTitleValue.isEnabled = isEditMode
-        //layExpandable.layoutManager = LinearLayoutManager(context)
+
         layExpandable.removeAllViews()
         for( category in categories ) {
+
             val level3ExpandableLayout = LayoutInflater.from(context).inflate(R.layout.layout_level3_expandable_recyclerview, null)
             val lblListHeader : TextView = level3ExpandableLayout.findViewById(R.id.lblListHeader)
             val rvLevel3 : RecyclerView = level3ExpandableLayout.findViewById(R.id.rvLevel3)
+            val ivExpand : ImageView = level3ExpandableLayout.findViewById(R.id.ivExpand)
+            val ivCollapse : ImageView = level3ExpandableLayout.findViewById(R.id.ivCollapse)
+
             rvLevel3.layoutManager = LinearLayoutManager(context)
             lblListHeader.text = category.title
             rvLevel3.adapter = ExpandableRecyclerViewAdapter(
@@ -104,6 +107,24 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     isEditMode)
             layExpandable.addView(level3ExpandableLayout)
 
+            lblListHeader.setOnClickListener {
+                if( rvLevel3.isVisible() ) {
+                    ivCollapse.show()
+                    ivExpand.hide()
+                }
+                else {
+                    ivCollapse.hide()
+                    ivExpand.show()
+                }
+                rvLevel3.toggleVisibility()
+                visibilityMap.put(category.title, rvLevel3.visibility)
+            }
+            rvLevel3.visibility = if( visibilityMap.containsKey(category.title) ) {
+                visibilityMap[category.title]!!
+            } else {
+                visibilityMap.put(category.title, View.GONE)
+                visibilityMap[category.title]!!
+            }
         }
 
         if( selectedDocument != null ) {

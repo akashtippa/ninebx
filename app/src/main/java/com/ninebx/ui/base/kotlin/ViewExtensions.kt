@@ -55,6 +55,10 @@ fun Context.showProgressDialog(message: String) {
 
 }
 
+fun View.toggleVisibility() {
+    if( this.isVisible() ) this.hide() else this.show()
+}
+
 fun Context.hideProgressDialog() {
     try {
         progressDialog!!.cancel()
