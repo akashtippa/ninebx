@@ -742,102 +742,94 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                                            eventLocation: String, eventNotes: String, eventReminder: String,
                                            eventReminderSet: Boolean, endRepeatEvent: String, isAllDay: Boolean) {
 
-        object: AsyncTask<Void, Void, Unit>() {
-            override fun doInBackground(vararg p0: Void?) {
-                for( index in 0..maxRepeatDays ) {
+        for( index in 0..maxRepeatDays ) {
 
-                    var eventStartDate: Date? = null
-                    var eventEndDate: Date? = null
+            var eventStartDate: Date? = null
+            var eventEndDate: Date? = null
 
-                    when (startRepeatEvent) {
-                        REMINDER_EveryDay -> {
-                            if(index == 0) {
-                                startDateCalendar!!.add(Calendar.DATE, index)
-                                endDateCalendar!!.add(Calendar.DATE, index)
-                            } else {
-                                startDateCalendar!!.add(Calendar.DATE, 1)
-                                endDateCalendar!!.add(Calendar.DATE, 1)
-                            }
-                            eventStartDate = startDateCalendar!!.time
-                            eventEndDate = endDateCalendar!!.time
-                        }
-                        REMINDER_EveryWeek -> {
-                            if(index == 0) {
-                                startDateCalendar!!.add(Calendar.DATE, index * 7)
-                                endDateCalendar!!.add(Calendar.DATE, index * 7)
-                            } else {
-                                startDateCalendar!!.add(Calendar.DATE, 7)
-                                endDateCalendar!!.add(Calendar.DATE, 7)
-                            }
-                            eventStartDate = startDateCalendar!!.time
-                            eventEndDate = endDateCalendar!!.time
-                        }
-                        REMINDER_Every2Weeks -> {
-                            if(index == 0) {
-                                startDateCalendar!!.add(Calendar.DATE, index)
-                                endDateCalendar!!.add(Calendar.DATE, index)
-                            } else {
-                                startDateCalendar!!.add(Calendar.DATE, 14)
-                                endDateCalendar!!.add(Calendar.DATE, 14)
-                            }
-                            eventStartDate = startDateCalendar!!.time
-                            eventEndDate = endDateCalendar!!.time
-                        }
-                        REMINDER_EveryMonth -> {
-                            if(index == 0) {
-                                startDateCalendar!!.add(Calendar.MONTH, index)
-                                endDateCalendar!!.add(Calendar.MONTH, index)
-                            } else {
-                                startDateCalendar!!.add(Calendar.MONTH, 1)
-                                endDateCalendar!!.add(Calendar.MONTH, 1)
-                            }
-                            eventStartDate = startDateCalendar!!.time
-                            eventEndDate = endDateCalendar!!.time
-                        }
-                        REMINDER_EveryYear -> {
-                            if(index == 0) {
-                                startDateCalendar!!.add(Calendar.YEAR, index)
-                                endDateCalendar!!.add(Calendar.YEAR, index)
-                            } else {
-                                startDateCalendar!!.add(Calendar.YEAR, 1)
-                                endDateCalendar!!.add(Calendar.YEAR, 1)
-                            }
-                            eventStartDate = startDateCalendar!!.time
-                            eventEndDate = endDateCalendar!!.time
-                        }
+            when (startRepeatEvent) {
+                REMINDER_EveryDay -> {
+                    if(index == 0) {
+                        startDateCalendar!!.add(Calendar.DATE, index)
+                        endDateCalendar!!.add(Calendar.DATE, index)
+                    } else {
+                        startDateCalendar!!.add(Calendar.DATE, 1)
+                        endDateCalendar!!.add(Calendar.DATE, 1)
                     }
-
-                    mCalendarEvent.title.add(eventTitle)
-                    mCalendarEvent.location.add(eventLocation)
-                    mCalendarEvent.notes.add(eventNotes)
-                    mCalendarEvent.reminder.add(eventReminder)
-                    mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
-                    mCalendarEvent.startsDate.add(parseDateForFormat(eventStartDate!!, DATE_FORMAT))
-                    mCalendarEvent.endsDate.add(parseDateForFormat(eventEndDate!!, DATE_FORMAT))
-                    mCalendarEvent.repeats.add(startRepeatEvent)
-                    mCalendarEvent.endRepeat.add(endRepeatEvent)
-                    if( startRepeatEvent != "Never" ) {
-                        if( endRepeatEvent != "Never") {
-                            mCalendarEvent.eventID.add(index.toString())
-                        } else {
-                            mCalendarEvent.eventID.add("0")
-                        }
+                    eventStartDate = startDateCalendar!!.time
+                    eventEndDate = endDateCalendar!!.time
+                }
+                REMINDER_EveryWeek -> {
+                    if(index == 0) {
+                        startDateCalendar!!.add(Calendar.DATE, index * 7)
+                        endDateCalendar!!.add(Calendar.DATE, index * 7)
+                    } else {
+                        startDateCalendar!!.add(Calendar.DATE, 7)
+                        endDateCalendar!!.add(Calendar.DATE, 7)
                     }
-                    mCalendarEvent.isAllDay.add(isAllDay)
-                    AlarmJob.scheduleJob(mCalendarEvent, startDateCalendar!!)
+                    eventStartDate = startDateCalendar!!.time
+                    eventEndDate = endDateCalendar!!.time
+                }
+                REMINDER_Every2Weeks -> {
+                    if(index == 0) {
+                        startDateCalendar!!.add(Calendar.DATE, index)
+                        endDateCalendar!!.add(Calendar.DATE, index)
+                    } else {
+                        startDateCalendar!!.add(Calendar.DATE, 14)
+                        endDateCalendar!!.add(Calendar.DATE, 14)
+                    }
+                    eventStartDate = startDateCalendar!!.time
+                    eventEndDate = endDateCalendar!!.time
+                }
+                REMINDER_EveryMonth -> {
+                    if(index == 0) {
+                        startDateCalendar!!.add(Calendar.MONTH, index)
+                        endDateCalendar!!.add(Calendar.MONTH, index)
+                    } else {
+                        startDateCalendar!!.add(Calendar.MONTH, 1)
+                        endDateCalendar!!.add(Calendar.MONTH, 1)
+                    }
+                    eventStartDate = startDateCalendar!!.time
+                    eventEndDate = endDateCalendar!!.time
+                }
+                REMINDER_EveryYear -> {
+                    if(index == 0) {
+                        startDateCalendar!!.add(Calendar.YEAR, index)
+                        endDateCalendar!!.add(Calendar.YEAR, index)
+                    } else {
+                        startDateCalendar!!.add(Calendar.YEAR, 1)
+                        endDateCalendar!!.add(Calendar.YEAR, 1)
+                    }
+                    eventStartDate = startDateCalendar!!.time
+                    eventEndDate = endDateCalendar!!.time
                 }
             }
 
-            override fun onPostExecute(result: Unit?) {
-                super.onPostExecute(result)
-                calendarRealm.beginTransaction()
-                uploadImageAws()
-                calendarRealm.copyToRealmOrUpdate(mCalendarEvent)
-                //mCalendarEvent.insertOrUpdate( calendarRealm )
-                calendarRealm.commitTransaction()
+            mCalendarEvent.title.add(eventTitle)
+            mCalendarEvent.location.add(eventLocation)
+            mCalendarEvent.notes.add(eventNotes)
+            mCalendarEvent.reminder.add(eventReminder)
+            mCalendarEvent.isReminderSet.add(eventReminderSet.toString())
+            mCalendarEvent.startsDate.add(parseDateForFormat(eventStartDate!!, DATE_FORMAT))
+            mCalendarEvent.endsDate.add(parseDateForFormat(eventEndDate!!, DATE_FORMAT))
+            mCalendarEvent.repeats.add(startRepeatEvent)
+            mCalendarEvent.endRepeat.add(endRepeatEvent)
+            if( startRepeatEvent != "Never" ) {
+                if( endRepeatEvent != "Never") {
+                    mCalendarEvent.eventID.add(index.toString())
+                } else {
+                    mCalendarEvent.eventID.add("0")
+                }
             }
+            mCalendarEvent.isAllDay.add(isAllDay)
+            AlarmJob.scheduleJob(mCalendarEvent, startDateCalendar!!)
+        }
+        calendarRealm.beginTransaction()
+        uploadImageAws()
+        calendarRealm.copyToRealmOrUpdate(mCalendarEvent)
+        //mCalendarEvent.insertOrUpdate( calendarRealm )
+        calendarRealm.commitTransaction()
 
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     fun goBack() {
