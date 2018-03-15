@@ -1,5 +1,7 @@
 package com.ninebx.ui.home.baseCategories
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
@@ -29,6 +31,7 @@ import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -221,10 +224,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             tvCategory.compoundDrawablePadding = context!!.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
             tvCategory.text = category.title
             if (category.subCategories.size == 0) {
+                tvCount.show()
                 tvCount.text = category.formsCount.toString()
             } else {
-                tvCount.text = ""
-                tvCount.setCompoundDrawables(null, null, null, null)
+                /*tvCount.text = ""
+                tvCount.setCompoundDrawables(null, null, null, null)*/
+                tvCount.hide()
             }
             rvSubCategory.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
@@ -253,66 +258,83 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
             subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
-
-                    val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                    fragmentTransaction.addToBackStack(null)
-                    val bundle = Bundle()
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
+                    if( action == "add_item" ) {
+                        val bundle = Bundle()
+                        bundle.putString("categoryName", categoryName)
+                        bundle.putString("categoryId", categoryID)
+                        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                        bundle.putString("action", "add")
+                        bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
+                        /*val level3CategoryFragment = Level3CategoryFragment()
+                        level3CategoryFragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/
+                        val intent = Intent( context, ContainerActivity::class.java)
+                        intent.putExtras(bundle)
+                        startActivityForResult(
+                                intent, 12313)
 
-                    bundle.putString("categoryName", categoryName)
-                    bundle.putString("categoryId", categoryID)
-                    bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-                    when {
-                        subCategory.title == "Add Persons." -> {
-                            if(!memberList.isEmpty()) {
-                                if(peopleCategory != null)
-                                CustomDropDown(peopleCategory!!.subCategories)
-                            }
-                            else {
-                                Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        subCategory.title == "Add Person." -> {
-                            val categoryFragment = ClothesFragment()
-                            categoryFragment.arguments = bundle
-                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                        }
-                        else -> {
-
-                            //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-                            if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
-                                when(category.title) {
-                                    "Work" -> {
-                                        val categoryFragment = WellnessFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
-                                    "Education" -> {
-                                        val categoryFragment = WellnessFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
-                                    "Personal Health Record" -> {
-                                        val categoryFragment = WellnessFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
-                                    "Clothing sizes" -> {
-                                        val categoryFragment = ClothesFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
+                    }
+                    else {
+                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                        fragmentTransaction.addToBackStack(null)
+                        val bundle = Bundle()
+                        bundle.putString("categoryName", categoryName)
+                        bundle.putString("categoryId", categoryID)
+                        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                        when {
+                            subCategory.title == "Add Persons." -> {
+                                if(!memberList.isEmpty()) {
+                                    if(peopleCategory != null)
+                                        CustomDropDown(peopleCategory!!.subCategories)
                                 }
-                            } else {
-                                val categoryFragment = Level2Fragment()
+                                else {
+                                    Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            subCategory.title == "Add Person." -> {
+                                val categoryFragment = ClothesFragment()
                                 categoryFragment.arguments = bundle
                                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                             }
-                            Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
+                            else -> {
 
+                                //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                                if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
+                                    when(category.title) {
+                                        "Work" -> {
+                                            val categoryFragment = WellnessFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                        "Education" -> {
+                                            val categoryFragment = WellnessFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                        "Personal Health Record" -> {
+                                            val categoryFragment = WellnessFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                        "Clothing sizes" -> {
+                                            val categoryFragment = ClothesFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                    }
+                                } else {
+                                    val categoryFragment = Level2Fragment()
+                                    categoryFragment.arguments = bundle
+                                    fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                }
+                                Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
+
+                            }
                         }
                     }
+
                 }
             })
             rvSubCategory.adapter = subCategoryAdapter
@@ -385,12 +407,19 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
+    private var categoryInt: Int = -1
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fromWhichBox = arguments!!.getInt("category")
+        categoryInt = arguments!!.getInt("category")
+        init()
+    }
+
+    private fun init() {
         showProgress(R.string.loading)
         fetchMembers()
-        mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
-        fromWhichBox = arguments!!.getInt("category")
+        mSearchPresenter = SearchPresenter(this, categoryInt)
         toolbarTitle.text = getString(fromWhichBox!!)
         ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
@@ -398,8 +427,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     }
 
     override fun onBackPressed(): Boolean {
-        //NineBxApplication.instance.activityInstance!!.showQuickAdd()
-        //NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
     }
 
@@ -499,4 +526,17 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     private var combineContactsFetched: ArrayList<ContactsList>? = null
 
+    override fun onResume() {
+        super.onResume()
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        NineBxApplication.instance.activityInstance!!.showBottomView()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
+            init()
+
+        }
+    }
 }
