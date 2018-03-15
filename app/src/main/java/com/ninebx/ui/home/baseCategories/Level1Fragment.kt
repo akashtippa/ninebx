@@ -418,12 +418,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     private fun init() {
         showProgress(R.string.loading)
-        fetchMembers()
         mSearchPresenter = SearchPresenter(this, categoryInt)
         toolbarTitle.text = getString(fromWhichBox!!)
         ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
+        fetchMembers()
     }
 
     override fun onBackPressed(): Boolean {
@@ -536,7 +536,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         super.onActivityResult(requestCode, resultCode, data)
         if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
             init()
-
         }
     }
 }
