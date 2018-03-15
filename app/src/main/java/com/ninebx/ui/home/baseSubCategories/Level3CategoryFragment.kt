@@ -492,10 +492,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)
 
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
-
-        NineBxApplication.instance.activityInstance!!.showQuickAddDisableText()
-
         boxValue = prefrences.currentBox!!
 
         ivBack.setOnClickListener {
@@ -504,7 +500,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         setTitle()
 
-        setCamera(boxValue)
+        //setCamera(boxValue)
         tvSave.hide()
         tvSave.setOnClickListener {
             if( validate() ) {
@@ -536,10 +532,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             etTitle.requestFocus()
         }
         return !etTitle.text.toString().isEmpty()
-    }
-
-    private fun setCamera(boxValue: String) {
-        NineBxApplication.instance.activityInstance!!.changeQuickAddCamera(boxValue)
     }
 
     private fun setTitle() {

@@ -258,7 +258,8 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
             subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
-
+                    categoryName = subCategory.title
+                    categoryID = subCategory.subCategoryId
                     if( action == "add_item" ) {
                         val bundle = Bundle()
                         bundle.putString("categoryName", categoryName)
@@ -279,9 +280,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                         fragmentTransaction.addToBackStack(null)
                         val bundle = Bundle()
-                        categoryName = subCategory.title
-                        categoryID = subCategory.subCategoryId
-
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
@@ -429,8 +427,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     }
 
     override fun onBackPressed(): Boolean {
-        //NineBxApplication.instance.activityInstance!!.showQuickAdd()
-        //NineBxApplication.instance.activityInstance!!.hideHomeNShowQuickAdd()
         return super.onBackPressed()
     }
 
@@ -530,10 +526,17 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     private var combineContactsFetched: ArrayList<ContactsList>? = null
 
+    override fun onResume() {
+        super.onResume()
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        NineBxApplication.instance.activityInstance!!.showBottomView()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
             init()
+
         }
     }
 }
