@@ -130,7 +130,8 @@ class AuthActivity : AppCompatActivity(), AuthView {
             NineBxApplication.getPreferences().currentStep = Constants.ACCOUNT_PASSWORD_COMPLETE
         mCurrentTag = "OTP"
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(OTPFragment::class.java.simpleName)
+        fragmentTransaction.disallowAddToBackStack()
+        /*fragmentTransaction.addToBackStack(OTPFragment::class.java.simpleName)*/
         otpFragment = OTPFragment()
         val bundle = Bundle()
 
@@ -300,10 +301,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP") {
+        /*if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP") {
             supportFragmentManager.popBackStack()
         } else {
             finish()
-        }
+        }*/
     }
 }
