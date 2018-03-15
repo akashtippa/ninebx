@@ -118,7 +118,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                     saveCalendarEvent()
                 }
             } else {
-                goBack()
+                NineBxApplication.instance.activityInstance!!.callHomeFragment()
             }
             //uploadImageAws()
             //downloadImageAws()
