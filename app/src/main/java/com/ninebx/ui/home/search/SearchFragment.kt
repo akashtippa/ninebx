@@ -177,6 +177,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             edtSearch.clearFocus()
             hideAllLayouts()
             setRecentSearchAdapter()
+            clearSearch.visibility = View.GONE
         })
     }
 
