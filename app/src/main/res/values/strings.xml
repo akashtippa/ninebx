@@ -985,5 +985,6 @@
     <string name="null_character"></string>
 
     <string name="recent_search">RECENT SEARCHES</string>
+    <string name="clear">clear</string>
 
 </resources>

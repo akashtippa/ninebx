@@ -133,7 +133,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         setRecentSearchAdapter()
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
-        edtSearch.clearFocus()
+        edtSearch.setText("")
         showProgress(R.string.loading)
 
         mSearchPresenter = SearchPresenter(this)
@@ -165,11 +165,18 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             }
         })
 
-        clearSearch.setOnClickListener(View.OnClickListener {
-            edtSearch.clearFocus()
+        clearSearch.setOnClickListener (View.OnClickListener {
+            edtSearch.setText("")
             hideAllLayouts()
             setRecentSearchAdapter()
             clearSearch.visibility = View.GONE
+        })
+
+        tvClear.setOnClickListener(View.OnClickListener {
+            edtSearch.setText("")
+            edtSearch.clearFocus()
+            hideAllLayouts()
+            setRecentSearchAdapter()
         })
     }
 
