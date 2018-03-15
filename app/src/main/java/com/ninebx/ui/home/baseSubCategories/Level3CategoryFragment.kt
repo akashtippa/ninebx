@@ -54,6 +54,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var classType = ""
     private var selectedDocument : Parcelable ?= null
     private var combineItem : Parcelable ?= null
+    private var isEditMode = true
 
     override fun showProgress(message: Int) {
 
@@ -74,14 +75,21 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
         //layExpandable.layoutManager = LinearLayoutManager(context)
+        layExpandable.removeAllViews()
         for( category in categories ) {
             val level3ExpandableLayout = LayoutInflater.from(context).inflate(R.layout.layout_level3_expandable_recyclerview, null)
             val lblListHeader : TextView = level3ExpandableLayout.findViewById(R.id.lblListHeader)
             val rvLevel3 : RecyclerView = level3ExpandableLayout.findViewById(R.id.rvLevel3)
             rvLevel3.layoutManager = LinearLayoutManager(context)
             lblListHeader.text = category.title
-            rvLevel3.adapter = ExpandableRecyclerViewAdapter( context!!, category.subCategories, this, categoryName, classType,
-                    ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) )
+            rvLevel3.adapter = ExpandableRecyclerViewAdapter(
+                    context!!,
+                    category.subCategories,
+                    this,
+                    categoryName,
+                    classType,
+                    ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members),
+                    isEditMode)
             layExpandable.addView(level3ExpandableLayout)
 
         }

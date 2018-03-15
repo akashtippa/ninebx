@@ -6,5 +6,5 @@ import com.ninebx.ui.home.search.Level3SearchItem
  * Created by Alok on 15/02/18.
  */
 interface SearchItemClickListener {
-    fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem)
+    fun onItemClick( itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String )
 }

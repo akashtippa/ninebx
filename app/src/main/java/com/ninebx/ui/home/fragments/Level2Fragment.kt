@@ -27,6 +27,7 @@ import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
+import com.ninebx.utility.Constants.SEARCH_EDIT
 import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
@@ -136,12 +137,12 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
         AppLogger.d("SearchItems" , " " + searchItems)
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
-        rvCommonList!!.adapter = SearchAdapter(searchItems, this )
+        rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this )
         rvCommonList!!.adapter.notifyDataSetChanged()
     }
 
-    override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
-        searchHelper.switchAndSearch(searchItem)
+    override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String ) {
+        searchHelper.switchAndSearch(searchItem, action)
     }
 
     private fun fetchTheContactListFromRealm() {

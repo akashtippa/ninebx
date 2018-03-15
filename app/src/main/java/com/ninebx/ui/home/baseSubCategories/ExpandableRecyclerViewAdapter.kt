@@ -34,7 +34,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                                      private val level2CategoryPresenter: Level2CategoryView,
                                      val categoryName: String,
                                      val classType: String,
-                                     val membersList : ArrayList<DecryptedMember> ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                     val membersList : ArrayList<DecryptedMember>,
+                                     val isEditMode : Boolean ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent!!.context)
@@ -552,6 +553,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 }
                 false
             })
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
 
         }
     } // 10
@@ -561,7 +564,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val etCurrentPassword = itemView.findViewById<EditText>(R.id.etCurrentPassword)
 
         init {
-
+            txtHeader.isEnabled = isEditMode
+            etCurrentPassword.isEnabled = isEditMode
             // childView = level2PasswordView
         }
     } // 11
@@ -572,7 +576,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         init {
 
-
+            chkLeft.isEnabled = isEditMode
+            chkRight.isEnabled = isEditMode
 
             // childView = level2RadioView
         }
@@ -585,6 +590,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val spinnerUsers = itemView.findViewById<Spinner>(R.id.spinnerUsers)
         init {
 
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            spinnerUsers.isEnabled = isEditMode
 
 
 
@@ -597,6 +605,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         
         init {
 
+            txtHeader.isEnabled = isEditMode
+            switchView.isEnabled = isEditMode
 
           
             // childView = level2SwitchView
@@ -609,7 +619,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val spinnerCurrency: Spinner = itemView.findViewById<Spinner>(R.id.spinnerCurrency)
         init {
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            spinnerCurrency.isEnabled = isEditMode
 
             // childView = level2USDView
         }
@@ -618,7 +630,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val edtNotes = itemView.findViewById<EditText>(R.id.edtNotes)
         init {
 
-
+            edtNotes.isEnabled = isEditMode
            
             // childView = level2NotesView
         }
@@ -631,7 +643,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         
         init {
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            spinnerAccountType.isEnabled = isEditMode
            
             // childView = level2NormalView
         }
@@ -639,7 +653,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
     inner class LEVEL2_ATTACHMENTSViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
         init {
 
-
+            itemView.isEnabled = isEditMode
             // childView = level2AttachmentsView
         }
     } // 18
@@ -650,7 +664,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         
         init {
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
             // childView = level2PickerView
         }
     } // 19
@@ -662,7 +677,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         init {
 
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
 
             // childView = level2NumberView
         }
@@ -673,8 +689,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val spinnerItem: Spinner = itemView.findViewById<Spinner>(R.id.spinnerValue)
         init {
 
-            
 
+            txtHeader.isEnabled = isEditMode
+            spinnerItem.isEnabled = isEditMode
         
 
             // childView = level2NormalSpinnerView

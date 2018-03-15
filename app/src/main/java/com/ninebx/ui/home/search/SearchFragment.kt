@@ -22,6 +22,7 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.baseCategories.Level1Fragment
+import com.ninebx.utility.Constants.SEARCH_NORMAL
 import kotlin.collections.ArrayList
 
 /**
@@ -295,9 +296,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
+        searchRecyclerView.adapter = SearchAdapter( searchList, SEARCH_NORMAL, object : SearchItemClickListener {
             @SuppressLint("CommitTransaction")
-            override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
+            override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String ) {
 
                 fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction!!.addToBackStack(null)
