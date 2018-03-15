@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.baseCategories
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -270,8 +271,8 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/
                         val intent = Intent( context, ContainerActivity::class.java)
                         intent.putExtras(bundle)
-                        startActivity(
-                                intent)
+                        startActivityForResult(
+                                intent, 12313)
 
                     }
                     else {
@@ -408,12 +409,19 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
+    private var categoryInt: Int = -1
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fromWhichBox = arguments!!.getInt("category")
+        categoryInt = arguments!!.getInt("category")
+        init()
+    }
+
+    private fun init() {
         showProgress(R.string.loading)
         fetchMembers()
-        mSearchPresenter = SearchPresenter(this, arguments!!.getInt("category"))
-        fromWhichBox = arguments!!.getInt("category")
+        mSearchPresenter = SearchPresenter(this, categoryInt)
         toolbarTitle.text = getString(fromWhichBox!!)
         ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
@@ -522,4 +530,10 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     private var combineContactsFetched: ArrayList<ContactsList>? = null
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
+            init()
+        }
+    }
 }
