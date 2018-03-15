@@ -1,6 +1,7 @@
 package com.ninebx.ui.home
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -28,6 +29,7 @@ import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
 import io.realm.Realm
 import io.realm.SyncUser
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 /**
  * Created by Alok on 14/02/18.
@@ -78,6 +80,9 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             addFamilyMemberOrUsersFragment!!.onAccountCreated(user)
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
 
     override fun showProgress(message: Int) {

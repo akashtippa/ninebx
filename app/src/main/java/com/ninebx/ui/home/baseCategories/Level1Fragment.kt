@@ -221,10 +221,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             tvCategory.compoundDrawablePadding = context!!.resources.getDimensionPixelOffset(R.dimen.default_mini_padding)
             tvCategory.text = category.title
             if (category.subCategories.size == 0) {
+                tvCount.show()
                 tvCount.text = category.formsCount.toString()
             } else {
-                tvCount.text = ""
-                tvCount.setCompoundDrawables(null, null, null, null)
+                /*tvCount.text = ""
+                tvCount.setCompoundDrawables(null, null, null, null)*/
+                tvCount.hide()
             }
             rvSubCategory.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 

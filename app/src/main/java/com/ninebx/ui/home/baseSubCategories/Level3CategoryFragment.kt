@@ -136,8 +136,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     etTitle.setText(decryptedFinancial.institutionName)
                     etTitleValue.setText(decryptedFinancial.accountName)
                     AppLogger.d("AccountName" , " " + decryptedFinancial.accountName)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                     Log.d("AccountName",decryptedFinancial.accountName)
                     Log.d("Modified",decryptedFinancial.modified)
 
@@ -146,86 +148,110 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
                     etTitle.setText(decryptedFinancial.cardName)
                     etTitleValue.setText(decryptedFinancial.userName)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedProperty-> {
                     val decryptedFinancial : DecryptedProperty = selectedDocument as DecryptedProperty
                     etTitle.setText(decryptedFinancial.titleName)
                     etTitleValue.setText(decryptedFinancial.propertyName)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedVehicle-> {
                     val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
                     etTitle.setText(decryptedFinancial.titleName)
                     etTitleValue.setText(decryptedFinancial.vehicleName)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedAsset-> {
                     val decryptedFinancial : DecryptedAsset = selectedDocument as DecryptedAsset
                     etTitle.setText(decryptedFinancial.assetName)
                     etTitleValue.setText(decryptedFinancial.assetName)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedInsurance-> {
                     val decryptedFinancial : DecryptedInsurance = selectedDocument as DecryptedInsurance
                     etTitle.setText(decryptedFinancial.insuranceCompany)
                     etTitleValue.setText(decryptedFinancial.insuredVehicle)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedTax-> {
                     val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
                     etTitle.setText(decryptedFinancial.title)
                     etTitleValue.setText(decryptedFinancial.taxPayer)
+                    createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             //Personal
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
                     etTitleValue.setText(decryptedCertificate.nameOnCertificate)
+                    createdValue.text = decryptedCertificate.created
                     modifiedValue.setText(decryptedCertificate.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedGovernment -> {
                     val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
                     etTitle.setText(decryptedGovernment.idName)
                     etTitleValue.setText(decryptedGovernment.nameOnId)
+                    createdValue.text = decryptedGovernment.created
                     modifiedValue.setText(decryptedGovernment.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedLicense ->{
                     val decryptedLicense : DecryptedLicense = selectedDocument as DecryptedLicense
                     etTitle.setText(decryptedLicense.nameOnLicense)
                     etTitleValue.setText(decryptedLicense.lic_description)
+                    createdValue.text = decryptedLicense.created
                     modifiedValue.setText(decryptedLicense.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedPersonal -> {
                     val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
                     etTitle.setText(decryptedPersonal.userName)
                     etTitleValue.setText(decryptedPersonal.nameOnAccount)
+                    createdValue.text = decryptedPersonal.created
                     modifiedValue.setText(decryptedPersonal.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedSocial -> {
                     val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
                     etTitle.setText(decryptedSocial.cardName)
                     etTitleValue.setText(decryptedSocial.cardName)
                     modifiedValue.setText(decryptedSocial.modified)
+                    createdValue.text = decryptedSocial.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedTaxID -> {
                     val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
                     etTitle.setText(decryptedTaxID.taxIdName)
                     etTitleValue.setText(decryptedTaxID.taxIdName)
                     modifiedValue.setText(decryptedTaxID.modified)
+                    createdValue.text = decryptedTaxID.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             //Wellness
                 is DecryptedIdentification -> {
@@ -233,60 +259,78 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     etTitle.setText(decryptedIdentification.name)
                     etTitleValue.setText(decryptedIdentification.name)
                     modifiedValue.setText(decryptedIdentification.modified)
+                    createdValue.text = decryptedIdentification.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedMedicalHistory -> {
                     val decryptedMedicalHistory : DecryptedMedicalHistory = selectedDocument as DecryptedMedicalHistory
                     etTitle.setText(decryptedMedicalHistory.history)
                     modifiedValue.setText(decryptedMedicalHistory.modified)
+                    createdValue.text = decryptedMedicalHistory.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedCheckups -> {
                     val decryptedCheckups : DecryptedCheckups = selectedDocument as DecryptedCheckups
                     etTitle.setText(decryptedCheckups.checkup_description)
                     etTitleValue.setText(decryptedCheckups.physicianName)
                     modifiedValue.setText(decryptedCheckups.modified)
+                    createdValue.setText(decryptedCheckups.created)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedEmergencyContacts -> {
                     val decryptedEmergencyContacts : DecryptedEmergencyContacts = selectedDocument as DecryptedEmergencyContacts
                     modifiedValue.setText(decryptedEmergencyContacts.modified)
+                    createdValue.text = decryptedEmergencyContacts.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedEyeglassPrescriptions -> {
                     val decryptedEyeglassPrescriptions : DecryptedEyeglassPrescriptions = selectedDocument as DecryptedEyeglassPrescriptions
                     etTitle.setText(decryptedEyeglassPrescriptions.physicianName)
                     etTitleValue.setText(decryptedEyeglassPrescriptions.datePrescribed)
                     modifiedValue.setText(decryptedEyeglassPrescriptions.modified)
+                    createdValue.text = decryptedEyeglassPrescriptions.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedHealthcareProviders -> {
                     val decryptedHealthcareProviders : DecryptedHealthcareProviders= selectedDocument as DecryptedHealthcareProviders
                     etTitle.setText(decryptedHealthcareProviders.name)
                     etTitleValue.setText(decryptedHealthcareProviders.physicianType)
                     modifiedValue.setText(decryptedHealthcareProviders.modified)
+                    createdValue.text = decryptedHealthcareProviders.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedMedicalConditions -> {
                     val decryptedMedicalCOnditions : DecryptedMedicalConditions= selectedDocument as DecryptedMedicalConditions
                     etTitle.setText(decryptedMedicalCOnditions.condition)
                     etTitleValue.setText(decryptedMedicalCOnditions.dateDiagnosed)
                     modifiedValue.setText(decryptedMedicalCOnditions.modified)
+                    createdValue.text = decryptedMedicalCOnditions.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedMedications ->{
                     val decryptedMedications : DecryptedMedications= selectedDocument as DecryptedMedications
                     etTitle.setText(decryptedMedications.name)
                     etTitleValue.setText(decryptedMedications.strength)
                     modifiedValue.setText(decryptedMedications.modified)
+                    createdValue.text = decryptedMedications.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedVitalNumbers -> {
                     val decryptedVitalNumbers : DecryptedVitalNumbers= selectedDocument as DecryptedVitalNumbers
                     etTitle.setText(decryptedVitalNumbers.vital_description)
                     etTitleValue.setText(decryptedVitalNumbers.measurementDate)
                     modifiedValue.setText(decryptedVitalNumbers.modified)
+                    createdValue.text = decryptedVitalNumbers.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             //Travel
                 is DecryptedDocuments -> {
@@ -303,10 +347,13 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                         }
                     }
                     modifiedValue.setText(decryptedDocuments.modified)
+                    createdValue.setText(decryptedDocuments.created)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedLoyalty -> {
                     val decryptedLoyalty : DecryptedLoyalty = selectedDocument as DecryptedLoyalty
+                    createdValue.setText(decryptedLoyalty.created)
                     AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
                     when( decryptedLoyalty.selectionType ) {
                         "travel_1001" -> {
@@ -342,61 +389,78 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     }
                     modifiedValue.setText(decryptedLoyalty.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                     /*etTitleValue.setText(decryptedLoyalty.nameOnAccount)*/
                 }
                 is DecryptedTravel -> {
                     val decryptedTravel : DecryptedTravel = selectedDocument as DecryptedTravel
+                    createdValue.setText(decryptedTravel.created)
                     etTitle.setText(decryptedTravel.userName)
                     etTitleValue.setText(decryptedTravel.nameOnAccount)
                     modifiedValue.setText(decryptedTravel.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedVacations -> {
                     val decryptedVacations : DecryptedVacations = selectedDocument as DecryptedVacations
+                    createdValue.setText(decryptedVacations.created)
                     etTitle.setText(decryptedVacations.vac_description)
                     etTitleValue.setText(decryptedVacations.vac_description)
                     modifiedValue.setText(decryptedVacations.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
 
             //Shopping
                 is DecryptedLoyaltyPrograms -> {
                     val decryptedLoyaltyPrograms : DecryptedLoyaltyPrograms = selectedDocument as DecryptedLoyaltyPrograms
+                    createdValue.setText(decryptedLoyaltyPrograms.created)
                     etTitle.setText(decryptedLoyaltyPrograms.brandName)
                     etTitleValue.setText(decryptedLoyaltyPrograms.accountName)
                     modifiedValue.setText(decryptedLoyaltyPrograms.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedRecentPurchase -> {
                     val decryptedRecentPurchase : DecryptedRecentPurchase = selectedDocument as DecryptedRecentPurchase
+                    createdValue.setText(decryptedRecentPurchase.created)
                     etTitle.setText(decryptedRecentPurchase.itemName)
                     etTitleValue.setText(decryptedRecentPurchase.brandName)
                     modifiedValue.setText(decryptedRecentPurchase.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedClothingSizes -> {
                     val decryptedClothingSizes : DecryptedClothingSizes = selectedDocument as DecryptedClothingSizes
+                    createdValue.setText(decryptedClothingSizes.created)
                     etTitle.setText(decryptedClothingSizes.personName)
                     etTitleValue.setText(decryptedClothingSizes.sizeName)
                     modifiedValue.setText(decryptedClothingSizes.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
                 is DecryptedShopping -> {
                     val decryptedShopping : DecryptedShopping = selectedDocument as DecryptedShopping
+                    createdValue.setText(decryptedShopping.created)
                     etTitle.setText(decryptedShopping.institutionName)
                     etTitle.setText(decryptedShopping.accountName)
                     modifiedValue.setText(decryptedShopping.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             //Interests
                 is DecryptedInterests -> {
                     val decryptedInterests : DecryptedInterests = selectedDocument as DecryptedInterests
+                    createdValue.setText(decryptedInterests.created)
                     etTitle.setText(decryptedInterests.institutionName)
                     etTitleValue.setText(decryptedInterests.accountName)
                     modifiedValue.setText(decryptedInterests.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             }
+
+            toolbarTitle.text = etTitle.text.toString()
         }
 
     }
@@ -441,6 +505,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         setTitle()
 
         setCamera(boxValue)
+        tvSave.hide()
         tvSave.setOnClickListener {
             if( validate() ) {
                 context!!.showProgressDialog(getString(R.string.saving_data))
@@ -453,6 +518,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
                 isEditMode = true
                 inflateLayout(level2Categories)
+                tvSave.show()
             }
         }
         ivDelete.setOnClickListener {
@@ -461,6 +527,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 (activity!! as ContainerActivity).onLevel3Action(arguments!!)
             }
         }
+        if( isEditMode ) tvSave.show()
     }
 
     private fun validate(): Boolean {
@@ -476,7 +543,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     private fun setTitle() {
+
         val bundleValue = arguments!!.getString("categoryName")
+        toolbarTitle.text = "Add " + bundleValue
+
         when (bundleValue) {
 
         // Common Items in Every

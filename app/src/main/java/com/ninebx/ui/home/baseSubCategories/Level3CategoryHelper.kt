@@ -3606,6 +3606,8 @@ class Level3CategoryHelper(
             decryptedFinancial!!.institutionName = title
             decryptedFinancial!!.accountName = subTitle
             AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
+            if( decryptedFinancial!!.created.isEmpty() )
+                decryptedFinancial!!.created = currentUsers + " " + currentDateandTime
             decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
 
             var isSaveComplete = false
@@ -3685,7 +3687,8 @@ class Level3CategoryHelper(
             decryptedPayment!!.cardName = title
             decryptedPayment!!.selectionType = categoryID
             AppLogger.d("SelectionType ", "DecryptedPayment" + decryptedPayment!!.selectionType)
-
+            if( decryptedPayment!!.created.isEmpty() )
+                decryptedPayment!!.created = currentUsers + " " + currentDateandTime
             decryptedPayment!!.modified = currentUsers + " " + currentDateandTime
 
             var isSaveComplete = false
@@ -3749,6 +3752,8 @@ class Level3CategoryHelper(
         if (decryptedProperty != null) {
             decryptedProperty!!.selectionType = categoryID
             decryptedProperty!!.propertyName = title
+            if( decryptedProperty!!.created.isEmpty() )
+                decryptedProperty!!.created = currentUsers + " " + currentDateandTime
             decryptedProperty!!.modified = currentUsers + " " + currentDateandTime
             var isSaveComplete = false
             if (decryptedProperty!!.id.equals(0)) {
@@ -3813,6 +3818,8 @@ class Level3CategoryHelper(
             decryptedVehicle!!.vehicleName = title
             var isSaveComplete = false
             decryptedVehicle!!.selectionType = categoryID
+            if( decryptedVehicle!!.created.isEmpty() )
+                decryptedVehicle!!.created = currentUsers + " " + currentDateandTime
             decryptedVehicle!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVehicle!!.id.toInt() == 0) {
                 decryptedVehicle!!.id = getUniqueId()
@@ -3873,6 +3880,8 @@ class Level3CategoryHelper(
         if (decryptedAssets != null) {
             decryptedAssets!!.selectionType = categoryID
             decryptedAssets!!.assetName = title
+            if( decryptedAssets!!.created.isEmpty() )
+                decryptedAssets!!.created = currentUsers + " " + currentDateandTime
             decryptedAssets!!.modified = currentUsers + " " + currentDateandTime
 
             if (decryptedAssets!!.id.toInt() == 0) {
@@ -3935,6 +3944,8 @@ class Level3CategoryHelper(
         if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
+            if( decryptedInsurance!!.created.isEmpty() )
+                decryptedInsurance!!.created = currentUsers + " " + currentDateandTime
             decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedInsurance!!.id.toInt() == 0) {
                 decryptedInsurance!!.id = getUniqueId()
@@ -3997,6 +4008,8 @@ class Level3CategoryHelper(
         if (decryptedTaxes != null) {
             decryptedTaxes!!.selectionType = categoryID
             decryptedTaxes!!.returnName = title
+            if( decryptedTaxes!!.created.isEmpty() )
+                decryptedTaxes!!.created = currentUsers + " " + currentDateandTime
             decryptedTaxes!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedTaxes!!.id.toInt() == 0) {
                 decryptedTaxes!!.id = getUniqueId()
@@ -4059,6 +4072,8 @@ class Level3CategoryHelper(
         if (decryptedDriversLicense != null) {
             decryptedDriversLicense!!.selectionType = categoryID
             decryptedDriversLicense!!.nameOnLicense = title
+            if( decryptedDriversLicense!!.created.isEmpty() )
+                decryptedDriversLicense!!.created = currentUsers + " " + currentDateandTime
             decryptedDriversLicense!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedDriversLicense!!.id.toInt() == 0) {
                 decryptedDriversLicense!!.id = getUniqueId()
@@ -4117,6 +4132,8 @@ class Level3CategoryHelper(
         if (decryptedSocial != null) {
             decryptedSocial!!.selectionType = categoryID
             decryptedSocial!!.cardName = title
+            if( decryptedSocial!!.created.isEmpty() )
+                decryptedSocial!!.created = currentUsers + " " + currentDateandTime
             decryptedSocial!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedSocial!!.id.toInt() == 0) {
                 decryptedSocial!!.id = getUniqueId()
@@ -4174,6 +4191,8 @@ class Level3CategoryHelper(
             decryptedTAX_ID!!.selectionType = categoryID
             decryptedTAX_ID!!.taxIdName = title
             decryptedTAX_ID!!.modified = currentUsers + " " + currentDateandTime
+            if( decryptedTAX_ID!!.created.isEmpty() )
+                decryptedTAX_ID!!.created = currentUsers + " " + currentDateandTime
 
             if (decryptedTAX_ID!!.id.toInt() == 0) {
                 decryptedTAX_ID!!.id = getUniqueId()
@@ -4230,6 +4249,9 @@ class Level3CategoryHelper(
             decryptedOtherGovernment!!.selectionType = categoryID
             decryptedOtherGovernment!!.idName = title
             decryptedOtherGovernment!!.modified = currentUsers + " " + currentDateandTime
+            if( decryptedOtherGovernment!!.created.isEmpty() )
+                decryptedOtherGovernment!!.created = currentUsers + " " + currentDateandTime
+
             if (decryptedOtherGovernment!!.id.toInt() == 0) {
                 decryptedOtherGovernment!!.id = getUniqueId()
             }
@@ -4284,6 +4306,8 @@ class Level3CategoryHelper(
         if (decryptedCertificate != null) {
             decryptedCertificate!!.selectionType = categoryID
             decryptedCertificate!!.nameOnCertificate = title
+            if( decryptedCertificate!!.created.isEmpty() )
+                decryptedCertificate!!.created = currentUsers + " " + currentDateandTime
             decryptedCertificate!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedCertificate!!.id.toInt() == 0) {
                 decryptedCertificate!!.id = getUniqueId()
@@ -4339,6 +4363,8 @@ class Level3CategoryHelper(
         if (decryptedIdentification != null) {
             decryptedIdentification!!.selectionType = categoryID
             decryptedIdentification!!.name = title
+            if( decryptedIdentification!!.created.isEmpty() )
+                decryptedIdentification!!.created = currentUsers + " " + currentDateandTime
             decryptedIdentification!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedIdentification!!.id.toInt() == 0) {
                 decryptedIdentification!!.id = getUniqueId()
@@ -4396,6 +4422,8 @@ class Level3CategoryHelper(
         if (decryptedMedicalHistory != null) {
             decryptedMedicalHistory!!.selectionType = categoryID
             decryptedMedicalHistory!!.attachmentNames = title
+            if( decryptedMedicalHistory!!.created.isEmpty() )
+                decryptedMedicalHistory!!.created = currentUsers + " " + currentDateandTime
             decryptedMedicalHistory!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedMedicalHistory!!.id.toInt() == 0) {
                 decryptedMedicalHistory!!.id = getUniqueId()
@@ -4457,6 +4485,8 @@ class Level3CategoryHelper(
         if (decryptedHealthcareProviders != null) {
             decryptedHealthcareProviders!!.selectionType = categoryID
             decryptedHealthcareProviders!!.name = title
+            if( decryptedHealthcareProviders!!.created.isEmpty() )
+                decryptedHealthcareProviders!!.created = currentUsers + " " + currentDateandTime
             decryptedHealthcareProviders!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedHealthcareProviders!!.id.toInt() == 0) {
                 decryptedHealthcareProviders!!.id = getUniqueId()
@@ -4520,6 +4550,8 @@ class Level3CategoryHelper(
         if (decryptedEmergencyContacts != null) {
             decryptedEmergencyContacts!!.selectionType = categoryID
             decryptedEmergencyContacts!!.name = title
+            if( decryptedEmergencyContacts!!.created.isEmpty() )
+                decryptedEmergencyContacts!!.created = currentUsers + " " + currentDateandTime
             decryptedEmergencyContacts!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedEmergencyContacts!!.id.toInt() == 0) {
                 decryptedEmergencyContacts!!.id = getUniqueId()
@@ -4581,6 +4613,8 @@ class Level3CategoryHelper(
         if (decryptedMedications != null) {
             decryptedMedications!!.selectionType = categoryID
             decryptedMedications!!.name = title
+            if( decryptedMedications!!.created.isEmpty() )
+                decryptedMedications!!.created = currentUsers + " " + currentDateandTime
             decryptedMedications!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedMedications!!.id.toInt() == 0) {
                 decryptedMedications!!.id = getUniqueId()
@@ -4642,6 +4676,8 @@ class Level3CategoryHelper(
         if (decryptedMedicalConditions != null) {
             decryptedMedicalConditions!!.selectionType = categoryID
             decryptedMedicalConditions!!.attachmentNames = title
+            if( decryptedMedicalConditions!!.created.isEmpty() )
+                decryptedMedicalConditions!!.created = currentUsers + " " + currentDateandTime
             decryptedMedicalConditions!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedMedicalConditions!!.id.toInt() == 0) {
                 decryptedMedicalConditions!!.id = getUniqueId()
@@ -4704,6 +4740,8 @@ class Level3CategoryHelper(
             decryptedEyeglassPrescriptions!!.selectionType = categoryID
             decryptedEyeglassPrescriptions!!.attachmentNames = title
             decryptedEyeglassPrescriptions!!.modified = currentUsers + " " + currentDateandTime
+            if( decryptedEyeglassPrescriptions!!.created.isEmpty() )
+                decryptedEyeglassPrescriptions!!.created = currentUsers + " " + currentDateandTime
             if (decryptedEyeglassPrescriptions!!.id.toInt() == 0) {
                 decryptedEyeglassPrescriptions!!.id = getUniqueId()
             }
@@ -4763,6 +4801,8 @@ class Level3CategoryHelper(
         if (decryptedVitalNumbers != null) {
             decryptedVitalNumbers!!.selectionType = categoryID
             decryptedVitalNumbers!!.attachmentNames = title
+            if( decryptedVitalNumbers!!.created.isEmpty() )
+                decryptedVitalNumbers!!.created = currentUsers + " " + currentDateandTime
             decryptedVitalNumbers!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVitalNumbers!!.id.toInt() == 0) {
                 decryptedVitalNumbers!!.id = getUniqueId()
@@ -4824,6 +4864,8 @@ class Level3CategoryHelper(
         if (decryptedCheckups != null) {
             decryptedCheckups!!.selectionType = categoryID
             decryptedCheckups!!.attachmentNames = title
+            if( decryptedCheckups!!.created.isEmpty() )
+                decryptedCheckups!!.created = currentUsers + " " + currentDateandTime
             decryptedCheckups!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedCheckups!!.id.toInt() == 0) {
                 decryptedCheckups!!.id = getUniqueId()
@@ -4895,6 +4937,8 @@ class Level3CategoryHelper(
                 decryptedLoyalty!!.railway = title
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
+            if( decryptedLoyalty!!.created.isEmpty() )
+                decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
             decryptedLoyalty!!.modified = currentUsers + " " + currentDateandTime
             decryptedLoyalty!!.accountName = subTitle
 
@@ -4987,6 +5031,8 @@ class Level3CategoryHelper(
             decryptedTravel!!.selectionType = categoryID
             decryptedTravel!!.nameOnAccount = title
             decryptedTravel!!.accountName = subTitle
+            if( decryptedTravel!!.created.isEmpty() )
+                decryptedTravel!!.created = currentUsers + " " + currentDateandTime
             decryptedTravel!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedTravel!!.id.toInt() == 0) {
                 decryptedTravel!!.id = getUniqueId()
@@ -5062,6 +5108,8 @@ class Level3CategoryHelper(
             AppLogger.d("SelectionType", " Visa Name " + decryptedDocuments!!.visaName)
             AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
             AppLogger.d("SelectionType", " Travel Document " + decryptedDocuments!!.selectionType)
+            if( decryptedDocuments!!.created.isEmpty() )
+                decryptedDocuments!!.created = currentUsers + " " + currentDateandTime
             decryptedDocuments!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedDocuments!!.id.toInt() == 0) {
                 decryptedDocuments!!.id = getUniqueId()
@@ -5127,6 +5175,8 @@ class Level3CategoryHelper(
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
             AppLogger.d("SelectionType", "decryptedVacations" + decryptedVacations!!.selectionType)
+            if( decryptedVacations!!.created.isEmpty() )
+                decryptedVacations!!.created = currentUsers + " " + currentDateandTime
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedVacations!!.id.toInt() == 0) {
                 decryptedVacations!!.id = getUniqueId()
@@ -5191,6 +5241,8 @@ class Level3CategoryHelper(
         if (decryptedLoyaltyPrograms != null) {
             decryptedLoyaltyPrograms!!.selectionType = categoryID
             decryptedLoyaltyPrograms!!.brandName = title
+            if( decryptedLoyaltyPrograms!!.created.isEmpty() )
+                decryptedLoyaltyPrograms!!.created = currentUsers + " " + currentDateandTime
             decryptedLoyaltyPrograms!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedLoyaltyPrograms!!.id.toInt() == 0) {
                 decryptedLoyaltyPrograms!!.id = getUniqueId()
@@ -5242,9 +5294,12 @@ class Level3CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedRecentPurchase != null) {
             decryptedRecentPurchase!!.selectionType = categoryID
             decryptedRecentPurchase!!.itemName = title
+            if( decryptedRecentPurchase!!.created.isEmpty() )
+                decryptedRecentPurchase!!.created = currentUsers + " " + currentDateandTime
             decryptedRecentPurchase!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedRecentPurchase!!.id.toInt() == 0) {
                 decryptedRecentPurchase!!.id = getUniqueId()
@@ -5296,9 +5351,13 @@ class Level3CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if(decryptedClothingSizes != null){
             decryptedClothingSizes!!.selectionType = categoryID
             decryptedClothingSizes!!.personName = title
+            if( decryptedClothingSizes!!.created.isEmpty() )
+                decryptedClothingSizes!!.created = currentUsers + " " + currentDateandTime
+
             decryptedClothingSizes!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedClothingSizes!!.id.toInt() == 0) {
                 decryptedClothingSizes!!.id = getUniqueId()
@@ -5350,9 +5409,12 @@ class Level3CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if(decryptedShopping != null){
             decryptedShopping!!.selectionType = categoryID
             decryptedShopping!!.userName = title
+            if( decryptedShopping!!.created.isEmpty() )
+                decryptedShopping!!.created = currentUsers + " " + currentDateandTime
             decryptedShopping!!.modified = currentUsers + " " + currentDateandTime
             if (decryptedShopping!!.id.toInt() == 0) {
                 decryptedShopping!!.id = getUniqueId()
