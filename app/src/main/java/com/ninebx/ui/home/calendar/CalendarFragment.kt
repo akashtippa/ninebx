@@ -23,7 +23,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by Alok on 03/01/18.
  */
-class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListener {
+class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListener{
 
     private lateinit var dateStringWithEvents: java.util.ArrayList<String>
 
@@ -110,7 +110,7 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
         }
 
         tvAddEvent.setOnClickListener {
-            mHomeView.addEditCalendarEvent( null, Date() )
+            mHomeView.addEditCalendarEvent( null, Date())
         }
     }
 

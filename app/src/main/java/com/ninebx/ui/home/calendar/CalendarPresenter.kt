@@ -79,6 +79,7 @@ class CalendarPresenter( val calendarView: CalendarView)  {
 
                 if( daysCount > 0 ) {
                     datesWithEvents.addAll(getDaysBetweenDates(startDate, endDate))
+                    datesWithEvents.add(endDate)
                     event.allDays.addAll(getDayStringForDates( startDate, endDate ))
                     dateStringWithEvents.addAll(getDayStringForDates( startDate, endDate ))
                 }
