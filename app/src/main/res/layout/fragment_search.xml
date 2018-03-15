@@ -108,7 +108,7 @@
             android:textAllCaps="true"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:id="@+id/tvClear"/>
+            android:id="@+id/"/>
     </LinearLayout>
 
     <RelativeLayout
