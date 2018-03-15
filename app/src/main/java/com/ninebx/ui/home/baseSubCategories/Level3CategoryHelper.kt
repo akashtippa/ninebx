@@ -14,7 +14,7 @@ import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
-import com.ninebx.ui.home.fragments.FragmentListContainer
+//import com.ninebx.ui.home.fragments.FragmentListContainer
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
@@ -35,7 +35,7 @@ class Level3CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
-    private var fragmentListContainer = FragmentListContainer()
+    //private var fragmentListContainer = FragmentListContainer()
     // For Home & Money
     private var decryptedFinancial: DecryptedFinancial? = null // DecryptedFinancial()
     private var decryptedPayment: DecryptedPayment? = null // DecryptedPayment()

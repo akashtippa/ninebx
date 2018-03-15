@@ -135,6 +135,7 @@ fun getDayStringForDates(startDate: Date, endDate: Date): Collection<String> {
         dates.add(dateFormat.format(result))
         calendar.add(Calendar.DATE, 1)
     }
+    dates.add(dateFormat.format(endDate))
     return dates
 }
 

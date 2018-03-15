@@ -34,7 +34,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     private val ADD_EDIT_MEMBER = 4324
     private val DELETE_MEMBER = 4325
-    private val adminUser : SyncUser
+    //private val adminUser : SyncUser
 
     override fun onMemberEdit(member: DecryptedMember?) {
         val bundle = Bundle()
@@ -202,7 +202,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
 
     private fun setPermissionsForCategory(updateMember: Member?, endPoint: String) {
 
-        val permissionManager = adminUser.permissionManager
+        /*val permissionManager = adminUser.permissionManager
         // Create request
         val condition = UserCondition.userId(updateMember!!.userId)
         var accessLevel = AccessLevel.NONE
@@ -265,7 +265,7 @@ class AddFamilyUsersFragment : FragmentBackHelper(), IMemberAdded, AWSFileTransf
                 error.printStackTrace()
 //                memberView.onError(R.string.error_permissions)
             }
-        })
+        })*/
     }
 
 
