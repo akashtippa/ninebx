@@ -651,8 +651,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         }
     } // 17
     inner class LEVEL2_ATTACHMENTSViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+        val etAttachment : EditText = itemView.findViewById(R.id.etAttachment)
         init {
-
+            etAttachment.isEnabled = isEditMode
             itemView.isEnabled = isEditMode
             // childView = level2AttachmentsView
         }
