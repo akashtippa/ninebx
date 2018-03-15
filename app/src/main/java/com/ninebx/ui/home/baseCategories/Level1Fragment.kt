@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.baseCategories
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
@@ -29,6 +30,7 @@ import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -256,65 +258,84 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
 
-                    val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                    fragmentTransaction.addToBackStack(null)
-                    val bundle = Bundle()
-                    categoryName = subCategory.title
-                    categoryID = subCategory.subCategoryId
+                    if( action == "add_item" ) {
+                        val bundle = Bundle()
+                        bundle.putString("categoryName", categoryName)
+                        bundle.putString("categoryId", categoryID)
+                        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                        bundle.putString("action", "add")
+                        bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
+                        /*val level3CategoryFragment = Level3CategoryFragment()
+                        level3CategoryFragment.arguments = bundle
+                        fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/
+                        val intent = Intent( context, ContainerActivity::class.java)
+                        intent.putExtras(bundle)
+                        startActivity(
+                                intent)
 
-                    bundle.putString("categoryName", categoryName)
-                    bundle.putString("categoryId", categoryID)
-                    bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-                    when {
-                        subCategory.title == "Add Persons." -> {
-                            if(!memberList.isEmpty()) {
-                                if(peopleCategory != null)
-                                CustomDropDown(peopleCategory!!.subCategories)
-                            }
-                            else {
-                                Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        subCategory.title == "Add Person." -> {
-                            val categoryFragment = ClothesFragment()
-                            categoryFragment.arguments = bundle
-                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                        }
-                        else -> {
+                    }
+                    else {
+                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                        fragmentTransaction.addToBackStack(null)
+                        val bundle = Bundle()
+                        categoryName = subCategory.title
+                        categoryID = subCategory.subCategoryId
 
-                            //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-                            if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
-                                when(category.title) {
-                                    "Work" -> {
-                                        val categoryFragment = WellnessFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
-                                    "Education" -> {
-                                        val categoryFragment = WellnessFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
-                                    "Personal Health Record" -> {
-                                        val categoryFragment = WellnessFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
-                                    "Clothing sizes" -> {
-                                        val categoryFragment = ClothesFragment()
-                                        categoryFragment.arguments = bundle
-                                        fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
-                                    }
+                        bundle.putString("categoryName", categoryName)
+                        bundle.putString("categoryId", categoryID)
+                        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                        when {
+                            subCategory.title == "Add Persons." -> {
+                                if(!memberList.isEmpty()) {
+                                    if(peopleCategory != null)
+                                        CustomDropDown(peopleCategory!!.subCategories)
                                 }
-                            } else {
-                                val categoryFragment = Level2Fragment()
+                                else {
+                                    Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            subCategory.title == "Add Person." -> {
+                                val categoryFragment = ClothesFragment()
                                 categoryFragment.arguments = bundle
                                 fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                             }
-                            Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
+                            else -> {
 
+                                //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                                if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
+                                    when(category.title) {
+                                        "Work" -> {
+                                            val categoryFragment = WellnessFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                        "Education" -> {
+                                            val categoryFragment = WellnessFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                        "Personal Health Record" -> {
+                                            val categoryFragment = WellnessFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                        "Clothing sizes" -> {
+                                            val categoryFragment = ClothesFragment()
+                                            categoryFragment.arguments = bundle
+                                            fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                        }
+                                    }
+                                } else {
+                                    val categoryFragment = Level2Fragment()
+                                    categoryFragment.arguments = bundle
+                                    fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
+                                }
+                                Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
+
+                            }
                         }
                     }
+
                 }
             })
             rvSubCategory.adapter = subCategoryAdapter
