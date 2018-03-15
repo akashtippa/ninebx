@@ -817,7 +817,7 @@ class SearchHelper() {
 
 
     interface OnDocumentSelection {
-        fun onDocumentSelected( selectedDocument: Parcelable?, classType : String )
+        fun onDocumentSelected( selectedDocument: Parcelable?, classType : String, action : String )
     }
 
     private var mOnDocumentSelection : OnDocumentSelection ?= null
@@ -829,7 +829,7 @@ class SearchHelper() {
     private fun goToCategoryFragment( selectedDocument: Parcelable?, classType: String ) {
         if( mOnDocumentSelection != null ) {
             //AppLogger.d("ClassType", "Parcelable classType : " + classType )
-            mOnDocumentSelection!!.onDocumentSelected( selectedDocument, classType )
+            mOnDocumentSelection!!.onDocumentSelected( selectedDocument, classType, mAction )
         }
     }
 }

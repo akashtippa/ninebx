@@ -47,12 +47,13 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection {
 
-    override fun onDocumentSelected(selectedDocument: Parcelable?, classType : String ) {
+    override fun onDocumentSelected(selectedDocument: Parcelable?, classType : String, action: String ) {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         val bundle = Bundle()
         bundle.putString("categoryName", categoryName)
         bundle.putString("categoryId", categoryID)
+        bundle.putString("action", action)
         bundle.putParcelable( "selectedDocument", selectedDocument )
         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
         bundle.putString("classType", classType)
