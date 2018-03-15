@@ -238,7 +238,8 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:layout_margin="@dimen/_5sdp"
-                android:hint="@string/comments_here" />
+                android:hint="@string/comments_here"
+                android:inputType="textMultiLine"/>
 
             <View
                 android:layout_width="match_parent"
