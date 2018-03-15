@@ -1,5 +1,6 @@
 package com.ninebx.utility
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -7,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
+import android.os.AsyncTask
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
@@ -131,7 +133,7 @@ class AlarmJob : Job() {
     companion object {
 
         val TAG = AlarmJob::class.java.simpleName
-
+        @SuppressLint("StaticFieldLeak")
         fun scheduleJob( reminder: CalendarEvents, calendar: Calendar ) {
             AppLogger.d(TAG, "scheduleJob : " + reminder.toString())
             val gson = Gson()
@@ -140,12 +142,24 @@ class AlarmJob : Job() {
             val extras = PersistableBundleCompat()
             extras.putString("reminder", reminderString)
 
-            scheduleRecurringEvent(reminder, calendar, extras)
 
+            object: AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
+                    scheduleRecurringEvent(reminder, calendar, extras)
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+
+                }
+
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         }
 
         private fun scheduleRecurringEvent(events: CalendarEvents, calendar: Calendar, extras: PersistableBundleCompat) {
+
+
             for( i in 0..events.startsDate.size -1) {
 
                 if (!events.isAllDay[i]!!) {
