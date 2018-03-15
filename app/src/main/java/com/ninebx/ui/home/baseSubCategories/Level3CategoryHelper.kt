@@ -3594,8 +3594,10 @@ class Level3CategoryHelper(
         }
     }
 
+    private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
+        mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
@@ -3632,7 +3634,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3643,7 +3645,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -3673,7 +3675,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3708,7 +3710,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3719,7 +3721,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -3738,7 +3740,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3770,7 +3772,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3782,7 +3784,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -3801,7 +3803,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3832,7 +3834,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3843,7 +3845,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -3862,7 +3864,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3894,7 +3896,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3905,7 +3907,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -3924,7 +3926,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3956,7 +3958,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -3967,7 +3969,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -3986,7 +3988,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4018,7 +4020,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4029,7 +4031,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            val combine: DecryptedCombine = mCombine as DecryptedCombine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -4048,7 +4050,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4079,7 +4081,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4088,7 +4090,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
+                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
                             var realmDriversLicense = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmDriversLicense == null) {
@@ -4106,7 +4108,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4136,7 +4138,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4145,7 +4147,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
+                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
                             var realmSocial = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmSocial == null) {
@@ -4162,7 +4164,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4193,7 +4195,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4201,7 +4203,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
+                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
                             var realmTaxID = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmTaxID == null) {
@@ -4218,7 +4220,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4248,7 +4250,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4256,7 +4258,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
+                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
                             var realmGovernment = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmGovernment == null) {
@@ -4273,7 +4275,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4303,7 +4305,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4311,7 +4313,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = combineItem as DecryptedCombinePersonal
+                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
                             var realmCertificate = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmCertificate == null) {
@@ -4328,7 +4330,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4358,7 +4360,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4367,7 +4369,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            var combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            var combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var realmIdentification = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (realmIdentification == null) {
@@ -4385,7 +4387,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4416,7 +4418,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4428,7 +4430,7 @@ class Level3CategoryHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
 
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4446,7 +4448,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4478,7 +4480,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4489,9 +4491,9 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            //val combine: DecryptedCombine = combineItem as DecryptedCombine
+                            //val combine: DecryptedCombine = mCombine as DecryptedCombine
                             //AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4509,7 +4511,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4541,7 +4543,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4552,7 +4554,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4570,7 +4572,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4602,7 +4604,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4613,7 +4615,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4631,7 +4633,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4663,7 +4665,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4674,7 +4676,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4692,7 +4694,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4723,7 +4725,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4734,7 +4736,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4752,7 +4754,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4784,7 +4786,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4795,7 +4797,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4813,7 +4815,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4844,7 +4846,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4855,7 +4857,7 @@ class Level3CategoryHelper(
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineWellness: DecryptedCombineWellness = combineItem as DecryptedCombineWellness
+                            val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -4873,7 +4875,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4935,7 +4937,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -4975,7 +4977,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5006,7 +5008,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5015,7 +5017,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
                             var realmTravel = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
                             realm.beginTransaction()
                             if (realmTravel == null) {
@@ -5040,7 +5042,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5082,7 +5084,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5091,7 +5093,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
                             var realmDocument = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
                             realm.beginTransaction()
                             if (realmDocument == null) {
@@ -5116,7 +5118,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5146,7 +5148,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5155,7 +5157,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = combineItem as DecryptedCombineTravel
+                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
                             var realmVacations = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
                             realm.beginTransaction()
                             if (realmVacations == null) {
@@ -5180,7 +5182,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5210,7 +5212,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5218,7 +5220,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combineShopping: DecryptedCombineShopping = combineItem as DecryptedCombineShopping
+                            val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
                             var realmLoyaltyPrograms = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmLoyaltyPrograms == null) {
@@ -5235,7 +5237,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5264,7 +5266,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5272,7 +5274,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
-                            val combineShopping: DecryptedCombineShopping = combineItem as DecryptedCombineShopping
+                            val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
                             var realmRecentPurchase = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmRecentPurchase == null) {
@@ -5289,7 +5291,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5318,7 +5320,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5326,7 +5328,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
-                            val combineShopping: DecryptedCombineShopping = combineItem as DecryptedCombineShopping
+                            val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
                             var realmClothingSizes = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmClothingSizes == null) {
@@ -5343,7 +5345,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5372,7 +5374,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -5380,7 +5382,7 @@ class Level3CategoryHelper(
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
-                            val combineShopping: DecryptedCombineShopping = combineItem as DecryptedCombineShopping
+                            val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
                             var realmShopping = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmShopping == null) {
@@ -5397,7 +5399,7 @@ class Level3CategoryHelper(
                     if (isSaveComplete) {
                         isSaveComplete = true
                     } else {
-                        categoryView.savedToRealm()
+                        categoryView.savedToRealm( mCombine!! )
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)

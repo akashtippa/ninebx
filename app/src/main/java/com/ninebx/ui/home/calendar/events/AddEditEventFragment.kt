@@ -23,6 +23,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.provider.MediaStore
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
@@ -236,8 +237,8 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     }
 
     private fun disableEdit() {
-        var appIcon = context!!.resources.getDrawable(R.drawable.search_bx)
-        appIcon.setBounds(0,0,120,120)
+        var appIcon = ContextCompat.getDrawable(context!!, R.drawable.search_bx)
+        appIcon!!.setBounds(0,0,120,120)
         tvSave.text = ""
         tvSave.setCompoundDrawables(null, null, appIcon, null)
         editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit))
@@ -257,7 +258,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun enableEdit() {
         tvSave.text = "Save"
         tvSave.setCompoundDrawables(null,null,null,null)
-        editBtn.setImageDrawable(resources.getDrawable(R.drawable.ic_icon_edit_blue))
+        editBtn.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
         etTitle.isEnabled = true
         etLocation.isEnabled = true
         tvStarts.isEnabled = true

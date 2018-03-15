@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_super_sub_list.*
 import java.util.*
 import kotlin.collections.ArrayList
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.utility.Constants.SEARCH_NORMAL
 
 
 /***
@@ -241,7 +242,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
         decryptedTravelList = arguments!!.getParcelable<DecryptedTravelList>(Constants.SELECTED_ITEM)
 
-        mListsAdapter = SearchAdapter(searchItems, this)
+        mListsAdapter = SearchAdapter(searchItems, SEARCH_NORMAL, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedSubLists!!.layoutManager = layoutManager
@@ -917,7 +918,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         listTitleName = listItem.listName
     }
 
-    override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
+    override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem, action : String ) {
         //TODO
     }
 }

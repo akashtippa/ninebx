@@ -4,20 +4,20 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.hide
-import com.ninebx.ui.base.kotlin.hideProgressDialog
-import com.ninebx.ui.base.kotlin.showProgressDialog
-import com.ninebx.ui.base.kotlin.showToast
+import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level3_category.*
 
@@ -26,10 +26,14 @@ import kotlinx.android.synthetic.main.fragment_level3_category.*
  */
 
 class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
-    override fun savedToRealm() {
+
+    override fun savedToRealm( combine : Parcelable ) {
         if( context != null ) {
             context!!.hideProgressDialog()
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            arguments!!.putString("action", "add")
+            arguments!!.putParcelable( "selectedDocument", selectedDocument )
+            arguments!!.putParcelable(Constants.COMBINE_ITEMS, combine)
+            (activity!! as ContainerActivity).onLevel3Action(arguments!!)
         }
     }
 
@@ -54,6 +58,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var classType = ""
     private var selectedDocument : Parcelable ?= null
     private var combineItem : Parcelable ?= null
+    private var action : String = ""
+    private var isEditMode = false
 
     override fun showProgress(message: Int) {
 
@@ -66,24 +72,59 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onError(error: Int) {
     }
 
+    private lateinit var level2Categories: ArrayList<Level2Category>
+
     override fun onSuccess(categories: ArrayList<Level2Category>) {
         hideProgress()
+        level2Categories = categories
         inflateLayout(categories)
     }
 
+    private val visibilityMap : HashMap<String, Int> = HashMap()
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
-        //layExpandable.layoutManager = LinearLayoutManager(context)
+        etTitle.isEnabled = isEditMode
+        etTitleValue.isEnabled = isEditMode
+
+        layExpandable.removeAllViews()
         for( category in categories ) {
+
             val level3ExpandableLayout = LayoutInflater.from(context).inflate(R.layout.layout_level3_expandable_recyclerview, null)
             val lblListHeader : TextView = level3ExpandableLayout.findViewById(R.id.lblListHeader)
             val rvLevel3 : RecyclerView = level3ExpandableLayout.findViewById(R.id.rvLevel3)
+            val ivExpand : ImageView = level3ExpandableLayout.findViewById(R.id.ivExpand)
+            val ivCollapse : ImageView = level3ExpandableLayout.findViewById(R.id.ivCollapse)
+
             rvLevel3.layoutManager = LinearLayoutManager(context)
             lblListHeader.text = category.title
-            rvLevel3.adapter = ExpandableRecyclerViewAdapter( context!!, category.subCategories, this, categoryName, classType,
-                    ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members) )
+            rvLevel3.adapter = ExpandableRecyclerViewAdapter(
+                    context!!,
+                    category.subCategories,
+                    this,
+                    categoryName,
+                    classType,
+                    ArrayList(NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members),
+                    isEditMode)
             layExpandable.addView(level3ExpandableLayout)
 
+            lblListHeader.setOnClickListener {
+                if( rvLevel3.isVisible() ) {
+                    ivCollapse.show()
+                    ivExpand.hide()
+                }
+                else {
+                    ivCollapse.hide()
+                    ivExpand.show()
+                }
+                rvLevel3.toggleVisibility()
+                visibilityMap.put(category.title, rvLevel3.visibility)
+            }
+            rvLevel3.visibility = if( visibilityMap.containsKey(category.title) ) {
+                visibilityMap[category.title]!!
+            } else {
+                visibilityMap.put(category.title, View.GONE)
+                visibilityMap[category.title]!!
+            }
         }
 
         if( selectedDocument != null ) {
@@ -370,7 +411,15 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
-
+        action = arguments!!.getString("action")
+        isEditMode = action == "add" || action == "edit"
+        if( action == "add" ) {
+            ivEdit.hide()
+            ivDelete.hide()
+        }
+        else if( action == "edit" ) {
+            ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
+        }
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
             classType = arguments!!.getString("classType")
@@ -386,7 +435,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         boxValue = prefrences.currentBox!!
 
         ivBack.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            activity!!.finish()
         }
 
         setTitle()
@@ -397,6 +446,19 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
                 mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim()  )
+            }
+        }
+        ivEdit.setOnClickListener {
+            if( !isEditMode ) {
+                ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
+                isEditMode = true
+                inflateLayout(level2Categories)
+            }
+        }
+        ivDelete.setOnClickListener {
+            if( isEditMode ) {
+                arguments!!.putString("action", "delete")
+                (activity!! as ContainerActivity).onLevel3Action(arguments!!)
             }
         }
     }
@@ -751,6 +813,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             }
 
             "Emergency contacts" -> {
+
             }
 
             "Medications" -> {
@@ -786,11 +849,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
-
-        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-
-        KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
-        return super.onBackPressed()
+        activity!!.finish()
+        return true
     }
 }
