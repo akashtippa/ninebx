@@ -130,7 +130,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvRecentSearch.visibility = View.VISIBLE
         setRecentSearchAdapter()
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
@@ -140,18 +139,10 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
+                rvRecentSearch.visibility = View.GONE
 
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                rvRecentSearch.visibility = View.VISIBLE
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-               // rvRecentSearch.visibility = View.GONE
-
-                val text = edtSearch.text.toString().trim()
-                searchDecryptCombine = mSearchPresenter.searchHomeItems( text )
+                var text = edtSearch.getText().toString()
+                searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
                 searchDecryptCombineTravel = mSearchPresenter.searchTravelItems(text)
                 searchDecryptCombineMemories = mSearchPresenter.searchMemoryItems(text)
                 searchDecryptCombineEducation = mSearchPresenter.searchEducationItems(text)
@@ -162,22 +153,41 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 searchDecryptedCombineShopping = mSearchPresenter.searchShoppingItems(text)
                 setAdapter()
             }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
         })
     }
 
     private fun setRecentSearchAdapter() {
         if( rvRecentSearch == null ) return
 
+        rvRecentSearch.visibility = View.VISIBLE
         var linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.setReverseLayout(true)
         linearLayoutManager.setStackFromEnd(true)
         rvRecentSearch.layoutManager = linearLayoutManager
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
+        rvRecentSearch.adapter.notifyDataSetChanged()
     }
 
     private fun hideAllLayouts() {
-        homeLayout.hide()
+        homeLayout.visibility = View.GONE
+        travelLayout.visibility = View.GONE
+        contactsLayout.visibility = View.GONE
+        educationLayout.visibility = View.GONE
+        personalLayout.visibility = View.GONE
+        interestsLayout.visibility = View.GONE
+        wellnessLayout.visibility = View.GONE
+        memoriesLayout.visibility = View.GONE
+        shoppingLayout.visibility = View.GONE
+        /*homeLayout.hide()
         travelLayout.hide()
         contactsLayout.hide()
         educationLayout.hide()
@@ -185,7 +195,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         interestsLayout.hide()
         wellnessLayout.hide()
         memoriesLayout.hide()
-        shoppingLayout.hide()
+        shoppingLayout.hide()*/
     }
 
     private var mSearchTravelItems = ArrayList<Level3SearchItem>()
@@ -298,6 +308,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 level1Fragment!!.arguments = bundle
 
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+
                 if(searchItem.categoryName.equals("documents") || searchItem.categoryName.equals("loyalty") || searchItem.categoryName.equals("vacation")){
                     switchTravelItems( position, searchItem )
                 }
@@ -305,9 +316,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
                     }
-                    (R.string.travel) -> {
+                    /*(R.string.travel) -> {
                         switchTravelItems( position, searchItem )
-                    }
+                    }*/
                     (R.string.contacts) -> {
                         switchContactsItems( position, searchItem )
                     }
@@ -549,7 +560,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
-            "document" -> {
+            "documents" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
                 goToCategoryFragment( selectedDocument )
                 mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Travel" ,selectedDocument::class.java.simpleName)
@@ -581,6 +592,8 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         when( searchItem.categoryName ) {
             "finance" -> {
+                //check for mainCategory and subCategory
+
                 val selectedDocument = searchDecryptCombine.financialItems[position]
                 goToCategoryFragment(selectedDocument)
                 mSearchPresenter.updateRecentSearch(selectedDocument!!.accountName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)

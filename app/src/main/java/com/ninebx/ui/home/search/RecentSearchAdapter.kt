@@ -18,11 +18,13 @@ class RecentSearchAdapter(private val mRecentSearch: ArrayList<DecryptedRecentSe
     }
 
     override fun getItemCount(): Int {
-        return if( mRecentSearch.size > 5 ) 5 else mRecentSearch.size
+        /*return if( mRecentSearch.size > 5 ) 5 else mRecentSearch.size*/
+        return  mRecentSearch.size
     }
 
     override fun onBindViewHolder(holder: RecentSearchAdapter.ViewHolder, position: Int) {
         holder.tvRecentSearch.text = mRecentSearch[position].mainCategory
+
     }
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {

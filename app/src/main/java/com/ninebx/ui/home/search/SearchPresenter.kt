@@ -132,7 +132,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_RECENT_SEARCH, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val recentSearch = realm!!.where(RecentSearch::class.java)/*.distinctValues("id")*/.sort("createdDate", Sort.DESCENDING).findAll()
+                        val recentSearch = realm!!.where(RecentSearch::class.java)/*.distinctValues("id")*//*.sort("createdDate", Sort.ASCENDING)*/.findAll()
                         if (recentSearch.size > 0) {
                             for (i in 0 until recentSearch.size) {
                                 decryptedRecentSearch.add(decryptRecentSearch(recentSearch[i]!!))
@@ -545,6 +545,7 @@ class SearchPresenter {
         }
 
         val searchDecryptCombineTravel = DecryptedCombineTravel()
+
         val searchDocumentItems = ArrayList<DecryptedDocuments>()
         val searchLoyaltyItems = ArrayList<DecryptedLoyalty>()
         val searchTravelItems = ArrayList<DecryptedTravel>()

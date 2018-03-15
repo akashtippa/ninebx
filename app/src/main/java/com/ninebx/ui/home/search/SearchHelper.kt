@@ -385,9 +385,9 @@ class SearchHelper() {
             R.string.home_amp_money -> {
                 switchHomeItems( position, searchItem )
             }
-            R.string.travel -> {
+           /* R.string.travel -> {
                 switchTravelItems( position, searchItem )
-            }
+            }*/
             (R.string.contacts) -> {
                 switchContactsItems( position, searchItem )
             }

@@ -65,7 +65,7 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/cardview_default_radius"
             app:cardElevation="@dimen/cardview_default_elevation"
-            app:contentPadding="@dimen/default_mini_padding">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/edtSearch"
@@ -73,9 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
                 android:hint="@string/search"
+                android:layout_margin="2dp"
                 android:padding="@dimen/default_mini_margin"
                 android:singleLine="true"
                 android:textSize="@dimen/text_16" />
@@ -104,15 +104,6 @@
             android:text="@string/loading" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rvRecentSearch"
-        android:nestedScrollingEnabled="false"
-        android:layout_below="@+id/searchLayout"
-        android:background="@color/white"
-        android:visibility="visible"
-        />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -126,6 +117,14 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/searchLayout"
             android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rvRecentSearch"
+                android:nestedScrollingEnabled="false"
+                android:background="@color/white"
+                android:visibility="visible"
+                />
             <LinearLayout
                 android:id="@+id/homeLayout"
                 android:layout_width="match_parent"
