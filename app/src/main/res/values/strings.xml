@@ -984,4 +984,6 @@
 
     <string name="null_character"></string>
 
+    <string name="recent_search">RECENT SEARCHES</string>
+
 </resources>

@@ -117,14 +117,36 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/searchLayout"
             android:orientation="vertical">
-            <android.support.v7.widget.RecyclerView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rvRecentSearch"
-                android:nestedScrollingEnabled="false"
-                android:background="@color/white"
-                android:visibility="visible"
-                />
+                android:orientation="vertical"
+                android:id="@+id/recentSearchLayout"
+                android:background="@color/grey_100">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/default_mini_padding"
+                    android:text="@string/recent_search"
+                    android:id="@+id/tvRecentSearch"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@color/divider_color" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvRecentSearch"
+                    android:nestedScrollingEnabled="false"
+                    android:background="@color/white"
+                    android:visibility="visible"
+                    />
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/homeLayout"
                 android:layout_width="match_parent"

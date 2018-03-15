@@ -139,7 +139,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                rvRecentSearch.visibility = View.GONE
+                recentSearchLayout.visibility = View.GONE
 
                 var text = edtSearch.getText().toString()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
@@ -167,7 +167,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private fun setRecentSearchAdapter() {
         if( rvRecentSearch == null ) return
 
-        rvRecentSearch.visibility = View.VISIBLE
+        recentSearchLayout.visibility = View.VISIBLE
         var linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.setReverseLayout(true)
         linearLayoutManager.setStackFromEnd(true)
