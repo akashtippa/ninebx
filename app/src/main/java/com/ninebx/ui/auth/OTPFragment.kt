@@ -70,7 +70,6 @@ class OTPFragment : BaseAuthFragment() {
                         if( result != -1 ) mAuthView.onError(result)
                     }
 
-
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
 
@@ -83,12 +82,12 @@ class OTPFragment : BaseAuthFragment() {
             etOtp4.setText("")
             etOtp5.setText("")
             etOtp6.setText("")
-            tvResend.isEnabled = false
+            tvResend.isEnabled = true
             handler.postDelayed(runnable, 60000)
             mAuthView.getAuthPresenter().requestOTP(mAuthView.getAccountEmail())
 
         }
-        tvResend.isEnabled = false
+        tvResend.isEnabled = true
         setupOtp()
     }
 

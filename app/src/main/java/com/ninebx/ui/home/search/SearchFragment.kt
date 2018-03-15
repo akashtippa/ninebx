@@ -166,7 +166,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             }
         })
 
-        clearSearch.setOnClickListener (View.OnClickListener {
+        clearSearch.setOnClickListener(View.OnClickListener {
             edtSearch.setText("")
             hideAllLayouts()
             setRecentSearchAdapter()
@@ -497,7 +497,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "certificate" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument.cer_description, selectedDocument.selectionType, selectedDocument.cer_description ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.cer_description, selectedDocument.selectionType, selectedDocument.nameOnCertificate ,selectedDocument::class.java.simpleName)
             }
             "govenment" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
@@ -507,7 +507,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.lic_description ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.nameOnLicense ,selectedDocument::class.java.simpleName)
             }
             "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
