@@ -37,6 +37,7 @@ class OTPFragment : BaseAuthFragment() {
 //        setupToolbar()
 //        toolbar.title = ""
 //        setHasOptionsMenu(true)
+
         tvEmail.text = arguments!!.getString("email", "")
         btnSubmit.setOnClickListener {
             if( validate() ) {
