@@ -146,4 +146,7 @@ dependencies {
     //BadgeView
     implementation 'q.rorbin:badgeview:1.1.0'
 
+    //circularImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
 }
