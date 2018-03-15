@@ -32,6 +32,7 @@ import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.utility.*
+import com.ninebx.utility.Constants.SEARCH_NORMAL
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_sub_list.*
 import java.util.*
@@ -69,7 +70,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedLists!!.layoutManager = layoutManager
-        mListsAdapter = SearchAdapter(searchItems, this)
+        mListsAdapter = SearchAdapter(searchItems, SEARCH_NORMAL, this)
         rvAddedLists!!.adapter = mListsAdapter
 
         listOption = arguments!!.getString("listOption")
@@ -544,7 +545,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         }
     }
 
-    override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem) {
+    override fun onItemClick(itemPosition: Int, position: Int, searchItem: Level3SearchItem, action : String ) {
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
         // For now managing in a bad way, just to make it work.
