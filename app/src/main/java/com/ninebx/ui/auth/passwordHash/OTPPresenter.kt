@@ -27,9 +27,10 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
 
 
 
-    fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText?){
-
-        if( validate( etOtp1,etOtp2 , etOtp3 ,etOtp4 ,etOtp5 ,etOtp6 ) ) {
+    fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText?,email:String)
+    {
+        emailOtp=email
+        if( validate( etOtp1,etOtp2 , etOtp3 ,etOtp4 ,etOtp5 ,etOtp6) ) {
             emailOtp = ""
             handler.removeCallbacks(runnable)
             object : AsyncTask<Void, Void, Int>() {
@@ -58,6 +59,8 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
                     mAuthView.navigateToCreatePassCode(Constants.PASSCODE_CREATE, "")
 
                     if( result != -1 ) mAuthView.onError(result)
+
+                    AppLogger.d("errorMessage",""+result)
                 }
 
 
