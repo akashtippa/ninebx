@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.search
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.FragmentTransaction
@@ -14,6 +15,7 @@ import com.ninebx.ui.home.BaseHomeFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.hide
@@ -24,6 +26,9 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.baseCategories.Level1Fragment
 import com.ninebx.utility.Constants.SEARCH_NORMAL
 import kotlin.collections.ArrayList
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+
 
 /**
  * Created by Alok on 03/01/18.
@@ -175,11 +180,18 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         tvClear.setOnClickListener(View.OnClickListener {
             edtSearch.setText("")
-            edtSearch.clearFocus()
             hideAllLayouts()
             setRecentSearchAdapter()
             clearSearch.visibility = View.GONE
             tvClear.visibility = View.GONE
+            edtSearch.setFocusableInTouchMode(false)
+            edtSearch.setFocusable(false)
+            edtSearch.setFocusableInTouchMode(true)
+            edtSearch.setFocusable(true)
+            edtSearch.onEditorAction(EditorInfo.IME_ACTION_DONE)
+
+            val inputMethodManager : InputMethodManager = getActivity()!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0)
         })
     }
 
