@@ -37,9 +37,9 @@ class SignUpFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtFirstName.setText("Alok")
-            edtLastName.setText("G")
-            edtEmailAddress.setText("alok.g@cognitiveclouds.com")
+            edtFirstName.setText("Smrithi")
+            edtLastName.setText("Sateesh")
+            edtEmailAddress.setText("smriti.sateesh@cognitiveclouds.com")
         }
 
         txtTermsOfUse.setOnClickListener {

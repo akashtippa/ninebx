@@ -38,4 +38,6 @@
     <color name="color_gray">#929292</color>
     <color name="color_text_hint">#C7C7CD</color>
 
+    <color name="otp_color">#2176b5</color>
+
 </resources>
