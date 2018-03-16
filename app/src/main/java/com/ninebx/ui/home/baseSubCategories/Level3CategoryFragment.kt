@@ -544,8 +544,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         when (bundleValue) {
 
         // Common Items in Every
-
-        // Financial Accounts
+            "Loans/Mortgages"-> {
+                etTitle.hint = "Institution name"
+                etTitleValue.hint = "Account name"
+                toolbarTitle.text = "Add Account"
+            }
             "Banking" -> {
                 etTitle.hint = "Institution name"
                 etTitleValue.hint = "Account name"

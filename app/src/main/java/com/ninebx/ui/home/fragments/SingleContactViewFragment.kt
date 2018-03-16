@@ -9,31 +9,22 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
-import android.provider.ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY
 import android.provider.MediaStore
-import android.service.autofill.Validators.and
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.contactsView.ContactsView
-import com.ninebx.ui.home.account.interfaces.IContactsAdded
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.AWSFileTransferHelper
 import com.ninebx.utility.*
-import com.ninebx.utility.countryPicker.Country
-import com.ninebx.utility.countryPicker.CountryPicker
-import com.onegravity.contactpicker.contact.Contact
-import com.onegravity.contactpicker.core.ContactPickerActivity
-import com.onegravity.contactpicker.group.Group
+import com.ninebx.utility.countryPicker.CountryPickerDialog
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
@@ -171,11 +162,9 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         NineBxApplication.instance.setCountrySelected(this)
 
         edtCountry.setOnClickListener {
-            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-            val countryPicker = CountryPicker()
-            countryPicker.setCountrySelectionListener(ICountrySelected { strCountry -> edtCountry.setText(strCountry) })
-            fragmentTransaction.replace(R.id.fragmentContainer, countryPicker).commit()
+            CountryPickerDialog(edtCountry.context, ICountrySelected {
+                strCountry -> edtCountry.setText(strCountry)
+            })
         }
 
         populateView(mContacts)
