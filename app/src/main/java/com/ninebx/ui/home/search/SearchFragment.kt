@@ -146,6 +146,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 recentSearchLayout.visibility = View.GONE
+                if(edtSearch.text.equals(null)){
+                    clearSearch.visibility = View.GONE
+                }
                 clearSearch.visibility = View.VISIBLE
                 tvClear.visibility = View.VISIBLE
 
@@ -200,12 +203,12 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         recentSearchLayout.visibility = View.VISIBLE
         var linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.setReverseLayout(true)
-        linearLayoutManager.setStackFromEnd(true)
         rvRecentSearch.layoutManager = linearLayoutManager
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
         rvRecentSearch.adapter.notifyDataSetChanged()
+        linearLayoutManager.setReverseLayout(true)
+        linearLayoutManager.setStackFromEnd(true)
         hideProgress()
     }
 

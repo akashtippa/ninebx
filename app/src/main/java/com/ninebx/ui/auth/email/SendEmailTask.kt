@@ -1,6 +1,7 @@
 package com.ninebx.ui.auth.email
 
 import android.content.Context
+import android.graphics.Color
 import android.os.AsyncTask
 import android.support.v4.content.ContextCompat
 import android.text.Html
@@ -15,6 +16,9 @@ import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 import com.ninebx.utility.AppLogger
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
+import android.text.SpannableStringBuilder
+
+
 
 
 /**
@@ -46,9 +50,17 @@ class SendEmailTask( private val emailOtp : String,
     override fun doInBackground(vararg p0: Void?): String {
 
         try {
-            /*ContextCompat.getColor(parent!!.context, R.color.red_300)*/
+            /*ContextCompat.getColor(parent!!.context, R.color.red_300)*//*
             val wordtoSpan = SpannableString(emailOtp)
-            wordtoSpan.setSpan(ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.otp_color)), 0, wordtoSpan.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            wordtoSpan.setSpan(ForegroundColorSpan(Color.BLUE), 0, wordtoSpan.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            *//*wordtoSpan.setSpan(ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.otp_color)), 0, wordtoSpan.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)*/
+
+            val builder = SpannableStringBuilder()
+
+            val wordtoSpan = SpannableString(emailOtp)
+            wordtoSpan.setSpan(ForegroundColorSpan(Color.BLUE), 0 , wordtoSpan.length, 0)
+            val otp = builder.append(wordtoSpan)
+
             val sendgrid = SendGrid("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")
             val email = SendGrid.Email()
             email.addTo(emailId)
@@ -58,7 +70,7 @@ class SendEmailTask( private val emailOtp : String,
                     "\n" +
                     "Here is your one-time, time-based code to authenticate your device.\n" +
                     "\n" +
-                    "Authentication code: " + wordtoSpan + "\n" +
+                    "Authentication code: " + otp + "\n" +
                     "\n" + "This is a time-sensitive code. Please enter it immediately to complete sign in.\n" +
                     "\n" + "Thanks!\n" +
                     "\n" + "The NineBx Team"
