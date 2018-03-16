@@ -3601,6 +3601,7 @@ class Level3CategoryHelper(
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
+
         if (decryptedFinancial != null) {
             decryptedFinancial!!.selectionType = categoryID
             decryptedFinancial!!.institutionName = title
@@ -4937,8 +4938,10 @@ class Level3CategoryHelper(
                 decryptedLoyalty!!.railway = title
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
+
             if( decryptedLoyalty!!.created.isEmpty() )
                 decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
+
             decryptedLoyalty!!.modified = currentUsers + " " + currentDateandTime
             decryptedLoyalty!!.accountName = subTitle
 
@@ -4957,7 +4960,7 @@ class Level3CategoryHelper(
                             var getDecryptedLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
                             AppLogger.d("getDecryptedLoyalty", "DecryptedCombineTravel" + getDecryptedLoyalty)
 
-                            if(getDecryptedLoyalty!!.loyaltyItems.size != null){
+                            if(getDecryptedLoyalty!!.loyaltyItems != null && getDecryptedLoyalty!!.loyaltyItems.size > 0){
                                 for(loyaltyItems in getDecryptedLoyalty!!.loyaltyItems){
                                     var deleteLoyalty = realm!!.where(CombineTravel::class.java).equalTo("id", loyaltyItems.id).findAll()
                                     realm.beginTransaction()
@@ -5171,6 +5174,7 @@ class Level3CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title

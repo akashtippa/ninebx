@@ -325,8 +325,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         searchHelper.switchAndSearch(mCurrentSearchItem!!, action)
                     }
                     "add" -> {
-                        combinedItems = data.getParcelableExtra(Constants.COMBINE_ITEMS)
-                        loadItems()
+                        /*combinedItems = data.getParcelableExtra(Constants.COMBINE_ITEMS)
+                        loadItems()*/
                     }
                 }
             }
