@@ -511,6 +511,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         locationViewHolder.spinnerItem.setSelection(accountType.indexOf(titleValue))
                         locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, accountType )
                     }
+                    Constants.OTHER_ACCOUNT_TYPE -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, othersAccountTypeOptions)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        locationViewHolder.spinnerItem.adapter = arrayAdapter
+                        locationViewHolder.spinnerItem.setSelection(othersAccountTypeOptions.indexOf(titleValue))
+                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, othersAccountTypeOptions )
+                    }
                     Constants.CARD_TYPE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, cardType)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

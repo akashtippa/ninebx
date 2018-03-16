@@ -17,6 +17,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
@@ -260,6 +261,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
+                    if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
+                        if( !subCategoryAdapter.checkForDependentCategory("Vehicles") ) {
+                            context!!.showToast(R.string.error_empty_vehicle_list)
+                            return
+                        }
+                    }
                     if( action == "add_item" ) {
                         val bundle = Bundle()
                         bundle.putString("categoryName", categoryName)
@@ -267,6 +274,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("action", "add")
                         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
+                        bundle.putInt(Constants.CURRENT_BOX, categoryInt )
                         /*val level3CategoryFragment = Level3CategoryFragment()
                         level3CategoryFragment.arguments = bundle
                         fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/

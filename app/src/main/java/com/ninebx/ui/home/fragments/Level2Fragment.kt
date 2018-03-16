@@ -68,6 +68,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
 
     var categoryName = ""
     var categoryID = ""
+    var categoryInt : Int = -1
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
     private val EXTRA_GROUPS = "EXTRA_GROUPS"
     private val EXTRA_CONTACTS = "EXTRA_CONTACTS"
@@ -105,6 +106,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         combinedItems = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
+        categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
 
         toolbarTitle.text = categoryName
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment()  }
@@ -128,6 +130,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                 bundle.putString("action", "add")
                 bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
+                bundle.putInt(Constants.CURRENT_BOX, categoryInt)
                 /*val level3CategoryFragment = Level3CategoryFragment()
                 level3CategoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/

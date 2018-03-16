@@ -983,5 +983,6 @@
     <string name="documents">documents</string>
 
     <string name="null_character"></string>
+    <string name="error_empty_vehicle_list">Vehicle list is empty, please add Vehicle details using Auto section</string>
 
 </resources>

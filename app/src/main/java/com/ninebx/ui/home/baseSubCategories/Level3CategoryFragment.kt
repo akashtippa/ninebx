@@ -55,6 +55,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     private var categoryName = ""
     private var categoryID = ""
+    private var categoryInt = -1
     private var classType = ""
     private var selectedDocument : Parcelable ?= null
     private var combineItem : Parcelable ?= null
@@ -490,7 +491,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
-        mCategoryPresenter = Level2CategoryPresenter(categoryName, categoryID, selectedDocument, classType, this)
+        mCategoryPresenter = Level2CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
 
         boxValue = prefrences.currentBox!!
 
