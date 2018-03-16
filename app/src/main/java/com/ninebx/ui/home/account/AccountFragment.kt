@@ -163,7 +163,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             var StringTwo = ""
             var StringThree = ""
             var StringFour = ""
-            val email= "\n" + NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
+            val email= NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].emailAddress
             var fullName= mHomeView.getCurrentUsers()[0]!!.fullName
 
             var validate =false
@@ -223,15 +223,16 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
             }
 
             StringFour = if( dialog.edtComments != null && dialog.edtComments.text.isNotEmpty() ){
-                var comments = dialog.edtComments.text
+                var comments = dialog.edtComments.getText().toString().trim()
                 (getString(R.string.other_comments_and_suggestions).toUpperCase())+ (" : ") + (comments)
 
             }else{
                 (getString(R.string.null_character))
             }
 
-            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName) + ("\n")+ email
-            AppLogger.d("emailBody",finalEmailBody.toString())
+            /*var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName) + ("\n")+ email*/
+            var finalEmailBody =  "$StringOne $StringTwo $StringThree $StringFour \n\n\n $fullName \n $email"
+            AppLogger.d("emailBody",finalEmailBody)
             AppLogger.d("SendingEmailbody","" + finalEmailBody)
             if(validate) {
                 val builder = AlertDialog.Builder(context)

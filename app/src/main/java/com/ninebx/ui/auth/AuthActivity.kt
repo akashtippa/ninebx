@@ -306,5 +306,6 @@ class AuthActivity : AppCompatActivity(), AuthView {
         } else {
             finish()
         }*/
+        finish()
     }
 }

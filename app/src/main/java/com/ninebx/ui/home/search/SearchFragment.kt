@@ -52,7 +52,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
         this.mRecentSearch = recentSearch
         setRecentSearchAdapter()
-        hideProgress()
     }
 
     override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
@@ -143,6 +142,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             override fun afterTextChanged(s: Editable?) {
                 recentSearchLayout.visibility = View.GONE
                 clearSearch.visibility = View.VISIBLE
+                tvClear.visibility = View.VISIBLE
 
                 var text = edtSearch.getText().toString()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
@@ -179,6 +179,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             hideAllLayouts()
             setRecentSearchAdapter()
             clearSearch.visibility = View.GONE
+            tvClear.visibility = View.GONE
         })
     }
 
@@ -193,6 +194,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
         rvRecentSearch.adapter.notifyDataSetChanged()
+        hideProgress()
     }
 
     private fun hideAllLayouts() {

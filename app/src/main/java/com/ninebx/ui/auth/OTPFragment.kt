@@ -77,6 +77,7 @@ class OTPFragment : BaseAuthFragment() {
             }
         }
         tvResend.setOnClickListener {
+            etOtp1.requestFocus()
             etOtp1.setText("")
             etOtp2.setText("")
             etOtp3.setText("")
