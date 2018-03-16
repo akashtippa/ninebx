@@ -475,6 +475,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
+        categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"

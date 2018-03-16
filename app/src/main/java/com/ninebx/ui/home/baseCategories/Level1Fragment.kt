@@ -228,8 +228,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 tvCount.show()
                 tvCount.text = category.formsCount.toString()
             } else {
-                /*tvCount.text = ""
-                tvCount.setCompoundDrawables(null, null, null, null)*/
                 tvCount.hide()
             }
             rvSubCategory.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
@@ -249,6 +247,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
+                        bundle.putInt(Constants.CURRENT_BOX, categoryInt)
                         val level2Fragment = Level2Fragment()
                         level2Fragment.arguments = bundle
                         fragmentTransaction.replace(R.id.frameLayout, level2Fragment).commit()
@@ -290,6 +289,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         val bundle = Bundle()
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
+                        bundle.putInt(Constants.CURRENT_BOX, categoryInt )
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         when {
                             subCategory.title == "Add Persons." -> {

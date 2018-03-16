@@ -57,6 +57,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         .putExtra("categoryName", categoryName)
                         .putExtra("categoryId", categoryID)
                         .putExtra("action", action)
+                        .putExtra(Constants.CURRENT_BOX, categoryInt)
                         .putExtra( "selectedDocument", selectedDocument )
                         .putExtra(Constants.COMBINE_ITEMS, combinedItems)
                         .putExtra("classType", classType)

@@ -78,7 +78,14 @@ class Level3CategoryHelper(
                 homeHelper!!.initialize()
                 homeHelper!!.getFormForCategory()
             }
+            else -> {
+                searchByOthers()
+            }
         }
+
+    }
+
+    private fun searchByOthers() {
         when (category_name) {
 
         // Personal
@@ -174,7 +181,7 @@ class Level3CategoryHelper(
             "Add person" -> {
                 getWork()
             }
-             "Travel Dates And Plans"-> {
+            "Travel Dates And Plans"-> {
                 getTravelDatesAndPlans()
             }
 
