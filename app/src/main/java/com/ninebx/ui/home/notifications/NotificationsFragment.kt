@@ -19,10 +19,7 @@ import com.ninebx.ui.home.BaseHomeFragment
 import com.ninebx.utility.*
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_notifications.*
-import java.text.SimpleDateFormat
-import java.util.*
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.utility.AlarmJob.Companion.scheduleNotificaiton
 import kotlin.collections.ArrayList
 
 /**

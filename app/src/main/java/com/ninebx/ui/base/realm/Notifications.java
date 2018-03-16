@@ -163,5 +163,22 @@ public class Notifications extends RealmObject {
         this.id = id;
     }
 
-
+    @Override
+    public String toString() {
+        return "Notifications{" +
+                "message='" + message + '\'' +
+                ", boxName='" + boxName + '\'' +
+                ", category='" + category + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", updatedDate=" + updatedDate +
+                ", subTitle='" + subTitle + '\'' +
+                ", notifyDate='" + notifyDate + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", read=" + read +
+                ", form_id=" + form_id +
+                ", id=" + id +
+                '}';
+    }
 }
