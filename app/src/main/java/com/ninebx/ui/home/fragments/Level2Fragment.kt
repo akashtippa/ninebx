@@ -110,7 +110,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
 
         toolbarTitle.text = categoryName
-        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment()  }
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         ivBack.setOnClickListener {  NineBxApplication.instance.activityInstance!!.onBackPressed() }
 
         layoutAddList.setOnClickListener {

@@ -111,8 +111,6 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
                 onNewMember(intent.getParcelableExtra(Constants.MEMBER))
             }
         }
-
-
     }
 
 

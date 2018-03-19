@@ -268,6 +268,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
 
         callHomeFragment()
+       /* callPersonalFragment()*/
         toggleCheck(false)
         //SearchUtils.search()
         this.showProgressDialog(getString(R.string.loading))
@@ -346,7 +347,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     //a Uri object to store file path
@@ -427,6 +427,16 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         layoutQuickAdd.show()
     }
 
+ /*   fun callPersonalFragment(){
+        fragmentTag = "Personal"
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.disallowAddToBackStack()
+        fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
+        prefrences.currentBox = getString(R.string.personal)
+        showBottomView()
+        layoutQuickAdd.show()
+    }*/
+
     private fun toggleCheck(isCheckable: Boolean) {
         bottomNavigationView.menu.getItem(0).isCheckable = isCheckable
         bottomNavigationView.menu.getItem(1).isCheckable = isCheckable
@@ -473,7 +483,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                     Toast.makeText(this@HomeActivity, error, Toast.LENGTH_LONG).show()
                     NineBxApplication.getPreferences().isPasswordRequired = true
                 }
-
             })
         }
 

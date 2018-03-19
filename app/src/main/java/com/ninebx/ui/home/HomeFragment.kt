@@ -70,7 +70,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun callLevel1Fragment(option: Int) {
         (activity as HomeActivity).callLevel1Fragment(option)
-
     }
 
     companion object {
