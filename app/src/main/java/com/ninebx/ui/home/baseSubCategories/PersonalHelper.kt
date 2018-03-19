@@ -370,7 +370,7 @@ class PersonalHelper(var category_name : String,
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
-
+        mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
@@ -422,15 +422,15 @@ class PersonalHelper(var category_name : String,
                                 realmDriversLicense = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
                             val encryptedObject = encryptLicense(decryptedDriversLicense!!)
-                            if(realmDriversLicense!!.licenseItems.contains(encryptedObject)){
+                            /*if(realmDriversLicense!!.licenseItems.contains(encryptedObject)){
                                 val index = realmDriversLicense!!.licenseItems.indexOf(encryptedObject)
                                 if(index != -1){
                                     realmDriversLicense!!.licenseItems[index] = encryptedObject
                                 }
                             }else{
                                 realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
-                            }
-
+                            }*/
+                            realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
                             realm.copyToRealmOrUpdate(realmDriversLicense)
                             AppLogger.d("Adding ", " Combine personal")
                             realm.commitTransaction()
@@ -489,7 +489,7 @@ class PersonalHelper(var category_name : String,
                             if (realmSocial == null) {
                                 realmSocial = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptSocial(decryptedSocial!!)
+                           /* val encryptedObject = encryptSocial(decryptedSocial!!)
                             if(realmSocial!!.socialItems.contains(encryptedObject)){
                                 val index = realmSocial!!.socialItems.indexOf(encryptedObject)
                                 if (index != -1){
@@ -497,8 +497,8 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
-                            }
-
+                            }*/
+                            realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
                             realm.copyToRealmOrUpdate(realmSocial)
                             realm.commitTransaction()
                         }
@@ -555,7 +555,7 @@ class PersonalHelper(var category_name : String,
                             if (realmTaxID == null) {
                                 realmTaxID = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptTaxID(decryptedTAX_ID!!)
+                          /*  val encryptedObject = encryptTaxID(decryptedTAX_ID!!)
                             if(realmTaxID!!.taxIDItems.contains(encryptedObject)){
                                 val index = realmTaxID!!.taxIDItems.indexOf(encryptedObject)
                                 if(index != -1){
@@ -563,7 +563,8 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmTaxID!!.taxIDItems.add(encryptTaxID(decryptedTAX_ID!!))
-                            }
+                            }*/
+                            realmTaxID!!.taxIDItems.add(encryptTaxID(decryptedTAX_ID!!))
                             realm.insertOrUpdate(realmTaxID)
                             realm.commitTransaction()
                         }
@@ -621,7 +622,7 @@ class PersonalHelper(var category_name : String,
                             if (realmGovernment == null) {
                                 realmGovernment = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptGovernment(decryptedOtherGovernment!!)
+                           /* val encryptedObject = encryptGovernment(decryptedOtherGovernment!!)
                             if(realmGovernment!!.governmentItems.contains(encryptedObject)){
                                 val index = realmGovernment!!.governmentItems.indexOf(encryptedObject)
                                 if(index != -1){
@@ -629,7 +630,8 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmGovernment!!.governmentItems.add(encryptGovernment(decryptedOtherGovernment!!))
-                            }
+                            }*/
+                            realmGovernment!!.governmentItems.add(encryptGovernment(decryptedOtherGovernment!!))
                             realm.copyToRealmOrUpdate(realmGovernment)
                             realm.commitTransaction()
                         }
@@ -686,7 +688,7 @@ class PersonalHelper(var category_name : String,
                             if (realmCertificate == null) {
                                 realmCertificate = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptCertificate(decryptedCertificate!!)
+                       /*     val encryptedObject = encryptCertificate(decryptedCertificate!!)
                             if(realmCertificate!!.certificateItems.contains(decryptedCertificate)){
                                 val index = realmCertificate!!.certificateItems.indexOf(encryptedObject)
                                 if(index != -1){
@@ -694,7 +696,8 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
-                            }
+                            }*/
+                            realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
                             realm.copyToRealmOrUpdate(realmCertificate)
                             realm.commitTransaction()
                         }

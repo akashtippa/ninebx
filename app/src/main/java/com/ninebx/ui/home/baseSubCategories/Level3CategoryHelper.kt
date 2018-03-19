@@ -1533,9 +1533,11 @@ class Level3CategoryHelper(
         if( homeHelper != null ) {
             homeHelper!!.setValue(level2Category)
         }
+        if( personalHelper != null){
+            personalHelper!!.setValue(level2Category)
+        }
         else {
             when (category_name) {
-
             // Travel
 
                 "Airline" -> {

@@ -125,6 +125,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
 
         fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
 
+
         when (fromWhichClass) {
             "MemoryView" -> {
                 loadMemoryTimeLine()
