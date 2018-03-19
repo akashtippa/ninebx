@@ -11,7 +11,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
@@ -20,7 +19,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.Constants
 import com.ninebx.utility.DateTimeSelectionListener
-import com.ninebx.utility.countryPicker.CountryPicker
+import com.ninebx.utility.countryPicker.CountryPickerDialog
 import com.ninebx.utility.getDateFromPicker
 import com.ninebx.utility.getDateMonthYearFormat
 import java.util.*
@@ -34,7 +33,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                                      private val level2CategoryPresenter: Level2CategoryView,
                                      val categoryName: String,
                                      val classType: String,
-                                     val membersList : ArrayList<DecryptedMember> ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                     val membersList : ArrayList<DecryptedMember>,
+                                     val isEditMode : Boolean ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent!!.context)
@@ -510,6 +510,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         locationViewHolder.spinnerItem.setSelection(accountType.indexOf(titleValue))
                         locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, accountType )
                     }
+                    Constants.OTHER_ACCOUNT_TYPE -> {
+                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, othersAccountTypeOptions)
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        locationViewHolder.spinnerItem.adapter = arrayAdapter
+                        locationViewHolder.spinnerItem.setSelection(othersAccountTypeOptions.indexOf(titleValue))
+                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, othersAccountTypeOptions )
+                    }
                     Constants.CARD_TYPE -> {
                         val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, cardType)
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -552,6 +559,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 }
                 false
             })
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
 
         }
     } // 10
@@ -561,7 +570,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val etCurrentPassword = itemView.findViewById<EditText>(R.id.etCurrentPassword)
 
         init {
-
+            txtHeader.isEnabled = isEditMode
+            etCurrentPassword.isEnabled = isEditMode
             // childView = level2PasswordView
         }
     } // 11
@@ -572,7 +582,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         init {
 
-
+            chkLeft.isEnabled = isEditMode
+            chkRight.isEnabled = isEditMode
 
             // childView = level2RadioView
         }
@@ -585,6 +596,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val spinnerUsers = itemView.findViewById<Spinner>(R.id.spinnerUsers)
         init {
 
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            spinnerUsers.isEnabled = isEditMode
 
 
 
@@ -594,11 +608,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val switchView = itemView.findViewById<Switch>(R.id.switchView)
-        
+
         init {
 
+            txtHeader.isEnabled = isEditMode
+            switchView.isEnabled = isEditMode
 
-          
+
             // childView = level2SwitchView
         }
     } // 14
@@ -609,7 +625,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val spinnerCurrency: Spinner = itemView.findViewById<Spinner>(R.id.spinnerCurrency)
         init {
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            spinnerCurrency.isEnabled = isEditMode
 
             // childView = level2USDView
         }
@@ -618,8 +636,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val edtNotes = itemView.findViewById<EditText>(R.id.edtNotes)
         init {
 
+            edtNotes.isEnabled = isEditMode
 
-           
             // childView = level2NotesView
         }
     } // 16
@@ -628,18 +646,21 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<EditText>(R.id.etSubHeader)
         val spinnerAccountType = itemView.findViewById<Spinner>(R.id.spinnerAccountType)
-        
+
         init {
 
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            spinnerAccountType.isEnabled = isEditMode
 
-           
             // childView = level2NormalView
         }
     } // 17
     inner class LEVEL2_ATTACHMENTSViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+        val etAttachment : EditText = itemView.findViewById(R.id.etAttachment)
         init {
-
-
+            etAttachment.isEnabled = isEditMode
+            itemView.isEnabled = isEditMode
             // childView = level2AttachmentsView
         }
     } // 18
@@ -647,10 +668,11 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<TextView>(R.id.etSubHeader)
-        
+
         init {
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
             // childView = level2PickerView
         }
     } // 19
@@ -658,11 +680,12 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<TextView>(R.id.etSubHeader)
-        
+
         init {
 
 
-
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
 
             // childView = level2NumberView
         }
@@ -673,9 +696,10 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val spinnerItem: Spinner = itemView.findViewById<Spinner>(R.id.spinnerValue)
         init {
 
-            
 
-        
+            txtHeader.isEnabled = isEditMode
+            spinnerItem.isEnabled = isEditMode
+
 
             // childView = level2NormalSpinnerView
         }
@@ -710,16 +734,11 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
     }
 
     private fun openStaticLayoutDialog( locationText: EditText) {
-        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val countryPicker = CountryPicker()
-        countryPicker.setCountrySelectionListener( object : ICountrySelected {
-            override fun onCountrySelected(strCountry: String?) {
-                locationText.setText( strCountry )
-            }
 
+        CountryPickerDialog(locationText.context, ICountrySelected {
+            strCountry -> locationText.setText(strCountry)
         })
-        fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
+
     }
 
     private fun openContactList() {

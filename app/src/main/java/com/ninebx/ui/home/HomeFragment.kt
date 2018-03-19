@@ -22,31 +22,31 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.txtHome -> {
-                callBottomViewFragment((R.string.home_amp_money))
+                callLevel1Fragment((R.string.home_amp_money))
             }
             R.id.txtTravel -> {
-                callBottomViewFragment((R.string.travel))
+                callLevel1Fragment((R.string.travel))
             }
             R.id.txtContacts -> {
-                callBottomViewFragment((R.string.contacts))
+                callLevel1Fragment((R.string.contacts))
             }
             R.id.txtEducation -> {
-                callBottomViewFragment((R.string.education_work))
+                callLevel1Fragment((R.string.education_work))
             }
             R.id.txtPersonal -> {
-                callBottomViewFragment((R.string.personal))
+                callLevel1Fragment((R.string.personal))
             }
             R.id.txtInterests -> {
-                callBottomViewFragment((R.string.interests))
+                callLevel1Fragment((R.string.interests))
             }
             R.id.txtWellness -> {
-                callBottomViewFragment((R.string.wellness))
+                callLevel1Fragment((R.string.wellness))
             }
             R.id.txtMemories -> {
-                callBottomViewFragment((R.string.memories))
+                callLevel1Fragment((R.string.memories))
             }
             R.id.txtShopping -> {
-                callBottomViewFragment((R.string.shopping))
+                callLevel1Fragment((R.string.shopping))
             }
         }
     }
@@ -68,8 +68,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         txtShopping.setOnClickListener(this)
     }
 
-
-
     private fun callBottomViewFragment(option: Int) {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -81,7 +79,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         prefrences.currentBox = getString(option)
         fragmentTransaction.add(R.id.frameLayout, level1Fragment).commit()
+    }
 
+    private fun callLevel1Fragment(option: Int) {
+        (activity as HomeActivity).callLevel1Fragment(option)
     }
 
     companion object {

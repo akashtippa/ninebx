@@ -149,4 +149,14 @@ class SubCategoryAdapter(var subCategories: ArrayList<SubCategory>, val actionCl
         }
 
     }
+
+    fun checkForDependentCategory( categoryName: String): Boolean {
+        val subCategoryIndex = subCategories.indexOf(SubCategory(categoryName))
+        if( subCategoryIndex != -1 ) {
+            val subCategory = subCategories[subCategoryIndex]
+            return subCategory.formsCount != 0
+        }
+        else return true
+
+    }
 }

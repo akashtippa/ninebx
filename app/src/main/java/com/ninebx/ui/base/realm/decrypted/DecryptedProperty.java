@@ -18,17 +18,6 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedProperty implements Parcelable {
-    public static final Creator<DecryptedProperty> CREATOR = new Creator<DecryptedProperty>() {
-        @Override
-        public DecryptedProperty createFromParcel(Parcel in) {
-            return new DecryptedProperty(in);
-        }
-
-        @Override
-        public DecryptedProperty[] newArray(int size) {
-            return new DecryptedProperty[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -87,35 +76,6 @@ public class DecryptedProperty implements Parcelable {
     public DecryptedProperty() {
     }
 
-    protected DecryptedProperty(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        propertyName = in.readString();
-        streetAddressOne = in.readString();
-        streetAddressTwo = in.readString();
-        city = in.readString();
-        state = in.readString();
-        zipCode = in.readString();
-        country = in.readString();
-        titleName = in.readString();
-        purchaseDate = in.readString();
-        purchasePrice = in.readString();
-        estimatedMarketValue = in.readString();
-        contacts = in.readString();
-        byte tmpCurrentlyRented = in.readByte();
-        currentlyRented = tmpCurrentlyRented == 0 ? null : tmpCurrentlyRented == 1;
-        tenantName = in.readString();
-        leaseStartDate = in.readString();
-        leaseEndDate = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
 
     public long getId() {
         return id;
@@ -333,39 +293,7 @@ public class DecryptedProperty implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(propertyName);
-        dest.writeString(streetAddressOne);
-        dest.writeString(streetAddressTwo);
-        dest.writeString(city);
-        dest.writeString(state);
-        dest.writeString(zipCode);
-        dest.writeString(country);
-        dest.writeString(titleName);
-        dest.writeString(purchaseDate);
-        dest.writeString(purchasePrice);
-        dest.writeString(estimatedMarketValue);
-        dest.writeString(contacts);
-        dest.writeByte((byte) (currentlyRented == null ? 0 : currentlyRented ? 1 : 2));
-        dest.writeString(tenantName);
-        dest.writeString(leaseStartDate);
-        dest.writeString(leaseEndDate);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     @Override
     public String toString() {
@@ -398,4 +326,83 @@ public class DecryptedProperty implements Parcelable {
                 ", attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.propertyName);
+        dest.writeString(this.streetAddressOne);
+        dest.writeString(this.streetAddressTwo);
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.zipCode);
+        dest.writeString(this.country);
+        dest.writeString(this.titleName);
+        dest.writeString(this.purchaseDate);
+        dest.writeString(this.purchasePrice);
+        dest.writeString(this.estimatedMarketValue);
+        dest.writeString(this.contacts);
+        dest.writeValue(this.currentlyRented);
+        dest.writeString(this.tenantName);
+        dest.writeString(this.leaseStartDate);
+        dest.writeString(this.leaseEndDate);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+    }
+
+    protected DecryptedProperty(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.propertyName = in.readString();
+        this.streetAddressOne = in.readString();
+        this.streetAddressTwo = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.titleName = in.readString();
+        this.purchaseDate = in.readString();
+        this.purchasePrice = in.readString();
+        this.estimatedMarketValue = in.readString();
+        this.contacts = in.readString();
+        this.currentlyRented = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.tenantName = in.readString();
+        this.leaseStartDate = in.readString();
+        this.leaseEndDate = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+    }
+
+    public static final Creator<DecryptedProperty> CREATOR = new Creator<DecryptedProperty>() {
+        @Override
+        public DecryptedProperty createFromParcel(Parcel source) {
+            return new DecryptedProperty(source);
+        }
+
+        @Override
+        public DecryptedProperty[] newArray(int size) {
+            return new DecryptedProperty[size];
+        }
+    };
 }

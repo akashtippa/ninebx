@@ -27,6 +27,7 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.account.AccountFragment
 import com.ninebx.ui.home.account.MyProfileFragment
 import com.ninebx.ui.home.account.addmembers.AddFamilyUsersFragment
+import com.ninebx.ui.home.baseCategories.Level1Fragment
 import com.ninebx.ui.home.calendar.CalendarFragment
 import com.ninebx.ui.home.calendar.events.AddEditEventFragment
 import com.ninebx.ui.home.calendar.events.AttachmentRecyclerViewAdapter
@@ -178,6 +179,22 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         hideProgressDialog()
     }
 
+    fun callLevel1Fragment(option: Int) {
+
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        val level1Fragment = Level1Fragment()
+        val bundle = Bundle()
+        bundle.putInt("category", option)
+        level1Fragment.arguments = bundle
+
+        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
+        prefrences.currentBox = getString(option)
+        fragmentTransaction.add(R.id.frameLayout, level1Fragment).commit()
+
+    }
+
     override fun addEditCalendarEvent(calendarEvent: CalendarEvents?, selectedDate: Date) {
         val addEventFragment = AddEditEventFragment()
         val bundle = Bundle()
@@ -250,6 +267,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
 
         callHomeFragment()
+
         toggleCheck(false)
         //SearchUtils.search()
         this.showProgressDialog(getString(R.string.loading))
@@ -328,7 +346,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     //a Uri object to store file path
@@ -393,12 +410,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             layoutQuickAdd.hide()
             cvAttachments.show()
         } else {
-
-            if ( fragmentTag == "Home" && mImagesList.size == 0 )
-                layoutQuickAdd.show()
-            else
-                layoutQuickAdd.hide()
-
+            layoutQuickAdd.show()
             cvAttachments.hide()
         }
     }
@@ -411,6 +423,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
         prefrences.currentBox = getString(R.string.home_amp_money)
         showBottomView()
+        layoutQuickAdd.show()
     }
 
     private fun toggleCheck(isCheckable: Boolean) {
@@ -435,6 +448,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     }
 
     override fun onResume() {
+
         super.onResume()
         Handler().postDelayed({
             showPasswordDialog()
@@ -458,7 +472,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                     Toast.makeText(this@HomeActivity, error, Toast.LENGTH_LONG).show()
                     NineBxApplication.getPreferences().isPasswordRequired = true
                 }
-
             })
         }
 
@@ -500,6 +513,11 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun onBackPressed() {
         var isToWorkOnBack = true
         showBottomView()
+
+        if( supportFragmentManager.backStackEntryCount == 1 ) {
+            layoutQuickAdd.show()
+        }
+
         if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack()) {
             val list = supportFragmentManager.fragments
             if (list != null) {
@@ -536,31 +554,12 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         layoutQuickAdd.hide()
     }
 
-
-    /*
-    We need 4 different methods, to Show and Hide
-    01. HomeIcon
-    02. BackIcon
-    03. BottomView
-    04. QuickAdd
-
-    Because, at some places only HomeIcon is there, and some places only BackIcon is there, and so on.
-     */
-
     fun hideBottomView() {
         bottomNavigationView.hide()
     }
 
     fun showBottomView() {
         bottomNavigationView.show()
-        hideShowAttachments()
-    }
-
-
-    fun showQuickAdd() {
-        imgCameraNineBx.setImageResource(R.drawable.ic_icon_add_photo_memories)
-        tvQuickAdd.show()
-        layoutQuickAdd.show()
     }
 
     fun showQuickAddDisableText() {

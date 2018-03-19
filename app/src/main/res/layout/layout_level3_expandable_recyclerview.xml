@@ -2,25 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/default_mini_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorGrey"
-    android:orientation="vertical"
-    android:padding="@dimen/default_mini_padding">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/lblListHeader"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/ic_arrow_five"
-        android:drawableRight="@drawable/ic_arrow_five"
-        android:text="@string/organized"
-        android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_16" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lblListHeader"
+            android:padding="@dimen/default_mini_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/organized"
+            android:layout_toLeftOf="@+id/expandLayout"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_16"
+            android:layout_toStartOf="@+id/expandLayout" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/default_micro_padding"
+            android:layout_centerVertical="true"
+            android:id="@+id/expandLayout"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_icon_arrow_down"
+                android:visibility="gone"
+                android:id="@+id/ivCollapse"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_arrow_five"
+                android:visibility="visible"
+                android:id="@+id/ivExpand"
+                />
+        </FrameLayout>
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:nestedScrollingEnabled="false"
         android:id="@+id/rvLevel3"/>
 

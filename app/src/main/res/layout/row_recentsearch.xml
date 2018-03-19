@@ -11,11 +11,15 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:padding="@dimen/default_mini_margin"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:layout_marginLeft="@dimen/margin_30"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color"
+        android:layout_marginLeft="@dimen/margin_12"/>
 
 </LinearLayout>

@@ -12,7 +12,6 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.*
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
@@ -20,7 +19,7 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
 import com.ninebx.utility.Constants
 import com.ninebx.utility.DateTimeSelectionListener
-import com.ninebx.utility.countryPicker.CountryPicker
+import com.ninebx.utility.countryPicker.CountryPickerDialog
 import com.ninebx.utility.getDateFromPicker
 import com.ninebx.utility.getDateMonthYearFormat
 import java.util.*
@@ -665,16 +664,9 @@ class ExpandableListViewAdapter(private val _context: Context,
     }
 
     private fun openStaticLayoutDialog( locationText: EditText) {
-        val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-        val countryPicker = CountryPicker()
-        countryPicker.setCountrySelectionListener( object : ICountrySelected {
-            override fun onCountrySelected(strCountry: String?) {
-                locationText.setText( strCountry )
-            }
-
+        CountryPickerDialog(locationText.context, ICountrySelected {
+            strCountry -> locationText.setText(strCountry)
         })
-        fragmentTransaction.replace(R.id.frameLayout, countryPicker).commit()
     }
 
     inner class CustomTextWatcher( val level2SubCategory: Level2SubCategory ) : TextWatcher {

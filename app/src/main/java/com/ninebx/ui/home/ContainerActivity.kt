@@ -1,17 +1,16 @@
 package com.ninebx.ui.home
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
+
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.R.string.contacts
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.ui.base.realm.Member
 import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
@@ -20,12 +19,13 @@ import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
 import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
+import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
-import io.realm.Realm
 import io.realm.SyncUser
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 /**
  * Created by Alok on 14/02/18.
@@ -64,13 +64,21 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         finish()
     }
 
+    fun onLevel3Action( arguments : Bundle ) {
+        val intent = Intent()
+        intent.putExtras(arguments)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
     override fun onMemberSignup(user: SyncUser) {
         if (addFamilyMemberOrUsersFragment != null)
             addFamilyMemberOrUsersFragment!!.onAccountCreated(user)
-
-
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
 
 
     override fun showProgress(message: Int) {
@@ -103,8 +111,6 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
                 onNewMember(intent.getParcelableExtra(Constants.MEMBER))
             }
         }
-
-
     }
 
 
@@ -117,8 +123,8 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         if (NineBxApplication.getPreferences().currentStep < ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
 
-        val intent = intent
         fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
+
 
         when (fromWhichClass) {
             "MemoryView" -> {
@@ -130,11 +136,18 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "Contacts" -> {
                 loadSingleContactView()
             }
+            "Level2Fragment" -> {
+                loadLevel3Fragment()
+            }
         }
     }
 
-    override fun onBackPressed() {
-        this.finish()
+    private fun loadLevel3Fragment() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val level3CategoryFragment = Level3CategoryFragment()
+        level3CategoryFragment.arguments = intent.extras
+        fragmentTransaction.replace(R.id.fragmentContainer, level3CategoryFragment).commit()
     }
 
     private fun loadMasterPasswordFragment() {
@@ -160,5 +173,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         fragmentTransaction.replace(R.id.fragmentContainer, contactsFragment).commit()
     }
 
-
+    override fun onBackPressed() {
+        finish()
+    }
 }

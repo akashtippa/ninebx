@@ -19,18 +19,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedFinancial implements Parcelable {
 
-    public static final Creator<DecryptedFinancial> CREATOR = new Creator<DecryptedFinancial>() {
-        @Override
-        public DecryptedFinancial createFromParcel(Parcel in) {
-            return new DecryptedFinancial(in);
-        }
-
-        @Override
-        public DecryptedFinancial[] newArray(int size) {
-            return new DecryptedFinancial[size];
-        }
-    };
-
     @Ignore public String searchField = "";
 
     @PrimaryKey //@Required
@@ -110,31 +98,6 @@ public class DecryptedFinancial implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedFinancial(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        institutionName = in.readString();
-        accountName = in.readString();
-        accountType = in.readString();
-        nameOnAccount = in.readString();
-        accountNumber = in.readString();
-        location = in.readString();
-        swiftCode = in.readString();
-        abaRoutingNumber = in.readString();
-        contacts = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
 
     public long getId() {
         return id;
@@ -357,35 +320,77 @@ public class DecryptedFinancial implements Parcelable {
                 '}';
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(institutionName);
-        dest.writeString(accountName);
-        dest.writeString(accountType);
-        dest.writeString(nameOnAccount);
-        dest.writeString(accountNumber);
-        dest.writeString(location);
-        dest.writeString(swiftCode);
-        dest.writeString(abaRoutingNumber);
-        dest.writeString(contacts);
-        dest.writeString(website);
-        dest.writeString(userName);
-        dest.writeString(password);
-        dest.writeString(pin);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-    }
 
     @Override
     public int describeContents() {
         return 0;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.institutionName);
+        dest.writeString(this.accountName);
+        dest.writeString(this.accountType);
+        dest.writeString(this.nameOnAccount);
+        dest.writeString(this.accountNumber);
+        dest.writeString(this.location);
+        dest.writeString(this.swiftCode);
+        dest.writeString(this.abaRoutingNumber);
+        dest.writeString(this.contacts);
+        dest.writeString(this.website);
+        dest.writeString(this.userName);
+        dest.writeString(this.password);
+        dest.writeString(this.pin);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+    }
+
+    protected DecryptedFinancial(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.institutionName = in.readString();
+        this.accountName = in.readString();
+        this.accountType = in.readString();
+        this.nameOnAccount = in.readString();
+        this.accountNumber = in.readString();
+        this.location = in.readString();
+        this.swiftCode = in.readString();
+        this.abaRoutingNumber = in.readString();
+        this.contacts = in.readString();
+        this.website = in.readString();
+        this.userName = in.readString();
+        this.password = in.readString();
+        this.pin = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+    }
+
+    public static final Creator<DecryptedFinancial> CREATOR = new Creator<DecryptedFinancial>() {
+        @Override
+        public DecryptedFinancial createFromParcel(Parcel source) {
+            return new DecryptedFinancial(source);
+        }
+
+        @Override
+        public DecryptedFinancial[] newArray(int size) {
+            return new DecryptedFinancial[size];
+        }
+    };
 }

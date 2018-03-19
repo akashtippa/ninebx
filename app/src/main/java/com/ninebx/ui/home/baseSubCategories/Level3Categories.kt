@@ -4,8 +4,8 @@ package com.ninebx.ui.home.baseSubCategories
  * Created by Alok on 14/03/18.
  */
 // In this way I'll create all the spinner values, and will use it in this constant, "LEVEL_NORMAL_SPINNER"
-var accountType = arrayOf("Account type", "Checking", "Savings", "Other")
-var cardType = arrayOf("Card type", "Credit", "Debit")
+var accountType = arrayOf("Checking", "Savings", "Other")
+var cardType = arrayOf("Credit", "Debit")
 
 
 // Constants for DropDown

@@ -131,7 +131,9 @@ object Constants {
 
     val BANK_ACCOUNT_TYPE = "bankAccountType"
     val CARD_TYPE = "cardType"
+    val OTHER_ACCOUNT_TYPE = "otherAccountType"
     val CONTACT_SPINNER = "contactSpinner"
+
 
     // Temporary Private Key
 
@@ -200,6 +202,8 @@ object Constants {
 
     val BASE_64_ENCODED_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmoHRpmQiNoByTvobDr7Z/tz51YS7sxotF+BqA++tbm2Qu54Aqvd7JfvnX8blIs5bgYTHXbC6K1KK4V/OJmgZ6pZElyJD0cuf6sevUpZaMq2emDhKlYsM+4R9pHjYAUCP0hy3vLgQjspQN/GaT48JcBd8I/Sl1E1xqCmJXFfPcLuAak0QmcnksiIEvribbaPQWEu8VjeTdNTJ/VJtOtjaX2EptUR+9uKutAtvEQL5Dcjgf8c0Sq3C0EASwdMw61MEmr0nrGRDqMbTJ6+fwWOo4HNSsIJ5wCXG6Y2ivhlIqyoeux7FlJA+OEcQ+73yAtk2s+ChRJSUwVJkVLjowzxzQIDAQAB"
 
+    val SEARCH_EDIT = 0
+    val SEARCH_NORMAL = 1
 
 
 }

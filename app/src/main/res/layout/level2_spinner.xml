@@ -46,6 +46,12 @@
             android:padding="@dimen/default_margin"
             android:visibility="visible" />
 
+        <!--<ListView
+            android:layout_below="@id/spinnerUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dropDownListView"/>-->
+
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

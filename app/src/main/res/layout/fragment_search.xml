@@ -30,6 +30,7 @@
                 android:text="@string/search"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16"
+                android:textStyle="bold"
                 android:visibility="visible" />
 
             <ImageView
@@ -54,32 +55,65 @@
         android:layout_below="@id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_200"
-        android:orientation="vertical"
-        android:padding="@dimen/default_mini_padding">
+        android:background="@color/grey_300"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_micro_padding">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cvSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
+            app:cardCornerRadius="8dp"
             app:cardElevation="@dimen/cardview_default_elevation"
-            android:padding="2dp">
+            android:padding="2dp"
+            android:layout_weight="5"
+            android:layout_margin="@dimen/default_mini_padding">
 
-            <EditText
-                android:id="@+id/edtSearch"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:hint="@string/search"
-                android:layout_margin="2dp"
-                android:padding="@dimen/default_mini_margin"
-                android:singleLine="true"
-                android:textSize="@dimen/text_16" />
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/search"
+                    android:layout_margin="2dp"
+                    android:padding="@dimen/default_mini_margin"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_16"
+                    android:layout_weight="5.6"
+                    />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/clearSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="15sp"
+                    android:src="@drawable/ic_close"
+                    android:layout_gravity="center"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/grey_700"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/bg_close"
+                    android:layout_margin="@dimen/margin_15"
+                    android:visibility="gone"/>
+            </LinearLayout>
         </android.support.v7.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/clear"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:id="@+id/tvClear"
+            android:layout_marginRight="@dimen/default_micro_padding"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -109,7 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/searchLayout"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <LinearLayout
             android:id="@+id/itemsLayout"
@@ -117,14 +151,36 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/searchLayout"
             android:orientation="vertical">
-            <android.support.v7.widget.RecyclerView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rvRecentSearch"
-                android:nestedScrollingEnabled="false"
-                android:background="@color/white"
-                android:visibility="visible"
-                />
+                android:orientation="vertical"
+                android:id="@+id/recentSearchLayout"
+                android:background="@color/grey_100">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/default_mini_padding"
+                    android:text="@string/recent_search"
+                    android:id="@+id/tvRecentSearch"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@color/divider_color" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvRecentSearch"
+                    android:nestedScrollingEnabled="false"
+                    android:background="@color/white"
+                    android:visibility="visible"
+                    />
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/homeLayout"
                 android:layout_width="match_parent"
@@ -139,18 +195,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_home"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_home_money_up" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/home_n_money" />
+                        android:text="@string/home_n_money"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -180,18 +237,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_travell"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_travel" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/travel" />
+                        android:text="@string/travel"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -221,18 +279,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_contacts"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_contacts" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/contacts" />
+                        android:text="@string/contacts"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -262,18 +321,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_education"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_education_work" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/education_work" />
+                        android:text="@string/education_work"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -303,18 +363,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_personal"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_personal" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/personal" />
+                        android:text="@string/personal"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -344,17 +405,18 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
-                        android:background="@drawable/bg_home"
-                        android:padding="@dimen/default_mini_padding"
-                        app:srcCompat="@drawable/ic_home_icon_home_money_up" />
+                        android:background="@drawable/bg_interests"
+                        android:padding="@dimen/default_micro_padding"
+                        app:srcCompat="@drawable/ic_home_icon_interests" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
+                        android:textColor="@color/colorPrimary"
                         android:text="@string/interests" />
 
                     <View
@@ -385,18 +447,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
-                        android:background="@drawable/bg_interests"
-                        android:padding="@dimen/default_mini_padding"
-                        app:srcCompat="@drawable/ic_home_icon_interests" />
+                        android:background="@drawable/bg_wellness"
+                        android:padding="@dimen/default_micro_padding"
+                        app:srcCompat="@drawable/ic_home_icon_wellness" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/wellness" />
+                        android:text="@string/wellness"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -426,18 +489,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_memories"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_memories" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/memories" />
+                        android:text="@string/memories"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -467,18 +531,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/margin_48"
-                        android:layout_height="@dimen/margin_48"
+                        android:layout_width="@dimen/margin_30"
+                        android:layout_height="@dimen/margin_30"
                         android:layout_margin="@dimen/default_micro_padding"
                         android:background="@drawable/bg_shopping"
-                        android:padding="@dimen/default_mini_padding"
+                        android:padding="@dimen/default_micro_padding"
                         app:srcCompat="@drawable/ic_home_icon_shopping" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_mini_padding"
-                        android:text="@string/shopping" />
+                        android:text="@string/shopping"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"

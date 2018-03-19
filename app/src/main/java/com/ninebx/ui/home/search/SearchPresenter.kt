@@ -9,24 +9,18 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
-import com.ninebx.ui.base.realm.home.memories.CombineMemories
 import com.ninebx.ui.base.realm.home.memories.MainMemories
 import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
-import com.ninebx.ui.base.realm.lists.ContactsList
 import com.ninebx.ui.base.realm.lists.MemoriesList
 import com.ninebx.ui.home.baseCategories.CategoryView
 import com.ninebx.utility.*
 import io.realm.Realm
-import io.realm.RealmList
-import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
 import kotlin.collections.ArrayList
@@ -371,6 +365,9 @@ class SearchPresenter {
                                 appendToDecrypt(decryptedCombine)
                             }
                         }
+                        if( categoryView != null ) {
+                            categoryView!!.onCombineResultsFetched(combineResult)
+                        }
                     }
                 })
             }
@@ -383,7 +380,7 @@ class SearchPresenter {
     }
 
 
-    private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
+    fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
         mDecryptCombine.id = decryptedCombine.id
         mDecryptCombine.listItems.addAll(decryptedCombine.listItems)
         mDecryptCombine.propertyItems.addAll(decryptedCombine.propertyItems)

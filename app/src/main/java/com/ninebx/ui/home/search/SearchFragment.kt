@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.search
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.FragmentTransaction
@@ -14,6 +15,7 @@ import com.ninebx.ui.home.BaseHomeFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.hide
@@ -22,7 +24,11 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.baseCategories.Level1Fragment
+import com.ninebx.utility.Constants.SEARCH_NORMAL
 import kotlin.collections.ArrayList
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+
 
 /**
  * Created by Alok on 03/01/18.
@@ -51,7 +57,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
         this.mRecentSearch = recentSearch
         setRecentSearchAdapter()
-        hideProgress()
     }
 
     override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
@@ -133,13 +138,19 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         setRecentSearchAdapter()
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         hideAllLayouts()
+        edtSearch.setText("")
         showProgress(R.string.loading)
 
         mSearchPresenter = SearchPresenter(this)
 
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                rvRecentSearch.visibility = View.GONE
+                recentSearchLayout.visibility = View.GONE
+                if(edtSearch.text.equals(null)){
+                    clearSearch.visibility = View.GONE
+                }
+                clearSearch.visibility = View.VISIBLE
+                tvClear.visibility = View.VISIBLE
 
                 var text = edtSearch.getText().toString()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
@@ -162,19 +173,43 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
+
+        clearSearch.setOnClickListener(View.OnClickListener {
+            edtSearch.setText("")
+            hideAllLayouts()
+            setRecentSearchAdapter()
+            clearSearch.visibility = View.GONE
+        })
+
+        tvClear.setOnClickListener(View.OnClickListener {
+            edtSearch.setText("")
+            hideAllLayouts()
+            setRecentSearchAdapter()
+            clearSearch.visibility = View.GONE
+            tvClear.visibility = View.GONE
+            edtSearch.setFocusableInTouchMode(false)
+            edtSearch.setFocusable(false)
+            edtSearch.setFocusableInTouchMode(true)
+            edtSearch.setFocusable(true)
+            edtSearch.onEditorAction(EditorInfo.IME_ACTION_DONE)
+
+            val inputMethodManager : InputMethodManager = getActivity()!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0)
+        })
     }
 
     private fun setRecentSearchAdapter() {
         if( rvRecentSearch == null ) return
 
-        rvRecentSearch.visibility = View.VISIBLE
+        recentSearchLayout.visibility = View.VISIBLE
         var linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.setReverseLayout(true)
-        linearLayoutManager.setStackFromEnd(true)
         rvRecentSearch.layoutManager = linearLayoutManager
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
         rvRecentSearch.adapter.notifyDataSetChanged()
+        linearLayoutManager.setReverseLayout(true)
+        linearLayoutManager.setStackFromEnd(true)
+        hideProgress()
     }
 
     private fun hideAllLayouts() {
@@ -295,15 +330,15 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     private fun setupAdapter(searchRecyclerView: RecyclerView?, layout: LinearLayout, searchList: ArrayList<Level3SearchItem>) {
 
         searchRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        searchRecyclerView.adapter = SearchAdapter( searchList, object : SearchItemClickListener {
+        searchRecyclerView.adapter = SearchAdapter( searchList, SEARCH_NORMAL, object : SearchItemClickListener {
             @SuppressLint("CommitTransaction")
-            override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem) {
+            override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String ) {
 
                 fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 fragmentTransaction!!.addToBackStack(null)
 
                 bundle = Bundle()
-                bundle!!.putInt("category", R.string.home_amp_money)
+                bundle!!.putInt("category", searchItem.searchCategory)
                 level1Fragment = Level1Fragment()
                 level1Fragment!!.arguments = bundle
 
@@ -316,9 +351,9 @@ class SearchFragment : BaseHomeFragment(), SearchView {
                     R.string.home_amp_money -> {
                         switchHomeItems( position, searchItem )
                     }
-                    /*(R.string.travel) -> {
+                    (R.string.travel) -> {
                         switchTravelItems( position, searchItem )
-                    }*/
+                    }
                     (R.string.contacts) -> {
                         switchContactsItems( position, searchItem )
                     }
@@ -349,30 +384,30 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
     private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
-            "loyalty" -> {
+            "loyaltyPrograms" -> {
                 val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Shopping" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptedCombineShopping!!.listItems[position].listName, selectedDocument.selectionType,  selectedDocument.brandName,selectedDocument::class.java.simpleName)
             }
             "recentPurchase" -> {
                 val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Shopping" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptedCombineShopping!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.itemName ,selectedDocument::class.java.simpleName)
             }
             "shopping" -> {
                 val selectedDocument = searchDecryptedCombineShopping.shoppingItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Shopping" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptedCombineShopping!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.userName ,selectedDocument::class.java.simpleName)
             }
             "clothingSize" -> {
                 val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Shopping" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptedCombineShopping!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.personName ,selectedDocument::class.java.simpleName)
             }
             "shoppingList" -> {
                 val selectedDocument = searchDecryptedCombineShopping.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "Shopping" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptedCombineShopping!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.listName ,selectedDocument::class.java.simpleName)
             }
         }
     }
@@ -382,17 +417,17 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "mainMemory" -> {
                 val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Memories" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptCombineMemories!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.institutionName ,selectedDocument::class.java.simpleName)
             }
             "memoryTimeline" -> {
                 val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Memories" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptCombineMemories!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.title ,selectedDocument::class.java.simpleName)
             }
             "memorylist" -> {
                 val selectedDocument = searchDecryptCombineMemories.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "Memories" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(searchDecryptCombineMemories!!.listItems[position].listName, selectedDocument.selectionType, selectedDocument.listName ,selectedDocument::class.java.simpleName)
             }
         }
     }
@@ -402,73 +437,74 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "checkups" -> {
                 val selectedDocument = searchDecryptedCombineWellness.checkupsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.checkup_description, selectedDocument.selectionType, selectedDocument.checkup_description ,selectedDocument::class.java.simpleName)
             }
             "emergencyContacts" ->{
                 val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.name, selectedDocument.selectionType, selectedDocument.name ,selectedDocument::class.java.simpleName)
             }
             "eyeglassPrescription" -> {
                 val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.physicianName, selectedDocument.selectionType, selectedDocument.physicianName ,selectedDocument::class.java.simpleName)
             }
             "healthcareProvider" -> {
                 val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.name, selectedDocument.selectionType, selectedDocument.name ,selectedDocument::class.java.simpleName)
             }
             "identification" -> {
                 val selectedDocument = searchDecryptedCombineWellness.identificationItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.name, selectedDocument.selectionType, selectedDocument.name ,selectedDocument::class.java.simpleName)
             }
             "medicalCondition" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.condition, selectedDocument.selectionType, selectedDocument.condition ,selectedDocument::class.java.simpleName)
             }
             "medicalHistory" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.history, selectedDocument.selectionType, selectedDocument.history ,selectedDocument::class.java.simpleName)
             }
             "medications" -> {
                 val selectedDocument = searchDecryptedCombineWellness.medicationsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.name, selectedDocument.selectionType, selectedDocument.name ,selectedDocument::class.java.simpleName)
             }
             "vitalNumbers" -> {
                 val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.vital_description, selectedDocument.selectionType, selectedDocument.vital_description ,selectedDocument::class.java.simpleName)
             }
             "wellness" -> {
                 val selectedDocument = searchDecryptedCombineWellness.wellnessItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.userName, selectedDocument.selectionType, selectedDocument.userName ,selectedDocument::class.java.simpleName)
             }
             "wellnessList" -> {
                 val selectedDocument = searchDecryptedCombineWellness.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "Wellness" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.listName, selectedDocument.selectionType, selectedDocument.listName ,selectedDocument::class.java.simpleName)
             }
         }
     }
 
     private fun switchInterestsItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
+            //check for parameters that needs to be passed for mainCategory
             "interests" -> {
                 val selectedDocument = searchDecryptedCombineInterests.interestItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Interests" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.institutionName, selectedDocument.selectionType, selectedDocument.institutionName ,selectedDocument::class.java.simpleName)
             }
             "interestsList" ->
             {
                 val selectedDocument = searchDecryptedCombineInterests.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "Interests" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.listName, selectedDocument.selectionType, selectedDocument.listName ,selectedDocument::class.java.simpleName)
             }
         }
     }
@@ -478,43 +514,44 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "certificate" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.cer_description, selectedDocument.selectionType, selectedDocument.nameOnCertificate ,selectedDocument::class.java.simpleName)
             }
             "govenment" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.idName, selectedDocument.selectionType, selectedDocument.idName ,selectedDocument::class.java.simpleName)
             }
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.nameOnLicense ,selectedDocument::class.java.simpleName)
             }
             "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.nameOnAccount, selectedDocument.selectionType, selectedDocument.nameOnAccount ,selectedDocument::class.java.simpleName)
             }
             "social" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.socialItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.cardName, selectedDocument.selectionType, selectedDocument.cardName ,selectedDocument::class.java.simpleName)
             }
             "taxID" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.taxIDItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.taxIdName, selectedDocument.selectionType, selectedDocument.taxIdName ,selectedDocument::class.java.simpleName)
             }
             "personalList" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "Personal" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.listName, selectedDocument.selectionType, selectedDocument.listName ,selectedDocument::class.java.simpleName)
             }
         }
     }
 
     private fun switchEducationItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
+            //check what parameters need to be passed for mainCategory
             "education" -> {
                 val selectedDocument = searchDecryptCombineEducation.educationItems[position]
                 goToCategoryFragment( selectedDocument )
@@ -543,17 +580,17 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "contacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.contactsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.firstName, selectedDocument.selectionType, "Contacts" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.firstName, selectedDocument.selectionType, selectedDocument.firstName ,selectedDocument::class.java.simpleName)
             }
             "mainContacts" -> {
                 val selectedDocument = searchDecryptedCombineContacts.mainContactsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Contacts" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.userName, selectedDocument.selectionType, selectedDocument.userName ,selectedDocument::class.java.simpleName)
             }
             "contactList" -> {
                 val selectedDocument = searchDecryptedCombineContacts.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "Contacts" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, selectedDocument.listName ,selectedDocument::class.java.simpleName)
             }
         }
     }
@@ -563,27 +600,53 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "documents" -> {
                 val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Travel" ,selectedDocument::class.java.simpleName)
+                if (selectedDocument.selectionType.equals("travel_2001")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.passportName, selectedDocument.selectionType, selectedDocument.passportName ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument.selectionType.equals("travel_2002")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.visaName, selectedDocument.selectionType, selectedDocument.visaName ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument.selectionType.equals("travel_2003")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.travelDocumentTitle, selectedDocument.selectionType, selectedDocument.travelDocumentTitle ,selectedDocument::class.java.simpleName)
+                }
+
             }
             "loyalty" -> {
                 val selectedDocument = searchDecryptCombineTravel.loyaltyItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "Travel" ,selectedDocument::class.java.simpleName)
+                if (selectedDocument!!.selectionType.equals("travel_1001")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.airLine, selectedDocument.selectionType, selectedDocument.airLine ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument!!.selectionType.equals("travel_1002")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.hotel, selectedDocument.selectionType, selectedDocument.hotel ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument!!.selectionType.equals("travel_1003")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.carRentalCompany, selectedDocument.selectionType, selectedDocument.carRentalCompany ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument!!.selectionType.equals("travel_1004")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.cruiseline, selectedDocument.selectionType, selectedDocument.cruiseline ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument!!.selectionType.equals("travel_1005")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.railway, selectedDocument.selectionType, selectedDocument.railway ,selectedDocument::class.java.simpleName)
+                }
+                if (selectedDocument!!.selectionType.equals("travel_1006")){
+                    mSearchPresenter.updateRecentSearch(selectedDocument.other, selectedDocument.selectionType, selectedDocument.other ,selectedDocument::class.java.simpleName)
+                }
             }
             "travel" -> {
                 val selectedItems = searchDecryptCombineTravel.travelItems[position]
                 goToCategoryFragment( selectedItems )
-                mSearchPresenter.updateRecentSearch(selectedItems!!.attachmentNames, selectedItems.selectionType, "Travel" ,selectedItems::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedItems.nameOnAccount, selectedItems.selectionType, selectedItems.nameOnAccount ,selectedItems::class.java.simpleName)
             }
             "vacation" -> {
                 val selectedItems = searchDecryptCombineTravel.vacationsItems[position]
                 goToCategoryFragment( selectedItems )
-                mSearchPresenter.updateRecentSearch(selectedItems!!.attachmentNames, selectedItems.selectionType, "Travel" ,selectedItems::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedItems.vac_description, selectedItems.selectionType, selectedItems.vac_description ,selectedItems::class.java.simpleName)
             }
             "travelList" -> {
                 val selectedItems = searchDecryptCombineTravel.listItems[position]
                 goToCategoryFragment( selectedItems )
-                mSearchPresenter.updateRecentSearch(selectedItems!!.listName, selectedItems.selectionType, "Travel" ,selectedItems::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedItems.listName, selectedItems.selectionType, selectedItems.listName ,selectedItems::class.java.simpleName)
             }
         }
     }
@@ -596,42 +659,42 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
                 val selectedDocument = searchDecryptCombine.financialItems[position]
                 goToCategoryFragment(selectedDocument)
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.accountName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.institutionName, selectedDocument.selectionType, selectedDocument.institutionName ,selectedDocument::class.java.simpleName)
             }
             "payment" -> {
                 val selectedDocument = searchDecryptCombine.paymentItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.cardName, selectedDocument.selectionType, selectedDocument.cardName ,selectedDocument::class.java.simpleName)
             }
             "asset" -> {
                 val selectedDocument = searchDecryptCombine.assetItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.assetName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.assetName, selectedDocument.selectionType, selectedDocument.assetName ,selectedDocument::class.java.simpleName)
             }
             "insurance" -> {
                 val selectedDocument = searchDecryptCombine.insuranceItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.userName, selectedDocument.selectionType, selectedDocument.insuranceCompany ,selectedDocument::class.java.simpleName)
             }
             "tax" -> {
                 val selectedDocument = searchDecryptCombine.taxesItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.returnName, selectedDocument.selectionType, selectedDocument.returnName ,selectedDocument::class.java.simpleName)
             }
             "vehicle" -> {
                 val selectedDocument = searchDecryptCombine.vehicleItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.vehicleName, selectedDocument.selectionType, selectedDocument.vehicleName ,selectedDocument::class.java.simpleName)
             }
             "property" -> {
                 val selectedDocument = searchDecryptCombine.propertyItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.attachmentNames, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.propertyName, selectedDocument.selectionType, selectedDocument.propertyName ,selectedDocument::class.java.simpleName)
             }
             "home" -> {
                 val selectedDocument = searchDecryptCombine.listItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument!!.listName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.listName, selectedDocument.selectionType, "HomeBank" ,selectedDocument::class.java.simpleName)
             }
         }
     }
