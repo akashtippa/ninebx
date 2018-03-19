@@ -41,7 +41,6 @@ import kotlinx.android.synthetic.main.fragment_list_container.*
 import java.io.Serializable
 import java.util.concurrent.atomic.AtomicBoolean
 
-
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
@@ -62,8 +61,6 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         .putExtra(Constants.COMBINE_ITEMS, combinedItems)
                         .putExtra("classType", classType)
                 , LEVEL_3)
-
-
     }
 
 

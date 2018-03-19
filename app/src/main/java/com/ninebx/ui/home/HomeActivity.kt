@@ -268,7 +268,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
 
         callHomeFragment()
-       /* callPersonalFragment()*/
+
         toggleCheck(false)
         //SearchUtils.search()
         this.showProgressDialog(getString(R.string.loading))
@@ -426,16 +426,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         showBottomView()
         layoutQuickAdd.show()
     }
-
- /*   fun callPersonalFragment(){
-        fragmentTag = "Personal"
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.disallowAddToBackStack()
-        fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
-        prefrences.currentBox = getString(R.string.personal)
-        showBottomView()
-        layoutQuickAdd.show()
-    }*/
 
     private fun toggleCheck(isCheckable: Boolean) {
         bottomNavigationView.menu.getItem(0).isCheckable = isCheckable

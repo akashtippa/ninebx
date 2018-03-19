@@ -370,7 +370,7 @@ class PersonalHelper(var category_name : String,
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
-
+        mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
