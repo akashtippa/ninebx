@@ -57,6 +57,7 @@ class OTPFragment : BaseAuthFragment(),OTPView {
 //        setupToolbar()
 //        toolbar.title = ""
 //        setHasOptionsMenu(true)
+
         tvEmail.text = arguments!!.getString("email", "")
         btnSubmit.setOnClickListener {
 
@@ -93,7 +94,6 @@ class OTPFragment : BaseAuthFragment(),OTPView {
                         if( result != -1 ) mAuthView.onError(result)
                     }
 
-
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
 
@@ -122,18 +122,19 @@ class OTPFragment : BaseAuthFragment(),OTPView {
             })
             builder.setMessage("New authentication code sent to"+mAuthView.getAccountEmail()+"Please check your inbox")
             builder.show()
+            etOtp1.requestFocus()
             etOtp1.setText("")
             etOtp2.setText("")
             etOtp3.setText("")
             etOtp4.setText("")
             etOtp5.setText("")
             etOtp6.setText("")
-            tvResend.isEnabled = false
+            tvResend.isEnabled = true
             handler.postDelayed(runnable, 60000)
             mAuthView.getAuthPresenter().requestOTP(mAuthView.getAccountEmail())
 
         }
-        tvResend.isEnabled = false
+        tvResend.isEnabled = true
         setupOtp()
     }
 

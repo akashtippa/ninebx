@@ -12,6 +12,8 @@ import com.ninebx.R.id.etOtp1
 import com.ninebx.R.id.tvResend
 import com.ninebx.ui.auth.AuthView
 import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.kotlin.progressDialog
+import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.utility.*
 import io.realm.Realm
@@ -25,11 +27,17 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
         var handler: Handler = Handler()
         var emailOtp = ""
 
+    var isSuccess : Boolean = false
+
 
 
     fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText?){
 
+
+        context!!.showProgressDialog("Loading")
+
         if( validate( etOtp1,etOtp2 , etOtp3 ,etOtp4 ,etOtp5 ,etOtp6 ) ) {
+
             emailOtp = ""
             handler.removeCallbacks(runnable)
             object : AsyncTask<Void, Void, Int>() {
@@ -41,12 +49,14 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
                                 val email = currentUsers[0]!!.emailAddress.decryptString()
                                 if( email.isNotEmpty() )
                                     NineBxApplication.getPreferences().userEmail = email
-                                AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
+                                  AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
                             }
                             else {
                                 onPostExecute(R.string.unable_to_find_user)
                             }
                         }
+
+
 
                     })
                     return -1
@@ -55,6 +65,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
                 override fun onPostExecute(result: Int) {
                     super.onPostExecute(result)
                     context!!.hideProgressDialog()
+                    isSuccess = true
                     mAuthView.navigateToCreatePassCode(Constants.PASSCODE_CREATE, "")
 
                     if( result != -1 ) mAuthView.onError(result)
@@ -63,9 +74,8 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+        }else{
 
-        }
-        else{
             val builder = AlertDialog.Builder(context)
             builder.setTitle("NineBx")
             builder.setIcon(R.mipmap.ic_launcher)
@@ -77,13 +87,28 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
             builder.setMessage("Incorrect OTP")
             builder.show()
         }
+
+        context!!.hideProgressDialog()
     }
+
+
 
 
     private var runnable: Runnable = Runnable {
         if (tvResend != null) {
-            if(mOTPView.otpVerificationGet())
-                context!!.showToast(R.string.otp_expired)
+            if(mOTPView.otpVerificationGet()){
+
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("NineBx")
+                builder.setIcon(R.mipmap.ic_launcher)
+                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0?.cancel()
+                    }
+                })
+                builder.setMessage("Incorrect OTP")
+                builder.show()
+            }
             emailOtp = ""
         }
 

@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_icon_arrow_down"
                 android:visibility="gone"
-                android:id="@+id/ivExpand"
+                android:id="@+id/ivCollapse"
                 />
 
             <ImageView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_arrow_five"
                 android:visibility="visible"
-                android:id="@+id/ivCollapse"
+                android:id="@+id/ivExpand"
                 />
         </FrameLayout>
 

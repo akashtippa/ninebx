@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.search
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.FragmentTransaction
@@ -14,6 +15,7 @@ import com.ninebx.ui.home.BaseHomeFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.hide
@@ -24,6 +26,9 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.baseCategories.Level1Fragment
 import com.ninebx.utility.Constants.SEARCH_NORMAL
 import kotlin.collections.ArrayList
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+
 
 /**
  * Created by Alok on 03/01/18.
@@ -52,7 +57,6 @@ class SearchFragment : BaseHomeFragment(), SearchView {
     override fun onRecentSearchFetched(recentSearch: ArrayList<DecryptedRecentSearch>) {
         this.mRecentSearch = recentSearch
         setRecentSearchAdapter()
-        hideProgress()
     }
 
     override fun onCombineTravelFetched(combineTravel: DecryptedCombineTravel) {
@@ -142,7 +146,11 @@ class SearchFragment : BaseHomeFragment(), SearchView {
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 recentSearchLayout.visibility = View.GONE
+                if(edtSearch.text.equals(null)){
+                    clearSearch.visibility = View.GONE
+                }
                 clearSearch.visibility = View.VISIBLE
+                tvClear.visibility = View.VISIBLE
 
                 var text = edtSearch.getText().toString()
                 searchDecryptCombine = mSearchPresenter.searchHomeItems(text)
@@ -166,7 +174,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             }
         })
 
-        clearSearch.setOnClickListener (View.OnClickListener {
+        clearSearch.setOnClickListener(View.OnClickListener {
             edtSearch.setText("")
             hideAllLayouts()
             setRecentSearchAdapter()
@@ -175,10 +183,18 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         tvClear.setOnClickListener(View.OnClickListener {
             edtSearch.setText("")
-            edtSearch.clearFocus()
             hideAllLayouts()
             setRecentSearchAdapter()
             clearSearch.visibility = View.GONE
+            tvClear.visibility = View.GONE
+            edtSearch.setFocusableInTouchMode(false)
+            edtSearch.setFocusable(false)
+            edtSearch.setFocusableInTouchMode(true)
+            edtSearch.setFocusable(true)
+            edtSearch.onEditorAction(EditorInfo.IME_ACTION_DONE)
+
+            val inputMethodManager : InputMethodManager = getActivity()!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0)
         })
     }
 
@@ -187,12 +203,13 @@ class SearchFragment : BaseHomeFragment(), SearchView {
 
         recentSearchLayout.visibility = View.VISIBLE
         var linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.setReverseLayout(true)
-        linearLayoutManager.setStackFromEnd(true)
         rvRecentSearch.layoutManager = linearLayoutManager
         val recentSearchAdapter  = RecentSearchAdapter(mRecentSearch)
         rvRecentSearch.adapter = recentSearchAdapter
         rvRecentSearch.adapter.notifyDataSetChanged()
+        linearLayoutManager.setReverseLayout(true)
+        linearLayoutManager.setStackFromEnd(true)
+        hideProgress()
     }
 
     private fun hideAllLayouts() {
@@ -497,7 +514,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "certificate" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument.cer_description, selectedDocument.selectionType, selectedDocument.cer_description ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.cer_description, selectedDocument.selectionType, selectedDocument.nameOnCertificate ,selectedDocument::class.java.simpleName)
             }
             "govenment" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
@@ -507,7 +524,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.lic_description ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.nameOnLicense ,selectedDocument::class.java.simpleName)
             }
             "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
