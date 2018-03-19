@@ -337,7 +337,15 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 else {
                     getTimeFromPicker( context!!, selectedDate, object  : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
+                            if(endDateCalendar != null) {
+                                if(selectedDate.get(Calendar.DAY_OF_MONTH) > endDateCalendar!!.get(Calendar.DAY_OF_MONTH)) {
+                                    AppLogger.d("WRONGTIME ", " is set")
+                                    endDateCalendar = null
+                                    tvEnds.text = ""
+                                }
+                            }
                             selectedDate.set(Calendar.SECOND, 0)
+                            selectedDate.set(Calendar.MILLISECOND, 0)
                             setDateTime(dateTimeTextView, selectedDate, isAllDay)
                         }
 

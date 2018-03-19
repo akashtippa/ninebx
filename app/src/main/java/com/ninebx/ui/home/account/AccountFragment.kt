@@ -230,7 +230,7 @@ class AccountFragment : BaseHomeFragment(), AccountView, View.OnClickListener, A
                 (getString(R.string.null_character))
             }
 
-            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName) + email
+            var finalEmailBody =  (StringOne) + (StringTwo) + (StringThree) +(StringFour)+ ("\n") + ("\n") + ("\n")+ (fullName)+ ("\n") + email
             AppLogger.d("emailBody",finalEmailBody.toString())
             AppLogger.d("SendingEmailbody","" + finalEmailBody)
             if(validate) {

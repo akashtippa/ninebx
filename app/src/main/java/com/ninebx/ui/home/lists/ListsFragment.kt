@@ -113,7 +113,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         ListsPresenter(this, 0, -1).fetchDataInBackground()
 
-        fragmentValue = arguments!!.getString("homeScreen")
+        fragmentValue = arguments!!.getString("listOption")
         categoryName = arguments!!.getInt("categoryName")
 
         when (fragmentValue) {

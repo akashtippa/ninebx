@@ -441,6 +441,10 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 bundle.putString("listOption", "Shopping")
                 bundle.putInt("categoryName", (R.string.shopping))
             }
+            R.string.contacts -> {
+                bundle.putString("listOption", "Contacts")
+                bundle.putInt("categoryName", (R.string.contacts))
+            }
         }
 
         listsFragment.arguments = bundle

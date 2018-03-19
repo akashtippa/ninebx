@@ -3,7 +3,6 @@ package com.ninebx.ui.home.baseCategories
 import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 
 /**
@@ -586,7 +585,7 @@ class CategoryHelper(
         category.title = "Memory Timeline"
         category.drawableString = "ic_home_sub_memories"
         category.category_id = "memory_1001"
-        category.formsCount = decryptedCombine.getMemory("Memories")
+        category.formsCount =  decryptedCombine.getMemory("Memories")
 
         categoryList.add(category)
 

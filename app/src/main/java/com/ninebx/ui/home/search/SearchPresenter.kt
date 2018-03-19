@@ -9,16 +9,23 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.memories.CombineMemories
+import com.ninebx.ui.base.realm.home.memories.MainMemories
+import com.ninebx.ui.base.realm.home.memories.MemoryTimeline
 import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.base.realm.lists.ContactsList
+import com.ninebx.ui.base.realm.lists.MemoriesList
 import com.ninebx.ui.home.baseCategories.CategoryView
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
@@ -154,7 +161,15 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineContacts = realm!!.where(CombineContacts::class.java)/*.distinctValues("id")*/.findAll()
+                        /*val contactItems = realm!!.where(Contacts::class.java).findAll() //shared contacts
+                        val mainContactsItems = realm.where(MainContacts::class.java).findAll()
+                        val listItems = realm.where(ContactsList::class.java).findAll()
+
+                        val decryptedCombineContacts = decryptCombineContacts(0L,
+                                mainContactsItems , contactItems , listItems )
+                        appendToDecryptCombineContacts(decryptedCombineContacts)*/
+
+                        val combineContacts = realm!!.where(CombineContacts::class.java).distinctValues("id").findAll()
                         if (combineContacts.size > 0) {
                             for (i in 0 until combineContacts.size) {
                                 val decryptedCombineContacts = decryptCombineContacts(combineContacts[i]!!)
@@ -301,13 +316,14 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_MEMORIES, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
-                        val combineMemories = realm!!.where(CombineMemories::class.java)/*.distinctValues("id")*/.findAll()
-                        if (combineMemories.size > 0) {
-                            for (i in 0 until combineMemories.size) {
-                                val decryptedCombineMemories = decryptCombineMemories(combineMemories[i]!!)
-                                appendToDecryptCOmbineMemories(decryptedCombineMemories)
-                            }
-                        }
+                        val memoryTimelines = realm!!.where(MemoryTimeline::class.java).findAll()
+                        val mainMemories = realm.where(MainMemories::class.java).findAll()
+                        val memoryLists = realm.where(MemoriesList::class.java).findAll()
+
+                        val decryptedCombineMemories = decryptCombineMemories(0L,
+                                mainMemories, memoryTimelines , memoryLists )
+                        appendToDecryptCOmbineMemories(decryptedCombineMemories)
+
                     }
                 })
             }

@@ -133,6 +133,10 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         }
     }
 
+    override fun onBackPressed() {
+        this.finish()
+    }
+
     private fun loadMasterPasswordFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
