@@ -131,7 +131,9 @@ object Constants {
 
     val BANK_ACCOUNT_TYPE = "bankAccountType"
     val CARD_TYPE = "cardType"
+    val OTHER_ACCOUNT_TYPE = "otherAccountType"
     val CONTACT_SPINNER = "contactSpinner"
+
 
     // Temporary Private Key
 

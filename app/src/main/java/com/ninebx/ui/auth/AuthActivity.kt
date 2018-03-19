@@ -19,6 +19,7 @@ import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Constants.PASSCODE_CREATE
 import io.realm.SyncUser
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
 /**
@@ -50,6 +51,10 @@ class AuthActivity : AppCompatActivity(), AuthView {
 
     override fun onError(error: String) {
         this@AuthActivity.showToast(error)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     private lateinit var mCurrentTag: String

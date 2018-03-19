@@ -1,5 +1,6 @@
 package com.ninebx.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,7 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : AppCompatActivity() {
@@ -63,5 +65,9 @@ class SplashActivity : AppCompatActivity() {
                     }
                 }
         disposables.add(disposable)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 }

@@ -19,6 +19,8 @@ import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.home.baseCategories.CategoryView
 import com.ninebx.utility.*
 import io.realm.Realm
+import io.realm.RealmChangeListener
+import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import java.util.*
@@ -355,6 +357,9 @@ class SearchPresenter {
                                 appendToDecrypt(decryptedCombine)
                             }
                         }
+                        if( categoryView != null ) {
+                            categoryView!!.onCombineResultsFetched(combineResult)
+                        }
                     }
                 })
             }
@@ -367,7 +372,7 @@ class SearchPresenter {
     }
 
 
-    private fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
+    fun appendToDecrypt(decryptedCombine: DecryptedCombine) {
         mDecryptCombine.id = decryptedCombine.id
         mDecryptCombine.listItems.addAll(decryptedCombine.listItems)
         mDecryptCombine.propertyItems.addAll(decryptedCombine.propertyItems)

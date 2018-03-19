@@ -1,6 +1,7 @@
 package com.ninebx.ui.tutorial.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -11,6 +12,7 @@ import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.tutorial.adapter.TutorialAdapter
 import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.activity_walk_through.*
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class WalkThroughActivity : AppCompatActivity() {
 
@@ -84,6 +86,10 @@ class WalkThroughActivity : AppCompatActivity() {
         super.onBackPressed()
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
 }
