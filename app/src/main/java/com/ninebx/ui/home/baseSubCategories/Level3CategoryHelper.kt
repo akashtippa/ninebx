@@ -68,7 +68,9 @@ class Level3CategoryHelper(
     private var decryptedClothingSizes: DecryptedClothingSizes? = null
     private var decryptedShopping: DecryptedShopping? = null
 
-    private var homeHelper : HomeHelper ?= null
+    private var  homeHelper : HomeHelper ?= null
+    private  var interestHelper : InterestHelper ?= null
+    private var educationAndWorkHelper : EducationAndWorkHelper ?= null
 
     init {
         extractObject()
@@ -78,11 +80,20 @@ class Level3CategoryHelper(
                 homeHelper!!.initialize()
                 homeHelper!!.getFormForCategory()
             }
+            R.string.interests -> {
+                interestHelper = InterestHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                interestHelper!!.initialize()
+                interestHelper!!.getFormForCategory()
+            }
+            R.string.education_work ->{
+                educationAndWorkHelper = EducationAndWorkHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                educationAndWorkHelper!!.initialize()
+                educationAndWorkHelper!!.getFormForCategory()
+            }
             else -> {
                 searchByOthers()
             }
         }
-
     }
 
     private fun searchByOthers() {

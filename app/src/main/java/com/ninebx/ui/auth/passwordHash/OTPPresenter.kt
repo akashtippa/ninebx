@@ -126,7 +126,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
         if( !validateView( etOtp5 ) ) isValid = false
         if( !validateView( etOtp6 ) ) isValid = false
 
-        if( isValid && emailOtp != "" ) {
+        if( isValid) {
             val otp = etOtp1?.text.toString().trim() +
                     etOtp2?.text.toString().trim() +
                     etOtp3?.text.toString().trim() +

@@ -1444,7 +1444,7 @@ class HomeHelper( var category_name : String,
                             realm.commitTransaction()
                         }
                     })
-                }
+            }
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
