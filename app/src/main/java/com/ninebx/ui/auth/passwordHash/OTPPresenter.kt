@@ -24,18 +24,12 @@ import io.realm.Realm
 class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: AuthView) {
 
 
-        var handler: Handler = Handler()
-        var emailOtp = ""
+    var handler: Handler = Handler()
+    var emailOtp = ""
 
     var isSuccess : Boolean = false
 
 
-<<<<<<< HEAD
-    fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText?,email:String)
-    {
-        emailOtp=email
-        if( validate( etOtp1,etOtp2 , etOtp3 ,etOtp4 ,etOtp5 ,etOtp6) ) {
-=======
 
     fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText? , emailOtpString:String){
 
@@ -45,7 +39,6 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
 
         if( validate( etOtp1,etOtp2 , etOtp3 ,etOtp4 ,etOtp5 ,etOtp6 ) ) {
 
->>>>>>> a388506327f929828478a5fdefbddd61a6fe0b68
             emailOtp = ""
             handler.removeCallbacks(runnable)
             object : AsyncTask<Void, Void, Int>() {
@@ -57,7 +50,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
                                 val email = currentUsers[0]!!.emailAddress.decryptString()
                                 if( email.isNotEmpty() )
                                     NineBxApplication.getPreferences().userEmail = email
-                                  AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
+                                AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
                             }
                             else {
                                 onPostExecute(R.string.unable_to_find_user)
@@ -77,8 +70,6 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
                     mAuthView.navigateToCreatePassCode(Constants.PASSCODE_CREATE, "")
 
                     if( result != -1 ) mAuthView.onError(result)
-
-                    AppLogger.d("errorMessage",""+result)
                 }
 
 
@@ -109,7 +100,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
             if(mOTPView.otpVerificationGet()){
                 context!!.showToast(R.string.otp_expired)
             }
-           // emailOtp = ""
+            // emailOtp = ""
         }
 
     }
@@ -146,7 +137,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
     }
 
 
-     fun validateView(etOtp: EditText?): Boolean {
+    fun validateView(etOtp: EditText?): Boolean {
         val isValid = etOtp!!.text.toString().isNotEmpty()
         if( !isValid ) {
             etOtp.error = context?.getString(R.string.required)
