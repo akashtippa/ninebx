@@ -41,6 +41,7 @@ public class DecryptedCombinePersonal implements Parcelable {
         this.id = id;
     }
 
+
     public ArrayList<DecryptedCertificate> getCertificateItems() {
         return certificateItems;
     }
@@ -108,56 +109,84 @@ public class DecryptedCombinePersonal implements Parcelable {
 
     public int getDriversLicense(String selectionType) {
         int count = 0;
-        for (DecryptedLicense decryptedLicense : licenseItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedLicense selectedItem : licenseItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getSocialSecurity(String selectionType) {
         int count = 0;
-        for (DecryptedSocial decryptedLicense : socialItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedSocial selectedItem : socialItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getTAXID(String selectionType) {
         int count = 0;
-        for (DecryptedTaxID decryptedLicense : taxIDItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedTaxID selectedItem : taxIDItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getOtherGovernment(String selectionType) {
         int count = 0;
-        for (DecryptedGovernment decryptedLicense : governmentItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedGovernment selectedItem : governmentItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getServicesAttachments(String selectionType) {
         int count = 0;
-        for (DecryptedPersonal decryptedLicense : personalItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedPersonal selectedItem : personalItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getOtherAttach(String selectionType) {
         int count = 0;
-        for (DecryptedPersonalList decryptedLicense : listItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedPersonalList selectedItem : listItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
 
     public int getMarriageCertificate(String selectionType) {
         int count = 0;
-        for (DecryptedCertificate decryptedLicense : certificateItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedCertificate selectedItem : certificateItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
@@ -168,6 +197,7 @@ public class DecryptedCombinePersonal implements Parcelable {
         ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedPersonalList decryptedLicense : listItems) {
             count += (decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )? 1 : 0;
+
         }
         return count;
     }
