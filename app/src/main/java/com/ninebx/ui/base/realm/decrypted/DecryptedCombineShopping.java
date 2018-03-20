@@ -105,16 +105,25 @@ public class DecryptedCombineShopping implements Parcelable {
 
     public int getLoyaltyPrograms(String selectionType) {
         int count = 0;
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedLoyaltyPrograms decryptedLicense : loyaltyProgramsItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            if(!ids.contains(decryptedLicense.getId())){
+                count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(decryptedLicense.getId());
+            }
         }
         return count;
     }
 
+
     public int getRecentPurchases(String selectionType) {
         int count = 0;
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedRecentPurchase decryptedLicense : recentPurchaseItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            if(!ids.contains(decryptedLicense.getId())){
+                count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(decryptedLicense.getId());
+            }
         }
         return count;
     }
