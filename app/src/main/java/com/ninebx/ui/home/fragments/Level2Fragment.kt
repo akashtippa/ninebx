@@ -14,6 +14,7 @@ import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -155,6 +156,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String ) {
         mCurrentSearchItem = searchItem
         searchHelper.switchAndSearch(searchItem, action)
+        Log.d("Search Category: ",getString(searchItem.searchCategory))
+        Log.d("Search Item: ",searchItem.categoryName)
     }
 
     private fun fetchTheContactListFromRealm() {

@@ -382,6 +382,7 @@ class SearchHelper() {
     fun switchAndSearch( searchItem: Level3SearchItem, action : String ) {
         val position = searchItem.itemIndex
         mAction = action
+
         when( searchItem.searchCategory ) {
 
             (R.string.home_amp_money) -> {
@@ -416,7 +417,7 @@ class SearchHelper() {
 
     private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
-            "loyalty" -> {
+            "loyaltyPrograms" -> {
                 val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
                 if( mAction == "delete" ) {
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_SHOPPING, selectedDocument.id, encryptLoyaltyProgram(selectedDocument) )
