@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:hint="" />
 
-    <Spinner
+    <EditText
         android:id="@+id/spinnerValue"
+        android:inputType="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_mini_padding"

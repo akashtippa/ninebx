@@ -2,6 +2,7 @@ package com.ninebx.ui.home.baseSubCategories
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.InputType
@@ -134,23 +135,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.etSubHeader.hint = headerTitle
                 locationViewHolder.etSubHeader.setText(titleValue)
                 locationViewHolder.etSubHeader.addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                if (keyBoardType == Constants.CONTACT_SPINNER) {
-                    openContactList()
-                } else {
-                    val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, membersList)
-                    (locationViewHolder.spinnerUsers).adapter = arrayAdapter
-                    (locationViewHolder.spinnerUsers).onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(p0: AdapterView<*>?) {
 
-                        }
-
-                        override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                            val newValue =  locationViewHolder.spinnerUsers.getItemAtPosition(position) as String
-                            locationViewHolder.etSubHeader.setText(newValue)
-
-                        }
-                    }
-                }
 
             }
             Constants.LEVEL2_SWITCH -> {
@@ -166,11 +151,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.etSubHeader.hint = headerTitle
                 locationViewHolder.etSubHeader.setText(titleValue)
                 locationViewHolder.etSubHeader.addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, currencyType)
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                locationViewHolder.spinnerCurrency.adapter = arrayAdapter
-                locationViewHolder.spinnerCurrency.setSelection(currencyType.indexOf(titleValue))
-                locationViewHolder.spinnerCurrency.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, currencyType )
+                locationViewHolder.spinnerCurrency.setText(titleValue)
             }
             Constants.LEVEL2_NOTES -> {
                 val locationViewHolder : LEVEL2_NOTESViewHolder = holder as LEVEL2_NOTESViewHolder
@@ -213,32 +194,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.etSubHeader.hint = headerTitle
                 locationViewHolder.etSubHeader.setText(titleValue)
                 locationViewHolder.etSubHeader.addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                if (keyBoardType == Constants.KEYBOARD_NUMBER) {
-                    locationViewHolder.etSubHeader.inputType = InputType.TYPE_CLASS_NUMBER
-                } else if (keyBoardType == Constants.KEYBOARD_SPINNER) {
-                    locationViewHolder.etSubHeader.hide()
-                    locationViewHolder.spinnerAccountType.show()
-
-                    val spinnerItems = when (classType) {
-                        DecryptedFinancial::class.java.simpleName -> {
-                            accountType
-                        }
-                        else -> {
-                            womenTopsNumericSizes
-                        }
-                    }
-                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
-                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    locationViewHolder.spinnerAccountType.adapter = arrayAdapter
-                    locationViewHolder.spinnerAccountType.setSelection(spinnerItems.indexOf(titleValue))
-                    locationViewHolder.spinnerAccountType.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, spinnerItems )
-                } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
-                    getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
-                        override fun onDateTimeSelected(selectedDate: Calendar) {
-                            (locationViewHolder.etSubHeader).setText(getDateMonthYearFormat(selectedDate.time))
-                        }
-                    })
-                }
+                locationViewHolder.spinnerAccountType.setText(titleValue)
 
             }
             Constants.LEVEL2_ATTACHMENTS -> {
@@ -248,283 +204,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             Constants.LEVEL_NORMAL_SPINNER -> {
                 val locationViewHolder : LEVEL_NORMAL_SPINNERViewHolder = holder as LEVEL_NORMAL_SPINNERViewHolder
                 locationViewHolder.txtHeader.text = headerTitle
-
-                when (keyBoardType) {
-                // Women Shopping Category
-
-                    Constants.PICKER_WOMEN_NUMERIC_SIZE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopsNumericSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenTopsNumericSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenTopsNumericSizes )
-                    }
-                    Constants.PICKER_WOMEN_SIZE_US -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenTopSize)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenTopSize.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenTopSize )
-                    }
-                    Constants.PICKER_WOMENS_DETAILS_SIZE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, sizeCategoryArray)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(sizeCategoryArray.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, sizeCategoryArray )
-                    }
-
-                    Constants.PICKER_WOMEN_SHOES -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenShoeSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenShoeSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenShoeSizes )
-                    }
-                    Constants.PICKER_WOMEN_SHOES_WIDTH -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenShoeWidthSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenShoeWidthSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenShoeWidthSizes )
-                    }
-
-                    Constants.PICKER_WOMEN_ACCESSORIES_BELTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesBelts)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenAccessoriesBelts.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesBelts )
-                    }
-                    Constants.PICKER_WOMEN_ACCESSORIES_HATS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesHats)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenAccessoriesHats.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesHats )
-                    }
-                    Constants.PICKER_WOMEN_ACCESSORIES_GLOVES -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesGloves)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenAccessoriesGloves.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesGloves )
-                    }
-                    Constants.PICKER_WOMEN_ACCESSORIES_TIGHTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, womenAccessoriesTights)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(womenAccessoriesTights.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesTights )
-                    }
-
-                // Men's Shopping Category
-                    Constants.PICKER_MENS_SIZE_CATEGORY_US -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menSizeCategories)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menSizeCategories.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menSizeCategories )
-                    }
-                    Constants.PICKER_MENS_SIZE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menTopsSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsSizes )
-                    }
-                    Constants.PICKER_MENS_NUMERIC_SIZE_TOPS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsNumericSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menTopsNumericSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsNumericSizes )
-                    }
-                    Constants.PICKER_MENS_NUMERIC_SIZE_BOTTOMS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menBottomsNumericSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericSizes )
-                    }
-                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menJacketsNumericSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menJacketsNumericSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menJacketsNumericSizes )
-                    }
-                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericSizesSuiting)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menBottomsNumericSizesSuiting.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericSizesSuiting )
-                    }
-                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_OUTERWEAR -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menTopsNumericSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menTopsNumericSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsNumericSizes )
-                    }
-                    Constants.PICKER_MENS_SHOES -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menShoeSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menShoeSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menShoeSizes )
-                    }
-                    Constants.PICKER_MENS_SHOES_WIDTH -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menShoeWidthSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menShoeWidthSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menShoeWidthSizes )
-                    }
-                    Constants.PICKER_MENS_BELTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBelts)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menBelts.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBelts )
-                    }
-                    Constants.PICKER_MENS_BELTS_NUMERIC_SIZE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menBottomsNumericBeltsSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menBottomsNumericBeltsSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericBeltsSizes )
-                    }
-                    Constants.PICKER_MENS_TIGHTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menHats)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menHats.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menHats )
-                    }
-                    Constants.PICKER_MENS_GLOVES -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, menGloves)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(menGloves.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menGloves )
-                    }
-
-
-                // Girls and Boys Shopping Category
-
-                    Constants.PICKER_GIRLS_NUMERIC_SIZE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsNumericSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsNumericSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsNumericSizes )
-                    }
-                    Constants.PICKER_GIRLS_SHOES_TODDLER -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsShoeSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsShoeSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoeSizes )
-                    }
-                    Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsShoesLittleAndBigKidSize)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsShoesLittleAndBigKidSize.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoesLittleAndBigKidSize )
-                    }
-                    Constants.PICKER_GIRLS_SHOES_WIDTH -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsShoeWidthSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsShoeWidthSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoeWidthSizes )
-                    }
-                    Constants.PICKER_GIRLS_ACCESSORIES_BELTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsBeltSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsBeltSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsBeltSizes )
-                    }
-                    Constants.PICKER_GIRLS_ACCESSORIES_BELTS_NUMERIC_SIZE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsNumericBeltsSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsNumericBeltsSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsNumericBeltsSizes )
-                    }
-                    Constants.PICKER_GIRLS_ACCESSORIES_HATS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsHatSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsHatSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsHatSizes )
-                    }
-                    Constants.PICKER_GIRLS_ACCESSORIES_GLOVES -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsGlovesSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsGlovesSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsGlovesSizes )
-                    }
-                    Constants.PICKER_GIRLS_ACCESSORIES_TIGHTS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsTightsSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsTightsSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsTightsSizes )
-                    }
-                    Constants.PICKER_GIRLS_ACCESSORIES_SOCKS -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, girlsSocksSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(girlsSocksSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsSocksSizes )
-                    }
-
-                // Baby Shopping Category
-                    Constants.PICKER_BABY_CLOTHING -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, babyClothings)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(babyClothings.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, babyClothings )
-                    }
-                    Constants.PICKER_BABY_SHOES -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, babyShoeSizes)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(babyShoeSizes.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, babyShoeSizes )
-                    }
-
-                    Constants.BANK_ACCOUNT_TYPE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, accountType)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(accountType.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, accountType )
-                    }
-                    Constants.OTHER_ACCOUNT_TYPE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, othersAccountTypeOptions)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(othersAccountTypeOptions.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, othersAccountTypeOptions )
-                    }
-                    Constants.CARD_TYPE -> {
-                        val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, cardType)
-                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        locationViewHolder.spinnerItem.adapter = arrayAdapter
-                        locationViewHolder.spinnerItem.setSelection(cardType.indexOf(titleValue))
-                        locationViewHolder.spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, cardType )
-                    }
-
-
-                }
+                locationViewHolder.spinnerItem.setText((titleValue))
+               
 
             }
         }
@@ -586,22 +267,82 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             // childView = level2RadioView
         }
     } // 12
-    inner class LEVEL2_SPINNERViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+    inner class LEVEL2_SPINNERViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ), View.OnClickListener {
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                val item = categories[position]
+                val keyBoardType = item.inputType
+                if (keyBoardType == Constants.CONTACT_SPINNER) {
+                    openContactList()
+                } else {
+                    showMemberPopup( spinnerUsers, membersList )
+                }
+            }
+        }
 
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<EditText>(R.id.etSubHeader)
-        val spinnerUsers = itemView.findViewById<Spinner>(R.id.spinnerUsers)
+        val spinnerUsers = itemView.findViewById<EditText>(R.id.spinnerUsers)
         init {
 
             txtHeader.isEnabled = isEditMode
             etSubHeader.isEnabled = isEditMode
             spinnerUsers.isEnabled = isEditMode
-
+            spinnerUsers.setOnClickListener(this)
 
 
         }
+
+
+
     } // 13
+
+    private fun showMemberPopup(optionEditText: EditText?, optionsList: ArrayList<DecryptedMember>) {
+
+        val popupWindow = PopupWindow(_context)
+        val popupView = LayoutInflater.from(_context).inflate(R.layout.popup_window_list_layout, null)
+        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
+
+        popupWindow.contentView = popupView
+        popupWindow.isOutsideTouchable = true
+        val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
+        val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
+        optionsListView.adapter = arrayAdapter
+
+        optionsListView.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                val newValue =  optionsList[position] as String
+                optionEditText!!.setText(newValue)
+            }
+        }
+
+        popupWindow.showAsDropDown(optionEditText)
+
+    }
+
+    private fun showPopup( level2SubCategory: Level2SubCategory, optionEditText: EditText?, optionsList: Array<String>) {
+
+        val popupWindow = PopupWindow(_context)
+        val popupView = LayoutInflater.from(_context).inflate(R.layout.popup_window_list_layout, null)
+        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
+
+        popupWindow.contentView = popupView
+        popupWindow.isOutsideTouchable = true
+        val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
+        val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
+        optionsListView.adapter = arrayAdapter
+
+        optionsListView.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, optionsList )
+        popupWindow.showAsDropDown(optionEditText)
+
+    }
+
     inner class LEVEL2_SWITCHViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
@@ -616,17 +357,24 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             // childView = level2SwitchView
         }
     } // 14
-    inner class LEVEL2_USDViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+    inner class LEVEL2_USDViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ), View.OnClickListener {
+        override fun onClick(p0: View?) {
+            val postion = adapterPosition
+            if( postion != RecyclerView.NO_POSITION ) {
+                val level2SubCategory = categories[postion]
+                showPopup(level2SubCategory, spinnerCurrency, currencyType)
+            }
+        }
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<EditText>(R.id.etSubHeader)
-        val spinnerCurrency: Spinner = itemView.findViewById<Spinner>(R.id.spinnerCurrency)
+        val spinnerCurrency: EditText = itemView.findViewById<EditText>(R.id.spinnerCurrency)
         init {
 
             txtHeader.isEnabled = isEditMode
             etSubHeader.isEnabled = isEditMode
             spinnerCurrency.isEnabled = isEditMode
-
+            spinnerCurrency.setOnClickListener(this)
             // childView = level2USDView
         }
     } // 15
@@ -639,18 +387,55 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             // childView = level2NotesView
         }
     } // 16
-    inner class LEVEL2_NORMALViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+    inner class LEVEL2_NORMALViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ), View.OnClickListener {
+        override fun onClick(p0: View?) {
+
+            val postion = adapterPosition
+            if( postion != RecyclerView.NO_POSITION ) {
+                val level2SubCategory = categories[postion]
+                val keyBoardType = level2SubCategory.inputType
+                if (keyBoardType == Constants.KEYBOARD_NUMBER) {
+                    etSubHeader.inputType = InputType.TYPE_CLASS_NUMBER
+                } else if (keyBoardType == Constants.KEYBOARD_SPINNER) {
+                    etSubHeader.hide()
+                    spinnerAccountType.show()
+
+                    val spinnerItems = when (classType) {
+                        DecryptedFinancial::class.java.simpleName -> {
+                            accountType
+                        }
+                        else -> {
+                            womenTopsNumericSizes
+                        }
+                    }
+                    showPopup(level2SubCategory, spinnerAccountType, spinnerItems)
+                    
+                    val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinnerAccountType.setText(level2SubCategory.titleValue)
+                } else if (keyBoardType == Constants.KEYBOARD_PICKER) {
+                    getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            (etSubHeader).setText(getDateMonthYearFormat(selectedDate.time))
+                        }
+                    })
+                }
+                
+            }
+            
+            
+        }
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<EditText>(R.id.etSubHeader)
-        val spinnerAccountType = itemView.findViewById<Spinner>(R.id.spinnerAccountType)
+        val spinnerAccountType = itemView.findViewById<EditText>(R.id.spinnerAccountType)
 
         init {
 
             txtHeader.isEnabled = isEditMode
             etSubHeader.isEnabled = isEditMode
             spinnerAccountType.isEnabled = isEditMode
-
+            spinnerAccountType.setOnClickListener(this)
             // childView = level2NormalView
         }
     } // 17
@@ -688,16 +473,303 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             // childView = level2NumberView
         }
     } // 20
-    inner class LEVEL_NORMAL_SPINNERViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+    inner class LEVEL_NORMAL_SPINNERViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ), View.OnClickListener {
+        override fun onClick(p0: View?) {
+
+            val postion = adapterPosition
+            if( postion != RecyclerView.NO_POSITION ) {
+                val level2SubCategory = categories[postion]
+                val keyBoardType = level2SubCategory.inputType
+                val titleValue = level2SubCategory.titleValue
+
+                val spinnerItems = when (keyBoardType) {
+                // Women Shopping Category
+
+                    Constants.PICKER_WOMEN_NUMERIC_SIZE -> {
+                        ( womenTopsNumericSizes)
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenTopsNumericSizes )
+                    }
+                    Constants.PICKER_WOMEN_SIZE_US -> {
+                        ( womenTopSize)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenTopSize )
+                    }
+                    Constants.PICKER_WOMENS_DETAILS_SIZE -> {
+                        ( sizeCategoryArray)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, sizeCategoryArray )
+                    }
+
+                    Constants.PICKER_WOMEN_SHOES -> {
+                        ( womenShoeSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenShoeSizes )
+                    }
+                    Constants.PICKER_WOMEN_SHOES_WIDTH -> {
+                        ( womenShoeWidthSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenShoeWidthSizes )
+                    }
+
+                    Constants.PICKER_WOMEN_ACCESSORIES_BELTS -> {
+                        ( womenAccessoriesBelts)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesBelts )
+                    }
+                    Constants.PICKER_WOMEN_ACCESSORIES_HATS -> {
+                        ( womenAccessoriesHats)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesHats )
+                    }
+                    Constants.PICKER_WOMEN_ACCESSORIES_GLOVES -> {
+                        ( womenAccessoriesGloves)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesGloves )
+                    }
+                    Constants.PICKER_WOMEN_ACCESSORIES_TIGHTS -> {
+                        ( womenAccessoriesTights)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesTights )
+                    }
+
+                // Men's Shopping Category
+                    Constants.PICKER_MENS_SIZE_CATEGORY_US -> {
+                        ( menSizeCategories)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menSizeCategories )
+                    }
+                    Constants.PICKER_MENS_SIZE -> {
+                        ( menTopsSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsSizes )
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_TOPS -> {
+                        ( menTopsNumericSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsNumericSizes )
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_BOTTOMS -> {
+                        ( menBottomsNumericSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericSizes )
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS -> {
+                        ( menJacketsNumericSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menJacketsNumericSizes )
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS -> {
+                        ( menBottomsNumericSizesSuiting)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericSizesSuiting )
+                    }
+                    Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_OUTERWEAR -> {
+                        ( menTopsNumericSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsNumericSizes )
+                    }
+                    Constants.PICKER_MENS_SHOES -> {
+                        ( menShoeSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menShoeSizes )
+                    }
+                    Constants.PICKER_MENS_SHOES_WIDTH -> {
+                        ( menShoeWidthSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menShoeWidthSizes )
+                    }
+                    Constants.PICKER_MENS_BELTS -> {
+                        ( menBelts)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBelts )
+                    }
+                    Constants.PICKER_MENS_BELTS_NUMERIC_SIZE -> {
+                        ( menBottomsNumericBeltsSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericBeltsSizes )
+                    }
+                    Constants.PICKER_MENS_TIGHTS -> {
+                        ( menHats)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menHats )
+                    }
+                    Constants.PICKER_MENS_GLOVES -> {
+                        ( menGloves)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menGloves )
+                    }
+
+
+                // Girls and Boys Shopping Category
+
+                    Constants.PICKER_GIRLS_NUMERIC_SIZE -> {
+                        ( girlsNumericSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsNumericSizes )
+                    }
+                    Constants.PICKER_GIRLS_SHOES_TODDLER -> {
+                        ( girlsShoeSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoeSizes )
+                    }
+                    Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID -> {
+                        ( girlsShoesLittleAndBigKidSize)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoesLittleAndBigKidSize )
+                    }
+                    Constants.PICKER_GIRLS_SHOES_WIDTH -> {
+                        ( girlsShoeWidthSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoeWidthSizes )
+                    }
+                    Constants.PICKER_GIRLS_ACCESSORIES_BELTS -> {
+                        ( girlsBeltSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsBeltSizes )
+                    }
+                    Constants.PICKER_GIRLS_ACCESSORIES_BELTS_NUMERIC_SIZE -> {
+                        ( girlsNumericBeltsSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsNumericBeltsSizes )
+                    }
+                    Constants.PICKER_GIRLS_ACCESSORIES_HATS -> {
+                        ( girlsHatSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsHatSizes )
+                    }
+                    Constants.PICKER_GIRLS_ACCESSORIES_GLOVES -> {
+                        ( girlsGlovesSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsGlovesSizes )
+                    }
+                    Constants.PICKER_GIRLS_ACCESSORIES_TIGHTS -> {
+                        ( girlsTightsSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsTightsSizes )
+                    }
+                    Constants.PICKER_GIRLS_ACCESSORIES_SOCKS -> {
+                        ( girlsSocksSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsSocksSizes )
+                    }
+
+                // Baby Shopping Category
+                    Constants.PICKER_BABY_CLOTHING -> {
+                        ( babyClothings)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, babyClothings )
+                    }
+                    Constants.PICKER_BABY_SHOES -> {
+                        ( babyShoeSizes)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, babyShoeSizes )
+                    }
+
+                    Constants.BANK_ACCOUNT_TYPE -> {
+                        ( accountType)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, accountType )
+                    }
+                    Constants.OTHER_ACCOUNT_TYPE -> {
+                        ( othersAccountTypeOptions)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, othersAccountTypeOptions )
+                    }
+                    /*Constants.CARD_TYPE*/else -> {
+                        ( cardType)
+                        
+                        
+                        
+                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, cardType )
+                    }
+
+
+                }
+
+                showPopup(level2SubCategory, spinnerItem, spinnerItems)
+                
+            }
+        }
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
-        val spinnerItem: Spinner = itemView.findViewById<Spinner>(R.id.spinnerValue)
+        val spinnerItem: EditText = itemView.findViewById<EditText>(R.id.spinnerValue)
         init {
 
 
             txtHeader.isEnabled = isEditMode
             spinnerItem.isEnabled = isEditMode
-
+            spinnerItem.setOnClickListener(this)
 
             // childView = level2NormalSpinnerView
         }
