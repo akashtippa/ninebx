@@ -15,17 +15,6 @@ import io.realm.annotations.PrimaryKey;
  */
 public class DecryptedCombinePersonal implements Parcelable {
 
-    public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
-        @Override
-        public DecryptedCombinePersonal createFromParcel(Parcel in) {
-            return new DecryptedCombinePersonal(in);
-        }
-
-        @Override
-        public DecryptedCombinePersonal[] newArray(int size) {
-            return new DecryptedCombinePersonal[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     ArrayList<DecryptedCertificate> certificateItems = new ArrayList<>();
@@ -50,10 +39,6 @@ public class DecryptedCombinePersonal implements Parcelable {
         this.taxIDItems = taxIDItems;
         this.listItems = listItems;
         this.id = id;
-    }
-
-    protected DecryptedCombinePersonal(Parcel in) {
-        id = in.readInt();
     }
 
     public ArrayList<DecryptedCertificate> getCertificateItems() {
@@ -120,15 +105,6 @@ public class DecryptedCombinePersonal implements Parcelable {
         this.id = id;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
 
     public int getDriversLicense(String selectionType) {
         int count = 0;
@@ -209,4 +185,47 @@ public class DecryptedCombinePersonal implements Parcelable {
                 ", id=" + id +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeTypedList(this.certificateItems);
+        dest.writeTypedList(this.governmentItems);
+        dest.writeTypedList(this.licenseItems);
+        dest.writeTypedList(this.personalItems);
+        dest.writeTypedList(this.socialItems);
+        dest.writeTypedList(this.taxIDItems);
+        dest.writeTypedList(this.listItems);
+        dest.writeLong(this.id);
+    }
+
+    protected DecryptedCombinePersonal(Parcel in) {
+        this.searchField = in.readString();
+        this.certificateItems = in.createTypedArrayList(DecryptedCertificate.CREATOR);
+        this.governmentItems = in.createTypedArrayList(DecryptedGovernment.CREATOR);
+        this.licenseItems = in.createTypedArrayList(DecryptedLicense.CREATOR);
+        this.personalItems = in.createTypedArrayList(DecryptedPersonal.CREATOR);
+        this.socialItems = in.createTypedArrayList(DecryptedSocial.CREATOR);
+        this.taxIDItems = in.createTypedArrayList(DecryptedTaxID.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedPersonalList.CREATOR);
+        this.id = in.readLong();
+    }
+
+    public static final Creator<DecryptedCombinePersonal> CREATOR = new Creator<DecryptedCombinePersonal>() {
+        @Override
+        public DecryptedCombinePersonal createFromParcel(Parcel source) {
+            return new DecryptedCombinePersonal(source);
+        }
+
+        @Override
+        public DecryptedCombinePersonal[] newArray(int size) {
+            return new DecryptedCombinePersonal[size];
+        }
+    };
 }

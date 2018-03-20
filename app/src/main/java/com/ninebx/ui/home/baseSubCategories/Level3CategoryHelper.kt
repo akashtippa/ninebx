@@ -9,8 +9,7 @@ import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
-import com.ninebx.ui.base.realm.home.homeBanking.Combine
-import com.ninebx.ui.base.realm.home.personal.CombinePersonal
+
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
