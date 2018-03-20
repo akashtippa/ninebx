@@ -256,7 +256,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 }
             }
 
-
             subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
                 override fun onItemClick(subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
