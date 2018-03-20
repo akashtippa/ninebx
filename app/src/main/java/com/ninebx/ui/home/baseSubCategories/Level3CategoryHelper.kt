@@ -60,6 +60,7 @@ class Level3CategoryHelper(
 
     private var homeHelper : HomeHelper ?= null
     private var personalHelper : PersonalHelper ?= null
+    private var travelHelper: TravelHelper ?= null
 
     init {
         extractObject()
@@ -74,6 +75,11 @@ class Level3CategoryHelper(
                 personalHelper!!.initialize()
                 personalHelper!!.getFormForCategory()
             }
+            R.string.travel -> {
+                travelHelper = TravelHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                travelHelper!!.initialize()
+                travelHelper!!.getFormForCategory()
+            }
             else -> {
                 searchByOthers()
             }
@@ -82,36 +88,6 @@ class Level3CategoryHelper(
 
     private fun searchByOthers() {
         when (category_name) {
-
-        //Travel
-
-            "Airline" -> {
-                getAirline()
-            }
-            "Hotel" -> {
-                getHotel()
-            }
-            "Car Rental" -> {
-                getCarRental()
-            }
-            "Cruiseline" -> {
-                getCruiseline()
-            }
-            "Railway" -> {
-                getRailway()
-            }
-            "Other" -> {
-                getOther()
-            }
-            "Passport" -> {
-                getPassport()
-            }
-            "Visa" -> {
-                getVisa()
-            }
-            "Other travel document" -> {
-                getOtherTravelDocuments()
-            }
 
         // Common View
             "Services/Other Accounts" -> {
@@ -726,340 +702,6 @@ class Level3CategoryHelper(
 
 
         categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    // TRAVEL
-
-    private fun getAirline() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1001
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2023
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2018
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes , "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getHotel() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1002
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2024
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName,  "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2024
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2024
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getCarRental() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1003
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2025
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2025
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2025
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getCruiseline() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1004
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2026
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2026
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2026
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getRailway() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1005
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2027
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2027
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2027
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getOther() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1006
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2028
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2028
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2028
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getPassport() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
-        var categoryIndex = 2001
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Passport Details"
-        category.subCategories.add(Level2SubCategory("Name on passport", decryptedDocuments!!.nameOnPassport, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Passport number", decryptedDocuments!!.passportNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2029
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2029
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getVisa() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
-        var categoryIndex = 2002
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Visa Details"
-        category.subCategories.add(Level2SubCategory("Name on visa", decryptedDocuments!!.nameOnVisa, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visa type", decryptedDocuments!!.visaType, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visa number", decryptedDocuments!!.visaNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2030
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2030
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getOtherTravelDocuments() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
-        var categoryIndex = 2003
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Travel Document Details"
-        category.subCategories.add(Level2SubCategory("Name on travel document", decryptedDocuments!!.nameOnTravelDocument, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Travel document type", decryptedDocuments!!.travelDocumentType, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Travel document number", decryptedDocuments!!.travelDocumentNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2031
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2031
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
@@ -2053,6 +1695,9 @@ class Level3CategoryHelper(
 
         if(personalHelper != null){
             personalHelper!!.saveDocument(context,combineItem, title, subTitle)
+        }
+        if(travelHelper != null) {
+            travelHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
 
         if (decryptedIdentification != null) {

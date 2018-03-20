@@ -4,6 +4,8 @@ import android.os.Parcelable
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.Constants
+import com.ninebx.utility.prepareRealmConnections
+import io.realm.Realm
 
 /**
  * Created by Alok on 12/01/18.

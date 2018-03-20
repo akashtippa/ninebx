@@ -113,12 +113,16 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         ListsPresenter(this, 0, -1).fetchDataInBackground()
 
-        fragmentValue = arguments!!.getString("listOption")
+        val listOp = arguments!!.getString("listOption")
+        fragmentValue = arguments!!.getString("homeScreen")
         categoryName = arguments!!.getInt("categoryName")
 
-        when (fragmentValue) {
+        when (listOp) {
             "HomeScreen" -> {
                 switchToDirectSubList(categoryName)
+            }
+            "Contacts" -> {
+                switchToDirectSubList(R.string.contacts)
             }
         }
 
