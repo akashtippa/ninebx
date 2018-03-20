@@ -203,7 +203,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
-                    etTitleValue.setText(decryptedCertificate.nameOnCertificate)
+                    etTitleValue.setEnabled(false)
                     createdValue.text = decryptedCertificate.created
                     modifiedValue.setText(decryptedCertificate.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -212,7 +212,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedGovernment -> {
                     val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
                     etTitle.setText(decryptedGovernment.idName)
-                    etTitleValue.setText(decryptedGovernment.nameOnId)
+                    etTitleValue.setEnabled(false)
                     createdValue.text = decryptedGovernment.created
                     modifiedValue.setText(decryptedGovernment.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -220,8 +220,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedLicense ->{
                     val decryptedLicense : DecryptedLicense = selectedDocument as DecryptedLicense
-                    etTitle.setText(decryptedLicense.nameOnLicense)
-                    etTitleValue.setText(decryptedLicense.lic_description)
+                    etTitle.setText(decryptedLicense.lic_description)
+                    etTitleValue.setEnabled(false)
                     createdValue.text = decryptedLicense.created
                     modifiedValue.setText(decryptedLicense.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -230,7 +230,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedPersonal -> {
                     val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
                     etTitle.setText(decryptedPersonal.userName)
-                    etTitleValue.setText(decryptedPersonal.nameOnAccount)
+                    etTitleValue.setEnabled(false)
                     createdValue.text = decryptedPersonal.created
                     modifiedValue.setText(decryptedPersonal.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -239,7 +239,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedSocial -> {
                     val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
                     etTitle.setText(decryptedSocial.cardName)
-                    etTitleValue.setText(decryptedSocial.cardName)
+                    etTitleValue.setEnabled(false)
                     modifiedValue.setText(decryptedSocial.modified)
                     createdValue.text = decryptedSocial.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -248,7 +248,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedTaxID -> {
                     val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
                     etTitle.setText(decryptedTaxID.taxIdName)
-                    etTitleValue.setText(decryptedTaxID.taxIdName)
+                    etTitleValue.setEnabled(false)
                     modifiedValue.setText(decryptedTaxID.modified)
                     createdValue.text = decryptedTaxID.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)

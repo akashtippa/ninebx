@@ -204,8 +204,8 @@ class PersonalHelper(var category_name : String,
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name 1 on certificate", decryptedCertificate!!.nameOneCertificate, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name 2 on certificate", decryptedCertificate!!.nameTwoCertificate, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of marriage", decryptedCertificate!!.dateOfMarriage, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Place of marriage", decryptedCertificate!!.placeOfMarriage, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of marriage", decryptedCertificate!!.dateOfMarriage, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Place of marriage", decryptedCertificate!!.placeOfMarriage, Constants.KEYBOARD_PICKER, Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2020
@@ -235,7 +235,7 @@ class PersonalHelper(var category_name : String,
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on certificate", decryptedCertificate!!.nameOnCertificate, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Gender", decryptedCertificate!!.gender, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Time of birth", decryptedCertificate!!.timeOfBirth, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place of birth", decryptedCertificate!!.placeOfBirth, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
@@ -377,7 +377,7 @@ class PersonalHelper(var category_name : String,
 
         if (decryptedDriversLicense != null) {
             decryptedDriversLicense!!.selectionType = categoryID
-            decryptedDriversLicense!!.nameOnLicense = title
+            decryptedDriversLicense!!.lic_description = title
 
             if( decryptedDriversLicense!!.created.isEmpty() )
                 decryptedDriversLicense!!.created = currentUsers + " " + currentDateandTime
@@ -451,6 +451,7 @@ class PersonalHelper(var category_name : String,
         if (decryptedSocial != null) {
             decryptedSocial!!.selectionType = categoryID
             decryptedSocial!!.cardName = title
+
             if( decryptedSocial!!.created.isEmpty() )
                 decryptedSocial!!.created = currentUsers + " " + currentDateandTime
             decryptedSocial!!.modified = currentUsers + " " + currentDateandTime
