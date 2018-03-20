@@ -2,6 +2,7 @@ package com.ninebx.ui.home.adapter
 
 import android.annotation.SuppressLint
 import android.media.Image
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -34,8 +35,8 @@ internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?
 
         holder.imgDeleteContact.setOnClickListener {
             //show dialog and delete
-            deleteContact(contacts)
             iContactsAdded.contactsDeleted(contacts)
+            deleteContact(contacts)
         }
 
         holder.imgEditContact.setOnClickListener {

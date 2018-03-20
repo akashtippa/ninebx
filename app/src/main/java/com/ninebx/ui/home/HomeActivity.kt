@@ -1,6 +1,7 @@
 package com.ninebx.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -43,6 +44,7 @@ import com.ninebx.ui.home.search.SearchFragment
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
 import com.ninebx.utility.Constants.FINGER_PRINT_COMPLETE
+import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_home.*
 import q.rorbin.badgeview.QBadgeView
@@ -220,6 +222,20 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     private var currentUsers: ArrayList<DecryptedUsers>? = null
     private lateinit var homePresenter: HomePresenter
 
+    /*companion object {
+        //testing RealmDelete
+        @SuppressLint("StaticFieldLeak")
+        private var homeActivityRealm: Realm ?= null
+    }*/
+
+    /*fun getRealm() {
+        prepareRealmConnections(this, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                homeActivityRealm = realm
+            }
+        })
+    }*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -273,6 +289,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         this.showProgressDialog(getString(R.string.loading))
         homePresenter.fetchCurrentUsers()
         val awsSecureFileTransfer = AWSSecureFileTransfer(this@HomeActivity)
+        //getRealm()
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment

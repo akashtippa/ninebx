@@ -3,11 +3,13 @@ package com.ninebx.ui.home.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -45,16 +47,48 @@ import kotlin.collections.ArrayList
 class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     override fun contactsDeleted(contacts: DecryptedContacts?) { //not working
+        //showDialogToDelete(contacts!!)
+        if(contactsRealm != null) {
+            contactsRealm!!.beginTransaction()
+            var deleteQuery = contactsRealm!!.where(Contacts::class.java).equalTo("id", contacts!!.id).findAll()
+            deleteQuery.deleteAllFromRealm()
+            contactsRealm!!.commitTransaction()
+            //checkIdToDelete(contacts.id)
+            //contactsRealm!!.refresh()
+            //delete from combineContacts
+            //contactsRealm!!.close()
+        }
+    }
 
-                if(contactsRealm != null) {
-                    contactsRealm!!.beginTransaction()
-                    contactsRealm!!.where(Contacts::class.java).equalTo("id", contacts!!.id).findAll().deleteAllFromRealm()
-                    contactsRealm!!.commitTransaction()
-                    contactsRealm!!.refresh()
+    fun deleteContact(contact: DecryptedContacts) {
+        if(contactsRealm != null) {
+            contactsRealm!!.beginTransaction()
+            contactsRealm!!.where(Contacts::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+            contactsRealm!!.commitTransaction()
+            contactsRealm!!.refresh()
 
-                    //delete from combineContacts
-                    checkIdToDelete(contacts.id)
-                }
+            //delete from combineContacts
+            checkIdToDelete(contact.id)
+        }
+    }
+
+    private fun showDialogToDelete(contact: DecryptedContacts) {
+
+        val alertDialogBuilder = AlertDialog.Builder(context!!)
+        alertDialogBuilder.setTitle("Are you sure you want to delete the contact?")
+        alertDialogBuilder.setPositiveButton(" Delete", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, p1: Int) {
+                deleteContact(contact)
+                dialog!!.dismiss()
+            }
+        })
+        alertDialogBuilder.setNegativeButton(" Cancel", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, p1: Int) {
+                dialog!!.dismiss()
+            }
+        })
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     private fun checkIdToDelete(deleteId: Long) {
@@ -63,9 +97,12 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 for(item in contact.contactsItems) {
                     if(item.id == deleteId) {
                         contactsRealm!!.beginTransaction()
-                        contactsRealm!!.where(CombineContacts::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
-                        contactsRealm!!.commitTransaction()
-                        contactsRealm!!.refresh()
+                        val deleteQuery = contactsRealm!!.where(CombineContacts::class.java).equalTo("id", contact.id).findAll()
+                        if(deleteQuery.isManaged && deleteQuery.isValid) {
+                            deleteQuery.deleteAllFromRealm()
+                            contactsRealm!!.commitTransaction()
+                            return
+                        }
                     }
                 }
             }
@@ -164,6 +201,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 context!!.hideProgressDialog()
             }
         })
+        //contactsRealm = Realm.getDefaultInstance()
 
     }
 
