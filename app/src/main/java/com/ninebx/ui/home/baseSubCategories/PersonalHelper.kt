@@ -394,6 +394,7 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
+                            val realmLicense = realm.where(CombinePersonal::class.java).equalTo("id", decryptedDriversLicense!!.id).findFirst()
                             val driversLicense = encryptLicense(decryptedDriversLicense!!)
                             realm.insertOrUpdate(driversLicense)
                             realm.commitTransaction()
@@ -415,23 +416,23 @@ class PersonalHelper(var category_name : String,
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmDriversLicense = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
+                            val combine: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            var combinePersonal1 = realm!!.where(CombinePersonal::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if (realmDriversLicense == null) {
-                                realmDriversLicense = realm.createObject(CombinePersonal::class.java, getUniqueId())
+                            if (combinePersonal1 == null) {
+                                combinePersonal1 = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
                             val encryptedObject = encryptLicense(decryptedDriversLicense!!)
-                            if(realmDriversLicense!!.licenseItems.contains(encryptedObject)){
-                                val index = realmDriversLicense!!.licenseItems.indexOf(encryptedObject)
+                            if(combinePersonal1!!.licenseItems.contains(encryptedObject)){
+                                val index = combinePersonal1!!.licenseItems.indexOf(encryptedObject)
                                 if(index != -1){
-                                    realmDriversLicense!!.licenseItems[index] = encryptedObject
+                                    combinePersonal1!!.licenseItems[index] = encryptedObject
                                 }
                             }else{
-                                realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
+                                combinePersonal1!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
                             }
-
-                            realm.copyToRealmOrUpdate(realmDriversLicense)
+                           // combinePersonal1!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
+                            realm.insertOrUpdate(combinePersonal1)
                             AppLogger.d("Adding ", " Combine personal")
                             realm.commitTransaction()
                         }
