@@ -87,8 +87,8 @@ class PersonalHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Issuing country", decryptedDriversLicense!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Issuing state", decryptedDriversLicense!!.issuingState, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("License number", decryptedDriversLicense!!.licenseNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDriversLicense!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDriversLicense!!.expirationDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDriversLicense!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDriversLicense!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2018
@@ -132,7 +132,7 @@ class PersonalHelper(var category_name : String,
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("Attachments", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
         categoryView.onSuccess(categoryList)
@@ -171,9 +171,9 @@ class PersonalHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Name on ID", decryptedOtherGovernment!!.nameOnId, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Issuing country", decryptedOtherGovernment!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Issuing state", decryptedOtherGovernment!!.issuingState, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("ID number", "ID number", decryptedOtherGovernment!!.idNumber, Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", decryptedOtherGovernment!!.dateIssued, Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", decryptedOtherGovernment!!.expirationDate, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("ID number",  decryptedOtherGovernment!!.idNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedOtherGovernment!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedOtherGovernment!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
 
         categoryList.add(category)
 

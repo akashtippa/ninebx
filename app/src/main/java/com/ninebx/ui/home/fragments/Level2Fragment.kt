@@ -59,8 +59,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         .putExtra(Constants.CURRENT_BOX, categoryInt)
                         .putExtra( "selectedDocument", selectedDocument )
                         .putExtra(Constants.COMBINE_ITEMS, combinedItems)
-                        .putExtra("classType", classType)
-                , LEVEL_3)
+                        .putExtra("classType", classType), LEVEL_3)
     }
 
 
@@ -134,9 +133,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/
                 val intent = Intent( context, ContainerActivity::class.java)
                 intent.putExtras(bundle)
-                startActivityForResult(
-                        intent
-                        , LEVEL_3)
+                startActivityForResult(intent, LEVEL_3)
             }
         }
         loadItems()
