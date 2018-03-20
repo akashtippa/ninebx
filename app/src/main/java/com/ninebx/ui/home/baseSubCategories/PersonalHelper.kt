@@ -687,7 +687,7 @@ class PersonalHelper(var category_name : String,
                             if (realmCertificate == null) {
                                 realmCertificate = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptCertificate(decryptedCertificate!!)
+                            /*val encryptedObject = encryptCertificate(decryptedCertificate!!)
                             if(realmCertificate!!.certificateItems.contains(decryptedCertificate)){
                                 val index = realmCertificate!!.certificateItems.indexOf(encryptedObject)
                                 if(index != -1){
@@ -695,7 +695,8 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
-                            }
+                            }*/
+                            realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
                             realm.copyToRealmOrUpdate(realmCertificate)
                             realm.commitTransaction()
                         }
