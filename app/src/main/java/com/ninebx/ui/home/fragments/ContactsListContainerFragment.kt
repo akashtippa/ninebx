@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.account.interfaces.IContactsAdded
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.utility.*
-import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
 import com.onegravity.contactpicker.contact.ContactSortOrder
@@ -44,31 +42,21 @@ import kotlin.collections.ArrayList
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
+@SuppressLint("ValidFragment")
+class ContactsListContainerFragment() : FragmentBackHelper(), IContactsAdded {
 
     override fun contactsDeleted(contacts: DecryptedContacts?) { //not working
         showDialogToDelete(contacts!!)
-        /*if(contactsRealm != null) {
-            contactsRealm!!.beginTransaction()
-            var deleteQuery = contactsRealm!!.where(Contacts::class.java).equalTo("id", contacts!!.id).findAll()
-            deleteQuery.deleteAllFromRealm()
-            contactsRealm!!.commitTransaction()
-            //checkIdToDelete(contacts.id)
-            //contactsRealm!!.refresh()
-            //delete from combineContacts
-            //contactsRealm!!.close()
-        }*/
     }
 
     fun deleteContact(contact: DecryptedContacts) {
         if(contactsRealm != null) {
             contactsRealm!!.beginTransaction()
             contactsRealm!!.where(Contacts::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+            //delete from combineContacts
+            //checkIdToDelete(contact.id)
             contactsRealm!!.commitTransaction()
             contactsRealm!!.refresh()
-
-            //delete from combineContacts
-            checkIdToDelete(contact.id)
             mListsAdapter!!.deleteContact(contact)
         }
     }
@@ -91,23 +79,19 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         alertDialog.show()
     }
 
-    private fun checkIdToDelete(deleteId: Long) {
-        if(decryptedCombineContacts != null) {
-            for(contact in decryptedCombineContacts!!) {
-                for(item in contact.contactsItems) {
-                    if(item.id == deleteId) {
-                        contactsRealm!!.beginTransaction()
-                        val deleteQuery = contactsRealm!!.where(CombineContacts::class.java).equalTo("id", contact.id).findAll()
-                        if(deleteQuery.isManaged && deleteQuery.isValid) {
-                            deleteQuery.deleteAllFromRealm()
-                            contactsRealm!!.commitTransaction()
-                            return
-                        }
+    /*private fun checkIdToDelete(deleteId: Long) {
+        if(decryptedCombineTest != null) {
+            for(contacts in decryptedCombineTest!!.contactsItems) {
+                if (contacts.id == deleteId) {
+                    val deleteQuery = contactsRealm!!.where(Contacts::class.java).equalTo("id", contacts.id).findAll()
+                    if (deleteQuery.isManaged && deleteQuery.isValid) {
+                        deleteQuery.deleteAllFromRealm()
+                        return
                     }
                 }
             }
         }
-    }
+    }*/
 
     override fun contactsEdited(contacts: DecryptedContacts?) {
         mListsAdapter!!.updateContact(contacts!!)
@@ -129,10 +113,8 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     private var mListsAdapter: ContactsAdapter? = null
     var myList: ArrayList<Contacts> = ArrayList()
-    private var contactsList: ArrayList<Contacts>? = ArrayList()
     private var contactsRealm: Realm? = null
     private var combineContactsRealm: CombineContacts ?= null
-    private var decryptedCombineContacts: ArrayList<DecryptedCombineContacts> ?= null
 
     private var firstName = ""
     private var lastName = ""
@@ -140,7 +122,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     private val PERMISSIONS_REQUEST_CODE_CONTACTS = 111
 
-    private val REQUEST_CONTACT = 0
+    private val REQUEST_CONTACT = 1230
     private var mContacts: ArrayList<Contact>? = ArrayList()
     private var mGroups: List<Group>? = null
     private val EXTRA_DARK_THEME = "EXTRA_DARK_THEME"
@@ -153,26 +135,25 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
     }
 
     var finalList: ArrayList<DecryptedContacts> ?= ArrayList()
+    var decryptedCombineTest: DecryptedCombineContacts ?= null
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
-        contactsList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
-        decryptedCombineContacts = ArrayList()
-        decryptedCombineContacts = arguments!!.getParcelableArrayList("COMBINECONTACTS")
-        myList.addAll(contactsList!!)
-        myList.reverse()
+        decryptedCombineTest = arguments!!.getParcelable(Constants.REALM_CONTACTS)
 
-        decryptMyContacts(myList)
-        if(decrypedContacts != null)
-        sortMyList(decrypedContacts!!)
-
+        //decryptMyContacts(myList)
+        finalList = decryptedCombineTest!!.contactsItems
         mListsAdapter = ContactsAdapter(finalList, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvContactList!!.layoutManager = layoutManager
         rvContactList!!.adapter = mListsAdapter
+
+        if(finalList != null)
+            sortMyList(finalList!!)
+
 
         ivHome.setOnClickListener {
             NineBxApplication.instance.activityInstance!!.callHomeFragment()
@@ -188,10 +169,10 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST_CODE_CONTACTS)
                 } else {
-                    callForContact()
+                    callContactPicker()
                 }
             } else {
-                callForContact()
+                callContactPicker()
             }
         }
 
@@ -205,86 +186,11 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     }
 
-    /*private fun createIndex(finalList: ArrayList<DecryptedContacts>) {
-
-
-        var AindexedList = ArrayList<String>()
-        loop@ for(contact in finalList) {
-            when(contact.firstName[0].toString()) {
-                "A" -> {
-                    if(AheaderCount == false) {
-                        AindexedList.add(contact.firstName[0].toString())
-                        AheaderCount = true
-                    }
-                    AindexedList.add(contact.firstName)
-                    continue@loop
-                }
-                "B" -> {}
-                "C" -> {}
-                "D" -> {}
-                "E" -> {}
-                "F" -> {}
-                "G" -> {}
-                "H" -> {}
-                "I" -> {}
-                "J" -> {}
-                "K" -> {}
-                "L" -> {}
-                "M" -> {}
-                "N" -> {}
-                "O" -> {}
-                "P" -> {}
-                "Q" -> {}
-                "R" -> {}
-                "S" -> {}
-                "T" -> {}
-                "U" -> {}
-                "V" -> {}
-                "W" -> {}
-                "X" -> {}
-                "Y" -> {}
-                "Z" -> {}
-                "a" -> {}
-                "b" -> {}
-                "c" -> {}
-                "d" -> {}
-                "e" -> {}
-                "f" -> {}
-                "g" -> {}
-                "h" -> {}
-                "i" -> {}
-                "j" -> {}
-                "k" -> {}
-                "l" -> {}
-                "m" -> {}
-                "n" -> {}
-                "o" -> {}
-                "p" -> {}
-                "q" -> {}
-                "r" -> {}
-                "s" -> {}
-                "t" -> {}
-                "u" -> {}
-                "v" -> {}
-                "w" -> {}
-                "x" -> {}
-                "y" -> {}
-                "z" -> {}            }
-        }
-    }*/
-
     private fun sortMyList(decrypedContacts: ArrayList<DecryptedContacts>){
         val list = decrypedContacts.sortedWith( compareBy( { it.firstName }))
         finalList = ArrayList(list)
         if(mListsAdapter != null)
             mListsAdapter!!.notifyData(finalList!!)
-    }
-
-    var decrypedContacts: ArrayList<DecryptedContacts> ?= ArrayList()
-    fun decryptMyContacts(myList: ArrayList<Contacts>) {
-        for(contact in myList) {
-            decrypedContacts!!.add(decryptContact(contact))
-        }
     }
 
     override fun onBackPressed(): Boolean {
@@ -294,31 +200,9 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
         return super.onBackPressed()
     }
 
-   /* @SuppressLint("StaticFieldLeak")
-    fun deleteContactFromRealm() {
-        object : AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg p0: Void?): Void? {
-                prepareRealmConnections(context!!, false, REALM_END_POINT_COMBINE_CONTACTS, object: Realm.Callback() {
-                    override fun onSuccess(realm: Realm?) {
-                        contactsRealm = realm
-                        if(contactsRealm != null) {
-                            contactsRealm!!.beginTransaction()
-                            contactsRealm!!.where(Contacts::class.java).equalTo("id", selectedContact!!.id).findAll().deleteAllFromRealm()
-                            contactsRealm!!.commitTransaction()
-                            //contactsRealm!!.close()
-                        }
-                    }
-                })
-            return null
-            }
-
-        }
-    }*/
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ADD_CONTACTS && resultCode == Activity.RESULT_OK) {
             if(data!!.hasExtra("DELETED")) {
-                mListsAdapter!!.deleteContact(selectedContact!!)
                 contactsDeleted(selectedContact!!)
             } else {
                 contactsEdited(data.getParcelableExtra(Constants.CONTACTS_VIEW))
@@ -327,7 +211,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 (data.hasExtra(ContactPickerActivity.RESULT_GROUP_DATA) || data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA))) {
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
-
+            contactsRealm!!.beginTransaction()
             for (contact in mContacts!!) {
                 val realmContacts = Contacts()
                 realmContacts.id = UUID.randomUUID().hashCode().toLong()
@@ -359,9 +243,9 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 contacts.lastName = lastName.encryptString()
                 contacts.mobileOne = strMobileNumber.encryptString()
                 contacts.selectionType = "Contacts".encryptString()
-                contacts.insertOrUpdate(contactsRealm!!)
+                contactsRealm!!.insertOrUpdate(contacts)
 
-                contactsRealm!!.beginTransaction()
+
                 if(combineContactsRealm == null) {
                     combineContactsRealm = contactsRealm!!.createObject(CombineContacts::class.java, getUniqueId())
                 }
@@ -374,27 +258,14 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                     combineContactsRealm!!.contactsItems.add(contacts)
                 }
                 contactsRealm!!.insertOrUpdate(combineContactsRealm)
-                contactsRealm!!.commitTransaction()
+
 
             }
+            contactsRealm!!.commitTransaction()
             contactsRealm!!.refresh()
 
         } else
             super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
-        //int start = result.length();
-        val displayName = element.displayName
-        result.append(prefix)
-        result.append(displayName + "\n")
-    }
-
-    private fun callForContact() {
-        callContactPicker()
-
-        // populate contact list
-        populateContactList(mGroups, mContacts)
     }
 
     private fun callContactPicker() {
@@ -411,32 +282,6 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER,
                         ContactSortOrder.AUTOMATIC.name)
         startActivityForResult(intent, REQUEST_CONTACT)
-    }
-
-    private fun populateContactList(groups: List<Group>?, contacts: List<Contact>?) {
-        // we got a result from the contact picker --> show the picked contacts
-        val result = SpannableStringBuilder()
-
-        try {
-            if (groups != null && !groups.isEmpty()) {
-                result.append("GROUPS\n")
-                for (group in groups) {
-                    populateContact(result, group, "")
-                    for (contact in group.contacts) {
-                        populateContact(result, contact, "    ")
-                    }
-                }
-            }
-            if (contacts != null && !contacts.isEmpty()) {
-                result.append("\n")
-                for (contact in contacts) {
-                    populateContact(result, contact, "")
-                }
-            }
-        } catch (e: Exception) {
-            result.append(e.message)
-        }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -456,7 +301,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
         if (requestCode == PERMISSIONS_REQUEST_CODE_CONTACTS) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                callForContact()
+                callContactPicker()
             } else {
                 Toast.makeText(context, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }

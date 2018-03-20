@@ -526,7 +526,19 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     private var decryptedCombineContact: DecryptedCombineContacts ?= null
     private fun gettingContactsList() {
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+
+        if(combinedItems != null) {
+            val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            val addFamilyUsersFragment = ContactsListContainerFragment()
+            val bundle = Bundle()
+            bundle.putString("categoryName", categoryName)
+            bundle.putString("categoryId", categoryID)
+            bundle.putParcelable(Constants.REALM_CONTACTS, combinedItems!!/*Contacts.createParcelableList(combinedItems!!)*/)
+            addFamilyUsersFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+        }
+        /*prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
 
             override fun onSuccess(realm: Realm?) {
                 hideProgress()
@@ -547,13 +559,13 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     bundle.putString("categoryId", categoryID)
                     bundle.putParcelableArrayList(Constants.REALM_CONTACTS, Contacts.createParcelableList(allContacts!!))
                     if(combineContacts != null) {
-                        bundle.putParcelableArrayList("COMBINECONTACTS", decryptedCombineContacts)
+                        bundle.putParcelableArrayList(Constants.COMBINE_ITEMS, decryptedCombineContacts)
                     }
                     addFamilyUsersFragment.arguments = bundle
                     fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
                 }
             }
-        })
+        })*/
     }
 
     private var decryptedCombineContacts: ArrayList<DecryptedCombineContacts> ?= null

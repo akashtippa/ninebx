@@ -222,21 +222,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     private var currentUsers: ArrayList<DecryptedUsers>? = null
     private lateinit var homePresenter: HomePresenter
 
-    /*companion object {
-        //testing RealmDelete
-        @SuppressLint("StaticFieldLeak")
-        private var homeActivityRealm: Realm ?= null
-    }*/
-
-    /*fun getRealm() {
-        prepareRealmConnections(this, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm?) {
-                homeActivityRealm = realm
-            }
-        })
-    }*/
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -289,7 +274,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         this.showProgressDialog(getString(R.string.loading))
         homePresenter.fetchCurrentUsers()
         val awsSecureFileTransfer = AWSSecureFileTransfer(this@HomeActivity)
-        //getRealm()
     }
 
     lateinit var bottomSheetDialogFragment: CustomBottomSheetProfileDialogFragment
