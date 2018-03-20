@@ -291,7 +291,10 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
                 realmContacts.id = UUID.randomUUID().hashCode().toLong()
                 realmContacts.firstName = contact.firstName
                 realmContacts.lastName = contact.lastName
-                realmContacts.mobileOne = contact.getPhone(0)
+                if(contact.getPhone(0) != null)
+                    realmContacts.mobileOne = contact.getPhone(0)
+                else
+                    realmContacts.mobileOne = ""
 
                 firstName = contact.firstName
                 strMobileNumber = contact.getPhone(0)
