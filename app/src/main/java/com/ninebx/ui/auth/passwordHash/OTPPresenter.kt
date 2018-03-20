@@ -31,8 +31,9 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
 
 
 
-    fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText?){
+    fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText? , emailOtpString:String){
 
+        emailOtp = emailOtpString
 
         context!!.showProgressDialog("Loading")
 
@@ -97,19 +98,9 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
     private var runnable: Runnable = Runnable {
         if (tvResend != null) {
             if(mOTPView.otpVerificationGet()){
-
-                val builder = AlertDialog.Builder(context)
-                builder.setTitle("NineBx")
-                builder.setIcon(R.mipmap.ic_launcher)
-                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        p0?.cancel()
-                    }
-                })
-                builder.setMessage("Incorrect OTP")
-                builder.show()
+                context!!.showToast(R.string.otp_expired)
             }
-            emailOtp = ""
+           // emailOtp = ""
         }
 
     }
@@ -126,7 +117,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
         if( !validateView( etOtp5 ) ) isValid = false
         if( !validateView( etOtp6 ) ) isValid = false
 
-        if( isValid) {
+        if( isValid && emailOtp != "") {
             val otp = etOtp1?.text.toString().trim() +
                     etOtp2?.text.toString().trim() +
                     etOtp3?.text.toString().trim() +

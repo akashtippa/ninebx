@@ -61,7 +61,7 @@ class OTPFragment : BaseAuthFragment(),OTPView {
         tvEmail.text = arguments!!.getString("email", "")
         btnSubmit.setOnClickListener {
 
-            OTPPresenter.submit(etOtp1,etOtp2,etOtp3,etOtp4,etOtp5,etOtp6)
+            OTPPresenter.submit(etOtp1,etOtp2,etOtp3,etOtp4,etOtp5,etOtp6 , emailOtp)
 
             /*if( validate() ) {
                 emailOtp = ""
@@ -318,6 +318,7 @@ class OTPFragment : BaseAuthFragment(),OTPView {
     }
 
     override fun validate(): Boolean {
+
         var isValid = true
 
         if( !validateView( etOtp1 ) ) isValid = false
