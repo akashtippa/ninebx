@@ -524,7 +524,7 @@ class SearchFragment : BaseHomeFragment(), SearchView {
             "license" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
                 goToCategoryFragment( selectedDocument )
-                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.nameOnLicense ,selectedDocument::class.java.simpleName)
+                mSearchPresenter.updateRecentSearch(selectedDocument.lic_description, selectedDocument.selectionType, selectedDocument.lic_description ,selectedDocument::class.java.simpleName)
             }
             "personal" ->{
                 val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
