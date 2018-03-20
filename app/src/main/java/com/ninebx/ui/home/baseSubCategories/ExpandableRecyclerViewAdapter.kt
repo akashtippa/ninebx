@@ -326,11 +326,11 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
     }
 
-    private fun showPopup( level2SubCategory: Level2SubCategory, optionEditText: EditText?, optionsList: Array<String>) {
+    private fun showPopup( level2SubCategory: Level2SubCategory, optionEditText: TextView?, optionsList: Array<String>) {
 
         val popupWindow = PopupWindow(_context)
         val popupView = LayoutInflater.from(_context).inflate(R.layout.popup_window_list_layout, null)
-        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
+        //popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
 
         popupWindow.contentView = popupView
         popupWindow.isOutsideTouchable = true
@@ -338,7 +338,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
         optionsListView.adapter = arrayAdapter
 
-        optionsListView.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, optionsList )
+        optionsListView.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, optionsList, optionEditText, popupWindow )
         popupWindow.showAsDropDown(optionEditText)
 
     }
@@ -368,7 +368,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<EditText>(R.id.etSubHeader)
-        val spinnerCurrency: EditText = itemView.findViewById<EditText>(R.id.spinnerCurrency)
+        val spinnerCurrency: TextView = itemView.findViewById<TextView>(R.id.spinnerCurrency)
         init {
 
             txtHeader.isEnabled = isEditMode
@@ -428,7 +428,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<EditText>(R.id.etSubHeader)
-        val spinnerAccountType = itemView.findViewById<EditText>(R.id.spinnerAccountType)
+        val spinnerAccountType = itemView.findViewById<TextView>(R.id.spinnerAccountType)
 
         init {
 
@@ -483,163 +483,75 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 val titleValue = level2SubCategory.titleValue
 
                 val spinnerItems = when (keyBoardType) {
-                // Women Shopping Category
 
                     Constants.PICKER_WOMEN_NUMERIC_SIZE -> {
                         ( womenTopsNumericSizes)
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenTopsNumericSizes )
                     }
                     Constants.PICKER_WOMEN_SIZE_US -> {
                         ( womenTopSize)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenTopSize )
                     }
                     Constants.PICKER_WOMENS_DETAILS_SIZE -> {
                         ( sizeCategoryArray)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, sizeCategoryArray )
                     }
 
                     Constants.PICKER_WOMEN_SHOES -> {
                         ( womenShoeSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenShoeSizes )
                     }
                     Constants.PICKER_WOMEN_SHOES_WIDTH -> {
                         ( womenShoeWidthSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenShoeWidthSizes )
                     }
 
                     Constants.PICKER_WOMEN_ACCESSORIES_BELTS -> {
                         ( womenAccessoriesBelts)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesBelts )
                     }
                     Constants.PICKER_WOMEN_ACCESSORIES_HATS -> {
                         ( womenAccessoriesHats)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesHats )
                     }
                     Constants.PICKER_WOMEN_ACCESSORIES_GLOVES -> {
                         ( womenAccessoriesGloves)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesGloves )
                     }
                     Constants.PICKER_WOMEN_ACCESSORIES_TIGHTS -> {
                         ( womenAccessoriesTights)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, womenAccessoriesTights )
                     }
-
                 // Men's Shopping Category
                     Constants.PICKER_MENS_SIZE_CATEGORY_US -> {
                         ( menSizeCategories)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menSizeCategories )
                     }
                     Constants.PICKER_MENS_SIZE -> {
                         ( menTopsSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsSizes )
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_TOPS -> {
                         ( menTopsNumericSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsNumericSizes )
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_BOTTOMS -> {
                         ( menBottomsNumericSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericSizes )
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_JACKETS -> {
                         ( menJacketsNumericSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menJacketsNumericSizes )
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_PANTS -> {
                         ( menBottomsNumericSizesSuiting)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericSizesSuiting )
                     }
                     Constants.PICKER_MENS_NUMERIC_SIZE_SUITING_OUTERWEAR -> {
                         ( menTopsNumericSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menTopsNumericSizes )
                     }
                     Constants.PICKER_MENS_SHOES -> {
                         ( menShoeSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menShoeSizes )
                     }
                     Constants.PICKER_MENS_SHOES_WIDTH -> {
                         ( menShoeWidthSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menShoeWidthSizes )
                     }
                     Constants.PICKER_MENS_BELTS -> {
                         ( menBelts)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBelts )
                     }
                     Constants.PICKER_MENS_BELTS_NUMERIC_SIZE -> {
                         ( menBottomsNumericBeltsSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menBottomsNumericBeltsSizes )
                     }
                     Constants.PICKER_MENS_TIGHTS -> {
                         ( menHats)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menHats )
                     }
                     Constants.PICKER_MENS_GLOVES -> {
                         ( menGloves)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, menGloves )
                     }
 
 
@@ -647,111 +559,51 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
                     Constants.PICKER_GIRLS_NUMERIC_SIZE -> {
                         ( girlsNumericSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsNumericSizes )
                     }
                     Constants.PICKER_GIRLS_SHOES_TODDLER -> {
                         ( girlsShoeSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoeSizes )
                     }
                     Constants.PICKER_GIRLS_SHOES_LITTLE_AND_BIG_KID -> {
                         ( girlsShoesLittleAndBigKidSize)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoesLittleAndBigKidSize )
                     }
                     Constants.PICKER_GIRLS_SHOES_WIDTH -> {
                         ( girlsShoeWidthSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsShoeWidthSizes )
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_BELTS -> {
                         ( girlsBeltSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsBeltSizes )
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_BELTS_NUMERIC_SIZE -> {
                         ( girlsNumericBeltsSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsNumericBeltsSizes )
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_HATS -> {
                         ( girlsHatSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsHatSizes )
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_GLOVES -> {
                         ( girlsGlovesSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsGlovesSizes )
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_TIGHTS -> {
                         ( girlsTightsSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsTightsSizes )
                     }
                     Constants.PICKER_GIRLS_ACCESSORIES_SOCKS -> {
                         ( girlsSocksSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, girlsSocksSizes )
                     }
 
                 // Baby Shopping Category
                     Constants.PICKER_BABY_CLOTHING -> {
                         ( babyClothings)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, babyClothings )
                     }
                     Constants.PICKER_BABY_SHOES -> {
                         ( babyShoeSizes)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, babyShoeSizes )
                     }
 
                     Constants.BANK_ACCOUNT_TYPE -> {
                         ( accountType)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, accountType )
                     }
                     Constants.OTHER_ACCOUNT_TYPE -> {
                         ( othersAccountTypeOptions)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, othersAccountTypeOptions )
                     }
                     /*Constants.CARD_TYPE*/else -> {
                         ( cardType)
-                        
-                        
-                        
-                       //spinnerItem.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, cardType )
                     }
 
 
@@ -763,7 +615,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         }
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
-        val spinnerItem: EditText = itemView.findViewById<EditText>(R.id.spinnerValue)
+        val spinnerItem: TextView = itemView.findViewById<TextView>(R.id.spinnerValue)
         init {
 
 
@@ -791,7 +643,10 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         }
     }
 
-    inner class CustomItemSelectedListener( val level2SubCategory: Level2SubCategory, val selectionArray : Array<String> ) : AdapterView.OnItemSelectedListener {
+    inner class CustomItemSelectedListener(private val level2SubCategory: Level2SubCategory,
+                                           private val selectionArray : Array<String>,
+                                           private val optionEditText: TextView?,
+                                           private val popupWindow: PopupWindow ) : AdapterView.OnItemSelectedListener {
 
         override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -800,6 +655,8 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
             level2SubCategory.titleValue = selectionArray[p2]
             level2CategoryPresenter.setValueToDocument(level2SubCategory)
+            optionEditText!!.setText(level2SubCategory.titleValue)
+            popupWindow.dismiss()
         }
     }
 
