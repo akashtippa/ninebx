@@ -89,10 +89,10 @@ class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<Su
             if (position != RecyclerView.NO_POSITION) {
                 when (view!!.id) {
                     R.id.tvCount -> {
-                        actionClickListener.onItemClick(category, getItemAtPosition(position), "add_item")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "add_item")
                     }
                     R.id.tvSubTitle -> {
-                        actionClickListener.onItemClick(category, getItemAtPosition(position), "display")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "display")
                     }
                 }
             }
@@ -115,7 +115,7 @@ class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<Su
             if (position != RecyclerView.NO_POSITION) {
                 when (view!!.id) {
                     R.id.tvSubTitle -> {
-                        actionClickListener.onItemClick(category, getItemAtPosition(position), "add_person")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "add_person")
                     }
                 }
             }
@@ -137,7 +137,7 @@ class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<Su
             if (position != RecyclerView.NO_POSITION) {
                 when (view!!.id) {
                     R.id.tvSubTitle -> {
-                        actionClickListener.onItemClick(category, getItemAtPosition(position), "display_person")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "display_person")
                     }
                 }
             }
