@@ -42,8 +42,8 @@ class AccountPasswordFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            etCreatePassword.setText("Password14.")
-            etConfirmPassword.setText("Password14.")
+            etCreatePassword.setText(TEST_PASSWORD)
+            etConfirmPassword.setText(TEST_PASSWORD)
         }
 
         ivBackPass.setOnClickListener {
