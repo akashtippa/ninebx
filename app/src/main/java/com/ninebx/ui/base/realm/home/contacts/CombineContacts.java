@@ -2,8 +2,13 @@ package com.ninebx.ui.base.realm.home.contacts;
 
 import com.ninebx.ui.base.realm.lists.ContactsList;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;

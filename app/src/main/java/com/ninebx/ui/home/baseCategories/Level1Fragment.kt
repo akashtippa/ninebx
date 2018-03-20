@@ -510,12 +510,17 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         })
     }
 
+    private var decryptedCombineContact: DecryptedCombineContacts ?= null
     private fun gettingContactsList() {
         prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+
             override fun onSuccess(realm: Realm?) {
                 hideProgress()
 
                 allContacts = getCurrentContactList(realm!!)
+                combineContacts = realm.where(CombineContacts::class.java).findAll()
+                decryptedCombineContact = DecryptedCombineContacts()
+                fetchCombineContacts(combineContacts!!)
                 if (allContacts != null) {
                     context!!.hideProgressDialog()
                     AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
@@ -527,11 +532,23 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     bundle.putString("categoryName", categoryName)
                     bundle.putString("categoryId", categoryID)
                     bundle.putParcelableArrayList(Constants.REALM_CONTACTS, Contacts.createParcelableList(allContacts!!))
+                    if(combineContacts != null) {
+                        bundle.putParcelableArrayList("COMBINECONTACTS", decryptedCombineContacts)
+                    }
                     addFamilyUsersFragment.arguments = bundle
                     fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
                 }
             }
         })
+    }
+
+    private var decryptedCombineContacts: ArrayList<DecryptedCombineContacts> ?= null
+
+    private fun fetchCombineContacts(combineContacts: RealmResults<CombineContacts>) {
+        decryptedCombineContacts= ArrayList()
+        for(contact in combineContacts) {
+            decryptedCombineContacts!!.add(decryptCombineContacts(contact))
+        }
     }
 
     private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
