@@ -156,8 +156,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedProperty-> {
                     val decryptedFinancial : DecryptedProperty = selectedDocument as DecryptedProperty
-                    etTitle.setText(decryptedFinancial.titleName)
-                    etTitleValue.setText(decryptedFinancial.propertyName)
+                    etTitle.setText(decryptedFinancial.propertyName)
+                    etTitleValue.setText(if( decryptedFinancial.titleName.isNotEmpty()) decryptedFinancial.titleName else decryptedFinancial.propertyName)
                     createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
