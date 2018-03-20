@@ -7,6 +7,7 @@ import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.decrypted.DecryptedEducation
+import com.ninebx.ui.base.realm.decrypted.DecryptedMainEducation
 import com.ninebx.ui.base.realm.decrypted.DecryptedWork
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
@@ -25,8 +26,9 @@ class EducationAndWorkHelper(var category_name : String,
                              var selectedDocument : Parcelable?,
                              val categoryView : Level2CategoryView) {
 
-    private var decryptedEducation: DecryptedEducation? = null
-    private var decryptedWork: DecryptedWork? = null
+    private var decryptedEducation: DecryptedEducation? = null//Decrypt Education
+    private var decryptedWork: DecryptedWork? = null//Decrypt work
+    private var decryptedMainEducation: DecryptedMainEducation ?= null
 
     fun initialize() {
         if (selectedDocument == null) {
@@ -39,19 +41,53 @@ class EducationAndWorkHelper(var category_name : String,
             DecryptedWork::class.java.simpleName -> {
                 decryptedWork = selectedDocument as DecryptedWork
             }
+            DecryptedMainEducation::class.java.simpleName -> {
+                decryptedMainEducation = selectedDocument as DecryptedMainEducation
+            }
         }
     }
 
     fun getFormForCategory() {
         when (category_name) {
             "Education" -> {
-                getEducation()
+                getMainEducation()
             }
             "Work" -> {
                 getWork()
             }
         }
     }
+
+    private fun getMainEducation() {
+            val categoryList = ArrayList<Level2Category>()
+            if (decryptedEducation == null) decryptedEducation = DecryptedEducation()
+            var categoryIndex = 1001
+            var category_id = "edu_" + categoryIndex
+            var category = Level2Category(category_id)
+            category.title = "Details"
+            category.subCategories.add(Level2SubCategory("Name", "Name", "", Constants.LEVEL2_NORMAL))
+            category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
+            category.subCategories.add(Level2SubCategory("Concenteration/majaor", "Concenteration/majaor", "", Constants.LEVEL2_NORMAL))
+            category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_PICKER))
+            category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_PICKER))
+            category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH))
+            categoryList.add(category)
+
+            categoryIndex += 2032
+            category_id = "account_details" + categoryIndex
+            category = Level2Category(category_id)
+            category.title = "Notes"
+            category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+            categoryList.add(category)
+
+            categoryIndex += 2032
+            category_id = "account_details" + categoryIndex
+            category = Level2Category(category_id)
+            category.title = "Attachments"
+            category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+            categoryList.add(category)
+            categoryView.onSuccess(categoryList)
+        }
 
     private fun getWork() {
         val categoryList = ArrayList<Level2Category>()
@@ -113,15 +149,13 @@ class EducationAndWorkHelper(var category_name : String,
         category.title = "Attachments"
         category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
-
-
         categoryView.onSuccess(categoryList)
     }
 
     fun setValue(level2Category: Level2SubCategory) {
         when (category_name) {
             "Education" -> {
-                setEducation(level2Category)
+                setMainEducation(level2Category)
             }
             "Work" -> {
                 setWork(level2Category)
@@ -129,6 +163,17 @@ class EducationAndWorkHelper(var category_name : String,
         }
     }
 
+    private fun setMainEducation(level2Category: Level2SubCategory) {
+        when(level2Category.title){
+            "Institution name"-> decryptedMainEducation!!.institutionName = level2Category.titleValue
+            "Qualification/degree"-> decryptedMainEducation!!.qualification = level2Category.titleValue
+            "Name"-> decryptedMainEducation!!.name = level2Category.titleValue
+            "Location"-> decryptedMainEducation!!.location = level2Category.titleValue
+            "Concentration/major" ->  decryptedMainEducation!!.major = level2Category.titleValue
+            "From" ->  decryptedMainEducation!!.from = level2Category.titleValue
+            "To" ->  decryptedMainEducation!!.to = level2Category.titleValue
+        }
+    }
     private fun setWork(level2Category: Level2SubCategory) {
         when (level2Category.title) {
             "Company name" -> decryptedWork!!.companyName= level2Category.titleValue
@@ -150,10 +195,9 @@ class EducationAndWorkHelper(var category_name : String,
             when (level2Category.title) {
 
                 "Institution name" -> decryptedEducation!!.institutionName = level2Category.titleValue
-                "Account name" -> decryptedEducation!!.accountName = level2Category.titleValue
-                "Account type" -> decryptedEducation!!.accountType = level2Category.titleValue
+                "Account name" -> decryptedEducation!!.userName = level2Category.titleValue
+                "Location"->decryptedEducation!!.location = level2Category.titleValue
                 "Name(s) on account" -> decryptedEducation!!.nameOnAccount = level2Category.titleValue
-                "Location" -> decryptedEducation!!.location = level2Category.titleValue
                 "SWIFT/other code" -> decryptedEducation!!.swiftCode = level2Category.titleValue
                 "ABA routing number" -> decryptedEducation!!.abaRoutingNumber = level2Category.titleValue
                 "Contacts" -> decryptedEducation!!.contacts = level2Category.titleValue
@@ -238,7 +282,7 @@ class EducationAndWorkHelper(var category_name : String,
                             if (combineRealm!!.educationItems.contains(encryptedObject)) {
                                 val index = combineRealm!!.educationItems.indexOf(encryptedObject)
                                 if (index != -1) {
-                                    combineRealm!!.educationItems[index] = (encryptedObject)
+                                    combineRealm!!.educationItems.indexOf(encryptedObject)
                                 }
                             } else {
                                 combineRealm!!.educationItems.add(encryptedObject)
@@ -262,8 +306,12 @@ class EducationAndWorkHelper(var category_name : String,
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedWork != null) {
-            decryptedWork!!.selectionType = categoryID//check from IOS
+            decryptedWork!!.selectionType = categoryID
             decryptedWork!!.companyName = title
+            decryptedEducation!!.accountName = subTitle
+            //decryptedWork!!.to=
+            //decryptedWork!!.location=
+            //decryptedWork!!.position=
             AppLogger.d("SelectionType ", "decryptedEducation" + decryptedWork!!.selectionType)
             if (decryptedEducation!!.created.isEmpty())
                 decryptedEducation!!.created = currentUsers + " " + currentDateandTime
@@ -317,7 +365,7 @@ class EducationAndWorkHelper(var category_name : String,
                             if (combineRealm!!.workItems.contains(encryptedObject)) {
                                 val index = combineRealm!!.workItems.indexOf(encryptedObject)
                                 if (index != -1) {
-                                    combineRealm!!.workItems[index] = (encryptedObject)
+                                    combineRealm!!.workItems.indexOf(encryptedObject)
                                 }
                             } else {
                                 combineRealm!!.workItems.add(encryptedObject)
