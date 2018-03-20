@@ -10,6 +10,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.utility.AppLogger
+import com.ninebx.utility.TEST_PASSWORD
 import com.ninebx.utility.encryptKey
 import kotlinx.android.synthetic.main.fragment_confirm_password.*
 import java.util.*
@@ -46,7 +47,7 @@ class ConfirmPasswordFragment : Fragment() {
             activity!!.finish()
         }
         if (NineBxApplication.autoTestMode) {
-            etConfirmPassword.setText("Password14.")
+            etConfirmPassword.setText(TEST_PASSWORD)
         }
     }
 

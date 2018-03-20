@@ -170,6 +170,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.txtHeader.text = headerTitle
                 locationViewHolder.etSubHeader.hint = headerTitle
                 locationViewHolder.etSubHeader.setText(  titleValue)
+                locationViewHolder.etSubHeader.addTextChangedListener(CustomTextWatcher(level2SubCategory))
                 locationViewHolder.etSubHeader.setOnClickListener {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {

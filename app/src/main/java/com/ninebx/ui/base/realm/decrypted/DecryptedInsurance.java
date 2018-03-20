@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedInsurance implements Parcelable {
 
-    public static final Creator<DecryptedInsurance> CREATOR = new Creator<DecryptedInsurance>() {
-        @Override
-        public DecryptedInsurance createFromParcel(Parcel in) {
-            return new DecryptedInsurance(in);
-        }
-
-        @Override
-        public DecryptedInsurance[] newArray(int size) {
-            return new DecryptedInsurance[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -105,30 +94,7 @@ public class DecryptedInsurance implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedInsurance(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        insuranceCompany = in.readString();
-        insuredProperty = in.readString();
-        insuredVehicle = in.readString();
-        insuredPerson = in.readString();
-        policyNumber = in.readString();
-        policyEffectiveDate = in.readString();
-        policyExpirationDate = in.readString();
-        contacts = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-    }
+
 
     public long getId() {
         return id;
@@ -314,35 +280,7 @@ public class DecryptedInsurance implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(insuranceCompany);
-        dest.writeString(insuredProperty);
-        dest.writeString(insuredVehicle);
-        dest.writeString(insuredPerson);
-        dest.writeString(policyNumber);
-        dest.writeString(policyEffectiveDate);
-        dest.writeString(policyExpirationDate);
-        dest.writeString(contacts);
-        dest.writeString(website);
-        dest.writeString(userName);
-        dest.writeString(password);
-        dest.writeString(pin);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     @Override
     public String toString() {
@@ -371,4 +309,75 @@ public class DecryptedInsurance implements Parcelable {
                 ", attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.insuranceCompany);
+        dest.writeString(this.insuredProperty);
+        dest.writeString(this.insuredVehicle);
+        dest.writeString(this.insuredPerson);
+        dest.writeString(this.policyNumber);
+        dest.writeString(this.policyEffectiveDate);
+        dest.writeString(this.policyExpirationDate);
+        dest.writeString(this.contacts);
+        dest.writeString(this.website);
+        dest.writeString(this.userName);
+        dest.writeString(this.password);
+        dest.writeString(this.pin);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+    }
+
+    protected DecryptedInsurance(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.insuranceCompany = in.readString();
+        this.insuredProperty = in.readString();
+        this.insuredVehicle = in.readString();
+        this.insuredPerson = in.readString();
+        this.policyNumber = in.readString();
+        this.policyEffectiveDate = in.readString();
+        this.policyExpirationDate = in.readString();
+        this.contacts = in.readString();
+        this.website = in.readString();
+        this.userName = in.readString();
+        this.password = in.readString();
+        this.pin = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+    }
+
+    public static final Creator<DecryptedInsurance> CREATOR = new Creator<DecryptedInsurance>() {
+        @Override
+        public DecryptedInsurance createFromParcel(Parcel source) {
+            return new DecryptedInsurance(source);
+        }
+
+        @Override
+        public DecryptedInsurance[] newArray(int size) {
+            return new DecryptedInsurance[size];
+        }
+    };
 }

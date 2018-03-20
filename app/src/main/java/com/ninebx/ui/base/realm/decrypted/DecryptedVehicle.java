@@ -18,17 +18,6 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedVehicle implements Parcelable {
-    public static final Creator<DecryptedVehicle> CREATOR = new Creator<DecryptedVehicle>() {
-        @Override
-        public DecryptedVehicle createFromParcel(Parcel in) {
-            return new DecryptedVehicle(in);
-        }
-
-        @Override
-        public DecryptedVehicle[] newArray(int size) {
-            return new DecryptedVehicle[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -126,39 +115,6 @@ public class DecryptedVehicle implements Parcelable {
         this.vehicle = vehicle;
         this.notes = notes;
         this.attachmentNames = attachmentNames;
-    }
-
-    protected DecryptedVehicle(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        vehicleName = in.readString();
-        licenseNumber = in.readString();
-        vinNumber = in.readString();
-        make = in.readString();
-        model = in.readString();
-        modelYear = in.readString();
-        color = in.readString();
-        titleName = in.readString();
-        estimatedMarketValue = in.readString();
-        registrationExpirydate = in.readString();
-        purchasedOrLeased = in.readString();
-        purchaseDate = in.readString();
-        financedThroughLoan = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        leaseStartDate = in.readString();
-        leaseEndDate = in.readString();
-        contacts = in.readString();
-        maintenanceEvent = in.readString();
-        serviceProviderName = in.readString();
-        dateOfService = in.readString();
-        vehicle = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
     }
 
     public long getId() {
@@ -409,43 +365,7 @@ public class DecryptedVehicle implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(vehicleName);
-        dest.writeString(licenseNumber);
-        dest.writeString(vinNumber);
-        dest.writeString(make);
-        dest.writeString(model);
-        dest.writeString(modelYear);
-        dest.writeString(color);
-        dest.writeString(titleName);
-        dest.writeString(estimatedMarketValue);
-        dest.writeString(registrationExpirydate);
-        dest.writeString(purchasedOrLeased);
-        dest.writeString(purchaseDate);
-        dest.writeString(financedThroughLoan);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-        dest.writeString(leaseStartDate);
-        dest.writeString(leaseEndDate);
-        dest.writeString(contacts);
-        dest.writeString(maintenanceEvent);
-        dest.writeString(serviceProviderName);
-        dest.writeString(dateOfService);
-        dest.writeString(vehicle);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     @Override
     public String toString() {
@@ -482,4 +402,91 @@ public class DecryptedVehicle implements Parcelable {
                 ", attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.vehicleName);
+        dest.writeString(this.licenseNumber);
+        dest.writeString(this.vinNumber);
+        dest.writeString(this.make);
+        dest.writeString(this.model);
+        dest.writeString(this.modelYear);
+        dest.writeString(this.color);
+        dest.writeString(this.titleName);
+        dest.writeString(this.estimatedMarketValue);
+        dest.writeString(this.registrationExpirydate);
+        dest.writeString(this.purchasedOrLeased);
+        dest.writeString(this.purchaseDate);
+        dest.writeString(this.financedThroughLoan);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+        dest.writeString(this.leaseStartDate);
+        dest.writeString(this.leaseEndDate);
+        dest.writeString(this.contacts);
+        dest.writeString(this.maintenanceEvent);
+        dest.writeString(this.serviceProviderName);
+        dest.writeString(this.dateOfService);
+        dest.writeString(this.vehicle);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+    }
+
+    protected DecryptedVehicle(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.vehicleName = in.readString();
+        this.licenseNumber = in.readString();
+        this.vinNumber = in.readString();
+        this.make = in.readString();
+        this.model = in.readString();
+        this.modelYear = in.readString();
+        this.color = in.readString();
+        this.titleName = in.readString();
+        this.estimatedMarketValue = in.readString();
+        this.registrationExpirydate = in.readString();
+        this.purchasedOrLeased = in.readString();
+        this.purchaseDate = in.readString();
+        this.financedThroughLoan = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+        this.leaseStartDate = in.readString();
+        this.leaseEndDate = in.readString();
+        this.contacts = in.readString();
+        this.maintenanceEvent = in.readString();
+        this.serviceProviderName = in.readString();
+        this.dateOfService = in.readString();
+        this.vehicle = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+    }
+
+    public static final Creator<DecryptedVehicle> CREATOR = new Creator<DecryptedVehicle>() {
+        @Override
+        public DecryptedVehicle createFromParcel(Parcel source) {
+            return new DecryptedVehicle(source);
+        }
+
+        @Override
+        public DecryptedVehicle[] newArray(int size) {
+            return new DecryptedVehicle[size];
+        }
+    };
 }

@@ -204,8 +204,8 @@ class PersonalHelper(var category_name : String,
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name 1 on certificate", decryptedCertificate!!.nameOneCertificate, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name 2 on certificate", decryptedCertificate!!.nameTwoCertificate, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of marriage", decryptedCertificate!!.dateOfMarriage, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Place of marriage", decryptedCertificate!!.placeOfMarriage, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of marriage", decryptedCertificate!!.dateOfMarriage, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Place of marriage", decryptedCertificate!!.placeOfMarriage, Constants.KEYBOARD_PICKER, Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2020
@@ -235,7 +235,7 @@ class PersonalHelper(var category_name : String,
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on certificate", decryptedCertificate!!.nameOnCertificate, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Gender", decryptedCertificate!!.gender, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Time of birth", decryptedCertificate!!.timeOfBirth, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place of birth", decryptedCertificate!!.placeOfBirth, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
@@ -377,7 +377,7 @@ class PersonalHelper(var category_name : String,
 
         if (decryptedDriversLicense != null) {
             decryptedDriversLicense!!.selectionType = categoryID
-            decryptedDriversLicense!!.nameOnLicense = title
+            decryptedDriversLicense!!.lic_description = title
 
             if( decryptedDriversLicense!!.created.isEmpty() )
                 decryptedDriversLicense!!.created = currentUsers + " " + currentDateandTime
@@ -394,6 +394,7 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
+                            val realmLicense = realm.where(CombinePersonal::class.java).equalTo("id", decryptedDriversLicense!!.id).findFirst()
                             val driversLicense = encryptLicense(decryptedDriversLicense!!)
                             realm.insertOrUpdate(driversLicense)
                             realm.commitTransaction()
@@ -415,23 +416,23 @@ class PersonalHelper(var category_name : String,
                 override fun doInBackground(vararg params: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmDriversLicense = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
+                            val combine: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            var combinePersonal1 = realm!!.where(CombinePersonal::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
-                            if (realmDriversLicense == null) {
-                                realmDriversLicense = realm.createObject(CombinePersonal::class.java, getUniqueId())
+                            if (combinePersonal1 == null) {
+                                combinePersonal1 = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
                             val encryptedObject = encryptLicense(decryptedDriversLicense!!)
-                            if(realmDriversLicense!!.licenseItems.contains(encryptedObject)){
-                                val index = realmDriversLicense!!.licenseItems.indexOf(encryptedObject)
+                            if(combinePersonal1!!.licenseItems.contains(encryptedObject)){
+                                val index = combinePersonal1!!.licenseItems.indexOf(encryptedObject)
                                 if(index != -1){
-                                    realmDriversLicense!!.licenseItems[index] = encryptedObject
+                                    combinePersonal1!!.licenseItems[index] = encryptedObject
                                 }
                             }else{
-                                realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
+                                combinePersonal1!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
                             }
-
-                            realm.copyToRealmOrUpdate(realmDriversLicense)
+                           // combinePersonal1!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
+                            realm.insertOrUpdate(combinePersonal1)
                             AppLogger.d("Adding ", " Combine personal")
                             realm.commitTransaction()
                         }
@@ -451,6 +452,7 @@ class PersonalHelper(var category_name : String,
         if (decryptedSocial != null) {
             decryptedSocial!!.selectionType = categoryID
             decryptedSocial!!.cardName = title
+
             if( decryptedSocial!!.created.isEmpty() )
                 decryptedSocial!!.created = currentUsers + " " + currentDateandTime
             decryptedSocial!!.modified = currentUsers + " " + currentDateandTime
@@ -686,7 +688,7 @@ class PersonalHelper(var category_name : String,
                             if (realmCertificate == null) {
                                 realmCertificate = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptCertificate(decryptedCertificate!!)
+                            /*val encryptedObject = encryptCertificate(decryptedCertificate!!)
                             if(realmCertificate!!.certificateItems.contains(decryptedCertificate)){
                                 val index = realmCertificate!!.certificateItems.indexOf(encryptedObject)
                                 if(index != -1){
@@ -694,7 +696,8 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
-                            }
+                            }*/
+                            realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
                             realm.copyToRealmOrUpdate(realmCertificate)
                             realm.commitTransaction()
                         }

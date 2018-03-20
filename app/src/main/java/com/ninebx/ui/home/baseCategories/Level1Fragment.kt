@@ -262,7 +262,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                        if( !subCategoryAdapter.checkForDependentCategory("Vehicles") ) {
+                        if( !checkForAsset("Vehicles", categories) ) {
                             context!!.showToast(R.string.error_empty_vehicle_list)
                             return
                         }
@@ -353,6 +353,19 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             }
             layoutCategory.addView(categoryView)
         }
+    }
+
+    private fun checkForAsset(categoryName: String, categories: ArrayList<Category>): Boolean {
+        var isAssetPresent = false
+        for( category in categories ) {
+            val subCategoryIndex = category.subCategories.indexOf(SubCategory(categoryName))
+            if( subCategoryIndex != -1 ) {
+                val subCategory = category.subCategories[subCategoryIndex]
+                isAssetPresent = subCategory.formsCount > 0
+            }
+            if( isAssetPresent ) break
+        }
+        return isAssetPresent
     }
 
     var addedPersonList: ArrayList<DecryptedMember> = ArrayList()

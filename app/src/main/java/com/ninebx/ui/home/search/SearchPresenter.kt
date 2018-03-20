@@ -393,6 +393,7 @@ class SearchPresenter {
     }
 
     private fun appendToDecryptCombineTravel(decryptedCombineTravel: DecryptedCombineTravel) {
+        mDecryptedCombineTravel.id = decryptedCombineTravel.id
         mDecryptedCombineTravel.documentsItems.addAll(decryptedCombineTravel.documentsItems)
         mDecryptedCombineTravel.loyaltyItems.addAll(decryptedCombineTravel.loyaltyItems)
         mDecryptedCombineTravel.travelItems.addAll(decryptedCombineTravel.travelItems)
@@ -401,12 +402,14 @@ class SearchPresenter {
     }
 
     private fun appendToDecryptCOmbineMemories(decryptedCombineMemories: DecryptedCombineMemories) {
+        mDecryptedCombineMemories.id = decryptedCombineMemories.id
         mDecryptedCombineMemories.listItems.addAll(decryptedCombineMemories.listItems)
         mDecryptedCombineMemories.mainMemoriesItems.addAll(decryptedCombineMemories.mainMemoriesItems)
         mDecryptedCombineMemories.memoryTimelineItems.addAll(decryptedCombineMemories.memoryTimelineItems)
     }
 
     private fun appendToDecryptCombineEducation(decryptedCombineEducation: DecryptedCombineEducation) {
+        mDecryptCombineEducation.id = decryptedCombineEducation.id
         mDecryptCombineEducation.listItems.addAll(decryptedCombineEducation.listItems)
         mDecryptCombineEducation.educationItems.addAll(decryptedCombineEducation.educationItems)
         mDecryptCombineEducation.mainEducationItems.addAll(decryptedCombineEducation.mainEducationItems)
@@ -414,11 +417,13 @@ class SearchPresenter {
     }
 
     private fun appendToDecryptCombineInterests(decryptedCombineInterests: DecryptedCombineInterests) {
+        mDecryptCombineInterests.id = decryptedCombineInterests.id
         mDecryptCombineInterests.interestItems.addAll(decryptedCombineInterests.interestItems)
         mDecryptCombineInterests.listItems.addAll(decryptedCombineInterests.listItems)
     }
 
     private fun appendToDecryptCombineWellness(decryptedCombineWellness: DecryptedCombineWellness) {
+        mDecryptCombineWellness.id = decryptedCombineWellness.id
         mDecryptCombineWellness.checkupsItems.addAll(decryptedCombineWellness.checkupsItems)
         mDecryptCombineWellness.emergencyContactsItems.addAll(decryptedCombineWellness.emergencyContactsItems)
         mDecryptCombineWellness.eyeglassPrescriptionsItems.addAll(decryptedCombineWellness.eyeglassPrescriptionsItems)
@@ -433,6 +438,7 @@ class SearchPresenter {
     }
 
     private fun appendToDecryptCombinePersonal(decryptedCombinePersonal: DecryptedCombinePersonal) {
+        mDecryptCombinePersonal.id = decryptedCombinePersonal.id
         mDecryptCombinePersonal.certificateItems.addAll(decryptedCombinePersonal.certificateItems)
         mDecryptCombinePersonal.governmentItems.addAll(decryptedCombinePersonal.governmentItems)
         mDecryptCombinePersonal.licenseItems.addAll(decryptedCombinePersonal.licenseItems)
@@ -443,6 +449,7 @@ class SearchPresenter {
     }
 
     private fun appendToDecryptCombineShopping(decryptedCombineShopping: DecryptedCombineShopping) {
+        mDecryptCombineShopping.id = decryptedCombineShopping.id
         mDecryptCombineShopping.loyaltyProgramsItems.addAll(decryptedCombineShopping.loyaltyProgramsItems)
         mDecryptCombineShopping.recentPurchaseItems.addAll(decryptedCombineShopping.recentPurchaseItems)
         mDecryptCombineShopping.shoppingItems.addAll(decryptedCombineShopping.shoppingItems)
@@ -451,6 +458,7 @@ class SearchPresenter {
     }
 
     private fun appendToDecryptCombineContacts(decryptedCombineContacts: DecryptedCombineContacts) {
+        mDecryptedCombineContacts.id = decryptedCombineContacts.id
         mDecryptedCombineContacts.contactsItems.addAll(decryptedCombineContacts.contactsItems)
         mDecryptedCombineContacts.mainContactsItems.addAll(decryptedCombineContacts.mainContactsItems)
         mDecryptedCombineContacts.listItems.addAll(decryptedCombineContacts.listItems)
