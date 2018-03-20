@@ -73,60 +73,7 @@ public class DecryptedLicense implements Parcelable {
         this.backingImages = backingImages;
     }
 
-    protected DecryptedLicense(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        lic_description = in.readString();
-        nameOnLicense = in.readString();
-        issuingCountry = in.readString();
-        issuingState = in.readString();
-        licenseNumber = in.readString();
-        dateIssued = in.readString();
-        expirationDate = in.readString();
-        notes = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(selectionType);
-        dest.writeString(lic_description);
-        dest.writeString(nameOnLicense);
-        dest.writeString(issuingCountry);
-        dest.writeString(issuingState);
-        dest.writeString(licenseNumber);
-        dest.writeString(dateIssued);
-        dest.writeString(expirationDate);
-        dest.writeString(notes);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<DecryptedLicense> CREATOR = new Creator<DecryptedLicense>() {
-        @Override
-        public DecryptedLicense createFromParcel(Parcel in) {
-            return new DecryptedLicense(in);
-        }
-
-        @Override
-        public DecryptedLicense[] newArray(int size) {
-            return new DecryptedLicense[size];
-        }
-    };
 
     public long getId() {
         return id;
@@ -276,4 +223,64 @@ public class DecryptedLicense implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.lic_description);
+        dest.writeString(this.nameOnLicense);
+        dest.writeString(this.issuingCountry);
+        dest.writeString(this.issuingState);
+        dest.writeString(this.licenseNumber);
+        dest.writeString(this.dateIssued);
+        dest.writeString(this.expirationDate);
+        dest.writeString(this.notes);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+        dest.writeList(this.backingImages);
+    }
+
+    protected DecryptedLicense(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.lic_description = in.readString();
+        this.nameOnLicense = in.readString();
+        this.issuingCountry = in.readString();
+        this.issuingState = in.readString();
+        this.licenseNumber = in.readString();
+        this.dateIssued = in.readString();
+        this.expirationDate = in.readString();
+        this.notes = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+    }
+
+    public static final Creator<DecryptedLicense> CREATOR = new Creator<DecryptedLicense>() {
+        @Override
+        public DecryptedLicense createFromParcel(Parcel source) {
+            return new DecryptedLicense(source);
+        }
+
+        @Override
+        public DecryptedLicense[] newArray(int size) {
+            return new DecryptedLicense[size];
+        }
+    };
 }

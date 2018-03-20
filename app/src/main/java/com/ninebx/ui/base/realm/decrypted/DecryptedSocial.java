@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedSocial implements Parcelable {
 
-    public static final Creator<DecryptedSocial> CREATOR = new Creator<DecryptedSocial>() {
-        @Override
-        public DecryptedSocial createFromParcel(Parcel in) {
-            return new DecryptedSocial(in);
-        }
-
-        @Override
-        public DecryptedSocial[] newArray(int size) {
-            return new DecryptedSocial[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -59,22 +48,6 @@ public class DecryptedSocial implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedSocial(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        cardName = in.readString();
-        nameOnCard = in.readString();
-        socialSecurityNumber = in.readString();
-        notes = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
-
     public DecryptedSocial(String selectionType, String cardName, String nameOnCard, String socialSecurityNumber, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
         this.cardName = cardName;
@@ -91,26 +64,7 @@ public class DecryptedSocial implements Parcelable {
     public DecryptedSocial() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(cardName);
-        dest.writeString(nameOnCard);
-        dest.writeString(socialSecurityNumber);
-        dest.writeString(notes);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public long getId() {
         return id;
@@ -242,4 +196,57 @@ public class DecryptedSocial implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.cardName);
+        dest.writeString(this.nameOnCard);
+        dest.writeString(this.socialSecurityNumber);
+        dest.writeString(this.notes);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedSocial(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.cardName = in.readString();
+        this.nameOnCard = in.readString();
+        this.socialSecurityNumber = in.readString();
+        this.notes = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedSocial> CREATOR = new Creator<DecryptedSocial>() {
+        @Override
+        public DecryptedSocial createFromParcel(Parcel source) {
+            return new DecryptedSocial(source);
+        }
+
+        @Override
+        public DecryptedSocial[] newArray(int size) {
+            return new DecryptedSocial[size];
+        }
+    };
 }
