@@ -337,8 +337,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
         val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
         optionsListView.adapter = arrayAdapter
-
-        optionsListView.onItemSelectedListener = CustomItemSelectedListener( level2SubCategory, optionsList, optionEditText, popupWindow )
+        optionsListView.setOnItemClickListener(CustomItemSelectedListener( level2SubCategory, optionsList, optionEditText, popupWindow ))
         popupWindow.showAsDropDown(optionEditText)
 
     }
@@ -646,18 +645,15 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
     inner class CustomItemSelectedListener(private val level2SubCategory: Level2SubCategory,
                                            private val selectionArray : Array<String>,
                                            private val optionEditText: TextView?,
-                                           private val popupWindow: PopupWindow ) : AdapterView.OnItemSelectedListener {
+                                           private val popupWindow: PopupWindow ) : AdapterView.OnItemClickListener {
 
-        override fun onNothingSelected(p0: AdapterView<*>?) {
-
-        }
-
-        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
             level2SubCategory.titleValue = selectionArray[p2]
             level2CategoryPresenter.setValueToDocument(level2SubCategory)
             optionEditText!!.setText(level2SubCategory.titleValue)
             popupWindow.dismiss()
         }
+
     }
 
     private fun openStaticLayoutDialog( locationText: EditText) {
