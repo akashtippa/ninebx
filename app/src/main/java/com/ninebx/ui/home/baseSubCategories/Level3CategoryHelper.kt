@@ -61,6 +61,7 @@ class Level3CategoryHelper(
     private var homeHelper : HomeHelper ?= null
     private var personalHelper : PersonalHelper ?= null
     private var travelHelper: TravelHelper ?= null
+    private var educationAndWorkHelper : EducationAndWorkHelper ?= null
 
     init {
         extractObject()
@@ -79,6 +80,11 @@ class Level3CategoryHelper(
                 travelHelper = TravelHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 travelHelper!!.initialize()
                 travelHelper!!.getFormForCategory()
+            }
+            R.string.education_work ->{
+                educationAndWorkHelper = EducationAndWorkHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                educationAndWorkHelper!!.initialize()
+                educationAndWorkHelper!!.getFormForCategory()
             }
             else -> {
                 searchByOthers()
@@ -625,6 +631,39 @@ class Level3CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
+    private fun getTravelDatesAndPlans() {
+        val categoryList = ArrayList<Level2Category>()
+        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
+        var categoryIndex = 3001
+        var category_id = "travel_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
+        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
+        categoryList.add(category)
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
 
 
     // Types of InputTYpe
@@ -710,9 +749,6 @@ class Level3CategoryHelper(
 
         categoryView.onSuccess(categoryList)
     }
-
-
-    // Education and Work
 
     private fun getEducation() {
         val categoryList = ArrayList<Level2Category>()
@@ -870,40 +906,10 @@ class Level3CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    private fun getTravelDatesAndPlans() {
-        val categoryList = ArrayList<Level2Category>()
-        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
-        var categoryIndex = 3001
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
-        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
-        categoryList.add(category)
-
-        categoryIndex += 2035
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
 
 
-        categoryIndex += 2035
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
 
-        categoryView.onSuccess(categoryList)
-    }
-
-
+    // Education and Work
     // Wellness
 
     private fun getIdentification() {
@@ -1178,49 +1184,15 @@ class Level3CategoryHelper(
         if( personalHelper != null){
             personalHelper!!.setValue(level2Category)
         }
+        if(travelHelper != null) {
+            travelHelper!!.setValue(level2Category)
+        }
+        if(educationAndWorkHelper != null) {
+            educationAndWorkHelper!!.setValue(level2Category)
+        }
+
         else {
             when (category_name) {
-            // Travel
-
-                "Airline" -> {
-                    setLoyalty(level2Category)
-                }
-                "Hotel" -> {
-                    setLoyalty(level2Category)
-                }
-                "Car Rental" -> {
-                    setLoyalty(level2Category)
-                }
-                "Cruiseline" -> {
-                    setLoyalty(level2Category)
-                }
-                "Railway" -> {
-                    setLoyalty(level2Category)
-                }
-                "Other" -> {
-                    setLoyalty(level2Category)
-                }
-                "Passport" -> {
-                    setTravelDocuments(level2Category)
-                }
-                "Visa" -> {
-                    setTravelDocuments(level2Category)
-                }
-                "Other travel document" -> {
-                    setTravelDocuments(level2Category)
-                }
-
-                "Travel" -> {
-                    setTravelItems(level2Category)
-                }
-                "TravelInstitution" -> {
-                    setTravelItems(level2Category)
-                }
-                "Travel Dates And Plans" ->
-                {
-                    setVacationItems(level2Category)
-                }
-
 
             // Common View
                 "Services/Other Accounts" -> {
@@ -1395,105 +1367,6 @@ class Level3CategoryHelper(
             }
         }
     }
-
-    private fun setLoyalty(level2Category: Level2SubCategory) {
-        AppLogger.d("Level2Category", " " + level2Category)
-        when (level2Category.title) {
-            "Airline" -> decryptedLoyalty!!.airLine = level2Category.titleValue
-            "Hotel" -> decryptedLoyalty!!.hotel = level2Category.titleValue
-            "Car Rental Company" -> decryptedLoyalty!!.carRentalCompany = level2Category.titleValue
-            "Cruiseline" -> decryptedLoyalty!!.cruiseline = level2Category.titleValue
-            "Railway" -> decryptedLoyalty!!.railway = level2Category.titleValue
-            "Account name" -> decryptedLoyalty!!.accountName = level2Category.titleValue
-            "Other" -> decryptedLoyalty!!.other = level2Category.titleValue
-            "Account name" -> decryptedLoyalty!!.accountName = level2Category.titleValue
-            "Name on account" -> decryptedLoyalty!!.nameOnAccount = level2Category.titleValue
-            "Account number" -> decryptedLoyalty!!.accountNumber = level2Category.titleValue
-            "Website" -> decryptedLoyalty!!.website = level2Category.titleValue
-            "Username/login" -> decryptedLoyalty!!.userName = level2Category.titleValue
-            "Password" -> decryptedLoyalty!!.password = level2Category.titleValue
-            "PIN" -> decryptedLoyalty!!.pin = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedLoyalty!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedLoyalty!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setTravelDocuments(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Passport name" -> decryptedDocuments!!.passportName = level2Category.titleValue
-            "Name on passport" -> decryptedDocuments!!.nameOnPassport = level2Category.titleValue
-            "Issuing country" -> decryptedDocuments!!.issuingCountry = level2Category.titleValue
-            "Passport number" -> decryptedDocuments!!.passportNumber = level2Category.titleValue
-            "Place issued" -> decryptedDocuments!!.placeIssued = level2Category.titleValue
-            "Date issued" -> decryptedDocuments!!.dateIssued = level2Category.titleValue
-            "Visa name" -> decryptedDocuments!!.visaName = level2Category.titleValue
-            "Name on visa" -> decryptedDocuments!!.nameOnVisa = level2Category.titleValue
-            "Visa type" -> decryptedDocuments!!.visaType = level2Category.titleValue
-            "Visa number" -> decryptedDocuments!!.visaNumber = level2Category.titleValue
-            "Travel document title" -> decryptedDocuments!!.travelDocumentTitle = level2Category.titleValue
-            "Name on travel document" -> decryptedDocuments!!.nameOnTravelDocument = level2Category.titleValue
-            "Travel document type" -> decryptedDocuments!!.travelDocumentType = level2Category.titleValue
-            "Travel document number" -> decryptedDocuments!!.travelDocumentNumber = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedDocuments!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedDocuments!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setVacationItems(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Description" -> decryptedVacations!!.vac_description = level2Category.titleValue
-            "Start date" -> decryptedVacations!!.startDate = level2Category.titleValue
-            "End date" -> decryptedVacations!!.endDate = level2Category.titleValue
-            "Places to visit/consider 1" -> decryptedVacations!!.placesToVisit_1 = level2Category.titleValue
-            "Places to visit/consider 2" -> decryptedVacations!!.placesToVisit_2 = level2Category.titleValue
-            "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedVacations!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedVacations!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setTravelItems(level2Category: Level2SubCategory) {
-         when(level2Category.title){
-             "Institution name" -> decryptedTravel!!.institutionName = level2Category.titleValue
-             "Account name" -> decryptedTravel!!.accountName = level2Category.titleValue
-             "Account type" -> decryptedTravel!!.accountType = level2Category.titleValue
-             "Name(s) on account" -> decryptedTravel!!.nameOnAccount = level2Category.titleValue
-
-             "Location" -> decryptedTravel!!.location = level2Category.titleValue
-             "SWIFT/other code" -> decryptedTravel!!.swiftCode = level2Category.titleValue
-             "ABA routing number" -> decryptedTravel!!.abaRoutingNumber = level2Category.titleValue
-             "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
-             "Account number" -> decryptedTravel!!.accountNumber = level2Category.titleValue
-
-             "Website" -> decryptedTravel!!.website = level2Category.titleValue
-             "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
-             "Username/login" -> decryptedTravel!!.userName = level2Category.titleValue
-             "Password" -> decryptedTravel!!.password = level2Category.titleValue
-             "PIN" -> decryptedTravel!!.pin = level2Category.titleValue
-             "Payment method on file" -> decryptedTravel!!.paymentMethodOnFile = level2Category.titleValue
-             "Notes" -> decryptedTravel!!.notes = level2Category.titleValue
-             "Title" -> decryptedTravel!!.title = level2Category.titleValue
-             else -> {
-                 when (level2Category.type) {
-                     Constants.LEVEL2_NOTES -> decryptedTravel!!.notes = level2Category.titleValue
-                     Constants.LEVEL2_ATTACHMENTS -> decryptedTravel!!.attachmentNames = level2Category.titleValue
-                 }
-             }
-         }
-    }
-
 
     private fun setIdentification(level2Category: Level2SubCategory) {
         when (level2Category.title) {
@@ -1698,6 +1571,9 @@ class Level3CategoryHelper(
         }
         if(travelHelper != null) {
             travelHelper!!.saveDocument(context, combineItem, title, subTitle)
+        }
+        if(educationAndWorkHelper != null) {
+
         }
 
         if (decryptedIdentification != null) {
@@ -2314,7 +2190,7 @@ class Level3CategoryHelper(
                             realm.insertOrUpdate(loyalty)
                             realm.copyToRealmOrUpdate(loyalty)
                             realm.commitTransaction()
-                          //  fragmentListContainer!!.setRecyclerView()
+                            //  fragmentListContainer!!.setRecyclerView()
                         }
                     })
                 }
