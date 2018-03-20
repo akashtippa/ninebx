@@ -51,7 +51,7 @@ class OTPFragment : BaseAuthFragment() {
                                 if (currentUsers != null && currentUsers.size > 0) {
                                     val email = currentUsers[0]!!.emailAddress.decryptString()
                                     if( email.isNotEmpty() )
-                                    NineBxApplication.getPreferences().userEmail = email
+                                        NineBxApplication.getPreferences().userEmail = email
                                     AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
                                 }
                                 else {

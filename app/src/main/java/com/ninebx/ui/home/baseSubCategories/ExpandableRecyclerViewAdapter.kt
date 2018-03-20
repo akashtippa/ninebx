@@ -249,8 +249,6 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 val locationViewHolder : LEVEL_NORMAL_SPINNERViewHolder = holder as LEVEL_NORMAL_SPINNERViewHolder
                 locationViewHolder.txtHeader.text = headerTitle
 
-
-
                 when (keyBoardType) {
                 // Women Shopping Category
 
