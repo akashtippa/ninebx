@@ -1,23 +1,32 @@
 package com.ninebx.ui.home.fragments
 
+import android.Manifest
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.service.autofill.Validators.and
+import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.handleMultiplePermission
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
+import com.ninebx.ui.base.realm.decrypted.DecryptedContacts
+import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.contactsView.ContactsView
@@ -36,7 +45,7 @@ import java.util.*
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperationsCompletionListener, ICountrySelected {
+class SingleContactViewFragment : Fragment(), AWSFileTransferHelper.FileOperationsCompletionListener, ICountrySelected {
 
     override fun onCountrySelected(strCountry: String?) {
         edtCountry.setText(strCountry)
@@ -70,7 +79,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
     var strCountry = ""
     val PICK_CONTACT = 1
 
-    private lateinit var mContacts: Contacts
+    private lateinit var mContacts: DecryptedContacts
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
     private lateinit var mContactsView: ContactsView
     private var contactsRealm: Realm? = null
@@ -90,12 +99,15 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         }
     }
 
+    private var isEditable: String = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Shared Contact")
 
+        if(arguments?.getBoolean("isEditable") != null)
+        this.isEditable = arguments!!.getBoolean("isEditable").toString()
         mContacts = arguments!!.getParcelable(Constants.CONTACTS_VIEW)
         mAWSFileTransferHelper = AWSFileTransferHelper(context!!)
 
@@ -113,19 +125,11 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         }
 
         txtDOB.setOnClickListener {
-            getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
-                override fun onDateTimeSelected(selectedDate: Calendar) {
-                    txtDOB.text = (getDateMonthYearFormat(selectedDate.time))
-                }
-            })
+            getDobPicker()
         }
 
         txtAnniversary.setOnClickListener {
-            getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
-                override fun onDateTimeSelected(selectedDate: Calendar) {
-                    txtAnniversary.text = (getDateMonthYearFormat(selectedDate.time))
-                }
-            })
+            getAnniversaryPicker()
         }
 
         txtSaveContacts.setOnClickListener {
@@ -153,6 +157,9 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                         contactDeleting.deleteAllFromRealm()
                         realm.commitTransaction()
 //                        activity!!.onBackPressed()
+                        val intent = Intent()
+                        intent.putExtra("DELETED",""+mContacts.id)
+                        activity!!.setResult(RESULT_OK, intent)
                         activity!!.finish()
                     }
                 }
@@ -169,11 +176,27 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
         populateView(mContacts)
 
+        enableDisableEditing()
     }
 
     private var contactList: RealmResults<Contacts>? = null
     private var contacts: ArrayList<Contacts>? = ArrayList()
 
+    private fun getDobPicker() {
+        getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
+            override fun onDateTimeSelected(selectedDate: Calendar) {
+                txtDOB.text = (getDateMonthYearFormat(selectedDate.time))
+            }
+        })
+    }
+
+    private fun getAnniversaryPicker() {
+        getDateFromPicker(this.context!!, Calendar.getInstance(), object : DateTimeSelectionListener {
+            override fun onDateTimeSelected(selectedDate: Calendar) {
+                txtAnniversary.text = (getDateMonthYearFormat(selectedDate.time))
+            }
+        })
+    }
 
     private fun saveTheEditedContacts() {
         strFirstName = edtFirstName.text.toString()
@@ -233,6 +256,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         } else {
             prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                 override fun onSuccess(realm: Realm?) {
+                    var contactsUpdate = Contacts()
 
                     val contactsUpdating = realm!!
                             .where(Contacts::class.java)
@@ -241,9 +265,7 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
 
                     if (contactsUpdating.isValid) {
                         realm.executeTransaction({
-                            var contactsUpdate = Contacts()
                             contactsUpdate.id = contactID
-
                             contactsUpdate.firstName = strFirstName.encryptString()
                             contactsUpdate.lastName = strLastName.encryptString()
                             contactsUpdate.dateOfBirth = strBirthday.encryptString()
@@ -261,7 +283,41 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
                             contactsUpdate.selectionType = "Contacts".encryptString()
                             realm.copyToRealmOrUpdate(contactsUpdate)
 //                            activity!!.onBackPressed()
+                            val decryptedContacts = DecryptedContacts()
+                            decryptedContacts.id = contactsUpdate.id
+                            decryptedContacts.firstName = strFirstName
+                            decryptedContacts.lastName = strLastName
+                            decryptedContacts.dateOfBirth = strBirthday
+                            decryptedContacts.anniversary = strAnniversary
+                            decryptedContacts.mobileOne = strPhone1
+                            decryptedContacts.mobileTwo = strPhone2
+                            decryptedContacts.emailOne = strEmail1
+                            decryptedContacts.emailTwo = strEmail2
+                            decryptedContacts.streetAddressOne = strStreetAddress1
+                            decryptedContacts.streetAddressTwo = strStreetAddress2
+                            decryptedContacts.city = strCity
+                            decryptedContacts.state = strState
+                            decryptedContacts.zipCode = strZipCode
+                            decryptedContacts.country = strCountry
+                            decryptedContacts.selectionType = "Contacts"
+                            val intent = Intent()
+                            intent.putExtra(Constants.CONTACTS_VIEW,decryptedContacts)
+                            activity!!.setResult(RESULT_OK,intent)
                             activity!!.finish()
+                        })
+                    }
+
+                    val combineContactsUpdate = realm!!
+                            .where(CombineContacts::class.java)
+                            .equalTo("id", mContacts.id)
+                            .findAll()
+
+                    if(combineContactsUpdate.isValid) {
+                        realm.executeTransaction({
+                            val combineContacts = CombineContacts()
+                            combineContacts.id = contactID!!
+                            combineContacts.contactsItems.add(contactsUpdate)
+                            realm.copyToRealmOrUpdate(contactsUpdate)
                         })
                     }
 
@@ -271,16 +327,14 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
     }
 
     private fun enableEditing() {
-
         imgEdit.setImageResource(R.drawable.ic_icon_save)
-        txtUserName.setTextColor(resources.getColor(R.color.colorPrimary))
+        txtUserName.setTextColor(ContextCompat.getColor( context!!, R.color.colorPrimary))
         edtFirstName.isEnabled = true
         edtLastName.isEnabled = true
         txtDOB.isClickable = true
         txtAnniversary.isClickable = true
         edtMobileOne.isEnabled = true
         edtMobileTwo.isEnabled = true
-
         edtEmail1.isEnabled = true
         edtEmail2.isEnabled = true
         txtAddress1.isEnabled = true
@@ -291,97 +345,152 @@ class SingleContactViewFragment : FragmentBackHelper(), AWSFileTransferHelper.Fi
         edtCountry.isEnabled = true
         ivHome.hide()
         txtSaveContacts.show()
+        imgEditProfile.setOnClickListener { selectImage() }
+        txtDOB.setOnClickListener{
+            getDobPicker()
+        }
+        txtAnniversary.setOnClickListener{
+            getAnniversaryPicker()
+        }
     }
 
-    override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.hideBottomView()
-        return super.onBackPressed()
+    private fun enableDisableEditing() {
+
+        if(isEditable != "") {
+            if(isEditable.equals("true", true)) {
+                enableEditing()
+            } else {
+                imgEdit.setImageResource(R.drawable.ic_icon_edit)
+                txtUserName.setTextColor(ContextCompat.getColor( context!!, R.color.default_circle_indicator_stroke_color))
+                edtFirstName.isEnabled = false
+                edtLastName.isEnabled = false
+                txtDOB.isClickable = false
+                txtDOB.setOnClickListener {}
+                txtAnniversary.isClickable = false
+                txtAnniversary.setOnClickListener{}
+                edtMobileOne.isEnabled = false
+                edtMobileTwo.isEnabled = false
+
+                edtEmail1.isEnabled = false
+                edtEmail2.isEnabled = false
+                txtAddress1.isEnabled = false
+                txtAddress2.isEnabled = false
+                edtCity.isEnabled = false
+                edtState.isEnabled = false
+                edtZipCode.isEnabled = false
+                edtCountry.isEnabled = false
+                ivHome.show()
+                txtSaveContacts.hide()
+                imgEditProfile.setOnClickListener {  }
+            }
+        }
     }
 
-    private fun populateView(contacts: Contacts?) {
+    private fun populateView(contacts: DecryptedContacts?) {
 
         var contactID = contacts!!.id
         if (contacts.firstName.isNotEmpty())
-            edtFirstName.setText(contacts.firstName.decryptString())
-        edtFirstName.setTextColor(resources.getColor(R.color.black))
+            edtFirstName.setText(contacts.firstName)
+        edtFirstName.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.lastName.isNotEmpty())
-            edtLastName.setText(contacts.lastName.decryptString())
-        edtLastName.setTextColor(resources.getColor(R.color.black))
+            edtLastName.setText(contacts.lastName)
+        edtLastName.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.dateOfBirth.isNotEmpty())
-            txtDOB.text = contacts.dateOfBirth.decryptString()
-        txtDOB.setTextColor(resources.getColor(R.color.black))
+            txtDOB.text = contacts.dateOfBirth
+        txtDOB.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.anniversary.isNotEmpty())
-            txtAnniversary.text = contacts.anniversary.decryptString()
-        txtAnniversary.setTextColor(resources.getColor(R.color.black))
+            txtAnniversary.text = contacts.anniversary
+        txtAnniversary.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.mobileOne.isNotEmpty())
-            edtMobileOne.setText(contacts.mobileOne.decryptString())
-        edtMobileOne.setTextColor(resources.getColor(R.color.black))
+            edtMobileOne.setText(contacts.mobileOne)
+        edtMobileOne.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.mobileTwo.isNotEmpty())
-            edtMobileTwo.setText(contacts.mobileTwo.decryptString())
-        edtMobileTwo.setTextColor(resources.getColor(R.color.black))
+            edtMobileTwo.setText(contacts.mobileTwo)
+        edtMobileTwo.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.emailOne.isNotEmpty())
-            edtEmail1.setText(contacts.emailOne.decryptString())
-        edtEmail1.setTextColor(resources.getColor(R.color.black))
+            edtEmail1.setText(contacts.emailOne)
+        edtEmail1.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.emailTwo.isNotEmpty())
-            edtEmail2.setText(contacts.emailTwo.decryptString())
-        edtEmail2.setTextColor(resources.getColor(R.color.black))
+            edtEmail2.setText(contacts.emailTwo)
+        edtEmail2.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.streetAddressOne.isNotEmpty())
-            txtAddress1.setText(contacts.streetAddressOne.decryptString())
-        txtAddress1.setTextColor(resources.getColor(R.color.black))
+            txtAddress1.setText(contacts.streetAddressOne)
+        txtAddress1.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.streetAddressTwo.isNotEmpty())
-            txtAddress2.setText(contacts.streetAddressTwo.decryptString())
-        txtAddress2.setTextColor(resources.getColor(R.color.black))
+            txtAddress2.setText(contacts.streetAddressTwo)
+        txtAddress2.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.city.isNotEmpty())
-            edtCity.setText(contacts.city.decryptString())
-        edtCity.setTextColor(resources.getColor(R.color.black))
+            edtCity.setText(contacts.city)
+        edtCity.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.state.isNotEmpty())
-            edtState.setText(contacts.state.decryptString())
-        edtState.setTextColor(resources.getColor(R.color.black))
+            edtState.setText(contacts.state)
+        edtState.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.zipCode.isNotEmpty())
-            edtZipCode.setText(contacts.zipCode.decryptString())
-        edtZipCode.setTextColor(resources.getColor(R.color.black))
+            edtZipCode.setText(contacts.zipCode)
+        edtZipCode.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         if (contacts.country.isNotEmpty())
-            edtCountry.setText(contacts.country.decryptString())
-        edtCountry.setTextColor(resources.getColor(R.color.black))
+            edtCountry.setText(contacts.country)
+        edtCountry.setTextColor(ContextCompat.getColor( context!!, R.color.black))
 
         mAWSFileTransferHelper.setFileTransferListener(this)
-        if (contacts!!.photosId.isNotEmpty())
+        if (contacts.photosId.isNotEmpty())
             mAWSFileTransferHelper.beginDownload("images/" + contacts.id + "/" + contacts.photosId)
 
     }
 
-    private fun selectImage() {
-        val items = arrayOf<CharSequence>("Take Photo", "Choose from Library", "Cancel")
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Add Photo!")
-        builder.setItems(items, DialogInterface.OnClickListener { dialog, item ->
-            val result = Utility.checkPermission(context)
-            if (items[item] == "Take Photo") {
-                userChoosenTask = "Take Photo"
-                if (result)
-                    cameraIntent()
-            } else if (items[item] == "Choose from Library") {
-                userChoosenTask = "Choose from Library"
-                if (result)
-                    galleryIntent()
-            } else if (items[item] == "Cancel") {
-                dialog.dismiss()
+    private val PERMISSION_REQUEST_CODE_CAMERA_GALLERY: Int = 3000
+
+    private fun checkForPermission(): Boolean {
+        val permissionList = arrayListOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA )
+        if (!handleMultiplePermission(context!!, permissionList)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(permissionList.toTypedArray(), PERMISSION_REQUEST_CODE_CAMERA_GALLERY)
+                return false
+            } else {
+                return true
             }
-        })
-        builder.show()
+        } else {
+            return true
+        }
+    }
+
+    private fun selectImage() {
+        if(checkForPermission()) {
+            val items = arrayOf<CharSequence>("Take Photo", "Choose from Library", "Cancel")
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Add Photo!")
+            builder.setItems(items, DialogInterface.OnClickListener { dialog, item ->
+                val result = Utility.checkPermission(context)
+                if (items[item] == "Take Photo") {
+                    userChoosenTask = "Take Photo"
+                    if (result)
+                        cameraIntent()
+                } else if (items[item] == "Choose from Library") {
+                    userChoosenTask = "Choose from Library"
+                    if (result)
+                        galleryIntent()
+                } else if (items[item] == "Cancel") {
+                    dialog.dismiss()
+                }
+            })
+            builder.show()
+        } else {
+
+        }
     }
 
 

@@ -2651,16 +2651,17 @@ fun decryptCombineTravel(combineTravel: CombineTravel) : DecryptedCombineTravel{
     return decryptedCombineTravel
 }
 
-fun decryptCombineMemories(combineMemories : CombineMemories) : DecryptedCombineMemories{
+fun decryptCombineMemories(id: Long, mainMemoriesItems: RealmResults<MainMemories>, memoryTimelineItems: RealmResults<MemoryTimeline>,
+                           listItems: RealmResults<MemoriesList>) : DecryptedCombineMemories{
     val decryptedCombineMemories = DecryptedCombineMemories()
-    decryptedCombineMemories.id = combineMemories.id
-    for(mainMemoryItems in combineMemories.mainMemoriesItems)  {
+    decryptedCombineMemories.id = id
+    for(mainMemoryItems in mainMemoriesItems)  {
         decryptedCombineMemories.mainMemoriesItems.add(decryptMainMemories(mainMemoryItems))
     }
-    for(memoryTimelineItems in combineMemories.memoryTimelineItems){
+    for(memoryTimelineItems in memoryTimelineItems){
         decryptedCombineMemories.memoryTimelineItems.add(decryptMemoryTimeLine(memoryTimelineItems))
     }
-    for(listItems in combineMemories.listItems){
+    for(listItems in listItems){
         decryptedCombineMemories.listItems.add(decryptMemoriesList(listItems))
     }
     return decryptedCombineMemories
@@ -2815,6 +2816,22 @@ fun decryptCombineContacts(combineContacts: CombineContacts): DecryptedCombineCo
         decryptedCombineContacts.mainContactsItems.add(decryptMainContacts(mainContactItems))
     }
     for(listItems in combineContacts.listItems){
+        decryptedCombineContacts.listItems.add(decryptContactsList(listItems as ContactsList))
+    }
+    return decryptedCombineContacts
+}
+
+fun decryptCombineContacts(id: Long, mainContacts: RealmResults<MainContacts>, contactitems: RealmResults<Contacts>,
+                           contactlistItems: RealmResults<ContactsList>): DecryptedCombineContacts {
+    val decryptedCombineContacts = DecryptedCombineContacts()
+    decryptedCombineContacts.id = id
+    for(contactItems in contactitems){
+        decryptedCombineContacts.contactsItems.add(decryptContact(contactItems as Contacts))
+    }
+    for(mainContactItems in mainContacts){
+        decryptedCombineContacts.mainContactsItems.add(decryptMainContacts(mainContactItems))
+    }
+    for(listItems in contactlistItems){
         decryptedCombineContacts.listItems.add(decryptContactsList(listItems as ContactsList))
     }
     return decryptedCombineContacts

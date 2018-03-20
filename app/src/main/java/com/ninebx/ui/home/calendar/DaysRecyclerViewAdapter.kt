@@ -132,7 +132,7 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
         }
 
         textView.background = if( textView.text.toString().isNotEmpty() && textView.text.toString().toInt() == selectedDate
-                && mCurrentDateCalendar.get(Calendar.MONTH) == month && mCurrentDateCalendar.get(Calendar.YEAR) == year ) mSelectedDrawable
+                /*&& mCurrentDateCalendar.get(Calendar.MONTH) == month && mCurrentDateCalendar.get(Calendar.YEAR) == year*/ ) mSelectedDrawable
                               else if( isEventPresent && isCurrentDay ) mCurrentEventDrawable
                               else if( isEventPresent ) mEventDrawable
                               else if( isCurrentDay ) mCurrentDayDrawable
@@ -183,6 +183,7 @@ class DaysRecyclerViewAdapter(val monthDates: Int,
                 selectedDate = dayTextView.text.toString().toInt()
                 adapterClickListener.onDayClick( selectedDate )
                 notifyDataSetChanged()
+                //setDrawable(dayTextView)
             }
         }
 

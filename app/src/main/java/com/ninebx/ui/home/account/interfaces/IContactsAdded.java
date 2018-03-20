@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.account.interfaces;
 
+import com.ninebx.ui.base.realm.decrypted.DecryptedContacts;
 import com.ninebx.ui.base.realm.home.contacts.Contacts;
 
 /**
@@ -7,10 +8,10 @@ import com.ninebx.ui.base.realm.home.contacts.Contacts;
  */
 
 public interface IContactsAdded {
-    void contactsAdded(Contacts contacts);
+    void contactsEdited(DecryptedContacts contacts);
 
-    void contactsEdited(Contacts contacts);
+    void contactsClicked(DecryptedContacts contacts, Boolean isEditable);
 
-    void contactsDeleted(Contacts contacts);
+    void contactsDeleted(DecryptedContacts contacts);
 
 }

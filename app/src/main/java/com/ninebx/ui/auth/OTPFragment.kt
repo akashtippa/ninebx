@@ -1,6 +1,8 @@
 package com.ninebx.ui.auth
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
@@ -15,18 +17,28 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.auth.passwordHash.OTPPresenter
+import com.ninebx.ui.auth.passwordHash.OTPView
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.utility.*
-import com.ninebx.utility.Constants.PASSCODE_CREATE
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_otp.*
-
 /**
  * Created by Alok on 04/01/18.
  */
+
 @SuppressLint("StaticFieldLeak")
-class OTPFragment : BaseAuthFragment() {
+class OTPFragment : BaseAuthFragment(),OTPView {
+
+    lateinit var OTPView: OTPView
+    lateinit var OTPPresenter : OTPPresenter
+
+    override fun otpVerificationGet(): Boolean {
+        return isPaused;
+    }
+
+    override fun otpVerificationSet(isPaused: Boolean) {
+        this.isPaused = isPaused;
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_otp, container, false)
@@ -34,13 +46,20 @@ class OTPFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        OTPView = this
+        OTPPresenter = OTPPresenter(context , this , mAuthView)
+        if(tvResend != null)
+            tvResend.isEnabled = true
 //        setupToolbar()
 //        toolbar.title = ""
 //        setHasOptionsMenu(true)
 
         tvEmail.text = arguments!!.getString("email", "")
         btnSubmit.setOnClickListener {
-            if( validate() ) {
+
+            OTPPresenter.submit(etOtp1,etOtp2,etOtp3,etOtp4,etOtp5,etOtp6 , emailOtp)
+
+            /*if( validate() ) {
                 emailOtp = ""
                 handler.removeCallbacks(runnable)
                 object : AsyncTask<Void, Void, Int>() {
@@ -75,8 +94,30 @@ class OTPFragment : BaseAuthFragment() {
 
 
             }
+            else{
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("NineBx")
+                builder.setIcon(R.mipmap.ic_launcher)
+                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0?.cancel()
+                    }
+                })
+                builder.setMessage("Incorrect OTP")
+                builder.show()
+            }*/
         }
         tvResend.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("NineBx")
+            builder.setIcon(R.mipmap.ic_launcher)
+            builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    p0?.cancel()
+                }
+            })
+            builder.setMessage("New authentication code sent to"+mAuthView.getAccountEmail()+"Please check your inbox")
+            builder.show()
             etOtp1.requestFocus()
             etOtp1.setText("")
             etOtp2.setText("")
@@ -94,15 +135,20 @@ class OTPFragment : BaseAuthFragment() {
     }
 
     var isPaused = false
+
     override fun onPause() {
         super.onPause()
         isPaused = true
+        OTPView.otpVerificationSet(isPaused)
         handler.removeCallbacks(runnable)
     }
 
     override fun onResume() {
         super.onResume()
         isPaused = false
+        OTPView.otpVerificationSet(isPaused)
+
+
     }
 
     private var handler: Handler = Handler()
@@ -111,10 +157,11 @@ class OTPFragment : BaseAuthFragment() {
             if( !isPaused )
                 context!!.showToast(R.string.otp_expired)
             emailOtp = ""
-            tvResend.isEnabled = true
         }
 
     }
+
+
 
     private fun setupOtp() {
         etOtp1.addTextChangedListener( object : TextWatcher {
@@ -267,6 +314,7 @@ class OTPFragment : BaseAuthFragment() {
     }
 
     override fun validate(): Boolean {
+
         var isValid = true
 
         if( !validateView( etOtp1 ) ) isValid = false
@@ -284,6 +332,8 @@ class OTPFragment : BaseAuthFragment() {
                     etOtp5.text.toString().trim() +
                     etOtp6.text.toString().trim()
             isValid = emailOtp == otp
+
+
         }
         else if( emailOtp == "" ) {
             isValid = false
@@ -297,12 +347,12 @@ class OTPFragment : BaseAuthFragment() {
         val isValid = etOtp!!.text.toString().isNotEmpty()
         if( !isValid ) {
             etOtp.error = getString(R.string.required)
+
         }
         return isValid
     }
 
     var emailOtp = ""
-
     fun setEmailOTP(emailOtp: String) {
         this.emailOtp = emailOtp
         if( NineBxApplication.autoTestMode && etOtp1 != null ) {

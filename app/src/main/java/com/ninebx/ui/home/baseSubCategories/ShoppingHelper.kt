@@ -104,7 +104,7 @@ class ShoppingHelper(
     }
     private fun getBabysSizes() {
         val categoryList = ArrayList<Level2Category>()
-        if (com.ninebx.utility.decryptedClothingSizes == null) com.ninebx.utility.decryptedClothingSizes = DecryptedClothingSizes()
+        if (decryptedClothingSizes == null) decryptedClothingSizes = DecryptedClothingSizes()
 
         var categoryIndex = 2050
         var category_id = "account_details" + categoryIndex
@@ -135,7 +135,7 @@ class ShoppingHelper(
 
     private fun getBoysSizes() {
         val categoryList = ArrayList<Level2Category>()
-        if (com.ninebx.utility.decryptedClothingSizes == null) com.ninebx.utility.decryptedClothingSizes = DecryptedClothingSizes()
+        if (decryptedClothingSizes == null) decryptedClothingSizes = DecryptedClothingSizes()
 
         var categoryIndex = 2050
         var category_id = "account_details" + categoryIndex
@@ -209,7 +209,7 @@ class ShoppingHelper(
 
     private fun getGirlsSizes() {
         val categoryList = ArrayList<Level2Category>()
-        if (com.ninebx.utility.decryptedClothingSizes == null) com.ninebx.utility.decryptedClothingSizes = DecryptedClothingSizes()
+        if (decryptedClothingSizes == null) decryptedClothingSizes = DecryptedClothingSizes()
 
         var categoryIndex = 2050
         var category_id = "account_details" + categoryIndex
@@ -298,7 +298,7 @@ class ShoppingHelper(
 
     private fun getMenSizes() {
         val categoryList = ArrayList<Level2Category>()
-        if (com.ninebx.utility.decryptedClothingSizes == null) com.ninebx.utility.decryptedClothingSizes = DecryptedClothingSizes()
+        if (decryptedClothingSizes == null) decryptedClothingSizes = DecryptedClothingSizes()
 
         var categoryIndex = 2050
         var category_id = "account_details" + categoryIndex
@@ -395,7 +395,7 @@ class ShoppingHelper(
 
     private fun getWomensSizes() {
         val categoryList = ArrayList<Level2Category>()
-        if (com.ninebx.utility.decryptedClothingSizes == null) com.ninebx.utility.decryptedClothingSizes = DecryptedClothingSizes()
+        if (decryptedClothingSizes == null) decryptedClothingSizes = DecryptedClothingSizes()
 
         var categoryIndex = 2050
         var category_id = "account_details" + categoryIndex
@@ -562,60 +562,60 @@ class ShoppingHelper(
     }
     private fun setClothingSizes(level2Category: Level2SubCategory) {
         when (level2Category.title) {
-            "Name of person" -> com.ninebx.utility.decryptedClothingSizes!!.personName = level2Category.titleValue
-            "Size name" -> com.ninebx.utility.decryptedClothingSizes!!.sizeName = level2Category.titleValue
-            "detailsSizeCategory" -> com.ninebx.utility.decryptedClothingSizes!!.sizeCategory = level2Category.titleValue
-            "topsSize" -> com.ninebx.utility.decryptedClothingSizes!!.topsSize = level2Category.titleValue
-            "topsNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.topsNumericSize = level2Category.titleValue
-            "bottomsSize" -> com.ninebx.utility.decryptedClothingSizes!!.bottomsSize = level2Category.titleValue
-            "bottomsNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.bottomsNumericSize = level2Category.titleValue
-            "dressesSize" -> com.ninebx.utility.decryptedClothingSizes!!.dressesSize = level2Category.titleValue
-            "dressesNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.dressesNumericSize = level2Category.titleValue
-            "outWearSize" -> com.ninebx.utility.decryptedClothingSizes!!.outWearSize = level2Category.titleValue
-            "outWearNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.outWearNumericSize = level2Category.titleValue
-            "swimWearSize" -> com.ninebx.utility.decryptedClothingSizes!!.swimWearSize = level2Category.titleValue
-            "swimWearNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.swimWearNumericSize = level2Category.titleValue
-            "swimWearbraBandSize" -> com.ninebx.utility.decryptedClothingSizes!!.swimWearBraBandCupSize = level2Category.titleValue
-            "shoeSize" -> com.ninebx.utility.decryptedClothingSizes!!.shoeSize = level2Category.titleValue
-            "shoeWidth" -> com.ninebx.utility.decryptedClothingSizes!!.shoeWidth = level2Category.titleValue
+            "Name of person" -> decryptedClothingSizes!!.personName = level2Category.titleValue
+            "Size name" -> decryptedClothingSizes!!.sizeName = level2Category.titleValue
+            "detailsSizeCategory" -> decryptedClothingSizes!!.sizeCategory = level2Category.titleValue
+            "topsSize" -> decryptedClothingSizes!!.topsSize = level2Category.titleValue
+            "topsNumericSize" -> decryptedClothingSizes!!.topsNumericSize = level2Category.titleValue
+            "bottomsSize" -> decryptedClothingSizes!!.bottomsSize = level2Category.titleValue
+            "bottomsNumericSize" -> decryptedClothingSizes!!.bottomsNumericSize = level2Category.titleValue
+            "dressesSize" -> decryptedClothingSizes!!.dressesSize = level2Category.titleValue
+            "dressesNumericSize" -> decryptedClothingSizes!!.dressesNumericSize = level2Category.titleValue
+            "outWearSize" -> decryptedClothingSizes!!.outWearSize = level2Category.titleValue
+            "outWearNumericSize" -> decryptedClothingSizes!!.outWearNumericSize = level2Category.titleValue
+            "swimWearSize" -> decryptedClothingSizes!!.swimWearSize = level2Category.titleValue
+            "swimWearNumericSize" -> decryptedClothingSizes!!.swimWearNumericSize = level2Category.titleValue
+            "swimWearbraBandSize" -> decryptedClothingSizes!!.swimWearBraBandCupSize = level2Category.titleValue
+            "shoeSize" -> decryptedClothingSizes!!.shoeSize = level2Category.titleValue
+            "shoeWidth" -> decryptedClothingSizes!!.shoeWidth = level2Category.titleValue
 
-            "Belts" -> com.ninebx.utility.decryptedClothingSizes!!.beltSize = level2Category.titleValue
-            "Waist (in)" -> com.ninebx.utility.decryptedClothingSizes!!.waist = level2Category.titleValue
-            "Hats" -> com.ninebx.utility.decryptedClothingSizes!!.hats = level2Category.titleValue
-            "Gloves" -> com.ninebx.utility.decryptedClothingSizes!!.gloves = level2Category.titleValue
-            "Tights" -> com.ninebx.utility.decryptedClothingSizes!!.tights = level2Category.titleValue
-            "Bust (in)" -> com.ninebx.utility.decryptedClothingSizes!!.bust = level2Category.titleValue
-            "Hips (in)" -> com.ninebx.utility.decryptedClothingSizes!!.hips = level2Category.titleValue
-            "Socks" -> com.ninebx.utility.decryptedClothingSizes!!.socks = level2Category.titleValue
-            "Seat (in)" -> com.ninebx.utility.decryptedClothingSizes!!.seat = level2Category.titleValue
+            "Belts" -> decryptedClothingSizes!!.beltSize = level2Category.titleValue
+            "Waist (in)" -> decryptedClothingSizes!!.waist = level2Category.titleValue
+            "Hats" -> decryptedClothingSizes!!.hats = level2Category.titleValue
+            "Gloves" -> decryptedClothingSizes!!.gloves = level2Category.titleValue
+            "Tights" -> decryptedClothingSizes!!.tights = level2Category.titleValue
+            "Bust (in)" -> decryptedClothingSizes!!.bust = level2Category.titleValue
+            "Hips (in)" -> decryptedClothingSizes!!.hips = level2Category.titleValue
+            "Socks" -> decryptedClothingSizes!!.socks = level2Category.titleValue
+            "Seat (in)" -> decryptedClothingSizes!!.seat = level2Category.titleValue
 
-            "Arm length (in)" -> com.ninebx.utility.decryptedClothingSizes!!.armLength = level2Category.titleValue
-            "Inseam (in)" -> com.ninebx.utility.decryptedClothingSizes!!.inseam = level2Category.titleValue
-            "Torso (in)" -> com.ninebx.utility.decryptedClothingSizes!!.torso = level2Category.titleValue
+            "Arm length (in)" -> decryptedClothingSizes!!.armLength = level2Category.titleValue
+            "Inseam (in)" -> decryptedClothingSizes!!.inseam = level2Category.titleValue
+            "Torso (in)" -> decryptedClothingSizes!!.torso = level2Category.titleValue
 
-            "Notes" -> com.ninebx.utility.decryptedClothingSizes!!.notes = level2Category.titleValue
+            "Notes" -> decryptedClothingSizes!!.notes = level2Category.titleValue
 
-            "clothing" -> com.ninebx.utility.decryptedClothingSizes!!.clothing = level2Category.titleValue
-            "shoes" -> com.ninebx.utility.decryptedClothingSizes!!.shoes = level2Category.titleValue
+            "clothing" -> decryptedClothingSizes!!.clothing = level2Category.titleValue
+            "shoes" -> decryptedClothingSizes!!.shoes = level2Category.titleValue
 
-            "jacketsNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.jacketsNumericSize = level2Category.titleValue
-            "toddlerSize" -> com.ninebx.utility.decryptedClothingSizes!!.toddlerSize = level2Category.titleValue
-            "kidsize" -> com.ninebx.utility.decryptedClothingSizes!!.kidSize = level2Category.titleValue
+            "jacketsNumericSize" -> decryptedClothingSizes!!.jacketsNumericSize = level2Category.titleValue
+            "toddlerSize" -> decryptedClothingSizes!!.toddlerSize = level2Category.titleValue
+            "kidsize" -> decryptedClothingSizes!!.kidSize = level2Category.titleValue
 
-            "beltsSize" -> com.ninebx.utility.decryptedClothingSizes!!.beltSize = level2Category.titleValue
-            "beltsNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.beltsNumericSize = level2Category.titleValue
+            "beltsSize" -> decryptedClothingSizes!!.beltSize = level2Category.titleValue
+            "beltsNumericSize" -> decryptedClothingSizes!!.beltsNumericSize = level2Category.titleValue
 
-            "Neck (in)" -> com.ninebx.utility.decryptedClothingSizes!!.neck = level2Category.titleValue
-            "Chest (in)" -> com.ninebx.utility.decryptedClothingSizes!!.chest = level2Category.titleValue
+            "Neck (in)" -> decryptedClothingSizes!!.neck = level2Category.titleValue
+            "Chest (in)" -> decryptedClothingSizes!!.chest = level2Category.titleValue
 
-            "beltsNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.beltsNumericSize = level2Category.titleValue
+            "beltsNumericSize" -> decryptedClothingSizes!!.beltsNumericSize = level2Category.titleValue
 
-            "pantsSize" -> com.ninebx.utility.decryptedClothingSizes!!.pantsSize = level2Category.titleValue
-            "pantsNumericSize" -> com.ninebx.utility.decryptedClothingSizes!!.pantsNumericSize = level2Category.titleValue
+            "pantsSize" -> decryptedClothingSizes!!.pantsSize = level2Category.titleValue
+            "pantsNumericSize" -> decryptedClothingSizes!!.pantsNumericSize = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> com.ninebx.utility.decryptedClothingSizes!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> com.ninebx.utility.decryptedClothingSizes!!.attachmentNames = level2Category.titleValue
+                    Constants.LEVEL2_NOTES -> decryptedClothingSizes!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedClothingSizes!!.attachmentNames = level2Category.titleValue
                 }
             }
         }
@@ -775,15 +775,15 @@ class ShoppingHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
-        if(com.ninebx.utility.decryptedClothingSizes != null){
-            com.ninebx.utility.decryptedClothingSizes!!.selectionType = categoryID
-            com.ninebx.utility.decryptedClothingSizes!!.personName = title
-            if( com.ninebx.utility.decryptedClothingSizes!!.created.isEmpty() )
-                com.ninebx.utility.decryptedClothingSizes!!.created = currentUsers + " " + currentDateandTime
+        if(decryptedClothingSizes != null){
+            decryptedClothingSizes!!.selectionType = categoryID
+            decryptedClothingSizes!!.personName = title
+            if( decryptedClothingSizes!!.created.isEmpty() )
+                decryptedClothingSizes!!.created = currentUsers + " " + currentDateandTime
 
-            com.ninebx.utility.decryptedClothingSizes!!.modified = currentUsers + " " + currentDateandTime
-            if (com.ninebx.utility.decryptedClothingSizes!!.id.toInt() == 0) {
-                com.ninebx.utility.decryptedClothingSizes!!.id = getUniqueId()
+            decryptedClothingSizes!!.modified = currentUsers + " " + currentDateandTime
+            if (decryptedClothingSizes!!.id.toInt() == 0) {
+                decryptedClothingSizes!!.id = getUniqueId()
             }
             var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
@@ -791,7 +791,7 @@ class ShoppingHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
-                            var clothingSize = encryptClothingSizes(com.ninebx.utility.decryptedClothingSizes!!)
+                            var clothingSize = encryptClothingSizes(decryptedClothingSizes!!)
                             realm!!.insertOrUpdate(clothingSize)
                             realm!!.commitTransaction()
                         }
@@ -816,7 +816,7 @@ class ShoppingHelper(
                             if (realmClothingSizes == null) {
                                 realmClothingSizes = realm.createObject(CombineShopping::class.java, getUniqueId())
                             }
-                            realmClothingSizes!!.clothingSizesItems.add(encryptClothingSizes(com.ninebx.utility.decryptedClothingSizes!!))
+                            realmClothingSizes!!.clothingSizesItems.add(encryptClothingSizes(decryptedClothingSizes!!))
                             realm.copyToRealmOrUpdate(realmClothingSizes)
                             realm.commitTransaction()
                         }
