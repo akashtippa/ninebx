@@ -1718,7 +1718,7 @@ class HomeHelper( var category_name : String,
         if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
-            decryptedInsurance!!.insuredProperty = title
+
             if (decryptedInsurance!!.created.isEmpty())
                 decryptedInsurance!!.created = currentUsers + " " + currentDateandTime
             decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime
