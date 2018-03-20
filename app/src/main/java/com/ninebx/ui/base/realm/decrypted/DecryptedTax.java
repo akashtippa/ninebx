@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedTax implements Parcelable {
 
-    public static final Creator<DecryptedTax> CREATOR = new Creator<DecryptedTax>() {
-        @Override
-        public DecryptedTax createFromParcel(Parcel in) {
-            return new DecryptedTax(in);
-        }
-
-        @Override
-        public DecryptedTax[] newArray(int size) {
-            return new DecryptedTax[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
@@ -87,29 +76,6 @@ public class DecryptedTax implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    protected DecryptedTax(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        returnName = in.readString();
-        taxYear = in.readString();
-        taxPayer = in.readString();
-        contacts = in.readString();
-        imageName = in.readString();
-        attachmentNames = in.readString();
-        notes = in.readString();
-        title = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public long getId() {
         return id;
@@ -247,24 +213,6 @@ public class DecryptedTax implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(returnName);
-        dest.writeString(taxYear);
-        dest.writeString(taxPayer);
-        dest.writeString(contacts);
-        dest.writeString(imageName);
-        dest.writeString(attachmentNames);
-        dest.writeString(notes);
-        dest.writeString(title);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
 
     @Override
     public String toString() {
@@ -287,4 +235,63 @@ public class DecryptedTax implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.returnName);
+        dest.writeString(this.taxYear);
+        dest.writeString(this.taxPayer);
+        dest.writeString(this.contacts);
+        dest.writeString(this.imageName);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.notes);
+        dest.writeString(this.title);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedTax(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.returnName = in.readString();
+        this.taxYear = in.readString();
+        this.taxPayer = in.readString();
+        this.contacts = in.readString();
+        this.imageName = in.readString();
+        this.attachmentNames = in.readString();
+        this.notes = in.readString();
+        this.title = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedTax> CREATOR = new Creator<DecryptedTax>() {
+        @Override
+        public DecryptedTax createFromParcel(Parcel source) {
+            return new DecryptedTax(source);
+        }
+
+        @Override
+        public DecryptedTax[] newArray(int size) {
+            return new DecryptedTax[size];
+        }
+    };
 }

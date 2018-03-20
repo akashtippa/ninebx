@@ -18,17 +18,6 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedAsset implements Parcelable {
-    public static final Creator<DecryptedAsset> CREATOR = new Creator<DecryptedAsset>() {
-        @Override
-        public DecryptedAsset createFromParcel(Parcel in) {
-            return new DecryptedAsset(in);
-        }
-
-        @Override
-        public DecryptedAsset[] newArray(int size) {
-            return new DecryptedAsset[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             private long id = 0;
@@ -95,27 +84,6 @@ public class DecryptedAsset implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    protected DecryptedAsset(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        test = in.readString();
-        assetName = in.readString();
-        descriptionOrLocation = in.readString();
-        estimatedMarketValue = in.readString();
-        serialNumber = in.readString();
-        purchaseDate = in.readString();
-        purchasePrice = in.readString();
-        contacts = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        notes = in.readString();
-        imageName = in.readString();
-        attachmentNames = in.readString();
-    }
 
     public long getId() {
         return id;
@@ -277,32 +245,7 @@ public class DecryptedAsset implements Parcelable {
         this.attachmentNames = attachmentNames;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(test);
-        dest.writeString(assetName);
-        dest.writeString(descriptionOrLocation);
-        dest.writeString(estimatedMarketValue);
-        dest.writeString(serialNumber);
-        dest.writeString(purchaseDate);
-        dest.writeString(purchasePrice);
-        dest.writeString(contacts);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-        dest.writeString(notes);
-        dest.writeString(imageName);
-        dest.writeString(attachmentNames);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     @Override
     public String toString() {
@@ -328,4 +271,69 @@ public class DecryptedAsset implements Parcelable {
                 ", attachmentNames='" + attachmentNames + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.test);
+        dest.writeString(this.assetName);
+        dest.writeString(this.descriptionOrLocation);
+        dest.writeString(this.estimatedMarketValue);
+        dest.writeString(this.serialNumber);
+        dest.writeString(this.purchaseDate);
+        dest.writeString(this.purchasePrice);
+        dest.writeString(this.contacts);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+        dest.writeString(this.notes);
+        dest.writeString(this.imageName);
+        dest.writeString(this.attachmentNames);
+    }
+
+    protected DecryptedAsset(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.test = in.readString();
+        this.assetName = in.readString();
+        this.descriptionOrLocation = in.readString();
+        this.estimatedMarketValue = in.readString();
+        this.serialNumber = in.readString();
+        this.purchaseDate = in.readString();
+        this.purchasePrice = in.readString();
+        this.contacts = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+        this.notes = in.readString();
+        this.imageName = in.readString();
+        this.attachmentNames = in.readString();
+    }
+
+    public static final Creator<DecryptedAsset> CREATOR = new Creator<DecryptedAsset>() {
+        @Override
+        public DecryptedAsset createFromParcel(Parcel source) {
+            return new DecryptedAsset(source);
+        }
+
+        @Override
+        public DecryptedAsset[] newArray(int size) {
+            return new DecryptedAsset[size];
+        }
+    };
 }
