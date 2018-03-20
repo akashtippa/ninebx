@@ -47,8 +47,8 @@ import kotlin.collections.ArrayList
 class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
     override fun contactsDeleted(contacts: DecryptedContacts?) { //not working
-        //showDialogToDelete(contacts!!)
-        if(contactsRealm != null) {
+        showDialogToDelete(contacts!!)
+        /*if(contactsRealm != null) {
             contactsRealm!!.beginTransaction()
             var deleteQuery = contactsRealm!!.where(Contacts::class.java).equalTo("id", contacts!!.id).findAll()
             deleteQuery.deleteAllFromRealm()
@@ -57,7 +57,7 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
             //contactsRealm!!.refresh()
             //delete from combineContacts
             //contactsRealm!!.close()
-        }
+        }*/
     }
 
     fun deleteContact(contact: DecryptedContacts) {
@@ -69,11 +69,11 @@ class ContactsListContainerFragment : FragmentBackHelper(), IContactsAdded {
 
             //delete from combineContacts
             checkIdToDelete(contact.id)
+            mListsAdapter!!.deleteContact(contact)
         }
     }
 
     private fun showDialogToDelete(contact: DecryptedContacts) {
-
         val alertDialogBuilder = AlertDialog.Builder(context!!)
         alertDialogBuilder.setTitle("Are you sure you want to delete the contact?")
         alertDialogBuilder.setPositiveButton(" Delete", object : DialogInterface.OnClickListener {

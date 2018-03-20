@@ -36,7 +36,7 @@ internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?
         holder.imgDeleteContact.setOnClickListener {
             //show dialog and delete
             iContactsAdded.contactsDeleted(contacts)
-            deleteContact(contacts)
+            //deleteContact(contacts)
         }
 
         holder.imgEditContact.setOnClickListener {
