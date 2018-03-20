@@ -126,9 +126,9 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         if (NineBxApplication.getPreferences().currentStep < ALL_COMPLETE)
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
 
-        fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
         combinedItems = intent.extras!!.getParcelable(Constants.COMBINE_ITEMS)
-
+        fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
+        fromWhichClass = getIntent().getExtras()!!.getString(Constants.FROM_CLASS)
 
         when (fromWhichClass) {
             "MemoryView" -> {

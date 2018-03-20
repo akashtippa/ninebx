@@ -49,17 +49,19 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private val LEVEL_3: Int = 12312
 
     override fun onDocumentSelected(selectedDocument: Parcelable?, classType : String, action: String ) {
-
+        val bundle = Bundle()
+            bundle.putString("categoryName", categoryName)
+            bundle.putString("categoryId", categoryID)
+            bundle.putString("action", action)
+            bundle.putInt(Constants.CURRENT_BOX, categoryInt)
+            bundle.putParcelable( "selectedDocument", selectedDocument )
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+            bundle.putString("classType", classType)
+            bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
         startActivityForResult(
                 Intent(context, ContainerActivity::class.java)
-                        .putExtra(Constants.FROM_CLASS, "Level2Fragment")
-                        .putExtra("categoryName", categoryName)
-                        .putExtra("categoryId", categoryID)
-                        .putExtra("action", action)
-                        .putExtra(Constants.CURRENT_BOX, categoryInt)
-                        .putExtra( "selectedDocument", selectedDocument )
-                        .putExtra(Constants.COMBINE_ITEMS, combinedItems)
-                        .putExtra("classType", classType), LEVEL_3)
+                        .putExtra("Bundle", bundle)
+                       , LEVEL_3)
     }
 
 
