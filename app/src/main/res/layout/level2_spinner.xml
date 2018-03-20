@@ -33,7 +33,8 @@
             android:padding="@dimen/default_mini_padding"
             android:singleLine="true" />
 
-        <Spinner
+        <EditText
+            android:inputType="none"
             android:id="@+id/spinnerUsers"
             android:layout_width="@dimen/default_big"
             android:layout_height="@dimen/default_big"

@@ -17,8 +17,11 @@
 */
 -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     style="?android:attr/spinnerDropDownItemStyle"
+    android:padding="@dimen/default_micro_padding"
+    tools:text="@string/family_users"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
