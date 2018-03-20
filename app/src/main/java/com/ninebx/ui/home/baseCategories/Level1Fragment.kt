@@ -257,8 +257,10 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             }
 
 
-            subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
-                override fun onItemClick(subCategory: SubCategory, action: String) {
+            subCategoryAdapter = SubCategoryAdapter(category, category.subCategories, object : CategoryItemClickListener {
+
+
+                override fun onItemClick(mainCategory: Category, subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
@@ -296,7 +298,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                             subCategory.title == "Add Persons." -> {
                                 if(!memberList.isEmpty()) {
                                     if(peopleCategory != null)
-                                        CustomDropDown(peopleCategory!!.subCategories)
+                                        CustomDropDown(mainCategory.subCategories)
                                 }
                                 else {
                                     Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
@@ -386,7 +388,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             override fun onItemClick(position: Int) {
                 val member = memberListAdapter!!.getItem(position)
                 addedPersonList.add(member)
-                subCategories.add(SubCategory(member.firstName + " " + member.lastName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, Constants.SUB_CATEGORY_DISPLAY_PERSON.toString()))
+                subCategories[0] = (SubCategory(
+                        member.firstName + " " + member.lastName,
+                        "",
+                        0,
+                        Constants.SUB_CATEGORY_DISPLAY_PERSON,
+                        Constants.SUB_CATEGORY_DISPLAY_PERSON.toString()))
                 peopleSubCategoryAdapter?.updateList(subCategories)
                 peopleCategoryView!!.rvSubCategory.adapter = peopleSubCategoryAdapter
                 memberListAdapter!!.removeItem(position)
