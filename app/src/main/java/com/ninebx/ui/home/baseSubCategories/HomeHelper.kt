@@ -1642,6 +1642,7 @@ class HomeHelper( var category_name : String,
         if (decryptedAssets != null) {
             decryptedAssets!!.selectionType = categoryID
             decryptedAssets!!.assetName = title
+            decryptedAssets!!.descriptionOrLocation = subTitle
             if (decryptedAssets!!.created.isEmpty())
                 decryptedAssets!!.created = currentUsers + " " + currentDateandTime
             decryptedAssets!!.modified = currentUsers + " " + currentDateandTime
@@ -1717,6 +1718,7 @@ class HomeHelper( var category_name : String,
         if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
+            decryptedInsurance!!.insuredProperty = title
             if (decryptedInsurance!!.created.isEmpty())
                 decryptedInsurance!!.created = currentUsers + " " + currentDateandTime
             decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime

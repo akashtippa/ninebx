@@ -131,7 +131,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( selectedDocument != null ) {
             AppLogger.d("Level2Category", "Selected Document : " + selectedDocument)
             when( selectedDocument ) {
-            //Home&Banking
+                //Home&Banking
                 is DecryptedFinancial -> {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
@@ -148,7 +148,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedPayment -> {
                     val decryptedFinancial : DecryptedPayment = selectedDocument as DecryptedPayment
                     etTitle.setText(decryptedFinancial.cardName)
-                    etTitleValue.setText(decryptedFinancial.userName)
+                    etTitleValue.setText("")
+                    etTitleValue.isEnabled = false
                     createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -165,8 +166,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedVehicle-> {
                     val decryptedFinancial : DecryptedVehicle = selectedDocument as DecryptedVehicle
-                    etTitle.setText(decryptedFinancial.titleName)
-                    etTitleValue.setText(decryptedFinancial.vehicleName)
+                    etTitle.setText(decryptedFinancial.vehicleName)
+                    etTitleValue.setText(decryptedFinancial.licenseNumber)
                     createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -175,7 +176,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedAsset-> {
                     val decryptedFinancial : DecryptedAsset = selectedDocument as DecryptedAsset
                     etTitle.setText(decryptedFinancial.assetName)
-                    etTitleValue.setText(decryptedFinancial.assetName)
+                    etTitleValue.setText(decryptedFinancial.descriptionOrLocation)
                     createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -184,7 +185,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedInsurance-> {
                     val decryptedFinancial : DecryptedInsurance = selectedDocument as DecryptedInsurance
                     etTitle.setText(decryptedFinancial.insuranceCompany)
-                    etTitleValue.setText(decryptedFinancial.insuredVehicle)
+                    etTitleValue.setText(decryptedFinancial.insuredProperty)
                     createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -192,14 +193,16 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedTax-> {
                     val decryptedFinancial : DecryptedTax = selectedDocument as DecryptedTax
-                    etTitle.setText(decryptedFinancial.title)
-                    etTitleValue.setText(decryptedFinancial.taxPayer)
+                    etTitle.setText(decryptedFinancial.returnName)
+                    etTitleValue.setText("")
+                    etTitleValue.isEnabled = false
                     createdValue.text = decryptedFinancial.created
                     modifiedValue.setText(decryptedFinancial.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
-            //Personal
+
+                 //Personal
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
@@ -795,11 +798,13 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Birth Certificate" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
+                etTitleValue.isEnabled = false
                 toolbarTitle.text = "Add Certificate"
             }
             "Marriage Certificate" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
+                etTitleValue.isEnabled = false
                 toolbarTitle.text = "Add Certificate"
             }
             "Other Government-Issued ID" -> {
