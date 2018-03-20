@@ -141,7 +141,7 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(license in searchDecryptedCombinePersonal.licenseItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, license.nameOnLicense, "license", license.selectionType, itemIndex++, license.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, license.lic_description, "license", license.selectionType, itemIndex++, license.id))
         }
         itemIndex = 0
         for(personal in searchDecryptedCombinePersonal.personalItems){

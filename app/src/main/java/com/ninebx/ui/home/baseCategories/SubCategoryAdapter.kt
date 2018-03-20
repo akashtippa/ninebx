@@ -11,7 +11,7 @@ import com.ninebx.utility.Constants
 /**
  * Created by Alok on 12/01/18.
  */
-class SubCategoryAdapter(var subCategories: ArrayList<SubCategory>, val actionClickListener: CategoryItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<SubCategory>, val actionClickListener: CategoryItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val subCategory = getItemAtPosition(position)
@@ -89,10 +89,10 @@ class SubCategoryAdapter(var subCategories: ArrayList<SubCategory>, val actionCl
             if (position != RecyclerView.NO_POSITION) {
                 when (view!!.id) {
                     R.id.tvCount -> {
-                        actionClickListener.onItemClick(getItemAtPosition(position), "add_item")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "add_item")
                     }
                     R.id.tvSubTitle -> {
-                        actionClickListener.onItemClick(getItemAtPosition(position), "display")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "display")
                     }
                 }
             }
@@ -115,7 +115,7 @@ class SubCategoryAdapter(var subCategories: ArrayList<SubCategory>, val actionCl
             if (position != RecyclerView.NO_POSITION) {
                 when (view!!.id) {
                     R.id.tvSubTitle -> {
-                        actionClickListener.onItemClick(getItemAtPosition(position), "add_person")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "add_person")
                     }
                 }
             }
@@ -137,7 +137,7 @@ class SubCategoryAdapter(var subCategories: ArrayList<SubCategory>, val actionCl
             if (position != RecyclerView.NO_POSITION) {
                 when (view!!.id) {
                     R.id.tvSubTitle -> {
-                        actionClickListener.onItemClick(getItemAtPosition(position), "display_person")
+                        actionClickListener.onItemClick(this@SubCategoryAdapter, category, getItemAtPosition(position), "display_person")
                     }
                 }
             }

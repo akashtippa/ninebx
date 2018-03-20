@@ -12,9 +12,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.kotlin.showToast
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.Constants
-import com.ninebx.utility.isValidPassword
+import com.ninebx.utility.*
 import io.realm.SyncUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -55,8 +53,8 @@ class SignInFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtEmailAddress.setText("smriti.sateesh@cognitiveclouds.com")
-            edtPassword.setText("Qwerty123.")
+            edtEmailAddress.setText(TEST_EMAIL)
+            edtPassword.setText(TEST_PASSWORD)
         }
 
         // For First Name

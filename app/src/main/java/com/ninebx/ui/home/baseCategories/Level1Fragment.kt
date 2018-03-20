@@ -197,9 +197,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     lateinit var rvSubCategory: RecyclerView
     lateinit var subCategoryAdapter: SubCategoryAdapter
-    var peopleCategory: Category ?= null
-    var peopleCategoryView: LinearLayout ?= null
-    var peopleSubCategoryAdapter: SubCategoryAdapter ?= null
     var categoryView: LinearLayout ?= null
     private fun inflateLayout(categories: ArrayList<Category>) {
 
@@ -209,11 +206,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
             categoryView = inflater.inflate(R.layout.layout_category_view, null) as LinearLayout
 
-            if(category.title == "Personal Health Record" || category.title == "Education"
-                    || category.title == "Work" || category.title == "Clothing sizes") {
-                peopleCategoryView = categoryView
-                peopleCategory = category
-            }
 
             val tvCategory = categoryView!!.findViewById<TextView>(R.id.tvCategory)
             val tvCount = categoryView!!.findViewById<TextView>(R.id.tvCount)
@@ -257,12 +249,14 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             }
 
 
-            subCategoryAdapter = SubCategoryAdapter(category.subCategories, object : CategoryItemClickListener {
-                override fun onItemClick(subCategory: SubCategory, action: String) {
+            var subCategoryAdapter = SubCategoryAdapter(category, category.subCategories, object : CategoryItemClickListener {
+
+
+                override fun onItemClick(adapter: SubCategoryAdapter, mainCategory: Category, subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                        if( !subCategoryAdapter.checkForDependentCategory("Vehicles") ) {
+                        if( !checkForAsset("Vehicles", categories) ) {
                             context!!.showToast(R.string.error_empty_vehicle_list)
                             return
                         }
@@ -295,8 +289,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         when {
                             subCategory.title == "Add Persons." -> {
                                 if(!memberList.isEmpty()) {
-                                    if(peopleCategory != null)
-                                        CustomDropDown(peopleCategory!!.subCategories)
+                                    CustomDropDown(adapter, mainCategory.subCategories)
                                 }
                                 else {
                                     Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
@@ -347,18 +340,31 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 }
             })
             rvSubCategory.adapter = subCategoryAdapter
-            if(category.title == "Personal Health Record" || category.title == "Education"
-                || category.title == "Work" || category.title == "Clothing sizes") {
+           /* if(category.title == "Personal Health Record" || category.title == "Education"
+                    || category.title == "Work" || category.title == "Clothing sizes") {
                 peopleSubCategoryAdapter = subCategoryAdapter
-            }
+            }*/
             layoutCategory.addView(categoryView)
         }
+    }
+
+    private fun checkForAsset(categoryName: String, categories: ArrayList<Category>): Boolean {
+        var isAssetPresent = false
+        for( category in categories ) {
+            val subCategoryIndex = category.subCategories.indexOf(SubCategory(categoryName))
+            if( subCategoryIndex != -1 ) {
+                val subCategory = category.subCategories[subCategoryIndex]
+                isAssetPresent = subCategory.formsCount > 0
+            }
+            if( isAssetPresent ) break
+        }
+        return isAssetPresent
     }
 
     var addedPersonList: ArrayList<DecryptedMember> = ArrayList()
     var memberListAdapter: MemberListAdapter ?= null
     var levelDialog: AlertDialog ?= null
-    private fun CustomDropDown(subCategories: ArrayList<SubCategory>) {
+    private fun CustomDropDown(adapter : SubCategoryAdapter, subCategories: ArrayList<SubCategory>) {
         //todo
         val dialogView: View = LayoutInflater.from(context).inflate(R.layout.layout_members, null)
         val cancelTextView: TextView = dialogView.findViewById(R.id.cancelTextView)
@@ -373,9 +379,13 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             override fun onItemClick(position: Int) {
                 val member = memberListAdapter!!.getItem(position)
                 addedPersonList.add(member)
-                subCategories.add(SubCategory(member.firstName + " " + member.lastName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, Constants.SUB_CATEGORY_DISPLAY_PERSON.toString()))
-                peopleSubCategoryAdapter?.updateList(subCategories)
-                peopleCategoryView!!.rvSubCategory.adapter = peopleSubCategoryAdapter
+                subCategories.add(0, SubCategory(
+                        member.firstName + " " + member.lastName,
+                        "",
+                        0,
+                        Constants.SUB_CATEGORY_DISPLAY_PERSON,
+                        Constants.SUB_CATEGORY_DISPLAY_PERSON.toString()))
+                adapter.notifyDataSetChanged()
                 memberListAdapter!!.removeItem(position)
                 memberListAdapter!!.notifyDataSetChanged()
                 levelDialog?.dismiss()

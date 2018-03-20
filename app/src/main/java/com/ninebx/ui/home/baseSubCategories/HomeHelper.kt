@@ -1465,7 +1465,15 @@ class HomeHelper( var category_name : String,
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.paymentItems.add(encryptPayment(decryptedPayment!!))
+                            val encryptedObject = encryptPayment( decryptedPayment!! )
+                            if (combineRealm!!.paymentItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.paymentItems.indexOf(encryptedObject)
+                                if (index != -1) {
+                                    combineRealm!!.paymentItems[index] = (encryptedObject)
+                                }
+                            } else {
+                                combineRealm!!.paymentItems.add(encryptedObject)
+                            }
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
                         }
@@ -1490,7 +1498,7 @@ class HomeHelper( var category_name : String,
                 decryptedProperty!!.created = currentUsers + " " + currentDateandTime
             decryptedProperty!!.modified = currentUsers + " " + currentDateandTime
             var isSaveComplete = false
-            if (decryptedProperty!!.id.equals(0)) {
+            if (decryptedProperty!!.id.toInt() == 0) {
                 decryptedProperty!!.id = getUniqueId()
             }
 
@@ -1530,7 +1538,17 @@ class HomeHelper( var category_name : String,
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.propertyItems.add(encryptProperty(decryptedProperty!!))
+
+                            val encryptedObject = encryptProperty( decryptedProperty!! )
+                            if (combineRealm!!.propertyItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.propertyItems.indexOf(encryptedObject)
+                                if (index != -1) {
+                                    combineRealm!!.propertyItems[index] = (encryptedObject)
+                                }
+                            } else {
+                                combineRealm!!.propertyItems.add(encryptedObject)
+                            }
+
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
                         }
@@ -1593,7 +1611,17 @@ class HomeHelper( var category_name : String,
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.vehicleItems.add(encryptVehicle(decryptedVehicle!!))
+
+                            val encryptedObject = encryptVehicle( decryptedVehicle!! )
+                            if (combineRealm!!.vehicleItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.vehicleItems.indexOf(encryptedObject)
+                                if (index != -1) {
+                                    combineRealm!!.vehicleItems[index] = (encryptedObject)
+                                }
+                            } else {
+                                combineRealm!!.vehicleItems.add(encryptedObject)
+                            }
+
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
                         }
@@ -1614,6 +1642,7 @@ class HomeHelper( var category_name : String,
         if (decryptedAssets != null) {
             decryptedAssets!!.selectionType = categoryID
             decryptedAssets!!.assetName = title
+            decryptedAssets!!.descriptionOrLocation = subTitle
             if (decryptedAssets!!.created.isEmpty())
                 decryptedAssets!!.created = currentUsers + " " + currentDateandTime
             decryptedAssets!!.modified = currentUsers + " " + currentDateandTime
@@ -1657,7 +1686,18 @@ class HomeHelper( var category_name : String,
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.assetItems.add(encryptAsset(decryptedAssets!!))
+
+
+                            val encryptedObject = encryptAsset(decryptedAssets!!)
+                            if (combineRealm!!.assetItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.assetItems.indexOf(encryptedObject)
+                                if (index != -1) {
+                                    combineRealm!!.assetItems[index] = (encryptedObject)
+                                }
+                            } else {
+                                combineRealm!!.assetItems.add(encryptedObject)
+                            }
+
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
                         }
@@ -1678,6 +1718,7 @@ class HomeHelper( var category_name : String,
         if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
+
             if (decryptedInsurance!!.created.isEmpty())
                 decryptedInsurance!!.created = currentUsers + " " + currentDateandTime
             decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime
@@ -1721,7 +1762,17 @@ class HomeHelper( var category_name : String,
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.insuranceItems.add(encryptInsurance(decryptedInsurance!!))
+
+                            val encryptedObject = encryptInsurance(decryptedInsurance!!)
+                            if (combineRealm!!.insuranceItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.insuranceItems.indexOf(encryptedObject)
+                                if (index != -1) {
+                                    combineRealm!!.insuranceItems[index] = (encryptedObject)
+                                }
+                            } else {
+                                combineRealm!!.insuranceItems.add(encryptedObject)
+                            }
+
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
                         }
@@ -1785,7 +1836,17 @@ class HomeHelper( var category_name : String,
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(Combine::class.java, getUniqueId())
                             }
-                            combineRealm!!.taxesItems.add(encryptTaxes(decryptedTaxes!!))
+
+                            val encryptedObject = encryptTaxes(decryptedTaxes!!)
+                            if (combineRealm!!.taxesItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.taxesItems.indexOf(encryptedObject)
+                                if (index != -1) {
+                                    combineRealm!!.taxesItems[index] = (encryptedObject)
+                                }
+                            } else {
+                                combineRealm!!.taxesItems.add(encryptedObject)
+                            }
+
                             realm.insertOrUpdate(combineRealm)
                             realm.commitTransaction()
                         }

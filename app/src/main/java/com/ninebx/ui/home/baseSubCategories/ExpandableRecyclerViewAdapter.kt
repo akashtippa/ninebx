@@ -170,6 +170,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.txtHeader.text = headerTitle
                 locationViewHolder.etSubHeader.hint = headerTitle
                 locationViewHolder.etSubHeader.setText(  titleValue)
+                locationViewHolder.etSubHeader.addTextChangedListener(CustomTextWatcher(level2SubCategory))
                 locationViewHolder.etSubHeader.setOnClickListener {
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
@@ -310,17 +311,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
         val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
         optionsListView.adapter = arrayAdapter
-
-        optionsListView.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                val newValue =  optionsList[position] as String
+        optionsListView.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val newValue =  optionsList[p2] as String
                 optionEditText!!.setText(newValue)
             }
         }
+
 
         popupWindow.showAsDropDown(optionEditText)
 
