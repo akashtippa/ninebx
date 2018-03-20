@@ -16,6 +16,9 @@ import com.ninebx.ui.base.kotlin.showToast
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import android.view.MotionEvent
 import android.view.View.OnTouchListener
+import com.ninebx.utility.TEST_EMAIL
+import com.ninebx.utility.TEST_FIRST_NAME
+import com.ninebx.utility.TEST_LAST_NAME
 
 
 /**
@@ -37,9 +40,9 @@ class SignUpFragment : BaseAuthFragment() {
         }
 
         if (NineBxApplication.autoTestMode) {
-            edtFirstName.setText("Smrithi")
-            edtLastName.setText("Sateesh")
-            edtEmailAddress.setText("smriti.sateesh@cognitiveclouds.com")
+            edtFirstName.setText(TEST_FIRST_NAME)
+            edtLastName.setText(TEST_LAST_NAME)
+            edtEmailAddress.setText(TEST_EMAIL)
         }
 
         txtTermsOfUse.setOnClickListener {
