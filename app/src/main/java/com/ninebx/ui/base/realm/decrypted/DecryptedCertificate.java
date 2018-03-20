@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCertificate implements Parcelable {
 
-    public static final Creator<DecryptedCertificate> CREATOR = new Creator<DecryptedCertificate>() {
-        @Override
-        public DecryptedCertificate createFromParcel(Parcel in) {
-            return new DecryptedCertificate(in);
-        }
-
-        @Override
-        public DecryptedCertificate[] newArray(int size) {
-            return new DecryptedCertificate[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -99,56 +88,6 @@ public class DecryptedCertificate implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    protected DecryptedCertificate(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        cer_description = in.readString();
-        nameOnCertificate = in.readString();
-        gender = in.readString();
-        dateOfBirth = in.readString();
-        timeOfBirth = in.readString();
-        placeOfBirth = in.readString();
-        dateOfMarriage = in.readString();
-        placeOfMarriage = in.readString();
-        nameOneCertificate = in.readString();
-        nameTwoCertificate = in.readString();
-        notes = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(cer_description);
-        dest.writeString(nameOnCertificate);
-        dest.writeString(gender);
-        dest.writeString(dateOfBirth);
-        dest.writeString(timeOfBirth);
-        dest.writeString(placeOfBirth);
-        dest.writeString(dateOfMarriage);
-        dest.writeString(placeOfMarriage);
-        dest.writeString(nameOneCertificate);
-        dest.writeString(nameTwoCertificate);
-        dest.writeString(notes);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public long getId() {
         return id;
@@ -335,4 +274,72 @@ public class DecryptedCertificate implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.cer_description);
+        dest.writeString(this.nameOnCertificate);
+        dest.writeString(this.gender);
+        dest.writeString(this.dateOfBirth);
+        dest.writeString(this.timeOfBirth);
+        dest.writeString(this.placeOfBirth);
+        dest.writeString(this.dateOfMarriage);
+        dest.writeString(this.placeOfMarriage);
+        dest.writeString(this.nameOneCertificate);
+        dest.writeString(this.nameTwoCertificate);
+        dest.writeString(this.notes);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedCertificate(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.cer_description = in.readString();
+        this.nameOnCertificate = in.readString();
+        this.gender = in.readString();
+        this.dateOfBirth = in.readString();
+        this.timeOfBirth = in.readString();
+        this.placeOfBirth = in.readString();
+        this.dateOfMarriage = in.readString();
+        this.placeOfMarriage = in.readString();
+        this.nameOneCertificate = in.readString();
+        this.nameTwoCertificate = in.readString();
+        this.notes = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedCertificate> CREATOR = new Creator<DecryptedCertificate>() {
+        @Override
+        public DecryptedCertificate createFromParcel(Parcel source) {
+            return new DecryptedCertificate(source);
+        }
+
+        @Override
+        public DecryptedCertificate[] newArray(int size) {
+            return new DecryptedCertificate[size];
+        }
+    };
 }

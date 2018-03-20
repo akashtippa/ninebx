@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedGovernment implements Parcelable {
 
-    public static final Creator<DecryptedGovernment> CREATOR = new Creator<DecryptedGovernment>() {
-        @Override
-        public DecryptedGovernment createFromParcel(Parcel in) {
-            return new DecryptedGovernment(in);
-        }
-
-        @Override
-        public DecryptedGovernment[] newArray(int size) {
-            return new DecryptedGovernment[size];
-        }
-    };
     @PrimaryKey //@Required
     private long id = 0;
     @Required
@@ -69,26 +58,6 @@ public class DecryptedGovernment implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedGovernment(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        idName = in.readString();
-        name = in.readString();
-        nameOnId = in.readString();
-        issuingCountry = in.readString();
-        issuingState = in.readString();
-        idNumber = in.readString();
-        dateIssued = in.readString();
-        expirationDate = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
 
     public DecryptedGovernment(String selectionType, String idName, String name, String nameOnId, String issuingCountry, String issuingState, String idNumber, String dateIssued, String expirationDate, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
@@ -111,31 +80,6 @@ public class DecryptedGovernment implements Parcelable {
     public DecryptedGovernment() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(idName);
-        dest.writeString(name);
-        dest.writeString(nameOnId);
-        dest.writeString(issuingCountry);
-        dest.writeString(issuingState);
-        dest.writeString(idNumber);
-        dest.writeString(dateIssued);
-        dest.writeString(expirationDate);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public long getId() {
         return id;
@@ -312,4 +256,68 @@ public class DecryptedGovernment implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.idName);
+        dest.writeString(this.searchField);
+        dest.writeString(this.name);
+        dest.writeString(this.nameOnId);
+        dest.writeString(this.issuingCountry);
+        dest.writeString(this.issuingState);
+        dest.writeString(this.idNumber);
+        dest.writeString(this.dateIssued);
+        dest.writeString(this.expirationDate);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedGovernment(Parcel in) {
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.idName = in.readString();
+        this.searchField = in.readString();
+        this.name = in.readString();
+        this.nameOnId = in.readString();
+        this.issuingCountry = in.readString();
+        this.issuingState = in.readString();
+        this.idNumber = in.readString();
+        this.dateIssued = in.readString();
+        this.expirationDate = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedGovernment> CREATOR = new Creator<DecryptedGovernment>() {
+        @Override
+        public DecryptedGovernment createFromParcel(Parcel source) {
+            return new DecryptedGovernment(source);
+        }
+
+        @Override
+        public DecryptedGovernment[] newArray(int size) {
+            return new DecryptedGovernment[size];
+        }
+    };
 }
