@@ -224,7 +224,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         homePresenter = HomePresenter(this)
         NotificationsPresenter(this)
 

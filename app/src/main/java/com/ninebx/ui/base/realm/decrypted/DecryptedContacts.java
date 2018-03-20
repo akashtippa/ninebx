@@ -18,17 +18,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedContacts implements Parcelable {
 
-    public static final Creator<DecryptedContacts> CREATOR = new Creator<DecryptedContacts>() {
-        @Override
-        public DecryptedContacts createFromParcel(Parcel in) {
-            return new DecryptedContacts(in);
-        }
-
-        @Override
-        public DecryptedContacts[] newArray(int size) {
-            return new DecryptedContacts[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -104,30 +93,6 @@ public class DecryptedContacts implements Parcelable {
     public DecryptedContacts() {
     }
 
-    protected DecryptedContacts(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        firstName = in.readString();
-        lastName = in.readString();
-        dateOfBirth = in.readString();
-        anniversary = in.readString();
-        mobileOne = in.readString();
-        mobileTwo = in.readString();
-        emailOne = in.readString();
-        emailTwo = in.readString();
-        streetAddressOne = in.readString();
-        streetAddressTwo = in.readString();
-        city = in.readString();
-        state = in.readString();
-        zipCode = in.readString();
-        country = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-        photosId = in.createStringArrayList();
-    }
 
     public long getId() {
         return id;
@@ -313,32 +278,7 @@ public class DecryptedContacts implements Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.firstName);
-        dest.writeString(this.lastName);
-        dest.writeString(this.dateOfBirth);
-        dest.writeString(this.anniversary);
-        dest.writeString(this.mobileOne);
-        dest.writeString(this.mobileTwo);
-        dest.writeString(this.emailOne);
-        dest.writeString(this.emailTwo);
-        dest.writeString(this.streetAddressOne);
-        dest.writeString(this.streetAddressTwo);
-        dest.writeString(this.city);
-        dest.writeString(this.state);
-        dest.writeString(this.zipCode);
-        dest.writeString(this.country);
-        dest.writeString(this.created);
-        dest.writeString(this.modified);
-        dest.writeString(this.createdUser);
-        dest.writeValue(this.isPrivate);
-    }
 
     @Override
     public String toString() {
@@ -367,4 +307,75 @@ public class DecryptedContacts implements Parcelable {
                 ", photosId=" + photosId +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.dateOfBirth);
+        dest.writeString(this.anniversary);
+        dest.writeString(this.mobileOne);
+        dest.writeString(this.mobileTwo);
+        dest.writeString(this.emailOne);
+        dest.writeString(this.emailTwo);
+        dest.writeString(this.streetAddressOne);
+        dest.writeString(this.streetAddressTwo);
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.zipCode);
+        dest.writeString(this.country);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+    }
+
+    protected DecryptedContacts(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.dateOfBirth = in.readString();
+        this.anniversary = in.readString();
+        this.mobileOne = in.readString();
+        this.mobileTwo = in.readString();
+        this.emailOne = in.readString();
+        this.emailTwo = in.readString();
+        this.streetAddressOne = in.readString();
+        this.streetAddressTwo = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+    }
+
+    public static final Creator<DecryptedContacts> CREATOR = new Creator<DecryptedContacts>() {
+        @Override
+        public DecryptedContacts createFromParcel(Parcel source) {
+            return new DecryptedContacts(source);
+        }
+
+        @Override
+        public DecryptedContacts[] newArray(int size) {
+            return new DecryptedContacts[size];
+        }
+    };
 }

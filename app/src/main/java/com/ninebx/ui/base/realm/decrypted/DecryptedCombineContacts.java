@@ -115,6 +115,7 @@ public class DecryptedCombineContacts implements Parcelable {
         for (DecryptedMainContacts decryptedLicense : mainContactsItems) {
             count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
         }
+        //get service account count and return
         return count;
     }
 
