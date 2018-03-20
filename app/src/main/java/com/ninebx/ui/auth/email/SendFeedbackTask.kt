@@ -17,7 +17,11 @@ import java.io.IOException
 import android.widget.Toast
 import io.realm.internal.SyncObjectServerFacade.getApplicationContext
 import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Build
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import com.ninebx.BuildConfig
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.home.HomeActivity
@@ -45,12 +49,15 @@ class SendFeedbackTask (
         try {
             val sendgrid = SendGrid("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")
             val email = SendGrid.Email()
-            email.addTo("varun.badarinath@cognitiveclouds.com")
-            email.addTo("souravstudy@gmail.com")
+        /*    email.addTo("varun.badarinath@cognitiveclouds.com")
+            email.addTo("souravstudy@gmail.com")*/
+            var finalEmailBody : Spannable = SpannableString(emailBody)
+            finalEmailBody.setSpan(StyleSpan(Typeface.NORMAL), 0, finalEmailBody.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
             email.addTo("smriti.sateesh@cognitiveclouds.com")
             email.from = emailUser
             email.subject = "NineBx Feedback - " + versionCode
-            email.text = emailBody
+            email.text = finalEmailBody.toString()
 
             // Send email, execute http request
             val response = sendgrid.send(email)

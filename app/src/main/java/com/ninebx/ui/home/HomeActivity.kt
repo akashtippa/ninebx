@@ -224,7 +224,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         homePresenter = HomePresenter(this)
         NotificationsPresenter(this)
 
@@ -268,6 +267,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
 
         callHomeFragment()
+
         toggleCheck(false)
         //SearchUtils.search()
         this.showProgressDialog(getString(R.string.loading))
@@ -346,7 +346,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                 Toast.makeText(this@HomeActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     //a Uri object to store file path
@@ -473,7 +472,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
                     Toast.makeText(this@HomeActivity, error, Toast.LENGTH_LONG).show()
                     NineBxApplication.getPreferences().isPasswordRequired = true
                 }
-
             })
         }
 

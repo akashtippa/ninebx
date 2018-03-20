@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
 import com.ninebx.NineBxApplication
 import com.ninebx.R
@@ -111,12 +112,12 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
                 onNewMember(intent.getParcelableExtra(Constants.MEMBER))
             }
         }
-
-
     }
 
 
     private lateinit var fromWhichClass: String
+
+    private var combinedItems: Parcelable ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,6 +127,8 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             NineBxApplication.getPreferences().currentStep = ALL_COMPLETE
 
         fromWhichClass = intent.extras!!.getString(Constants.FROM_CLASS)
+        combinedItems = intent.extras!!.getParcelable(Constants.COMBINE_ITEMS)
+
 
         when (fromWhichClass) {
             "MemoryView" -> {

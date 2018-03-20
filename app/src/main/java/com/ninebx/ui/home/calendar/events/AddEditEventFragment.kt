@@ -114,8 +114,12 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
         ivBack.setOnClickListener { goBack() }
         tvSave.setOnClickListener {
-            if( validate() ) {
-                saveCalendarEvent()
+            if(tvSave.text != "") {
+                if( validate() ) {
+                    saveCalendarEvent()
+                }
+            } else {
+                NineBxApplication.instance.activityInstance!!.callHomeFragment()
             }
             //uploadImageAws()
             //downloadImageAws()
@@ -334,7 +338,15 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
                 else {
                     getTimeFromPicker( context!!, selectedDate, object  : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
+                            if(endDateCalendar != null) {
+                                if(selectedDate.get(Calendar.DAY_OF_MONTH) > endDateCalendar!!.get(Calendar.DAY_OF_MONTH)) {
+                                    AppLogger.d("WRONGTIME ", " is set")
+                                    endDateCalendar = null
+                                    tvEnds.text = ""
+                                }
+                            }
                             selectedDate.set(Calendar.SECOND, 0)
+                            selectedDate.set(Calendar.MILLISECOND, 0)
                             setDateTime(dateTimeTextView, selectedDate, isAllDay)
                         }
 
@@ -349,7 +361,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
     private fun setDateTime(dateTimeTextView: TextView?, selectedDate: Calendar, allDay: Boolean) {
 
         if( allDay ) {
-            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time, DATE_FORMAT)
+            dateTimeTextView!!.text = parseDateForFormat(selectedDate.time, DATE_FORMAT_ALL_DAY)
         }
         else
             dateTimeTextView!!.text = parseDateForFormat(selectedDate.time , DATE_FORMAT)
@@ -471,6 +483,7 @@ class AddEditEventFragment : FragmentBackHelper(), CalendarBottomFragment.Bottom
 
     private val TAG: String = AddEditEventFragment::class.java.simpleName
     private val DATE_FORMAT = "MMMM dd, yyyy hh:mm a"
+    private val DATE_FORMAT_ALL_DAY = "MMMM dd, yyyy"
     //a Uri object to store file path
     private var filePath: Uri? = null
     private var mImagesList : ArrayList<Uri> = ArrayList()

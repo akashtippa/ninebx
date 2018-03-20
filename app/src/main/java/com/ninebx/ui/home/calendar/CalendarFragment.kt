@@ -88,12 +88,13 @@ class CalendarFragment : BaseHomeFragment(), CalendarView, DaysAdapterClickListe
             mCalendar = Calendar.getInstance()
             tvMonthYear.text = mMonthFormat.format(mCalendar.time)
             mPrevMonth = tvMonthYear.text.toString()
-            if( isWeekView ) {
+            /*if( isWeekView ) {
                 tvWeekMonth.callOnClick()
             }
             else {
                 setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
-            }
+            }*/
+            setDaysAdapter(mCalendar.get(Calendar.DATE), mCalendar.get(Calendar.WEEK_OF_MONTH))
         }
 
         tvWeekMonth.setOnClickListener {

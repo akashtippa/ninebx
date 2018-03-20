@@ -969,10 +969,6 @@ class HomeHelper( var category_name : String,
         categoryView.onSuccess(categoryList)
     }
 
-
-
-
-
     private fun getMaintenance() {
 
         val categoryList = ArrayList<Level2Category>()
@@ -1192,29 +1188,6 @@ class HomeHelper( var category_name : String,
         categoryView.onSuccess(categoryList)
     }
 
-    private fun setBanking(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Loan type", "Account type" -> decryptedFinancial!!.accountType = level2Category.titleValue
-            "Name(s) on account" -> decryptedFinancial!!.nameOnAccount = level2Category.titleValue
-            "Account number" -> decryptedFinancial!!.accountNumber = level2Category.titleValue
-            "Location" -> decryptedFinancial!!.location = level2Category.titleValue
-            "SWIFT/other code" -> decryptedFinancial!!. swiftCode = level2Category.titleValue
-            "ABA routing number" -> decryptedFinancial!!.abaRoutingNumber = level2Category.titleValue
-            "Contacts" -> decryptedFinancial!!.contacts = level2Category.titleValue
-            "Website" -> decryptedFinancial!!.website = level2Category.titleValue
-            "Username/login" -> decryptedFinancial!!.userName = level2Category.titleValue
-            "Password" -> decryptedFinancial!!.password = level2Category.titleValue
-            "PIN" -> decryptedFinancial!!.pin = level2Category.titleValue
-            "Account name" -> decryptedFinancial!!.accountName = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
     fun setValue(level2Category: Level2SubCategory) {
         when (category_name) {
             "Banking" -> {
@@ -1291,6 +1264,29 @@ class HomeHelper( var category_name : String,
             }
             "Returns to be filed" -> {
                 setPastReturns( level2Category )
+            }
+        }
+    }
+
+    private fun setBanking(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
+            "Loan type", "Account type" -> decryptedFinancial!!.accountType = level2Category.titleValue
+            "Name(s) on account" -> decryptedFinancial!!.nameOnAccount = level2Category.titleValue
+            "Account number" -> decryptedFinancial!!.accountNumber = level2Category.titleValue
+            "Location" -> decryptedFinancial!!.location = level2Category.titleValue
+            "SWIFT/other code" -> decryptedFinancial!!. swiftCode = level2Category.titleValue
+            "ABA routing number" -> decryptedFinancial!!.abaRoutingNumber = level2Category.titleValue
+            "Contacts" -> decryptedFinancial!!.contacts = level2Category.titleValue
+            "Website" -> decryptedFinancial!!.website = level2Category.titleValue
+            "Username/login" -> decryptedFinancial!!.userName = level2Category.titleValue
+            "Password" -> decryptedFinancial!!.password = level2Category.titleValue
+            "PIN" -> decryptedFinancial!!.pin = level2Category.titleValue
+            "Account name" -> decryptedFinancial!!.accountName = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedFinancial!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedFinancial!!.attachmentNames = level2Category.titleValue
+                }
             }
         }
     }
@@ -1444,7 +1440,7 @@ class HomeHelper( var category_name : String,
                             realm.commitTransaction()
                         }
                     })
-                }
+            }
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
@@ -1807,5 +1803,4 @@ class HomeHelper( var category_name : String,
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
     }
-
 }

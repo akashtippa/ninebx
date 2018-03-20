@@ -35,21 +35,11 @@ class Level3CategoryHelper(
         val selectedDocument: Parcelable?,
         val classType: String?
 ) {
-
-
-
     // For Travel
     private var decryptedLoyalty: DecryptedLoyalty? = null // decryptedLoyalty()
     private var decryptedTravel: DecryptedTravel? = null // DecryptedTravel()
     private var decryptedDocuments: DecryptedDocuments? = null // DecryptedTravel()
     private var decryptedVacations: DecryptedVacations? = null // DecryptedTravel()
-
-    // For Personal
-    private var decryptedDriversLicense: DecryptedLicense? = null // DecryptedLicense()
-    private var decryptedSocial: DecryptedSocial? = null // DecryptedSocial()
-    private var decryptedTAX_ID: DecryptedTaxID? = null // DecryptedTaxID()
-    private var decryptedCertificate: DecryptedCertificate? = null // DecryptedCertificate()
-    private var decryptedOtherGovernment: DecryptedGovernment? = null // DecryptedGovernment()
 
     //For Wellness
     private var decryptedIdentification: DecryptedIdentification? = null
@@ -69,6 +59,9 @@ class Level3CategoryHelper(
     private var decryptedShopping: DecryptedShopping? = null
 
     private var homeHelper : HomeHelper ?= null
+    private var personalHelper : PersonalHelper ?= null
+    private var travelHelper: TravelHelper ?= null
+    private var educationAndWorkHelper : EducationAndWorkHelper ?= null
 
     init {
         extractObject()
@@ -78,68 +71,29 @@ class Level3CategoryHelper(
                 homeHelper!!.initialize()
                 homeHelper!!.getFormForCategory()
             }
+            R.string.personal -> {
+                personalHelper = PersonalHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                personalHelper!!.initialize()
+                personalHelper!!.getFormForCategory()
+            }
+            R.string.travel -> {
+                travelHelper = TravelHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                travelHelper!!.initialize()
+                travelHelper!!.getFormForCategory()
+            }
+            R.string.education_work ->{
+                educationAndWorkHelper = EducationAndWorkHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+                educationAndWorkHelper!!.initialize()
+                educationAndWorkHelper!!.getFormForCategory()
+            }
             else -> {
                 searchByOthers()
             }
         }
-
     }
 
     private fun searchByOthers() {
         when (category_name) {
-
-        // Personal
-
-            "Drivers License" -> {
-                getDriversLicense()
-            }
-            "Social Security Card" -> {
-                getSocialSecurityCard()
-            }
-
-            "Tax ID" -> {
-                getTaxID()
-            }
-
-            "Birth Certificate" -> {
-                getBirthCertificate()
-            }
-            "Marriage Certificate" -> {
-                getMarriageCertificate()
-            }
-            "Other Government-Issued ID" -> {
-                getOtherGovernmentIssuedID()
-            }
-
-        //Travel
-
-            "Airline" -> {
-                getAirline()
-            }
-            "Hotel" -> {
-                getHotel()
-            }
-            "Car Rental" -> {
-                getCarRental()
-            }
-            "Cruiseline" -> {
-                getCruiseline()
-            }
-            "Railway" -> {
-                getRailway()
-            }
-            "Other" -> {
-                getOther()
-            }
-            "Passport" -> {
-                getPassport()
-            }
-            "Visa" -> {
-                getVisa()
-            }
-            "Other travel document" -> {
-                getOtherTravelDocuments()
-            }
 
         // Common View
             "Services/Other Accounts" -> {
@@ -236,23 +190,6 @@ class Level3CategoryHelper(
             }
             DecryptedVacations::class.java.simpleName -> {
                 decryptedVacations = selectedDocument as DecryptedVacations
-            }
-
-        // For Personal
-            DecryptedLicense::class.java.simpleName -> {
-                decryptedDriversLicense = selectedDocument as DecryptedLicense
-            }
-            DecryptedSocial::class.java.simpleName -> {
-                decryptedSocial = selectedDocument as DecryptedSocial
-            }
-            DecryptedTaxID::class.java.simpleName -> {
-                decryptedTAX_ID = selectedDocument as DecryptedTaxID
-            }
-            DecryptedCertificate::class.java.simpleName -> {
-                decryptedCertificate = selectedDocument as DecryptedCertificate
-            }
-            DecryptedGovernment::class.java.simpleName -> {
-                decryptedOtherGovernment = selectedDocument as DecryptedGovernment
             }
 
         // For Wellness
@@ -694,6 +631,39 @@ class Level3CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
+    private fun getTravelDatesAndPlans() {
+        val categoryList = ArrayList<Level2Category>()
+        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
+        var categoryIndex = 3001
+        var category_id = "travel_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
+        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
+        categoryList.add(category)
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
 
 
     // Types of InputTYpe
@@ -779,525 +749,6 @@ class Level3CategoryHelper(
 
         categoryView.onSuccess(categoryList)
     }
-
-    // PERSONAL
-    private fun getOtherGovernmentIssuedID() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedOtherGovernment == null) decryptedOtherGovernment = DecryptedGovernment()
-        var categoryIndex = 6001
-        var category_id = "personal_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on ID", decryptedOtherGovernment!!.nameOnId, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedOtherGovernment!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Issuing state", decryptedOtherGovernment!!.issuingState, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("ID number", "ID number", decryptedOtherGovernment!!.idNumber, Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", "Date issued", decryptedOtherGovernment!!.dateIssued, Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", "Expiration date", decryptedOtherGovernment!!.expirationDate, Constants.LEVEL2_PICKER))
-
-        categoryList.add(category)
-
-        categoryIndex += 2022
-        category_id = "other_certificate_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedOtherGovernment!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getMarriageCertificate() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedCertificate == null) decryptedCertificate = DecryptedCertificate()
-        var categoryIndex = 5001
-        var category_id = "personal_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name 1 on certificate", decryptedCertificate!!.nameOneCertificate, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Name 2 on certificate", decryptedCertificate!!.nameTwoCertificate, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of marriage", decryptedCertificate!!.dateOfMarriage, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Place of marriage", decryptedCertificate!!.placeOfMarriage, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2020
-        category_id = "birth_certificate_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedCertificate!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getBirthCertificate() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedCertificate == null) decryptedCertificate = DecryptedCertificate()
-        var categoryIndex = 4001
-        var category_id = "personal_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on certificate", decryptedCertificate!!.nameOnCertificate, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Gender", decryptedCertificate!!.gender, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Time of birth", decryptedCertificate!!.timeOfBirth, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place of birth", decryptedCertificate!!.placeOfBirth, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2020
-        category_id = "birth_certificate_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedCertificate!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getTaxID() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedTAX_ID == null) decryptedTAX_ID = DecryptedTaxID()
-        var categoryIndex = 3001
-        var category_id = "personal_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on ID", decryptedTAX_ID!!.taxIdName, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedTAX_ID!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Tax ID number", decryptedTAX_ID!!.taxIdNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2020
-        category_id = "tax_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedTAX_ID!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getSocialSecurityCard() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedSocial == null) decryptedSocial = DecryptedSocial()
-        var categoryIndex = 2001
-        var category_id = "personal_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on card", decryptedSocial!!.nameOnCard, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Social security number", decryptedSocial!!.socialSecurityNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2019
-        category_id = "social_security_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedSocial!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getDriversLicense() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDriversLicense == null) decryptedDriversLicense = DecryptedLicense()
-        var categoryIndex = 1001
-        var category_id = "personal_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Name on license", decryptedDriversLicense!!.nameOnLicense, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDriversLicense!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Issuing state", decryptedDriversLicense!!.issuingState, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("License number", decryptedDriversLicense!!.licenseNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDriversLicense!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDriversLicense!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2018
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDriversLicense!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    // TRAVEL
-
-    private fun getAirline() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1001
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2023
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2018
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes , "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2001
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getHotel() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1002
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2024
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName,  "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2024
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2024
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getCarRental() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1003
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2025
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2025
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2025
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getCruiseline() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1004
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2026
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2026
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2026
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getRailway() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1005
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2027
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2027
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2027
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getOther() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedLoyalty == null) decryptedLoyalty = DecryptedLoyalty()
-        var categoryIndex = 1006
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name on account", decryptedLoyalty!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyalty!!.accountNumber, "", Constants.LEVEL2_NORMAL))
-        categoryList.add(category)
-
-        categoryIndex += 2028
-        category_id = "online_access" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", decryptedLoyalty!!.website, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyalty!!.userName, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", decryptedLoyalty!!.password, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyalty!!.pin, "", Constants.LEVEL2_PASSWORD))
-        categoryList.add(category)
-
-        categoryIndex += 2028
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyalty!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2028
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-
-    }
-
-    private fun getPassport() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
-        var categoryIndex = 2001
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Passport Details"
-        category.subCategories.add(Level2SubCategory("Name on passport", decryptedDocuments!!.nameOnPassport, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Passport number", decryptedDocuments!!.passportNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2029
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2029
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getVisa() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
-        var categoryIndex = 2002
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Visa Details"
-        category.subCategories.add(Level2SubCategory("Name on visa", decryptedDocuments!!.nameOnVisa, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visa type", decryptedDocuments!!.visaType, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visa number", decryptedDocuments!!.visaNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2030
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2030
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-    private fun getOtherTravelDocuments() {
-        val categoryList = ArrayList<Level2Category>()
-        if (decryptedDocuments == null) decryptedDocuments = DecryptedDocuments()
-        var categoryIndex = 2003
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Travel Document Details"
-        category.subCategories.add(Level2SubCategory("Name on travel document", decryptedDocuments!!.nameOnTravelDocument, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Travel document type", decryptedDocuments!!.travelDocumentType, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Travel document number", decryptedDocuments!!.travelDocumentNumber, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
-        categoryList.add(category)
-
-        categoryIndex += 2031
-        category_id = "other_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedDocuments!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
-
-        categoryIndex += 2031
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
-
-        categoryView.onSuccess(categoryList)
-    }
-
-
-    // Education and Work
 
     private fun getEducation() {
         val categoryList = ArrayList<Level2Category>()
@@ -1455,40 +906,10 @@ class Level3CategoryHelper(
         categoryView.onSuccess(categoryList)
     }
 
-    private fun getTravelDatesAndPlans() {
-        val categoryList = ArrayList<Level2Category>()
-        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
-        var categoryIndex = 3001
-        var category_id = "travel_" + categoryIndex
-        var category = Level2Category(category_id)
-        category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
-        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
-        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
-        categoryList.add(category)
-
-        categoryIndex += 2035
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
-        categoryList.add(category)
 
 
-        categoryIndex += 2035
-        category_id = "account_details" + categoryIndex
-        category = Level2Category(category_id)
-        category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
-        categoryList.add(category)
 
-        categoryView.onSuccess(categoryList)
-    }
-
-
+    // Education and Work
     // Wellness
 
     private fun getIdentification() {
@@ -1760,73 +1181,18 @@ class Level3CategoryHelper(
         if( homeHelper != null ) {
             homeHelper!!.setValue(level2Category)
         }
+        if( personalHelper != null){
+            personalHelper!!.setValue(level2Category)
+        }
+        if(travelHelper != null) {
+            travelHelper!!.setValue(level2Category)
+        }
+        if(educationAndWorkHelper != null) {
+            educationAndWorkHelper!!.setValue(level2Category)
+        }
+
         else {
             when (category_name) {
-
-            // Personal
-
-                "Drivers License" -> {
-                    setDriversLicense(level2Category)
-                }
-                "Social Security Card" -> {
-                    setSocialSecurityCard(level2Category)
-                }
-
-                "Tax ID" -> {
-                    setTaxID(level2Category)
-                }
-
-                "Birth Certificate" -> {
-                    setCertificate(level2Category)
-                }
-                "Marriage Certificate" -> {
-                    setCertificate(level2Category)
-                }
-                "Other Government-Issued ID" -> {
-                    setOtherGovernmentIssuedID(level2Category)
-                }
-
-            // Travel
-
-                "Airline" -> {
-                    setLoyalty(level2Category)
-                }
-                "Hotel" -> {
-                    setLoyalty(level2Category)
-                }
-                "Car Rental" -> {
-                    setLoyalty(level2Category)
-                }
-                "Cruiseline" -> {
-                    setLoyalty(level2Category)
-                }
-                "Railway" -> {
-                    setLoyalty(level2Category)
-                }
-                "Other" -> {
-                    setLoyalty(level2Category)
-                }
-                "Passport" -> {
-                    setTravelDocuments(level2Category)
-                }
-                "Visa" -> {
-                    setTravelDocuments(level2Category)
-                }
-                "Other travel document" -> {
-                    setTravelDocuments(level2Category)
-                }
-
-                "Travel" -> {
-                    setTravelItems(level2Category)
-                }
-                "TravelInstitution" -> {
-                    setTravelItems(level2Category)
-                }
-                "Travel Dates And Plans" ->
-                {
-                    setVacationItems(level2Category)
-                }
-
 
             // Common View
                 "Services/Other Accounts" -> {
@@ -2001,190 +1367,6 @@ class Level3CategoryHelper(
             }
         }
     }
-
-
-    private fun setDriversLicense(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Description" -> decryptedDriversLicense!!.lic_description = level2Category.titleValue
-            "Name on license" -> decryptedDriversLicense!!.nameOnLicense = level2Category.titleValue
-            "Issuing country" -> decryptedDriversLicense!!.issuingCountry = level2Category.titleValue
-            "License number" -> decryptedDriversLicense!!.licenseNumber = level2Category.titleValue
-            "Date issued" -> decryptedDriversLicense!!.dateIssued = level2Category.titleValue
-            "Expiration date" -> decryptedDriversLicense!!.expirationDate = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedDriversLicense!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedDriversLicense!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setSocialSecurityCard(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Card name" -> decryptedSocial!!.nameOnCard = level2Category.titleValue
-            "Name on card" -> decryptedSocial!!.nameOnCard = level2Category.titleValue
-            "Social security number" -> decryptedSocial!!.socialSecurityNumber = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedSocial!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedSocial!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setTaxID(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Tax ID name" -> decryptedTAX_ID!!.name = level2Category.titleValue
-            "Name on ID" -> decryptedTAX_ID!!.taxIdName = level2Category.titleValue
-            "Tax ID number" -> decryptedTAX_ID!!.taxIdNumber = level2Category.titleValue
-            "Issuing country" -> decryptedTAX_ID!!.issuingCountry = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedTAX_ID!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedTAX_ID!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setCertificate(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Description" -> decryptedCertificate!!.cer_description = level2Category.titleValue
-            "Name on certificate" -> decryptedCertificate!!.nameOnCertificate = level2Category.titleValue
-            "Gender" -> decryptedCertificate!!.gender = level2Category.titleValue
-            "Date of birth" -> decryptedCertificate!!.dateOfBirth = level2Category.titleValue
-            "Time of birth" -> decryptedCertificate!!.timeOfBirth = level2Category.titleValue
-            "Place of birth" -> decryptedCertificate!!.placeOfBirth = level2Category.titleValue
-            "Name 1 on certificate" -> decryptedCertificate!!.nameOneCertificate = level2Category.titleValue
-            "Name 2 on certificate" -> decryptedCertificate!!.nameTwoCertificate = level2Category.titleValue
-            "Date of marriage" -> decryptedCertificate!!.dateOfMarriage = level2Category.titleValue
-            "Place of marriage" -> decryptedCertificate!!.placeOfMarriage = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedCertificate!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedCertificate!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setOtherGovernmentIssuedID(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "ID name" -> decryptedOtherGovernment!!.idName = level2Category.titleValue
-            "Name on ID" -> decryptedOtherGovernment!!.nameOnId = level2Category.titleValue
-            "Issuing country" -> decryptedOtherGovernment!!.issuingCountry = level2Category.titleValue
-            "ID number" -> decryptedOtherGovernment!!.idNumber = level2Category.titleValue
-            "Date issued" -> decryptedOtherGovernment!!.dateIssued = level2Category.titleValue
-            "Expiration date" -> decryptedOtherGovernment!!.expirationDate = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedOtherGovernment!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedOtherGovernment!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setLoyalty(level2Category: Level2SubCategory) {
-        AppLogger.d("Level2Category", " " + level2Category)
-        when (level2Category.title) {
-            "Airline" -> decryptedLoyalty!!.airLine = level2Category.titleValue
-            "Hotel" -> decryptedLoyalty!!.hotel = level2Category.titleValue
-            "Car Rental Company" -> decryptedLoyalty!!.carRentalCompany = level2Category.titleValue
-            "Cruiseline" -> decryptedLoyalty!!.cruiseline = level2Category.titleValue
-            "Railway" -> decryptedLoyalty!!.railway = level2Category.titleValue
-            "Account name" -> decryptedLoyalty!!.accountName = level2Category.titleValue
-            "Other" -> decryptedLoyalty!!.other = level2Category.titleValue
-            "Account name" -> decryptedLoyalty!!.accountName = level2Category.titleValue
-            "Name on account" -> decryptedLoyalty!!.nameOnAccount = level2Category.titleValue
-            "Account number" -> decryptedLoyalty!!.accountNumber = level2Category.titleValue
-            "Website" -> decryptedLoyalty!!.website = level2Category.titleValue
-            "Username/login" -> decryptedLoyalty!!.userName = level2Category.titleValue
-            "Password" -> decryptedLoyalty!!.password = level2Category.titleValue
-            "PIN" -> decryptedLoyalty!!.pin = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedLoyalty!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedLoyalty!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setTravelDocuments(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Passport name" -> decryptedDocuments!!.passportName = level2Category.titleValue
-            "Name on passport" -> decryptedDocuments!!.nameOnPassport = level2Category.titleValue
-            "Issuing country" -> decryptedDocuments!!.issuingCountry = level2Category.titleValue
-            "Passport number" -> decryptedDocuments!!.passportNumber = level2Category.titleValue
-            "Place issued" -> decryptedDocuments!!.placeIssued = level2Category.titleValue
-            "Date issued" -> decryptedDocuments!!.dateIssued = level2Category.titleValue
-            "Visa name" -> decryptedDocuments!!.visaName = level2Category.titleValue
-            "Name on visa" -> decryptedDocuments!!.nameOnVisa = level2Category.titleValue
-            "Visa type" -> decryptedDocuments!!.visaType = level2Category.titleValue
-            "Visa number" -> decryptedDocuments!!.visaNumber = level2Category.titleValue
-            "Travel document title" -> decryptedDocuments!!.travelDocumentTitle = level2Category.titleValue
-            "Name on travel document" -> decryptedDocuments!!.nameOnTravelDocument = level2Category.titleValue
-            "Travel document type" -> decryptedDocuments!!.travelDocumentType = level2Category.titleValue
-            "Travel document number" -> decryptedDocuments!!.travelDocumentNumber = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedDocuments!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedDocuments!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setVacationItems(level2Category: Level2SubCategory) {
-        when (level2Category.title) {
-            "Description" -> decryptedVacations!!.vac_description = level2Category.titleValue
-            "Start date" -> decryptedVacations!!.startDate = level2Category.titleValue
-            "End date" -> decryptedVacations!!.endDate = level2Category.titleValue
-            "Places to visit/consider 1" -> decryptedVacations!!.placesToVisit_1 = level2Category.titleValue
-            "Places to visit/consider 2" -> decryptedVacations!!.placesToVisit_2 = level2Category.titleValue
-            "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
-            else -> {
-                when (level2Category.type) {
-                    Constants.LEVEL2_NOTES -> decryptedVacations!!.notes = level2Category.titleValue
-                    Constants.LEVEL2_ATTACHMENTS -> decryptedVacations!!.attachmentNames = level2Category.titleValue
-                }
-            }
-        }
-    }
-
-    private fun setTravelItems(level2Category: Level2SubCategory) {
-         when(level2Category.title){
-             "Institution name" -> decryptedTravel!!.institutionName = level2Category.titleValue
-             "Account name" -> decryptedTravel!!.accountName = level2Category.titleValue
-             "Account type" -> decryptedTravel!!.accountType = level2Category.titleValue
-             "Name(s) on account" -> decryptedTravel!!.nameOnAccount = level2Category.titleValue
-
-             "Location" -> decryptedTravel!!.location = level2Category.titleValue
-             "SWIFT/other code" -> decryptedTravel!!.swiftCode = level2Category.titleValue
-             "ABA routing number" -> decryptedTravel!!.abaRoutingNumber = level2Category.titleValue
-             "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
-             "Account number" -> decryptedTravel!!.accountNumber = level2Category.titleValue
-
-             "Website" -> decryptedTravel!!.website = level2Category.titleValue
-             "Contacts" -> decryptedTravel!!.contacts = level2Category.titleValue
-             "Username/login" -> decryptedTravel!!.userName = level2Category.titleValue
-             "Password" -> decryptedTravel!!.password = level2Category.titleValue
-             "PIN" -> decryptedTravel!!.pin = level2Category.titleValue
-             "Payment method on file" -> decryptedTravel!!.paymentMethodOnFile = level2Category.titleValue
-             "Notes" -> decryptedTravel!!.notes = level2Category.titleValue
-             "Title" -> decryptedTravel!!.title = level2Category.titleValue
-             else -> {
-                 when (level2Category.type) {
-                     Constants.LEVEL2_NOTES -> decryptedTravel!!.notes = level2Category.titleValue
-                     Constants.LEVEL2_ATTACHMENTS -> decryptedTravel!!.attachmentNames = level2Category.titleValue
-                 }
-             }
-         }
-    }
-
 
     private fun setIdentification(level2Category: Level2SubCategory) {
         when (level2Category.title) {
@@ -2384,295 +1566,14 @@ class Level3CategoryHelper(
             homeHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
 
-        if (decryptedDriversLicense != null) {
-            decryptedDriversLicense!!.selectionType = categoryID
-            decryptedDriversLicense!!.nameOnLicense = title
-            if( decryptedDriversLicense!!.created.isEmpty() )
-                decryptedDriversLicense!!.created = currentUsers + " " + currentDateandTime
-            decryptedDriversLicense!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedDriversLicense!!.id.toInt() == 0) {
-                decryptedDriversLicense!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            val driversLicense = encryptLicense(decryptedDriversLicense!!)
-                            realm.insertOrUpdate(driversLicense)
-                            realm.commitTransaction()
-                            AppLogger.d("Adding ", " personal")
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmDriversLicense = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmDriversLicense == null) {
-                                realmDriversLicense = realm.createObject(CombinePersonal::class.java, getUniqueId())
-                            }
-                            realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
-                            realm.copyToRealmOrUpdate(realmDriversLicense)
-                            AppLogger.d("Adding ", " Combine personal")
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        if(personalHelper != null){
+            personalHelper!!.saveDocument(context,combineItem, title, subTitle)
         }
-
-        if (decryptedSocial != null) {
-            decryptedSocial!!.selectionType = categoryID
-            decryptedSocial!!.cardName = title
-            if( decryptedSocial!!.created.isEmpty() )
-                decryptedSocial!!.created = currentUsers + " " + currentDateandTime
-            decryptedSocial!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedSocial!!.id.toInt() == 0) {
-                decryptedSocial!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            val social = encryptSocial(decryptedSocial!!)
-                            realm.insertOrUpdate(social)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmSocial = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmSocial == null) {
-                                realmSocial = realm.createObject(CombinePersonal::class.java, getUniqueId())
-                            }
-                            realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
-                            realm.copyToRealmOrUpdate(realmSocial)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        if(travelHelper != null) {
+            travelHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
+        if(educationAndWorkHelper != null) {
 
-        if (decryptedTAX_ID != null) {
-            decryptedTAX_ID!!.selectionType = categoryID
-            decryptedTAX_ID!!.taxIdName = title
-            decryptedTAX_ID!!.modified = currentUsers + " " + currentDateandTime
-            if( decryptedTAX_ID!!.created.isEmpty() )
-                decryptedTAX_ID!!.created = currentUsers + " " + currentDateandTime
-
-            if (decryptedTAX_ID!!.id.toInt() == 0) {
-                decryptedTAX_ID!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            var taxID = encryptTaxID(decryptedTAX_ID!!)
-                            realm.insertOrUpdate(taxID)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmTaxID = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmTaxID == null) {
-                                realmTaxID = realm.createObject(CombinePersonal::class.java, getUniqueId())
-                            }
-                            realmTaxID!!.taxIDItems.add(encryptTaxID(decryptedTAX_ID!!))
-                            realm.insertOrUpdate(realmTaxID)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-
-        if (decryptedOtherGovernment != null) {
-            decryptedOtherGovernment!!.selectionType = categoryID
-            decryptedOtherGovernment!!.idName = title
-            decryptedOtherGovernment!!.modified = currentUsers + " " + currentDateandTime
-            if( decryptedOtherGovernment!!.created.isEmpty() )
-                decryptedOtherGovernment!!.created = currentUsers + " " + currentDateandTime
-
-            if (decryptedOtherGovernment!!.id.toInt() == 0) {
-                decryptedOtherGovernment!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            var otherGovernment = encryptGovernment(decryptedOtherGovernment!!)
-                            realm!!.insertOrUpdate(otherGovernment)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmGovernment = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmGovernment == null) {
-                                realmGovernment = realm.createObject(CombinePersonal::class.java, getUniqueId())
-                            }
-                            realmGovernment!!.governmentItems.add(encryptGovernment(decryptedOtherGovernment!!))
-                            realm.copyToRealmOrUpdate(realmGovernment)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-
-        if (decryptedCertificate != null) {
-            decryptedCertificate!!.selectionType = categoryID
-            decryptedCertificate!!.nameOnCertificate = title
-            if( decryptedCertificate!!.created.isEmpty() )
-                decryptedCertificate!!.created = currentUsers + " " + currentDateandTime
-            decryptedCertificate!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedCertificate!!.id.toInt() == 0) {
-                decryptedCertificate!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            var certificate = encryptCertificate(decryptedCertificate!!)
-                            realm.insertOrUpdate(certificate)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
-                            var realmCertificate = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmCertificate == null) {
-                                realmCertificate = realm.createObject(CombinePersonal::class.java, getUniqueId())
-                            }
-                            realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
-                            realm.copyToRealmOrUpdate(realmCertificate)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         if (decryptedIdentification != null) {
@@ -3289,7 +2190,7 @@ class Level3CategoryHelper(
                             realm.insertOrUpdate(loyalty)
                             realm.copyToRealmOrUpdate(loyalty)
                             realm.commitTransaction()
-                          //  fragmentListContainer!!.setRecyclerView()
+                            //  fragmentListContainer!!.setRecyclerView()
                         }
                     })
                 }
