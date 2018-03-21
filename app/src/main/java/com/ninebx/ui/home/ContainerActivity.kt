@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
@@ -20,9 +21,10 @@ import com.ninebx.ui.home.account.addmembers.MemberView
 import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
 import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
+import com.ninebx.ui.home.baseCategories.Category
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
-import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
-import com.ninebx.ui.home.fragments.SingleContactViewFragment
+import com.ninebx.ui.home.fragments.*
 import com.ninebx.utility.*
 import com.ninebx.utility.Constants.ALL_COMPLETE
 import io.realm.SyncUser
@@ -141,6 +143,59 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             }
             "Level2Fragment" -> {
                 loadLevel3Fragment()
+            }
+            "Level1Fragment" -> {
+                loadOtherFragments()
+            }
+        }
+    }
+
+    private fun loadOtherFragments() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        val subCategory = intent.getParcelableExtra<SubCategory>(Constants.SUB_CATEGORY)
+        val category = intent.getParcelableExtra<Category>(Constants.CATEGORY)
+        val bundle = intent.extras
+        when {
+
+            subCategory.title == "Add Person." -> {
+                val categoryFragment = ClothesFragment()
+                categoryFragment.arguments = intent.extras
+                fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+            }
+            else -> {
+
+                //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+                if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
+                    when(category.title) {
+                        "Work" -> {
+                            val categoryFragment = WellnessFragment()
+                            categoryFragment.arguments = bundle
+                            fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+                        }
+                        "Education" -> {
+                            val categoryFragment = WellnessFragment()
+                            categoryFragment.arguments = bundle
+                            fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+                        }
+                        "Personal Health Record" -> {
+                            val categoryFragment = WellnessFragment()
+                            categoryFragment.arguments = bundle
+                            fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+                        }
+                        "Clothing sizes" -> {
+                            val categoryFragment = ClothesFragment()
+                            categoryFragment.arguments = bundle
+                            fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+                        }
+                    }
+                } else {
+                    val categoryFragment = Level2Fragment()
+                    categoryFragment.arguments = bundle
+                    fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+                }
+                Toast.makeText(this, "ID is " + category.category_id, Toast.LENGTH_LONG).show()
+
             }
         }
     }

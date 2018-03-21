@@ -38,7 +38,7 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutMens.setOnClickListener {
@@ -50,7 +50,7 @@ class ClothesFragment : FragmentBackHelper() {
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutGirls.setOnClickListener {
@@ -62,7 +62,7 @@ class ClothesFragment : FragmentBackHelper() {
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutBoys.setOnClickListener {
@@ -74,7 +74,7 @@ class ClothesFragment : FragmentBackHelper() {
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutBaby.setOnClickListener {
@@ -86,7 +86,7 @@ class ClothesFragment : FragmentBackHelper() {
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
 
