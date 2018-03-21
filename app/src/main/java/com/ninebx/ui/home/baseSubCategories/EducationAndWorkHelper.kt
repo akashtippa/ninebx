@@ -5,10 +5,7 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Parcelable
 import com.ninebx.NineBxApplication
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
-import com.ninebx.ui.base.realm.decrypted.DecryptedEducation
-import com.ninebx.ui.base.realm.decrypted.DecryptedMainEducation
-import com.ninebx.ui.base.realm.decrypted.DecryptedWork
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.utility.*
@@ -52,42 +49,78 @@ class EducationAndWorkHelper(var category_name : String,
             "Education" -> {
                 getMainEducation()
             }
+            /*"Main Education" -> {
+                getMainEducation()
+            }*/
             "Work" -> {
                 getWork()
             }
         }
     }
 
+  /*  private fun getEducation() {
+        val categoryList = ArrayList<Level2Category>()
+        if( decryptedEducation == null ) decryptedEducation = DecryptedEducation()
+        var categoryIndex = 1001
+        var category_id = "edu_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Name", decryptedEducation!!.nameOnAccount, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Location", "Location", "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Concenteration/majaor", "Concenteration/majaor", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("From", "From", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("To", "To", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH))
+        categoryList.add(category)
+
+        categoryIndex += 2032
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+        categoryIndex += 2032
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+
+        categoryView.onSuccess(categoryList)
+    }*/
+
     private fun getMainEducation() {
-            val categoryList = ArrayList<Level2Category>()
-            if (decryptedMainEducation == null) decryptedMainEducation = DecryptedMainEducation()
-            var categoryIndex = 1001
-            var category_id = "edu_" + categoryIndex
-            var category = Level2Category(category_id)
-            category.title = "Details"
-            category.subCategories.add(Level2SubCategory("Name", decryptedMainEducation!!.name, "", Constants.LEVEL2_NORMAL))
-            category.subCategories.add(Level2SubCategory("Location", decryptedMainEducation!!.location, "", Constants.LEVEL2_LOCATION))
-            category.subCategories.add(Level2SubCategory("Concentration/major", decryptedMainEducation!!.major, "", Constants.LEVEL2_NORMAL))
-            category.subCategories.add(Level2SubCategory("From", decryptedMainEducation!!.from, "", Constants.LEVEL2_PICKER))
-            category.subCategories.add(Level2SubCategory("To", decryptedMainEducation!!.to, "", Constants.LEVEL2_PICKER))
-            category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH, decryptedMainEducation!!.current))
-            categoryList.add(category)
+        val categoryList = ArrayList<Level2Category>()
+        if (decryptedMainEducation == null) decryptedMainEducation = DecryptedMainEducation()
+        var categoryIndex = 1001
+        var category_id = "edu_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Name", decryptedMainEducation!!.name, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Location", decryptedMainEducation!!.location, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Concentration/major", decryptedMainEducation!!.major, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("From", decryptedMainEducation!!.from, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("To", decryptedMainEducation!!.to, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Currently studying here", "", "", Constants.LEVEL2_SWITCH, decryptedMainEducation!!.current))
+        categoryList.add(category)
 
-            categoryIndex += 2032
-            category_id = "account_details" + categoryIndex
-            category = Level2Category(category_id)
-            category.title = "Notes"
-            category.subCategories.add(Level2SubCategory("", decryptedMainEducation!!.notes, "", Constants.LEVEL2_NOTES))
-            categoryList.add(category)
+        categoryIndex += 2032
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", decryptedMainEducation!!.notes, "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
 
-            categoryIndex += 2032
-            category_id = "account_details" + categoryIndex
-            category = Level2Category(category_id)
-            category.title = "Attachments"
-            category.subCategories.add(Level2SubCategory("", decryptedMainEducation!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
-            categoryList.add(category)
-            categoryView.onSuccess(categoryList)
-        }
+        categoryIndex += 2032
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", decryptedMainEducation!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+        categoryView.onSuccess(categoryList)
+    }
 
     private fun getWork() {
         val categoryList = ArrayList<Level2Category>()
@@ -126,6 +159,9 @@ class EducationAndWorkHelper(var category_name : String,
             "Education" -> {
                 setMainEducation(level2Category)
             }
+            /*"Main Education" -> {
+                setMainEducation(level2Category)
+            }*/
             "Work" -> {
                 setWork(level2Category)
             }
@@ -166,33 +202,33 @@ class EducationAndWorkHelper(var category_name : String,
         }
     }
 
-        private fun setEducation(level2Category: Level2SubCategory) {
-            when (level2Category.title) {
+   /* private fun setEducation(level2Category: Level2SubCategory) {
+        when (level2Category.title) {
 
-                "Institution name" -> decryptedEducation!!.institutionName = level2Category.titleValue
-                "Account name" -> decryptedEducation!!.userName = level2Category.titleValue
-                "Location"->decryptedEducation!!.location = level2Category.titleValue
-                "Name(s) on account" -> decryptedEducation!!.nameOnAccount = level2Category.titleValue
-                "SWIFT/other code" -> decryptedEducation!!.swiftCode = level2Category.titleValue
-                "ABA routing number" -> decryptedEducation!!.abaRoutingNumber = level2Category.titleValue
-                "Contacts" -> decryptedEducation!!.contacts = level2Category.titleValue
-                "Account number" -> decryptedEducation!!.accountNumber = level2Category.titleValue
-                "Website" -> decryptedEducation!!.website = level2Category.titleValue
-                "Contacts" -> decryptedEducation!!.contacts = level2Category.titleValue
-                "Username/login" -> decryptedEducation!!.userName = level2Category.titleValue
-                "Password" -> decryptedEducation!!.password = level2Category.titleValue
-                "PIN" -> decryptedEducation!!.pin = level2Category.titleValue
-                "Payment method on file" -> decryptedEducation!!.paymentMethodOnFile = level2Category.titleValue
-                "Notes" -> decryptedEducation!!.notes = level2Category.titleValue
-                "Title" -> decryptedEducation!!.title = level2Category.titleValue
-                else -> {
-                    when (level2Category.type) {
-                        Constants.LEVEL2_NOTES -> decryptedEducation!!.notes = level2Category.titleValue
-                        Constants.LEVEL2_ATTACHMENTS -> decryptedEducation!!.attachmentNames = level2Category.titleValue
-                    }
+            "Institution name" -> decryptedEducation!!.institutionName = level2Category.titleValue
+            "Account name" -> decryptedEducation!!.userName = level2Category.titleValue
+            "Location"->decryptedEducation!!.location = level2Category.titleValue
+            "Name(s) on account" -> decryptedEducation!!.nameOnAccount = level2Category.titleValue
+            "SWIFT/other code" -> decryptedEducation!!.swiftCode = level2Category.titleValue
+            "ABA routing number" -> decryptedEducation!!.abaRoutingNumber = level2Category.titleValue
+            "Contacts" -> decryptedEducation!!.contacts = level2Category.titleValue
+            "Account number" -> decryptedEducation!!.accountNumber = level2Category.titleValue
+            "Website" -> decryptedEducation!!.website = level2Category.titleValue
+            "Contacts" -> decryptedEducation!!.contacts = level2Category.titleValue
+            "Username/login" -> decryptedEducation!!.userName = level2Category.titleValue
+            "Password" -> decryptedEducation!!.password = level2Category.titleValue
+            "PIN" -> decryptedEducation!!.pin = level2Category.titleValue
+            "Payment method on file" -> decryptedEducation!!.paymentMethodOnFile = level2Category.titleValue
+            "Notes" -> decryptedEducation!!.notes = level2Category.titleValue
+            "Title" -> decryptedEducation!!.title = level2Category.titleValue
+            else -> {
+                when (level2Category.type) {
+                    Constants.LEVEL2_NOTES -> decryptedEducation!!.notes = level2Category.titleValue
+                    Constants.LEVEL2_ATTACHMENTS -> decryptedEducation!!.attachmentNames = level2Category.titleValue
                 }
-                }
+            }
         }
+    }*/
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String){
@@ -245,21 +281,21 @@ class EducationAndWorkHelper(var category_name : String,
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val combine: DecryptedCombineEducation = mCombine as DecryptedCombineEducation
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(CombineEducation::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
                                 combineRealm = realm.createObject(CombineEducation::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptEducation(decryptedEducation!!)
-                            if (combineRealm!!.educationItems.contains(encryptedObject)) {
-                                val index = combineRealm!!.educationItems.indexOf(encryptedObject)
+                            val encryptedObject = encryptMainEducation(decryptedMainEducation!!)
+                            if (combineRealm!!.mainEducationItems.contains(encryptedObject)) {
+                                val index = combineRealm!!.mainEducationItems.indexOf(encryptedObject)
                                 if (index != -1) {
-                                    combineRealm!!.educationItems.indexOf(encryptedObject)
+                                    combineRealm!!.mainEducationItems.indexOf(encryptedObject)
                                 }
                             } else {
-                                combineRealm!!.educationItems.add(encryptedObject)
+                                combineRealm!!.mainEducationItems.add(encryptedObject)
                             }
                             /*combine.financialItems.add( decryptedEducation )
                             val encryptedCombine = encryptCombine(combine)*/
@@ -325,7 +361,7 @@ class EducationAndWorkHelper(var category_name : String,
 
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val combine: DecryptedCombineEducation = mCombine as DecryptedCombineEducation
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(CombineEducation::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()

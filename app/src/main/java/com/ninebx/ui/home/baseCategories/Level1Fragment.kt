@@ -196,7 +196,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     val prefrences = NineBxPreferences()
 
     lateinit var rvSubCategory: RecyclerView
-    lateinit var subCategoryAdapter: SubCategoryAdapter
     var categoryView: LinearLayout ?= null
     private fun inflateLayout(categories: ArrayList<Category>) {
 
@@ -285,7 +284,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         when {
                             subCategory.title == "Add Persons." -> {
                                 if(!memberList.isEmpty()) {
-                                    CustomDropDown(adapter, mainCategory.subCategories)
+                                    CustomDropDown(adapter, category.title, mainCategory.subCategories)
                                 }
                                 else {
                                     Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
@@ -344,7 +343,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     var addedPersonList: ArrayList<DecryptedMember> = ArrayList()
     var memberListAdapter: MemberListAdapter ?= null
     var levelDialog: AlertDialog ?= null
-    private fun CustomDropDown(adapter : SubCategoryAdapter, subCategories: ArrayList<SubCategory>) {
+    private fun CustomDropDown(adapter : SubCategoryAdapter, categoryName: String, subCategories: ArrayList<SubCategory>) {
         //todo
         val dialogView: View = LayoutInflater.from(context).inflate(R.layout.layout_members, null)
         val cancelTextView: TextView = dialogView.findViewById(R.id.cancelTextView)
@@ -360,11 +359,11 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 val member = memberListAdapter!!.getItem(position)
                 addedPersonList.add(member)
                 subCategories.add(0, SubCategory(
-                        member.firstName + " " + member.lastName,
+                        categoryName,
                         "",
                         0,
                         Constants.SUB_CATEGORY_DISPLAY_PERSON,
-                        Constants.SUB_CATEGORY_DISPLAY_PERSON.toString()))
+                        categoryID, member.firstName + " " + member.lastName))
                 adapter.notifyDataSetChanged()
                 memberListAdapter!!.removeItem(position)
                 memberListAdapter!!.notifyDataSetChanged()
