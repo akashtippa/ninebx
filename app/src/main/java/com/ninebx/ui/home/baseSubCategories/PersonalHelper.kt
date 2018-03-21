@@ -359,6 +359,7 @@ class PersonalHelper(var category_name : String,
             "ID number" -> decryptedOtherGovernment!!.idNumber = level2Category.titleValue
             "Date issued" -> decryptedOtherGovernment!!.dateIssued = level2Category.titleValue
             "Expiration date" -> decryptedOtherGovernment!!.expirationDate = level2Category.titleValue
+            "Issuing state" -> decryptedOtherGovernment!!.issuingState = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedOtherGovernment!!.notes = level2Category.titleValue
