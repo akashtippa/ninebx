@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.utility.Constants.SEARCH_EDIT
 import com.ninebx.utility.Constants.SEARCH_NORMAL
@@ -40,6 +42,13 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
 
     override fun onBindViewHolder(holder: SearchAdapter.ViewHolder, position: Int) {
         holder.textView.text = searchItems[position].itemName
+        if( mode == SEARCH_EDIT && searchItems[position].subHeader.isEmpty() ) {
+            holder.txtSubHeader!!.hide()
+        }
+        else {
+            holder.txtSubHeader!!.show()
+            holder.txtSubHeader!!.text = searchItems[position].subHeader
+        }
     }
 
 
@@ -65,7 +74,7 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 when( view!!.id ) {
-                    R.id.txtListSearch -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "view")
+                    R.id.txtListSearch, R.id.txtSubHeader -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "view")
                     R.id.ivEdit -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "edit")
                     R.id.ivDelete -> {
                         adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "delete")
@@ -80,13 +89,16 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
         val textView: TextView = view.findViewById<View>(R.id.txtListSearch) as TextView
         var ivEdit : ImageView?= null
         var ivDelete : ImageView ?= null
+        var txtSubHeader : TextView ?= null
 
         init {
             if( mode == SEARCH_EDIT ) {
                 ivDelete = view.findViewById(R.id.ivDelete)
                 ivEdit = view.findViewById(R.id.ivEdit)
+                txtSubHeader = view.findViewById(R.id.txtSubHeader)
                 ivDelete!!.setOnClickListener(this)
                 ivEdit!!.setOnClickListener(this)
+                txtSubHeader!!.setOnClickListener(this)
             }
             textView.setOnClickListener(this)
 
