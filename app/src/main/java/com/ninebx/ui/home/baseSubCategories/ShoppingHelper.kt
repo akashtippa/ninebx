@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Parcelable
+import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
@@ -658,7 +659,9 @@ class ShoppingHelper(
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
      fun saveDocument(context: Context,combineItem: Parcelable?,title:String,subTitle:String){
+        Log.d("Combine Item", combineItem.toString())
         mCombine = combineItem
+
         val currentUsers = NineBxApplication.getPreferences().userFirstName + " " + NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format(Date())

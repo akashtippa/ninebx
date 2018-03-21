@@ -1,70 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey_100"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/default_mini_padding"
+        android:paddingLeft="@dimen/default_mini_padding"
+        android:id="@+id/txtLayout"
+        android:layout_toStartOf="@+id/ivEdit"
+        android:layout_toLeftOf="@+id/ivEdit"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtListSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/default_mini_padding"
-            android:paddingLeft="@dimen/default_mini_padding"
-            android:id="@+id/txtLayout"
-            android:layout_toStartOf="@+id/ivEdit"
-            android:layout_toLeftOf="@+id/ivEdit"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtListSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/text_16"
-                android:padding="@dimen/default_mini_margin"
-                android:text="@string/app_name" />
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_16"
+            android:padding="@dimen/default_mini_margin"
+            android:text="@string/app_name" />
 
-            <TextView
-                android:id="@+id/txtSubHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_14"
-                android:gravity="center_vertical"
-                android:padding="@dimen/default_mini_margin"
-                android:text="@string/app_name" />
-        </LinearLayout>
-
-
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txtSubHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_2sdp"
-            app:srcCompat="@drawable/ic_delete_grey_400_24dp"
-            android:padding="@dimen/default_micro_padding"
-            android:id="@+id/ivDelete"
-            />
+            android:textSize="@dimen/text_14"
+            android:gravity="center_vertical"
+            android:padding="@dimen/default_mini_margin"
+            android:text="@string/app_name" />
+    </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_toLeftOf="@+id/ivDelete"
-            android:layout_toStartOf="@+id/ivDelete"
-            app:srcCompat="@drawable/ic_icon_edit"
-            android:padding="@dimen/default_micro_padding"
-            android:id="@+id/ivEdit"
-            />
 
-    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_2sdp"
+        app:srcCompat="@drawable/ic_delete_grey_400_24dp"
+        android:padding="@dimen/default_micro_padding"
+        android:id="@+id/ivDelete"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_toLeftOf="@+id/ivDelete"
+        android:layout_toStartOf="@+id/ivDelete"
+        app:srcCompat="@drawable/ic_icon_edit"
+        android:padding="@dimen/default_micro_padding"
+        android:id="@+id/ivEdit"
+        />
+
 
 
     <View
@@ -73,6 +69,4 @@
         android:layout_below="@+id/txtLayout"
         android:background="@color/white" />
 
-
-
-</LinearLayout>
+</RelativeLayout>
