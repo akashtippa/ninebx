@@ -202,10 +202,20 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private var mListsAdapter: MainContactsAdapter ?= null
     private fun loadItems() {
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
-        if(categoryName == "Services/Other Accounts") {
-            var list = combinedItems as DecryptedCombineContacts
-            mListsAdapter = MainContactsAdapter(list.mainContactsItems , this)
-            rvCommonList!!.adapter = mListsAdapter
+        if(categoryInt == R.string.contacts) {
+            if(categoryName == "Services/Other Accounts") {
+                var list = combinedItems as DecryptedCombineContacts
+                mListsAdapter = MainContactsAdapter(list.mainContactsItems , this)
+                rvCommonList!!.adapter = mListsAdapter
+            } else {
+                searchHelper = SearchHelper()
+                searchHelper.setOnDocumentSelection(this)
+
+                val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
+                AppLogger.d("SearchItems" , " " + searchItems)
+                rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this )
+            }
+
         } else {
             searchHelper = SearchHelper()
             searchHelper.setOnDocumentSelection(this)
