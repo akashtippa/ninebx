@@ -348,12 +348,15 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     when(decryptedDocuments.selectionType){
                         "travel_2001" -> {
                             etTitle.setText(decryptedDocuments.passportName)
+                            etTitleValue.setEnabled(false)
                         }
                         "travel_2002"->{
                             etTitle.setText(decryptedDocuments.visaName)
+                            etTitleValue.setEnabled(false)
                         }
                         "travel_2003" -> {
                             etTitle.setText(decryptedDocuments.travelDocumentTitle)
+                            etTitleValue.setEnabled(false)
                         }
                     }
                     modifiedValue.setText(decryptedDocuments.modified)
@@ -415,7 +418,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedVacations : DecryptedVacations = selectedDocument as DecryptedVacations
                     createdValue.setText(decryptedVacations.created)
                     etTitle.setText(decryptedVacations.vac_description)
-                    etTitleValue.setText(decryptedVacations.vac_description)
+                    etTitleValue.setEnabled(false)
                     modifiedValue.setText(decryptedVacations.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)

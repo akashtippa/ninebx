@@ -601,7 +601,30 @@ class TravelHelper(var category_name : String,
 
         if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
-            decryptedLoyalty!!.accountName = title
+
+
+            when( decryptedLoyalty!!.selectionType ) {
+                "travel_1001" -> {
+                    decryptedLoyalty!!.airLine = title
+                }
+                "travel_1002" -> {
+                    decryptedLoyalty!!.hotel = title
+                }
+                "travel_1003" -> {
+                    decryptedLoyalty!!.carRentalCompany = title
+                }
+                "travel_1004" -> {
+                    decryptedLoyalty!!.cruiseline = title
+                }
+                "travel_1005" -> {
+                    decryptedLoyalty!!.railway = title
+                }
+                "travel_1006" -> {
+                    decryptedLoyalty!!.other = title
+                }
+            }
+
+            decryptedLoyalty!!.accountName = subTitle
 
             if( decryptedLoyalty!!.created.isEmpty() )
                 decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
@@ -809,7 +832,18 @@ class TravelHelper(var category_name : String,
 
         if (decryptedDocuments != null) {
             decryptedDocuments!!.selectionType = categoryID
-            decryptedDocuments!!.nameOnTravelDocument = title
+
+            when(decryptedDocuments!!.selectionType){
+                "travel_2001" -> {
+                    decryptedDocuments!!.passportName = title
+                }
+                "travel_2002"->{
+                    decryptedDocuments!!.visaName = title
+                }
+                "travel_2003" -> {
+                    decryptedDocuments!!.travelDocumentTitle = title
+                }
+            }
             if( decryptedDocuments!!.created.isEmpty() )
                 decryptedDocuments!!.created = currentUsers + " " + currentDateandTime
             decryptedDocuments!!.modified = currentUsers + " " + currentDateandTime
@@ -875,7 +909,8 @@ class TravelHelper(var category_name : String,
 
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
-            decryptedVacations!!.createdUser = title
+            decryptedVacations!!.vac_description = title
+
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if( decryptedVacations!!.created.isEmpty() )
                 decryptedVacations!!.created = currentUsers + " " + currentDateandTime
