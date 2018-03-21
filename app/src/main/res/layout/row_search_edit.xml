@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey_200"
-
+    android:background="@color/grey_50"
     android:orientation="vertical">
 
     <LinearLayout
@@ -42,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/_2sdp"
         app:srcCompat="@drawable/ic_delete_grey_400_24dp"
         android:padding="@dimen/default_micro_padding"
@@ -51,6 +51,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_toLeftOf="@+id/ivDelete"
         android:layout_toStartOf="@+id/ivDelete"
