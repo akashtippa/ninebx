@@ -108,9 +108,11 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getLoyaltyCount(String selectionType) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
-
-        for (DecryptedLoyalty decryptedLicense : loyaltyItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        for (DecryptedLoyalty selectedItem : loyaltyItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
@@ -120,8 +122,11 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getTravelDocuments(String selectionType) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
-        for (DecryptedDocuments decryptedLicense : documentsItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        for (DecryptedDocuments selectedItem : documentsItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
@@ -130,8 +135,11 @@ public class DecryptedCombineTravel implements Parcelable {
         int count = 0;
 
         ArrayList<Long> ids = new ArrayList<>();
-        for (DecryptedTravel decryptedLicense : travelItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        for (DecryptedTravel selectedItem : travelItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
@@ -140,8 +148,11 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getTravelDatesPlans(String selectionType) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
-        for (DecryptedVacations decryptedLicense : vacationsItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        for (DecryptedVacations selectedItem : vacationsItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
@@ -150,9 +161,13 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getServices(String selectionType) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
-        for (DecryptedTravel decryptedLicense : travelItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+       for (DecryptedTravel selectedItem : travelItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
+
         return count;
     }
 
@@ -160,8 +175,12 @@ public class DecryptedCombineTravel implements Parcelable {
     public int getTravelLists(String selectionType, long detailsId ) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
-        for (DecryptedTravelList decryptedLicense : listItems) {
-            count += ( decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )? 1 : 0;
+        for (DecryptedTravelList selectedItem : listItems) {
+            count += (selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detailsId )? 1 : 0;
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }

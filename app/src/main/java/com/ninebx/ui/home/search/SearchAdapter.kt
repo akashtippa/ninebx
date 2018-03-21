@@ -1,5 +1,8 @@
 package com.ninebx.ui.home.search
 
+import android.app.AlertDialog
+
+import android.content.DialogInterface
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -78,11 +81,25 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                     R.id.ivEdit -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "edit")
                     R.id.ivDelete -> {
                         adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "delete")
-                        searchItems.removeAt(position)
-                        notifyDataSetChanged()
+                        val builder = AlertDialog.Builder(view!!.context)
+                        builder.setTitle("NineBx")
+                        builder.setCancelable(false)
+                        builder.setMessage("Are you sure you want to delete?")
+                        builder.setPositiveButton("Ok"  ,object :  DialogInterface.OnClickListener{
+                            override fun onClick(dialog: DialogInterface?, p1: Int) {
+                                searchItems.removeAt(position)
+                                notifyDataSetChanged()
+                            }
+                        })
+                        builder.setNegativeButton("Cancel", object  : DialogInterface.OnClickListener{
+                            override fun onClick(dialog: DialogInterface?, which: Int) {
+                                dialog?.cancel()
+                            }
+                        })
+                        builder.show()
+
                     }
                 }
-
             }
         }
 

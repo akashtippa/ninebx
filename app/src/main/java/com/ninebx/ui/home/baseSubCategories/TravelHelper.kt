@@ -77,6 +77,9 @@ class TravelHelper(var category_name : String,
             "Other travel document" -> {
                 getOtherTravelDocuments()
             }
+            "Travel Dates And Plans"-> {
+                getTravelDatesAndPlans()
+            }
 
         }
     }
@@ -369,8 +372,8 @@ class TravelHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Passport number", decryptedDocuments!!.passportNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2029
@@ -402,8 +405,8 @@ class TravelHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Visa type", decryptedDocuments!!.visaType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Visa number", decryptedDocuments!!.visaNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2030
@@ -435,8 +438,8 @@ class TravelHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Travel document type", decryptedDocuments!!.travelDocumentType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Travel document number", decryptedDocuments!!.travelDocumentNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2031
@@ -455,6 +458,40 @@ class TravelHelper(var category_name : String,
 
         categoryView.onSuccess(categoryList)
     }
+
+    private fun getTravelDatesAndPlans() {
+        val categoryList = ArrayList<Level2Category>()
+        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
+        var categoryIndex = 3001
+        var category_id = "travel_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
+        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
+        categoryList.add(category)
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
 
     private fun setLoyalty(level2Category: Level2SubCategory) {
         AppLogger.d("Level2Category", " " + level2Category)
@@ -498,6 +535,7 @@ class TravelHelper(var category_name : String,
             "Name on travel document" -> decryptedDocuments!!.nameOnTravelDocument = level2Category.titleValue
             "Travel document type" -> decryptedDocuments!!.travelDocumentType = level2Category.titleValue
             "Travel document number" -> decryptedDocuments!!.travelDocumentNumber = level2Category.titleValue
+            "Expiration date" -> decryptedDocuments!!.expirationDate = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedDocuments!!.notes = level2Category.titleValue
@@ -564,7 +602,30 @@ class TravelHelper(var category_name : String,
 
         if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
-            decryptedLoyalty!!.accountName = title
+
+
+            when( decryptedLoyalty!!.selectionType ) {
+                "travel_1001" -> {
+                    decryptedLoyalty!!.airLine = title
+                }
+                "travel_1002" -> {
+                    decryptedLoyalty!!.hotel = title
+                }
+                "travel_1003" -> {
+                    decryptedLoyalty!!.carRentalCompany = title
+                }
+                "travel_1004" -> {
+                    decryptedLoyalty!!.cruiseline = title
+                }
+                "travel_1005" -> {
+                    decryptedLoyalty!!.railway = title
+                }
+                "travel_1006" -> {
+                    decryptedLoyalty!!.other = title
+                }
+            }
+
+            decryptedLoyalty!!.accountName = subTitle
 
             if( decryptedLoyalty!!.created.isEmpty() )
                 decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
@@ -608,16 +669,16 @@ class TravelHelper(var category_name : String,
                             if (realmloyalty == null) {
                                 realmloyalty = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptLoyality(decryptedLoyalty!!)
-                            /*if(realmDriversLicense!!.licenseItems.contains(encryptedObject)){
-                                val index = realmDriversLicense!!.licenseItems.indexOf(encryptedObject)
+                            val encryptedObject = encryptLoyalty(decryptedLoyalty!!)
+                            if(realmloyalty!!.loyaltyItems.contains(encryptedObject)){
+                                val index = realmloyalty!!.loyaltyItems.indexOf(encryptedObject)
                                 if(index != -1){
-                                    realmDriversLicense!!.licenseItems[index] = encryptedObject
+                                    realmloyalty!!.loyaltyItems[index] = encryptedObject
                                 }
                             }else{
-                                realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
-                            }*/
-                            realmloyalty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
+                                realmloyalty!!.loyaltyItems.add(encryptLoyalty(decryptedLoyalty!!))
+                            }
+
                             realm.copyToRealmOrUpdate(realmloyalty)
                             AppLogger.d("Adding ", " Combine personal")
                             realm.commitTransaction()
@@ -677,16 +738,16 @@ class TravelHelper(var category_name : String,
                             if (realmTravel == null) {
                                 realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            /* val encryptedObject = encryptSocial(decryptedSocial!!)
-                             if(realmSocial!!.socialItems.contains(encryptedObject)){
-                                 val index = realmSocial!!.socialItems.indexOf(encryptedObject)
+                             val encryptedObject = encryptTravel(decryptedTravel!!)
+                             if(realmTravel!!.travelItems.contains(encryptedObject)){
+                                 val index = realmTravel!!.travelItems.indexOf(encryptedObject)
                                  if (index != -1){
-                                     realmSocial!!.socialItems[index] = encryptedObject
+                                     realmTravel!!.travelItems[index] = encryptedObject
                                  }
                              }else{
-                                 realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
-                             }*/
-                            realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                                 realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                             }
+
                             realm.copyToRealmOrUpdate(realmTravel)
                             realm.commitTransaction()
                         }
@@ -743,16 +804,16 @@ class TravelHelper(var category_name : String,
                             if (realmTravelDocuments == null) {
                                 realmTravelDocuments = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            /*  val encryptedObject = encryptTaxID(decryptedTAX_ID!!)
-                              if(realmTaxID!!.taxIDItems.contains(encryptedObject)){
-                                  val index = realmTaxID!!.taxIDItems.indexOf(encryptedObject)
+                              val encryptedObject = encryptTravel(decryptedTravel!!)
+                              if(realmTravelDocuments!!.travelItems.contains(encryptedObject)){
+                                  val index = realmTravelDocuments!!.travelItems.indexOf(encryptedObject)
                                   if(index != -1){
-                                      realmTaxID!!.taxIDItems[index] = encryptedObject
+                                      realmTravelDocuments!!.travelItems[index] = encryptedObject
                                   }
                               }else{
-                                  realmTaxID!!.taxIDItems.add(encryptTaxID(decryptedTAX_ID!!))
-                              }*/
-                            realmTravelDocuments!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                                  realmTravelDocuments!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                              }
+
                             realm.insertOrUpdate(realmTravelDocuments)
                             realm.commitTransaction()
                         }
@@ -772,7 +833,18 @@ class TravelHelper(var category_name : String,
 
         if (decryptedDocuments != null) {
             decryptedDocuments!!.selectionType = categoryID
-            decryptedDocuments!!.nameOnTravelDocument = title
+
+            when(decryptedDocuments!!.selectionType){
+                "travel_2001" -> {
+                    decryptedDocuments!!.passportName = title
+                }
+                "travel_2002"->{
+                    decryptedDocuments!!.visaName = title
+                }
+                "travel_2003" -> {
+                    decryptedDocuments!!.travelDocumentTitle = title
+                }
+            }
             if( decryptedDocuments!!.created.isEmpty() )
                 decryptedDocuments!!.created = currentUsers + " " + currentDateandTime
             decryptedDocuments!!.modified = currentUsers + " " + currentDateandTime
@@ -811,16 +883,16 @@ class TravelHelper(var category_name : String,
                             if (realmTravel == null) {
                                 realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            /* val encryptedObject = encryptSocial(decryptedSocial!!)
-                             if(realmSocial!!.socialItems.contains(encryptedObject)){
-                                 val index = realmSocial!!.socialItems.indexOf(encryptedObject)
+                             val encryptedObject = encryptDocuments(decryptedDocuments!!)
+                             if(realmTravel!!.documentsItems.contains(encryptedObject)){
+                                 val index = realmTravel!!.documentsItems.indexOf(encryptedObject)
                                  if (index != -1){
-                                     realmSocial!!.socialItems[index] = encryptedObject
+                                     realmTravel!!.documentsItems[index] = encryptedObject
                                  }
                              }else{
-                                 realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
-                             }*/
-                            realmTravel!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
+                                 realmTravel!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
+                             }
+
                             realm.copyToRealmOrUpdate(realmTravel)
                             realm.commitTransaction()
                         }
@@ -838,7 +910,8 @@ class TravelHelper(var category_name : String,
 
         if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
-            decryptedVacations!!.createdUser = title
+            decryptedVacations!!.vac_description = title
+
             decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
             if( decryptedVacations!!.created.isEmpty() )
                 decryptedVacations!!.created = currentUsers + " " + currentDateandTime
@@ -877,7 +950,15 @@ class TravelHelper(var category_name : String,
                             if (realmVacations == null) {
                                 realmVacations = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
+                            val encryptedObject = encryptVacations(decryptedVacations!!)
+                            if(realmVacations!!.vacationsItems.contains(encryptedObject)){
+                                val index = realmVacations!!.vacationsItems.indexOf(encryptedObject)
+                                if (index != -1){
+                                    realmVacations!!.vacationsItems[index] = encryptedObject
+                                }
+                            }else{
+                                realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
+                            }
                             realm.copyToRealmOrUpdate(realmVacations)
                             realm.commitTransaction()
                         }

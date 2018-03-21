@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedVacations implements Parcelable {
 
-    public static final Creator<DecryptedVacations> CREATOR = new Creator<DecryptedVacations>() {
-        @Override
-        public DecryptedVacations createFromParcel(Parcel in) {
-            return new DecryptedVacations(in);
-        }
-
-        @Override
-        public DecryptedVacations[] newArray(int size) {
-            return new DecryptedVacations[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -67,27 +56,6 @@ public class DecryptedVacations implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedVacations(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        vac_description = in.readString();
-        startDate = in.readString();
-        endDate = in.readString();
-        placesToVisit_1 = in.readString();
-        placesToVisit_2 = in.readString();
-        placesToVisit_3 = in.readString();
-        byte tmpPlansConfirmed = in.readByte();
-        plansConfirmed = tmpPlansConfirmed == 0 ? null : tmpPlansConfirmed == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedVacations(String selectionType, String vac_description, String startDate, String endDate, String placesToVisit_1, String placesToVisit_2, String placesToVisit_3, Boolean plansConfirmed, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.vac_description = vac_description;
@@ -106,31 +74,6 @@ public class DecryptedVacations implements Parcelable {
     }
 
     public DecryptedVacations() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(vac_description);
-        dest.writeString(startDate);
-        dest.writeString(endDate);
-        dest.writeString(placesToVisit_1);
-        dest.writeString(placesToVisit_2);
-        dest.writeString(placesToVisit_3);
-        dest.writeByte((byte) (plansConfirmed == null ? 0 : plansConfirmed ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -299,4 +242,66 @@ public class DecryptedVacations implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.vac_description);
+        dest.writeString(this.startDate);
+        dest.writeString(this.endDate);
+        dest.writeString(this.placesToVisit_1);
+        dest.writeString(this.placesToVisit_2);
+        dest.writeString(this.placesToVisit_3);
+        dest.writeValue(this.plansConfirmed);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedVacations(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.vac_description = in.readString();
+        this.startDate = in.readString();
+        this.endDate = in.readString();
+        this.placesToVisit_1 = in.readString();
+        this.placesToVisit_2 = in.readString();
+        this.placesToVisit_3 = in.readString();
+        this.plansConfirmed = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedVacations> CREATOR = new Creator<DecryptedVacations>() {
+        @Override
+        public DecryptedVacations createFromParcel(Parcel source) {
+            return new DecryptedVacations(source);
+        }
+
+        @Override
+        public DecryptedVacations[] newArray(int size) {
+            return new DecryptedVacations[size];
+        }
+    };
 }
