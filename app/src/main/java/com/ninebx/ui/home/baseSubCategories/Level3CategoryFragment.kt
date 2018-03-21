@@ -207,7 +207,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedCertificate.created
                     modifiedValue.setText(decryptedCertificate.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -217,7 +217,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
                     etTitle.setText(decryptedGovernment.idName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedGovernment.created
                     modifiedValue.setText(decryptedGovernment.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -227,7 +227,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedLicense : DecryptedLicense = selectedDocument as DecryptedLicense
                     etTitle.setText(decryptedLicense.lic_description)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedLicense.created
                     modifiedValue.setText(decryptedLicense.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -237,7 +237,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
                     etTitle.setText(decryptedPersonal.userName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedPersonal.created
                     modifiedValue.setText(decryptedPersonal.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -482,8 +482,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
-
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
@@ -493,6 +491,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( action == "add" ) {
             ivEdit.hide()
             ivDelete.hide()
+            ivHome.hide()
         }
         else if( action == "edit" ) {
             ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
@@ -540,6 +539,9 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             }
         }
         if( isEditMode ) tvSave.show()
+
+        ivHome.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.callHomeFragment() }
     }
 
     private fun validate(): Boolean {

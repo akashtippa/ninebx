@@ -645,16 +645,16 @@ class TravelHelper(var category_name : String,
                             if (realmloyalty == null) {
                                 realmloyalty = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            val encryptedObject = encryptLoyality(decryptedLoyalty!!)
-                            /*if(realmDriversLicense!!.licenseItems.contains(encryptedObject)){
-                                val index = realmDriversLicense!!.licenseItems.indexOf(encryptedObject)
+                            val encryptedObject = encryptLoyalty(decryptedLoyalty!!)
+                            if(realmloyalty!!.loyaltyItems.contains(encryptedObject)){
+                                val index = realmloyalty!!.loyaltyItems.indexOf(encryptedObject)
                                 if(index != -1){
-                                    realmDriversLicense!!.licenseItems[index] = encryptedObject
+                                    realmloyalty!!.loyaltyItems[index] = encryptedObject
                                 }
                             }else{
-                                realmDriversLicense!!.licenseItems.add(encryptLicense(decryptedDriversLicense!!))
-                            }*/
-                            realmloyalty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
+                                realmloyalty!!.loyaltyItems.add(encryptLoyalty(decryptedLoyalty!!))
+                            }
+
                             realm.copyToRealmOrUpdate(realmloyalty)
                             AppLogger.d("Adding ", " Combine personal")
                             realm.commitTransaction()
@@ -714,16 +714,16 @@ class TravelHelper(var category_name : String,
                             if (realmTravel == null) {
                                 realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            /* val encryptedObject = encryptSocial(decryptedSocial!!)
-                             if(realmSocial!!.socialItems.contains(encryptedObject)){
-                                 val index = realmSocial!!.socialItems.indexOf(encryptedObject)
+                             val encryptedObject = encryptTravel(decryptedTravel!!)
+                             if(realmTravel!!.travelItems.contains(encryptedObject)){
+                                 val index = realmTravel!!.travelItems.indexOf(encryptedObject)
                                  if (index != -1){
-                                     realmSocial!!.socialItems[index] = encryptedObject
+                                     realmTravel!!.travelItems[index] = encryptedObject
                                  }
                              }else{
-                                 realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
-                             }*/
-                            realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                                 realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                             }
+
                             realm.copyToRealmOrUpdate(realmTravel)
                             realm.commitTransaction()
                         }
@@ -780,16 +780,16 @@ class TravelHelper(var category_name : String,
                             if (realmTravelDocuments == null) {
                                 realmTravelDocuments = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            /*  val encryptedObject = encryptTaxID(decryptedTAX_ID!!)
-                              if(realmTaxID!!.taxIDItems.contains(encryptedObject)){
-                                  val index = realmTaxID!!.taxIDItems.indexOf(encryptedObject)
+                              val encryptedObject = encryptTravel(decryptedTravel!!)
+                              if(realmTravelDocuments!!.travelItems.contains(encryptedObject)){
+                                  val index = realmTravelDocuments!!.travelItems.indexOf(encryptedObject)
                                   if(index != -1){
-                                      realmTaxID!!.taxIDItems[index] = encryptedObject
+                                      realmTravelDocuments!!.travelItems[index] = encryptedObject
                                   }
                               }else{
-                                  realmTaxID!!.taxIDItems.add(encryptTaxID(decryptedTAX_ID!!))
-                              }*/
-                            realmTravelDocuments!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                                  realmTravelDocuments!!.travelItems.add(encryptTravel(decryptedTravel!!))
+                              }
+
                             realm.insertOrUpdate(realmTravelDocuments)
                             realm.commitTransaction()
                         }
@@ -848,16 +848,16 @@ class TravelHelper(var category_name : String,
                             if (realmTravel == null) {
                                 realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            /* val encryptedObject = encryptSocial(decryptedSocial!!)
-                             if(realmSocial!!.socialItems.contains(encryptedObject)){
-                                 val index = realmSocial!!.socialItems.indexOf(encryptedObject)
+                             val encryptedObject = encryptDocuments(decryptedDocuments!!)
+                             if(realmTravel!!.documentsItems.contains(encryptedObject)){
+                                 val index = realmTravel!!.documentsItems.indexOf(encryptedObject)
                                  if (index != -1){
-                                     realmSocial!!.socialItems[index] = encryptedObject
+                                     realmTravel!!.documentsItems[index] = encryptedObject
                                  }
                              }else{
-                                 realmSocial!!.socialItems.add(encryptSocial(decryptedSocial!!))
-                             }*/
-                            realmTravel!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
+                                 realmTravel!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
+                             }
+
                             realm.copyToRealmOrUpdate(realmTravel)
                             realm.commitTransaction()
                         }
@@ -914,7 +914,15 @@ class TravelHelper(var category_name : String,
                             if (realmVacations == null) {
                                 realmVacations = realm.createObject(CombineTravel::class.java, getUniqueId())
                             }
-                            realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
+                            val encryptedObject = encryptVacations(decryptedVacations!!)
+                            if(realmVacations!!.vacationsItems.contains(encryptedObject)){
+                                val index = realmVacations!!.vacationsItems.indexOf(encryptedObject)
+                                if (index != -1){
+                                    realmVacations!!.vacationsItems[index] = encryptedObject
+                                }
+                            }else{
+                                realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
+                            }
                             realm.copyToRealmOrUpdate(realmVacations)
                             realm.commitTransaction()
                         }
