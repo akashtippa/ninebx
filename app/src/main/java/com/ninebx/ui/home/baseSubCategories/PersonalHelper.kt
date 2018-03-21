@@ -291,6 +291,7 @@ class PersonalHelper(var category_name : String,
             "License number" -> decryptedDriversLicense!!.licenseNumber = level2Category.titleValue
             "Date issued" -> decryptedDriversLicense!!.dateIssued = level2Category.titleValue
             "Expiration date" -> decryptedDriversLicense!!.expirationDate = level2Category.titleValue
+            "Issuing state" -> decryptedDriversLicense!!.issuingState = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedDriversLicense!!.notes = level2Category.titleValue
