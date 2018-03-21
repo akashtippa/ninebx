@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -20,9 +21,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.SearchItemClickListener
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombineContacts
+import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
+import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.account.interfaces.MainContactsAdded
+import com.ninebx.ui.home.adapter.MainContactsAdapter
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -30,6 +37,7 @@ import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.Constants.SEARCH_EDIT
 import com.ninebx.utility.FragmentBackHelper
+import com.ninebx.utility.prepareRealmConnections
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -37,6 +45,7 @@ import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
+import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list_container.*
 import java.io.Serializable
@@ -45,7 +54,54 @@ import java.util.concurrent.atomic.AtomicBoolean
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection {
+class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection, MainContactsAdded {
+    override fun contactsEdited(contacts: DecryptedMainContacts) {
+        mListsAdapter!!.updateContact(contacts)
+    }
+
+    override fun contactsClicked(contacts: DecryptedMainContacts, isEditable: Boolean?) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
+        bundle.putString("action", "add")
+        bundle.putParcelable("selectedDocument",contacts)
+        bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
+        bundle.putInt(Constants.CURRENT_BOX, categoryInt)
+        val intent = Intent( context, ContainerActivity::class.java)
+        intent.putExtras(bundle)
+        startActivityForResult(intent, LEVEL_3)
+    }
+
+    override fun contactsDeleted(contacts: DecryptedMainContacts) {
+        showDialogToDelete(contacts)
+    }
+
+    fun deleteContact(contact: DecryptedMainContacts) {
+        if(contactsRealm != null) {
+            contactsRealm!!.beginTransaction()
+            contactsRealm!!.where(MainContacts::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+            contactsRealm!!.commitTransaction()
+            contactsRealm!!.refresh()
+            mListsAdapter!!.deleteContact(contact)
+        }
+    }
+
+    private fun showDialogToDelete(contact: DecryptedMainContacts) {
+        val alertDialogBuilder = AlertDialog.Builder(context!!)
+        alertDialogBuilder.setTitle("Are you sure you want to delete the contact?")
+        alertDialogBuilder.setPositiveButton(" Delete", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, p1: Int) {
+                deleteContact(contact)
+                dialog!!.dismiss()
+            }
+        })
+        alertDialogBuilder.setNegativeButton(" Cancel", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, p1: Int) {
+                dialog!!.dismiss()
+            }
+        })
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
 
     private val LEVEL_3: Int = 12312
 
@@ -78,7 +134,6 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private var mDarkTheme: Boolean = false
     private var mContacts: ArrayList<Contact>? = ArrayList()
     private var mGroups: List<Group>? = null
-    private val PARAM_REQUEST_IN_PROCESS = "requestPermissionsInProcess"
 
     private val REQUEST_PERMISSION = 3
     private val PREFERENCE_PERMISSION_DENIED = "PREFERENCE_PERMISSION_DENIED"
@@ -86,6 +141,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private var contactList: RealmResults<Contacts>? = null
     private var contacts: ArrayList<Contacts>? = ArrayList()
     private var combinedItems: Parcelable? = null
+    private var contactsRealm: Realm? = null
 
     private val mRequestPermissionsInProcess = AtomicBoolean()
 
@@ -129,26 +185,35 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 bundle.putString("action", "add")
                 bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
                 bundle.putInt(Constants.CURRENT_BOX, categoryInt)
-                /*val level3CategoryFragment = Level3CategoryFragment()
-                level3CategoryFragment.arguments = bundle
-                fragmentTransaction.replace(R.id.frameLayout, level3CategoryFragment).commit()*/
                 val intent = Intent( context, ContainerActivity::class.java)
                 intent.putExtras(bundle)
                 startActivityForResult(intent, LEVEL_3)
             }
         }
         loadItems()
+        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+            override fun onSuccess(realm: Realm?) {
+                contactsRealm = realm
+                context!!.hideProgressDialog()
+            }
+        })
     }
 
+    private var mListsAdapter: MainContactsAdapter ?= null
     private fun loadItems() {
-
-        searchHelper = SearchHelper()
-        searchHelper.setOnDocumentSelection(this)
-
-        val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
-        AppLogger.d("SearchItems" , " " + searchItems)
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
-        rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this )
+        if(categoryName == "Services/Other Accounts") {
+            var list = combinedItems as DecryptedCombineContacts
+            mListsAdapter = MainContactsAdapter(list.mainContactsItems , this)
+            rvCommonList!!.adapter = mListsAdapter
+        } else {
+            searchHelper = SearchHelper()
+            searchHelper.setOnDocumentSelection(this)
+
+            val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
+            AppLogger.d("SearchItems" , " " + searchItems)
+            rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this )
+        }
         rvCommonList!!.adapter.notifyDataSetChanged()
     }
 

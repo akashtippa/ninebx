@@ -54,9 +54,11 @@ class Level3CategoryHelper(
 
     private var travelHelper: TravelHelper ?= null
     private var educationAndWorkHelper : EducationAndWorkHelper ?= null
+    private var commonItemHelper : CommonItemsHelper ?= null
 
     init {
         extractObject()
+        setupCommonHelper()
         when( categoryInt ) {
             R.string.home_amp_money -> {
                 homeHelper = HomeHelper(category_name, categoryID, classType, selectedDocument, categoryView)
@@ -95,12 +97,18 @@ class Level3CategoryHelper(
         }
     }
 
+    private fun setupCommonHelper() {
+        commonItemHelper = CommonItemsHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+        commonItemHelper!!.initialize()
+    }
+
     private fun searchByOthers() {
         when (category_name) {
 
         // Common View
             "Services/Other Accounts" -> {
-                getServicesOthersAccounts()
+                //getServicesOthersAccounts()
+                commonItemHelper!!.getFormForCategory()
             }
             "Other Attachments" -> {
                 getOtherAttachments()
@@ -439,7 +447,8 @@ class Level3CategoryHelper(
 
             // Common View
                 "Services/Other Accounts" -> {
-                    getServicesOthersAccounts()
+                    //getServicesOthersAccounts() //call commonHelper's setValue
+                    commonItemHelper!!.setValue(level2Category)
                 }
                 "Other Attachments" -> {
                     getOtherAttachments()
@@ -507,6 +516,9 @@ class Level3CategoryHelper(
         }
         if(shoppingHelper!=null){
             shoppingHelper!!.saveDocument(context,combineItem, title, subTitle)
+        }
+        if(commonItemHelper != null) {
+            commonItemHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
 
 
