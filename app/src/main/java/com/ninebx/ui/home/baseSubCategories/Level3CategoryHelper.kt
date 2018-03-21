@@ -506,7 +506,6 @@ class Level3CategoryHelper(
                 decryptedLoyalty!!.railway = title
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
-
             if( decryptedLoyalty!!.created.isEmpty() )
                 decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
 
