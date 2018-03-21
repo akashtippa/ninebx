@@ -56,12 +56,14 @@ object Constants {
     val LEVEL2_PICKER = 19
     val LEVEL2_NUMBER = 20
     val LEVEL_NORMAL_SPINNER = 21
-    val LEVEL2_Picker_Country = 22
+
+    val LEVEL2_TIMEPICKER = 22
 
     val KEYBOARD_NUMBER = "number"
     val KEYBOARD_SPINNER = "spinner"
     val KEYBOARD_SEARCH = "search"
     val KEYBOARD_PICKER = "picker"
+    val KEYBOARD_TIMEPICKER = "picker"
     val CURRENT_USER: String = "current_user"
     val LIST_HOME: String = "homeList"
     val REALM_MEMORY_VIEW: String = "memory_view"
@@ -134,6 +136,8 @@ object Constants {
     val CARD_TYPE = "cardType"
     val OTHER_ACCOUNT_TYPE = "otherAccountType"
     val CONTACT_SPINNER = "contactSpinner"
+
+    val GENDER = "gender"
 
 
     // Temporary Private Key

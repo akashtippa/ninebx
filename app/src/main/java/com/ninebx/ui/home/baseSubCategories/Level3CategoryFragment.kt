@@ -539,9 +539,9 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         ivDelete.setOnClickListener {
             if( isEditMode ) {
-                arguments!!.putString("action", "delete")
-                (activity!! as ContainerActivity).onLevel3Action(arguments!!)
-                /*val builder = AlertDialog.Builder(context)
+               /* arguments!!.putString("action", "delete")
+                (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
+                val builder = AlertDialog.Builder(context)
                 builder.setTitle("NineBx")
                 builder.setCancelable(false)
                 builder.setMessage("Are you sure you want to delete?")
@@ -556,14 +556,14 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                         dialog?.cancel()
                     }
                 })
-                builder.show()*/
+                builder.show()
             }
         }
 
         if( isEditMode ) tvSave.show()
 
-        ivHome.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.callHomeFragment() }
+       /* ivHome.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.callHomeFragment() }*/
     }
 
     private fun validate(): Boolean {

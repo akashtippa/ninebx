@@ -18,11 +18,8 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
 import com.ninebx.ui.base.realm.decrypted.DecryptedMember
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
-import com.ninebx.utility.Constants
-import com.ninebx.utility.DateTimeSelectionListener
+import com.ninebx.utility.*
 import com.ninebx.utility.countryPicker.CountryPickerDialog
-import com.ninebx.utility.getDateFromPicker
-import com.ninebx.utility.getDateMonthYearFormat
 import java.util.*
 
 /**
@@ -75,14 +72,15 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             Constants.LEVEL2_ATTACHMENTS -> {
                 return LEVEL2_ATTACHMENTSViewHolder(inflater.inflate(R.layout.level2_atachments, parent, false))
             }
-           /* Constants.LEVEL2_Picker_Country -> {
-                return
-            }*/
+            Constants.LEVEL2_TIMEPICKER -> {
+                return LEVEL2_TIMEPICKERViewHolder(inflater.inflate(R.layout.level2_time_picker, parent, false))
+            }
             else -> {
                 return LEVEL_NORMAL_SPINNERViewHolder(inflater.inflate(R.layout.level2_item_spinner_value, parent, false))
             }
         }
     }
+
 
     fun getItemAtPosition( position : Int ) : Level2SubCategory {
         return categories[position]
@@ -168,7 +166,6 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             Constants.LEVEL2_PICKER -> {
                 val locationViewHolder : LEVEL2_PICKERViewHolder = holder as LEVEL2_PICKERViewHolder
 
-
                 locationViewHolder.txtHeader.text = headerTitle
                 locationViewHolder.etSubHeader.hint = headerTitle
                 locationViewHolder.etSubHeader.setText(  titleValue)
@@ -177,6 +174,21 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                     getDateFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
                         override fun onDateTimeSelected(selectedDate: Calendar) {
                             locationViewHolder.etSubHeader.text = getDateMonthYearFormat(selectedDate.time)
+                        }
+                    })
+                }
+            }
+            Constants.LEVEL2_TIMEPICKER -> {
+                val locationViewHolder : LEVEL2_TIMEPICKERViewHolder = holder as LEVEL2_TIMEPICKERViewHolder
+
+                locationViewHolder.txtHeader.text = headerTitle
+                locationViewHolder.etSubHeader.hint = headerTitle
+                locationViewHolder.etSubHeader.setText(  titleValue)
+                locationViewHolder.etSubHeader.addTextChangedListener(CustomTextWatcher(level2SubCategory))
+                locationViewHolder.etSubHeader.setOnClickListener{
+                    getTimeFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            locationViewHolder.etSubHeader.text = getTimeFormat(selectedDate.time)
                         }
                     })
                 }
@@ -417,11 +429,14 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                             (etSubHeader).setText(getDateMonthYearFormat(selectedDate.time))
                         }
                     })
+                } else if (keyBoardType == Constants.KEYBOARD_TIMEPICKER){
+                    getTimeFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener{
+                        override fun onDateTimeSelected(selectedDate: Calendar) {
+                            (etSubHeader).setText(getTimeFormat(selectedDate.time))
+                        }
+                    })
                 }
-                
             }
-            
-            
         }
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
@@ -457,6 +472,17 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             // childView = level2PickerView
         }
     } // 19
+    inner class LEVEL2_TIMEPICKERViewHolder( itemView: View ) : RecyclerView.ViewHolder( itemView ){
+        val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
+        val etSubHeader = itemView.findViewById<TextView>(R.id.etSubHeader)
+
+        init {
+
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            // childView = level2PickerView
+        }
+    }
     inner class LEVEL2_NUMBERViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
@@ -600,10 +626,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                     Constants.OTHER_ACCOUNT_TYPE -> {
                         ( othersAccountTypeOptions)
                     }
-                    /*Constants.CARD_TYPE*/else -> {
+                    Constants.CARD_TYPE -> {
                         ( cardType)
                     }
 
+                    /*Constants.GENDER*/ else -> {
+                        (gender)
+                    }
 
                 }
 
