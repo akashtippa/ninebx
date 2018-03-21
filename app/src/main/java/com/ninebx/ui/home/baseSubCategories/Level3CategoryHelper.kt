@@ -107,8 +107,16 @@ class Level3CategoryHelper(
 
         // Common View
             "Services/Other Accounts" -> {
-                //getServicesOthersAccounts()
-                commonItemHelper!!.getFormForCategory()
+                when(categoryInt) {
+                    R.string.contacts -> {
+                        commonItemHelper!!.getFormForCategory()
+                    }
+                    else -> {
+                        getServicesOthersAccounts()
+                    }
+                }
+
+
             }
             "Other Attachments" -> {
                 getOtherAttachments()
@@ -447,8 +455,15 @@ class Level3CategoryHelper(
 
             // Common View
                 "Services/Other Accounts" -> {
-                    //getServicesOthersAccounts() //call commonHelper's setValue
-                    commonItemHelper!!.setValue(level2Category)
+                    when(categoryInt) {
+                        R.string.contacts -> {
+                            commonItemHelper!!.setValue(level2Category)
+                        }
+                        else -> {
+                            getServicesOthersAccounts()
+                        }
+                    }
+
                 }
                 "Other Attachments" -> {
                     getOtherAttachments()
