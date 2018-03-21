@@ -638,6 +638,7 @@ class TravelHelper(var category_name : String,
         if (decryptedTravel != null) {
             decryptedTravel!!.selectionType = categoryID
             decryptedTravel!!.accountName = title
+
             if( decryptedTravel!!.created.isEmpty() )
                 decryptedTravel!!.created = currentUsers + " " + currentDateandTime
             decryptedTravel!!.modified = currentUsers + " " + currentDateandTime

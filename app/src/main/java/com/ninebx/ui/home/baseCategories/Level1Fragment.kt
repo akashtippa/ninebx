@@ -255,6 +255,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 override fun onItemClick(adapter: SubCategoryAdapter, mainCategory: Category, subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
+                    if( subCategory.formsCount == 0 )
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
                         if( !checkForAsset("Vehicles", categories) ) {
                             context!!.showToast(R.string.error_empty_vehicle_list)

@@ -463,20 +463,6 @@ class Level3CategoryHelper(
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
@@ -490,7 +476,7 @@ class Level3CategoryHelper(
         }
 
         if(personalHelper != null){
-            personalHelper!!.saveDocument(context,combineItem, title, subTitle)
+            personalHelper!!.saveDocument(context,combineItem, title)
         }
         if(travelHelper != null) {
             travelHelper!!.saveDocument(context, combineItem, title, subTitle)
@@ -499,33 +485,12 @@ class Level3CategoryHelper(
 
         }
 
-
-
-
         if(wellnessHelper!=null){
             wellnessHelper!!.saveDocument(context,combineItem, title, subTitle)
         }
         if(shoppingHelper!=null){
             shoppingHelper!!.saveDocument(context,combineItem, title, subTitle)
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
@@ -541,7 +506,6 @@ class Level3CategoryHelper(
                 decryptedLoyalty!!.railway = title
             if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
                 decryptedLoyalty!!.other = title
-
             if( decryptedLoyalty!!.created.isEmpty() )
                 decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
 
