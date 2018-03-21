@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedDocuments implements Parcelable {
 
-    public static final Creator<DecryptedDocuments> CREATOR = new Creator<DecryptedDocuments>() {
-        @Override
-        public DecryptedDocuments createFromParcel(Parcel in) {
-            return new DecryptedDocuments(in);
-        }
-
-        @Override
-        public DecryptedDocuments[] newArray(int size) {
-            return new DecryptedDocuments[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -83,34 +72,6 @@ public class DecryptedDocuments implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedDocuments(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        passportName = in.readString();
-        visaName = in.readString();
-        nameOnPassport = in.readString();
-        nameOnVisa = in.readString();
-        visaType = in.readString();
-        visaNumber = in.readString();
-        travelDocumentTitle = in.readString();
-        nameOnTravelDocument = in.readString();
-        travelDocumentType = in.readString();
-        travelDocumentNumber = in.readString();
-        issuingCountry = in.readString();
-        passportNumber = in.readString();
-        placeIssued = in.readString();
-        dateIssued = in.readString();
-        expirationDate = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedDocuments(String selectionType, String passportName, String visaName, String nameOnPassport, String nameOnVisa, String visaType, String visaNumber, String travelDocumentTitle, String nameOnTravelDocument, String travelDocumentType, String travelDocumentNumber, String issuingCountry, String passportNumber, String placeIssued, String dateIssued, String expirationDate, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.passportName = passportName;
@@ -137,39 +98,6 @@ public class DecryptedDocuments implements Parcelable {
     }
 
     public DecryptedDocuments() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(passportName);
-        dest.writeString(visaName);
-        dest.writeString(nameOnPassport);
-        dest.writeString(nameOnVisa);
-        dest.writeString(visaType);
-        dest.writeString(visaNumber);
-        dest.writeString(travelDocumentTitle);
-        dest.writeString(nameOnTravelDocument);
-        dest.writeString(travelDocumentType);
-        dest.writeString(travelDocumentNumber);
-        dest.writeString(issuingCountry);
-        dest.writeString(passportNumber);
-        dest.writeString(placeIssued);
-        dest.writeString(dateIssued);
-        dest.writeString(expirationDate);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -410,4 +338,82 @@ public class DecryptedDocuments implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.passportName);
+        dest.writeString(this.visaName);
+        dest.writeString(this.nameOnPassport);
+        dest.writeString(this.nameOnVisa);
+        dest.writeString(this.visaType);
+        dest.writeString(this.visaNumber);
+        dest.writeString(this.travelDocumentTitle);
+        dest.writeString(this.nameOnTravelDocument);
+        dest.writeString(this.travelDocumentType);
+        dest.writeString(this.travelDocumentNumber);
+        dest.writeString(this.issuingCountry);
+        dest.writeString(this.passportNumber);
+        dest.writeString(this.placeIssued);
+        dest.writeString(this.dateIssued);
+        dest.writeString(this.expirationDate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedDocuments(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.passportName = in.readString();
+        this.visaName = in.readString();
+        this.nameOnPassport = in.readString();
+        this.nameOnVisa = in.readString();
+        this.visaType = in.readString();
+        this.visaNumber = in.readString();
+        this.travelDocumentTitle = in.readString();
+        this.nameOnTravelDocument = in.readString();
+        this.travelDocumentType = in.readString();
+        this.travelDocumentNumber = in.readString();
+        this.issuingCountry = in.readString();
+        this.passportNumber = in.readString();
+        this.placeIssued = in.readString();
+        this.dateIssued = in.readString();
+        this.expirationDate = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedDocuments> CREATOR = new Creator<DecryptedDocuments>() {
+        @Override
+        public DecryptedDocuments createFromParcel(Parcel source) {
+            return new DecryptedDocuments(source);
+        }
+
+        @Override
+        public DecryptedDocuments[] newArray(int size) {
+            return new DecryptedDocuments[size];
+        }
+    };
 }

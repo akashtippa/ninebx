@@ -14,17 +14,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedTravelList implements Parcelable {
 
-    public static final Creator<DecryptedTravelList> CREATOR = new Creator<DecryptedTravelList>() {
-        @Override
-        public DecryptedTravelList createFromParcel(Parcel in) {
-            return new DecryptedTravelList(in);
-        }
-
-        @Override
-        public DecryptedTravelList[] newArray(int size) {
-            return new DecryptedTravelList[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -70,54 +59,6 @@ public class DecryptedTravelList implements Parcelable {
     }
 
     public DecryptedTravelList() {
-    }
-
-    protected DecryptedTravelList(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        classType = in.readString();
-        listName = in.readString();
-        dueDate = in.readString();
-//        if (in.readByte() == 0) {
-//            detailsId = null;
-//        } else {
-//            detailsId = in.readInt();
-//        }
-        detailsId = in.readLong();
-
-        byte tmpIsSelected = in.readByte();
-        isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(listName);
-        dest.writeString(dueDate);
-//        if (detailsId == null) {
-//            dest.writeByte((byte) 0);
-//        } else {
-//            dest.writeByte((byte) 1);
-//            dest.writeInt(detailsId);
-//        }
-        dest.writeLong(detailsId);
-        dest.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -242,4 +183,59 @@ public class DecryptedTravelList implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.listName);
+        dest.writeString(this.dueDate);
+        dest.writeLong(this.detailsId);
+        dest.writeValue(this.isSelected);
+        dest.writeLong(this.selectedDate != null ? this.selectedDate.getTime() : -1);
+        dest.writeLong(this.createdDate != null ? this.createdDate.getTime() : -1);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedTravelList(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.listName = in.readString();
+        this.dueDate = in.readString();
+        this.detailsId = in.readLong();
+        this.isSelected = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        long tmpSelectedDate = in.readLong();
+        this.selectedDate = tmpSelectedDate == -1 ? null : new Date(tmpSelectedDate);
+        long tmpCreatedDate = in.readLong();
+        this.createdDate = tmpCreatedDate == -1 ? null : new Date(tmpCreatedDate);
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedTravelList> CREATOR = new Creator<DecryptedTravelList>() {
+        @Override
+        public DecryptedTravelList createFromParcel(Parcel source) {
+            return new DecryptedTravelList(source);
+        }
+
+        @Override
+        public DecryptedTravelList[] newArray(int size) {
+            return new DecryptedTravelList[size];
+        }
+    };
 }
