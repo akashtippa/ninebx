@@ -247,7 +247,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
                     etTitle.setText(decryptedSocial.cardName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     modifiedValue.setText(decryptedSocial.modified)
                     createdValue.text = decryptedSocial.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -257,7 +257,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
                     etTitle.setText(decryptedTaxID.taxIdName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     modifiedValue.setText(decryptedTaxID.modified)
                     createdValue.text = decryptedTaxID.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -790,42 +790,42 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add License"
             }
             "Social Security Card" -> {
                 etTitle.hint = "Card name"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add Card"
             }
             "Tax ID" -> {
                 etTitle.hint = "Tax ID name"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add ID"
             }
             "Birth Certificate" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
                 etTitleValue.isEnabled = false
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add Certificate"
             }
             "Marriage Certificate" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
                 etTitleValue.isEnabled = false
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add Certificate"
             }
             "Other Government-Issued ID" -> {
                 etTitle.hint = "ID name"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add ID"
             }
 
