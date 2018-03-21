@@ -174,6 +174,17 @@ class SingleContactViewFragment : Fragment(), AWSFileTransferHelper.FileOperatio
             })
         }
 
+        edtCountry.setOnFocusChangeListener(object: View.OnFocusChangeListener {
+            override fun onFocusChange(view: View?, hasFocus: Boolean) {
+                if(hasFocus) {
+                    edtCountry.callOnClick()
+                } else {
+                    //hidekeyboard
+                }
+            }
+
+        })
+
         populateView(mContacts)
 
         enableDisableEditing()
