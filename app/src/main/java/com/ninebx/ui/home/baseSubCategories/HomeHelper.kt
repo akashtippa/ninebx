@@ -1325,7 +1325,6 @@ class HomeHelper( var category_name : String,
                 }
             }
         }
-
     }
 
     private var mCombine : Parcelable ?= null

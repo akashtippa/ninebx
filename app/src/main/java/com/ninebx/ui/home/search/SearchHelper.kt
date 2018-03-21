@@ -613,7 +613,7 @@ class SearchHelper() {
                 }
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
-            "govenment" -> {
+            "government" -> {
                 val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
                 if( mAction == "delete" ) {
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptGovernment(selectedDocument) )
