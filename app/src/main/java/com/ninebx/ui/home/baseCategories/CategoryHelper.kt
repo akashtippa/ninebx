@@ -62,7 +62,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_health_records"
 
         for(wellness in decryptedCombine.wellnessItems) {
-            category.subCategories.add(SubCategory(wellness.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, wellness.userName))
         }
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
@@ -493,7 +493,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_clothing_sizes"
 
         for(shoppingItem in decryptedCombine.shoppingItems) {
-            category.subCategories.add(SubCategory(shoppingItem.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, shoppingItem.userName))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
@@ -635,8 +635,8 @@ class CategoryHelper(
         category.drawableString = "ic_icon_education"
         category.category_id = "edu_1001"
 
-        for(educationItem in decryptedCombine.educationItems) {
-            category.subCategories.add(SubCategory(educationItem.userName, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+        for(educationItem in decryptedCombine.mainEducationItems) {
+            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, "edu_1001", educationItem.name))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
@@ -651,7 +651,7 @@ class CategoryHelper(
         category.category_id = "edu_2001"
 
         for(workItem in decryptedCombine.workItems) {
-            category.subCategories.add(SubCategory(workItem.name, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON))
+            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, "edu_2001", workItem.name))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))

@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/ic_icon_edit"
         android:padding="@dimen/default_micro_padding"
         android:id="@+id/ivEdit"
-         />
+        />
 
 
 

@@ -111,19 +111,19 @@ class SearchHelper() {
         mSearchEducationItems.clear()
         var itemIndex = 0
         for (education in searchDecryptCombineEducation.educationItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, education.institutionName, "education", education.selectionType, itemIndex++, education.id, education.accountName))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, education.institutionName, "education", education.selectionType, itemIndex++, education.id, education.accountName))
         }
         itemIndex = 0
         for(mainEducation in searchDecryptCombineEducation.mainEducationItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, mainEducation.institutionName, "mainEducation", mainEducation.selectionType, itemIndex++, mainEducation.id, mainEducation.qualification))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, mainEducation.institutionName, "mainEducation", mainEducation.selectionType, itemIndex++, mainEducation.id, mainEducation.qualification))
         }
         itemIndex = 0
         for(work in searchDecryptCombineEducation.workItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, work.companyName, "work", work.selectionType, itemIndex++, work.id))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, work.companyName, "work", work.selectionType, itemIndex++, work.id))
         }
         itemIndex = 0
         for(educationList in searchDecryptCombineEducation.listItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, educationList.listName, "educationList", educationList.selectionType, itemIndex++, educationList.id))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, educationList.listName, "educationList", educationList.selectionType, itemIndex++, educationList.id))
         }
         mSearchEducationItems = filterDuplicates( mSearchEducationItems )
         return mSearchEducationItems
@@ -247,7 +247,8 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(shoppingList in searchDecryptedCombineShopping.listItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName, "shoppingList", shoppingList.selectionType, itemIndex++, shoppingList.id))
+            if( shoppingList.listName != null )
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName, "shoppingList", shoppingList.selectionType, itemIndex++, shoppingList.id))
         }
         mSearchShoppingItems = filterDuplicates( mSearchShoppingItems )
         return mSearchShoppingItems
