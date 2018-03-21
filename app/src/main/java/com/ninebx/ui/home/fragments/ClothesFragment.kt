@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_clothes.*
 
@@ -22,6 +23,8 @@ class ClothesFragment : FragmentBackHelper() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
+        ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
 
         //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Select Category")
         layoutWomens.setOnClickListener {
@@ -30,7 +33,9 @@ class ClothesFragment : FragmentBackHelper() {
             val bundle = Bundle()
             bundle.putString("categoryName", "Womens sizes")
             bundle.putString("categoryId", "1")
-
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()

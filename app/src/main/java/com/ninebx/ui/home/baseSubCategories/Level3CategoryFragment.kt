@@ -90,7 +90,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         layExpandable.removeAllViews()
         for( category in categories ) {
 
-            val level3ExpandableLayout = LayoutInflater.from(context).inflate(R.layout.layout_level3_expandable_recyclerview, null)
+            val level3ExpandableLayout = LayoutInflater.from(context).inflate(R.layout.layout_level3_expandable_recyclerview,null)
             val lblListHeader : TextView = level3ExpandableLayout.findViewById(R.id.lblListHeader)
             val rvLevel3 : RecyclerView = level3ExpandableLayout.findViewById(R.id.rvLevel3)
             val ivExpand : ImageView = level3ExpandableLayout.findViewById(R.id.ivExpand)
