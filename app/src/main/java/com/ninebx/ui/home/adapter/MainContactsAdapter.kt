@@ -11,36 +11,38 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedContacts
+import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.account.interfaces.IContactsAdded
+import com.ninebx.ui.home.account.interfaces.MainContactsAdded
 import com.ninebx.utility.decryptString
+import org.w3c.dom.Text
 
-internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?, private val iContactsAdded: IContactsAdded) : RecyclerView.Adapter<ContactsAdapter.RecyclerItemViewHolder>() {
+internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainContacts>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<MainContactsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_contacts, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_service_accounts, parent, false)
         return RecyclerItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val contacts = myList!![position]
-        holder.txtContacts.text = contacts.firstName + " " + contacts.lastName
+        holder.txtInstitutionName.text = contacts.institutionName
+        holder.txtAccountName.text = contacts.accountName
         mLastPosition = position
 
         holder.layoutContacts.setOnClickListener {
-            iContactsAdded.contactsClicked(contacts, false)
+            mainContactsAdded.contactsClicked(contacts, false)
         }
 
         holder.imgDeleteContact.setOnClickListener {
             //show dialog and delete
-            iContactsAdded.contactsDeleted(contacts)
+            mainContactsAdded.contactsDeleted(contacts)
             //deleteContact(contacts)
         }
 
         holder.imgEditContact.setOnClickListener {
-            iContactsAdded.contactsClicked(contacts, true)
+            mainContactsAdded.contactsClicked(contacts, true)
         }
     }
 
@@ -48,7 +50,7 @@ internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?
         return myList!!.size
     }
 
-    fun deleteContact(contact: DecryptedContacts) {
+    fun deleteContact(contact: DecryptedMainContacts) {
         myList!!.remove(contact)
         notifyData(myList!!)
     }
@@ -58,16 +60,16 @@ internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?
         notifyItemRemoved(position)
     }
 
-    fun notifyData(myList: ArrayList<DecryptedContacts>) {
+    fun notifyData(myList: ArrayList<DecryptedMainContacts>) {
         this.myList = myList
         notifyDataSetChanged()
     }
 
-    fun getList(): ArrayList<DecryptedContacts>? {
+    fun getList(): ArrayList<DecryptedMainContacts>? {
         return this.myList
     }
 
-    fun updateContact(contact: DecryptedContacts) {
+    fun updateContact(contact: DecryptedMainContacts) {
         for(item in myList!!) {
             if(item.id == contact.id) {
                 myList!!.remove(item)
@@ -75,7 +77,7 @@ internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?
             }
         }
         myList!!.add(contact)
-        val list = myList!!.sortedWith( compareBy( { it.firstName }))
+        val list = myList!!.sortedWith( compareBy( { it.accountName }))
         myList!!.clear()
         myList = ArrayList(list)
         notifyData(myList!!)
@@ -83,7 +85,8 @@ internal class ContactsAdapter(private var myList: ArrayList<DecryptedContacts>?
 
     internal inner class RecyclerItemViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
         @SuppressLint("CommitTransaction")
-        var txtContacts: TextView = parent.findViewById<View>(R.id.txtContacts) as TextView
+        var txtInstitutionName: TextView = parent.findViewById<View>(R.id.txtInstitution) as TextView
+        var txtAccountName: TextView = parent.findViewById<View>(R.id.txtAccountName) as TextView
         val imgDeleteContact: ImageView = parent.findViewById<View>(R.id.imgDeleteContact) as ImageView
         val layoutContacts: LinearLayout = parent.findViewById<View>(R.id.layoutContacts) as LinearLayout
         val imgEditContact: ImageView = parent.findViewById<View>(R.id.imgEditContact) as ImageView
