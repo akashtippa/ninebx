@@ -155,6 +155,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     override fun onItemClick(itemPosition : Int, position: Int, searchItem: Level3SearchItem, action : String ) {
         mCurrentSearchItem = searchItem
         searchHelper.switchAndSearch(searchItem, action)
+        AppLogger.d("searchItem", " categoryName: " + searchItem.categoryName)
     }
 
     private fun fetchTheContactListFromRealm() {
