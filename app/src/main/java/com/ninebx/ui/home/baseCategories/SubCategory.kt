@@ -11,13 +11,15 @@ class SubCategory(
         var drawableString: String = "",
         var formsCount: Int = 0,
         var type: Int = 0,
-        var subCategoryId: String = ""
+        var subCategoryId: String = "",
+        var personName : String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
             source.readInt(),
             source.readInt(),
+            source.readString(),
             source.readString()
     )
 
@@ -29,6 +31,7 @@ class SubCategory(
         writeInt(formsCount)
         writeInt(type)
         writeString(subCategoryId)
+        writeString(personName)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -38,13 +41,19 @@ class SubCategory(
         other as SubCategory
 
         if (title != other.title) return false
+        if (subCategoryId != other.subCategoryId) return false
+        if (personName != other.personName) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return title.hashCode()
+        var result = title.hashCode()
+        result = 31 * result + subCategoryId.hashCode()
+        result = 31 * result + personName.hashCode()
+        return result
     }
+
 
     companion object {
         @JvmField

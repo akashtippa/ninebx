@@ -15,17 +15,7 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedCombineTravel implements Parcelable {
-    public static final Creator<DecryptedCombineTravel> CREATOR = new Creator<DecryptedCombineTravel>() {
-        @Override
-        public DecryptedCombineTravel createFromParcel(Parcel in) {
-            return new DecryptedCombineTravel(in);
-        }
 
-        @Override
-        public DecryptedCombineTravel[] newArray(int size) {
-            return new DecryptedCombineTravel[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -51,20 +41,6 @@ public class DecryptedCombineTravel implements Parcelable {
         this.travelItems = travelItems;
         this.vacationsItems = vacationsItems;
         this.listItems = listItems;
-    }
-
-    protected DecryptedCombineTravel(Parcel in) {
-        id = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public  long getId() {
@@ -128,7 +104,7 @@ public class DecryptedCombineTravel implements Parcelable {
     }
 
 
-    // Loyalty Programs
+    // Loyalty
     public int getLoyaltyCount(String selectionType) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
@@ -191,4 +167,41 @@ public class DecryptedCombineTravel implements Parcelable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.documentsItems);
+        dest.writeTypedList(this.loyaltyItems);
+        dest.writeTypedList(this.travelItems);
+        dest.writeTypedList(this.vacationsItems);
+        dest.writeTypedList(this.listItems);
+    }
+
+    protected DecryptedCombineTravel(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.documentsItems = in.createTypedArrayList(DecryptedDocuments.CREATOR);
+        this.loyaltyItems = in.createTypedArrayList(DecryptedLoyalty.CREATOR);
+        this.travelItems = in.createTypedArrayList(DecryptedTravel.CREATOR);
+        this.vacationsItems = in.createTypedArrayList(DecryptedVacations.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedTravelList.CREATOR);
+    }
+
+    public static final Creator<DecryptedCombineTravel> CREATOR = new Creator<DecryptedCombineTravel>() {
+        @Override
+        public DecryptedCombineTravel createFromParcel(Parcel source) {
+            return new DecryptedCombineTravel(source);
+        }
+
+        @Override
+        public DecryptedCombineTravel[] newArray(int size) {
+            return new DecryptedCombineTravel[size];
+        }
+    };
 }

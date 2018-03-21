@@ -111,19 +111,19 @@ class SearchHelper() {
         mSearchEducationItems.clear()
         var itemIndex = 0
         for (education in searchDecryptCombineEducation.educationItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, education.accountName, "education", education.selectionType, itemIndex++, education.id))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, education.institutionName, "education", education.selectionType, itemIndex++, education.id, education.accountName))
         }
         itemIndex = 0
         for(mainEducation in searchDecryptCombineEducation.mainEducationItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, mainEducation.institutionName, "mainEducation", mainEducation.selectionType, itemIndex++, mainEducation.id))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, mainEducation.institutionName, "mainEducation", mainEducation.selectionType, itemIndex++, mainEducation.id, mainEducation.qualification))
         }
         itemIndex = 0
         for(work in searchDecryptCombineEducation.workItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, work.companyName, "work", work.selectionType, itemIndex++, work.id))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, work.companyName, "work", work.selectionType, itemIndex++, work.id))
         }
         itemIndex = 0
         for(educationList in searchDecryptCombineEducation.listItems){
-            mSearchEducationItems.add(Level3SearchItem(R.string.education, educationList.listName, "educationList", educationList.selectionType, itemIndex++, educationList.id))
+            mSearchEducationItems.add(Level3SearchItem(R.string.education_work, educationList.listName, "educationList", educationList.selectionType, itemIndex++, educationList.id))
         }
         mSearchEducationItems = filterDuplicates( mSearchEducationItems )
         return mSearchEducationItems
@@ -133,27 +133,27 @@ class SearchHelper() {
         mSearchPersonalItems.clear()
         var itemIndex = 0
         for(certificate in searchDecryptedCombinePersonal.certificateItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, certificate.nameOnCertificate, "certificate", certificate.selectionType, itemIndex++, certificate.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, certificate.cer_description, "certificate", certificate.selectionType, itemIndex++, certificate.id, certificate.nameOnCertificate))
         }
         itemIndex = 0
         for(government in searchDecryptedCombinePersonal.governmentItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, government.idName, "government", government.selectionType, itemIndex++, government.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, government.idName, "government", government.selectionType, itemIndex++, government.id, government.nameOnId))
         }
         itemIndex = 0
         for(license in searchDecryptedCombinePersonal.licenseItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, license.lic_description, "license", license.selectionType, itemIndex++, license.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, license.lic_description, "license", license.selectionType, itemIndex++, license.id, license.nameOnLicense))
         }
         itemIndex = 0
         for(personal in searchDecryptedCombinePersonal.personalItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, personal.nameOnAccount, "personal", personal.selectionType, itemIndex++, personal.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, personal.institutionName, "personal", personal.selectionType, itemIndex++, personal.id, personal.accountName))
         }
         itemIndex = 0
         for(social in searchDecryptedCombinePersonal.socialItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, social.cardName, "social", social.selectionType, itemIndex++, social.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, social.cardName, "social", social.selectionType, itemIndex++, social.id, social.nameOnCard))
         }
         itemIndex = 0
         for(taxID in searchDecryptedCombinePersonal.taxIDItems){
-            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, taxID.taxIdName, "taxID", taxID.selectionType, itemIndex++, taxID.id))
+            mSearchPersonalItems.add(Level3SearchItem(R.string.personal, taxID.taxIdName, "taxID", taxID.selectionType, itemIndex++, taxID.id, taxID.name))
         }
         itemIndex = 0
         for(personalList in searchDecryptedCombinePersonal.listItems){
@@ -185,39 +185,39 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(emergencyContacts in searchDecryptedCombineWellness.emergencyContactsItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, emergencyContacts.name, "emergencyContacts", emergencyContacts.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, emergencyContacts.name, "emergencyContacts", emergencyContacts.selectionType, itemIndex++, emergencyContacts.id, emergencyContacts.relationShip))
         }
         itemIndex = 0
         for(eyeglassPrescription in searchDecryptedCombineWellness.eyeglassPrescriptionsItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, eyeglassPrescription.physicianName, "eyeglassPrescription", eyeglassPrescription.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, eyeglassPrescription.physicianName, "eyeglassPrescription", eyeglassPrescription.selectionType, itemIndex++, eyeglassPrescription.id, eyeglassPrescription.datePrescribed))
         }
         itemIndex = 0
         for(healthcareProvider in searchDecryptedCombineWellness.healthcareProvidersItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, healthcareProvider.practiceName, "healthcareProvider", healthcareProvider.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, healthcareProvider.name, "healthcareProvider", healthcareProvider.selectionType, itemIndex++, healthcareProvider.id, healthcareProvider.physicianType))
         }
         itemIndex = 0
         for(identification in searchDecryptedCombineWellness.identificationItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, identification.name, "identification", identification.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, identification.name, "identification", identification.selectionType, itemIndex++, identification.id, identification.gender))
         }
         itemIndex = 0
         for(medicalConditions in searchDecryptedCombineWellness.medicalConditionsItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicalConditions.medi_description, "medicalConditions", medicalConditions.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicalConditions.condition, "medicalConditions", medicalConditions.selectionType, itemIndex++, medicalConditions.id, medicalConditions.dateDiagnosed))
         }
         itemIndex = 0
         for(medicalHistory in searchDecryptedCombineWellness.medicalHistoryItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicalHistory.treatmentDiscription, "medicalHistory", medicalHistory.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicalHistory.history, "medicalHistory", medicalHistory.selectionType, itemIndex++, medicalHistory.id, medicalHistory.treatmentDiscription))
         }
         itemIndex = 0
         for(medicaltion in searchDecryptedCombineWellness.medicationsItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicaltion.name, "medicationItems", medicaltion.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, medicaltion.name, "medicationItems", medicaltion.selectionType, itemIndex++, medicaltion.id, medicaltion.strength))
         }
         itemIndex = 0
         for(vitalNumbers in searchDecryptedCombineWellness.vitalNumbersItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, vitalNumbers.bloodGlucose, "vitalNumbers", vitalNumbers.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, vitalNumbers.vital_description, "vitalNumbers", vitalNumbers.selectionType, itemIndex++, vitalNumbers.id, vitalNumbers.measurementDate))
         }
         itemIndex = 0
         for(wellness in searchDecryptedCombineWellness.wellnessItems){
-            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, wellness.nameOnAccount,"wellness",  wellness.selectionType, itemIndex++))
+            mSearchWellnessItems.add(Level3SearchItem(R.string.wellness, wellness.institutionName,"wellness",  wellness.selectionType, itemIndex++, wellness.id, wellness.accountName))
         }
         itemIndex = 0
         for(wellnessList in searchDecryptedCombineWellness.listItems){
@@ -231,23 +231,24 @@ class SearchHelper() {
         mSearchShoppingItems.clear()
         var itemIndex = 0
         for(loyaltyPrograms in searchDecryptedCombineShopping.loyaltyProgramsItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, loyaltyPrograms.brandName, "loyaltyPrograms", loyaltyPrograms.selectionType, itemIndex++, loyaltyPrograms.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, loyaltyPrograms.brandName, "loyaltyPrograms", loyaltyPrograms.selectionType, itemIndex++, loyaltyPrograms.id, loyaltyPrograms.accountName))
         }
         itemIndex = 0
         for(recentPurchase in searchDecryptedCombineShopping.recentPurchaseItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, recentPurchase.itemName, "recentPurchase", recentPurchase.selectionType, itemIndex++, recentPurchase.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, recentPurchase.itemName, "recentPurchase", recentPurchase.selectionType, itemIndex++, recentPurchase.id, recentPurchase.brandName))
         }
         itemIndex = 0
         for(shopping in searchDecryptedCombineShopping.shoppingItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shopping.nameOnAccount, "shopping", shopping.selectionType, itemIndex++, shopping.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shopping.institutionName, "shopping", shopping.selectionType, itemIndex++, shopping.id, shopping.accountName))
         }
         itemIndex = 0
         for(clothingSizes in searchDecryptedCombineShopping.clothingSizesItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName))
         }
         itemIndex = 0
         for(shoppingList in searchDecryptedCombineShopping.listItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName, "shoppingList", shoppingList.selectionType, itemIndex++, shoppingList.id))
+            if( shoppingList.listName != null )
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName, "shoppingList", shoppingList.selectionType, itemIndex++, shoppingList.id))
         }
         mSearchShoppingItems = filterDuplicates( mSearchShoppingItems )
         return mSearchShoppingItems
@@ -257,7 +258,7 @@ class SearchHelper() {
         mSearchMemoriesItems.clear()
         var itemIndex = 0
         for(mainMemory in searchDecryptCombineMemories.mainMemoriesItems){
-            mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, mainMemory.nameOnAccount,"mainMemory",  mainMemory.selectionType, itemIndex++, mainMemory.id))
+            mSearchMemoriesItems.add(Level3SearchItem(R.string.memories, mainMemory.nameOnAccount,"mainMemory",  mainMemory.selectionType, itemIndex++, mainMemory.id, mainMemory.accountName))
         }
         itemIndex = 0
         for(memoryTimeline in searchDecryptCombineMemories.memoryTimelineItems){
@@ -276,38 +277,38 @@ class SearchHelper() {
         var itemIndex = 0
         for(documents in searchDecryptCombineTravel.documentsItems){
             if (documents!!.selectionType.equals("travel_2001"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.passportName, "documents", documents.selectionType, itemIndex++, documents.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, documents.passportName, "documents", documents.selectionType, itemIndex++, documents.id, documents.nameOnPassport))
             if (documents!!.selectionType.equals("travel_2002"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.visaName, "documents", documents.selectionType, itemIndex++, documents.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, documents.visaName, "documents", documents.selectionType, itemIndex++, documents.id, documents.nameOnVisa))
             if (documents!!.selectionType.equals("travel_2003"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.travel_documents, documents.travelDocumentTitle, "documents", documents.selectionType, itemIndex++, documents.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, documents.travelDocumentTitle, "documents", documents.selectionType, itemIndex++, documents.id, documents.nameOnTravelDocument))
         }
         itemIndex = 0
         for(loyalty in searchDecryptCombineTravel.loyaltyItems){
             if (loyalty!!.selectionType.equals("travel_1001"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.airLine, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, loyalty.airLine, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
             if (loyalty!!.selectionType.equals("travel_1002"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.hotel, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, loyalty.hotel, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
             if (loyalty!!.selectionType.equals("travel_1003"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.carRentalCompany, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, loyalty.carRentalCompany, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
             if (loyalty!!.selectionType.equals("travel_1004"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.cruiseline, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, loyalty.cruiseline, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
             if (loyalty!!.selectionType.equals("travel_1005"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.railway, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, loyalty.railway, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
             if (loyalty!!.selectionType.equals("travel_1006"))
-                mSearchTravelItems.add(Level3SearchItem(R.string.loyality_programs, loyalty.other, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
+                mSearchTravelItems.add(Level3SearchItem(R.string.travel, loyalty.other, "loyalty", loyalty.selectionType, itemIndex++, loyalty.id))
         }
         itemIndex = 0
         for(travel in searchDecryptCombineTravel.travelItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.travel, travel.nameOnAccount, "travel", travel.selectionType, itemIndex++, travel.id))
+            mSearchTravelItems.add(Level3SearchItem(R.string.travel, travel.institutionName, "travel", travel.selectionType, itemIndex++, travel.id, travel.accountName))
         }
         itemIndex = 0
         for(vacation in searchDecryptCombineTravel.vacationsItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.vacation_home, vacation.vac_description, "vacation", vacation.selectionType, itemIndex++, vacation.id))
+            mSearchTravelItems.add(Level3SearchItem(R.string.travel, vacation.vac_description, "vacation", vacation.selectionType, itemIndex++, vacation.id))
         }
         itemIndex = 0
         for(travelList in searchDecryptCombineTravel.listItems){
-            mSearchTravelItems.add(Level3SearchItem(R.string.travel_list, travelList.listName, "travelList", travelList.selectionType, itemIndex++, travelList.id))
+            mSearchTravelItems.add(Level3SearchItem(R.string.travel, travelList.listName, "travelList", travelList.selectionType, itemIndex++, travelList.id))
         }
         mSearchTravelItems = filterDuplicates( mSearchTravelItems )
         return mSearchTravelItems
@@ -317,7 +318,7 @@ class SearchHelper() {
         mSearchHomeList.clear()
         var itemIndex = 0
         for( finance in searchDecryptCombine.financialItems ) {
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.institutionName, "finance", finance.selectionType, itemIndex++, finance.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  finance.institutionName, "finance", finance.selectionType, itemIndex++, finance.id, finance.accountName))
         }
         itemIndex = 0
         for( payment in searchDecryptCombine.paymentItems ) {
@@ -329,7 +330,7 @@ class SearchHelper() {
         itemIndex = 0
         for( asset in searchDecryptCombine.assetItems ) {
             //if( !mSearchHomeList.contains(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset", asset.selectionType, itemIndex, asset.id)))
-            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset", asset.selectionType, itemIndex++, asset.id))
+            mSearchHomeList.add(Level3SearchItem( R.string.home_amp_money,  asset.assetName, "asset", asset.selectionType, itemIndex++, asset.id, asset.descriptionOrLocation))
         }
         itemIndex = 0
         for( insurance in searchDecryptCombine.insuranceItems ) {

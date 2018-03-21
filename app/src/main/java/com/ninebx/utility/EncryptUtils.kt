@@ -1387,7 +1387,7 @@ fun encryptClothingSizes(clothingSizes: DecryptedClothingSizes): ClothingSizes {
     val enClothingSizes = ClothingSizes()
     enClothingSizes.id = clothingSizes.id
     enClothingSizes.selectionType = clothingSizes.selectionType.encryptString()
-    enClothingSizes.classType = clothingSizes.classType.encryptString()
+    enClothingSizes.classType = clothingSizes.classType
     enClothingSizes.personName = clothingSizes.personName.encryptString()
     enClothingSizes.sizeName = clothingSizes.sizeName.encryptString()
     enClothingSizes.sizeCategory = clothingSizes.sizeCategory.encryptString()
@@ -1435,6 +1435,13 @@ fun encryptClothingSizes(clothingSizes: DecryptedClothingSizes): ClothingSizes {
     enClothingSizes.created = clothingSizes.created
     enClothingSizes.modified = clothingSizes.modified
     enClothingSizes.createdUser = clothingSizes.createdUser
+
+    enClothingSizes.baby = clothingSizes.baby;
+    enClothingSizes.women = clothingSizes.women;
+    enClothingSizes.girl = clothingSizes.girl;
+    enClothingSizes.men = clothingSizes.men;
+    enClothingSizes.boy = clothingSizes.boy;
+    
     return enClothingSizes
 }
 

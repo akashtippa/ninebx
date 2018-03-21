@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedLoyalty implements Parcelable {
 
-    public static final Creator<DecryptedLoyalty> CREATOR = new Creator<DecryptedLoyalty>() {
-        @Override
-        public DecryptedLoyalty createFromParcel(Parcel in) {
-            return new DecryptedLoyalty(in);
-        }
-
-        @Override
-        public DecryptedLoyalty[] newArray(int size) {
-            return new DecryptedLoyalty[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -79,32 +68,6 @@ public class DecryptedLoyalty implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedLoyalty(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        airLine = in.readString();
-        hotel = in.readString();
-        carRentalCompany = in.readString();
-        cruiseline = in.readString();
-        railway = in.readString();
-        other = in.readString();
-        accountName = in.readString();
-        nameOnAccount = in.readString();
-        accountNumber = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedLoyalty(String selectionType, String airLine, String hotel, String carRentalCompany, String cruiseline, String railway, String other, String accountName, String nameOnAccount, String accountNumber, String website, String userName, String password, String pin, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.airLine = airLine;
@@ -131,36 +94,6 @@ public class DecryptedLoyalty implements Parcelable {
     public DecryptedLoyalty() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(airLine);
-        dest.writeString(hotel);
-        dest.writeString(carRentalCompany);
-        dest.writeString(cruiseline);
-        dest.writeString(railway);
-        dest.writeString(other);
-        dest.writeString(accountName);
-        dest.writeString(nameOnAccount);
-        dest.writeString(accountNumber);
-        dest.writeString(website);
-        dest.writeString(userName);
-        dest.writeString(password);
-        dest.writeString(pin);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public long getId() {
         return id;
@@ -382,4 +315,78 @@ public class DecryptedLoyalty implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.airLine);
+        dest.writeString(this.hotel);
+        dest.writeString(this.carRentalCompany);
+        dest.writeString(this.cruiseline);
+        dest.writeString(this.railway);
+        dest.writeString(this.other);
+        dest.writeString(this.accountName);
+        dest.writeString(this.nameOnAccount);
+        dest.writeString(this.accountNumber);
+        dest.writeString(this.website);
+        dest.writeString(this.userName);
+        dest.writeString(this.password);
+        dest.writeString(this.pin);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedLoyalty(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.airLine = in.readString();
+        this.hotel = in.readString();
+        this.carRentalCompany = in.readString();
+        this.cruiseline = in.readString();
+        this.railway = in.readString();
+        this.other = in.readString();
+        this.accountName = in.readString();
+        this.nameOnAccount = in.readString();
+        this.accountNumber = in.readString();
+        this.website = in.readString();
+        this.userName = in.readString();
+        this.password = in.readString();
+        this.pin = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedLoyalty> CREATOR = new Creator<DecryptedLoyalty>() {
+        @Override
+        public DecryptedLoyalty createFromParcel(Parcel source) {
+            return new DecryptedLoyalty(source);
+        }
+
+        @Override
+        public DecryptedLoyalty[] newArray(int size) {
+            return new DecryptedLoyalty[size];
+        }
+    };
 }

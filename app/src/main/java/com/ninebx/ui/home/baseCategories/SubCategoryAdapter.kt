@@ -31,11 +31,14 @@ class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<Su
     private fun initDisplayValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
         val viewHolder: DisplayViewHolder = holder as DisplayViewHolder
         viewHolder.tvSubTitle.text = subCategory.title
+        if( subCategory.personName.isNotEmpty() )
+            viewHolder.tvSubTitle.text = subCategory.personName
     }
 
     private fun initCategoryValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
         val viewHolder: PersonViewHolder = holder as PersonViewHolder
         viewHolder.tvSubTitle.text = subCategory.title
+
     }
 
     private fun initItemValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {

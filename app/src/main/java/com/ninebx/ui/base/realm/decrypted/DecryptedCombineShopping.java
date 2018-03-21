@@ -144,6 +144,7 @@ public class DecryptedCombineShopping implements Parcelable {
         return count;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
