@@ -1503,6 +1503,7 @@ fun decryptWellnessList(wellnessList: WellnessList): DecryptedWellnessList {
 
 fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes {
     val decryptClothingSizes = DecryptedClothingSizes()
+
     decryptClothingSizes.id = clothingSizes.id
     decryptClothingSizes.selectionType = clothingSizes.selectionType.decryptString()
     decryptClothingSizes.classType = clothingSizes.classType
@@ -1552,6 +1553,11 @@ fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes
     decryptClothingSizes.createdUser = clothingSizes.createdUser
     decryptClothingSizes.private = clothingSizes.private
     decryptClothingSizes.backingImages = ArrayList(clothingSizes.backingImages)
+    decryptClothingSizes.baby = clothingSizes.baby;
+    decryptClothingSizes.women = clothingSizes.women;
+    decryptClothingSizes.girl = clothingSizes.girl;
+    decryptClothingSizes.men = clothingSizes.men;
+    decryptClothingSizes.boy = clothingSizes.boy;
     return decryptClothingSizes
 }
 

@@ -492,8 +492,8 @@ class CategoryHelper(
         category.title = "Clothing sizes"
         category.drawableString = "ic_icon_clothing_sizes"
 
-        for(shoppingItem in decryptedCombine.shoppingItems) {
-            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, shoppingItem.userName))
+        for(shoppingItem in decryptedCombine.clothingSizesItems) {
+            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, shoppingItem.personName))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
