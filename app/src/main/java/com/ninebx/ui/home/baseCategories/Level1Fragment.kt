@@ -33,6 +33,7 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -306,12 +307,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                                 if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
                                     when(category.title) {
                                         "Work" -> {
-                                            val categoryFragment = WellnessFragment()
+                                            val categoryFragment = Level2Fragment()
                                             categoryFragment.arguments = bundle
                                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                                         }
                                         "Education" -> {
-                                            val categoryFragment = WellnessFragment()
+                                            val categoryFragment =  Level2Fragment()
                                             categoryFragment.arguments = bundle
                                             fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                                         }
@@ -327,12 +328,11 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                                         }
                                     }
                                 } else {
-                                    val categoryFragment = Level2Fragment()
+                               val categoryFragment = Level2Fragment()
                                     categoryFragment.arguments = bundle
                                     fragmentTransaction.replace(R.id.frameLayout, categoryFragment).commit()
                                 }
                                 Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
-
                             }
                         }
                     }

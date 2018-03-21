@@ -496,6 +496,7 @@ class Level3CategoryHelper(
             travelHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
         if(educationAndWorkHelper != null) {
+            educationAndWorkHelper!!.saveDocument(context,combineItem,title, subTitle)
 
         }
 
