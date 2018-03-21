@@ -75,11 +75,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             Constants.LEVEL2_ATTACHMENTS -> {
                 return LEVEL2_ATTACHMENTSViewHolder(inflater.inflate(R.layout.level2_atachments, parent, false))
             }
+           /* Constants.LEVEL2_Picker_Country -> {
+                return
+            }*/
             else -> {
                 return LEVEL_NORMAL_SPINNERViewHolder(inflater.inflate(R.layout.level2_item_spinner_value, parent, false))
             }
         }
-
     }
 
     fun getItemAtPosition( position : Int ) : Level2SubCategory {
