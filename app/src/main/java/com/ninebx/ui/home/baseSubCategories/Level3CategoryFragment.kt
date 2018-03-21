@@ -482,6 +482,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
+
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
@@ -494,6 +496,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         else if( action == "edit" ) {
             ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
+            ivHome.hide()
         }
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
@@ -526,6 +529,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 isEditMode = true
                 inflateLayout(level2Categories)
                 tvSave.show()
+                ivHome.hide()
+                toolbarTitle.text = "Add Account"
             }
         }
         ivDelete.setOnClickListener {
@@ -548,7 +553,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun setTitle() {
 
         val bundleValue = arguments!!.getString("categoryName")
-        toolbarTitle.text = "Add " + bundleValue
+       // toolbarTitle.text = "Add " + bundleValue
 
         when (bundleValue) {
 

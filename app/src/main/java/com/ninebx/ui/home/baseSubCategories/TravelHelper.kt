@@ -77,6 +77,9 @@ class TravelHelper(var category_name : String,
             "Other travel document" -> {
                 getOtherTravelDocuments()
             }
+            "Travel Dates And Plans"-> {
+                getTravelDatesAndPlans()
+            }
 
         }
     }
@@ -455,6 +458,40 @@ class TravelHelper(var category_name : String,
 
         categoryView.onSuccess(categoryList)
     }
+
+    private fun getTravelDatesAndPlans() {
+        val categoryList = ArrayList<Level2Category>()
+        if( decryptedVacations == null ) decryptedVacations = DecryptedVacations()
+        var categoryIndex = 3001
+        var category_id = "travel_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Details"
+        category.subCategories.add(Level2SubCategory("Plans confirmed?", "", "", Constants.LEVEL2_SWITCH, decryptedVacations!!.plansConfirmed))
+        category.subCategories.add(Level2SubCategory("Start date", decryptedVacations!!.startDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", decryptedVacations!!.endDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 1", decryptedVacations!!.placesToVisit_1, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 2", decryptedVacations!!.placesToVisit_2, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Plans to visit/consider 3", decryptedVacations!!.placesToVisit_3, "", Constants.LEVEL2_LOCATION))
+        categoryList.add(category)
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("Notes", decryptedVacations!!.notes, "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2035
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
+    }
+
 
     private fun setLoyalty(level2Category: Level2SubCategory) {
         AppLogger.d("Level2Category", " " + level2Category)
