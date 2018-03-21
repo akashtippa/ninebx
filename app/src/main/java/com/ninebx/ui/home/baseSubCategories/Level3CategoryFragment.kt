@@ -1,6 +1,8 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
@@ -539,8 +541,25 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             if( isEditMode ) {
                 arguments!!.putString("action", "delete")
                 (activity!! as ContainerActivity).onLevel3Action(arguments!!)
+                /*val builder = AlertDialog.Builder(context)
+                builder.setTitle("NineBx")
+                builder.setCancelable(false)
+                builder.setMessage("Are you sure you want to delete?")
+                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, p1: Int) {
+                        arguments!!.putString("action", "delete")
+                        (activity!! as ContainerActivity).onLevel3Action(arguments!!)
+                    }
+                })
+                builder.setNegativeButton("Cancel", object  : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        dialog?.cancel()
+                    }
+                })
+                builder.show()*/
             }
         }
+
         if( isEditMode ) tvSave.show()
 
         ivHome.setOnClickListener {
