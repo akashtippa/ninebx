@@ -256,7 +256,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                        if( !checkForAsset("Vehicles", categories) ) {
+                        if( subCategory.formsCount == 0 && !checkForAsset("Vehicles", categories) ) {
                             context!!.showToast(R.string.error_empty_vehicle_list)
                             return
                         }
