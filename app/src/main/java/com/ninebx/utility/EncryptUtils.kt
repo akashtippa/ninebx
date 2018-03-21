@@ -1074,27 +1074,27 @@ fun encryptLoyaltyPrograms(loyalityPrograms: DecryptedLoyaltyPrograms): LoyaltyP
 fun encryptMainContacts(mainContacts: DecryptedMainContacts): MainContacts {
     val decryptMainContacts = MainContacts()
     decryptMainContacts.id = mainContacts.id
-    decryptMainContacts.selectionType = decryptMainContacts.selectionType.encryptString()
-    decryptMainContacts.institutionName = decryptMainContacts.institutionName.encryptString()
-    decryptMainContacts.accountName = decryptMainContacts.accountName.encryptString()
-    decryptMainContacts.accountType = decryptMainContacts.accountType.encryptString()
-    decryptMainContacts.nameOnAccount = decryptMainContacts.nameOnAccount.encryptString()
-    decryptMainContacts.accountNumber = decryptMainContacts.accountNumber.encryptString()
-    decryptMainContacts.location = decryptMainContacts.location.encryptString()
-    decryptMainContacts.swiftCode = decryptMainContacts.swiftCode.encryptString()
-    decryptMainContacts.abaRoutingNumber = decryptMainContacts.abaRoutingNumber.encryptString()
-    decryptMainContacts.contacts = decryptMainContacts.contacts.encryptString()
-    decryptMainContacts.website = decryptMainContacts.website.encryptString()
-    decryptMainContacts.userName = decryptMainContacts.userName.encryptString()
-    decryptMainContacts.password = decryptMainContacts.password.encryptString()
-    decryptMainContacts.pin = decryptMainContacts.pin.encryptString()
-    decryptMainContacts.paymentMethodOnFile = decryptMainContacts.paymentMethodOnFile.encryptString()
-    decryptMainContacts.notes = decryptMainContacts.notes.encryptString()
-    decryptMainContacts.attachmentNames = decryptMainContacts.attachmentNames
-    decryptMainContacts.title = decryptMainContacts.title.encryptString()
-    decryptMainContacts.created = decryptMainContacts.created
-    decryptMainContacts.modified = decryptMainContacts.modified
-    decryptMainContacts.createdUser = decryptMainContacts.createdUser
+    decryptMainContacts.selectionType = mainContacts.selectionType.encryptString()
+    decryptMainContacts.institutionName = mainContacts.institutionName.encryptString()
+    decryptMainContacts.accountName = mainContacts.accountName.encryptString()
+    decryptMainContacts.accountType = mainContacts.accountType.encryptString()
+    decryptMainContacts.nameOnAccount = mainContacts.nameOnAccount.encryptString()
+    decryptMainContacts.accountNumber = mainContacts.accountNumber.encryptString()
+    decryptMainContacts.location = mainContacts.location.encryptString()
+    decryptMainContacts.swiftCode = mainContacts.swiftCode.encryptString()
+    decryptMainContacts.abaRoutingNumber = mainContacts.abaRoutingNumber.encryptString()
+    decryptMainContacts.contacts = mainContacts.contacts.encryptString()
+    decryptMainContacts.website = mainContacts.website.encryptString()
+    decryptMainContacts.userName = mainContacts.userName.encryptString()
+    decryptMainContacts.password = mainContacts.password.encryptString()
+    decryptMainContacts.pin = mainContacts.pin.encryptString()
+    decryptMainContacts.paymentMethodOnFile = mainContacts.paymentMethodOnFile.encryptString()
+    decryptMainContacts.notes = mainContacts.notes.encryptString()
+    decryptMainContacts.attachmentNames = mainContacts.attachmentNames
+    decryptMainContacts.title = mainContacts.title.encryptString()
+    decryptMainContacts.created = mainContacts.created
+    decryptMainContacts.modified = mainContacts.modified
+    decryptMainContacts.createdUser = mainContacts.createdUser
     return decryptMainContacts
 }
 
@@ -1387,7 +1387,7 @@ fun encryptClothingSizes(clothingSizes: DecryptedClothingSizes): ClothingSizes {
     val enClothingSizes = ClothingSizes()
     enClothingSizes.id = clothingSizes.id
     enClothingSizes.selectionType = clothingSizes.selectionType.encryptString()
-    enClothingSizes.classType = clothingSizes.classType.encryptString()
+    enClothingSizes.classType = clothingSizes.classType
     enClothingSizes.personName = clothingSizes.personName.encryptString()
     enClothingSizes.sizeName = clothingSizes.sizeName.encryptString()
     enClothingSizes.sizeCategory = clothingSizes.sizeCategory.encryptString()
@@ -1435,6 +1435,13 @@ fun encryptClothingSizes(clothingSizes: DecryptedClothingSizes): ClothingSizes {
     enClothingSizes.created = clothingSizes.created
     enClothingSizes.modified = clothingSizes.modified
     enClothingSizes.createdUser = clothingSizes.createdUser
+
+    enClothingSizes.baby = clothingSizes.baby;
+    enClothingSizes.women = clothingSizes.women;
+    enClothingSizes.girl = clothingSizes.girl;
+    enClothingSizes.men = clothingSizes.men;
+    enClothingSizes.boy = clothingSizes.boy;
+    
     return enClothingSizes
 }
 

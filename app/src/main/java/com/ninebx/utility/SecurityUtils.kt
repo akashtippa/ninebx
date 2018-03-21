@@ -1503,6 +1503,7 @@ fun decryptWellnessList(wellnessList: WellnessList): DecryptedWellnessList {
 
 fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes {
     val decryptClothingSizes = DecryptedClothingSizes()
+
     decryptClothingSizes.id = clothingSizes.id
     decryptClothingSizes.selectionType = clothingSizes.selectionType.decryptString()
     decryptClothingSizes.classType = clothingSizes.classType
@@ -1552,6 +1553,11 @@ fun decryptedClothingSizes(clothingSizes: ClothingSizes): DecryptedClothingSizes
     decryptClothingSizes.createdUser = clothingSizes.createdUser
     decryptClothingSizes.private = clothingSizes.private
     decryptClothingSizes.backingImages = ArrayList(clothingSizes.backingImages)
+    decryptClothingSizes.baby = clothingSizes.baby;
+    decryptClothingSizes.women = clothingSizes.women;
+    decryptClothingSizes.girl = clothingSizes.girl;
+    decryptClothingSizes.men = clothingSizes.men;
+    decryptClothingSizes.boy = clothingSizes.boy;
     return decryptClothingSizes
 }
 
@@ -1728,27 +1734,27 @@ fun decryptLoyaltyPrograms(loyalityPrograms: LoyaltyPrograms): DecryptedLoyaltyP
 fun decryptMainContacts(mainContacts: MainContacts): DecryptedMainContacts {
     val decryptMainContacts = DecryptedMainContacts()
     decryptMainContacts.id = mainContacts.id
-    decryptMainContacts.selectionType = decryptMainContacts.selectionType.decryptString()
-    decryptMainContacts.institutionName = decryptMainContacts.institutionName.decryptString()
-    decryptMainContacts.accountName = decryptMainContacts.accountName.decryptString()
-    decryptMainContacts.accountType = decryptMainContacts.accountType.decryptString()
-    decryptMainContacts.nameOnAccount = decryptMainContacts.nameOnAccount.decryptString()
-    decryptMainContacts.accountNumber = decryptMainContacts.accountNumber.decryptString()
-    decryptMainContacts.location = decryptMainContacts.location.decryptString()
-    decryptMainContacts.swiftCode = decryptMainContacts.swiftCode.decryptString()
-    decryptMainContacts.abaRoutingNumber = decryptMainContacts.abaRoutingNumber.decryptString()
-    decryptMainContacts.contacts = decryptMainContacts.contacts.decryptString()
-    decryptMainContacts.website = decryptMainContacts.website.decryptString()
-    decryptMainContacts.userName = decryptMainContacts.userName.decryptString()
-    decryptMainContacts.password = decryptMainContacts.password.decryptString()
-    decryptMainContacts.pin = decryptMainContacts.pin.decryptString()
-    decryptMainContacts.paymentMethodOnFile = decryptMainContacts.paymentMethodOnFile.decryptString()
-    decryptMainContacts.notes = decryptMainContacts.notes.decryptString()
-    decryptMainContacts.attachmentNames = decryptMainContacts.attachmentNames
-    decryptMainContacts.title = decryptMainContacts.title.decryptString()
-    decryptMainContacts.created = decryptMainContacts.created
-    decryptMainContacts.modified = decryptMainContacts.modified
-    decryptMainContacts.createdUser = decryptMainContacts.createdUser
+    decryptMainContacts.selectionType = mainContacts.selectionType.decryptString()
+    decryptMainContacts.institutionName = mainContacts.institutionName.decryptString()
+    decryptMainContacts.accountName = mainContacts.accountName.decryptString()
+    decryptMainContacts.accountType = mainContacts.accountType.decryptString()
+    decryptMainContacts.nameOnAccount = mainContacts.nameOnAccount.decryptString()
+    decryptMainContacts.accountNumber = mainContacts.accountNumber.decryptString()
+    decryptMainContacts.location = mainContacts.location.decryptString()
+    decryptMainContacts.swiftCode = mainContacts.swiftCode.decryptString()
+    decryptMainContacts.abaRoutingNumber = mainContacts.abaRoutingNumber.decryptString()
+    decryptMainContacts.contacts = mainContacts.contacts.decryptString()
+    decryptMainContacts.website = mainContacts.website.decryptString()
+    decryptMainContacts.userName = mainContacts.userName.decryptString()
+    decryptMainContacts.password = mainContacts.password.decryptString()
+    decryptMainContacts.pin = mainContacts.pin.decryptString()
+    decryptMainContacts.paymentMethodOnFile = mainContacts.paymentMethodOnFile.decryptString()
+    decryptMainContacts.notes = mainContacts.notes.decryptString()
+    decryptMainContacts.attachmentNames = mainContacts.attachmentNames
+    decryptMainContacts.title = mainContacts.title.decryptString()
+    decryptMainContacts.created = mainContacts.created
+    decryptMainContacts.modified = mainContacts.modified
+    decryptMainContacts.createdUser = mainContacts.createdUser
     return decryptMainContacts
 }
 

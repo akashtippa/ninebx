@@ -166,7 +166,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             else -> {
 
                 //bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-                if(subCategory.subCategoryId == "2") { //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
+               //getString(Constants.SUB_CATEGORY_DISPLAY_PERSON) not working
                     when(category.title) {
                         "Work" -> {
                             val categoryFragment = Level2Fragment()
@@ -188,12 +188,13 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
                             categoryFragment.arguments = bundle
                             fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
                         }
+                        else -> {
+                            val categoryFragment = Level2Fragment()
+                            categoryFragment.arguments = bundle
+                            fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+                        }
                     }
-                } else {
-                    val categoryFragment = Level2Fragment()
-                    categoryFragment.arguments = bundle
-                    fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
-                }
+
                 Toast.makeText(this, "ID is " + category.category_id, Toast.LENGTH_LONG).show()
 
             }
