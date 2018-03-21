@@ -760,18 +760,21 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Passport" -> {
                 etTitle.hint = "Passport name"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Passport"
             }
 
             "Visa" -> {
                 etTitle.hint = "Visa name"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Visa"
             }
 
             "Other travel document" -> {
                 etTitle.hint = "Travel document title"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Document"
 
             }
@@ -779,6 +782,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Travel Dates And Plans" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Travel Plan"
 
             }

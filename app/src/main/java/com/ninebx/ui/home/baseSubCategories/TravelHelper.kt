@@ -405,7 +405,7 @@ class TravelHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Visa type", decryptedDocuments!!.visaType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Visa number", decryptedDocuments!!.visaNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.placeIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
@@ -438,8 +438,8 @@ class TravelHelper(var category_name : String,
         category.subCategories.add(Level2SubCategory("Travel document type", decryptedDocuments!!.travelDocumentType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Travel document number", decryptedDocuments!!.travelDocumentNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Expiration date", decryptedDocuments!!.expirationDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2031
@@ -535,6 +535,7 @@ class TravelHelper(var category_name : String,
             "Name on travel document" -> decryptedDocuments!!.nameOnTravelDocument = level2Category.titleValue
             "Travel document type" -> decryptedDocuments!!.travelDocumentType = level2Category.titleValue
             "Travel document number" -> decryptedDocuments!!.travelDocumentNumber = level2Category.titleValue
+            "Expiration date" -> decryptedDocuments!!.expirationDate = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedDocuments!!.notes = level2Category.titleValue

@@ -78,11 +78,11 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                     R.id.ivEdit -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "edit")
                     R.id.ivDelete -> {
                         adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "delete")
+
                         searchItems.removeAt(position)
                         notifyDataSetChanged()
                     }
                 }
-
             }
         }
 
