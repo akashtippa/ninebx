@@ -1325,7 +1325,6 @@ class HomeHelper( var category_name : String,
                 }
             }
         }
-
     }
 
     private var mCombine : Parcelable ?= null
@@ -1718,7 +1717,7 @@ class HomeHelper( var category_name : String,
         if (decryptedInsurance != null) {
             decryptedInsurance!!.selectionType = categoryID
             decryptedInsurance!!.insuranceCompany = title
-
+            decryptedInsurance!!.insuredVehicle = subTitle
             if (decryptedInsurance!!.created.isEmpty())
                 decryptedInsurance!!.created = currentUsers + " " + currentDateandTime
             decryptedInsurance!!.modified = currentUsers + " " + currentDateandTime

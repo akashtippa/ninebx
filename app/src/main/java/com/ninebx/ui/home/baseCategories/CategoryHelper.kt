@@ -106,7 +106,6 @@ class CategoryHelper(
     private fun getPersonal() {
         val decryptedCombinePersonal: DecryptedCombinePersonal = combineItems as DecryptedCombinePersonal
         //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
-
         val categoryList = ArrayList<Category>()
 
         var categoryIndex = 1005

@@ -291,6 +291,7 @@ class PersonalHelper(var category_name : String,
             "License number" -> decryptedDriversLicense!!.licenseNumber = level2Category.titleValue
             "Date issued" -> decryptedDriversLicense!!.dateIssued = level2Category.titleValue
             "Expiration date" -> decryptedDriversLicense!!.expirationDate = level2Category.titleValue
+            "Issuing state" -> decryptedDriversLicense!!.issuingState = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedDriversLicense!!.notes = level2Category.titleValue
@@ -358,6 +359,7 @@ class PersonalHelper(var category_name : String,
             "ID number" -> decryptedOtherGovernment!!.idNumber = level2Category.titleValue
             "Date issued" -> decryptedOtherGovernment!!.dateIssued = level2Category.titleValue
             "Expiration date" -> decryptedOtherGovernment!!.expirationDate = level2Category.titleValue
+            "Issuing state" -> decryptedOtherGovernment!!.issuingState = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedOtherGovernment!!.notes = level2Category.titleValue
@@ -369,7 +371,7 @@ class PersonalHelper(var category_name : String,
 
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String) {
         mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
@@ -688,7 +690,7 @@ class PersonalHelper(var category_name : String,
                             if (realmCertificate == null) {
                                 realmCertificate = realm.createObject(CombinePersonal::class.java, getUniqueId())
                             }
-                            /*val encryptedObject = encryptCertificate(decryptedCertificate!!)
+                            val encryptedObject = encryptCertificate(decryptedCertificate!!)
                             if(realmCertificate!!.certificateItems.contains(decryptedCertificate)){
                                 val index = realmCertificate!!.certificateItems.indexOf(encryptedObject)
                                 if(index != -1){
@@ -696,8 +698,7 @@ class PersonalHelper(var category_name : String,
                                 }
                             }else{
                                 realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
-                            }*/
-                            realmCertificate!!.certificateItems.add(encryptCertificate(decryptedCertificate!!))
+                            }
                             realm.copyToRealmOrUpdate(realmCertificate)
                             realm.commitTransaction()
                         }

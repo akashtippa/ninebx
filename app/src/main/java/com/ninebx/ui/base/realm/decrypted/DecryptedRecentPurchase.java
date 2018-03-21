@@ -19,17 +19,7 @@ import io.realm.annotations.Required;
  */
 public class DecryptedRecentPurchase implements Parcelable {
 
-    public static final Creator<DecryptedRecentPurchase> CREATOR = new Creator<DecryptedRecentPurchase>() {
-        @Override
-        public DecryptedRecentPurchase createFromParcel(Parcel in) {
-            return new DecryptedRecentPurchase(in);
-        }
 
-        @Override
-        public DecryptedRecentPurchase[] newArray(int size) {
-            return new DecryptedRecentPurchase[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -84,23 +74,7 @@ public class DecryptedRecentPurchase implements Parcelable {
                 '}';
     }
 
-    protected DecryptedRecentPurchase(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        brandName = in.readString();
-        itemName = in.readString();
-        purchasedBy = in.readString();
-        purchasedDate = in.readString();
-        purchasedPrice = in.readString();
-        notes = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
+
 
     public DecryptedRecentPurchase(String selectionType, String brandName, String itemName, String purchasedBy, String purchasedDate, String purchasedPrice, String notes, String created, String modified, Boolean isPrivate, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
@@ -120,28 +94,9 @@ public class DecryptedRecentPurchase implements Parcelable {
     public DecryptedRecentPurchase() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(brandName);
-        dest.writeString(itemName);
-        dest.writeString(purchasedBy);
-        dest.writeString(purchasedDate);
-        dest.writeString(purchasedPrice);
-        dest.writeString(notes);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+
+
 
     public long getId() {
         return id;
@@ -270,4 +225,61 @@ public class DecryptedRecentPurchase implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.brandName);
+        dest.writeString(this.itemName);
+        dest.writeString(this.purchasedBy);
+        dest.writeString(this.purchasedDate);
+        dest.writeString(this.purchasedPrice);
+        dest.writeString(this.notes);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedRecentPurchase(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.brandName = in.readString();
+        this.itemName = in.readString();
+        this.purchasedBy = in.readString();
+        this.purchasedDate = in.readString();
+        this.purchasedPrice = in.readString();
+        this.notes = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedRecentPurchase> CREATOR = new Creator<DecryptedRecentPurchase>() {
+        @Override
+        public DecryptedRecentPurchase createFromParcel(Parcel source) {
+            return new DecryptedRecentPurchase(source);
+        }
+
+        @Override
+        public DecryptedRecentPurchase[] newArray(int size) {
+            return new DecryptedRecentPurchase[size];
+        }
+    };
 }

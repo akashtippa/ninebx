@@ -500,16 +500,16 @@ class ShoppingHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Purchased by", "Purchased by", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Purchased date", "Purchased date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchased price", "Purchased price", "", Constants.LEVEL2_USD))
+        category.subCategories.add(Level2SubCategory("Purchased by", decryptedRecentPurchase!!.purchasedBy, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Purchased date", decryptedRecentPurchase!!.purchasedDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchased price", decryptedRecentPurchase!!.purchasedPrice, "", Constants.LEVEL2_USD))
         categoryList.add(category)
 
         categoryIndex += 2034
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedRecentPurchase!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -529,25 +529,25 @@ class ShoppingHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Account Details"
-        category.subCategories.add(Level2SubCategory("Name(s) on account", "Name(s) on account", "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Account number", "Account number", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedLoyaltyPrograms!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedLoyaltyPrograms!!.accountNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2033
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Online Access"
-        category.subCategories.add(Level2SubCategory("Website", "Website", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Username/login", "Username/login", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Password", "Password", "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("PIN", "PIN", "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Website", decryptedLoyaltyPrograms!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedLoyaltyPrograms!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedLoyaltyPrograms!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedLoyaltyPrograms!!.pin, "", Constants.LEVEL2_PASSWORD))
         categoryList.add(category)
 
         categoryIndex += 2033
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedLoyaltyPrograms!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
 
@@ -624,7 +624,7 @@ class ShoppingHelper(
         when (level2Category.title) {
             "Brand/Retailer" -> decryptedLoyaltyPrograms!!.brandName = level2Category.titleValue
             "Account name" -> decryptedLoyaltyPrograms!!.accountName = level2Category.titleValue
-            "Name on account" -> decryptedLoyaltyPrograms!!.nameOnAccount = level2Category.titleValue
+            "Name(s) on account" -> decryptedLoyaltyPrograms!!.nameOnAccount = level2Category.titleValue
             "Account number" -> decryptedLoyaltyPrograms!!.accountNumber = level2Category.titleValue
             "Website" -> decryptedLoyaltyPrograms!!.website = level2Category.titleValue
             "Username/login" -> decryptedLoyaltyPrograms!!.userName = level2Category.titleValue
@@ -666,6 +666,7 @@ class ShoppingHelper(
         if (decryptedLoyaltyPrograms != null) {
             decryptedLoyaltyPrograms!!.selectionType = categoryID
             decryptedLoyaltyPrograms!!.brandName = title
+            decryptedLoyaltyPrograms!!.accountName = subTitle
             if( decryptedLoyaltyPrograms!!.created.isEmpty() )
                 decryptedLoyaltyPrograms!!.created = currentUsers + " " + currentDateandTime
             decryptedLoyaltyPrograms!!.modified = currentUsers + " " + currentDateandTime

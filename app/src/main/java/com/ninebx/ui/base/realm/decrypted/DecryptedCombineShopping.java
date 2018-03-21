@@ -16,17 +16,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedCombineShopping implements Parcelable {
 
-    public static final Creator<DecryptedCombineShopping> CREATOR = new Creator<DecryptedCombineShopping>() {
-        @Override
-        public DecryptedCombineShopping createFromParcel(Parcel in) {
-            return new DecryptedCombineShopping(in);
-        }
-
-        @Override
-        public DecryptedCombineShopping[] newArray(int size) {
-            return new DecryptedCombineShopping[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey
@@ -52,20 +41,6 @@ public class DecryptedCombineShopping implements Parcelable {
         this.shoppingItems = shoppingItems;
         this.clothingSizesItems = clothingSizesItems;
         this.listItems = listItems;
-    }
-
-    protected DecryptedCombineShopping(Parcel in) {
-        id = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public  long getId() {
@@ -130,16 +105,25 @@ public class DecryptedCombineShopping implements Parcelable {
 
     public int getLoyaltyPrograms(String selectionType) {
         int count = 0;
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedLoyaltyPrograms decryptedLicense : loyaltyProgramsItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            if(!ids.contains(decryptedLicense.getId())){
+                count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(decryptedLicense.getId());
+            }
         }
         return count;
     }
 
+
     public int getRecentPurchases(String selectionType) {
         int count = 0;
+        ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedRecentPurchase decryptedLicense : recentPurchaseItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+            if(!ids.contains(decryptedLicense.getId())){
+                count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(decryptedLicense.getId());
+            }
         }
         return count;
     }
@@ -160,4 +144,41 @@ public class DecryptedCombineShopping implements Parcelable {
         return count;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.loyaltyProgramsItems);
+        dest.writeTypedList(this.recentPurchaseItems);
+        dest.writeTypedList(this.shoppingItems);
+        dest.writeTypedList(this.clothingSizesItems);
+        dest.writeTypedList(this.listItems);
+    }
+
+    protected DecryptedCombineShopping(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.loyaltyProgramsItems = in.createTypedArrayList(DecryptedLoyaltyPrograms.CREATOR);
+        this.recentPurchaseItems = in.createTypedArrayList(DecryptedRecentPurchase.CREATOR);
+        this.shoppingItems = in.createTypedArrayList(DecryptedShopping.CREATOR);
+        this.clothingSizesItems = in.createTypedArrayList(DecryptedClothingSizes.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedShoppingList.CREATOR);
+    }
+
+    public static final Creator<DecryptedCombineShopping> CREATOR = new Creator<DecryptedCombineShopping>() {
+        @Override
+        public DecryptedCombineShopping createFromParcel(Parcel source) {
+            return new DecryptedCombineShopping(source);
+        }
+
+        @Override
+        public DecryptedCombineShopping[] newArray(int size) {
+            return new DecryptedCombineShopping[size];
+        }
+    };
 }

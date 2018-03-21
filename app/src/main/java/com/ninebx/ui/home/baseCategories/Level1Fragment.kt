@@ -256,6 +256,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 override fun onItemClick(adapter: SubCategoryAdapter, mainCategory: Category, subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
+                    if( subCategory.formsCount == 0 )
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
                         if( !checkForAsset("Vehicles", categories) ) {
                             context!!.showToast(R.string.error_empty_vehicle_list)
@@ -521,12 +522,29 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         })
     }
 
-    private fun  gettingContactsList() {
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+    private var decryptedCombineContact: DecryptedCombineContacts ?= null
+    private fun gettingContactsList() {
+
+        if(combinedItems != null) {
+            val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            val addFamilyUsersFragment = ContactsListContainerFragment()
+            val bundle = Bundle()
+            bundle.putString("categoryName", categoryName)
+            bundle.putString("categoryId", categoryID)
+            bundle.putParcelable(Constants.REALM_CONTACTS, combinedItems!!/*Contacts.createParcelableList(combinedItems!!)*/)
+            addFamilyUsersFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
+        }
+        /*prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+
             override fun onSuccess(realm: Realm?) {
                 hideProgress()
 
                 allContacts = getCurrentContactList(realm!!)
+                combineContacts = realm.where(CombineContacts::class.java).findAll()
+                decryptedCombineContact = DecryptedCombineContacts()
+                fetchCombineContacts(combineContacts!!)
                 if (allContacts != null) {
                     context!!.hideProgressDialog()
                     AppLogger.e("Contacts", "Contacts from Realm : " + allContacts.toString())
@@ -538,11 +556,23 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     bundle.putString("categoryName", categoryName)
                     bundle.putString("categoryId", categoryID)
                     bundle.putParcelableArrayList(Constants.REALM_CONTACTS, Contacts.createParcelableList(allContacts!!))
+                    if(combineContacts != null) {
+                        bundle.putParcelableArrayList(Constants.COMBINE_ITEMS, decryptedCombineContacts)
+                    }
                     addFamilyUsersFragment.arguments = bundle
                     fragmentTransaction.replace(R.id.frameLayout, addFamilyUsersFragment).commit()
                 }
             }
-        })
+        })*/
+    }
+
+    private var decryptedCombineContacts: ArrayList<DecryptedCombineContacts> ?= null
+
+    private fun fetchCombineContacts(combineContacts: RealmResults<CombineContacts>) {
+        decryptedCombineContacts= ArrayList()
+        for(contact in combineContacts) {
+            decryptedCombineContacts!!.add(decryptCombineContacts(contact))
+        }
     }
 
     private var searchItems: ArrayList<Level3SearchItem> = ArrayList()
