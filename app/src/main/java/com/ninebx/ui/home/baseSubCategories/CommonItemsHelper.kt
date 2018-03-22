@@ -180,11 +180,18 @@ class CommonItemsHelper(var category_name: String,
             }
             decryptedMainContacts!!.modified = currentUsers + " " + currentDateandTime
 
-            var isSaveComplete = false
             if( decryptedMainContacts!!.id.toInt() == 0) {
                 decryptedMainContacts!!.id = getUniqueId()
                 AppLogger.d("saveDocument", "id" + decryptedMainContacts!!.id)
             }
+
+            val combine: DecryptedCombineContacts = mCombine as DecryptedCombineContacts
+            val index = combine.mainContactsItems.indexOf(decryptedMainContacts)
+            if( index != -1 ) {
+                combine.mainContactsItems[index] = decryptedMainContacts
+            }
+            else combine.mainContactsItems.add(decryptedMainContacts)
+            mCombine = combine
 
             AppLogger.d("saveDocument", "Document Id " + decryptedMainContacts!!.id)
             AppLogger.d("saveDocument", "Document : " + decryptedMainContacts!!)
@@ -206,8 +213,9 @@ class CommonItemsHelper(var category_name: String,
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
-                    context.hideProgressDialog()
-                    categoryView.savedToRealm(mCombine!!)
+                    //context.hideProgressDialog()
+                    saveToCombineContact(context, mainContacts)
+                    //categoryView.savedToRealm(mCombine!!)
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
@@ -218,7 +226,6 @@ class CommonItemsHelper(var category_name: String,
 
     @SuppressLint("StaticFieldLeak")
     private fun saveToCombineContact(context: Context, mainContacts: MainContacts?) {
-        var isSaveComplete = false
         object : AsyncTask<Void, Void, Unit>() {
 
             override fun doInBackground(vararg p0: Void?) {
@@ -252,12 +259,8 @@ class CommonItemsHelper(var category_name: String,
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
-                if (isSaveComplete) {
-                    isSaveComplete = true
-                    context.hideProgressDialog()
-                } else {
-                    categoryView.savedToRealm(mCombine!!)
-                }
+                context.hideProgressDialog()
+                categoryView.savedToRealm(mCombine!!)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
