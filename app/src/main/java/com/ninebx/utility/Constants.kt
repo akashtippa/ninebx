@@ -211,6 +211,7 @@ object Constants {
     val SEARCH_NORMAL = 1
     val SUB_CATEGORY: String = "sub_category"
     val CATEGORY: String = "category_main"
+    val SUB_OPTIONS: String = "sub_options"
 
 
 }

@@ -158,6 +158,15 @@
                         android:id="@+id/ivEdit"
                         />
 
+                    <TextView
+                        android:layout_below="@+id/etTitle"
+                        android:id="@+id/tvTitleValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:background="@color/grey_100"
+                         />
+
                     <EditText
                         android:layout_below="@+id/etTitle"
                         android:id="@+id/etTitleValue"
