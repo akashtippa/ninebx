@@ -507,7 +507,6 @@ class Level3CategoryHelper(
         }
         if(educationAndWorkHelper != null) {
             educationAndWorkHelper!!.saveDocument(context,combineItem,title, subTitle)
-
         }
 
         if(wellnessHelper!=null){
@@ -520,7 +519,7 @@ class Level3CategoryHelper(
             commonItemHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
 
-        if (decryptedLoyalty != null) {
+   /*     if (decryptedLoyalty != null) {
             decryptedLoyalty!!.selectionType = categoryID
             if (decryptedLoyalty!!.selectionType.equals("travel_1001"))
                 decryptedLoyalty!!.airLine = title
@@ -770,7 +769,7 @@ class Level3CategoryHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
-        if (decryptedVacations != null) {
+      *//*  if (decryptedVacations != null) {
             decryptedVacations!!.selectionType = categoryID
             decryptedVacations!!.vac_description = title
             AppLogger.d("SelectionType", "decryptedVacations" + decryptedVacations!!.selectionType)
@@ -836,9 +835,9 @@ class Level3CategoryHelper(
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+*//*
 
-
-
+*/
 
 
 

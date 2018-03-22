@@ -59,6 +59,20 @@
                     android:padding="@dimen/default_mini_margin"
                     android:text="Save"
                     android:textColor="@color/colorPrimary"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/default_mini_margin"
+                    android:layout_marginRight="@dimen/default_mini_margin"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/search_bx"
+                    android:layout_centerVertical="true"
                     android:visibility="visible" />
 
             </android.support.v7.widget.Toolbar>

@@ -1,6 +1,8 @@
 package com.ninebx.ui.home.baseSubCategories
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
@@ -207,7 +209,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedCertificate.created
                     modifiedValue.setText(decryptedCertificate.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -217,7 +219,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedGovernment : DecryptedGovernment = selectedDocument as DecryptedGovernment
                     etTitle.setText(decryptedGovernment.idName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedGovernment.created
                     modifiedValue.setText(decryptedGovernment.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -227,7 +229,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedLicense : DecryptedLicense = selectedDocument as DecryptedLicense
                     etTitle.setText(decryptedLicense.lic_description)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedLicense.created
                     modifiedValue.setText(decryptedLicense.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -237,7 +239,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
                     etTitle.setText(decryptedPersonal.userName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     createdValue.text = decryptedPersonal.created
                     modifiedValue.setText(decryptedPersonal.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -247,7 +249,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedSocial : DecryptedSocial = selectedDocument as DecryptedSocial
                     etTitle.setText(decryptedSocial.cardName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     modifiedValue.setText(decryptedSocial.modified)
                     createdValue.text = decryptedSocial.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -257,7 +259,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedTaxID : DecryptedTaxID = selectedDocument as DecryptedTaxID
                     etTitle.setText(decryptedTaxID.taxIdName)
                     etTitleValue.setEnabled(false)
-                    etTitleValue.visibility = View.GONE
+
                     modifiedValue.setText(decryptedTaxID.modified)
                     createdValue.text = decryptedTaxID.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -348,12 +350,15 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     when(decryptedDocuments.selectionType){
                         "travel_2001" -> {
                             etTitle.setText(decryptedDocuments.passportName)
+                            etTitleValue.setEnabled(false)
                         }
                         "travel_2002"->{
                             etTitle.setText(decryptedDocuments.visaName)
+                            etTitleValue.setEnabled(false)
                         }
                         "travel_2003" -> {
                             etTitle.setText(decryptedDocuments.travelDocumentTitle)
+                            etTitleValue.setEnabled(false)
                         }
                     }
                     modifiedValue.setText(decryptedDocuments.modified)
@@ -415,7 +420,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedVacations : DecryptedVacations = selectedDocument as DecryptedVacations
                     createdValue.setText(decryptedVacations.created)
                     etTitle.setText(decryptedVacations.vac_description)
-                    etTitleValue.setText(decryptedVacations.vac_description)
+                    etTitleValue.setEnabled(false)
                     modifiedValue.setText(decryptedVacations.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
@@ -501,9 +506,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( action == "add" ) {
             ivEdit.hide()
             ivDelete.hide()
+            ivHome.hide()
         }
         else if( action == "edit" ) {
             ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
+            ivHome.hide()
         }
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
@@ -536,15 +543,37 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 isEditMode = true
                 inflateLayout(level2Categories)
                 tvSave.show()
+                ivHome.hide()
+                toolbarTitle.text = "Add Account"
             }
         }
         ivDelete.setOnClickListener {
             if( isEditMode ) {
-                arguments!!.putString("action", "delete")
-                (activity!! as ContainerActivity).onLevel3Action(arguments!!)
+               /* arguments!!.putString("action", "delete")
+                (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("NineBx")
+                builder.setCancelable(false)
+                builder.setMessage("Are you sure you want to delete?")
+                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, p1: Int) {
+                        arguments!!.putString("action", "delete")
+                        (activity!! as ContainerActivity).onLevel3Action(arguments!!)
+                    }
+                })
+                builder.setNegativeButton("Cancel", object  : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        dialog?.cancel()
+                    }
+                })
+                builder.show()
             }
         }
+
         if( isEditMode ) tvSave.show()
+
+       /* ivHome.setOnClickListener {
+            NineBxApplication.instance.activityInstance!!.callHomeFragment() }*/
     }
 
     private fun validate(): Boolean {
@@ -558,7 +587,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun setTitle() {
 
         val bundleValue = arguments!!.getString("categoryName")
-        toolbarTitle.text = "Add " + bundleValue
+       // toolbarTitle.text = "Add " + bundleValue
 
         when (bundleValue) {
 
@@ -760,18 +789,21 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Passport" -> {
                 etTitle.hint = "Passport name"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Passport"
             }
 
             "Visa" -> {
                 etTitle.hint = "Visa name"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Visa"
             }
 
             "Other travel document" -> {
                 etTitle.hint = "Travel document title"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Document"
 
             }
@@ -779,6 +811,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Travel Dates And Plans" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
+                etTitleValue.setEnabled(false)
                 toolbarTitle.text = "Add Travel Plan"
 
             }
@@ -800,42 +833,42 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add License"
             }
             "Social Security Card" -> {
                 etTitle.hint = "Card name"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add Card"
             }
             "Tax ID" -> {
                 etTitle.hint = "Tax ID name"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add ID"
             }
             "Birth Certificate" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
                 etTitleValue.isEnabled = false
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add Certificate"
             }
             "Marriage Certificate" -> {
                 etTitle.hint = "Description"
                 etTitleValue.hint = ""
                 etTitleValue.isEnabled = false
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add Certificate"
             }
             "Other Government-Issued ID" -> {
                 etTitle.hint = "ID name"
                 etTitleValue.hint = ""
                 etTitleValue.setEnabled(false)
-                etTitleValue.visibility = View.GONE
+
                 toolbarTitle.text = "Add ID"
             }
 

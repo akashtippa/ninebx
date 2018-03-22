@@ -7,6 +7,7 @@ package com.ninebx.ui.home.baseSubCategories
 var accountType = arrayOf("Checking", "Savings", "Other")
 var cardType = arrayOf("Credit", "Debit")
 
+var gender = arrayOf("Male", "Female")
 
 // Constants for DropDown
 

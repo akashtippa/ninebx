@@ -847,7 +847,7 @@ class HomeHelper( var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Card Details"
         category.subCategories.add(Level2SubCategory("Card number", decryptedPayment!!.cardNumber, "", Constants.LEVEL2_PASSWORD))
-        category.subCategories.add(Level2SubCategory("Card type", decryptedPayment!!.cardType, Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Card type", decryptedPayment!!.cardType, Constants.CARD_TYPE, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Card holder", decryptedPayment!!.cardHolder, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Expiry date", decryptedPayment!!.expiryDate, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("CVV code", decryptedPayment!!.cvvCode, "", Constants.LEVEL2_PASSWORD))

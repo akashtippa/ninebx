@@ -16,17 +16,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedCombine implements Parcelable {
 
-    public static final Creator<DecryptedCombine> CREATOR = new Creator<DecryptedCombine>() {
-        @Override
-        public DecryptedCombine createFromParcel(Parcel in) {
-            return new DecryptedCombine(in);
-        }
-
-        @Override
-        public DecryptedCombine[] newArray(int size) {
-            return new DecryptedCombine[size];
-        }
-    };
     @PrimaryKey //@Required
     private long id = 0;
     @Required
@@ -62,13 +51,6 @@ public class DecryptedCombine implements Parcelable {
     }
     @Ignore
     public String searchField = "";
-    protected DecryptedCombine(Parcel in) {
-        id = in.readInt();
-    }
-
-    public static Creator<DecryptedCombine> getCREATOR() {
-        return CREATOR;
-    }
 
     public long getId() {
         return id;
@@ -142,15 +124,6 @@ public class DecryptedCombine implements Parcelable {
         this.listItems = listItems;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     @Override
     public String toString() {
@@ -274,5 +247,50 @@ public class DecryptedCombine implements Parcelable {
         }
         return count;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.financialItems);
+        dest.writeTypedList(this.paymentItems);
+        dest.writeTypedList(this.propertyItems);
+        dest.writeTypedList(this.vehicleItems);
+        dest.writeTypedList(this.assetItems);
+        dest.writeTypedList(this.insuranceItems);
+        dest.writeTypedList(this.taxesItems);
+        dest.writeTypedList(this.listItems);
+        dest.writeString(this.searchField);
+    }
+
+    protected DecryptedCombine(Parcel in) {
+        this.id = in.readLong();
+        this.financialItems = in.createTypedArrayList(DecryptedFinancial.CREATOR);
+        this.paymentItems = in.createTypedArrayList(DecryptedPayment.CREATOR);
+        this.propertyItems = in.createTypedArrayList(DecryptedProperty.CREATOR);
+        this.vehicleItems = in.createTypedArrayList(DecryptedVehicle.CREATOR);
+        this.assetItems = in.createTypedArrayList(DecryptedAsset.CREATOR);
+        this.insuranceItems = in.createTypedArrayList(DecryptedInsurance.CREATOR);
+        this.taxesItems = in.createTypedArrayList(DecryptedTax.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedHomeList.CREATOR);
+        this.searchField = in.readString();
+    }
+
+    public static final Creator<DecryptedCombine> CREATOR = new Creator<DecryptedCombine>() {
+        @Override
+        public DecryptedCombine createFromParcel(Parcel source) {
+            return new DecryptedCombine(source);
+        }
+
+        @Override
+        public DecryptedCombine[] newArray(int size) {
+            return new DecryptedCombine[size];
+        }
+    };
 }
 
