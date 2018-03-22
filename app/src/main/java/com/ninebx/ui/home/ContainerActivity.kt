@@ -158,7 +158,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         val bundle = intent.extras
         when {
 
-            subCategory.title == "Add Person." -> {
+            subCategory != null && subCategory.title == "Add Person." -> {
                 val categoryFragment = ClothesFragment()
                 categoryFragment.arguments = intent.extras
                 fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
