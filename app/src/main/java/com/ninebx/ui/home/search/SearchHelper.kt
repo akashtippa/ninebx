@@ -247,8 +247,7 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(shoppingList in searchDecryptedCombineShopping.listItems){
-            if( shoppingList.listName != null )
-                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName, "shoppingList", shoppingList.selectionType, itemIndex++, shoppingList.id))
+            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, shoppingList.listName, "shoppingList", shoppingList.selectionType, itemIndex++, shoppingList.id))
         }
         mSearchShoppingItems = filterDuplicates( mSearchShoppingItems )
         return mSearchShoppingItems

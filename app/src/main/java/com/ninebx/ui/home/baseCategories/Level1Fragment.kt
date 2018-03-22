@@ -421,8 +421,10 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         super.onViewCreated(view, savedInstanceState)
         fromWhichBox = arguments!!.getInt("category")
         categoryInt = arguments!!.getInt("category")
-        init()
+
     }
+
+
 
     private fun init() {
         showProgress(R.string.loading)
@@ -569,6 +571,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     override fun onResume() {
         super.onResume()
+        init()
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
     }

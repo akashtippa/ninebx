@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedClothingSizes implements Parcelable {
 
-    public static final Creator<DecryptedClothingSizes> CREATOR = new Creator<DecryptedClothingSizes>() {
-        @Override
-        public DecryptedClothingSizes createFromParcel(Parcel in) {
-            return new DecryptedClothingSizes(in);
-        }
-
-        @Override
-        public DecryptedClothingSizes[] newArray(int size) {
-            return new DecryptedClothingSizes[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -146,68 +135,6 @@ public class DecryptedClothingSizes implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedClothingSizes(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        personName = in.readString();
-        sizeName = in.readString();
-        sizeCategory = in.readString();
-        topsSize = in.readString();
-        topsNumericSize = in.readString();
-        bottomsSize = in.readString();
-        bottomsNumericSize = in.readString();
-        dressesSize = in.readString();
-        dressesNumericSize = in.readString();
-        outWearSize = in.readString();
-        outWearNumericSize = in.readString();
-        swimWearSize = in.readString();
-        swimWearNumericSize = in.readString();
-        swimWearBraBandCupSize = in.readString();
-        shoeSize = in.readString();
-        shoeWidth = in.readString();
-        hats = in.readString();
-        gloves = in.readString();
-        tights = in.readString();
-        bust = in.readString();
-        waist = in.readString();
-        hips = in.readString();
-        armLength = in.readString();
-        inseam = in.readString();
-        torso = in.readString();
-        jacketsSize = in.readString();
-        jacketsNumericSize = in.readString();
-        pantsSize = in.readString();
-        pantsNumericSize = in.readString();
-        toddlerSize = in.readString();
-        kidSize = in.readString();
-        neck = in.readString();
-        chest = in.readString();
-        clothing = in.readString();
-        shoes = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        byte tmpIsBaby = in.readByte();
-        isBaby = tmpIsBaby == 0 ? null : tmpIsBaby == 1;
-        byte tmpIsWomen = in.readByte();
-        isWomen = tmpIsWomen == 0 ? null : tmpIsWomen == 1;
-        byte tmpIsGirl = in.readByte();
-        isGirl = tmpIsGirl == 0 ? null : tmpIsGirl == 1;
-        byte tmpIsMen = in.readByte();
-        isMen = tmpIsMen == 0 ? null : tmpIsMen == 1;
-        byte tmpIsBoy = in.readByte();
-        isBoy = tmpIsBoy == 0 ? null : tmpIsBoy == 1;
-        beltsNumericSize = in.readString();
-        socks = in.readString();
-        seat = in.readString();
-        beltSize = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
 
     public DecryptedClothingSizes(String selectionType, String classType, String personName, String sizeName, String sizeCategory, String topsSize, String topsNumericSize, String bottomsSize, String bottomsNumericSize, String dressesSize, String dressesNumericSize, String outWearSize, String outWearNumericSize, String swimWearSize, String swimWearNumericSize, String swimWearBraBandCupSize, String shoeSize, String shoeWidth, String hats, String gloves, String tights, String bust, String waist, String hips, String armLength, String inseam, String torso, String jacketsSize, String jacketsNumericSize, String pantsSize, String pantsNumericSize, String toddlerSize, String kidSize, String neck, String chest, String clothing, String shoes, String notes, String attachmentNames, Boolean isBaby, Boolean isWomen, Boolean isGirl, Boolean isMen, Boolean isBoy, String beltsNumericSize, String socks, String seat, String beltSize, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
@@ -267,68 +194,8 @@ public class DecryptedClothingSizes implements Parcelable {
     public DecryptedClothingSizes() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(personName);
-        dest.writeString(sizeName);
-        dest.writeString(sizeCategory);
-        dest.writeString(topsSize);
-        dest.writeString(topsNumericSize);
-        dest.writeString(bottomsSize);
-        dest.writeString(bottomsNumericSize);
-        dest.writeString(dressesSize);
-        dest.writeString(dressesNumericSize);
-        dest.writeString(outWearSize);
-        dest.writeString(outWearNumericSize);
-        dest.writeString(swimWearSize);
-        dest.writeString(swimWearNumericSize);
-        dest.writeString(swimWearBraBandCupSize);
-        dest.writeString(shoeSize);
-        dest.writeString(shoeWidth);
-        dest.writeString(hats);
-        dest.writeString(gloves);
-        dest.writeString(tights);
-        dest.writeString(bust);
-        dest.writeString(waist);
-        dest.writeString(hips);
-        dest.writeString(armLength);
-        dest.writeString(inseam);
-        dest.writeString(torso);
-        dest.writeString(jacketsSize);
-        dest.writeString(jacketsNumericSize);
-        dest.writeString(pantsSize);
-        dest.writeString(pantsNumericSize);
-        dest.writeString(toddlerSize);
-        dest.writeString(kidSize);
-        dest.writeString(neck);
-        dest.writeString(chest);
-        dest.writeString(clothing);
-        dest.writeString(shoes);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeByte((byte) (isBaby == null ? 0 : isBaby ? 1 : 2));
-        dest.writeByte((byte) (isWomen == null ? 0 : isWomen ? 1 : 2));
-        dest.writeByte((byte) (isGirl == null ? 0 : isGirl ? 1 : 2));
-        dest.writeByte((byte) (isMen == null ? 0 : isMen ? 1 : 2));
-        dest.writeByte((byte) (isBoy == null ? 0 : isBoy ? 1 : 2));
-        dest.writeString(beltsNumericSize);
-        dest.writeString(socks);
-        dest.writeString(seat);
-        dest.writeString(beltSize);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+
 
     public long getId() {
         return id;
@@ -838,4 +705,141 @@ public class DecryptedClothingSizes implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.personName);
+        dest.writeString(this.sizeName);
+        dest.writeString(this.sizeCategory);
+        dest.writeString(this.topsSize);
+        dest.writeString(this.topsNumericSize);
+        dest.writeString(this.bottomsSize);
+        dest.writeString(this.bottomsNumericSize);
+        dest.writeString(this.dressesSize);
+        dest.writeString(this.dressesNumericSize);
+        dest.writeString(this.outWearSize);
+        dest.writeString(this.outWearNumericSize);
+        dest.writeString(this.swimWearSize);
+        dest.writeString(this.swimWearNumericSize);
+        dest.writeString(this.swimWearBraBandCupSize);
+        dest.writeString(this.shoeSize);
+        dest.writeString(this.shoeWidth);
+        dest.writeString(this.hats);
+        dest.writeString(this.gloves);
+        dest.writeString(this.tights);
+        dest.writeString(this.bust);
+        dest.writeString(this.waist);
+        dest.writeString(this.hips);
+        dest.writeString(this.armLength);
+        dest.writeString(this.inseam);
+        dest.writeString(this.torso);
+        dest.writeString(this.jacketsSize);
+        dest.writeString(this.jacketsNumericSize);
+        dest.writeString(this.pantsSize);
+        dest.writeString(this.pantsNumericSize);
+        dest.writeString(this.toddlerSize);
+        dest.writeString(this.kidSize);
+        dest.writeString(this.neck);
+        dest.writeString(this.chest);
+        dest.writeString(this.clothing);
+        dest.writeString(this.shoes);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeValue(this.isBaby);
+        dest.writeValue(this.isWomen);
+        dest.writeValue(this.isGirl);
+        dest.writeValue(this.isMen);
+        dest.writeValue(this.isBoy);
+        dest.writeString(this.beltsNumericSize);
+        dest.writeString(this.socks);
+        dest.writeString(this.seat);
+        dest.writeString(this.beltSize);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedClothingSizes(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.personName = in.readString();
+        this.sizeName = in.readString();
+        this.sizeCategory = in.readString();
+        this.topsSize = in.readString();
+        this.topsNumericSize = in.readString();
+        this.bottomsSize = in.readString();
+        this.bottomsNumericSize = in.readString();
+        this.dressesSize = in.readString();
+        this.dressesNumericSize = in.readString();
+        this.outWearSize = in.readString();
+        this.outWearNumericSize = in.readString();
+        this.swimWearSize = in.readString();
+        this.swimWearNumericSize = in.readString();
+        this.swimWearBraBandCupSize = in.readString();
+        this.shoeSize = in.readString();
+        this.shoeWidth = in.readString();
+        this.hats = in.readString();
+        this.gloves = in.readString();
+        this.tights = in.readString();
+        this.bust = in.readString();
+        this.waist = in.readString();
+        this.hips = in.readString();
+        this.armLength = in.readString();
+        this.inseam = in.readString();
+        this.torso = in.readString();
+        this.jacketsSize = in.readString();
+        this.jacketsNumericSize = in.readString();
+        this.pantsSize = in.readString();
+        this.pantsNumericSize = in.readString();
+        this.toddlerSize = in.readString();
+        this.kidSize = in.readString();
+        this.neck = in.readString();
+        this.chest = in.readString();
+        this.clothing = in.readString();
+        this.shoes = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.isBaby = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isWomen = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isGirl = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isMen = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isBoy = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.beltsNumericSize = in.readString();
+        this.socks = in.readString();
+        this.seat = in.readString();
+        this.beltSize = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedClothingSizes> CREATOR = new Creator<DecryptedClothingSizes>() {
+        @Override
+        public DecryptedClothingSizes createFromParcel(Parcel source) {
+            return new DecryptedClothingSizes(source);
+        }
+
+        @Override
+        public DecryptedClothingSizes[] newArray(int size) {
+            return new DecryptedClothingSizes[size];
+        }
+    };
 }

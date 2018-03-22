@@ -1,16 +1,13 @@
 package com.ninebx.ui.home
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
-import com.ninebx.ui.home.baseCategories.Level1Fragment
 import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.fragment_home_updated.*
 
@@ -75,19 +72,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         if( layoutQuickAdd != null && (activity as HomeActivity).areImagesPresent() ) layoutQuickAdd.hide() else layoutQuickAdd.show()
     }
 
-
-    private fun callBottomViewFragment(option: Int) {
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack(null)
-
-        val level1Fragment = Level1Fragment()
-        val bundle = Bundle()
-        bundle.putInt("category", option)
-        level1Fragment.arguments = bundle
-        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-        prefrences.currentBox = getString(option)
-        fragmentTransaction.add(R.id.frameLayout, level1Fragment).commit()
-    }
 
     private fun callLevel1Fragment(option: Int) {
         (activity as HomeActivity).callLevel1Fragment(option)
