@@ -534,7 +534,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 inflateLayout(level2Categories)
                 tvSave.show()
                 ivHome.hide()
-                toolbarTitle.text = "Add Account"
             }
         }
         ivDelete.setOnClickListener {
@@ -545,17 +544,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 builder.setTitle("NineBx")
                 builder.setCancelable(false)
                 builder.setMessage("Are you sure you want to delete?")
-                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, p1: Int) {
-                        arguments!!.putString("action", "delete")
-                        (activity!! as ContainerActivity).onLevel3Action(arguments!!)
-                    }
-                })
-                builder.setNegativeButton("Cancel", object  : DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        dialog?.cancel()
-                    }
-                })
+                builder.setPositiveButton("OK") { dialog, p1 ->
+                    arguments!!.putString("action", "delete")
+                    (activity!! as ContainerActivity).onLevel3Action(arguments!!)
+                }
+                builder.setNegativeButton("Cancel") { dialog, which -> dialog?.cancel() }
                 builder.show()
             }
         }
