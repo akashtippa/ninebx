@@ -88,7 +88,7 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                         builder.setPositiveButton("Ok"  ,object :  DialogInterface.OnClickListener{
                             override fun onClick(dialog: DialogInterface?, p1: Int) {
                                 val deletedItem = searchItems.removeAt(position)
-                                adapterClickListener.onItemClick(position, searchItems[position].itemIndex, deletedItem, "delete")
+                                adapterClickListener.onItemClick(position, deletedItem.itemIndex, deletedItem, "delete")
                                 notifyDataSetChanged()
                             }
                         })
