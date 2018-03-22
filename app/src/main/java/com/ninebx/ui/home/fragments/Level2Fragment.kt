@@ -55,6 +55,12 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Created by TechnoBlogger on 24/01/18.
  */
 class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection, MainContactsAdded {
+
+    override fun onDocumentRemoved(combineParcelable: Parcelable) {
+        combinedItems = combineParcelable
+        loadItems()
+    }
+
     override fun contactsEdited(contacts: DecryptedMainContacts) {
         mListsAdapter!!.updateContact(contacts)
     }

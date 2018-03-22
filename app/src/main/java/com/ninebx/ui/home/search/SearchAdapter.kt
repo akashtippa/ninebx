@@ -81,14 +81,14 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                     R.id.txtListSearch, R.id.txtSubHeader -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "view")
                     R.id.ivEdit -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "edit")
                     R.id.ivDelete -> {
-                        adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "delete")
                         val builder = AlertDialog.Builder(view!!.context)
                         builder.setTitle("NineBx")
                         builder.setCancelable(false)
                         builder.setMessage("Are you sure you want to delete?")
                         builder.setPositiveButton("Ok"  ,object :  DialogInterface.OnClickListener{
                             override fun onClick(dialog: DialogInterface?, p1: Int) {
-                                searchItems.removeAt(position)
+                                val deletedItem = searchItems.removeAt(position)
+                                adapterClickListener.onItemClick(position, searchItems[position].itemIndex, deletedItem, "delete")
                                 notifyDataSetChanged()
                             }
                         })

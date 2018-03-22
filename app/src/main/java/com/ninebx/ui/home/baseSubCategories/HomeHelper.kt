@@ -1382,6 +1382,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.financialItems.indexOf(decryptedFinancial)
+                            if( index != -1 ) {
+                                combine.financialItems[index] = decryptedFinancial
+                            }
+                            else combine.financialItems.add(decryptedFinancial)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
