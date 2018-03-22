@@ -85,18 +85,12 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                         builder.setTitle("NineBx")
                         builder.setCancelable(false)
                         builder.setMessage("Are you sure you want to delete?")
-                        builder.setPositiveButton("Ok"  ,object :  DialogInterface.OnClickListener{
-                            override fun onClick(dialog: DialogInterface?, p1: Int) {
-                                val deletedItem = searchItems.removeAt(position)
-                                adapterClickListener.onItemClick(position, deletedItem.itemIndex, deletedItem, "delete")
-                                notifyDataSetChanged()
-                            }
-                        })
-                        builder.setNegativeButton("Cancel", object  : DialogInterface.OnClickListener{
-                            override fun onClick(dialog: DialogInterface?, which: Int) {
-                                dialog?.cancel()
-                            }
-                        })
+                        builder.setPositiveButton("Ok") { dialog, p1 ->
+                            val deletedItem = searchItems.removeAt(position)
+                            adapterClickListener.onItemClick(position, deletedItem.itemIndex, deletedItem, "delete")
+                            notifyDataSetChanged()
+                        }
+                        builder.setNegativeButton("Cancel") { dialog, which -> dialog?.cancel() }
                         builder.show()
 
                     }
