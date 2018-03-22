@@ -664,6 +664,12 @@ class TravelHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val decryptedCombineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
+                            val index = decryptedCombineTravel.loyaltyItems.indexOf(decryptedLoyalty)
+                            if( index != -1 ) {
+                                decryptedCombineTravel.loyaltyItems[index] = decryptedLoyalty
+                            }
+                            else decryptedCombineTravel.loyaltyItems.add(decryptedLoyalty)
+                            mCombine = decryptedCombineTravel
                             var realmloyalty = realm!!.where(CombineTravel::class.java).equalTo("id", decryptedCombineTravel .id).findFirst()
                             realm.beginTransaction()
                             if (realmloyalty == null) {
@@ -733,6 +739,12 @@ class TravelHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
+                            val index = combineTravel.travelItems.indexOf(decryptedTravel)
+                            if( index != -1 ) {
+                                combineTravel.travelItems[index] = decryptedTravel
+                            }
+                            else combineTravel.travelItems.add(decryptedTravel)
+                            mCombine = combineTravel
                             var realmTravel = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
                             realm.beginTransaction()
                             if (realmTravel == null) {
@@ -753,73 +765,6 @@ class TravelHelper(var category_name : String,
                         }
                     })
                 }
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-
-        if (decryptedTravel != null) {
-            decryptedTravel!!.selectionType = categoryID
-            decryptedTravel!!.accountName = title
-            decryptedTravel!!.modified = currentUsers + " " + currentDateandTime
-            if( decryptedTravel!!.created.isEmpty() )
-                decryptedTravel!!.created = currentUsers + " " + currentDateandTime
-
-            if (decryptedTravel!!.id.toInt() == 0) {
-                decryptedTravel!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            var documents = encryptTravel(decryptedTravel!!)
-                            realm.insertOrUpdate(documents)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
-                            var realmTravelDocuments = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmTravelDocuments == null) {
-                                realmTravelDocuments = realm.createObject(CombineTravel::class.java, getUniqueId())
-                            }
-                              val encryptedObject = encryptTravel(decryptedTravel!!)
-                              if(realmTravelDocuments!!.travelItems.contains(encryptedObject)){
-                                  val index = realmTravelDocuments!!.travelItems.indexOf(encryptedObject)
-                                  if(index != -1){
-                                      realmTravelDocuments!!.travelItems[index] = encryptedObject
-                                  }
-                              }else{
-                                  realmTravelDocuments!!.travelItems.add(encryptTravel(decryptedTravel!!))
-                              }
-
-                            realm.insertOrUpdate(realmTravelDocuments)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
                 override fun onPostExecute(result: Unit?) {
                     if (isSaveComplete) {
                         isSaveComplete = true
@@ -878,6 +823,12 @@ class TravelHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
+                            val index = combineTravel.documentsItems.indexOf(decryptedDocuments)
+                            if( index != -1 ) {
+                                combineTravel.documentsItems[index] = decryptedDocuments
+                            }
+                            else combineTravel.documentsItems.add(decryptedDocuments)
+                            mCombine = combineTravel
                             var realmTravel = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
                             realm.beginTransaction()
                             if (realmTravel == null) {
@@ -945,6 +896,12 @@ class TravelHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
+                            val index = combineTravel.vacationsItems.indexOf(decryptedVacations)
+                            if( index != -1 ) {
+                                combineTravel.vacationsItems[index] = decryptedVacations
+                            }
+                            else combineTravel.vacationsItems.add(decryptedVacations)
+                            mCombine = combineTravel
                             var realmVacations = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
                             realm.beginTransaction()
                             if (realmVacations == null) {

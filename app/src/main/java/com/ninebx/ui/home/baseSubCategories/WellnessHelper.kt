@@ -621,6 +621,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             var combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.identificationItems.indexOf(decryptedIdentification)
+                            if( index != -1 ) {
+                                combineWellness.identificationItems[index] = decryptedIdentification
+                            }
+                            else combineWellness.identificationItems.add(decryptedIdentification)
+                            mCombine = combineWellness
                             var realmIdentification = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (realmIdentification == null) {
@@ -683,6 +689,12 @@ class WellnessHelper(
                         override fun onSuccess(realm: Realm?) {
 
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.medicalHistoryItems.indexOf(decryptedMedicalHistory)
+                            if( index != -1 ) {
+                                combineWellness.medicalHistoryItems[index] = decryptedMedicalHistory
+                            }
+                            else combineWellness.medicalHistoryItems.add(decryptedMedicalHistory)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -747,6 +759,12 @@ class WellnessHelper(
                             //val combine: DecryptedCombine = mCombine as DecryptedCombine
                             //AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.healthcareProvidersItems.indexOf(decryptedHealthcareProviders)
+                            if( index != -1 ) {
+                                combineWellness.healthcareProvidersItems[index] = decryptedHealthcareProviders
+                            }
+                            else combineWellness.healthcareProvidersItems.add(decryptedHealthcareProviders)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -809,6 +827,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.emergencyContactsItems.indexOf(decryptedEmergencyContacts)
+                            if( index != -1 ) {
+                                combineWellness.emergencyContactsItems[index] = decryptedEmergencyContacts
+                            }
+                            else combineWellness.emergencyContactsItems.add(decryptedEmergencyContacts)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -871,6 +895,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.medicationsItems.indexOf(decryptedMedications)
+                            if( index != -1 ) {
+                                combineWellness.medicationsItems[index] = decryptedMedications
+                            }
+                            else combineWellness.medicationsItems.add(decryptedMedications)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -933,6 +963,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.medicalConditionsItems.indexOf(decryptedMedicalConditions)
+                            if( index != -1 ) {
+                                combineWellness.medicalConditionsItems[index] = decryptedMedicalConditions
+                            }
+                            else combineWellness.medicalConditionsItems.add(decryptedMedicalConditions)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -994,6 +1030,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.eyeglassPrescriptionsItems.indexOf(decryptedEyeglassPrescriptions)
+                            if( index != -1 ) {
+                                combineWellness.eyeglassPrescriptionsItems[index] = decryptedEyeglassPrescriptions
+                            }
+                            else combineWellness.eyeglassPrescriptionsItems.add(decryptedEyeglassPrescriptions)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -1056,6 +1098,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.vitalNumbersItems.indexOf(decryptedVitalNumbers)
+                            if( index != -1 ) {
+                                combineWellness.vitalNumbersItems[index] = decryptedVitalNumbers
+                            }
+                            else combineWellness.vitalNumbersItems.add(decryptedVitalNumbers)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -1117,6 +1165,12 @@ class WellnessHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineWellness: DecryptedCombineWellness = mCombine as DecryptedCombineWellness
+                            val index = combineWellness.checkupsItems.indexOf(decryptedCheckups)
+                            if( index != -1 ) {
+                                combineWellness.checkupsItems[index] = decryptedCheckups
+                            }
+                            else combineWellness.checkupsItems.add(decryptedCheckups)
+                            mCombine = combineWellness
                             var combineRealm = realm!!.where(CombineWellness::class.java).equalTo("id", combineWellness.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {

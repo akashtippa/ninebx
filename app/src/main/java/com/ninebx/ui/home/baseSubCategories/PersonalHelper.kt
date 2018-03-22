@@ -419,6 +419,12 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            val index = combine.licenseItems.indexOf(decryptedDriversLicense)
+                            if( index != -1 ) {
+                                combine.licenseItems[index] = decryptedDriversLicense
+                            }
+                            else combine.licenseItems.add(decryptedDriversLicense)
+                            mCombine = combine
                             var combinePersonal1 = realm!!.where(CombinePersonal::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if (combinePersonal1 == null) {
@@ -488,6 +494,12 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            val index = combinePersonal.socialItems.indexOf(decryptedSocial)
+                            if( index != -1 ) {
+                                combinePersonal.socialItems[index] = decryptedSocial
+                            }
+                            else combinePersonal.socialItems.add(decryptedSocial)
+                            mCombine = combinePersonal
                             var realmSocial = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmSocial == null) {
@@ -554,6 +566,12 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            val index = combinePersonal.taxIDItems.indexOf(decryptedTAX_ID)
+                            if( index != -1 ) {
+                                combinePersonal.taxIDItems[index] = decryptedTAX_ID
+                            }
+                            else combinePersonal.taxIDItems.add(decryptedTAX_ID)
+                            mCombine = combinePersonal
                             var realmTaxID = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmTaxID == null) {
@@ -620,6 +638,12 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            val index = combinePersonal.governmentItems.indexOf(decryptedOtherGovernment)
+                            if( index != -1 ) {
+                                combinePersonal.governmentItems[index] = decryptedOtherGovernment
+                            }
+                            else combinePersonal.governmentItems.add(decryptedOtherGovernment)
+                            mCombine = combinePersonal
                             var realmGovernment = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmGovernment == null) {
@@ -685,6 +709,12 @@ class PersonalHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_PERSONAL, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combinePersonal: DecryptedCombinePersonal = mCombine as DecryptedCombinePersonal
+                            val index = combinePersonal.certificateItems.indexOf(decryptedCertificate)
+                            if( index != -1 ) {
+                                combinePersonal.certificateItems[index] = decryptedCertificate
+                            }
+                            else combinePersonal.certificateItems.add(decryptedCertificate)
+                            mCombine = combinePersonal
                             var realmCertificate = realm!!.where(CombinePersonal::class.java).equalTo("id", combinePersonal.id).findFirst()
                             realm.beginTransaction()
                             if (realmCertificate == null) {
