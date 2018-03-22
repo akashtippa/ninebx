@@ -232,16 +232,22 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     category.title == "Shared Contacts" -> gettingContactsList()
 
                     category.subCategories.size == 0 -> {
-                        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                        fragmentTransaction.addToBackStack(null)
+
                         val bundle = Bundle()
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
                         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
+                        bundle.putString(Constants.FROM_CLASS, "Level1Fragment")
+                        val intent = Intent( context, ContainerActivity::class.java)
+                        intent.putExtras(bundle)
+                        startActivityForResult(
+                                intent, 12313)
+                        /*val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                        fragmentTransaction.addToBackStack(null)
                         val level2Fragment = Level2Fragment()
                         level2Fragment.arguments = bundle
-                        fragmentTransaction.replace(R.id.frameLayout, level2Fragment).commit()
+                        fragmentTransaction.replace(R.id.frameLayout, level2Fragment).commit()*/
                         Toast.makeText(context, "ID is " + categoryID, Toast.LENGTH_LONG).show()
                     }
                 }
