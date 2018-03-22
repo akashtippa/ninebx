@@ -183,7 +183,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
                 locationViewHolder.txtHeader.text = headerTitle
                 locationViewHolder.etSubHeader.hint = headerTitle
-                locationViewHolder.etSubHeader.setText(  titleValue)
+                locationViewHolder.etSubHeader.setText(titleValue)
                 locationViewHolder.etSubHeader.addTextChangedListener(CustomTextWatcher(level2SubCategory))
                 locationViewHolder.etSubHeader.setOnClickListener{
                     getTimeFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener {
@@ -247,7 +247,6 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 if (event.action == MotionEvent.ACTION_UP) {
                     if (event.rawX >= etSubHeader.right - etSubHeader.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
                         openStaticLayoutDialog(etSubHeader)
-
                         return@OnTouchListener true
                     }
                 }
