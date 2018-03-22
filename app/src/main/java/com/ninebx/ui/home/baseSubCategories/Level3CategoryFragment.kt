@@ -493,7 +493,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 modifiedValue.hide()
             }
             tvTitleValue.text = etTitleValue.text.toString()
-            if( arguments!!.containsKey(Constants.SUB_OPTIONS) && arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS ) != null ) {
+            if( arguments!!.containsKey(Constants.SUB_OPTIONS)
+                    && arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS ) != null ) {
                 tvTitleValue.show()
                 etTitleValue.hide()
                 tvTitleValue.setOnClickListener {
@@ -510,6 +511,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     private fun showDropDownForOptions(optionsList: java.util.ArrayList<OptionItem>?) {
+
+        if( optionsList!!.size == 0 ) {
+            return
+        }
 
         val popupView = LayoutInflater.from(context).inflate(R.layout.popup_window_list_layout, null)
         //popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
