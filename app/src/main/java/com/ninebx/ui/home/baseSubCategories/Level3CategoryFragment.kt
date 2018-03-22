@@ -476,7 +476,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             }
-
+            if( modifiedValue.text.equals(createdValue.text) ) {
+                modified.hide()
+                modifiedValue.hide()
+            }
             toolbarTitle.text = etTitle.text.toString()
         }
 
