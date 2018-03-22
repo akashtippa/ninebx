@@ -468,6 +468,16 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
+            //Contacts
+                is DecryptedMainContacts -> {
+                    val decryptedMainContacts = selectedDocument as DecryptedMainContacts
+                    createdValue.setText(decryptedMainContacts.created)
+                    etTitle.setText(decryptedMainContacts.institutionName)
+                    etTitleValue.setText(decryptedMainContacts.accountName)
+                    modifiedValue.setText(decryptedMainContacts.modified)
+                    modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
+                }
             }
 
             toolbarTitle.text = etTitle.text.toString()

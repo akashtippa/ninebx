@@ -25,6 +25,7 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineContacts
 import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
+import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.home.ContainerActivity
@@ -59,11 +60,15 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         mListsAdapter!!.updateContact(contacts)
     }
 
-    override fun contactsClicked(contacts: DecryptedMainContacts, isEditable: Boolean?) {
+    override fun contactsClicked(contacts: Parcelable, isEditable: Boolean) {
         val bundle = Bundle()
+        bundle.putString("categoryName", categoryName)
+        bundle.putString("categoryId", categoryID)
         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-        bundle.putString("action", "add")
-        bundle.putParcelable("selectedDocument",contacts)
+        val action = if(isEditable) "edit" else "add"
+        bundle.putString("action", action)
+        bundle.putString("classType", DecryptedMainContacts::class.java.simpleName)
+        bundle.putParcelable("selectedDocument", contacts)
         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
         val intent = Intent( context, ContainerActivity::class.java)
@@ -150,13 +155,13 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     }
 
     private lateinit var searchHelper: SearchHelper
+    val bundle = Bundle()
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
-        val bundle = Bundle()
         combinedItems = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
@@ -207,6 +212,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 var list = combinedItems as DecryptedCombineContacts
                 mListsAdapter = MainContactsAdapter(list.mainContactsItems , this)
                 rvCommonList!!.adapter = mListsAdapter
+                mListsAdapter!!.notifyDataSetChanged()
             } else {
                 searchHelper = SearchHelper()
                 searchHelper.setOnDocumentSelection(this)
@@ -401,8 +407,9 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         searchHelper.switchAndSearch(mCurrentSearchItem!!, action)
                     }
                     "add" -> {
-                        /*combinedItems = data.getParcelableExtra(Constants.COMBINE_ITEMS)
-                        loadItems()*/
+                        combinedItems = data.getParcelableExtra(Constants.COMBINE_ITEMS)
+                        loadItems()
+                        //update list
                     }
                 }
             }

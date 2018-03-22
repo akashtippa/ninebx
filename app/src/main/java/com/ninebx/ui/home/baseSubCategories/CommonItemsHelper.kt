@@ -23,7 +23,7 @@ class CommonItemsHelper(var category_name: String,
                         val categoryView: Level2CategoryView) {
 
     private var decryptedMainContacts: DecryptedMainContacts ?= null
-    private var decryptedCombine: DecryptedCombine ?= null
+    private var decryptedCombine: DecryptedCombine ?= null // need to check
     private var decryptedTravel: DecryptedTravel ?= null
     private var decryptedEducation: DecryptedEducation ?= null
     private var decryptedPersonal: DecryptedPersonal ?= null
@@ -38,7 +38,7 @@ class CommonItemsHelper(var category_name: String,
         }
 
         when (classType) {
-            DecryptedContacts::class.java.simpleName -> {
+            DecryptedMainContacts::class.java.simpleName -> {
                 decryptedMainContacts = selectedDocument as DecryptedMainContacts
             }
             DecryptedCombine::class.java.simpleName -> {
