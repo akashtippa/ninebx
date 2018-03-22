@@ -25,7 +25,7 @@ import java.util.*
 /**
  * Created by Alok on 14/03/18.
  */
-@SuppressLint("ClickableViewAccessibility")
+@SuppressLint("ClickableViewAccessibility", "SetTextI18n")
 class ExpandableRecyclerViewAdapter( private val _context: Context,
                                      private val categories: ArrayList<Level2SubCategory>,
                                      private val level2CategoryPresenter: Level2CategoryView,
@@ -85,6 +85,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
     fun getItemAtPosition( position : Int ) : Level2SubCategory {
         return categories[position]
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
 
@@ -507,6 +508,10 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
                 val spinnerItems = when (keyBoardType) {
 
+                    Constants.BANK_ACCOUNT_TYPE -> {
+                        accountType
+                    }
+
                     Constants.PICKER_WOMEN_NUMERIC_SIZE -> {
                         ( womenTopsNumericSizes)
                     }
@@ -619,9 +624,6 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         ( babyShoeSizes)
                     }
 
-                    Constants.BANK_ACCOUNT_TYPE -> {
-                        ( accountType)
-                    }
                     Constants.OTHER_ACCOUNT_TYPE -> {
                         ( othersAccountTypeOptions)
                     }
