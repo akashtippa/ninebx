@@ -116,7 +116,7 @@ class OTPFragment : BaseAuthFragment(),OTPView {
                     p0?.cancel()
                 }
             })
-            builder.setMessage("New authentication code sent to"+mAuthView.getAccountEmail()+"Please check your inbox")
+            builder.setMessage("New authentication code sent to "+mAuthView.getAccountEmail()+" Please check your inbox.")
             builder.show()
             etOtp1.requestFocus()
             etOtp1.setText("")
