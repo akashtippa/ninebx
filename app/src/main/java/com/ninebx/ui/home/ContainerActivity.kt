@@ -155,18 +155,18 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         fragmentTransaction.addToBackStack(null)
         var subCategory: SubCategory ?= null
         val bundle = intent.extras
-        if(intent.hasExtra(Constants.SUB_CATEGORY)) {
+        /*if(intent.hasExtra(Constants.SUB_CATEGORY)) {
             subCategory = intent.getParcelableExtra<SubCategory>(Constants.SUB_CATEGORY)
         } else {
             val categoryFragment = Level2Fragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
             return
-        }
+        }*/
         val category = intent.getParcelableExtra<Category>(Constants.CATEGORY)
         when {
 
-            subCategory!!.title == "Add Person." -> {
+            subCategory != null && subCategory.title == "Add Person." -> {
                 val categoryFragment = ClothesFragment()
                 categoryFragment.arguments = intent.extras
                 fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()

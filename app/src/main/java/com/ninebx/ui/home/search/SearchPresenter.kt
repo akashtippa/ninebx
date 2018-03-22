@@ -9,6 +9,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedCombine
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.base.realm.home.homeBanking.Combine
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.memories.MainMemories
@@ -177,9 +178,23 @@ class SearchPresenter {
             }
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                mDecryptedCombineContacts.mainContactsItems = filterDuplicates(mDecryptedCombineContacts.mainContactsItems!!)
                 searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicates(mCombineContacts: java.util.ArrayList<DecryptedMainContacts>): ArrayList<DecryptedMainContacts> {
+        val singleCountList = ArrayList<DecryptedMainContacts>()
+        for( item in mCombineContacts ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombineShopping() {

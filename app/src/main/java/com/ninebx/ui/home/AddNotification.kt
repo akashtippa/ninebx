@@ -23,6 +23,10 @@ import com.ninebx.R.drawable.logo_nine
  * Created by smrit on 26-02-2018.
  */
 class AddNotification : HomeView {
+    override fun startCameraIntent() {
+
+    }
+
     private var mDecryptedCombine : DecryptedCombine ?= null
     private var mDecryptedCombineTravel : DecryptedCombineTravel ?= null
     private var mDecryptedCombineEducation : DecryptedCombineEducation ?= null

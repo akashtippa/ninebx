@@ -3,14 +3,13 @@ package com.ninebx.ui.home.baseSubCategories
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.PopupWindowCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
@@ -25,7 +24,7 @@ import java.util.*
 /**
  * Created by Alok on 14/03/18.
  */
-@SuppressLint("ClickableViewAccessibility")
+@SuppressLint("ClickableViewAccessibility", "SetTextI18n")
 class ExpandableRecyclerViewAdapter( private val _context: Context,
                                      private val categories: ArrayList<Level2SubCategory>,
                                      private val level2CategoryPresenter: Level2CategoryView,
@@ -85,6 +84,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
     fun getItemAtPosition( position : Int ) : Level2SubCategory {
         return categories[position]
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
 
@@ -315,40 +315,42 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
     private fun showMemberPopup(optionEditText: EditText?, optionsList: ArrayList<DecryptedMember>) {
 
-        val popupWindow = PopupWindow(_context)
-        val popupView = LayoutInflater.from(_context).inflate(R.layout.popup_window_list_layout, null)
-        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
 
-        popupWindow.contentView = popupView
-        popupWindow.isOutsideTouchable = true
+        val popupView = LayoutInflater.from(_context).inflate(R.layout.popup_window_list_layout, null)
+        //popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
+
+        //popupWindow.contentView = popupView
+        //popupWindow.isOutsideTouchable = true
         val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
         val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
         optionsListView.adapter = arrayAdapter
-        optionsListView.onItemClickListener = object : AdapterView.OnItemClickListener {
-            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val newValue =  optionsList[p2] as String
-                optionEditText!!.setText(newValue)
-            }
+        optionsListView.onItemClickListener = AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
+            val newValue =  optionsList[p2] as String
+            optionEditText!!.setText(newValue)
         }
-
-
-        popupWindow.showAsDropDown(optionEditText)
+        val popupWindow = AlertDialog.Builder(_context).setView(popupView).create()
+        popupWindow.show()
+        //PopupWindowCompat.showAsDropDown(popupWindow, optionEditText!!, optionEditText.x.toInt(), optionEditText.y.toInt(), Gravity.BOTTOM)
 
     }
 
     private fun showPopup( level2SubCategory: Level2SubCategory, optionEditText: TextView?, optionsList: Array<String>) {
 
-        val popupWindow = PopupWindow(_context)
         val popupView = LayoutInflater.from(_context).inflate(R.layout.popup_window_list_layout, null)
         //popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
 
-        popupWindow.contentView = popupView
-        popupWindow.isOutsideTouchable = true
+        //popupWindow.contentView = popupView
+        //popupWindow.isOutsideTouchable = true
         val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
         val arrayAdapter = ArrayAdapter(_context, R.layout.txt_usd, optionsList)
         optionsListView.adapter = arrayAdapter
-        optionsListView.setOnItemClickListener(CustomItemSelectedListener( level2SubCategory, optionsList, optionEditText, popupWindow ))
-        popupWindow.showAsDropDown(optionEditText)
+
+        val popupWindow = AlertDialog.Builder(_context).setView(popupView).create()
+
+        optionsListView.onItemClickListener = CustomItemSelectedListener( level2SubCategory, optionsList, optionEditText, popupWindow )
+        popupWindow.show()
+
+        //PopupWindowCompat.showAsDropDown(popupWindow, optionEditText!!, optionEditText.x.toInt(), optionEditText.y.toInt(), Gravity.BOTTOM)
 
     }
 
@@ -507,6 +509,10 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
                 val spinnerItems = when (keyBoardType) {
 
+                    Constants.BANK_ACCOUNT_TYPE -> {
+                        accountType
+                    }
+
                     Constants.PICKER_WOMEN_NUMERIC_SIZE -> {
                         ( womenTopsNumericSizes)
                     }
@@ -619,9 +625,6 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         ( babyShoeSizes)
                     }
 
-                    Constants.BANK_ACCOUNT_TYPE -> {
-                        ( accountType)
-                    }
                     Constants.OTHER_ACCOUNT_TYPE -> {
                         ( othersAccountTypeOptions)
                     }
@@ -672,7 +675,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
     inner class CustomItemSelectedListener(private val level2SubCategory: Level2SubCategory,
                                            private val selectionArray : Array<String>,
                                            private val optionEditText: TextView?,
-                                           private val popupWindow: PopupWindow ) : AdapterView.OnItemClickListener {
+                                           private val popupWindow: AlertDialog ) : AdapterView.OnItemClickListener {
 
         override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
             level2SubCategory.titleValue = selectionArray[p2]

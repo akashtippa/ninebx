@@ -33,6 +33,7 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -237,6 +238,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
+                        bundle.putParcelable(Constants.CATEGORY, category)
                         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
                         bundle.putString(Constants.FROM_CLASS, "Level1Fragment")
                         val intent = Intent( context, ContainerActivity::class.java)
@@ -274,6 +276,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         bundle.putString("categoryId", categoryID)
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("action", "add")
+                        bundle.putParcelable(Constants.CATEGORY, category)
                         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
                         bundle.putInt(Constants.CURRENT_BOX, categoryInt )
                         /*val level3CategoryFragment = Level3CategoryFragment()
@@ -331,6 +334,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             }*/
             layoutCategory.addView(categoryView)
         }
+
     }
 
     private fun checkForAsset(categoryName: String, categories: ArrayList<Category>): Boolean {
@@ -576,4 +580,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         }
     }
+
+
 }

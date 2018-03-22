@@ -208,7 +208,7 @@ class CommonItemsHelper(var category_name: String,
                     super.onPostExecute(result)
                     if (isSaveComplete) {
                         isSaveComplete = true
-                        saveToCombineContact(context, mainContacts)
+                        //saveToCombineContact(context, mainContacts)
                     } else {
                         categoryView.savedToRealm(mCombine!!)
                     }
