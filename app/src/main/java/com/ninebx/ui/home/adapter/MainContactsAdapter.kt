@@ -1,8 +1,6 @@
 package com.ninebx.ui.home.adapter
 
 import android.annotation.SuppressLint
-import android.media.Image
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +12,6 @@ import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
-import com.ninebx.utility.decryptString
-import org.w3c.dom.Text
 
 internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainContacts>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<MainContactsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0

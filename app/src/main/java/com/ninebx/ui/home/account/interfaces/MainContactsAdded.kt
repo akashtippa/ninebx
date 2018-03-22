@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.account.interfaces
 
+import android.os.Parcelable
 import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 
 /**
@@ -8,7 +9,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 interface MainContactsAdded {
     fun contactsEdited(contacts: DecryptedMainContacts)
 
-    fun contactsClicked(contacts: DecryptedMainContacts, isEditable: Boolean?)
+    fun contactsClicked(contacts: Parcelable, isEditable: Boolean)
 
     fun contactsDeleted(contacts: DecryptedMainContacts)
 
