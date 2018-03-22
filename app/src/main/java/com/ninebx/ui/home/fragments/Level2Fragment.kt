@@ -246,8 +246,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
-
         return super.onBackPressed()
+
     }
 
     // Checking The Permission is Enabled Or Not
