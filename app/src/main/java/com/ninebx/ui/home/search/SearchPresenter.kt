@@ -358,6 +358,7 @@ class SearchPresenter {
             override fun doInBackground(vararg p0: Void?) {
                 prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                     override fun onSuccess(realm: Realm?) {
+
                         val combineResult = realm!!.where(Combine::class.java)/*.distinctValues("id")*/.findAll()
                         if( combineResult.size > 0 ) {
                             for (i in 0 until combineResult.size) {

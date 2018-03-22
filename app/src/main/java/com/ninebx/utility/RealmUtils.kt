@@ -81,6 +81,7 @@ fun prepareRealmConnections(context: Context?,
                 AppLogger.d(TAG, "Connection established : " + realmEndPoint)
                 //connectionsMap.put(realmEndPoint, realm!!)
                 realm!!.refresh()
+                //realm.isAutoRefresh = true
                 callback.onSuccess(realm)
 
                 if ( isForeground && context != null )

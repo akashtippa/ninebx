@@ -16,18 +16,4 @@ class CategoryPresenter(private val categoryId: Int, private val combineItems: P
         categoryView.showProgress(R.string.loading)
         CategoryHelper(categoryId, categoryView, combineItems )
     }
-
-    var financialList   : RealmResults<Financial> ?= null
-    var paymentList     : RealmResults<Payment> ?= null
-    var propertyList    : RealmResults<Property> ?= null
-    var vehicleList     : RealmResults<Vehicle> ?= null
-    var assetList       : RealmResults<Asset> ?= null
-    var insuranceList   : RealmResults<Insurance> ?= null
-    var taxList         : RealmResults<Taxes> ?= null
-    var homeList        : RealmResults<HomeList> ?= null
-    var travelList      : RealmResults<TravelList> ?= null
-
-    fun setDataForCombine(combine: RealmResults<Combine>) {
-
-    }
 }

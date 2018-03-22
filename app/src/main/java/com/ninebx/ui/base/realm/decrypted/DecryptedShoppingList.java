@@ -14,17 +14,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedShoppingList implements Parcelable {
 
-    public static final Creator<DecryptedShoppingList> CREATOR = new Creator<DecryptedShoppingList>() {
-        @Override
-        public DecryptedShoppingList createFromParcel(Parcel in) {
-            return new DecryptedShoppingList(in);
-        }
-
-        @Override
-        public DecryptedShoppingList[] newArray(int size) {
-            return new DecryptedShoppingList[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -73,50 +62,7 @@ public class DecryptedShoppingList implements Parcelable {
     public DecryptedShoppingList() {
     }
 
-    protected DecryptedShoppingList(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        classType = in.readString();
-        listName = in.readString();
-        dueDate = in.readString();
-        if (in.readByte() == 0) {
-            detailsId = null;
-        } else {
-            detailsId = in.readInt();
-        }
-        byte tmpIsSelected = in.readByte();
-        isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(listName);
-        dest.writeString(dueDate);
-        if (detailsId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(detailsId);
-        }
-        dest.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public long getId() {
         return id;
@@ -240,4 +186,58 @@ public class DecryptedShoppingList implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.listName);
+        dest.writeString(this.dueDate);
+        dest.writeValue(this.detailsId);
+        dest.writeValue(this.isSelected);
+        dest.writeLong(this.selectedDate != null ? this.selectedDate.getTime() : -1);
+        dest.writeLong(this.createdDate != null ? this.createdDate.getTime() : -1);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedShoppingList(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.listName = in.readString();
+        this.dueDate = in.readString();
+        this.detailsId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isSelected = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        long tmpSelectedDate = in.readLong();
+        this.selectedDate = tmpSelectedDate == -1 ? null : new Date(tmpSelectedDate);
+        long tmpCreatedDate = in.readLong();
+        this.createdDate = tmpCreatedDate == -1 ? null : new Date(tmpCreatedDate);
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedShoppingList> CREATOR = new Creator<DecryptedShoppingList>() {
+        @Override
+        public DecryptedShoppingList createFromParcel(Parcel source) {
+            return new DecryptedShoppingList(source);
+        }
+
+        @Override
+        public DecryptedShoppingList[] newArray(int size) {
+            return new DecryptedShoppingList[size];
+        }
+    };
 }

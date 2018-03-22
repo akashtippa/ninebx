@@ -238,6 +238,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
+                        bundle.putParcelable(Constants.CATEGORY, category)
                         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
                         bundle.putString(Constants.FROM_CLASS, "Level1Fragment")
                         val intent = Intent( context, ContainerActivity::class.java)
@@ -275,6 +276,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         bundle.putString("categoryId", categoryID)
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
                         bundle.putString("action", "add")
+                        bundle.putParcelable(Constants.CATEGORY, category)
                         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
                         bundle.putInt(Constants.CURRENT_BOX, categoryInt )
                         /*val level3CategoryFragment = Level3CategoryFragment()
@@ -419,8 +421,10 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         super.onViewCreated(view, savedInstanceState)
         fromWhichBox = arguments!!.getInt("category")
         categoryInt = arguments!!.getInt("category")
-        init()
+
     }
+
+
 
     private fun init() {
         showProgress(R.string.loading)
@@ -567,6 +571,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     override fun onResume() {
         super.onResume()
+        init()
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         NineBxApplication.instance.activityInstance!!.showBottomView()
     }

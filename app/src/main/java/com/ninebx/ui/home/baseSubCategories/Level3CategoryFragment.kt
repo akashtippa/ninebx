@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseSubCategories
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
@@ -20,6 +21,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level3_category.*
 
@@ -474,7 +476,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
             }
-
+            if( modifiedValue.text.equals(createdValue.text) ) {
+                modified.hide()
+                modifiedValue.hide()
+            }
             toolbarTitle.text = etTitle.text.toString()
         }
 
@@ -515,7 +520,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         ivBack.setOnClickListener {
             activity!!.finish()
         }
-
+        ivHome.setOnClickListener {
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
+        }
         setTitle()
 
         //setCamera(boxValue)
@@ -534,7 +543,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 inflateLayout(level2Categories)
                 tvSave.show()
                 ivHome.hide()
-                toolbarTitle.text = "Add Account"
             }
         }
         ivDelete.setOnClickListener {
@@ -545,17 +553,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 builder.setTitle("NineBx")
                 builder.setCancelable(false)
                 builder.setMessage("Are you sure you want to delete?")
-                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, p1: Int) {
-                        arguments!!.putString("action", "delete")
-                        (activity!! as ContainerActivity).onLevel3Action(arguments!!)
-                    }
-                })
-                builder.setNegativeButton("Cancel", object  : DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        dialog?.cancel()
-                    }
-                })
+                builder.setPositiveButton("OK") { dialog, p1 ->
+                    arguments!!.putString("action", "delete")
+                    (activity!! as ContainerActivity).onLevel3Action(arguments!!)
+                }
+                builder.setNegativeButton("Cancel") { dialog, which -> dialog?.cancel() }
                 builder.show()
             }
         }
