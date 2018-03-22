@@ -42,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
+        android:id="@+id/boxLayout"
         android:padding="@dimen/default_mini_padding"
         android:layout_centerInParent="true"
         android:orientation="vertical"
@@ -240,6 +241,40 @@
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutQuickAdd"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/default_mini_padding"
+        android:layout_marginRight="@dimen/default_mini_padding"
+        android:layout_marginEnd="@dimen/default_mini_padding">
+
+        <TextView
+            android:id="@+id/tvQuickAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:text="@string/quick_add" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgCameraNineBx"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/tvQuickAdd"
+            android:layout_toRightOf="@+id/tvQuickAdd"
+            android:src="@drawable/ic_icon_add_photo_memories"
+            tools:ignore="VectorDrawableCompat" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

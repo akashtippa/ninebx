@@ -33,6 +33,7 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -331,6 +332,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             }*/
             layoutCategory.addView(categoryView)
         }
+
     }
 
     private fun checkForAsset(categoryName: String, categories: ArrayList<Category>): Boolean {
@@ -576,4 +578,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         }
     }
+
+
 }

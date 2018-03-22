@@ -181,15 +181,17 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         hideProgressDialog()
     }
 
+    private var level1Fragment: Level1Fragment ?= null
+
     fun callLevel1Fragment(option: Int) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
-        val level1Fragment = Level1Fragment()
+        level1Fragment = Level1Fragment()
         val bundle = Bundle()
         bundle.putInt("category", option)
-        level1Fragment.arguments = bundle
+        level1Fragment!!.arguments = bundle
 
         NineBxApplication.instance.activityInstance!!.hideQuickAdd()
         prefrences.currentBox = getString(option)
@@ -282,7 +284,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
     private val PERMISSIONS_REQUEST_CODE_CAMERA = 115
     private val PERMISSIONS_REQUEST_CODE_GALLERY = 116
 
-    private fun startCameraIntent() {
+    override fun startCameraIntent() {
         bottomSheetDialogFragment.show(supportFragmentManager, bottomSheetDialogFragment.tag)
     }
 
@@ -406,14 +408,20 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         rvAttachments.adapter = attachmentRecyclerAdapter
     }
 
+    fun areImagesPresent() : Boolean {
+        return mImagesList.size > 0
+    }
+
     private fun hideShowAttachments() {
         if (mImagesList.size > 0) {
             layoutQuickAdd.hide()
             cvAttachments.show()
         } else {
-            layoutQuickAdd.show()
+            //layoutQuickAdd.show()
+            layoutQuickAdd.hide()
             cvAttachments.hide()
         }
+        HomeFragment.getHomeInstance().hideShowQuickAdd()
     }
 
     fun callHomeFragment() {
@@ -424,7 +432,8 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         fragmentTransaction.replace(R.id.frameLayout, HomeFragment.getHomeInstance()).commit()
         prefrences.currentBox = getString(R.string.home_amp_money)
         showBottomView()
-        layoutQuickAdd.show()
+        //layoutQuickAdd.show()
+        layoutQuickAdd.hide()
     }
 
     private fun toggleCheck(isCheckable: Boolean) {
@@ -515,10 +524,6 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         var isToWorkOnBack = true
         showBottomView()
 
-        if( supportFragmentManager.backStackEntryCount == 1 ) {
-            layoutQuickAdd.show()
-        }
-
         if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack()) {
             val list = supportFragmentManager.fragments
             if (list != null) {
@@ -563,13 +568,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         bottomNavigationView.show()
     }
 
-    fun showQuickAddDisableText() {
-        tvQuickAdd.hide()
-        layoutQuickAdd.show()
-    }
-
     fun changeQuickAddCamera(boxValue: String) {
-        tvQuickAdd.hide()
         when (boxValue) {
             getString(R.string.home_amp_money) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_home)
@@ -595,6 +594,14 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
             getString(R.string.shopping) -> {
                 imgCameraNineBx.setImageResource(R.drawable.camera_shopping)
             }
+            getString(R.string.education_work) -> {
+                imgCameraNineBx.setImageResource(R.drawable.camera_education)
+            }
         }
     }
+
+    fun hideShowQuickAdd() {
+        if( imgCameraNineBx != null && areImagesPresent() ) imgCameraNineBx.hide() else imgCameraNineBx.show()
+    }
+
 }
