@@ -1464,6 +1464,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.paymentItems.indexOf(decryptedPayment)
+                            if( index != -1 ) {
+                                combine.paymentItems[index] = decryptedPayment
+                            }
+                            else combine.paymentItems.add(decryptedPayment)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -1537,6 +1543,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.propertyItems.indexOf(decryptedProperty)
+                            if( index != -1 ) {
+                                combine.propertyItems[index] = decryptedProperty
+                            }
+                            else combine.propertyItems.add(decryptedProperty)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -1610,6 +1622,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.vehicleItems.indexOf(decryptedVehicle)
+                            if( index != -1 ) {
+                                combine.vehicleItems[index] = decryptedVehicle
+                            }
+                            else combine.vehicleItems.add(decryptedVehicle)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -1685,6 +1703,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.assetItems.indexOf(decryptedAssets)
+                            if( index != -1 ) {
+                                combine.assetItems[index] = decryptedAssets
+                            }
+                            else combine.assetItems.add(decryptedAssets)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -1761,6 +1785,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.insuranceItems.indexOf(decryptedInsurance)
+                            if( index != -1 ) {
+                                combine.insuranceItems[index] = decryptedInsurance
+                            }
+                            else combine.insuranceItems.add(decryptedInsurance)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
@@ -1835,6 +1865,12 @@ class HomeHelper( var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombine = mCombine as DecryptedCombine
+                            val index = combine.taxesItems.indexOf(decryptedTaxes)
+                            if( index != -1 ) {
+                                combine.taxesItems[index] = decryptedTaxes
+                            }
+                            else combine.taxesItems.add(decryptedTaxes)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()

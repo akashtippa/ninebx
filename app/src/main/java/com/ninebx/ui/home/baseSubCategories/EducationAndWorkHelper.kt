@@ -283,6 +283,12 @@ class EducationAndWorkHelper(var category_name : String,
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombineEducation = mCombine as DecryptedCombineEducation
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
+                            val index = combine.mainEducationItems.indexOf(decryptedMainEducation)
+                            if( index != -1 ) {
+                                combine.mainEducationItems[index] = decryptedMainEducation
+                            }
+                            else combine.mainEducationItems.add(decryptedMainEducation)
+                            mCombine = combine
                             var combineRealm = realm!!.where(CombineEducation::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()
                             if (combineRealm == null) {
@@ -362,6 +368,12 @@ class EducationAndWorkHelper(var category_name : String,
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_EDUCATION, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combine: DecryptedCombineEducation = mCombine as DecryptedCombineEducation
+                            val index = combine.workItems.indexOf(decryptedWork)
+                            if( index != -1 ) {
+                                combine.workItems[index] = decryptedWork
+                            }
+                            else combine.workItems.add(decryptedWork)
+                            mCombine = combine
                             AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
                             var combineRealm = realm!!.where(CombineEducation::class.java).equalTo("id", combine.id).findFirst()
                             realm.beginTransaction()

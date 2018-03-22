@@ -702,6 +702,12 @@ class ShoppingHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
+                            val index = combineShopping.shoppingItems.indexOf(decryptedShopping)
+                            if( index != -1 ) {
+                                combineShopping.shoppingItems[index] = decryptedShopping
+                            }
+                            else combineShopping.shoppingItems.add(decryptedShopping)
+                            mCombine = combineShopping
                             var realmLoyaltyPrograms = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmLoyaltyPrograms == null) {
@@ -758,6 +764,12 @@ class ShoppingHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
                             val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
+                            val index = combineShopping.recentPurchaseItems.indexOf(decryptedRecentPurchase)
+                            if( index != -1 ) {
+                                combineShopping.recentPurchaseItems[index] = decryptedRecentPurchase
+                            }
+                            else combineShopping.recentPurchaseItems.add(decryptedRecentPurchase)
+                            mCombine = combineShopping
                             var realmRecentPurchase = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmRecentPurchase == null) {
@@ -815,6 +827,12 @@ class ShoppingHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
                             val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
+                            val index = combineShopping.clothingSizesItems.indexOf(decryptedClothingSizes)
+                            if( index != -1 ) {
+                                combineShopping.clothingSizesItems[index] = decryptedClothingSizes
+                            }
+                            else combineShopping.clothingSizesItems.add(decryptedClothingSizes)
+                            mCombine = combineShopping
                             var realmClothingSizes = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmClothingSizes == null) {
@@ -872,6 +890,12 @@ class ShoppingHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback(){
                         override fun onSuccess(realm: Realm?) {
                             val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
+                            val index = combineShopping.shoppingItems.indexOf(decryptedShopping)
+                            if( index != -1 ) {
+                                combineShopping.shoppingItems[index] = decryptedShopping
+                            }
+                            else combineShopping.shoppingItems.add(decryptedShopping)
+                            mCombine = combineShopping
                             var realmShopping = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
                             if (realmShopping == null) {
