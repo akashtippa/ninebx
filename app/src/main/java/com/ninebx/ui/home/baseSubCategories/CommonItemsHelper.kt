@@ -8,6 +8,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
+import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.utility.*
 import io.realm.Realm
 import java.text.SimpleDateFormat
@@ -188,15 +189,17 @@ class CommonItemsHelper(var category_name: String,
             AppLogger.d("saveDocument", "Document Id " + decryptedMainContacts!!.id)
             AppLogger.d("saveDocument", "Document : " + decryptedMainContacts!!)
 
+            var mainContacts: MainContacts?= null
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             realm!!.beginTransaction()
-                            val mainContacts = encryptMainContacts(decryptedMainContacts!!)
-                            realm.insertOrUpdate(mainContacts)
+                            mainContacts = encryptMainContacts(decryptedMainContacts!!)
+                            realm.insertOrUpdate(mainContacts!!)
                             AppLogger.d("CombineMainContacts ", "Inserted ")
                             realm.commitTransaction()
+                            isSaveComplete = true
                         }
                     })
                 }
@@ -205,56 +208,62 @@ class CommonItemsHelper(var category_name: String,
                     super.onPostExecute(result)
                     if (isSaveComplete) {
                         isSaveComplete = true
+                        saveToCombineContact(context, mainContacts)
                     } else {
                         categoryView.savedToRealm(mCombine!!)
                     }
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>() {
 
-                override fun doInBackground(vararg p0: Void?) {
-
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombineContacts = mCombine as DecryptedCombineContacts
-                            AppLogger.d("saveDocument", "Combine Id " + combine.id)
-                            var combineRealm = realm!!.where(CombineContacts::class.java).equalTo("id", combine.id).findFirst()
-                            realm.beginTransaction()
-                            if (combineRealm == null) {
-                                combineRealm = realm.createObject(CombineContacts::class.java, getUniqueId())
-                            }
-                            val encryptedObject = encryptMainContacts(decryptedMainContacts!!)
-                            if (combineRealm!!.mainContactsItems.contains(encryptedObject)) {
-                                val index = combineRealm.mainContactsItems.indexOf(encryptedObject)
-                                if (index != -1) {
-                                    combineRealm.mainContactsItems[index] = (encryptedObject)
-                                }
-                            } else {
-                                combineRealm.mainContactsItems.add(encryptedObject)
-                            }
-                            /*combine.financialItems.add( decryptedFinancial )
-                            val encryptedCombine = encryptCombine(combine)*/
-                            AppLogger.d("MAINCONTACTS ", "Combine mainContact " + encryptedObject.accountName + " " +
-                            encryptedObject.institutionName + " " +encryptedObject.accountType)
-                            realm.insertOrUpdate(combineRealm)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    super.onPostExecute(result)
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                        context.hideProgressDialog()
-                    } else {
-                        categoryView.savedToRealm(mCombine!!)
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private fun saveToCombineContact(context: Context, mainContacts: MainContacts?) {
+        var isSaveComplete = false
+        object : AsyncTask<Void, Void, Unit>() {
+
+            override fun doInBackground(vararg p0: Void?) {
+
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        AppLogger.d("saveDocument", "Combine Id " + mainContacts!!.id)
+                        var combineRealm = realm!!.where(CombineContacts::class.java).equalTo("id", mainContacts.id).findFirst()
+                        realm.beginTransaction()
+                        if (combineRealm == null) {
+                            combineRealm = realm.createObject(CombineContacts::class.java, mainContacts.id)
+                        }
+                        val encryptedObject = encryptMainContacts(decryptedMainContacts!!)
+                        if (combineRealm!!.mainContactsItems.contains(encryptedObject)) {
+                            val index = combineRealm.mainContactsItems.indexOf(encryptedObject)
+                            if (index != -1) {
+                                combineRealm.mainContactsItems[index] = (encryptedObject)
+                            }
+                        } else {
+                            combineRealm.mainContactsItems.add(encryptedObject)
+                        }
+                        /*combine.financialItems.add( decryptedFinancial )
+                        val encryptedCombine = encryptCombine(combine)*/
+                        AppLogger.d("MAINCONTACTS ", "Combine mainContact " + encryptedObject.accountName + " " +
+                                encryptedObject.institutionName + " " +encryptedObject.accountType)
+                        realm.insertOrUpdate(combineRealm)
+                        realm.commitTransaction()
+                    }
+                })
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                if (isSaveComplete) {
+                    isSaveComplete = true
+                    context.hideProgressDialog()
+                } else {
+                    categoryView.savedToRealm(mCombine!!)
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
 }

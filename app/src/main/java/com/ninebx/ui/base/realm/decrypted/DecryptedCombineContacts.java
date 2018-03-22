@@ -15,17 +15,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineContacts implements Parcelable {
 
-    public static final Creator<DecryptedCombineContacts> CREATOR = new Creator<DecryptedCombineContacts>() {
-        @Override
-        public DecryptedCombineContacts createFromParcel(Parcel in) {
-            return new DecryptedCombineContacts(in);
-        }
-
-        @Override
-        public DecryptedCombineContacts[] newArray(int size) {
-            return new DecryptedCombineContacts[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -36,20 +25,6 @@ public class DecryptedCombineContacts implements Parcelable {
     private ArrayList<DecryptedMainContacts> mainContactsItems = new ArrayList<>();
     @Required
     private ArrayList<DecryptedContactsList> listItems = new ArrayList<>();
-
-    public DecryptedCombineContacts(long id, ArrayList<DecryptedContacts> contactsItems, ArrayList<DecryptedMainContacts> mainContactsItems, ArrayList<DecryptedContactsList> listItems) {
-        this.id = id;
-        this.contactsItems = contactsItems;
-        this.mainContactsItems = mainContactsItems;
-        this.listItems = listItems;
-    }
-
-    public DecryptedCombineContacts() {
-    }
-
-    protected DecryptedCombineContacts(Parcel in) {
-        id = in.readInt();
-    }
 
     public long getId() {
         return id;
@@ -81,16 +56,6 @@ public class DecryptedCombineContacts implements Parcelable {
 
     public void setListItems(ArrayList<DecryptedContactsList> listItems) {
         this.listItems = listItems;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
     }
 
 
@@ -128,4 +93,41 @@ public class DecryptedCombineContacts implements Parcelable {
                 ", listItems=" + listItems +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.contactsItems);
+        dest.writeTypedList(this.mainContactsItems);
+        dest.writeTypedList(this.listItems);
+    }
+
+    public DecryptedCombineContacts() {
+    }
+
+    protected DecryptedCombineContacts(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.contactsItems = in.createTypedArrayList(DecryptedContacts.CREATOR);
+        this.mainContactsItems = in.createTypedArrayList(DecryptedMainContacts.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedContactsList.CREATOR);
+    }
+
+    public static final Creator<DecryptedCombineContacts> CREATOR = new Creator<DecryptedCombineContacts>() {
+        @Override
+        public DecryptedCombineContacts createFromParcel(Parcel source) {
+            return new DecryptedCombineContacts(source);
+        }
+
+        @Override
+        public DecryptedCombineContacts[] newArray(int size) {
+            return new DecryptedCombineContacts[size];
+        }
+    };
 }

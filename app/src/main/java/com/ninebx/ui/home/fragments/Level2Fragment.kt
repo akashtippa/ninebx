@@ -25,7 +25,6 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineContacts
 import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
-import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.home.ContainerActivity
@@ -155,7 +154,6 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     }
 
     private lateinit var searchHelper: SearchHelper
-    val bundle = Bundle()
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -174,6 +172,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         layoutAddList.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
+            val bundle = Bundle()
             bundle.putString("categoryName", categoryName)
             bundle.putString("categoryId", categoryID)
 
