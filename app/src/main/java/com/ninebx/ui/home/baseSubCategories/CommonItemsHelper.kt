@@ -189,6 +189,7 @@ class CommonItemsHelper(var category_name: String,
             AppLogger.d("saveDocument", "Document Id " + decryptedMainContacts!!.id)
             AppLogger.d("saveDocument", "Document : " + decryptedMainContacts!!)
 
+
             var mainContacts: MainContacts?= null
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
