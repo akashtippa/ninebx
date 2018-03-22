@@ -28,6 +28,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
 import com.ninebx.ui.home.adapter.MainContactsAdapter
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -163,7 +164,11 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
 
         toolbarTitle.text = categoryName
-        ivHome.setOnClickListener { activity!!.onBackPressed() }
+        ivHome.setOnClickListener {
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
+        }
         ivBack.setOnClickListener {  activity!!.onBackPressed()  }
 
         layoutAddList.setOnClickListener {

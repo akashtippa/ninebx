@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseSubCategories
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
@@ -20,6 +21,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level3_category.*
 
@@ -515,7 +517,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         ivBack.setOnClickListener {
             activity!!.finish()
         }
-
+        ivHome.setOnClickListener {
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
+        }
         setTitle()
 
         //setCamera(boxValue)

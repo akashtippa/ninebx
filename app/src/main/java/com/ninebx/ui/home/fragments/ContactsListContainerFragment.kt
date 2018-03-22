@@ -24,6 +24,7 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedContacts
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.IContactsAdded
 import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.utility.*
@@ -156,11 +157,13 @@ class ContactsListContainerFragment() : FragmentBackHelper(), IContactsAdded {
 
 
         ivHome.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.callHomeFragment()
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
         }
 
         ivBackContactView.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.onBackPressed()
+            activity!!.onBackPressed()
         }
 
         layoutAddList.setOnClickListener {
