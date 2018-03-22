@@ -159,6 +159,8 @@ class MemberPresenter(private val memberView: MemberView, private val adminUser:
 
     private fun setPermissionsForCategory(updateMember: Member?, endPoint: String) {
 
+        if( mCurrentUser == null ) return
+
         val permissionManager = adminUser.permissionManager
         // Create request
         val condition = UserCondition.userId(mCurrentUser!!.identity)

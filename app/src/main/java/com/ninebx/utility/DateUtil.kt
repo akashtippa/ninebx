@@ -20,6 +20,9 @@ fun getDateMonthYearFormat(date: Date): String {
     return SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(date)
 }
 
+fun getTimeFormat(date: Date): String {
+    return SimpleDateFormat("hh:mm", Locale.getDefault()).format(date)
+}
 fun parseDateForMemory(date: Date): String {
     return SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date)
 }

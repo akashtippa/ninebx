@@ -84,7 +84,7 @@ class PersonalHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on license", decryptedDriversLicense!!.nameOnLicense, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDriversLicense!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDriversLicense!!.issuingCountry, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Issuing state", decryptedDriversLicense!!.issuingState, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("License number", decryptedDriversLicense!!.licenseNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Date issued", decryptedDriversLicense!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
@@ -147,7 +147,7 @@ class PersonalHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on ID", decryptedTAX_ID!!.taxIdName, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedTAX_ID!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedTAX_ID!!.issuingCountry, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Tax ID number", decryptedTAX_ID!!.taxIdNumber, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
@@ -169,7 +169,7 @@ class PersonalHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on ID", decryptedOtherGovernment!!.nameOnId, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedOtherGovernment!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedOtherGovernment!!.issuingCountry, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Issuing state", decryptedOtherGovernment!!.issuingState, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("ID number",  decryptedOtherGovernment!!.idNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Date issued", decryptedOtherGovernment!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
@@ -234,9 +234,9 @@ class PersonalHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Details"
         category.subCategories.add(Level2SubCategory("Name on certificate", decryptedCertificate!!.nameOnCertificate, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Gender", decryptedCertificate!!.gender, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Gender", decryptedCertificate!!.gender, Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Date of birth", decryptedCertificate!!.dateOfBirth, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Time of birth", decryptedCertificate!!.timeOfBirth, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Time of birth", decryptedCertificate!!.timeOfBirth, Constants.KEYBOARD_TIMEPICKER,  Constants.LEVEL2_TIMEPICKER))
         category.subCategories.add(Level2SubCategory("Place of birth", decryptedCertificate!!.placeOfBirth, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 

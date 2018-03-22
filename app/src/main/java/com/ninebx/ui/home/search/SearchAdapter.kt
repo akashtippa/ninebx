@@ -45,7 +45,8 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
 
     override fun onBindViewHolder(holder: SearchAdapter.ViewHolder, position: Int) {
         holder.textView.text = searchItems[position].itemName
-        if( mode == SEARCH_EDIT && searchItems[position].subHeader.isEmpty() ) {
+        if( mode == SEARCH_EDIT )
+        if(  searchItems[position].subHeader.isEmpty() ) {
             holder.txtSubHeader!!.hide()
         }
         else {

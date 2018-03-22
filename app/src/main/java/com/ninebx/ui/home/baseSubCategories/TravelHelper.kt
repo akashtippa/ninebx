@@ -369,7 +369,7 @@ class TravelHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Passport Details"
         category.subCategories.add(Level2SubCategory("Name on passport", decryptedDocuments!!.nameOnPassport, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Passport number", decryptedDocuments!!.passportNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Date issued", decryptedDocuments!!.dateIssued, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
@@ -401,7 +401,7 @@ class TravelHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Visa Details"
         category.subCategories.add(Level2SubCategory("Name on visa", decryptedDocuments!!.nameOnVisa, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Visa type", decryptedDocuments!!.visaType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Visa number", decryptedDocuments!!.visaNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
@@ -434,7 +434,7 @@ class TravelHelper(var category_name : String,
         var category = Level2Category(category_id)
         category.title = "Travel Document Details"
         category.subCategories.add(Level2SubCategory("Name on travel document", decryptedDocuments!!.nameOnTravelDocument, "", Constants.LEVEL2_SPINNER))
-        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Issuing country", decryptedDocuments!!.issuingCountry, "", Constants.LEVEL2_LOCATION))
         category.subCategories.add(Level2SubCategory("Travel document type", decryptedDocuments!!.travelDocumentType, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Travel document number", decryptedDocuments!!.travelDocumentNumber, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Place issued", decryptedDocuments!!.placeIssued, "", Constants.LEVEL2_NORMAL))
@@ -550,9 +550,9 @@ class TravelHelper(var category_name : String,
             "Description" -> decryptedVacations!!.vac_description = level2Category.titleValue
             "Start date" -> decryptedVacations!!.startDate = level2Category.titleValue
             "End date" -> decryptedVacations!!.endDate = level2Category.titleValue
-            "Places to visit/consider 1" -> decryptedVacations!!.placesToVisit_1 = level2Category.titleValue
-            "Places to visit/consider 2" -> decryptedVacations!!.placesToVisit_2 = level2Category.titleValue
-            "Places to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
+            "Plans to visit/consider 1" -> decryptedVacations!!.placesToVisit_1 = level2Category.titleValue
+            "Plans to visit/consider 2" -> decryptedVacations!!.placesToVisit_2 = level2Category.titleValue
+            "Plans to visit/consider 3" -> decryptedVacations!!.placesToVisit_3 = level2Category.titleValue
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedVacations!!.notes = level2Category.titleValue
