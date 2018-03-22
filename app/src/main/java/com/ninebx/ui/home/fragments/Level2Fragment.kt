@@ -245,18 +245,9 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         AppLogger.d("searchItem", " " + searchItem.toString())
     }
 
-    private fun fetchTheContactListFromRealm() {
-        var contactList: ArrayList<Contacts>? = ArrayList()
-        contactList = arguments!!.getParcelableArrayList<Contacts>(Constants.REALM_CONTACTS)
-        contacts!!.addAll(contactList!!)
-//      setContactsList()
-    }
-
     override fun onBackPressed(): Boolean {
-        NineBxApplication.instance.activityInstance!!.hideQuickAdd()
-        NineBxApplication.instance.activityInstance!!.showBottomView()
-
-        return super.onBackPressed()
+        activity!!.onBackPressed()
+        return true
     }
 
     // Checking The Permission is Enabled Or Not

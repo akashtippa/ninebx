@@ -199,7 +199,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     lateinit var rvSubCategory: RecyclerView
     var categoryView: LinearLayout ?= null
     private fun inflateLayout(categories: ArrayList<Category>) {
-
+        layoutCategory.removeAllViews()
         val inflater = LayoutInflater.from(context)
 
         for (category in categories) {

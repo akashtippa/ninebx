@@ -178,7 +178,9 @@ class SearchPresenter {
             }
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
-                mDecryptedCombineContacts.mainContactsItems = filterDuplicates(mDecryptedCombineContacts.mainContactsItems!!)
+                val items = filterDuplicates(mDecryptedCombineContacts.mainContactsItems!!)
+                mDecryptedCombineContacts.mainContactsItems.clear()
+                mDecryptedCombineContacts.mainContactsItems.addAll(items)
                 searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)

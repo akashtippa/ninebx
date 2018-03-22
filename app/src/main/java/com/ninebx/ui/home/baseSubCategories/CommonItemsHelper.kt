@@ -199,19 +199,14 @@ class CommonItemsHelper(var category_name: String,
                             realm.insertOrUpdate(mainContacts!!)
                             AppLogger.d("CombineMainContacts ", "Inserted ")
                             realm.commitTransaction()
-                            isSaveComplete = true
                         }
                     })
                 }
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                        //saveToCombineContact(context, mainContacts)
-                    } else {
-                        categoryView.savedToRealm(mCombine!!)
-                    }
+                    context.hideProgressDialog()
+                    categoryView.savedToRealm(mCombine!!)
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
