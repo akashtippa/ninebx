@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hide
+import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.home.baseCategories.Level1Fragment
 import com.ninebx.utility.NineBxPreferences
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_updated.*
 
 /***
@@ -66,7 +67,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
         txtWellness.setOnClickListener(this)
         txtMemories.setOnClickListener(this)
         txtShopping.setOnClickListener(this)
+        layoutQuickAdd.setOnClickListener{ (activity as HomeActivity).startCameraIntent() }
+        hideShowQuickAdd()
     }
+
+    fun hideShowQuickAdd() {
+        if( layoutQuickAdd != null && (activity as HomeActivity).areImagesPresent() ) layoutQuickAdd.hide() else layoutQuickAdd.show()
+    }
+
 
     private fun callBottomViewFragment(option: Int) {
         val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()

@@ -22,4 +22,5 @@ interface HomeView : BaseView {
     fun onCombinePersonalFetched(mDecryptCombinePersonal: DecryptedCombinePersonal)
     fun onCombineWellnessFetched(mDecryptCombineWellness: DecryptedCombineWellness)
     fun onCombineEducationFetched(mDecryptCombineEducation: DecryptedCombineEducation)
+    fun startCameraIntent()
 }
