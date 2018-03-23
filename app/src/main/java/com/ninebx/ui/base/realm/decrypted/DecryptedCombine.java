@@ -190,10 +190,21 @@ public class DecryptedCombine implements Parcelable {
         return count;
     }
 
+    public ArrayList<OptionItem> getPropertyList() {
+        ArrayList<OptionItem> ids = new ArrayList<>();
+        for (DecryptedProperty selectedItem : propertyItems) {
+            OptionItem optionItem = new OptionItem( selectedItem.getId(), selectedItem.getPropertyName(), "");
+            if (!ids.contains(optionItem)) {
+                ids.add(optionItem);
+            }
+        }
+        return ids;
+    }
+
     public ArrayList<OptionItem> getAutoList() {
         ArrayList<OptionItem> ids = new ArrayList<>();
         for (DecryptedVehicle selectedItem : vehicleItems) {
-            OptionItem optionItem = new OptionItem( selectedItem.getId(), selectedItem.getVehicleName());
+            OptionItem optionItem = new OptionItem( selectedItem.getId(), selectedItem.getVehicleName(), "");
             if (!ids.contains(optionItem)) {
                 ids.add(optionItem);
             }

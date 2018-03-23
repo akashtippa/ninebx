@@ -3,10 +3,17 @@ package com.ninebx.utility
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.support.v7.app.AlertDialog
+import android.view.LayoutInflater
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import com.ninebx.NineBxApplication
+import com.ninebx.R
 import com.ninebx.ui.base.realm.CalendarEvents
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Alok on 16/01/18.
@@ -105,6 +112,32 @@ fun getTimeFromPicker(context: Context, calendar: Calendar, dateTimeSelectionLis
             calendar.get(Calendar.MINUTE), false)
 
     timePickerDialog.show()
+
+}
+
+interface YearSelectionListener {
+    fun onYearSelected(selectedYear : String)
+}
+
+fun getYearFromPicker(context: Context, minYear : Int, maxYear : Int, dateTimeSelectionListener: YearSelectionListener) {
+
+    val yearsList = ArrayList<String>()
+    var popupWindow : AlertDialog ?= null
+    for( year in minYear..maxYear ) {
+        yearsList.add(year.toString())
+    }
+    yearsList.reverse()
+    val popupView = LayoutInflater.from(context).inflate(R.layout.popup_window_list_layout, null)
+
+    val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
+    val arrayAdapter = ArrayAdapter(context, R.layout.txt_usd, yearsList)
+    optionsListView.adapter = arrayAdapter
+    optionsListView.onItemClickListener = AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
+        dateTimeSelectionListener.onYearSelected(yearsList[p2])
+        popupWindow!!.dismiss()
+    }
+    popupWindow = AlertDialog.Builder(context).setView(popupView).create()
+    popupWindow.show()
 
 }
 
