@@ -18,17 +18,7 @@ import io.realm.annotations.Required;
  */
 
 public class DecryptedWork implements Parcelable {
-    public static final Creator<DecryptedWork> CREATOR = new Creator<DecryptedWork>() {
-        @Override
-        public DecryptedWork createFromParcel(Parcel in) {
-            return new DecryptedWork(in);
-        }
 
-        @Override
-        public DecryptedWork[] newArray(int size) {
-            return new DecryptedWork[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -70,29 +60,6 @@ public class DecryptedWork implements Parcelable {
     @Required
     private List<String> photosId = new ArrayList<>();
 
-    protected DecryptedWork(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        classType = in.readString();
-        companyName = in.readString();
-        position = in.readString();
-        name = in.readString();
-        location = in.readString();
-        from = in.readString();
-        to = in.readString();
-        currentWork = in.readString();
-        byte tmpIsCurrent = in.readByte();
-        isCurrent = tmpIsCurrent == 0 ? null : tmpIsCurrent == 1;
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-        photosId = in.createStringArrayList();
-    }
-
     public DecryptedWork() {
     }
 
@@ -116,33 +83,6 @@ public class DecryptedWork implements Parcelable {
         this.createdUser = createdUser;
         this.backingImages = backingImages;
         this.photosId = photosId;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(companyName);
-        dest.writeString(position);
-        dest.writeString(name);
-        dest.writeString(location);
-        dest.writeString(from);
-        dest.writeString(to);
-        dest.writeString(currentWork);
-        dest.writeByte((byte) (isCurrent == null ? 0 : isCurrent ? 1 : 2));
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-        dest.writeStringList(photosId);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public List<String> getPhotosId() {
@@ -329,4 +269,70 @@ public class DecryptedWork implements Parcelable {
                 ", photosId=" + photosId +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.companyName);
+        dest.writeString(this.position);
+        dest.writeString(this.name);
+        dest.writeString(this.location);
+        dest.writeString(this.from);
+        dest.writeString(this.to);
+        dest.writeString(this.currentWork);
+        dest.writeValue(this.isCurrent);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+    }
+
+    protected DecryptedWork(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.companyName = in.readString();
+        this.position = in.readString();
+        this.name = in.readString();
+        this.location = in.readString();
+        this.from = in.readString();
+        this.to = in.readString();
+        this.currentWork = in.readString();
+        this.isCurrent = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+    }
+
+    public static final Creator<DecryptedWork> CREATOR = new Creator<DecryptedWork>() {
+        @Override
+        public DecryptedWork createFromParcel(Parcel source) {
+            return new DecryptedWork(source);
+        }
+
+        @Override
+        public DecryptedWork[] newArray(int size) {
+            return new DecryptedWork[size];
+        }
+    };
 }

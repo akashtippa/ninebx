@@ -3,22 +3,16 @@ package com.ninebx.ui.home.baseSubCategories
 import android.annotation.SuppressLint
 import android.content.Context
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
 
-import com.ninebx.ui.base.realm.home.shopping.CombineShopping
-import com.ninebx.ui.base.realm.home.travel.CombineTravel
-import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
-import io.realm.Realm
-import io.realm.RealmResults
 import java.text.SimpleDateFormat
 
 import java.util.*
@@ -69,27 +63,33 @@ class Level3CategoryHelper(
                 personalHelper = PersonalHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 personalHelper!!.initialize()
                 personalHelper!!.getFormForCategory()
+                searchByOthers()
             }
 
             R.string.wellness -> {
                 wellnessHelper = WellnessHelper(category_name,categoryID,classType,selectedDocument,categoryView)
                 wellnessHelper!!.initialize()
                 wellnessHelper!!.getFormForCategory()
+                searchByOthers()
             }
             R.string.shopping -> {
                 shoppingHelper = ShoppingHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 shoppingHelper!!.initialize()
                 shoppingHelper!!.getFormForCategory()
+                searchByOthers()
             }
             R.string.travel -> {
                 travelHelper = TravelHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 travelHelper!!.initialize()
                 travelHelper!!.getFormForCategory()
+                searchByOthers()
+                searchByOthers()
             }
             R.string.education_work ->{
                 educationAndWorkHelper = EducationAndWorkHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 educationAndWorkHelper!!.initialize()
                 educationAndWorkHelper!!.getFormForCategory()
+                searchByOthers()
             }
             else -> {
                 searchByOthers()
@@ -98,7 +98,7 @@ class Level3CategoryHelper(
     }
 
     private fun setupCommonHelper() {
-        commonItemHelper = CommonItemsHelper(category_name, categoryID, classType, selectedDocument, categoryView)
+        commonItemHelper = CommonItemsHelper(category_name, categoryID, classType, selectedDocument, categoryView, categoryInt)
         commonItemHelper!!.initialize()
     }
 
@@ -107,16 +107,7 @@ class Level3CategoryHelper(
 
         // Common View
             "Services/Other Accounts" -> {
-                when(categoryInt) {
-                    R.string.contacts -> {
-                        commonItemHelper!!.getFormForCategory()
-                    }
-                    else -> {
-                        getServicesOthersAccounts()
-                    }
-                }
-
-
+                commonItemHelper!!.getFormForCategory()
             }
             "Other Attachments" -> {
                 getOtherAttachments()
@@ -455,15 +446,7 @@ class Level3CategoryHelper(
 
             // Common View
                 "Services/Other Accounts" -> {
-                    when(categoryInt) {
-                        R.string.contacts -> {
-                            commonItemHelper!!.setValue(level2Category)
-                        }
-                        else -> {
-                            getServicesOthersAccounts()
-                        }
-                    }
-
+                    commonItemHelper!!.setValue(level2Category)
                 }
                 "Other Attachments" -> {
                     getOtherAttachments()

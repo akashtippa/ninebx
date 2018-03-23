@@ -22,14 +22,24 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.SearchItemClickListener
-import com.ninebx.ui.base.realm.decrypted.DecryptedCombineContacts
-import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
+import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
+import com.ninebx.ui.base.realm.home.education.Education
+import com.ninebx.ui.base.realm.home.interests.Interests
+import com.ninebx.ui.base.realm.home.memories.MainMemories
+import com.ninebx.ui.base.realm.home.shopping.Shopping
+import com.ninebx.ui.base.realm.home.travel.Travel
+import com.ninebx.ui.base.realm.home.wellness.Wellness
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.account.interfaces.EducationItemsAdded
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
+import com.ninebx.ui.home.account.interfaces.PersonalItemsAdded
+import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
+import com.ninebx.ui.home.adapter.EducationItemsAdapter
 import com.ninebx.ui.home.adapter.MainContactsAdapter
+import com.ninebx.ui.home.adapter.TravelItemsAdapter
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -54,15 +64,16 @@ import java.util.concurrent.atomic.AtomicBoolean
 /***
  * Created by TechnoBlogger on 24/01/18.
  */
-class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection, MainContactsAdded {
+class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection,
+        MainContactsAdded, TravelItemsAdded, EducationItemsAdded, PersonalItemsAdded {
+
+    override fun contactsDeleted(contacts: Parcelable) {
+        showDialogToDelete(contacts )
+    }
 
     override fun onDocumentRemoved(combineParcelable: Parcelable) {
         combinedItems = combineParcelable
         loadItems()
-    }
-
-    override fun contactsEdited(contacts: DecryptedMainContacts) {
-        mListsAdapter!!.updateContact(contacts)
     }
 
     override fun contactsClicked(contacts: Parcelable, isEditable: Boolean) {
@@ -72,7 +83,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
         val action = if(isEditable) "edit" else "add"
         bundle.putString("action", action)
-        bundle.putString("classType", DecryptedMainContacts::class.java.simpleName)
+        val classType = getClassType()
+        bundle.putString("classType", classType)
         bundle.putParcelable("selectedDocument", contacts)
         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
@@ -81,21 +93,80 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         startActivityForResult(intent, LEVEL_3)
     }
 
-    override fun contactsDeleted(contacts: DecryptedMainContacts) {
-        showDialogToDelete(contacts)
+    private fun getClassType(): String {
+        var classType = ""
+        classType = when(categoryInt) {
+            R.string.home_amp_money -> { "" }
+            R.string.travel -> { DecryptedTravel::class.java.simpleName }
+            R.string.contacts -> { DecryptedMainContacts::class.java.simpleName }
+            R.string.education -> { DecryptedEducation::class.java.simpleName }
+            R.string.interests -> { DecryptedInterests::class.java.simpleName }
+            R.string.wellness -> { DecryptedWellness::class.java.simpleName }
+            R.string.memories -> { DecryptedMainMemories::class.java.simpleName }
+            R.string.shopping -> { DecryptedShopping::class.java.simpleName }
+            else -> { "" }
+        }
+        return classType
     }
 
-    fun deleteContact(contact: DecryptedMainContacts) {
+    fun deleteContact(contact: Parcelable) {
+        /*when(categoryInt) {
+            R.string.home_amp_money -> { contact as DecryptedCombine }
+            R.string.travel -> { contact as DecryptedTravel}
+            R.string.contacts -> { contact as DecryptedMainContacts }
+            R.string.education -> { contact as DecryptedEducation }
+            R.string.interests -> { contact as DecryptedInterests }
+            R.string.wellness -> { contact as DecryptedWellness }
+            R.string.memories -> { contact as DecryptedMainMemories }
+            R.string.shopping -> { contact as DecryptedShopping }
+            else -> { contact as DecryptedContacts }
+        }*/
         if(contactsRealm != null) {
+            contactsRealm!!.refresh()
             contactsRealm!!.beginTransaction()
-            contactsRealm!!.where(MainContacts::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+            when (categoryInt) {
+                R.string.home_amp_money -> {
+
+                }
+                R.string.travel -> {
+                    contact as DecryptedTravel
+                    contactsRealm!!.where(Travel::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mTravelItemsAdapter!!.deleteContact(contact)
+                }
+                R.string.contacts -> {
+                    contact as DecryptedMainContacts
+                    contactsRealm!!.where(MainContacts::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mContactsAdapter!!.deleteContact(contact)
+                }
+                R.string.education_work -> {
+                    contact as DecryptedEducation
+                    contactsRealm!!.where(Education::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mEducationItemsAdapter!!.deleteContact(contact)
+                }
+                R.string.interests -> {
+                    contact as DecryptedInterests
+                    contactsRealm!!.where(Interests::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                }
+                R.string.wellness -> {
+                    contact as DecryptedWellness
+                    contactsRealm!!.where(Wellness::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                }
+                R.string.memories -> {
+                    contact as DecryptedMainMemories
+                    contactsRealm!!.where(MainMemories::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                }
+                R.string.shopping -> {
+                    contact as DecryptedShopping
+                    contactsRealm!!.where(Shopping::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                }
+            }
             contactsRealm!!.commitTransaction()
             contactsRealm!!.refresh()
-            mListsAdapter!!.deleteContact(contact)
         }
     }
 
-    private fun showDialogToDelete(contact: DecryptedMainContacts) {
+    private fun showDialogToDelete(contact: Parcelable  ) {
+
         val alertDialogBuilder = AlertDialog.Builder(context!!)
         alertDialogBuilder.setTitle("Are you sure you want to delete the contact?")
         alertDialogBuilder.setPositiveButton(" Delete", object : DialogInterface.OnClickListener {
@@ -148,8 +219,6 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private val REQUEST_PERMISSION = 3
     private val PREFERENCE_PERMISSION_DENIED = "PREFERENCE_PERMISSION_DENIED"
 
-    private var contactList: RealmResults<Contacts>? = null
-    private var contacts: ArrayList<Contacts>? = ArrayList()
     private var combinedItems: Parcelable? = null
     private var contactsRealm: Realm? = null
 
@@ -205,7 +274,22 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             }
         }
         loadItems()
-        prepareRealmConnections(context, true, Constants.REALM_END_POINT_COMBINE_CONTACTS, object : Realm.Callback() {
+        when (categoryInt) {
+            R.string.home_amp_money -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE) }
+            R.string.travel -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_TRAVEL)}
+            R.string.contacts -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_CONTACTS) }
+            R.string.education_work -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_EDUCATION) }
+            R.string.personal -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_PERSONAL) }
+            R.string.interests -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_INTERESTS) }
+            R.string.wellness -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_WELLNESS) }
+            R.string.memories -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_MEMORIES) }
+            R.string.shopping -> { getRealmEndPoint(Constants.REALM_END_POINT_COMBINE_SHOPPING) }
+        }
+
+    }
+
+    private fun getRealmEndPoint(endPoint: String) {
+        prepareRealmConnections(context, true, endPoint, object : Realm.Callback() {
             override fun onSuccess(realm: Realm?) {
                 contactsRealm = realm
                 context!!.hideProgressDialog()
@@ -213,31 +297,70 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         })
     }
 
-    private var mListsAdapter: MainContactsAdapter ?= null
+    private var mContactsAdapter: MainContactsAdapter ?= null
+    private var mTravelItemsAdapter: TravelItemsAdapter ?= null
+    private var mEducationItemsAdapter: EducationItemsAdapter ?= null
     private fun loadItems() {
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
-        if(categoryInt == R.string.contacts) {
-            if(categoryName == "Services/Other Accounts") {
-                var list = combinedItems as DecryptedCombineContacts
-                mListsAdapter = MainContactsAdapter(list.mainContactsItems , this)
-                rvCommonList!!.adapter = mListsAdapter
-                mListsAdapter!!.notifyDataSetChanged()
-            } else {
-                searchHelper = SearchHelper()
-                searchHelper.setOnDocumentSelection(this)
-
-                val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
-                AppLogger.d("SearchItems" , " " + searchItems)
-                rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this )
+        if (categoryName == "Services/Other Accounts") {
+            when(categoryInt) {
+                R.string.contacts -> {
+                    val list = combinedItems as DecryptedCombineContacts
+                    mContactsAdapter = MainContactsAdapter(list.mainContactsItems, this)
+                    rvCommonList!!.adapter = mContactsAdapter
+                    mContactsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.travel -> {
+                    val list = combinedItems as DecryptedCombineTravel
+                    mTravelItemsAdapter = TravelItemsAdapter(list.travelItems, this)
+                    rvCommonList!!.adapter = mTravelItemsAdapter
+                    mTravelItemsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.education_work -> {
+                    val list = combinedItems as DecryptedCombineEducation
+                    mEducationItemsAdapter = EducationItemsAdapter(list.educationItems, this)
+                    rvCommonList!!.adapter = mEducationItemsAdapter
+                    mEducationItemsAdapter!!.notifyDataSetChanged()
+                }
+                /*R.string.personal -> {
+                    var list = combinedItems as DecryptedCombinePersonal
+                    mContactsAdapter = MainContactsAdapter(list.personalItems, this)
+                    rvCommonList!!.adapter = mContactsAdapter
+                    mContactsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.interests -> {
+                    var list = combinedItems as DecryptedCombineInterests
+                    mContactsAdapter = MainContactsAdapter(list.interestItems, this)
+                    rvCommonList!!.adapter = mContactsAdapter
+                    mContactsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.wellness -> {
+                    var list = combinedItems as DecryptedCombineWellness
+                    mContactsAdapter = MainContactsAdapter(list.wellnessItems, this)
+                    rvCommonList!!.adapter = mContactsAdapter
+                    mContactsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.memories -> {
+                    var list = combinedItems as DecryptedCombineMemories
+                    mContactsAdapter = MainContactsAdapter(list.mainMemoriesItems, this)
+                    rvCommonList!!.adapter = mContactsAdapter
+                    mContactsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.shopping -> {
+                    var list = combinedItems as DecryptedCombineShopping
+                    mContactsAdapter = MainContactsAdapter(list.shoppingItems, this)
+                    rvCommonList!!.adapter = mContactsAdapter
+                    mContactsAdapter!!.notifyDataSetChanged()
+                }
+                R.string.home_amp_money -> {}*/
             }
-
         } else {
             searchHelper = SearchHelper()
             searchHelper.setOnDocumentSelection(this)
 
-            val searchItems = searchHelper.getLevel3SearchItemsForCategory( categoryID, searchHelper.getSearchItems(combinedItems!!))
-            AppLogger.d("SearchItems" , " " + searchItems)
-            rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this )
+            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!))
+            AppLogger.d("SearchItems", " " + searchItems)
+            rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this)
         }
         rvCommonList!!.adapter.notifyDataSetChanged()
     }
@@ -434,4 +557,24 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         result.append(prefix)
         result.append(displayName + "\n")
     }
+
+    /*override fun contactsEdited(contacts: DecryptedTravel) {
+        mTravelItemsAdapter!!.updateContact(contacts)
+    }*/
+
+    /*override fun contactsDeleted(contacts: DecryptedTravel) {
+        showDialogToDelete(contacts )
+    }*/
+
+    /*override fun contactsEdited(contacts: DecryptedMainContacts) {
+        mContactsAdapter!!.updateContact(contacts)
+    }*/
+
+    /*override fun contactsDeleted(contacts: DecryptedMainContacts) {
+        showDialogToDelete(contacts )
+    }*/
+
+    /*override fun contactsEdited(contacts: DecryptedEducation) {
+        mEducationItemsAdapter!!.updateContact(contacts)
+    }*/
 }

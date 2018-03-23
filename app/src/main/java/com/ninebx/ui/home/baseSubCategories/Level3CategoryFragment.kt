@@ -485,6 +485,26 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
+            //EducationAndWork
+                is DecryptedEducation -> {
+                    val decryptedEducationItems = selectedDocument as DecryptedEducation
+                    createdValue.setText(decryptedEducationItems.created)
+                    etTitle.setText(decryptedEducationItems.institutionName)
+                    etTitleValue.setText(decryptedEducationItems.accountName)
+                    modifiedValue.setText(decryptedEducationItems.modified)
+                    modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
+                }
+            //Memories
+                is DecryptedMainMemories -> {
+                    val decryptedMainMemores = selectedDocument as DecryptedMainMemories
+                    createdValue.setText(decryptedMainMemores.created)
+                    etTitle.setText(decryptedMainMemores.institutionName)
+                    etTitleValue.setText(decryptedMainMemores.accountName)
+                    modifiedValue.setText(decryptedMainMemores.modified)
+                    modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
+                }
             }
             if( modifiedValue.text.equals(createdValue.text) ) {
                 modified.hide()

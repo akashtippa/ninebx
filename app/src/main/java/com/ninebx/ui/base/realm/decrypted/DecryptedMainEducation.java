@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedMainEducation implements Parcelable {
 
-    public static final Creator<DecryptedMainEducation> CREATOR = new Creator<DecryptedMainEducation>() {
-        @Override
-        public DecryptedMainEducation createFromParcel(Parcel in) {
-            return new DecryptedMainEducation(in);
-        }
-
-        @Override
-        public DecryptedMainEducation[] newArray(int size) {
-            return new DecryptedMainEducation[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -97,30 +86,6 @@ public class DecryptedMainEducation implements Parcelable {
         this.createdUser = createdUser;
         this.backingImages = backingImages;
         this.photosId = photosId;
-    }
-
-    protected DecryptedMainEducation(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        classType = in.readString();
-        institutionName = in.readString();
-        qualification = in.readString();
-        name = in.readString();
-        location = in.readString();
-        major = in.readString();
-        from = in.readString();
-        to = in.readString();
-        currentlyStudying = in.readString();
-        byte tmpIsCurrent = in.readByte();
-        isCurrent = tmpIsCurrent == 0 ? null : tmpIsCurrent == 1;
-        notes = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-        photosId = in.createStringArrayList();
     }
 
     public List<String> getPhotosId() {
@@ -292,34 +257,6 @@ public class DecryptedMainEducation implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(institutionName);
-        dest.writeString(qualification);
-        dest.writeString(name);
-        dest.writeString(location);
-        dest.writeString(major);
-        dest.writeString(from);
-        dest.writeString(to);
-        dest.writeString(currentlyStudying);
-        dest.writeByte((byte) (isCurrent == null ? 0 : isCurrent ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-        dest.writeStringList(photosId);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
     public String toString() {
         return "DecryptedMainEducation{" +
                 "id=" + id +
@@ -344,4 +281,72 @@ public class DecryptedMainEducation implements Parcelable {
                 ", photosId=" + photosId +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.institutionName);
+        dest.writeString(this.qualification);
+        dest.writeString(this.name);
+        dest.writeString(this.location);
+        dest.writeString(this.major);
+        dest.writeString(this.from);
+        dest.writeString(this.to);
+        dest.writeString(this.currentlyStudying);
+        dest.writeValue(this.isCurrent);
+        dest.writeString(this.notes);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+    }
+
+    protected DecryptedMainEducation(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.institutionName = in.readString();
+        this.qualification = in.readString();
+        this.name = in.readString();
+        this.location = in.readString();
+        this.major = in.readString();
+        this.from = in.readString();
+        this.to = in.readString();
+        this.currentlyStudying = in.readString();
+        this.isCurrent = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+    }
+
+    public static final Creator<DecryptedMainEducation> CREATOR = new Creator<DecryptedMainEducation>() {
+        @Override
+        public DecryptedMainEducation createFromParcel(Parcel source) {
+            return new DecryptedMainEducation(source);
+        }
+
+        @Override
+        public DecryptedMainEducation[] newArray(int size) {
+            return new DecryptedMainEducation[size];
+        }
+    };
 }
