@@ -119,13 +119,14 @@ interface YearSelectionListener {
     fun onYearSelected(selectedYear : String)
 }
 
-fun getYearFromPicker(context: Context, calendar: Calendar, dateTimeSelectionListener: YearSelectionListener) {
+fun getYearFromPicker(context: Context, minYear : Int, maxYear : Int, dateTimeSelectionListener: YearSelectionListener) {
 
     val yearsList = ArrayList<String>()
-    val maxYear = calendar.get(Calendar.YEAR) + 2
-    for( year in maxYear..1900 ) {
+    var popupWindow : AlertDialog ?= null
+    for( year in minYear..maxYear ) {
         yearsList.add(year.toString())
     }
+    yearsList.reverse()
     val popupView = LayoutInflater.from(context).inflate(R.layout.popup_window_list_layout, null)
 
     val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
@@ -133,8 +134,9 @@ fun getYearFromPicker(context: Context, calendar: Calendar, dateTimeSelectionLis
     optionsListView.adapter = arrayAdapter
     optionsListView.onItemClickListener = AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
         dateTimeSelectionListener.onYearSelected(yearsList[p2])
+        popupWindow!!.dismiss()
     }
-    val popupWindow = AlertDialog.Builder(context).setView(popupView).create()
+    popupWindow = AlertDialog.Builder(context).setView(popupView).create()
     popupWindow.show()
 
 }
