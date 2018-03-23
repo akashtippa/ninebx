@@ -207,11 +207,20 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.etSubHeader.setText(titleValue)
                 locationViewHolder.etSubHeader.addTextChangedListener(CustomTextWatcher(level2SubCategory))
                 locationViewHolder.etSubHeader.setOnClickListener{
-                    getYearFromPicker(_context, Calendar.getInstance(), object : YearSelectionListener {
-                        override fun onYearSelected(selectedYear: String) {
-                            locationViewHolder.etSubHeader.setText(selectedYear)
-                        }
-                    })
+                    if( level2SubCategory.title == "Tax year" ) {
+                        getYearFromPicker(_context, 2003, Calendar.getInstance().get(Calendar.YEAR), object : YearSelectionListener {
+                            override fun onYearSelected(selectedYear: String) {
+                                locationViewHolder.etSubHeader.setText(selectedYear)
+                            }
+                        })
+                    }
+                    else {
+                        getYearFromPicker(_context, 1900, Calendar.getInstance().get(Calendar.YEAR) + 2, object : YearSelectionListener {
+                            override fun onYearSelected(selectedYear: String) {
+                                locationViewHolder.etSubHeader.setText(selectedYear)
+                            }
+                        })
+                    }
                 }
             }
             Constants.LEVEL2_TIMEPICKER -> {
@@ -399,15 +408,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 if (keyBoardType == Constants.CONTACT_SPINNER) {
                     openContactList()
                 }
-                if( keyBoardType == Constants.KEYBOARD_YEAR_PICKER ) {
-                    getYearFromPicker(_context, Calendar.getInstance(), object : YearSelectionListener {
-                        override fun onYearSelected(selectedYear: String) {
-                            (spinnerUsers).setText(selectedYear)
-                            item.titleValue = selectedYear
-                            level2CategoryPresenter.setValueToDocument(item)
-                        }
-                    })
-                }
+
                 else {
                     showMemberPopup( spinnerUsers, membersList )
                 }
@@ -582,13 +583,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         }
                     })
                 }
-                else if( keyBoardType == Constants.KEYBOARD_YEAR_PICKER ) {
-                    getYearFromPicker(_context, Calendar.getInstance(), object : YearSelectionListener {
-                        override fun onYearSelected(selectedYear: String) {
-                            (etSubHeader).setText(selectedYear)
-                        }
-                    })
-                }
+
             }
         }
 
@@ -600,19 +595,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
             txtHeader.isEnabled = isEditMode
             etSubHeader.isEnabled = isEditMode
-            etSubHeader.setOnClickListener {
-                val position = adapterPosition
-                if( position != RecyclerView.NO_POSITION ) {
-                    val item = getItemAtPosition(position)
-                    if( item.inputType == Constants.KEYBOARD_YEAR_PICKER ) {
-                        getYearFromPicker(_context, Calendar.getInstance(), object : YearSelectionListener {
-                            override fun onYearSelected(selectedYear: String) {
-                                (etSubHeader).setText(selectedYear)
-                            }
-                        })
-                    }
-                }
-            }
+
             spinnerAccountType.isEnabled = isEditMode
             spinnerAccountType.setOnClickListener(this)
             // childView = level2NormalView
