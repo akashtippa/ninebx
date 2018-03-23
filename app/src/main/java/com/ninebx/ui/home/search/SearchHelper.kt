@@ -422,39 +422,64 @@ class SearchHelper() {
     private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "loyaltyPrograms" -> {
-                val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_SHOPPING, selectedDocument.id, encryptLoyaltyProgram(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineShopping.loyaltyProgramsItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "recentPurchase" -> {
-                val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_SHOPPING, selectedDocument.id, encryptRecentPurchase(selectedDocument)  )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineShopping.recentPurchaseItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "shopping" -> {
-                val selectedDocument = searchDecryptedCombineShopping.shoppingItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineShopping.shoppingItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_SHOPPING, selectedDocument.id, encryptShopping(selectedDocument)  )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineShopping.shoppingItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "clothingSize" -> {
-                val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_SHOPPING, selectedDocument.id, encryptClothingSizes(selectedDocument)  )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "shoppingList" -> {
-                val selectedDocument = searchDecryptedCombineShopping.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineShopping.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_SHOPPING, selectedDocument.id, encryptShoppingList(selectedDocument)  )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineShopping.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
         }
     }
@@ -492,25 +517,39 @@ class SearchHelper() {
     private fun switchMemoriesItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "mainMemory" -> {
-                val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems.removeAt(position)
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems.removeAt(position)
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_MEMORIES, selectedDocument.id, encryptMainMemories(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombineMemories.mainMemoriesItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "memoryTimeline" -> {
-                val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_MEMORIES, selectedDocument.id, encryptMemoryTimeLIne(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val  selectedDocument = searchDecryptCombineMemories.memoryTimelineItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "memorylist" -> {
-                val selectedDocument = searchDecryptCombineMemories.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineMemories.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_MEMORIES, selectedDocument.id, encryptMemoriesList(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombineMemories.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
             }
         }
     }
@@ -518,81 +557,136 @@ class SearchHelper() {
     private fun switchWellnessItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "checkups" -> {
-                val selectedDocument = searchDecryptedCombineWellness.checkupsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.checkupsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptCheckUps(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.checkupsItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "emergencyContacts" ->{
-                val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptEmergencyContacts(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.emergencyContactsItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "eyeglassPrescription" -> {
-                val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptEyeGlassPrescriptions(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.eyeglassPrescriptionsItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "healthcareProvider" -> {
-                val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptHealthCareProviders(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.healthcareProvidersItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "identification" -> {
-                val selectedDocument = searchDecryptedCombineWellness.identificationItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.identificationItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptIdentification(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.identificationItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "medicalCondition" -> {
-                val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptMedicalConditions(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.medicalConditionsItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "medicalHistory" -> {
-                val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptMedicalHistory(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.medicalHistoryItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "medications" -> {
-                val selectedDocument = searchDecryptedCombineWellness.medicationsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.medicationsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptMedications(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.medicationsItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "vitalNumbers" -> {
-                val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptVitalNumbers(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.vitalNumbersItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "wellness" -> {
-                val selectedDocument = searchDecryptedCombineWellness.wellnessItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.wellnessItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptWellness(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.wellnessItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "wellnessList" -> {
-                val selectedDocument = searchDecryptedCombineWellness.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineWellness.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_WELLNESS, selectedDocument.id, encryptWellnessList(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineWellness.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
         }
     }
@@ -600,19 +694,29 @@ class SearchHelper() {
     private fun switchInterestsItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "interests" -> {
-                val selectedDocument = searchDecryptedCombineInterests.interestItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineInterests.interestItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_INTERESTS, selectedDocument.id, encryptInterests(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineInterests.interestItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "interestsList" ->
             {
-                val selectedDocument = searchDecryptedCombineInterests.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineInterests.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_INTERESTS, selectedDocument.id, encryptInterestList(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombineInterests.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
         }
     }
@@ -620,53 +724,88 @@ class SearchHelper() {
     private fun switchPersonalItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "certificate" ->{
-                val selectedDocument = searchDecryptedCombinePersonal.certificateItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.certificateItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptCertificate(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.certificateItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "government" -> {
-                val selectedDocument = searchDecryptedCombinePersonal.governmentItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.governmentItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptGovernment(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.governmentItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "license" -> {
-                val selectedDocument = searchDecryptedCombinePersonal.licenseItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.licenseItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptLicense(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.licenseItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "personal" ->{
-                val selectedDocument = searchDecryptedCombinePersonal.personalItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.personalItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptPersonal(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.personalItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "social" -> {
-                val selectedDocument = searchDecryptedCombinePersonal.socialItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.socialItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptSocial(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.socialItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "taxID" -> {
-                val selectedDocument = searchDecryptedCombinePersonal.taxIDItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.taxIDItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptTaxID(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.taxIDItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "personalList" -> {
-                val selectedDocument = searchDecryptedCombinePersonal.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombinePersonal.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_PERSONAL, selectedDocument.id, encryptPersonalList(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptedCombinePersonal.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
         }
     }
@@ -674,32 +813,52 @@ class SearchHelper() {
     private fun switchEducationItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "education" -> {
-                val selectedDocument = searchDecryptCombineEducation.educationItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineEducation.educationItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_EDUCATION, selectedDocument.id, encryptEducation(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombineEducation.educationItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "mainEducation" -> {
-                val selectedDocument = searchDecryptCombineEducation.mainEducationItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineEducation.mainEducationItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_EDUCATION, selectedDocument.id, encryptMainEducation(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombineEducation.mainEducationItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "work" -> {
-                val selectedDocument = searchDecryptCombineEducation.workItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineEducation.workItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_EDUCATION, selectedDocument.id, encryptWork(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombineEducation.workItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "educationList" -> {
-                val selectedDocument = searchDecryptCombineEducation.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineEducation.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_EDUCATION, selectedDocument.id, encryptEducationList(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombineEducation.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
         }
     }
@@ -707,24 +866,33 @@ class SearchHelper() {
     private fun switchContactsItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "contacts" -> {
-                val selectedDocument = searchDecryptedCombineContacts.contactsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineContacts.contactsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_CONTACTS, selectedDocument.id, encryptContact(selectedDocument) )
+                    return
                 }
+                val selectedDocument = searchDecryptedCombineContacts.contactsItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "mainContacts" -> {
-                val selectedDocument = searchDecryptedCombineContacts.mainContactsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineContacts.mainContactsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_CONTACTS, selectedDocument.id, encryptMainContacts(selectedDocument) )
+                    return
                 }
+                val selectedDocument = searchDecryptedCombineContacts.mainContactsItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "contactList" -> {
-                val selectedDocument = searchDecryptedCombineContacts.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptedCombineContacts.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_CONTACTS, selectedDocument.id, encryptContactsList(selectedDocument) )
+                    return
                 }
+                val selectedDocument = searchDecryptedCombineContacts.listItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
@@ -733,39 +901,54 @@ class SearchHelper() {
     private fun switchTravelItems(position: Int, searchItem: Level3SearchItem) {
         when(searchItem.categoryName){
             "documents" -> {
-                val selectedDocument = searchDecryptCombineTravel.documentsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineTravel.documentsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_TRAVEL, selectedDocument.id, encryptDocuments(selectedDocument) )
+                    return
                 }
+                val selectedDocument = searchDecryptCombineTravel.documentsItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "loyalty" -> {
-                val selectedDocument = searchDecryptCombineTravel.loyaltyItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombineTravel.loyaltyItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_TRAVEL, selectedDocument.id, encryptLoyalty(selectedDocument) )
+                    return
                 }
+                val selectedDocument = searchDecryptCombineTravel.loyaltyItems[position]
                 goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "travel" -> {
-                val selectedItems = searchDecryptCombineTravel.travelItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedItems = searchDecryptCombineTravel.travelItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_TRAVEL, selectedItems.id, encryptTravel(selectedItems) )
+                    return
                 }
-                goToCategoryFragment( selectedItems, selectedItems::class.java.simpleName )
+                val selectedDocument = searchDecryptCombineTravel.travelItems[position]
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "vacation" -> {
-                val selectedItems = searchDecryptCombineTravel.vacationsItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedItems = searchDecryptCombineTravel.vacationsItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_TRAVEL, selectedItems.id, encryptVacations(selectedItems) )
+                    return
                 }
-                goToCategoryFragment( selectedItems, selectedItems::class.java.simpleName )
+                val selectedDocument = searchDecryptCombineTravel.vacationsItems[position]
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
             "travelList" -> {
-                val selectedItems = searchDecryptCombineTravel.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedItems = searchDecryptCombineTravel.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE_TRAVEL, selectedItems.id, encryptTravelList(selectedItems) )
+                    return
                 }
-                goToCategoryFragment( selectedItems, selectedItems::class.java.simpleName )
+                val selectedDocument = searchDecryptCombineTravel.listItems[position]
+                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
             }
         }
     }
@@ -774,60 +957,100 @@ class SearchHelper() {
 
         when( searchItem.categoryName ) {
             "finance" -> {
-                val selectedDocument = searchDecryptCombine.financialItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.financialItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptFinancial(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.financialItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "payment" -> {
-                val selectedDocument = searchDecryptCombine.paymentItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.paymentItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptPayment(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.paymentItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "asset" -> {
-                val selectedDocument = searchDecryptCombine.assetItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.assetItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptAsset(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.assetItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "insurance" -> {
-                val selectedDocument = searchDecryptCombine.insuranceItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.insuranceItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptInsurance(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.insuranceItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "tax" -> {
-                val selectedDocument = searchDecryptCombine.taxesItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.taxesItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptTaxes(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.taxesItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "vehicle" -> {
-                val selectedDocument = searchDecryptCombine.vehicleItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.vehicleItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptVehicle(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.vehicleItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "property" -> {
-                val selectedDocument = searchDecryptCombine.propertyItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.propertyItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptProperty(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.propertyItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
             "home" -> {
-                val selectedDocument = searchDecryptCombine.listItems.removeAt( position )
+
                 if( mAction == "delete" ) {
+                    val selectedDocument = searchDecryptCombine.listItems.removeAt( position )
                     deleteDocumentFromRealm( Constants.REALM_END_POINT_COMBINE, selectedDocument.id, encryptHomeList(selectedDocument) )
                 }
-                goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                else {
+                    val selectedDocument = searchDecryptCombine.listItems[position]
+                    goToCategoryFragment( selectedDocument, selectedDocument::class.java.simpleName )
+                }
+
             }
         }
     }

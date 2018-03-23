@@ -988,5 +988,8 @@
     <string name="recent_search">RECENT SEARCHES</string>
     <string name="clear">clear</string>
     <string name="select_category">Select Category</string>
+    <string name="purchase_date">Purchase date</string>
+    <string name="lease_start_date">Lease start date</string>
+    <string name="lease_end_date">Lease end date</string>
 
 </resources>

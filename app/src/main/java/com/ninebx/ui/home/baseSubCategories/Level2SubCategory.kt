@@ -11,14 +11,24 @@ class Level2SubCategory(
         var titleValue: String = "",
         var inputType: String = "",
         var type: Int = 0,
-        var isValueSet: Boolean = false
+        var isValueSet: Boolean = false,
+        var isVisible: Boolean = true,
+        var isEnabled: Boolean = true,
+        var purchaseDate: String = "",
+        var leaseStartDate: String = "",
+        var leaseEndDate: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
             source.readString(),
             source.readInt(),
-            1 == source.readInt()
+            1 == source.readInt(),
+            1 == source.readInt(),
+            1 == source.readInt(),
+            source.readString(),
+            source.readString(),
+            source.readString()
     )
 
     override fun describeContents() = 0
@@ -29,6 +39,11 @@ class Level2SubCategory(
         writeString(inputType)
         writeInt(type)
         writeInt((if (isValueSet) 1 else 0))
+        writeInt((if (isVisible) 1 else 0))
+        writeInt((if (isEnabled) 1 else 0))
+        writeString(purchaseDate)
+        writeString(leaseStartDate)
+        writeString(leaseEndDate)
     }
 
     companion object {

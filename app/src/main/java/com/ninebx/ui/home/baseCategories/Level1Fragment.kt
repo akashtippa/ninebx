@@ -262,7 +262,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 override fun onItemClick(adapter: SubCategoryAdapter, mainCategory: Category, subCategory: SubCategory, action: String) {
                     categoryName = subCategory.title
                     categoryID = subCategory.subCategoryId
-
+                    val bundle = Bundle()
                     if( subCategory.formsCount == 0 )
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
                         if( !checkForAsset("Vehicles", categories) ) {
@@ -270,8 +270,14 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                             return
                         }
                     }
+
+                    if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
+                        val listItems = (combinedItems as DecryptedCombine).autoList
+                        bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
+                    }
+
                     if( action == "add_item" ) {
-                        val bundle = Bundle()
+
                         bundle.putString("categoryName", categoryName)
                         bundle.putString("categoryId", categoryID)
                         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
@@ -302,7 +308,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
                             else -> {
                                 //Move this to container
-                                val bundle = Bundle()
                                 bundle.putString("categoryName", categoryName)
                                 bundle.putString("categoryId", categoryID)
                                 bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)

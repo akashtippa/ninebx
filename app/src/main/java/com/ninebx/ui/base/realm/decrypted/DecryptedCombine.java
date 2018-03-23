@@ -3,6 +3,8 @@ package com.ninebx.ui.base.realm.decrypted;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.ninebx.ui.home.baseCategories.OptionItem;
+
 import java.util.ArrayList;
 
 import io.realm.RealmList;
@@ -186,6 +188,17 @@ public class DecryptedCombine implements Parcelable {
             }
         }
         return count;
+    }
+
+    public ArrayList<OptionItem> getAutoList() {
+        ArrayList<OptionItem> ids = new ArrayList<>();
+        for (DecryptedVehicle selectedItem : vehicleItems) {
+            OptionItem optionItem = new OptionItem( selectedItem.getId(), selectedItem.getVehicleName());
+            if (!ids.contains(optionItem)) {
+                ids.add(optionItem);
+            }
+        }
+        return ids;
     }
 
     public int getOtherCount(String selectionType) {

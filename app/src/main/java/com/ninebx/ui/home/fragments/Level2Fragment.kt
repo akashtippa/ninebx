@@ -40,6 +40,7 @@ import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
 import com.ninebx.ui.home.adapter.EducationItemsAdapter
 import com.ninebx.ui.home.adapter.MainContactsAdapter
 import com.ninebx.ui.home.adapter.TravelItemsAdapter
+import com.ninebx.ui.home.baseCategories.OptionItem
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -88,6 +89,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         bundle.putParcelable("selectedDocument", contacts)
         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
+        bundle.putParcelableArrayList(Constants.SUB_OPTIONS, optionsList)
         val intent = Intent( context, ContainerActivity::class.java)
         intent.putExtras(bundle)
         startActivityForResult(intent, LEVEL_3)
@@ -197,7 +199,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         .putExtra(Constants.COMBINE_ITEMS, combinedItems)
                         .putExtra("classType", classType)
                         .putExtra(Constants.FROM_CLASS, "Level2Fragment")
-                       , LEVEL_3)
+                        .putExtra(Constants.SUB_OPTIONS, optionsList)
+                , LEVEL_3)
     }
 
 
@@ -218,7 +221,9 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
 
     private val REQUEST_PERMISSION = 3
     private val PREFERENCE_PERMISSION_DENIED = "PREFERENCE_PERMISSION_DENIED"
-
+    private var contactList: RealmResults<Contacts>? = null
+    private var contacts: ArrayList<Contacts>? = ArrayList()
+    private var optionsList : ArrayList<OptionItem> ?= null
     private var combinedItems: Parcelable? = null
     private var contactsRealm: Realm? = null
 
@@ -239,6 +244,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         categoryName = arguments!!.getString("categoryName")
         categoryID = arguments!!.getString("categoryId")
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
+        if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
 
         toolbarTitle.text = categoryName
         ivHome.setOnClickListener {
@@ -254,6 +260,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             val bundle = Bundle()
             bundle.putString("categoryName", categoryName)
             bundle.putString("categoryId", categoryID)
+            bundle.putParcelableArrayList(Constants.SUB_OPTIONS, optionsList)
 
             if (categoryName == "Shared Contacts") {
                 checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
@@ -268,6 +275,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 bundle.putString("action", "add")
                 bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
                 bundle.putInt(Constants.CURRENT_BOX, categoryInt)
+
                 val intent = Intent( context, ContainerActivity::class.java)
                 intent.putExtras(bundle)
                 startActivityForResult(intent, LEVEL_3)

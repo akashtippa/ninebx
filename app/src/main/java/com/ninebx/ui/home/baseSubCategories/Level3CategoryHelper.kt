@@ -83,7 +83,6 @@ class Level3CategoryHelper(
                 travelHelper!!.initialize()
                 travelHelper!!.getFormForCategory()
                 searchByOthers()
-                searchByOthers()
             }
             R.string.education_work ->{
                 educationAndWorkHelper = EducationAndWorkHelper(category_name, categoryID, classType, selectedDocument, categoryView)

@@ -14,14 +14,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.*
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.baseCategories.OptionItem
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level3_category.*
 
@@ -46,7 +46,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     }
 
     override fun saveDocument(context: Context?) {
-        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim())
+        val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
+        mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle )
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
@@ -89,6 +90,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun inflateLayout(categories: ArrayList<Level2Category>) {
 
         etTitle.isEnabled = isEditMode
+        tvTitleValue.isEnabled = isEditMode
         etTitleValue.isEnabled = isEditMode
 
         layExpandable.removeAllViews()
@@ -510,9 +512,51 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 modified.hide()
                 modifiedValue.hide()
             }
+            tvTitleValue.text = etTitleValue.text.toString()
+            if( arguments!!.containsKey(Constants.SUB_OPTIONS)
+                    && arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS ) != null ) {
+                tvTitleValue.show()
+                etTitleValue.hide()
+                tvTitleValue.setOnClickListener {
+                    showDropDownForOptions( arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS))
+                }
+            }
+            else {
+                tvTitleValue.hide()
+                etTitleValue.show()
+            }
             toolbarTitle.text = etTitle.text.toString()
         }
 
+    }
+
+    private fun showDropDownForOptions(optionsList: java.util.ArrayList<OptionItem>?) {
+
+        if( optionsList!!.size == 0 ) {
+            return
+        }
+
+        val popupView = LayoutInflater.from(context).inflate(R.layout.popup_window_list_layout, null)
+        //popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(_context, R.color.white))
+
+        //popupWindow.contentView = popupView
+        //popupWindow.isOutsideTouchable = true
+        val optionsListView = popupView.findViewById<ListView>(R.id.optionsListView)
+        val arrayAdapter = ArrayAdapter(context, R.layout.txt_usd, optionsList)
+        optionsListView.adapter = arrayAdapter
+
+        val popupWindow = android.support.v7.app.AlertDialog.Builder(context!!).setView(popupView).create()
+
+        optionsListView.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                tvTitleValue.text = optionsList!![p2].itemName
+                popupWindow.dismiss()
+            }
+
+        }
+        popupWindow.show()
+
+        //PopupWindowCompat.showAsDropDown(popupWindow, optionEditText!!, optionEditText.x.toInt(), optionEditText.y.toInt(), Gravity.BOTTOM)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -563,7 +607,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             if( validate() ) {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
-                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), etTitleValue.text.toString().trim()  )
+                val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle )
             }
         }
         ivEdit.setOnClickListener {
@@ -998,6 +1043,18 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.hint = "Physician name"
                 if( selectedDocument == null ) toolbarTitle.text = "Add Visit"
             }
+        }
+
+        if( arguments!!.containsKey(Constants.SUB_OPTIONS) && arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS ) != null ) {
+            tvTitleValue.show()
+            etTitleValue.hide()
+            tvTitleValue.setOnClickListener {
+                showDropDownForOptions( arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS))
+            }
+        }
+        else {
+            tvTitleValue.hide()
+            etTitleValue.show()
         }
     }
 

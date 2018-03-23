@@ -53,7 +53,7 @@ public class DecryptedProperty implements Parcelable {
     @Required
     private String contacts = "";
     @Required
-    private Boolean currentlyRented = false;
+    private Boolean currentlyRented = true;
     @Required
     private String tenantName = "";
     @Required

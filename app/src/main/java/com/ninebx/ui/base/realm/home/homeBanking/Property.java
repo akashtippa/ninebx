@@ -75,7 +75,7 @@ public class Property extends RealmObject {
     @Required private String estimatedMarketValue = "";
     @Required private String contacts = "";
 
-    @Required private Boolean currentlyRented = false;
+    @Required private Boolean currentlyRented = true;
     @Required private String tenantName = "";
     @Required private String leaseStartDate = "";
     @Required private String leaseEndDate = "";
