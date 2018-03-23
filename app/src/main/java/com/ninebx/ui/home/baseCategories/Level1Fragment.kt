@@ -33,7 +33,6 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.ContainerActivity
-import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -42,8 +41,6 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_category.*
-import kotlinx.android.synthetic.main.layout_category_view.view.*
-
 /**
  * Created by Alok on 12/01/18.
  */

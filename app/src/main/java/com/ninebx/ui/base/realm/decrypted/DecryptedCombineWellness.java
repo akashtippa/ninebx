@@ -159,8 +159,13 @@ public class DecryptedCombineWellness implements Parcelable {
 
     public int getLists(String selectionType, Integer detailsId ) {
         int count = 0;
-        for (DecryptedWellnessList decryptedLicense : listItems) {
-            count += ( decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )  ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedWellnessList selectedItem : listItems) {
+            count += (selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detailsId )? 1 : 0;
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
@@ -175,8 +180,12 @@ public class DecryptedCombineWellness implements Parcelable {
 
     public int getServices(String selectionType) {
         int count = 0;
-        for (DecryptedWellness decryptedLicense : wellnessItems) {
-            count += decryptedLicense.getSelectionType().equals(selectionType) ? 1 : 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedWellness selectedItem : wellnessItems) {
+            if (!ids.contains(selectedItem.getId())) {
+                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                ids.add(selectedItem.getId());
+            }
         }
         return count;
     }
