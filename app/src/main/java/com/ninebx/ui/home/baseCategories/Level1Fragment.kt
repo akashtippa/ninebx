@@ -273,11 +273,11 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
                     when( categoryName ) {
                         "Maintenance", "Auto insurance" -> {
-                            val listItems = (combinedItems as DecryptedCombine).autoList
+                            val listItems = (combinedItems as DecryptedCombine).getAutoList("home_4001")
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
                         "Insurance" -> {
-                            val listItems = (combinedItems as DecryptedCombine).propertyList
+                            val listItems = (combinedItems as DecryptedCombine).getPropertyList("home_3003")
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
                         "Life insurance", "Health insurance" -> {
