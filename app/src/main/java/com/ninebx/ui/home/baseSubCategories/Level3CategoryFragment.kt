@@ -273,7 +273,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedIdentification -> {
                     val decryptedIdentification : DecryptedIdentification = selectedDocument as DecryptedIdentification
                     etTitle.setText(decryptedIdentification.name)
-                    etTitleValue.setText(decryptedIdentification.name)
+                    etTitleValue.setText("")
+                    etTitleValue.isEnabled = false
                     modifiedValue.setText(decryptedIdentification.modified)
                     createdValue.text = decryptedIdentification.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -282,6 +283,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedMedicalHistory -> {
                     val decryptedMedicalHistory : DecryptedMedicalHistory = selectedDocument as DecryptedMedicalHistory
                     etTitle.setText(decryptedMedicalHistory.history)
+                    etTitleValue.setText("")
+                    etTitleValue.isEnabled = false
                     modifiedValue.setText(decryptedMedicalHistory.modified)
                     createdValue.text = decryptedMedicalHistory.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -998,12 +1001,14 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             "Identification" -> {
                 etTitle.hint = "User name"
                 etTitleValue.hint = ""
+                etTitleValue.isEnabled = false
                 if( selectedDocument == null ) toolbarTitle.text = "Add Identification"
             }
 
             "Medical history" -> {
                 etTitle.hint = "History"
                 etTitleValue.hint = ""
+                etTitleValue.isEnabled = false
                 if( selectedDocument == null ) toolbarTitle.text = "Add History"
             }
 
@@ -1011,10 +1016,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Name"
                 etTitleValue.hint = "Type of physician"
                 if( selectedDocument == null ) toolbarTitle.text = "Add Providers"
-            }
-
-            "Emergency contacts" -> {
-
             }
 
             "Medications" -> {

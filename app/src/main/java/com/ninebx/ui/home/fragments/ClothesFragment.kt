@@ -93,14 +93,10 @@ class ClothesFragment : FragmentBackHelper() {
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
-
-
     }
 
     override fun onBackPressed(): Boolean {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
-
-
         return super.onBackPressed()
     }
 }

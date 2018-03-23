@@ -95,8 +95,16 @@ class WellnessHelper(
             "Checkups and visits" -> {
                 getCheckUps()
             }
+            "Emergency contacts" -> {
+                getEmergencyContacts()
+            }
         }
     }
+
+    private fun getEmergencyContacts() {
+
+    }
+
     private fun getIdentification() {
         val categoryList = ArrayList<Level2Category>()
         if (decryptedIdentification == null) decryptedIdentification = DecryptedIdentification()
@@ -390,6 +398,9 @@ class WellnessHelper(
             }
             "Checkups and visits" -> {
                 setCheckUps(level2Category)
+            }
+            "Emergency contacts" -> {
+                setEmergencyContacts(level2Category)
             }
         }
     }

@@ -332,7 +332,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             }*/
             layoutCategory.addView(categoryView)
         }
-
     }
 
     private fun checkForAsset(categoryName: String, categories: ArrayList<Category>): Boolean {
@@ -352,7 +351,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     var memberListAdapter: MemberListAdapter ?= null
     var levelDialog: AlertDialog ?= null
     private fun CustomDropDown(adapter : SubCategoryAdapter, categoryName: String, subCategories: ArrayList<SubCategory>) {
-        //todo
+
         val dialogView: View = LayoutInflater.from(context).inflate(R.layout.layout_members, null)
         val cancelTextView: TextView = dialogView.findViewById(R.id.cancelTextView)
         val dialogTitleTextView : TextView = dialogView.findViewById(R.id.titleTextView)
@@ -377,7 +376,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 memberListAdapter!!.notifyDataSetChanged()
                 levelDialog?.dismiss()
             }
-
         })
         membersRecyclerView.adapter = memberListAdapter
         cancelTextView.setOnClickListener{
@@ -402,7 +400,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 //mListsAdapter!!.notifyDataSetChanged()
                 //saveUserObject()
             }
-
         })
     }
 
@@ -419,10 +416,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         super.onViewCreated(view, savedInstanceState)
         fromWhichBox = arguments!!.getInt("category")
         categoryInt = arguments!!.getInt("category")
-
     }
-
-
 
     private fun init() {
         showProgress(R.string.loading)
