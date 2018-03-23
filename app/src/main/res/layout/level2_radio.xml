@@ -1,41 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:paddingTop="@dimen/_10sdp">
 
-    <CheckBox
-        android:id="@+id/chkLeft"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:button="@drawable/custom_check"
-        android:padding="@dimen/default_mini_padding"
-        android:text="@string/engaged" />
+        android:orientation="horizontal"
+        android:id="@+id/checkRadioGroup">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/chkLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:button="@drawable/custom_check"
+            tools:checked="true"
+            android:padding="@dimen/default_mini_padding"
+            android:text="@string/engaged" />
 
 
-    <CheckBox
-        android:id="@+id/chkRight"
-        android:layout_width="wrap_content"
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/chkRight"
+            android:layout_marginStart="@dimen/default_mini_padding"
+            android:layout_marginLeft="@dimen/default_mini_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:button="@drawable/custom_check"
+            android:padding="@dimen/default_mini_padding"
+            android:text="@string/organized" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtPurchaseDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:button="@drawable/custom_check"
-        android:padding="@dimen/default_mini_padding"
-        android:text="@string/organized" />
+        android:layout_marginLeft="@dimen/default_mini_padding"
+        android:layout_marginStart="@dimen/default_mini_padding"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/purchase_date" />
+
+    <TextView
+        android:id="@+id/etPurchaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_mini_padding"
+        android:singleLine="true"
+        android:background="@null"
+        android:hint="@string/purchase_date"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txtLeaseStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_mini_padding"
+        android:layout_marginStart="@dimen/default_mini_padding"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:hint="@string/lease_start_date" />
+
+    <TextView
+        android:id="@+id/etLeaseStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_mini_padding"
+        android:singleLine="true"
+        android:background="@null"
+        android:hint="@string/lease_start_date"
+        android:visibility="visible" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_below="@id/chkLeft"
+        android:id="@+id/leaseView"
         android:layout_height="@dimen/divider_height"
         android:background="@color/divider_color"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/txtLeaseEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_mini_padding"
+        android:layout_marginStart="@dimen/default_mini_padding"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:hint="@string/lease_end_date" />
+
+    <TextView
+        android:id="@+id/etLeaseEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_mini_padding"
+        android:singleLine="true"
+        android:background="@null"
+        android:hint="@string/lease_end_date"
+        android:visibility="visible" />
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"/>
+
+</LinearLayout>

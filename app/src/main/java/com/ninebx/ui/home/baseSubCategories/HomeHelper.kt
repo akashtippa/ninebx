@@ -586,10 +586,16 @@ class HomeHelper( var category_name : String,
         category.subCategories.add(Level2SubCategory("Name on title", decryptedVehicle!!.titleName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Estimated market value", decryptedVehicle!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
         category.subCategories.add(Level2SubCategory("Registration expiration date", decryptedVehicle!!.registrationExpirydate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Purchased", decryptedVehicle!!.purchasedOrLeased, "", Constants.LEVEL2_RADIO))
-        category.subCategories.add(Level2SubCategory("Purchase date", decryptedVehicle!!.purchaseDate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Lease start date", decryptedVehicle!!.purchaseDate, "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Lease end date", decryptedVehicle!!.purchaseDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Purchased",
+                decryptedVehicle!!.purchasedOrLeased,
+                "",
+                Constants.LEVEL2_RADIO, false, true, true,
+                decryptedVehicle!!.purchaseDate,
+                decryptedVehicle!!.leaseStartDate,
+                decryptedVehicle!!.leaseEndDate))
+        //category.subCategories.add(Level2SubCategory("Purchase date", decryptedVehicle!!.purchaseDate, "", Constants.LEVEL2_PICKER, false, true,decryptedVehicle!!.purchasedOrLeased == "Purchased"))
+        //category.subCategories.add(Level2SubCategory("Lease start date", decryptedVehicle!!.leaseStartDate, "", Constants.LEVEL2_PICKER, false, true,decryptedVehicle!!.purchasedOrLeased == "Leased"))
+        //category.subCategories.add(Level2SubCategory("Lease end date", decryptedVehicle!!.leaseEndDate, "", Constants.LEVEL2_PICKER, false, true,decryptedVehicle!!.purchasedOrLeased == "Leased"))
         category.subCategories.add(Level2SubCategory("Financed through loan", decryptedVehicle!!.financedThroughLoan, "", Constants.LEVEL2_SWITCH))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedVehicle!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -765,7 +771,7 @@ class HomeHelper( var category_name : String,
         category.subCategories.add(Level2SubCategory("City", decryptedProperty!!.city, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("State", decryptedProperty!!.state, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Zip Code", decryptedProperty!!.zipCode, "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Country", decryptedProperty!!.country, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Country", decryptedProperty!!.country, "", Constants.LEVEL2_LOCATION))
         categoryList.add(category)
 
         categoryIndex += 2007
@@ -1030,7 +1036,7 @@ class HomeHelper( var category_name : String,
     }
 
     private fun setVehicles(level2Category: Level2SubCategory) {
-        when (level2Category.titleValue) {
+        when (level2Category.title) {
             "Vehicle identification number (VIN)" -> decryptedVehicle!!.vehicle = level2Category.titleValue//stants.LEVEL2_NORMAL))
             "Make" -> decryptedVehicle!!.make = level2Category.titleValue//stants.LEVEL2_NORMAL))
             "Model" -> decryptedVehicle!!.model = level2Category.titleValue//stants.LEVEL2_NORMAL))
@@ -1039,10 +1045,13 @@ class HomeHelper( var category_name : String,
             "Name on title" -> decryptedVehicle!!.titleName = level2Category.titleValue//stants.LEVEL2_SPINNER))
             "Estimated market value" -> decryptedVehicle!!.estimatedMarketValue = level2Category.titleValue//stants.LEVEL2_USD))
             "Registration expiration date" -> decryptedVehicle!!.registrationExpirydate = level2Category.titleValue//stants.LEVEL2_PICKER))
-            "Purchased" -> decryptedVehicle!!.purchasedOrLeased = level2Category.titleValue//stants.LEVEL2_RADIO))
-            "Purchase date" -> decryptedVehicle!!.purchaseDate = level2Category.titleValue//stants.LEVEL2_PICKER))
-            "Lease start date" -> decryptedVehicle!!.leaseStartDate = level2Category.titleValue//stants.LEVEL2_PICKER))
-            "Lease end date" -> decryptedVehicle!!.leaseEndDate = level2Category.titleValue//stants.LEVEL2_PICKER))
+            "Purchased" -> {
+                decryptedVehicle!!.purchasedOrLeased = level2Category.titleValue
+                decryptedVehicle!!.purchaseDate = level2Category.purchaseDate//stants.LEVEL2_PICKER))
+                decryptedVehicle!!.leaseStartDate = level2Category.leaseStartDate//stants.LEVEL2_PICKER))
+                decryptedVehicle!!.leaseEndDate = level2Category.leaseEndDate//stants.LEVEL2_PICKER))
+            }//stants.LEVEL2_RADIO))
+
             "Financed through loan" -> decryptedVehicle!!.financedThroughLoan = level2Category.titleValue//stants.LEVEL2_SWITCH))
             "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
             else -> {

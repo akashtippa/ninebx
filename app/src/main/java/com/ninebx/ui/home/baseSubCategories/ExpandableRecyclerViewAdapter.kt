@@ -127,6 +127,12 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                     locationViewHolder.chkLeft.isChecked = false
                     locationViewHolder.chkRight.isChecked = true
                 }
+                locationViewHolder.etPurchaseDate.text = level2SubCategory.purchaseDate
+                locationViewHolder.etLeaseEndDate.text = level2SubCategory.leaseEndDate
+                locationViewHolder.etLeaseStartDate.text = level2SubCategory.leaseStartDate
+                (locationViewHolder.etPurchaseDate).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                (locationViewHolder.etLeaseEndDate).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
+                (locationViewHolder.etLeaseStartDate).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
 
             }
             Constants.LEVEL2_SPINNER -> {
@@ -136,12 +142,19 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.etSubHeader.setText(titleValue)
                 locationViewHolder.etSubHeader.addTextChangedListener( CustomTextWatcher(level2SubCategory) )
 
+                if( level2SubCategory.isVisible ) {
+                    locationViewHolder.itemView.show()
+                } else {
+                    locationViewHolder.itemView.hide()
+                }
+
 
             }
             Constants.LEVEL2_SWITCH -> {
                 val locationViewHolder : LEVEL2_SWITCHViewHolder = holder as LEVEL2_SWITCHViewHolder
                 locationViewHolder.txtHeader.text = headerTitle
                 locationViewHolder.switchView.isChecked = isValueSet
+
 
             }
             Constants.LEVEL2_USD -> {
@@ -177,6 +190,14 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         }
                     })
                 }
+                if( level2SubCategory.isVisible ) {
+                    locationViewHolder.itemView.show()
+                } else {
+                    locationViewHolder.itemView.hide()
+                }
+                locationViewHolder.txtHeader.isEnabled = isEditMode && level2SubCategory.isEnabled
+                locationViewHolder.etSubHeader.isEnabled = isEditMode && level2SubCategory.isEnabled
+
             }
             Constants.LEVEL2_TIMEPICKER -> {
                 val locationViewHolder : LEVEL2_TIMEPICKERViewHolder = holder as LEVEL2_TIMEPICKERViewHolder
@@ -220,7 +241,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 val locationViewHolder : LEVEL_NORMAL_SPINNERViewHolder = holder as LEVEL_NORMAL_SPINNERViewHolder
                 locationViewHolder.txtHeader.text = headerTitle
                 locationViewHolder.spinnerItem.setText((titleValue))
-               
+
 
             }
         }
@@ -268,16 +289,88 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             // childView = level2PasswordView
         }
     } // 11
-    inner class LEVEL2_RADIOViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+    inner class LEVEL2_RADIOViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ), CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
-        val chkLeft = itemView.findViewById<CheckBox>(R.id.chkLeft)
-        val chkRight = itemView.findViewById<CheckBox>(R.id.chkRight)
+        override fun onClick(view: View?) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                val item = getItemAtPosition(position)
+                val textView = view as TextView
+                getDateFromPicker(view.context, Calendar.getInstance(), object : DateTimeSelectionListener {
+                    override fun onDateTimeSelected(selectedDate: Calendar) {
+                        textView.text = getDateMonthYearFormat(selectedDate.time)
+                        when( view.id ) {
+                            R.id.etLeaseStartDate -> {
+                                item.leaseStartDate = textView.text.toString()
+                            }
+                            R.id.etLeaseEndDate -> {
+                                item.leaseEndDate = textView.text.toString()
+                            }
+                            else -> {
+                                item.purchaseDate = textView.text.toString()
+                            }
+                        }
+                    }
+                })
+            }
+        }
 
+        override fun onCheckedChanged(button: CompoundButton?, isChecked: Boolean) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+
+                val item = getItemAtPosition(position)
+
+                item.titleValue = if( chkLeft.isChecked )
+                    chkLeft.text.toString()
+                else
+                    chkRight.toString()
+
+                level2CategoryPresenter.setValueToDocument(item)
+
+                if( chkLeft.isChecked ) {
+                    etPurchaseDate.show()
+                    etLeaseStartDate.hide()
+                    etLeaseEndDate.hide()
+                    txtPurchaseDate.show()
+                    txtLeaseEndDate.hide()
+                    txtLeaseStartDate.hide()
+                    leaseView.hide()
+                }
+                else {
+                    etPurchaseDate.hide()
+                    etLeaseStartDate.show()
+                    etLeaseEndDate.show()
+                    txtPurchaseDate.hide()
+                    txtLeaseEndDate.show()
+                    txtLeaseStartDate.show()
+                    leaseView.show()
+                }
+
+            }
+
+        }
+
+        val chkLeft = itemView.findViewById<RadioButton>(R.id.chkLeft)
+        val chkRight = itemView.findViewById<RadioButton>(R.id.chkRight)
+        val txtPurchaseDate = itemView.findViewById<TextView>(R.id.txtPurchaseDate)
+        val etPurchaseDate = itemView.findViewById<TextView>(R.id.etPurchaseDate)
+        val etLeaseEndDate = itemView.findViewById<TextView>(R.id.etLeaseEndDate)
+        val txtLeaseStartDate = itemView.findViewById<TextView>(R.id.txtLeaseStartDate)
+        val etLeaseStartDate = itemView.findViewById<TextView>(R.id.etLeaseStartDate)
+        val txtLeaseEndDate = itemView.findViewById<TextView>(R.id.txtLeaseEndDate)
+        val leaseView = itemView.findViewById<View>(R.id.leaseView)
         init {
 
             chkLeft.isEnabled = isEditMode
             chkRight.isEnabled = isEditMode
-
+            chkLeft.text = "Purchased"
+            chkRight.text = "Leased"
+            chkRight.setOnCheckedChangeListener( this )
+            chkLeft.setOnCheckedChangeListener( this )
+            etPurchaseDate.setOnClickListener(this)
+            etLeaseStartDate.setOnClickListener (this)
+            etLeaseEndDate.setOnClickListener(this)
             // childView = level2RadioView
         }
     } // 12
@@ -354,7 +447,30 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
     }
 
-    inner class LEVEL2_SWITCHViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+    inner class LEVEL2_SWITCHViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ), CompoundButton.OnCheckedChangeListener {
+
+        override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
+            val position = adapterPosition
+            if( position != RecyclerView.NO_POSITION ) {
+                val subCategory = getItemAtPosition(position)
+                if( subCategory.title == "Currently rented" ) {
+                    val tenantNameSubCategory = getItemAtPosition(position + 1)
+                    val leaseStartDateSubCategory= getItemAtPosition(position + 2)
+                    val leaseEndDateSubCategory = getItemAtPosition(position + 3)
+                    tenantNameSubCategory.isVisible = isChecked
+                    leaseStartDateSubCategory.isVisible = isChecked
+                    leaseEndDateSubCategory.isVisible = isChecked
+                    try {
+                        notifyItemChanged(position + 1)
+                        notifyItemChanged(position + 2 )
+                        notifyItemChanged(position + 3)
+                    } catch ( e : Exception ) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+        }
 
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val switchView = itemView.findViewById<Switch>(R.id.switchView)
@@ -363,7 +479,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
             txtHeader.isEnabled = isEditMode
             switchView.isEnabled = isEditMode
-
+            switchView.setOnCheckedChangeListener(this)
 
             // childView = level2SwitchView
         }
@@ -420,7 +536,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         }
                     }
                     showPopup(level2SubCategory, spinnerAccountType, spinnerItems)
-                    
+
                     val arrayAdapter = ArrayAdapter(_context, android.R.layout.simple_spinner_item, spinnerItems)
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spinnerAccountType.setText(level2SubCategory.titleValue)
@@ -632,14 +748,14 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         ( cardType)
                     }
 
-                    /*Constants.GENDER*/ else -> {
+                /*Constants.GENDER*/ else -> {
                         (gender)
                     }
 
                 }
 
                 showPopup(level2SubCategory, spinnerItem, spinnerItems)
-                
+
             }
         }
 
@@ -660,7 +776,12 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         override fun afterTextChanged(p0: Editable?) {
             val valueString = p0.toString()
             level2SubCategory.titleValue = valueString
-            level2CategoryPresenter.setValueToDocument(level2SubCategory)
+            if( level2SubCategory.isVisible )
+                level2CategoryPresenter.setValueToDocument(level2SubCategory)
+            else {
+                level2SubCategory.titleValue = ""
+                level2CategoryPresenter.setValueToDocument(level2SubCategory)
+            }
         }
 
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
