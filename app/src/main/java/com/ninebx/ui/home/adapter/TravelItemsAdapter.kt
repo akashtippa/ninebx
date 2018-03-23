@@ -1,7 +1,6 @@
 package com.ninebx.ui.home.adapter
 
 import android.annotation.SuppressLint
-import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
+import com.ninebx.ui.base.realm.decrypted.DecryptedTravel
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.account.interfaces.MainContactsAdded
+import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
 
-internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainContacts>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<MainContactsAdapter.RecyclerItemViewHolder>() {
+internal class TravelItemsAdapter(private var myList: ArrayList<DecryptedTravel>?, private val travelItemsAdded: TravelItemsAdded) : RecyclerView.Adapter<TravelItemsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -29,17 +29,17 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         mLastPosition = position
 
         holder.layoutContacts.setOnClickListener {
-            mainContactsAdded.contactsClicked(contacts, false)
+            travelItemsAdded.contactsClicked(contacts, false)
         }
 
         holder.imgDeleteContact.setOnClickListener {
             //show dialog and delete
-            mainContactsAdded.contactsDeleted(contacts)
+            travelItemsAdded.contactsDeleted(contacts)
             //deleteContact(contacts)
         }
 
         holder.imgEditContact.setOnClickListener {
-            mainContactsAdded.contactsClicked(contacts, true)
+            travelItemsAdded.contactsClicked(contacts, true)
         }
     }
 
@@ -47,8 +47,8 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         return myList!!.size
     }
 
-    fun deleteContact(contact: DecryptedMainContacts) {
-        myList!!.remove(contact)
+    fun deleteContact(travelItem: DecryptedTravel) {
+        myList!!.remove(travelItem)
         notifyData(myList!!)
     }
 
@@ -57,16 +57,16 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         notifyItemRemoved(position)
     }
 
-    fun notifyData(myList: ArrayList<DecryptedMainContacts>) {
+    fun notifyData(myList: ArrayList<DecryptedTravel>) {
         this.myList = myList
         notifyDataSetChanged()
     }
 
-    fun getList(): ArrayList<DecryptedMainContacts>? {
+    fun getList(): ArrayList<DecryptedTravel>? {
         return this.myList
     }
 
-    fun updateContact(contact: DecryptedMainContacts) {
+    fun updateContact(contact: DecryptedTravel) {
         for(item in myList!!) {
             if(item.id == contact.id) {
                 myList!!.remove(item)

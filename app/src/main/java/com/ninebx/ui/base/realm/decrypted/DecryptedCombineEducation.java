@@ -16,17 +16,7 @@ import io.realm.annotations.Required;
 
 public class DecryptedCombineEducation implements Parcelable {
 
-    public static final Creator<DecryptedCombineEducation> CREATOR = new Creator<DecryptedCombineEducation>() {
-        @Override
-        public DecryptedCombineEducation createFromParcel(Parcel in) {
-            return new DecryptedCombineEducation(in);
-        }
 
-        @Override
-        public DecryptedCombineEducation[] newArray(int size) {
-            return new DecryptedCombineEducation[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -49,20 +39,6 @@ public class DecryptedCombineEducation implements Parcelable {
         this.mainEducationItems = mainEducationItems;
         this.workItems = workItems;
         this.listItems = listItems;
-    }
-
-    protected DecryptedCombineEducation(Parcel in) {
-        id = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -145,4 +121,41 @@ public class DecryptedCombineEducation implements Parcelable {
         }
         return count;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.educationItems);
+        dest.writeTypedList(this.mainEducationItems);
+        dest.writeTypedList(this.workItems);
+        dest.writeTypedList(this.listItems);
+    }
+
+    protected DecryptedCombineEducation(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.educationItems = in.createTypedArrayList(DecryptedEducation.CREATOR);
+        this.mainEducationItems = in.createTypedArrayList(DecryptedMainEducation.CREATOR);
+        this.workItems = in.createTypedArrayList(DecryptedWork.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedEducationList.CREATOR);
+    }
+
+    public static final Creator<DecryptedCombineEducation> CREATOR = new Creator<DecryptedCombineEducation>() {
+        @Override
+        public DecryptedCombineEducation createFromParcel(Parcel source) {
+            return new DecryptedCombineEducation(source);
+        }
+
+        @Override
+        public DecryptedCombineEducation[] newArray(int size) {
+            return new DecryptedCombineEducation[size];
+        }
+    };
 }
