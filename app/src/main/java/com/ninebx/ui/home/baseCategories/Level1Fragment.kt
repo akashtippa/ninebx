@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.baseCategories
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -300,9 +301,18 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                             subCategory.title == "Add Persons." -> {
                                 if(!memberList.isEmpty()) {
                                     CustomDropDown(adapter, category.title, mainCategory.subCategories)
+                                    AppLogger.d("subcategories",""+subCategory)
                                 }
                                 else {
-                                    Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
+                                   // Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
+                                    val builder = android.app.AlertDialog.Builder(context)
+                                    builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
+                                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            p0?.cancel()
+                                        }
+                                    })
+                                    builder.setMessage("The Family/Users list is empty,please add Family/Users using account section.")
+                                    builder.show()
                                 }
                             }
 

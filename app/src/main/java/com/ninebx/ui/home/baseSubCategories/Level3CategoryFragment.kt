@@ -487,6 +487,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
+                //work and education
+                is DecryptedMainEducation -> {
+
+                }
             }
             if( modifiedValue.text.equals(createdValue.text) ) {
                 modified.hide()
@@ -918,7 +922,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
                 if( selectedDocument == null ) toolbarTitle.text = "Add ID"
             }
-
+            //work and education
             "Add Person" -> {
                 etTitle.hint = "Institution name"
                 etTitleValue.hint = "Qualification/degree"
