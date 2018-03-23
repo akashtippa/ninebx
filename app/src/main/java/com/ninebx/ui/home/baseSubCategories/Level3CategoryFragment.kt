@@ -619,8 +619,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         if( isEditMode ) tvSave.show()
 
-       /* ivHome.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.callHomeFragment() }*/
+        ivHome.setOnClickListener {
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
+        }
     }
 
     private fun validate(): Boolean {

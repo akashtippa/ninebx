@@ -1,11 +1,13 @@
 package com.ninebx.ui.home.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_wellness.*
@@ -27,6 +29,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ivHome.setOnClickListener {
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
+        }
+
+        ivBack.setOnClickListener {  activity!!.onBackPressed()  }
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         val bundle = arguments
         layoutPersonalHealthRecord.setOnClickListener {
@@ -124,8 +133,6 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
         }
-
-
     }
 
     override fun onBackPressed(): Boolean {
