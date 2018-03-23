@@ -7,9 +7,11 @@ import android.os.Parcelable
  * Created by Alok on 22/03/18.
  */
 class OptionItem(var itemId: Long = 0,
-                 var itemName: String = "") : Parcelable {
+                 var itemName: String = "",
+                 var memberId: String = "") : Parcelable {
     constructor(source: Parcel) : this(
             source.readLong(),
+            source.readString(),
             source.readString()
     )
 
@@ -18,6 +20,7 @@ class OptionItem(var itemId: Long = 0,
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeLong(itemId)
         writeString(itemName)
+        writeString(memberId)
     }
 
     override fun toString(): String {

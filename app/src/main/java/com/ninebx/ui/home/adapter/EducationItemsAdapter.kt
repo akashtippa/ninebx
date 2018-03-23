@@ -10,11 +10,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
+import com.ninebx.ui.base.realm.decrypted.DecryptedEducation
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.account.interfaces.MainContactsAdded
+import com.ninebx.ui.home.account.interfaces.EducationItemsAdded
 
-internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainContacts>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<MainContactsAdapter.RecyclerItemViewHolder>() {
+internal class EducationItemsAdapter(private var myList: ArrayList<DecryptedEducation>?, private val EducationItemsAdded: EducationItemsAdded) : RecyclerView.Adapter<EducationItemsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -29,17 +29,17 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         mLastPosition = position
 
         holder.layoutContacts.setOnClickListener {
-            mainContactsAdded.contactsClicked(contacts, false)
+            EducationItemsAdded.contactsClicked(contacts, false)
         }
 
         holder.imgDeleteContact.setOnClickListener {
             //show dialog and delete
-            mainContactsAdded.contactsDeleted(contacts)
+            EducationItemsAdded.contactsDeleted(contacts)
             //deleteContact(contacts)
         }
 
         holder.imgEditContact.setOnClickListener {
-            mainContactsAdded.contactsClicked(contacts, true)
+            EducationItemsAdded.contactsClicked(contacts, true)
         }
     }
 
@@ -47,7 +47,7 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         return myList!!.size
     }
 
-    fun deleteContact(contact: DecryptedMainContacts) {
+    fun deleteContact(contact: DecryptedEducation) {
         myList!!.remove(contact)
         notifyData(myList!!)
     }
@@ -57,16 +57,16 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         notifyItemRemoved(position)
     }
 
-    fun notifyData(myList: ArrayList<DecryptedMainContacts>) {
+    fun notifyData(myList: ArrayList<DecryptedEducation>) {
         this.myList = myList
         notifyDataSetChanged()
     }
 
-    fun getList(): ArrayList<DecryptedMainContacts>? {
+    fun getList(): ArrayList<DecryptedEducation>? {
         return this.myList
     }
 
-    fun updateContact(contact: DecryptedMainContacts) {
+    fun updateContact(contact: DecryptedEducation) {
         for(item in myList!!) {
             if(item.id == contact.id) {
                 myList!!.remove(item)

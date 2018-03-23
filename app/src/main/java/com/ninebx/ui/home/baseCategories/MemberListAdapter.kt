@@ -18,7 +18,7 @@ import java.util.ArrayList
 /**
  * Created by venu on 08-03-2018.
  */
-class MemberListAdapter(private var myList: ArrayList<DecryptedMember>, val adapterClickListener: AdapterClickListener ) : RecyclerView.Adapter<MemberListAdapter.RecyclerItemViewHolder>() {
+class MemberListAdapter(private var myList: ArrayList<String>, val adapterClickListener: AdapterClickListener ) : RecyclerView.Adapter<MemberListAdapter.RecyclerItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -30,14 +30,14 @@ class MemberListAdapter(private var myList: ArrayList<DecryptedMember>, val adap
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val member = myList[position]
-        holder.txtProfileName.text = member.firstName + " " + member.lastName
+        holder.txtProfileName.text = member
     }
 
     override fun getItemCount(): Int {
         return myList.size
     }
 
-    fun getItem(position: Int): DecryptedMember {
+    fun getItem(position: Int): String {
         return myList[position]
     }
 
