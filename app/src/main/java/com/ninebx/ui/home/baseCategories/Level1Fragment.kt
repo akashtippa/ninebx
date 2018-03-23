@@ -313,8 +313,22 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
                         when {
                             subCategory.title == "Add Persons." -> {
-                                if(!memberList.isEmpty()) {
-                                    CustomDropDown(adapter, category.title, mainCategory.subCategories)
+
+                                    val usersList = ArrayList<String>()
+                                    val currentUsersList = ArrayList<String>()
+                                    for( subSection in category.subCategories ) {
+                                        if( subSection.type == Constants.SUB_CATEGORY_DISPLAY_PERSON ) {
+                                            currentUsersList.add(subSection.personName)
+                                        }
+                                    }
+                                    for( member in memberList ) {
+                                        usersList.add(member.firstName + " " + member.lastName)
+                                    }
+                                    usersList.removeAll(currentUsersList)
+
+                                if(usersList.isNotEmpty()) {
+
+                                    CustomDropDown(adapter, usersList, category.title, subCategory.title, mainCategory.subCategories)
                                 }
                                 else {
                                     Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
@@ -373,7 +387,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     var addedPersonList: ArrayList<DecryptedMember> = ArrayList()
     var memberListAdapter: MemberListAdapter ?= null
     var levelDialog: AlertDialog ?= null
-    private fun CustomDropDown(adapter : SubCategoryAdapter, categoryName: String, subCategories: ArrayList<SubCategory>) {
+    private fun CustomDropDown(adapter : SubCategoryAdapter, usersList : ArrayList<String>, categoryName: String, subCategoryTitle : String, subCategories: ArrayList<SubCategory>) {
         //todo
         val dialogView: View = LayoutInflater.from(context).inflate(R.layout.layout_members, null)
         val cancelTextView: TextView = dialogView.findViewById(R.id.cancelTextView)
@@ -382,18 +396,17 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         levelDialog = AlertDialog.Builder(context!!)
                 .setView(dialogView)
                 .create()
-        dialogTitleTextView.setText("Family/Users")
+        dialogTitleTextView.setText(subCategoryTitle)
         membersRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        memberListAdapter = MemberListAdapter(memberList, object: AdapterClickListener {
+        memberListAdapter = MemberListAdapter(usersList, object: AdapterClickListener {
             override fun onItemClick(position: Int) {
                 val member = memberListAdapter!!.getItem(position)
-                addedPersonList.add(member)
                 subCategories.add(0, SubCategory(
                         categoryName,
                         "",
                         0,
                         Constants.SUB_CATEGORY_DISPLAY_PERSON,
-                        categoryID, member.firstName + " " + member.lastName))
+                        categoryID, member))
                 adapter.notifyDataSetChanged()
                 memberListAdapter!!.removeItem(position)
                 memberListAdapter!!.notifyDataSetChanged()
