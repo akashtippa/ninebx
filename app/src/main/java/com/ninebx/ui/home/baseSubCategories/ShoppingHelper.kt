@@ -702,11 +702,11 @@ class ShoppingHelper(
                     prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_SHOPPING, object : Realm.Callback() {
                         override fun onSuccess(realm: Realm?) {
                             val combineShopping: DecryptedCombineShopping = mCombine as DecryptedCombineShopping
-                            val index = combineShopping.shoppingItems.indexOf(decryptedShopping)
+                            val index = combineShopping.loyaltyProgramsItems.indexOf(decryptedLoyaltyPrograms)
                             if( index != -1 ) {
-                                combineShopping.shoppingItems[index] = decryptedShopping
+                                combineShopping.loyaltyProgramsItems[index] = decryptedLoyaltyPrograms
                             }
-                            else combineShopping.shoppingItems.add(decryptedShopping)
+                            else combineShopping.loyaltyProgramsItems.add(decryptedLoyaltyPrograms)
                             mCombine = combineShopping
                             var realmLoyaltyPrograms = realm!!.where(CombineShopping::class.java).equalTo("id", combineShopping.id).findFirst()
                             realm.beginTransaction()
