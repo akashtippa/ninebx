@@ -49,7 +49,7 @@ public class DecryptedVehicle implements Parcelable {
     @Required
     private String registrationExpirydate = "";
     @Required
-    private String purchasedOrLeased = "";
+    private String purchasedOrLeased = "Purchased";
     @Required
     private String purchaseDate = "";
     @Required
