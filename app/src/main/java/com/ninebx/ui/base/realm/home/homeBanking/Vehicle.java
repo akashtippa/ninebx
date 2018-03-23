@@ -73,7 +73,7 @@ public class Vehicle extends RealmObject {
     @Required private String estimatedMarketValue = "";
 
     @Required private String registrationExpirydate = "";
-    @Required private String purchasedOrLeased = "";
+    @Required private String purchasedOrLeased = "Purchased";
     @Required private String purchaseDate = "";
     @Required private String financedThroughLoan = "";
 
