@@ -581,7 +581,7 @@ class HomeHelper( var category_name : String,
         category.subCategories.add(Level2SubCategory("Vehicle identification number (VIN)", decryptedVehicle!!.vehicle, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Make", decryptedVehicle!!.make, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Model", decryptedVehicle!!.model, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Model year", decryptedVehicle!!.modelYear, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Model year", decryptedVehicle!!.modelYear, Constants.KEYBOARD_YEAR_PICKER, Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Color", decryptedVehicle!!.color, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name on title", decryptedVehicle!!.titleName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Estimated market value", decryptedVehicle!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
@@ -1079,7 +1079,8 @@ class HomeHelper( var category_name : String,
             "Purchase price" -> decryptedProperty!!.purchasePrice = level2Category.titleValue//.LEVEL2_USD))
             "Estimated market value" -> decryptedProperty!!.estimatedMarketValue = level2Category.titleValue//.LEVEL2_USD))
             "Contacts" -> decryptedProperty!!.contacts = level2Category.titleValue//.LEVEL2_SPINNER))
-
+            "Lease start date"-> decryptedProperty!!.leaseStartDate = level2Category.titleValue//, "", Constants.LEVEL2_PICKER))
+            "Lease end date"-> decryptedProperty!!.leaseEndDate = level2Category.titleValue//, "", Constants.LEVEL2_PICKER))
             else -> {
                 when (level2Category.type) {
                     Constants.LEVEL2_NOTES -> decryptedProperty!!.notes = level2Category.titleValue
@@ -1454,7 +1455,7 @@ class HomeHelper( var category_name : String,
                             realm.commitTransaction()
                         }
                     })
-            }
+                }
 
                 override fun onPostExecute(result: Unit?) {
                     super.onPostExecute(result)
