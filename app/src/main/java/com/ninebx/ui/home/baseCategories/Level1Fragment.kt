@@ -2,6 +2,7 @@ package com.ninebx.ui.home.baseCategories
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
@@ -457,6 +458,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this, categoryInt)
         toolbarTitle.text = getString(fromWhichBox!!)
+        toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)

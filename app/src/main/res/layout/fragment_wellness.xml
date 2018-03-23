@@ -78,18 +78,6 @@
             android:gravity="start"
             android:text="Identification" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableRight="@drawable/ic_arrow_right"
-            android:gravity="center_vertical"
-            android:text="0" />
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -112,18 +100,6 @@
             android:gravity="start"
             android:text="Medical history"
             />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableRight="@drawable/ic_arrow_right"
-            android:gravity="center_vertical"
-            android:text="0" />
-
     </RelativeLayout>
 
     <RelativeLayout

@@ -529,8 +529,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.show()
             }
             toolbarTitle.text = etTitle.text.toString()
+            toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         }
-
     }
 
     private fun showDropDownForOptions(optionsList: java.util.ArrayList<OptionItem>?) {
