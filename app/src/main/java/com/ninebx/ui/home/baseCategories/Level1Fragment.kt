@@ -271,10 +271,25 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         }
                     }
 
-                    if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                        val listItems = (combinedItems as DecryptedCombine).autoList
-                        bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
+                    when( categoryName ) {
+                        "Maintenance", "Auto insurance" -> {
+                            val listItems = (combinedItems as DecryptedCombine).autoList
+                            bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
+                        }
+                        "Insurance" -> {
+                            val listItems = (combinedItems as DecryptedCombine).propertyList
+                            bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
+                        }
+                        "Life insurance", "Health insurance" -> {
+                            val listItems = ArrayList<OptionItem>()
+                            for( member in NineBxApplication.instance.activityInstance!!.getCurrentUsers()[0].members ) {
+                                listItems.add(OptionItem(member.userId.hashCode().toLong(), member.firstName + " " + member.lastName, member.userId))
+                            }
+                            bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
+                        }
+
                     }
+
 
                     if( action == "add_item" ) {
 

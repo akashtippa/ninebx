@@ -451,7 +451,10 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             val position = adapterPosition
             if( position != RecyclerView.NO_POSITION ) {
                 val subCategory = getItemAtPosition(position)
+
                 if( subCategory.title == "Currently rented" ) {
+                    subCategory.isValueSet = isChecked
+                    level2CategoryPresenter.setValueToDocument(subCategory)
                     val tenantNameSubCategory = getItemAtPosition(position + 1)
                     val leaseStartDateSubCategory= getItemAtPosition(position + 2)
                     val leaseEndDateSubCategory = getItemAtPosition(position + 3)
@@ -548,6 +551,13 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                     getTimeFromPicker(_context, Calendar.getInstance(), object : DateTimeSelectionListener{
                         override fun onDateTimeSelected(selectedDate: Calendar) {
                             (etSubHeader).setText(getTimeFormat(selectedDate.time))
+                        }
+                    })
+                }
+                else if( keyBoardType == Constants.KEYBOARD_YEAR_PICKER ) {
+                    getYearFromPicker(_context, Calendar.getInstance(), object : YearSelectionListener {
+                        override fun onYearSelected(selectedYear: String) {
+                            (etSubHeader).setText(selectedYear)
                         }
                     })
                 }
