@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCheckups implements Parcelable {
 
-    public static final Creator<DecryptedCheckups> CREATOR = new Creator<DecryptedCheckups>() {
-        @Override
-        public DecryptedCheckups createFromParcel(Parcel in) {
-            return new DecryptedCheckups(in);
-        }
-
-        @Override
-        public DecryptedCheckups[] newArray(int size) {
-            return new DecryptedCheckups[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
     private long id = 0;
@@ -65,25 +54,6 @@ public class DecryptedCheckups implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedCheckups(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        physicianName = in.readString();
-        checkup_description = in.readString();
-        physicianType = in.readString();
-        reason = in.readString();
-        dateOfVisit = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedCheckups(String selectionType, String classType, String physicianName, String checkup_description, String physicianType, String reason, String dateOfVisit, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
@@ -101,30 +71,6 @@ public class DecryptedCheckups implements Parcelable {
     }
 
     public DecryptedCheckups() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(physicianName);
-        dest.writeString(checkup_description);
-        dest.writeString(physicianType);
-        dest.writeString(reason);
-        dest.writeString(dateOfVisit);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -284,4 +230,64 @@ public class DecryptedCheckups implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.physicianName);
+        dest.writeString(this.checkup_description);
+        dest.writeString(this.physicianType);
+        dest.writeString(this.reason);
+        dest.writeString(this.dateOfVisit);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedCheckups(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.physicianName = in.readString();
+        this.checkup_description = in.readString();
+        this.physicianType = in.readString();
+        this.reason = in.readString();
+        this.dateOfVisit = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedCheckups> CREATOR = new Creator<DecryptedCheckups>() {
+        @Override
+        public DecryptedCheckups createFromParcel(Parcel source) {
+            return new DecryptedCheckups(source);
+        }
+
+        @Override
+        public DecryptedCheckups[] newArray(int size) {
+            return new DecryptedCheckups[size];
+        }
+    };
 }

@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
 
 public class DecryptedMedicalConditions implements Parcelable {
 
-    public static final Creator<DecryptedMedicalConditions> CREATOR = new Creator<DecryptedMedicalConditions>() {
-        @Override
-        public DecryptedMedicalConditions createFromParcel(Parcel in) {
-            return new DecryptedMedicalConditions(in);
-        }
-
-        @Override
-        public DecryptedMedicalConditions[] newArray(int size) {
-            return new DecryptedMedicalConditions[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
@@ -61,23 +50,6 @@ public class DecryptedMedicalConditions implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedMedicalConditions(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        condition = in.readString();
-        dateDiagnosed = in.readString();
-        medi_description = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedMedicalConditions() {
     }
 
@@ -96,28 +68,6 @@ public class DecryptedMedicalConditions implements Parcelable {
         this.modified = modified;
         this.isPrivate = isPrivate;
         this.createdUser = createdUser;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(condition);
-        dest.writeString(dateDiagnosed);
-        dest.writeString(medi_description);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -259,4 +209,60 @@ public class DecryptedMedicalConditions implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.condition);
+        dest.writeString(this.dateDiagnosed);
+        dest.writeString(this.medi_description);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedMedicalConditions(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.condition = in.readString();
+        this.dateDiagnosed = in.readString();
+        this.medi_description = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedMedicalConditions> CREATOR = new Creator<DecryptedMedicalConditions>() {
+        @Override
+        public DecryptedMedicalConditions createFromParcel(Parcel source) {
+            return new DecryptedMedicalConditions(source);
+        }
+
+        @Override
+        public DecryptedMedicalConditions[] newArray(int size) {
+            return new DecryptedMedicalConditions[size];
+        }
+    };
 }
