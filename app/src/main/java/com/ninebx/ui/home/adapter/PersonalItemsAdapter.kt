@@ -10,11 +10,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedEducation
+import com.ninebx.ui.base.realm.decrypted.DecryptedPersonal
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
 
-internal class EducationItemsAdapter(private var myList: ArrayList<DecryptedEducation>?, private val EducationItemsAdded: MainContactsAdded) : RecyclerView.Adapter<EducationItemsAdapter.RecyclerItemViewHolder>() {
+internal class PersonalItemsAdapter(private var myList: ArrayList<DecryptedPersonal>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<PersonalItemsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -29,17 +29,17 @@ internal class EducationItemsAdapter(private var myList: ArrayList<DecryptedEduc
         mLastPosition = position
 
         holder.layoutContacts.setOnClickListener {
-            EducationItemsAdded.contactsClicked(contacts, false)
+            mainContactsAdded.contactsClicked(contacts, false)
         }
 
         holder.imgDeleteContact.setOnClickListener {
             //show dialog and delete
-            EducationItemsAdded.contactsDeleted(contacts)
+            mainContactsAdded.contactsDeleted(contacts)
             //deleteContact(contacts)
         }
 
         holder.imgEditContact.setOnClickListener {
-            EducationItemsAdded.contactsClicked(contacts, true)
+            mainContactsAdded.contactsClicked(contacts, true)
         }
     }
 
@@ -47,7 +47,7 @@ internal class EducationItemsAdapter(private var myList: ArrayList<DecryptedEduc
         return myList!!.size
     }
 
-    fun deleteContact(contact: DecryptedEducation) {
+    fun deleteContact(contact: DecryptedPersonal) {
         myList!!.remove(contact)
         notifyData(myList!!)
     }
@@ -57,16 +57,16 @@ internal class EducationItemsAdapter(private var myList: ArrayList<DecryptedEduc
         notifyItemRemoved(position)
     }
 
-    fun notifyData(myList: ArrayList<DecryptedEducation>) {
+    fun notifyData(myList: ArrayList<DecryptedPersonal>) {
         this.myList = myList
         notifyDataSetChanged()
     }
 
-    fun getList(): ArrayList<DecryptedEducation>? {
+    fun getList(): ArrayList<DecryptedPersonal>? {
         return this.myList
     }
 
-    fun updateContact(contact: DecryptedEducation) {
+    fun updateContact(contact: DecryptedPersonal) {
         for(item in myList!!) {
             if(item.id == contact.id) {
                 myList!!.remove(item)
