@@ -58,6 +58,7 @@ object Constants {
     val LEVEL_NORMAL_SPINNER = 21
 
     val LEVEL2_TIMEPICKER = 22
+    val LEVEL2_YEARPICKER = 23
 
     val KEYBOARD_NUMBER = "number"
     val KEYBOARD_SPINNER = "spinner"
@@ -213,6 +214,7 @@ object Constants {
     val SUB_CATEGORY: String = "sub_category"
     val CATEGORY: String = "category_main"
     val SUB_OPTIONS: String = "sub_options"
+    val PERSON_NAME: String = "person_name"
 
 
 }
