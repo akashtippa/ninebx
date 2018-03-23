@@ -265,7 +265,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     val bundle = Bundle()
                     if( subCategory.formsCount == 0 )
                     if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                        if( !checkForAsset("Vehicles", categories) ) {
+                        if( (combinedItems as DecryptedCombine).getAutoList("home_4001").size == 0 ) {
                             context!!.showToast(R.string.error_empty_vehicle_list)
                             return
                         }
