@@ -130,9 +130,6 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.etPurchaseDate.text = level2SubCategory.purchaseDate
                 locationViewHolder.etLeaseEndDate.text = level2SubCategory.leaseEndDate
                 locationViewHolder.etLeaseStartDate.text = level2SubCategory.leaseStartDate
-                (locationViewHolder.etPurchaseDate).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                (locationViewHolder.etLeaseEndDate).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
-                (locationViewHolder.etLeaseStartDate).addTextChangedListener( CustomTextWatcher(level2SubCategory) )
 
             }
             Constants.LEVEL2_SPINNER -> {
@@ -310,6 +307,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                                 item.purchaseDate = textView.text.toString()
                             }
                         }
+                        level2CategoryPresenter.setValueToDocument(item)
                     }
                 })
             }
