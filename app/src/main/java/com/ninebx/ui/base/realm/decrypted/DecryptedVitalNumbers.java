@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedVitalNumbers implements Parcelable {
 
-    public static final Creator<DecryptedVitalNumbers> CREATOR = new Creator<DecryptedVitalNumbers>() {
-        @Override
-        public DecryptedVitalNumbers createFromParcel(Parcel in) {
-            return new DecryptedVitalNumbers(in);
-        }
-
-        @Override
-        public DecryptedVitalNumbers[] newArray(int size) {
-            return new DecryptedVitalNumbers[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
@@ -87,36 +76,6 @@ public class DecryptedVitalNumbers implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedVitalNumbers(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        vital_description = in.readString();
-        measurementDate = in.readString();
-        height = in.readString();
-        weight = in.readString();
-        waist = in.readString();
-        bodyFat = in.readString();
-        bodyMassIndex = in.readString();
-        bloodPressure = in.readString();
-        heartRate = in.readString();
-        totalCholesterol = in.readString();
-        hdlCholesterol = in.readString();
-        ldlCholesterol = in.readString();
-        cholesterolRatio = in.readString();
-        triglycerides = in.readString();
-        bloodGlucose = in.readString();
-        hemoglobin = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
-
     public DecryptedVitalNumbers(String selectionType, String classType, String vital_description, String measurementDate, String height, String weight, String waist, String bodyFat, String bodyMassIndex, String bloodPressure, String heartRate, String totalCholesterol, String hdlCholesterol, String ldlCholesterol, String cholesterolRatio, String triglycerides, String bloodGlucose, String hemoglobin, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
@@ -145,41 +104,6 @@ public class DecryptedVitalNumbers implements Parcelable {
     }
 
     public DecryptedVitalNumbers() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(vital_description);
-        dest.writeString(measurementDate);
-        dest.writeString(height);
-        dest.writeString(weight);
-        dest.writeString(waist);
-        dest.writeString(bodyFat);
-        dest.writeString(bodyMassIndex);
-        dest.writeString(bloodPressure);
-        dest.writeString(heartRate);
-        dest.writeString(totalCholesterol);
-        dest.writeString(hdlCholesterol);
-        dest.writeString(ldlCholesterol);
-        dest.writeString(cholesterolRatio);
-        dest.writeString(triglycerides);
-        dest.writeString(bloodGlucose);
-        dest.writeString(hemoglobin);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -438,4 +362,85 @@ public class DecryptedVitalNumbers implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.vital_description);
+        dest.writeString(this.measurementDate);
+        dest.writeString(this.height);
+        dest.writeString(this.weight);
+        dest.writeString(this.waist);
+        dest.writeString(this.bodyFat);
+        dest.writeString(this.bodyMassIndex);
+        dest.writeString(this.bloodPressure);
+        dest.writeString(this.heartRate);
+        dest.writeString(this.totalCholesterol);
+        dest.writeString(this.hdlCholesterol);
+        dest.writeString(this.ldlCholesterol);
+        dest.writeString(this.cholesterolRatio);
+        dest.writeString(this.triglycerides);
+        dest.writeString(this.bloodGlucose);
+        dest.writeString(this.hemoglobin);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedVitalNumbers(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.vital_description = in.readString();
+        this.measurementDate = in.readString();
+        this.height = in.readString();
+        this.weight = in.readString();
+        this.waist = in.readString();
+        this.bodyFat = in.readString();
+        this.bodyMassIndex = in.readString();
+        this.bloodPressure = in.readString();
+        this.heartRate = in.readString();
+        this.totalCholesterol = in.readString();
+        this.hdlCholesterol = in.readString();
+        this.ldlCholesterol = in.readString();
+        this.cholesterolRatio = in.readString();
+        this.triglycerides = in.readString();
+        this.bloodGlucose = in.readString();
+        this.hemoglobin = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedVitalNumbers> CREATOR = new Creator<DecryptedVitalNumbers>() {
+        @Override
+        public DecryptedVitalNumbers createFromParcel(Parcel source) {
+            return new DecryptedVitalNumbers(source);
+        }
+
+        @Override
+        public DecryptedVitalNumbers[] newArray(int size) {
+            return new DecryptedVitalNumbers[size];
+        }
+    };
 }

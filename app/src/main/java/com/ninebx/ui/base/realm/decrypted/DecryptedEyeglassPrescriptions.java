@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedEyeglassPrescriptions implements Parcelable {
 
-    public static final Creator<DecryptedEyeglassPrescriptions> CREATOR = new Creator<DecryptedEyeglassPrescriptions>() {
-        @Override
-        public DecryptedEyeglassPrescriptions createFromParcel(Parcel in) {
-            return new DecryptedEyeglassPrescriptions(in);
-        }
-
-        @Override
-        public DecryptedEyeglassPrescriptions[] newArray(int size) {
-            return new DecryptedEyeglassPrescriptions[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
@@ -83,34 +72,6 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedEyeglassPrescriptions(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        physicianName = in.readString();
-        datePrescribed = in.readString();
-        odSphereValue = in.readString();
-        osSphereValue = in.readString();
-        odCylinderValue = in.readString();
-        osCylinderValue = in.readString();
-        odAxisValue = in.readString();
-        osAxisValue = in.readString();
-        odPrismValue = in.readString();
-        osPrismValue = in.readString();
-        odAddValue = in.readString();
-        osAddValue = in.readString();
-        odBaseValue = in.readString();
-        osBaseValue = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedEyeglassPrescriptions(String selectionType, String classType, String physicianName, String datePrescribed, String odSphereValue, String osSphereValue, String odCylinderValue, String osCylinderValue, String odAxisValue, String osAxisValue, String odPrismValue, String osPrismValue, String odAddValue, String osAddValue, String odBaseValue, String osBaseValue, String notes, String attachmentNames, String created, String modified, Boolean isPrivate, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
@@ -137,34 +98,6 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
     }
 
     public DecryptedEyeglassPrescriptions() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(physicianName);
-        dest.writeString(datePrescribed);
-        dest.writeString(odSphereValue);
-        dest.writeString(osSphereValue);
-        dest.writeString(odCylinderValue);
-        dest.writeString(osCylinderValue);
-        dest.writeString(odAxisValue);
-        dest.writeString(osAxisValue);
-        dest.writeString(odPrismValue);
-        dest.writeString(osPrismValue);
-        dest.writeString(odAddValue);
-        dest.writeString(osAddValue);
-        dest.writeString(odBaseValue);
-        dest.writeString(osBaseValue);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
     }
 
     @Override
@@ -196,11 +129,6 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
                 ", isPrivate=" + isPrivate +
                 ", createdUser='" + createdUser + '\'' +
                 '}';
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -410,4 +338,82 @@ public class DecryptedEyeglassPrescriptions implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.physicianName);
+        dest.writeString(this.datePrescribed);
+        dest.writeString(this.odSphereValue);
+        dest.writeString(this.osSphereValue);
+        dest.writeString(this.odCylinderValue);
+        dest.writeString(this.osCylinderValue);
+        dest.writeString(this.odAxisValue);
+        dest.writeString(this.osAxisValue);
+        dest.writeString(this.odPrismValue);
+        dest.writeString(this.osPrismValue);
+        dest.writeString(this.odAddValue);
+        dest.writeString(this.osAddValue);
+        dest.writeString(this.odBaseValue);
+        dest.writeString(this.osBaseValue);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedEyeglassPrescriptions(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.physicianName = in.readString();
+        this.datePrescribed = in.readString();
+        this.odSphereValue = in.readString();
+        this.osSphereValue = in.readString();
+        this.odCylinderValue = in.readString();
+        this.osCylinderValue = in.readString();
+        this.odAxisValue = in.readString();
+        this.osAxisValue = in.readString();
+        this.odPrismValue = in.readString();
+        this.osPrismValue = in.readString();
+        this.odAddValue = in.readString();
+        this.osAddValue = in.readString();
+        this.odBaseValue = in.readString();
+        this.osBaseValue = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedEyeglassPrescriptions> CREATOR = new Creator<DecryptedEyeglassPrescriptions>() {
+        @Override
+        public DecryptedEyeglassPrescriptions createFromParcel(Parcel source) {
+            return new DecryptedEyeglassPrescriptions(source);
+        }
+
+        @Override
+        public DecryptedEyeglassPrescriptions[] newArray(int size) {
+            return new DecryptedEyeglassPrescriptions[size];
+        }
+    };
 }

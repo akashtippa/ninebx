@@ -55,25 +55,9 @@ public class DecryptedCombineWellness implements Parcelable {
         this.listItems = listItems;
     }
 
-    protected DecryptedCombineWellness(Parcel in) {
-        id = in.readInt();
-    }
-
     public DecryptedCombineWellness() {
 
     }
-
-    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
-        @Override
-        public DecryptedCombineWellness createFromParcel(Parcel in) {
-            return new DecryptedCombineWellness(in);
-        }
-
-        @Override
-        public DecryptedCombineWellness[] newArray(int size) {
-            return new DecryptedCombineWellness[size];
-        }
-    };
 
     public  long getId() {
         return id;
@@ -172,15 +156,6 @@ public class DecryptedCombineWellness implements Parcelable {
         this.listItems = listItems;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
 
     public int getLists(String selectionType, Integer detailsId ) {
         int count = 0;
@@ -205,4 +180,55 @@ public class DecryptedCombineWellness implements Parcelable {
         }
         return count;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.checkupsItems);
+        dest.writeTypedList(this.emergencyContactsItems);
+        dest.writeTypedList(this.eyeglassPrescriptionsItems);
+        dest.writeTypedList(this.healthcareProvidersItems);
+        dest.writeTypedList(this.identificationItems);
+        dest.writeTypedList(this.medicalConditionsItems);
+        dest.writeTypedList(this.medicalHistoryItems);
+        dest.writeTypedList(this.medicationsItems);
+        dest.writeTypedList(this.vitalNumbersItems);
+        dest.writeTypedList(this.wellnessItems);
+        dest.writeTypedList(this.listItems);
+        dest.writeString(this.searchField);
+    }
+
+    protected DecryptedCombineWellness(Parcel in) {
+        this.id = in.readLong();
+        this.checkupsItems = in.createTypedArrayList(DecryptedCheckups.CREATOR);
+        this.emergencyContactsItems = in.createTypedArrayList(DecryptedEmergencyContacts.CREATOR);
+        this.eyeglassPrescriptionsItems = in.createTypedArrayList(DecryptedEyeglassPrescriptions.CREATOR);
+        this.healthcareProvidersItems = in.createTypedArrayList(DecryptedHealthcareProviders.CREATOR);
+        this.identificationItems = in.createTypedArrayList(DecryptedIdentification.CREATOR);
+        this.medicalConditionsItems = in.createTypedArrayList(DecryptedMedicalConditions.CREATOR);
+        this.medicalHistoryItems = in.createTypedArrayList(DecryptedMedicalHistory.CREATOR);
+        this.medicationsItems = in.createTypedArrayList(DecryptedMedications.CREATOR);
+        this.vitalNumbersItems = in.createTypedArrayList(DecryptedVitalNumbers.CREATOR);
+        this.wellnessItems = in.createTypedArrayList(DecryptedWellness.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedWellnessList.CREATOR);
+        this.searchField = in.readString();
+    }
+
+    public static final Creator<DecryptedCombineWellness> CREATOR = new Creator<DecryptedCombineWellness>() {
+        @Override
+        public DecryptedCombineWellness createFromParcel(Parcel source) {
+            return new DecryptedCombineWellness(source);
+        }
+
+        @Override
+        public DecryptedCombineWellness[] newArray(int size) {
+            return new DecryptedCombineWellness[size];
+        }
+    };
 }

@@ -104,23 +104,23 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Gender", "Gender", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of birth", "Date of birth", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Age", "Age", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Height(ft, in)", "Height(ft, in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Weight", "Weight", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Hair color", "Hair color", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Eye color", "Eye color", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visible marks", "Visible marks", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Blood type", "Blood type", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Organ donor", "Organ donor", "", Constants.LEVEL2_SWITCH))
+        category.subCategories.add(Level2SubCategory("Gender", "Gender", Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Date of birth", decryptedIdentification!!.dateofBirth, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Age",  decryptedIdentification!!.age, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Height(ft, in)", decryptedIdentification!!.height, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Weight", decryptedIdentification!!.weight, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Hair color", decryptedIdentification!!.hairColor, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Eye color", decryptedIdentification!!.eyeColor, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Visible marks", decryptedIdentification!!.visibleMarks, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Blood type", decryptedIdentification!!.bloodType, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Organ donor", decryptedIdentification!!.orgonDonor, "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedIdentification!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -140,28 +140,28 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Past Conditions And Treatment"
-        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalHistory!!.treatmentDiscription, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Immunization History"
-        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalHistory!!.immunizationDiscription, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Family History"
-        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalHistory!!.history, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedMedicalHistory!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -181,23 +181,23 @@ class WellnessHelper(
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Practice/Group name", "Practice/Group name", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Phone number 1", "Phone number 1", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Phone number 2", "Phone number 2", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Email address", "Email address", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Street address 1", "Street address 1", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Street address 2", "Street address 2", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("City", "City", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("State", "State", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Zip code", "Zip code", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Country", "Country", "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Practice/Group name", decryptedHealthcareProviders!!.practiceName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Phone number 1", decryptedHealthcareProviders!!.phoneNumberOne, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Phone number 2", decryptedHealthcareProviders!!.phoneNumberTwo, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Email address", decryptedHealthcareProviders!!.emailAddress, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Street address 1", decryptedHealthcareProviders!!.streetAddressOne, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Street address 2", decryptedHealthcareProviders!!.streetAddressTwo, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("City", decryptedHealthcareProviders!!.city, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("State", decryptedHealthcareProviders!!.state, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Zip code", decryptedHealthcareProviders!!.zipCode, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Country", decryptedHealthcareProviders!!.country, "", Constants.LEVEL2_LOCATION))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedHealthcareProviders!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -217,16 +217,16 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Frequency", "Frequency", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Start date", "Start date", "", Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("End date", "End date", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Frequency", decryptedMedications!!.frequency, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Start date", decryptedMedications!!.startDate, "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("End date", decryptedMedications!!.endDate, "", Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedMedications!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -246,14 +246,14 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Description", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalConditions!!.medi_description, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedMedicalConditions!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -300,27 +300,27 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Height (ft, in)", "Height (ft, in)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Weight(lbs)", "Weight(lbs)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Waist(in)", "Waist(in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Body fat(%)", "Body fat(%)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Body mass index(BMI kg/m2)", "Body mass index(BMI kg/m2)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Blood pressure(xx/yy)", "Blood pressure(xx/yy)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Heart rate(bpm)", "Heart rate(bpm)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Total cholesterol(mg/dL)", "Total cholesterol(mg/dL)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("HDL cholesterol(mg/dL)", "HDL cholesterol(mg/dL)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("LDL cholesterol(mg/dL)", "LDL cholesterol(mg/dL)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Cholesterol ration(Total cholesterol/HDL)", "Cholesterol ration(Total cholesterol/HDL)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Triglycerides(mg/dL)", "Triglycerides(mg/dL)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Blood glucose(mg/dL)", "Blood glucose(mg/dL)", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Hemoglobin A1C(%)", "Hemoglobin A1C(%)", "", Constants.LEVEL2_SWITCH))
+        category.subCategories.add(Level2SubCategory("Height (ft, in)", decryptedVitalNumbers!!.height, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Weight(lbs)", decryptedVitalNumbers!!.weight, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist(in)", decryptedVitalNumbers!!.waist, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Body fat(%)", decryptedVitalNumbers!!.bodyFat, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Body mass index(BMI kg/m2)", decryptedVitalNumbers!!.bodyMassIndex, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Blood pressure(xx/yy)", decryptedVitalNumbers!!.bloodPressure, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Heart rate(bpm)", decryptedVitalNumbers!!.heartRate, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Total cholesterol(mg/dL)", decryptedVitalNumbers!!.totalCholesterol, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("HDL cholesterol(mg/dL)", decryptedVitalNumbers!!.hdlCholesterol, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("LDL cholesterol(mg/dL)", decryptedVitalNumbers!!.ldlCholesterol, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Cholesterol ratio(Total cholesterol/HDL)", decryptedVitalNumbers!!.cholesterolRatio, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Triglycerides(mg/dL)", decryptedVitalNumbers!!.triglycerides, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Blood glucose(mg/dL)", decryptedVitalNumbers!!.bloodGlucose, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Hemoglobin A1C(%)", decryptedVitalNumbers!!.hemoglobin, "", Constants.LEVEL2_SWITCH))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedVitalNumbers!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -340,16 +340,16 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Type of physician", "Type of physician", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Reason", "Reason", "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Date of visit", "Date of visit", "", Constants.LEVEL2_PICKER))
+        category.subCategories.add(Level2SubCategory("Type of physician", decryptedCheckups!!.physicianType, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Reason", decryptedCheckups!!.reason, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Date of visit", decryptedCheckups!!.dateOfVisit, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedCheckups!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2001
@@ -361,6 +361,7 @@ class WellnessHelper(
 
         categoryView.onSuccess(categoryList)
     }
+
     fun setValue(level2Category: Level2SubCategory){
         when(category_name){
             "Identification" -> {

@@ -9,6 +9,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
+import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_wellness.*
 
@@ -37,17 +38,22 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
         ivBack.setOnClickListener {  activity!!.onBackPressed()  }
         NineBxApplication.instance.activityInstance!!.hideBottomView()
+
         val bundle = arguments
         layoutPersonalHealthRecord.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
 
-            bundle!!.putString("categoryName", "Identification")
+            val bundle = Bundle()
+            bundle.putString("categoryName", "Identification")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutMedicalHistory.setOnClickListener {
@@ -56,10 +62,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Medical history")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutHealthCare.setOnClickListener {
@@ -68,10 +77,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Healthcare providers")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutMedications.setOnClickListener {
@@ -80,10 +92,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Medications")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutMedicalConditions.setOnClickListener {
@@ -92,10 +107,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Medical conditions/Allergies")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutEye.setOnClickListener {
@@ -104,10 +122,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Eyeglass prescriptions")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutVitalNumber.setOnClickListener {
@@ -116,10 +137,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Vital numbers")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
         layoutCheckUps.setOnClickListener {
@@ -128,10 +152,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
             bundle!!.putString("categoryName", "Checkups and visits")
             bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
     }
 

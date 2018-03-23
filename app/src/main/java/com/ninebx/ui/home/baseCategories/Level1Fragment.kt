@@ -325,11 +325,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                                         intent, 12313)
                             }
                         }
-
-
-
                     }
-
                 }
             })
             rvSubCategory.adapter = subCategoryAdapter
@@ -588,6 +584,4 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         }
     }
-
-
 }

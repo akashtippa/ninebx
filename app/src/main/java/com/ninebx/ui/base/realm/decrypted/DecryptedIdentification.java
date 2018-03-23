@@ -19,20 +19,9 @@ import io.realm.annotations.Required;
  */
 public class DecryptedIdentification implements Parcelable {
 
-    public static final Creator<DecryptedIdentification> CREATOR = new Creator<DecryptedIdentification>() {
-        @Override
-        public DecryptedIdentification createFromParcel(Parcel in) {
-            return new DecryptedIdentification(in);
-        }
-
-        @Override
-        public DecryptedIdentification[] newArray(int size) {
-            return new DecryptedIdentification[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
-            long id = 0;
+     long id = 0;
     @Required
     private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore
@@ -77,31 +66,6 @@ public class DecryptedIdentification implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedIdentification(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        name = in.readString();
-        gender = in.readString();
-        dateofBirth = in.readString();
-        age = in.readString();
-        height = in.readString();
-        weight = in.readString();
-        hairColor = in.readString();
-        eyeColor = in.readString();
-        visibleMarks = in.readString();
-        bloodType = in.readString();
-        orgonDonor = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
-
     public DecryptedIdentification(String selectionType, String classType, String name, String gender, String dateofBirth, String age, String height, String weight, String hairColor, String eyeColor, String visibleMarks, String bloodType, String orgonDonor, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
@@ -125,36 +89,6 @@ public class DecryptedIdentification implements Parcelable {
     }
 
     public DecryptedIdentification() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(name);
-        dest.writeString(gender);
-        dest.writeString(dateofBirth);
-        dest.writeString(age);
-        dest.writeString(height);
-        dest.writeString(weight);
-        dest.writeString(hairColor);
-        dest.writeString(eyeColor);
-        dest.writeString(visibleMarks);
-        dest.writeString(bloodType);
-        dest.writeString(orgonDonor);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -368,4 +302,76 @@ public class DecryptedIdentification implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.name);
+        dest.writeString(this.gender);
+        dest.writeString(this.dateofBirth);
+        dest.writeString(this.age);
+        dest.writeString(this.height);
+        dest.writeString(this.weight);
+        dest.writeString(this.hairColor);
+        dest.writeString(this.eyeColor);
+        dest.writeString(this.visibleMarks);
+        dest.writeString(this.bloodType);
+        dest.writeString(this.orgonDonor);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedIdentification(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.name = in.readString();
+        this.gender = in.readString();
+        this.dateofBirth = in.readString();
+        this.age = in.readString();
+        this.height = in.readString();
+        this.weight = in.readString();
+        this.hairColor = in.readString();
+        this.eyeColor = in.readString();
+        this.visibleMarks = in.readString();
+        this.bloodType = in.readString();
+        this.orgonDonor = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedIdentification> CREATOR = new Creator<DecryptedIdentification>() {
+        @Override
+        public DecryptedIdentification createFromParcel(Parcel source) {
+            return new DecryptedIdentification(source);
+        }
+
+        @Override
+        public DecryptedIdentification[] newArray(int size) {
+            return new DecryptedIdentification[size];
+        }
+    };
 }
