@@ -160,6 +160,7 @@ class ContactsListContainerFragment() : FragmentBackHelper(), IContactsAdded {
             /*val homeIntent = Intent(context, HomeActivity::class.java)
             startActivity(homeIntent)
             activity!!.finishAffinity()*/
+            NineBxApplication.backPressedFromSharedContacts = true
             NineBxApplication.instance.activityInstance!!.callHomeFragment()
         }
 

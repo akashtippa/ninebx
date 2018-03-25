@@ -540,7 +540,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         if (!isToWorkOnBack)
             return
 
-        if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack())
+        if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack() && !NineBxApplication.backPressedFromSharedContacts)
             super.onBackPressed()
         else {
             backBtnCount++
