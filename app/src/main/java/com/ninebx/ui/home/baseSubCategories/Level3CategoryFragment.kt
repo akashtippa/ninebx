@@ -241,9 +241,9 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedPersonal -> {
                     val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
-                    etTitle.setText(decryptedPersonal.userName)
+                    etTitle.setText(decryptedPersonal.institutionName)
+                    etTitleValue.setText(decryptedPersonal.accountName)
                     etTitleValue.setEnabled(false)
-
                     createdValue.text = decryptedPersonal.created
                     modifiedValue.setText(decryptedPersonal.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -348,6 +348,15 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
+                is DecryptedWellness -> {
+                    val decryptedWellness: DecryptedWellness = selectedDocument as DecryptedWellness
+                    createdValue.setText(decryptedWellness.created)
+                    etTitle.setText(decryptedWellness.institutionName)
+                    etTitleValue.setText(decryptedWellness.accountName)
+                    modifiedValue.setText(decryptedWellness.modified)
+                    modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
+                }
             //Travel
                 is DecryptedDocuments -> {
                     val decryptedDocuments : DecryptedDocuments = selectedDocument as DecryptedDocuments
@@ -414,8 +423,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 is DecryptedTravel -> {
                     val decryptedTravel : DecryptedTravel = selectedDocument as DecryptedTravel
                     createdValue.setText(decryptedTravel.created)
-                    etTitle.setText(decryptedTravel.userName)
-                    etTitleValue.setText(decryptedTravel.nameOnAccount)
+                    etTitle.setText(decryptedTravel.institutionName)
+                    etTitleValue.setText(decryptedTravel.accountName)
                     modifiedValue.setText(decryptedTravel.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)

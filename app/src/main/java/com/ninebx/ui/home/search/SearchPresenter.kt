@@ -178,7 +178,7 @@ class SearchPresenter {
             }
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
-                val items = filterDuplicates(mDecryptedCombineContacts.mainContactsItems!!)
+                val items = filterDuplicatesforContacts(mDecryptedCombineContacts.mainContactsItems!!)
                 mDecryptedCombineContacts.mainContactsItems.clear()
                 mDecryptedCombineContacts.mainContactsItems.addAll(items)
                 searchView!!.onCombineContactsFetched(mDecryptedCombineContacts)
@@ -186,7 +186,7 @@ class SearchPresenter {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    private fun filterDuplicates(mCombineContacts: java.util.ArrayList<DecryptedMainContacts>): ArrayList<DecryptedMainContacts> {
+    private fun filterDuplicatesforContacts(mCombineContacts: java.util.ArrayList<DecryptedMainContacts>): ArrayList<DecryptedMainContacts> {
         val singleCountList = ArrayList<DecryptedMainContacts>()
         for( item in mCombineContacts ) {
             if( !singleCountList.contains(item) ) {
@@ -365,9 +365,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforTravel(mDecryptedCombineTravel.travelItems!!)
+                mDecryptedCombineTravel.travelItems.clear()
+                mDecryptedCombineTravel.travelItems.addAll(items)
                 searchView!!.onCombineTravelFetched(mDecryptedCombineTravel)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforTravel(mCombineTravel: java.util.ArrayList<DecryptedTravel>): ArrayList<DecryptedTravel> {
+        val singleCountList = ArrayList<DecryptedTravel>()
+        for( item in mCombineTravel ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombine() {

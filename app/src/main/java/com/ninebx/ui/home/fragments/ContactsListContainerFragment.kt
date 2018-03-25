@@ -161,7 +161,6 @@ class ContactsListContainerFragment() : FragmentBackHelper(), IContactsAdded {
             startActivity(homeIntent)
             activity!!.finishAffinity()*/
             NineBxApplication.instance.activityInstance!!.callHomeFragment()
-            /*activity!!.finish()*/
         }
 
         ivBackContactView.setOnClickListener {
