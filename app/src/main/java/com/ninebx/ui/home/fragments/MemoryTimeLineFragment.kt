@@ -67,7 +67,7 @@ class MemoryTimeLineFragment : FragmentBackHelper(), AWSFileTransferHelper.FileO
     private lateinit var mAWSFileTransferHelper: AWSFileTransferHelper
 
     var addOrEdit = ""
-    val preferences = NineBxPreferences()
+    val preferences = NineBxApplication.getPreferences()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

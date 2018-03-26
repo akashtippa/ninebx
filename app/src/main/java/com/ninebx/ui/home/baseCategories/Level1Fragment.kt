@@ -194,7 +194,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
         inflateLayout(categories)
     }
 
-    val prefrences = NineBxPreferences()
+    val prefrences = NineBxApplication.getPreferences()
 
     lateinit var rvSubCategory: RecyclerView
     var categoryView: LinearLayout ?= null
