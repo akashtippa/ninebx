@@ -76,7 +76,7 @@ class CommonItemsHelper(var category_name: String,
             DecryptedWellness::class.java.simpleName -> {
                 decryptedWellness = selectedDocument as DecryptedWellness
             }
-            DecryptedMemoryTimeline::class.java.simpleName -> {
+            DecryptedMainMemories::class.java.simpleName -> {
                 decryptedMemories = selectedDocument as DecryptedMainMemories
             }
             DecryptedShopping::class.java.simpleName -> {
@@ -107,6 +107,7 @@ class CommonItemsHelper(var category_name: String,
                     R.string.travel -> { }
                     R.string.contacts -> {  }
                     R.string.education -> {  }
+                    R.string.personal -> { }
                     R.string.interests -> {  }
                     R.string.wellness -> {  }
                     R.string.memories -> {  }
@@ -503,6 +504,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedPersonal!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedPersonal!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedPersonal!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedPersonal!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedPersonal!!.notes = level2SubCategory.titleValue}
@@ -524,6 +526,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedShopping!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedShopping!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedShopping!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedShopping!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedShopping!!.notes = level2SubCategory.titleValue}
@@ -545,6 +548,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedMemories!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedMemories!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedMemories!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedMemories!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedMemories!!.notes = level2SubCategory.titleValue}
@@ -566,6 +570,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedWellness!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedWellness!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedWellness!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedWellness!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedWellness!!.notes = level2SubCategory.titleValue}
@@ -587,6 +592,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedInterests!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedInterests!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedInterests!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedInterests!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedInterests!!.notes = level2SubCategory.titleValue}
@@ -608,6 +614,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedEducation!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedEducation!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedEducation!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedEducation!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedEducation!!.notes = level2SubCategory.titleValue}
@@ -617,7 +624,7 @@ class CommonItemsHelper(var category_name: String,
         }
     }
 
-    fun setServiceAccountsForTravel(level2SubCategory: Level2SubCategory) { //for contacts only
+    private fun setServiceAccountsForTravel(level2SubCategory: Level2SubCategory) { //for contacts only
         when(level2SubCategory.title) {
             "Loan type", "Account type" -> {decryptedTravel!!.accountType = level2SubCategory.titleValue}
             "Name(s) on account" -> {decryptedTravel!!.nameOnAccount = level2SubCategory.titleValue}
@@ -629,6 +636,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedTravel!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedTravel!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedTravel!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedTravel!!.paymentMethodOnFile = level2SubCategory.titleValue }
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedTravel!!.notes = level2SubCategory.titleValue}
@@ -638,7 +646,7 @@ class CommonItemsHelper(var category_name: String,
         }
     }
 
-    fun setServiceAccountsForContacts(level2SubCategory: Level2SubCategory) { //for contacts only
+    private fun setServiceAccountsForContacts(level2SubCategory: Level2SubCategory) { //for contacts only
         when(level2SubCategory.title) {
             "Loan type", "Account type" -> {decryptedMainContacts!!.accountType = level2SubCategory.titleValue}
             "Name(s) on account" -> {decryptedMainContacts!!.nameOnAccount = level2SubCategory.titleValue}
@@ -650,6 +658,7 @@ class CommonItemsHelper(var category_name: String,
             "Password" -> {decryptedMainContacts!!.password = level2SubCategory.titleValue}
             "PIN" -> {decryptedMainContacts!!.pin = level2SubCategory.titleValue}
             "Account name" -> {decryptedMainContacts!!.accountName = level2SubCategory.titleValue}
+            "Payment method on file" -> { decryptedMainContacts!!.paymentMethodOnFile = level2SubCategory.titleValue}
             else -> {
                 when (level2SubCategory.type) {
                     Constants.LEVEL2_NOTES -> { decryptedMainContacts!!.notes = level2SubCategory.titleValue}

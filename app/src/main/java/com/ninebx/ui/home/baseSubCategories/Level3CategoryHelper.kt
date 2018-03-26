@@ -440,7 +440,7 @@ class Level3CategoryHelper(
             educationAndWorkHelper!!.setValue(level2Category)
         }
 
-        else {
+        if(commonItemHelper != null) {
             when (category_name) {
 
             // Common View
