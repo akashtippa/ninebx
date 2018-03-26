@@ -11,7 +11,6 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.tutorial.adapter.TutorialAdapter
-import com.ninebx.utility.NineBxPreferences
 import kotlinx.android.synthetic.main.activity_walk_through.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
@@ -27,7 +26,6 @@ class WalkThroughActivity : AppCompatActivity() {
         val viewPager = findViewById<View>(R.id.activity_help_view_pager) as ViewPager
         viewPager.adapter = TutorialAdapter(supportFragmentManager)
 
-        prefrences.firstRun = false
         activity_help_view_page_indicator.setViewPager(activity_help_view_pager!!)
 
         activity_help_view_page_indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -76,7 +74,7 @@ class WalkThroughActivity : AppCompatActivity() {
         })
 
         txtGetStarted.setOnClickListener({
-            prefrences.firstRun = false
+            prefrences.firstRunDone = true
             val intent = Intent(this@WalkThroughActivity, AuthActivity::class.java)
             startActivity(intent)
             finish()
