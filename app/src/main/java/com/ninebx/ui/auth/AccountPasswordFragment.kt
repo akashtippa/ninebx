@@ -51,9 +51,9 @@ class AccountPasswordFragment : BaseAuthFragment() {
             activity!!.onBackPressed()
         }
 
-        etConfirmPassword.setOnFocusChangeListener { view, isFocused ->
+        etConfirmPassword.setOnFocusChangeListener { _, isFocused ->
             if( isFocused ) {
-                if( etCreatePassword.text.toString().isEmpty() ) {
+                if( etCreatePassword.text.toString().isEmpty() || !isValidPassword(etCreatePassword.text.toString().trim()) ) {
                     context!!.showToast(R.string.password_rules)
                     etCreatePassword.requestFocus()
                 }
