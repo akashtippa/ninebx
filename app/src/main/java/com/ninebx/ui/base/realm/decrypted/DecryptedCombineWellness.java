@@ -190,7 +190,17 @@ public class DecryptedCombineWellness implements Parcelable {
         return count;
     }
 
-
+    public int getHealthcareSize(String name){
+        int count = 0;
+        ArrayList<Long> ids = new ArrayList<Long>();
+        for (DecryptedHealthcareProviders selectedItem : healthcareProvidersItems ){
+            if( selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)) {
+                count++;
+                ids.add(selectedItem.id);
+            }
+        }
+        return count;
+    }
     @Override
     public int describeContents() {
         return 0;

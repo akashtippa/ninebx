@@ -54,10 +54,11 @@ class Level3CategoryHelper(
         extractObject()
         setupCommonHelper()
         when( categoryInt ) {
-            R.string.home_amp_money -> {
+            R.string.home_n_money -> {
                 homeHelper = HomeHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 homeHelper!!.initialize()
                 homeHelper!!.getFormForCategory()
+                searchByOthers()
             }
             R.string.personal -> {
                 personalHelper = PersonalHelper(category_name, categoryID, classType, selectedDocument, categoryView)
@@ -476,6 +477,7 @@ class Level3CategoryHelper(
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
+
 
         if( homeHelper != null ) {
             homeHelper!!.saveDocument(context, combineItem, title, subTitle)

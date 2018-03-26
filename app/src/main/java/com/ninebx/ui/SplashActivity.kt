@@ -42,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
                 .subscribe {
 
                     when {
-                        nineBxPreferences.firstRun -> {
+                        !nineBxPreferences.firstRunDone -> {
                             val intent = Intent(this@SplashActivity, WalkThroughActivity::class.java)
                             startActivity(intent)
                             disposables.clear()

@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -28,6 +27,7 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.base.realm.home.education.Education
+import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.base.realm.home.interests.Interests
 import com.ninebx.ui.base.realm.home.memories.MainMemories
 import com.ninebx.ui.base.realm.home.personal.Personal
@@ -36,12 +36,10 @@ import com.ninebx.ui.base.realm.home.travel.Travel
 import com.ninebx.ui.base.realm.home.wellness.Wellness
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.account.interfaces.EducationItemsAdded
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
-import com.ninebx.ui.home.account.interfaces.PersonalItemsAdded
-import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
 import com.ninebx.ui.home.adapter.*
 import com.ninebx.ui.home.baseCategories.OptionItem
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -83,7 +81,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         bundle.putString("categoryName", categoryName)
         bundle.putString("categoryId", categoryID)
         bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
-        val action = if(isEditable) "edit" else "add"
+        val action = if(isEditable) "edit" else "view"
         bundle.putString("action", action)
         val classType = getClassType()
         bundle.putString("classType", classType)
@@ -91,6 +89,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
         bundle.putParcelableArrayList(Constants.SUB_OPTIONS, optionsList)
+        if( arguments!!.containsKey(Constants.SUB_CATEGORY) )
+        bundle.putParcelable(Constants.SUB_CATEGORY, arguments!!.getParcelable(Constants.SUB_CATEGORY))
         val intent = Intent( context, ContainerActivity::class.java)
         intent.putExtras(bundle)
         startActivityForResult(intent, LEVEL_3)
@@ -99,7 +99,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private fun getClassType(): String {
         var classType = ""
         classType = when(categoryInt) {
-            R.string.home_amp_money -> { "" }
+            R.string.home_amp_money -> { DecryptedFinancial::class.java.simpleName }
             R.string.travel -> { DecryptedTravel::class.java.simpleName }
             R.string.contacts -> { DecryptedMainContacts::class.java.simpleName }
             R.string.education_work -> { DecryptedEducation::class.java.simpleName }
@@ -130,7 +130,9 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             contactsRealm!!.beginTransaction()
             when (categoryInt) {
                 R.string.home_amp_money -> {
-
+                    contact as DecryptedFinancial
+                    contactsRealm!!.where(Financial::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mHomeServiceAccountsAdapter!!.deleteContact(contact)
                 }
                 R.string.travel -> {
                     contact as DecryptedTravel
@@ -211,6 +213,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         .putExtra("classType", classType)
                         .putExtra(Constants.FROM_CLASS, "Level2Fragment")
                         .putExtra(Constants.SUB_OPTIONS, optionsList)
+                        .putExtra(Constants.SUB_CATEGORY, arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY))
                 , LEVEL_3)
     }
 
@@ -258,7 +261,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
         Log.d("Sub options",optionsList.toString())
         toolbarTitle.text = categoryName
-        toolbarTitle.typeface = Typeface.DEFAULT_BOLD
+
         ivHome.setOnClickListener {
             val homeIntent = Intent(context, HomeActivity::class.java)
             startActivity(homeIntent)
@@ -287,7 +290,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 bundle.putString("action", "add")
                 bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
                 bundle.putInt(Constants.CURRENT_BOX, categoryInt)
-
+                if( arguments!!.containsKey(Constants.SUB_CATEGORY) )
+                    bundle.putParcelable(Constants.SUB_CATEGORY, arguments!!.getParcelable(Constants.SUB_CATEGORY))
                 val intent = Intent( context, ContainerActivity::class.java)
                 intent.putExtras(bundle)
                 startActivityForResult(intent, LEVEL_3)
@@ -325,6 +329,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private var mWellnessItemsAdapter: WellnessItemsAdapter ?= null
     private var mMainMemoriesAdapter: MainMemoriesAdapter ?= null
     private var mShoppingItemsAdapter: ShoppingItemsAdapter ?= null
+    private var mHomeServiceAccountsAdapter: HomeServiceAccountsAdapter ?= null
     private fun loadItems() {
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         if (categoryName == "Services/Other Accounts") {
@@ -377,13 +382,24 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                     rvCommonList!!.adapter = mShoppingItemsAdapter
                     mShoppingItemsAdapter!!.notifyDataSetChanged()
                 }
-            /*R.string.home_amp_money -> {}*/
+                R.string.home_amp_money -> {
+                    val list = combinedItems as DecryptedCombine
+                    val serviceList: ArrayList<DecryptedFinancial> ?= ArrayList()
+                    for(item in list.financialItems) {
+                        if(item.selectionType == "home_8001") {
+                            serviceList!!.add(item)
+                        }
+                    }
+                    mHomeServiceAccountsAdapter = HomeServiceAccountsAdapter(serviceList,this)
+                    rvCommonList!!.adapter = mHomeServiceAccountsAdapter
+                    mHomeServiceAccountsAdapter!!.notifyDataSetChanged()
+                }
             }
         } else {
             searchHelper = SearchHelper()
             searchHelper.setOnDocumentSelection(this)
-
-            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!))
+            val subCategory : SubCategory ?= arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!), subCategory)
             AppLogger.d("SearchItems", " " + searchItems)
             rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this)
         }

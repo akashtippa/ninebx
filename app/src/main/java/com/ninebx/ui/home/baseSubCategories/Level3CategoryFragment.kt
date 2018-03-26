@@ -539,7 +539,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.show()
             }
             toolbarTitle.text = etTitle.text.toString()
-            toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         }
     }
 
@@ -586,6 +585,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"
+        setTitle()
         if( action == "add" ) {
             ivEdit.hide()
             ivDelete.hide()
@@ -614,7 +614,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             startActivity(homeIntent)
             activity!!.finishAffinity()
         }
-        setTitle()
 
         //setCamera(boxValue)
         tvSave.hide()

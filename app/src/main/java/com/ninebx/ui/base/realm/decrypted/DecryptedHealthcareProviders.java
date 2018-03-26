@@ -388,4 +388,5 @@ public class DecryptedHealthcareProviders implements Parcelable {
             return new DecryptedHealthcareProviders[size];
         }
     };
+
 }

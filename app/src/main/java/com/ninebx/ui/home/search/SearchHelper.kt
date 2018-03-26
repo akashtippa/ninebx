@@ -8,6 +8,7 @@ import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.kotlin.showProgressDialog
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmModel
@@ -85,9 +86,19 @@ class SearchHelper() {
         }
     }
 
-    fun getLevel3SearchItemsForCategory( categoryId : String, allItems : ArrayList<Level3SearchItem> ) : ArrayList<Level3SearchItem> {
+    fun getLevel3SearchItemsForCategory(categoryId: String, allItems: ArrayList<Level3SearchItem>, subCategory: SubCategory?) : ArrayList<Level3SearchItem> {
         AppLogger.d("LevelList", "getLevel3SearchItemsForCategory : " + categoryId)
         var level3SearchItems = ArrayList<Level3SearchItem>()
+        for( item in allItems ) {
+            if( item.categoryId.equals(categoryId, true) ) {
+                if( subCategory != null ) {
+                    //TODO
+                }
+                else {
+                    level3SearchItems.add(item)
+                }
+            }
+        }
         allItems.filterTo(level3SearchItems) { it.categoryId.equals(categoryId, true) }
         level3SearchItems = filterDuplicates(level3SearchItems)
         return level3SearchItems

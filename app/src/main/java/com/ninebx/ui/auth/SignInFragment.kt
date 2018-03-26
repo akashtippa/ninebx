@@ -82,6 +82,9 @@ class SignInFragment : BaseAuthFragment() {
         imgDelEmail.setOnClickListener {
             edtEmailAddress.setText("")
         }
+
+        if( !NineBxApplication.getPreferences().userEmail.isNullOrEmpty() )
+            edtEmailAddress.setText(NineBxApplication.getPreferences().userEmail)
     }
 
     override fun validate(): Boolean {

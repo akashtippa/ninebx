@@ -10,11 +10,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
+import com.ninebx.ui.base.realm.decrypted.DecryptedFinancial
 import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
 
-internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainContacts>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<MainContactsAdapter.RecyclerItemViewHolder>() {
+internal class HomeServiceAccountsAdapter(private var myList: ArrayList<DecryptedFinancial>?, private val mainContactsAdded: MainContactsAdded) : RecyclerView.Adapter<HomeServiceAccountsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
@@ -47,7 +48,7 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         return myList!!.size
     }
 
-    fun deleteContact(contact: DecryptedMainContacts) {
+    fun deleteContact(contact: DecryptedFinancial) {
         myList!!.remove(contact)
         notifyData(myList!!)
     }
@@ -57,16 +58,16 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
         notifyItemRemoved(position)
     }
 
-    fun notifyData(myList: ArrayList<DecryptedMainContacts>) {
+    fun notifyData(myList: ArrayList<DecryptedFinancial>) {
         this.myList = myList
         notifyDataSetChanged()
     }
 
-    fun getList(): ArrayList<DecryptedMainContacts>? {
+    fun getList(): ArrayList<DecryptedFinancial>? {
         return this.myList
     }
 
-    fun updateContact(contact: DecryptedMainContacts) {
+    fun updateContact(contact: DecryptedFinancial) {
         for(item in myList!!) {
             if(item.id == contact.id) {
                 myList!!.remove(item)
@@ -92,4 +93,6 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
     }
+
+
 }
