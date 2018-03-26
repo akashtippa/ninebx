@@ -76,7 +76,7 @@ class CommonItemsHelper(var category_name: String,
             DecryptedWellness::class.java.simpleName -> {
                 decryptedWellness = selectedDocument as DecryptedWellness
             }
-            DecryptedMemoryTimeline::class.java.simpleName -> {
+            DecryptedMainMemories::class.java.simpleName -> {
                 decryptedMemories = selectedDocument as DecryptedMainMemories
             }
             DecryptedShopping::class.java.simpleName -> {
