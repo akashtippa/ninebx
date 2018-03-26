@@ -30,6 +30,7 @@ class LoginSignupTask(private var userName: String,
 
     override fun onSuccess(result: SyncUser?) {
 
+
         if (result == null) {
             authView.hideProgress()
             authView.onError(R.string.error_login)
@@ -38,6 +39,11 @@ class LoginSignupTask(private var userName: String,
             //AppLogger.d(TAG, "login : result : " + result.toString())
             //AppLogger.d(TAG, result.toJson())
             mCurrentUser = result
+
+            NineBxApplication.currentUserId = result.identity
+            NineBxApplication.getPreferences().userPassword = Arrays.toString(encryptedPasswordByteArray)
+            NineBxApplication.getPreferences().userPasswordUINT8 = Arrays.toString(encryptedPasswordByteArray)
+
             if (type == "Signup") {
 
                 //Save user data to realm
@@ -194,8 +200,7 @@ class LoginSignupTask(private var userName: String,
 
         encryptedPasswordByteArray = (encryptKey(password, userName))
         encryptedPassword = convertToUInt8IntArray(encryptedPasswordByteArray)
-        NineBxApplication.getPreferences().userPassword = Arrays.toString(encryptedPasswordByteArray)
-        NineBxApplication.getPreferences().userPasswordUINT8 = Arrays.toString(encryptedPasswordByteArray)
+
 
         //AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
         //AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
