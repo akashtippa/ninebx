@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
@@ -49,6 +50,16 @@ class AccountPasswordFragment : BaseAuthFragment() {
         ivBackPass.setOnClickListener {
             activity!!.onBackPressed()
         }
+
+        etConfirmPassword.setOnFocusChangeListener { view, isFocused ->
+            if( isFocused ) {
+                if( etCreatePassword.text.toString().isEmpty() ) {
+                    context!!.showToast(R.string.password_rules)
+                    etCreatePassword.requestFocus()
+                }
+            }
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -142,7 +153,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 etCreatePassword.requestFocus()
                 isValid = false
             }
-            
+
             if (etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8) {
                 context!!.showToast(R.string.password_length_8)
                 etConfirmPassword.requestFocus()
