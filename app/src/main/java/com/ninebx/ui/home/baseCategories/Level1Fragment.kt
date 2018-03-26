@@ -287,8 +287,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                             }
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
-
-                    }
+    }
 
 
                     if( action == "add_item" ) {
