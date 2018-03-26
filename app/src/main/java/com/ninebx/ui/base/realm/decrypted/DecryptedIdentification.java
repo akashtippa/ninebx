@@ -21,7 +21,7 @@ public class DecryptedIdentification implements Parcelable {
 
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
-            long id = 0;
+     long id = 0;
     @Required
     private ArrayList<RealmString> backingImages = new ArrayList<>();
     @Ignore

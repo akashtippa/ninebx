@@ -92,7 +92,6 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                         }
                         builder.setNegativeButton("Cancel") { dialog, which -> dialog?.cancel() }
                         builder.show()
-
                     }
                 }
             }

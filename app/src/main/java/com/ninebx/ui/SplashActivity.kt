@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.auth.AuthActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.tutorial.activity.WalkThroughActivity
-import com.ninebx.utility.NineBxPreferences
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit
 
 class SplashActivity : AppCompatActivity() {
 
-    val disposables: CompositeDisposable = CompositeDisposable()
-    val prefrences = NineBxPreferences()
+    private val disposables: CompositeDisposable = CompositeDisposable()
+    private val nineBxPreferences = NineBxApplication.getPreferences()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +42,14 @@ class SplashActivity : AppCompatActivity() {
                 .subscribe {
 
                     when {
-                        prefrences.firstRun -> {
+                        nineBxPreferences.firstRun -> {
                             val intent = Intent(this@SplashActivity, WalkThroughActivity::class.java)
                             startActivity(intent)
                             disposables.clear()
                             finish()
                         }
 
-                        !prefrences.isLogin -> {
+                        !nineBxPreferences.isLogin -> {
                             val homeIntent = Intent(this@SplashActivity, AuthActivity::class.java)
                             startActivity(homeIntent)
                             disposables.clear()

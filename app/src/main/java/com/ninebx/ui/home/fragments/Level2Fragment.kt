@@ -35,12 +35,10 @@ import com.ninebx.ui.base.realm.home.travel.Travel
 import com.ninebx.ui.base.realm.home.wellness.Wellness
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.account.interfaces.EducationItemsAdded
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
-import com.ninebx.ui.home.account.interfaces.PersonalItemsAdded
-import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
 import com.ninebx.ui.home.adapter.*
 import com.ninebx.ui.home.baseCategories.OptionItem
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.ui.home.search.SearchHelper
@@ -90,6 +88,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
         bundle.putInt(Constants.CURRENT_BOX, categoryInt)
         bundle.putParcelableArrayList(Constants.SUB_OPTIONS, optionsList)
+        if( arguments!!.containsKey(Constants.SUB_CATEGORY) )
+        bundle.putParcelable(Constants.SUB_CATEGORY, arguments!!.getParcelable(Constants.SUB_CATEGORY))
         val intent = Intent( context, ContainerActivity::class.java)
         intent.putExtras(bundle)
         startActivityForResult(intent, LEVEL_3)
@@ -212,6 +212,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                         .putExtra("classType", classType)
                         .putExtra(Constants.FROM_CLASS, "Level2Fragment")
                         .putExtra(Constants.SUB_OPTIONS, optionsList)
+                        .putExtra(Constants.SUB_CATEGORY, arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY))
                 , LEVEL_3)
     }
 
@@ -259,6 +260,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
 
         toolbarTitle.text = categoryName
+
         ivHome.setOnClickListener {
             val homeIntent = Intent(context, HomeActivity::class.java)
             startActivity(homeIntent)
@@ -287,7 +289,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 bundle.putString("action", "add")
                 bundle.putString(Constants.FROM_CLASS, "Level2Fragment")
                 bundle.putInt(Constants.CURRENT_BOX, categoryInt)
-
+                if( arguments!!.containsKey(Constants.SUB_CATEGORY) )
+                    bundle.putParcelable(Constants.SUB_CATEGORY, arguments!!.getParcelable(Constants.SUB_CATEGORY))
                 val intent = Intent( context, ContainerActivity::class.java)
                 intent.putExtras(bundle)
                 startActivityForResult(intent, LEVEL_3)
@@ -394,8 +397,8 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         } else {
             searchHelper = SearchHelper()
             searchHelper.setOnDocumentSelection(this)
-
-            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!))
+            val subCategory : SubCategory ?= arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!), subCategory)
             AppLogger.d("SearchItems", " " + searchItems)
             rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this)
         }
