@@ -543,6 +543,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         if (!NineBxApplication.instance.fragmentOpener.hasNoMoreBack() && !NineBxApplication.backPressedFromSharedContacts)
             super.onBackPressed()
         else {
+            NineBxApplication.backPressedFromSharedContacts = false
             backBtnCount++
 
             if (backBtnCount == 2) {

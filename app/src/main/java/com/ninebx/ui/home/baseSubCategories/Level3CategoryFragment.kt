@@ -243,7 +243,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedPersonal : DecryptedPersonal = selectedDocument as DecryptedPersonal
                     etTitle.setText(decryptedPersonal.institutionName)
                     etTitleValue.setText(decryptedPersonal.accountName)
-                    etTitleValue.setEnabled(false)
+                    //etTitleValue.setEnabled(false)
                     createdValue.text = decryptedPersonal.created
                     modifiedValue.setText(decryptedPersonal.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -471,7 +471,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     val decryptedShopping : DecryptedShopping = selectedDocument as DecryptedShopping
                     createdValue.setText(decryptedShopping.created)
                     etTitle.setText(decryptedShopping.institutionName)
-                    etTitle.setText(decryptedShopping.accountName)
+                    etTitleValue.setText(decryptedShopping.accountName)
                     modifiedValue.setText(decryptedShopping.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)

@@ -218,9 +218,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforShopping(mDecryptCombineShopping.shoppingItems!!)
+                mDecryptCombineShopping.shoppingItems.clear()
+                mDecryptCombineShopping.shoppingItems.addAll(items)
                 searchView!!.onCombineShoppingFetched(mDecryptCombineShopping)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforShopping(mCombineShopping: java.util.ArrayList<DecryptedShopping>): ArrayList<DecryptedShopping> {
+        val singleCountList = ArrayList<DecryptedShopping>()
+        for( item in mCombineShopping ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombinePersonal() {
@@ -242,9 +258,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforPersonal(mDecryptCombinePersonal.personalItems!!)
+                mDecryptCombinePersonal.personalItems.clear()
+                mDecryptCombinePersonal.personalItems.addAll(items)
                 searchView!!.onCombinePersonalFetched(mDecryptCombinePersonal)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforPersonal(mCombinePersonal: java.util.ArrayList<DecryptedPersonal>): ArrayList<DecryptedPersonal> {
+        val singleCountList = ArrayList<DecryptedPersonal>()
+        for( item in mCombinePersonal ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombineWellness() {
@@ -265,9 +297,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforWellness(mDecryptCombineWellness.wellnessItems!!)
+                mDecryptCombineWellness.wellnessItems.clear()
+                mDecryptCombineWellness.wellnessItems.addAll(items)
                 searchView!!.onCombineWellnessFetched(mDecryptCombineWellness)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforWellness(mCombineWellness: java.util.ArrayList<DecryptedWellness>): ArrayList<DecryptedWellness> {
+        val singleCountList = ArrayList<DecryptedWellness>()
+        for( item in mCombineWellness ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombineInterests() {
@@ -290,9 +338,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforInterests(mDecryptCombineInterests.interestItems!!)
+                mDecryptCombineInterests.interestItems.clear()
+                mDecryptCombineInterests.interestItems.addAll(items)
                 searchView!!.onCombineInterestsFetched(mDecryptCombineInterests)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforInterests(mCombineInterests: java.util.ArrayList<DecryptedInterests>): ArrayList<DecryptedInterests> {
+        val singleCountList = ArrayList<DecryptedInterests>()
+        for( item in mCombineInterests ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombineEducation() {
@@ -317,9 +381,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforEducation(mDecryptCombineEducation.educationItems!!)
+                mDecryptCombineEducation.educationItems.clear()
+                mDecryptCombineEducation.educationItems.addAll(items)
                 searchView!!.onCombineEducationFetched(mDecryptCombineEducation)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforEducation(mCombineEducation: java.util.ArrayList<DecryptedEducation>): ArrayList<DecryptedEducation> {
+        val singleCountList = ArrayList<DecryptedEducation>()
+        for( item in mCombineEducation ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombineMemories() {
@@ -341,9 +421,25 @@ class SearchPresenter {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
+                val items = filterDuplicatesforMainMemories(mDecryptedCombineMemories.mainMemoriesItems!!)
+                mDecryptedCombineMemories.mainMemoriesItems.clear()
+                mDecryptedCombineMemories.mainMemoriesItems.addAll(items)
                 searchView!!.onCombineMemoryFetched(mDecryptedCombineMemories)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun filterDuplicatesforMainMemories(mCombineMainMemories: java.util.ArrayList<DecryptedMainMemories>): ArrayList<DecryptedMainMemories> {
+        val singleCountList = ArrayList<DecryptedMainMemories>()
+        for( item in mCombineMainMemories ) {
+            if( !singleCountList.contains(item) ) {
+                singleCountList.add(item)
+            }
+            else {
+                singleCountList[singleCountList.indexOf(item)] = item
+            }
+        }
+        return singleCountList
     }
 
     private fun fetchCombineTravel() {

@@ -107,6 +107,7 @@ class CommonItemsHelper(var category_name: String,
                     R.string.travel -> { }
                     R.string.contacts -> {  }
                     R.string.education -> {  }
+                    R.string.personal -> { }
                     R.string.interests -> {  }
                     R.string.wellness -> {  }
                     R.string.memories -> {  }
