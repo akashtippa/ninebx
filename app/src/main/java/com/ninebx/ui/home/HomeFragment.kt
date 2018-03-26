@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home_updated.*
  */
 class HomeFragment : Fragment(), View.OnClickListener {
 
-    val prefrences = NineBxPreferences()
+    val prefrences = NineBxApplication.getPreferences()
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.txtHome -> {

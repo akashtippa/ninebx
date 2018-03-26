@@ -11,12 +11,10 @@ import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
-import com.ninebx.utility.FragmentOrganiser
-import com.ninebx.utility.NineBxJobCreator
-import com.ninebx.utility.NineBxPreferences
-import com.ninebx.utility.Preferences
+import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.SyncUser
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.security.SecureRandom
 
@@ -61,14 +59,19 @@ class NineBxApplication : MultiDexApplication() {
 
     companion object {
 
+        var currentUserId : String = "default"
+
         @SuppressLint("StaticFieldLeak")
         var nineBxPreferences: NineBxPreferences? = null
 
         fun getPreferences(): NineBxPreferences {
-            if (nineBxPreferences == null)
-                nineBxPreferences = NineBxPreferences()
+            if( SyncUser.currentUser() != null )
+            currentUserId = SyncUser.currentUser().identity
+            AppLogger.d("Application", "Preferences for : " + currentUserId)
+            nineBxPreferences = NineBxPreferences(currentUserId)
             return nineBxPreferences!!
         }
+
 
         var autoTestMode = true
         var backPressedFromSharedContacts = false

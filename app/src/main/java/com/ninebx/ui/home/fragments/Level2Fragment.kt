@@ -254,7 +254,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
 
         toolbarTitle.text = categoryName
-        toolbarTitle.typeface = Typeface.DEFAULT_BOLD
+
         ivHome.setOnClickListener {
             val homeIntent = Intent(context, HomeActivity::class.java)
             startActivity(homeIntent)

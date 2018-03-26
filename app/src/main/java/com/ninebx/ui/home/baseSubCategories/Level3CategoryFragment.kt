@@ -56,7 +56,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var strSubTitle = ""
 
     private var boxValue = ""
-    val prefrences = NineBxPreferences()
+    val prefrences = NineBxApplication.getPreferences()
 
     private var categoryName = ""
     private var categoryID = ""
@@ -539,7 +539,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.show()
             }
             toolbarTitle.text = etTitle.text.toString()
-            toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         }
     }
 

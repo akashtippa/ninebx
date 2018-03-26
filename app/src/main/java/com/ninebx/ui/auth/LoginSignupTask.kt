@@ -30,6 +30,7 @@ class LoginSignupTask(private var userName: String,
 
     override fun onSuccess(result: SyncUser?) {
 
+
         if (result == null) {
             authView.hideProgress()
             authView.onError(R.string.error_login)
@@ -38,6 +39,11 @@ class LoginSignupTask(private var userName: String,
             //AppLogger.d(TAG, "login : result : " + result.toString())
             //AppLogger.d(TAG, result.toJson())
             mCurrentUser = result
+
+            NineBxApplication.currentUserId = result.identity
+            NineBxApplication.getPreferences().userPassword = Arrays.toString(encryptedPasswordByteArray)
+            NineBxApplication.getPreferences().userPasswordUINT8 = Arrays.toString(encryptedPasswordByteArray)
+
             if (type == "Signup") {
 
                 //Save user data to realm
@@ -166,7 +172,7 @@ class LoginSignupTask(private var userName: String,
     }
 
     val TAG: String = LoginSignupTask::class.java.simpleName
-    private val prefrences = NineBxPreferences()
+    private val prefrences = NineBxApplication.getPreferences()
     var strPassword: String = "[219, 80, 120, 19, 74, 36, 40, 74, 173, 169, 201, 144, 10, 213, 102, 44, 154, 239, 237, 49, 132, 210, 196, 168, 186, 136, 44, 34, 0, 30, 35, 44]"
     private var syncCredentials: SyncCredentials? = null
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -194,8 +200,7 @@ class LoginSignupTask(private var userName: String,
 
         encryptedPasswordByteArray = (encryptKey(password, userName))
         encryptedPassword = convertToUInt8IntArray(encryptedPasswordByteArray)
-        NineBxApplication.getPreferences().userPassword = Arrays.toString(encryptedPasswordByteArray)
-        NineBxApplication.getPreferences().userPasswordUINT8 = Arrays.toString(encryptedPasswordByteArray)
+
 
         //AppLogger.d(TAG, "Encrypted : " + encryptedPassword)
         //AppLogger.d(TAG, "Encrypted iOS : " + strPassword)
