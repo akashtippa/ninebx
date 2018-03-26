@@ -81,7 +81,7 @@ class SignInFragment : BaseAuthFragment() {
             edtEmailAddress.setText("")
         }
 
-        if( NineBxApplication.getPreferences().userEmail!!.isNotEmpty() )
+        if( !NineBxApplication.getPreferences().userEmail.isNullOrEmpty() )
             edtEmailAddress.setText(NineBxApplication.getPreferences().userEmail)
     }
 
