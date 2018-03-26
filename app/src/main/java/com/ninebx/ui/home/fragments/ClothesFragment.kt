@@ -2,6 +2,7 @@ package com.ninebx.ui.home.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,8 +41,9 @@ class ClothesFragment : FragmentBackHelper() {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            Log.d("Combine Items",Constants.COMBINE_ITEMS)
             bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
-            val categoryFragment = Level3CategoryFragment()
+            val categoryFragment = Level2Fragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }

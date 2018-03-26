@@ -135,6 +135,17 @@ public class DecryptedCombineShopping implements Parcelable {
         }
         return count;
     }
+    public int getClothingSizesItems(String name ) {
+        int count = 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedClothingSizes decryptedLicense : clothingSizesItems) {
+            if(!ids.contains(decryptedLicense.getId())){
+                count += decryptedLicense.getSelectionType().equals(name) ? 1 : 0;
+                ids.add(decryptedLicense.getId());
+            }
+        }
+        return count;
+    }
 
     public int getServices(String selectionType) {
         int count = 0;

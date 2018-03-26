@@ -490,6 +490,7 @@ class CategoryHelper(
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
         category.title = "Clothing sizes"
+        category.formsCount = decryptedCombine.getClothingSizesItems("shopping_2001")
         category.drawableString = "ic_icon_clothing_sizes"
 
         for(shoppingItem in decryptedCombine.clothingSizesItems) {

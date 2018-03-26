@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import com.ninebx.BuildConfig
@@ -33,6 +34,7 @@ class SignInFragment : BaseAuthFragment() {
                 AppLogger.d("Signin", "Comparing : " + edtEmailAddress.text.toString().toLowerCase().trim() + " : " + NineBxApplication.getPreferences().userEmail)
                 if( !edtEmailAddress.text.toString().toLowerCase().trim().equals(NineBxApplication.getPreferences().userEmail, true)) {
                     NineBxApplication.getPreferences().clearPreferences()
+
                 }
                 else {
                     if( NineBxApplication.getPreferences().currentStep > Constants.OTP_COMPLETE )

@@ -583,6 +583,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryID = arguments!!.getString("categoryId")
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
+
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"
         if( action == "add" ) {
@@ -596,6 +597,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
+
             classType = arguments!!.getString("classType")
             AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }

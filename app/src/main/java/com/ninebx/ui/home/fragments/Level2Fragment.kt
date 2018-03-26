@@ -16,6 +16,7 @@ import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -255,7 +256,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         categoryID = arguments!!.getString("categoryId")
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
-
+        Log.d("Sub options",optionsList.toString())
         toolbarTitle.text = categoryName
         toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         ivHome.setOnClickListener {
