@@ -54,10 +54,11 @@ class Level3CategoryHelper(
         extractObject()
         setupCommonHelper()
         when( categoryInt ) {
-            R.string.home_amp_money -> {
+            R.string.home_n_money -> {
                 homeHelper = HomeHelper(category_name, categoryID, classType, selectedDocument, categoryView)
                 homeHelper!!.initialize()
                 homeHelper!!.getFormForCategory()
+                searchByOthers()
             }
             R.string.personal -> {
                 personalHelper = PersonalHelper(category_name, categoryID, classType, selectedDocument, categoryView)

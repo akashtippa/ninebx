@@ -582,12 +582,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"
+        setTitle()
         if( action == "add" ) {
-            ivEdit.setImageResource(R.drawable.ic_icon_save)
+            ivEdit.hide()
+            ivDelete.hide()
             ivHome.hide()
-            etTitle.isEnabled = false
-            tvTitleValue.isEnabled = false
-
         }
         else if( action == "edit" ) {
             ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
@@ -611,7 +610,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             startActivity(homeIntent)
             activity!!.finishAffinity()
         }
-        setTitle()
 
         //setCamera(boxValue)
         tvSave.hide()

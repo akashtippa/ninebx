@@ -431,7 +431,7 @@ class CategoryHelper(
         categoryList.add(category)
 
         categoryIndex += 1000
-        category_id = "shopping_" + categoryIndex
+        category_id = "home_" + categoryIndex
         category = Category(category_id)
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
@@ -440,7 +440,7 @@ class CategoryHelper(
         categoryList.add(category)
 
         categoryIndex += 1000
-        category_id = "shopping_" + categoryIndex
+        category_id = "home_" + categoryIndex
         category = Category(category_id)
         category.title = "Other Attachments"
         category.drawableString = "ic_icon_attachments"
@@ -450,7 +450,7 @@ class CategoryHelper(
         categoryList.add(category)
 
         categoryIndex += 1000
-        category_id = "shopping_" + categoryIndex
+        category_id = "home_" + categoryIndex
         category = Category(category_id)
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"

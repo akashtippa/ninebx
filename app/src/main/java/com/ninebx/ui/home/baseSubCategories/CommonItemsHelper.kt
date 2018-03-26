@@ -12,6 +12,8 @@ import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
 import com.ninebx.ui.base.realm.home.education.Education
+import com.ninebx.ui.base.realm.home.homeBanking.Combine
+import com.ninebx.ui.base.realm.home.homeBanking.Financial
 import com.ninebx.ui.base.realm.home.interests.CombineInterests
 import com.ninebx.ui.base.realm.home.interests.Interests
 import com.ninebx.ui.base.realm.home.memories.CombineMemories
@@ -40,7 +42,7 @@ class CommonItemsHelper(var category_name: String,
                         val categoryInt: Int) {
 
     private var decryptedMainContacts: DecryptedMainContacts ?= null
-    private var decryptedCombine: DecryptedCombine ?= null // need to check
+    private var decryptedFinancial: DecryptedFinancial ?= null // need to check
     private var decryptedTravel: DecryptedTravel ?= null
     private var decryptedEducation: DecryptedEducation ?= null
     private var decryptedPersonal: DecryptedPersonal ?= null
@@ -58,8 +60,8 @@ class CommonItemsHelper(var category_name: String,
             DecryptedMainContacts::class.java.simpleName -> {
                 decryptedMainContacts = selectedDocument as DecryptedMainContacts
             }
-            DecryptedCombine::class.java.simpleName -> {
-                decryptedCombine = selectedDocument as DecryptedCombine
+            DecryptedFinancial::class.java.simpleName -> {
+                decryptedFinancial = selectedDocument as DecryptedFinancial
             }
             DecryptedTravel::class.java.simpleName -> {
                 decryptedTravel = selectedDocument as DecryptedTravel
@@ -89,7 +91,7 @@ class CommonItemsHelper(var category_name: String,
         when (category_name) {
             "Services/Other Accounts" -> {
                 when(categoryInt) {
-                    R.string.home_amp_money -> {  }
+                    R.string.home_amp_money -> { getServicesOthersAccountsforHome() }
                     R.string.travel -> { getServicesOthersAccountsForTravel() }
                     R.string.contacts -> { getServicesOthersAccountsForContacts() }
                     R.string.education_work -> { getServicesOthersaccountsForEducation() }
@@ -116,6 +118,50 @@ class CommonItemsHelper(var category_name: String,
                 }
             }
         }
+    }
+
+    private fun getServicesOthersAccountsforHome() {
+        val categoryList = ArrayList<Level2Category>()
+        if(decryptedFinancial == null) decryptedFinancial = DecryptedFinancial() //testing for contacts only
+        var categoryIndex = 1001
+        var category_id = "interest_" + categoryIndex
+        var category = Level2Category(category_id)
+        category.title = "Account Details"
+        category.subCategories.add(Level2SubCategory("Account type", decryptedFinancial!!.accountType, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name(s) on account", decryptedFinancial!!.nameOnAccount, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Account number", decryptedFinancial!!.accountNumber, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Location", decryptedFinancial!!.location, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Contacts", decryptedFinancial!!.contacts, "", Constants.LEVEL2_SPINNER))
+        categoryList.add(category)
+
+        categoryIndex += 3001
+        category_id = "service_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Online Access"
+        category.subCategories.add(Level2SubCategory("Website", decryptedFinancial!!.website, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Username/login", decryptedFinancial!!.userName, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Password", decryptedFinancial!!.password, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("PIN", decryptedFinancial!!.pin, "", Constants.LEVEL2_PASSWORD))
+        category.subCategories.add(Level2SubCategory("Payment method on file", ""/*decryptedFinancial!!.paymentMethodOnFile*/, "", Constants.LEVEL2_SPINNER))
+
+        categoryList.add(category)
+
+        categoryIndex += 3001
+        category_id = "service_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Notes"
+        category.subCategories.add(Level2SubCategory("", decryptedFinancial!!.notes, "", Constants.LEVEL2_NOTES))
+        categoryList.add(category)
+
+
+        categoryIndex += 2001
+        category_id = "account_details" + categoryIndex
+        category = Level2Category(category_id)
+        category.title = "Attachments"
+        category.subCategories.add(Level2SubCategory("", decryptedFinancial!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
+        categoryList.add(category)
+
+        categoryView.onSuccess(categoryList)
     }
 
     private fun getServicesOthersAccountsForPersonal() {
@@ -474,7 +520,7 @@ class CommonItemsHelper(var category_name: String,
         when (category_name) {
             "Services/Other Accounts" -> {
                 when(categoryInt) {
-                    R.string.home_amp_money -> {  }
+                    R.string.home_amp_money -> { setServiceAccountsForHome(level2SubCategory) }
                     R.string.travel -> { setServiceAccountsForTravel(level2SubCategory) }
                     R.string.contacts -> { setServiceAccountsForContacts(level2SubCategory) }
                     R.string.education_work -> { setServiceAccountsForEducation(level2SubCategory) }
@@ -488,6 +534,28 @@ class CommonItemsHelper(var category_name: String,
             }
             "Other Attachments" -> {
 
+            }
+        }
+    }
+
+    private fun setServiceAccountsForHome(level2SubCategory: Level2SubCategory) {
+        when(level2SubCategory.title) {
+            "Loan type", "Account type" -> {decryptedFinancial!!.accountType = level2SubCategory.titleValue}
+            "Name(s) on account" -> {decryptedFinancial!!.nameOnAccount = level2SubCategory.titleValue}
+            "Account number" -> {decryptedFinancial!!.accountNumber = level2SubCategory.titleValue}
+            "Location" -> {decryptedFinancial!!.location = level2SubCategory.titleValue}
+            "Contacts" -> {decryptedFinancial!!.contacts = level2SubCategory.titleValue}
+            "Website" -> {decryptedFinancial!!.website = level2SubCategory.titleValue}
+            "Username/login" -> {decryptedFinancial!!.userName = level2SubCategory.titleValue}
+            "Password" -> {decryptedFinancial!!.password = level2SubCategory.titleValue}
+            "PIN" -> {decryptedFinancial!!.pin = level2SubCategory.titleValue}
+            "Account name" -> {decryptedFinancial!!.accountName = level2SubCategory.titleValue}
+            //"Payment method on file" -> { decryptedFinancial!!.paymentMethodOnFile = level2SubCategory.titleValue}
+            else -> {
+                when (level2SubCategory.type) {
+                    Constants.LEVEL2_NOTES -> { decryptedFinancial!!.notes = level2SubCategory.titleValue}
+                    Constants.LEVEL2_ATTACHMENTS -> { decryptedFinancial!!.attachmentNames = level2SubCategory.titleValue}
+                }
             }
         }
     }
@@ -677,7 +745,7 @@ class CommonItemsHelper(var category_name: String,
         val currentDateandTime = sdf.format(Date())
 
         when(categoryInt) {
-            R.string.home_amp_money -> {  }
+            R.string.home_amp_money -> { saveDecryptedFinancialItems(title, subTitle, currentUsers, currentDateandTime, context) }
             R.string.travel -> { saveDecryptedTravel(title, subTitle, currentUsers, currentDateandTime, context) }
             R.string.contacts -> { saveDecryptedMainContacts(title, subTitle, currentUsers, currentDateandTime, context) }
             R.string.education_work -> { saveDecryptedEducationItems(title, subTitle, currentUsers, currentDateandTime, context) }
@@ -689,6 +757,103 @@ class CommonItemsHelper(var category_name: String,
             else -> {  }
         }
 
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private fun saveDecryptedFinancialItems(title: String, subTitle: String, currentUsers: String, currentDateandTime: String, context: Context) {
+        if(decryptedFinancial != null) {
+            decryptedFinancial!!.selectionType = categoryID
+            decryptedFinancial!!.institutionName = title
+            decryptedFinancial!!.accountName = subTitle
+
+            AppLogger.d("SelectionType ", "DecryptedFinancialItems" + decryptedFinancial!!.selectionType)
+            if(decryptedFinancial!!.created.isEmpty()) {
+                decryptedFinancial!!.created = currentUsers + " " + currentDateandTime
+            }
+            decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
+
+            if( decryptedFinancial!!.id.toInt() == 0) {
+                decryptedFinancial!!.id = getUniqueId()
+                AppLogger.d("saveDocument", "id" + decryptedFinancial!!.id)
+            }
+
+            val combine: DecryptedCombine = mCombine as DecryptedCombine
+            val index = combine.financialItems.indexOf(decryptedFinancial)
+            if( index != -1 ) {
+                combine.financialItems[index] = decryptedFinancial
+            }
+            else combine.financialItems.add(decryptedFinancial)
+            mCombine = combine
+
+            AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
+            AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
+
+
+            var mainContacts: Financial?= null
+            object : AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg p0: Void?) {
+                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                        override fun onSuccess(realm: Realm?) {
+                            realm!!.beginTransaction()
+                            mainContacts = encryptFinancial(decryptedFinancial!!)
+                            realm.insertOrUpdate(mainContacts!!)
+                            AppLogger.d("CombineFinancialItems ", "Inserted ")
+                            realm.commitTransaction()
+                        }
+                    })
+                }
+
+                override fun onPostExecute(result: Unit?) {
+                    super.onPostExecute(result)
+                    //context.hideProgressDialog()
+                    saveToCombineRealm(context, mainContacts)
+                    //categoryView.savedToRealm(mCombine!!)
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private fun saveToCombineRealm(context: Context, mainContacts: Financial?) {
+        object : AsyncTask<Void, Void, Unit>() {
+
+            override fun doInBackground(vararg p0: Void?) {
+
+                prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm?) {
+                        AppLogger.d("saveDocument", "Combine Id " + mainContacts!!.id)
+                        var combineRealm = realm!!.where(Combine::class.java).equalTo("id", mainContacts.id).findFirst()
+                        realm.beginTransaction()
+                        if (combineRealm == null) {
+                            combineRealm = realm.createObject(Combine::class.java, mainContacts.id)
+                        }
+                        val encryptedObject = encryptFinancial(decryptedFinancial!!)
+                        if (combineRealm!!.financialItems.contains(encryptedObject)) {
+                            val index = combineRealm.financialItems.indexOf(encryptedObject)
+                            if (index != -1) {
+                                combineRealm.financialItems[index] = (encryptedObject)
+                            }
+                        } else {
+                            combineRealm.financialItems.add(encryptedObject)
+                        }
+                        /*combine.financialItems.add( decryptedFinancial )
+                        val encryptedCombine = encryptCombine(combine)*/
+                        AppLogger.d("FINANCIAL ITEMS ", "Combine finacial Items " + encryptedObject.accountName + " " +
+                                encryptedObject.institutionName + " " +encryptedObject.accountType)
+                        realm.insertOrUpdate(combineRealm)
+                        realm.commitTransaction()
+                    }
+                })
+            }
+
+            override fun onPostExecute(result: Unit?) {
+                super.onPostExecute(result)
+                context.hideProgressDialog()
+                categoryView.savedToRealm(mCombine!!)
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
     @SuppressLint("StaticFieldLeak")

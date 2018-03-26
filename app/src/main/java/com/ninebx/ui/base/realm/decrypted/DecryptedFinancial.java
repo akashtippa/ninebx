@@ -393,4 +393,19 @@ public class DecryptedFinancial implements Parcelable {
             return new DecryptedFinancial[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedFinancial that = (DecryptedFinancial) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }
