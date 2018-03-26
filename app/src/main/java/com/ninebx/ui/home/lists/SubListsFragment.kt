@@ -156,7 +156,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         createdDate = created
     }
 
-    val preferences = NineBxPreferences()
+    val preferences = NineBxApplication.getPreferences()
     private fun aadToParticularRealmList(categoryName: Int) {
         when (categoryName) {
             R.string.home_amp_money -> {
@@ -436,7 +436,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             } else {
                 fm.popBackStack()
             }
-            val preferences = NineBxPreferences()
+            val preferences = NineBxApplication.getPreferences()
             val toolbarTitle = preferences.currentBox
             //NineBxApplication.instance.activityInstance!!.changeToolbarTitle(toolbarTitle.toString())
 

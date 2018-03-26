@@ -11,10 +11,7 @@ import com.ninebx.ui.base.realm.Users
 import com.ninebx.ui.base.realm.decrypted.DecryptedUsers
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.account.interfaces.ICountrySelected
-import com.ninebx.utility.FragmentOrganiser
-import com.ninebx.utility.NineBxJobCreator
-import com.ninebx.utility.NineBxPreferences
-import com.ninebx.utility.Preferences
+import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.SyncUser
@@ -62,17 +59,16 @@ class NineBxApplication : MultiDexApplication() {
 
     companion object {
 
-        var currentUserId = SyncUser.currentUser().identity
+        var currentUserId : String = "default"
 
         @SuppressLint("StaticFieldLeak")
         var nineBxPreferences: NineBxPreferences? = null
 
         fun getPreferences(): NineBxPreferences {
-            if( SyncUser.currentUser() == null ) {
-                throw Exception("Preferences : User not present")
-            }
-            if (nineBxPreferences == null)
-                nineBxPreferences = NineBxPreferences(currentUserId)
+            if( SyncUser.currentUser() != null )
+            currentUserId = SyncUser.currentUser().identity
+            AppLogger.d("Application", "Preferences for : " + currentUserId)
+            nineBxPreferences = NineBxPreferences(currentUserId)
             return nineBxPreferences!!
         }
 

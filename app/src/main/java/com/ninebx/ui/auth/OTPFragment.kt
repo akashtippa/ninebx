@@ -59,53 +59,6 @@ class OTPFragment : BaseAuthFragment(),OTPView {
 
             OTPPresenter.submit(etOtp1,etOtp2,etOtp3,etOtp4,etOtp5,etOtp6 , emailOtp)
 
-            /*if( validate() ) {
-                emailOtp = ""
-                handler.removeCallbacks(runnable)
-                object : AsyncTask<Void, Void, Int>() {
-                    override fun doInBackground(vararg p0: Void?) : Int {
-                        prepareRealmConnections( context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback( ) {
-                            override fun onSuccess(realm: Realm?) {
-                                val currentUsers = getCurrentUsers( realm!! )
-                                if (currentUsers != null && currentUsers.size > 0) {
-                                    val email = currentUsers[0]!!.emailAddress.decryptString()
-                                    if( email.isNotEmpty() )
-                                    NineBxApplication.getPreferences().userEmail = email
-                                    AppLogger.d("Email", "OTP prepareRealmConnections " + NineBxApplication.getPreferences().userEmail!!)
-                                }
-                                else {
-                                    onPostExecute(R.string.unable_to_find_user)
-                                }
-                            }
-
-                        })
-                        return -1
-                    }
-
-                    override fun onPostExecute(result: Int) {
-                        super.onPostExecute(result)
-                        context!!.hideProgressDialog()
-                        mAuthView.navigateToCreatePassCode(PASSCODE_CREATE, "")
-
-                        if( result != -1 ) mAuthView.onError(result)
-                    }
-
-                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-
-            }
-            else{
-                val builder = AlertDialog.Builder(context)
-                builder.setTitle("NineBx")
-                builder.setIcon(R.mipmap.ic_launcher)
-                builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        p0?.cancel()
-                    }
-                })
-                builder.setMessage("Incorrect OTP")
-                builder.show()
-            }*/
         }
         tvResend.setOnClickListener {
             val builder = AlertDialog.Builder(context)

@@ -75,7 +75,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
     }
 
     private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
-    val preferences = NineBxPreferences()
+    val preferences = NineBxApplication.getPreferences()
 
     fun setCombineFetched(combineFetched: ArrayList<DecryptedTravelList>?) {
         this.combineTravelFetched = combineFetched

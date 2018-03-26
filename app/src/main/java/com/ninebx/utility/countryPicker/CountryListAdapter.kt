@@ -15,7 +15,7 @@ import com.ninebx.utility.NineBxPreferences
  */
 class CountryListAdapter(private val mContext: Context, internal var countries: List<Country>, private val iCountrySelected: ICountrySelected) : BaseAdapter() {
     internal var inflater: LayoutInflater
-    internal var prefrences = NineBxPreferences()
+    internal var prefrences = NineBxApplication.getPreferences()
 
     init {
         inflater = LayoutInflater.from(mContext)

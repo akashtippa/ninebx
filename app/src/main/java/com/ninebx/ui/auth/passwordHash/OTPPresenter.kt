@@ -1,5 +1,6 @@
 package com.ninebx.ui.auth.passwordHash
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -30,7 +31,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
     var isSuccess : Boolean = false
 
 
-
+    @SuppressLint("StaticFieldLeak")
     fun submit(etOtp1: EditText? , etOtp2: EditText? , etOtp3: EditText? , etOtp4: EditText? ,etOtp5: EditText? ,etOtp6: EditText? , emailOtpString:String){
 
         emailOtp = emailOtpString
@@ -41,6 +42,7 @@ class OTPPresenter(var context: Context?, var mOTPView: OTPView, var mAuthView: 
 
             emailOtp = ""
             handler.removeCallbacks(runnable)
+
             object : AsyncTask<Void, Void, Int>() {
                 override fun doInBackground(vararg p0: Void?) : Int {
                     prepareRealmConnections( context, true, Constants.REALM_END_POINT_USERS, object : Realm.Callback( ) {

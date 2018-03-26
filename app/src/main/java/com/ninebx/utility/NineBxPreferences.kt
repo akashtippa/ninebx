@@ -8,7 +8,7 @@ import com.ninebx.utility.Constants.NONE_COMPLETE
  * Created by TechnoBlogger on 18/12/17.
  */
 
-class NineBxPreferences( userId : String ) : Preferences() {
+class NineBxPreferences( var userId : String = "" ) : Preferences() {
 
     var adminId by stringPref( userId + "_" + Constants.ADMIN)
     var firstRun by booleanPref(userId + "_" +Constants.FIRST_RUN, true)

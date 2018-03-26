@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -256,6 +257,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
 
         toolbarTitle.text = categoryName
+
         ivHome.setOnClickListener {
             val homeIntent = Intent(context, HomeActivity::class.java)
             startActivity(homeIntent)
