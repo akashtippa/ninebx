@@ -17,6 +17,7 @@ import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import com.onegravity.contactpicker.ContactElement
@@ -180,6 +181,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         layoutEmergency.setOnClickListener{
             checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
             callForContact()
+
+          /*  val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+
+            bundle!!.putString("categoryName", "Emergency Contacts")
+            bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+
+            val categoryFragment = Level3CategoryFragment()
+            categoryFragment.arguments = bundle
+            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()*/
         }
     }
 
@@ -280,6 +294,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
 //            setContactsList()
+            AppLogger.d("WellnessFragment ", "emergencyContactsGroups " + mGroups)
+            AppLogger.d("WellnessFragment ", "emergencyContactsContacts " + mContacts)
         }
     }
 }

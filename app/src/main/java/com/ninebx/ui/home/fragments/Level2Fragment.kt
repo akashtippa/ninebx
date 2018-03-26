@@ -35,10 +35,7 @@ import com.ninebx.ui.base.realm.home.travel.Travel
 import com.ninebx.ui.base.realm.home.wellness.Wellness
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.account.interfaces.EducationItemsAdded
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
-import com.ninebx.ui.home.account.interfaces.PersonalItemsAdded
-import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
 import com.ninebx.ui.home.adapter.*
 import com.ninebx.ui.home.baseCategories.OptionItem
 import com.ninebx.ui.home.search.Level3SearchItem

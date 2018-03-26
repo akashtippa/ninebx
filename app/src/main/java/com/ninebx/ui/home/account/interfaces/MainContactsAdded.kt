@@ -9,7 +9,6 @@ import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 interface MainContactsAdded {
 
     fun contactsClicked(contacts: Parcelable, isEditable: Boolean)
-
     fun contactsDeleted(contacts: Parcelable)
 
 }
