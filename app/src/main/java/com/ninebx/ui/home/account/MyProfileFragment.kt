@@ -68,7 +68,7 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
     var idUser: Long? = null
     var idUserID = ""
 
-    val prefrences = NineBxPreferences()
+    val prefrences = NineBxApplication.getPreferences()
     var user: SyncUser? = null
     lateinit var realm: Realm
 

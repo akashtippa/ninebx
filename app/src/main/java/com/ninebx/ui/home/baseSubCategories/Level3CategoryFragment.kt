@@ -56,7 +56,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var strSubTitle = ""
 
     private var boxValue = ""
-    val prefrences = NineBxPreferences()
+    val prefrences = NineBxApplication.getPreferences()
 
     private var categoryName = ""
     private var categoryID = ""

@@ -166,7 +166,7 @@ class HomeActivity : AppCompatActivity(), HomeView, NotificationsView, CustomBot
         }
     }
 
-    val prefrences = NineBxPreferences()
+    val prefrences = NineBxApplication.getPreferences()
 
     override fun getCurrentUsers(): ArrayList<DecryptedUsers> {
         NineBxApplication.instance.currentUser = currentUsers!![0]
