@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.ContactsContract
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -15,7 +16,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
+import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
@@ -56,6 +60,8 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val bundle = arguments
+        val subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+        val combineItems : DecryptedCombineWellness = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
         layoutPersonalHealthRecord.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
@@ -65,7 +71,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putParcelable(Constants.COMBINE_ITEMS, arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level3CategoryFragment()
             categoryFragment.arguments = bundle
@@ -181,6 +187,14 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
             callForContact()
         }
+
+        tvHealthCareCount.text = combineItems.healthcareProvidersItems.size.toString()
+        tvEmergencyContactsCount.text = combineItems.emergencyContactsItems.size.toString()
+        tvMedicationCount.text = combineItems.medicationsItems.size.toString()
+        tvMedicalAllergiesCount.text = combineItems.medicalConditionsItems.size.toString()
+        tvEyeGlassPrescriptionCount.text = combineItems.eyeglassPrescriptionsItems.size.toString()
+        tvVitalNumbersCount.text = combineItems.vitalNumbersItems.size.toString()
+        tvCheckupAndVisitsCount.text = combineItems.checkupsItems.size.toString()
     }
 
     override fun onBackPressed(): Boolean {
