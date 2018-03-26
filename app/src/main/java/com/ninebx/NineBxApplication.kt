@@ -17,6 +17,7 @@ import com.ninebx.utility.NineBxPreferences
 import com.ninebx.utility.Preferences
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.SyncUser
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.security.SecureRandom
 
@@ -61,14 +62,20 @@ class NineBxApplication : MultiDexApplication() {
 
     companion object {
 
+        var currentUserId = SyncUser.currentUser().identity
+
         @SuppressLint("StaticFieldLeak")
         var nineBxPreferences: NineBxPreferences? = null
 
         fun getPreferences(): NineBxPreferences {
+            if( SyncUser.currentUser() == null ) {
+                throw Exception("Preferences : User not present")
+            }
             if (nineBxPreferences == null)
-                nineBxPreferences = NineBxPreferences()
+                nineBxPreferences = NineBxPreferences(currentUserId)
             return nineBxPreferences!!
         }
+
 
         var autoTestMode = true
         var backPressedFromSharedContacts = false
