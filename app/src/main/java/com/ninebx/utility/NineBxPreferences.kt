@@ -11,8 +11,8 @@ import com.ninebx.utility.Constants.NONE_COMPLETE
 class NineBxPreferences( var userId : String = "" ) : Preferences() {
 
     var adminId by stringPref( userId + "_" + Constants.ADMIN)
-    var firstRun by booleanPref(userId + "_" +Constants.FIRST_RUN, true)
-    var isLogin by booleanPref(userId + "_" +Constants.IS_LOGIN, false)
+    var firstRun by booleanPref(userId + "_" +Constants.FIRST_RUN)
+    var isLogin by booleanPref(userId + "_" +Constants.IS_LOGIN)
     var isPasswordRequired by booleanPref(userId + "_" +Constants.IS_PASSWORD_REQUIRED)
     var isPasswordEnabled by booleanPref(userId + "_" +Constants.IS_MAPS_SHOWN)
     var currentStep by intPref(userId + "_" +Constants.CURRENT_STEP, NONE_COMPLETE)

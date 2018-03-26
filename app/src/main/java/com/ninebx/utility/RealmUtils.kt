@@ -228,7 +228,7 @@ private fun getRealmInstance(realmEndPoint: String, callback: Realm.Callback) {
     AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_URL + realmEndPoint)
     var serverEndPoint = Constants.SERVER_URL + realmEndPoint
     val adminId = NineBxApplication.getPreferences().adminId
-    if( adminId != null ) {
+    if( adminId!!.isNotEmpty() ) {
         serverEndPoint = Constants.SERVER_ADDRESS + adminId + "/" + realmEndPoint
     }
     val config = SyncConfiguration.Builder(user, serverEndPoint)
@@ -244,7 +244,7 @@ private fun getRealmInstanceRealmThread(realmEndPoint: String, callback: Realm.C
     AppLogger.d(TAG, "getRealmInstance : " + Constants.SERVER_URL + realmEndPoint)
     var serverEndPoint = Constants.SERVER_URL + realmEndPoint
     val adminId = NineBxApplication.getPreferences().adminId
-    if( adminId != null ) {
+    if( adminId!!.isNotEmpty() ) {
         serverEndPoint = Constants.SERVER_ADDRESS + adminId + "/" + realmEndPoint
     }
     val config = SyncConfiguration.Builder(user, serverEndPoint)

@@ -27,7 +27,7 @@ class WalkThroughActivity : AppCompatActivity() {
         val viewPager = findViewById<View>(R.id.activity_help_view_pager) as ViewPager
         viewPager.adapter = TutorialAdapter(supportFragmentManager)
 
-
+        prefrences.firstRun = false
         activity_help_view_page_indicator.setViewPager(activity_help_view_pager!!)
 
         activity_help_view_page_indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
