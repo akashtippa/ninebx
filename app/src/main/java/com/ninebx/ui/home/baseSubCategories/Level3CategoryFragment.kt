@@ -539,7 +539,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitleValue.show()
             }
             toolbarTitle.text = etTitle.text.toString()
-            toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         }
     }
 

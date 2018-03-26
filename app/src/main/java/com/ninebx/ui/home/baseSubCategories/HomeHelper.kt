@@ -358,7 +358,7 @@ class HomeHelper( var category_name : String,
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Tax year", decryptedTaxes!!.taxYear, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Tax year", decryptedTaxes!!.taxYear, Constants.KEYBOARD_YEAR_PICKER, Constants.LEVEL2_YEARPICKER))
         category.subCategories.add(Level2SubCategory("Taxpayer(s)", decryptedTaxes!!.taxPayer, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedTaxes!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -771,7 +771,7 @@ class HomeHelper( var category_name : String,
         category.subCategories.add(Level2SubCategory("City", decryptedProperty!!.city, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("State", decryptedProperty!!.state, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Zip Code", decryptedProperty!!.zipCode, "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Country", decryptedProperty!!.country, "", Constants.LEVEL2_LOCATION))
+        category.subCategories.add(Level2SubCategory("Country", decryptedProperty!!.country, "", Constants.LEVEL2_NORMAL))
         categoryList.add(category)
 
         categoryIndex += 2007
