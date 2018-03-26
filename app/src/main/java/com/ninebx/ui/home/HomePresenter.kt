@@ -199,7 +199,7 @@ class HomePresenter( val homeView : HomeView ) {
 
             override fun onPostExecute(result: Unit?) {
                 super.onPostExecute(result)
-                homeView!!.onCombineEducationFetched(mDecryptCombineEducation)
+                homeView.onCombineEducationFetched(mDecryptCombineEducation)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }

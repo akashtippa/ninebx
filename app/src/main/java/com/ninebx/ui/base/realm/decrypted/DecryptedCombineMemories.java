@@ -15,18 +15,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineMemories implements Parcelable {
 
-
-    public static final Creator<DecryptedCombineMemories> CREATOR = new Creator<DecryptedCombineMemories>() {
-        @Override
-        public DecryptedCombineMemories createFromParcel(Parcel in) {
-            return new DecryptedCombineMemories(in);
-        }
-
-        @Override
-        public DecryptedCombineMemories[] newArray(int size) {
-            return new DecryptedCombineMemories[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -46,20 +34,6 @@ public class DecryptedCombineMemories implements Parcelable {
         this.mainMemoriesItems = mainMemoriesItems;
         this.memoryTimelineItems = memoryTimelineItems;
         this.listItems = listItems;
-    }
-
-    protected DecryptedCombineMemories(Parcel in) {
-        id = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -117,4 +91,55 @@ public class DecryptedCombineMemories implements Parcelable {
         }
         return count;
     }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedCombineMemories that = (DecryptedCombineMemories) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.mainMemoriesItems);
+        dest.writeTypedList(this.memoryTimelineItems);
+        dest.writeTypedList(this.listItems);
+    }
+
+    protected DecryptedCombineMemories(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.mainMemoriesItems = in.createTypedArrayList(DecryptedMainMemories.CREATOR);
+        this.memoryTimelineItems = in.createTypedArrayList(DecryptedMemoryTimeline.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedMemoriesList.CREATOR);
+    }
+
+    public static final Creator<DecryptedCombineMemories> CREATOR = new Creator<DecryptedCombineMemories>() {
+        @Override
+        public DecryptedCombineMemories createFromParcel(Parcel source) {
+            return new DecryptedCombineMemories(source);
+        }
+
+        @Override
+        public DecryptedCombineMemories[] newArray(int size) {
+            return new DecryptedCombineMemories[size];
+        }
+    };
 }

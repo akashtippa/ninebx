@@ -15,17 +15,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedCombineInterests implements Parcelable {
 
-    public static final Creator<DecryptedCombineInterests> CREATOR = new Creator<DecryptedCombineInterests>() {
-        @Override
-        public DecryptedCombineInterests createFromParcel(Parcel in) {
-            return new DecryptedCombineInterests(in);
-        }
-
-        @Override
-        public DecryptedCombineInterests[] newArray(int size) {
-            return new DecryptedCombineInterests[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -42,10 +31,6 @@ public class DecryptedCombineInterests implements Parcelable {
         this.id = id;
         this.interestItems = interestItems;
         this.listItems = listItems;
-    }
-
-    protected DecryptedCombineInterests(Parcel in) {
-        id = in.readInt();
     }
 
     public long getId() {
@@ -70,16 +55,6 @@ public class DecryptedCombineInterests implements Parcelable {
 
     public void setListItems(ArrayList<DecryptedInterestsList> listItems) {
         this.listItems = listItems;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
     }
 
     public int getServicesOrOtherAccounts(String selectionType) {
@@ -114,4 +89,37 @@ public class DecryptedCombineInterests implements Parcelable {
                 ", listItems=" + listItems +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeTypedList(this.interestItems);
+        dest.writeTypedList(this.listItems);
+    }
+
+    protected DecryptedCombineInterests(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.interestItems = in.createTypedArrayList(DecryptedInterests.CREATOR);
+        this.listItems = in.createTypedArrayList(DecryptedInterestsList.CREATOR);
+    }
+
+    public static final Creator<DecryptedCombineInterests> CREATOR = new Creator<DecryptedCombineInterests>() {
+        @Override
+        public DecryptedCombineInterests createFromParcel(Parcel source) {
+            return new DecryptedCombineInterests(source);
+        }
+
+        @Override
+        public DecryptedCombineInterests[] newArray(int size) {
+            return new DecryptedCombineInterests[size];
+        }
+    };
 }

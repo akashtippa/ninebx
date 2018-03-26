@@ -266,7 +266,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     val bundle = Bundle()
                     if( subCategory.formsCount == 0 )
                         if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                            if( !checkForAsset("Vehicles", categories) ) {
+                        if( (combinedItems as DecryptedCombine).getAutoList("home_4001").size == 0 ) {
                                 context!!.showToast(R.string.error_empty_vehicle_list)
                                 return
                             }
@@ -274,11 +274,11 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
                     when( categoryName ) {
                         "Maintenance", "Auto insurance" -> {
-                        val listItems = (combinedItems as DecryptedCombine).autoList
-                        bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
-                    }
+                            val listItems = (combinedItems as DecryptedCombine).getAutoList("home_4001")
+                            bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
+                        }
                         "Insurance" -> {
-                            val listItems = (combinedItems as DecryptedCombine).propertyList
+                            val listItems = (combinedItems as DecryptedCombine).getPropertyList("home_3003")
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
                         "Life insurance", "Health insurance" -> {
@@ -315,24 +315,24 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         when {
                             subCategory.title == "Add Persons." -> {
 
-                                    val usersList = ArrayList<String>()
-                                    val currentUsersList = ArrayList<String>()
-                                    for( subSection in category.subCategories ) {
-                                        if( subSection.type == Constants.SUB_CATEGORY_DISPLAY_PERSON ) {
-                                            currentUsersList.add(subSection.personName)
-                                        }
+                                val usersList = ArrayList<String>()
+                                val currentUsersList = ArrayList<String>()
+                                for( subSection in category.subCategories ) {
+                                    if( subSection.type == Constants.SUB_CATEGORY_DISPLAY_PERSON ) {
+                                        currentUsersList.add(subSection.personName)
                                     }
-                                    for( member in memberList ) {
-                                        usersList.add(member.firstName + " " + member.lastName)
-                                    }
-                                    usersList.removeAll(currentUsersList)
+                                }
+                                for( member in memberList ) {
+                                    usersList.add(member.firstName + " " + member.lastName)
+                                }
+                                usersList.removeAll(currentUsersList)
 
                                 if(usersList.isNotEmpty()) {
 
                                     CustomDropDown(adapter, usersList, category.title, subCategory.title, mainCategory.subCategories)
                                 }
                                 else {
-                                   // Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
+                                    // Toast.makeText(context, "All Family/Users added to the list!", Toast.LENGTH_SHORT).show()
                                     val builder = android.app.AlertDialog.Builder(context)
                                     builder.setPositiveButton("OK"  ,object :  DialogInterface.OnClickListener{
                                         override fun onClick(p0: DialogInterface?, p1: Int) {

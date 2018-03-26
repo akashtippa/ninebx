@@ -71,6 +71,7 @@ class NineBxApplication : MultiDexApplication() {
         }
 
         var autoTestMode = true
+        var backPressedFromSharedContacts = false
 
         private var getUserAPI: NetModule.GetUsersAPI? = null
         fun getUserAPI(): NetModule.GetUsersAPI? {

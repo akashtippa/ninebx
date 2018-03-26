@@ -9,12 +9,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.ninebx.R
-import com.ninebx.ui.base.realm.decrypted.DecryptedMainContacts
 import com.ninebx.ui.base.realm.decrypted.DecryptedTravel
 import com.ninebx.ui.base.realm.home.contacts.Contacts
-import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
+import com.ninebx.ui.home.account.interfaces.MainContactsAdded
 
-internal class TravelItemsAdapter(private var myList: ArrayList<DecryptedTravel>?, private val travelItemsAdded: TravelItemsAdded) : RecyclerView.Adapter<TravelItemsAdapter.RecyclerItemViewHolder>() {
+internal class TravelItemsAdapter(private var myList: ArrayList<DecryptedTravel>?, private val travelItemsAdded: MainContactsAdded) : RecyclerView.Adapter<TravelItemsAdapter.RecyclerItemViewHolder>() {
     internal var mLastPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {

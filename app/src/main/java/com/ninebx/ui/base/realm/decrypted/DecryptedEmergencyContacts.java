@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedEmergencyContacts implements Parcelable {
 
-    public static final Creator<DecryptedEmergencyContacts> CREATOR = new Creator<DecryptedEmergencyContacts>() {
-        @Override
-        public DecryptedEmergencyContacts createFromParcel(Parcel in) {
-            return new DecryptedEmergencyContacts(in);
-        }
-
-        @Override
-        public DecryptedEmergencyContacts[] newArray(int size) {
-            return new DecryptedEmergencyContacts[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
@@ -105,31 +94,6 @@ public class DecryptedEmergencyContacts implements Parcelable {
                 '}';
     }
 
-    protected DecryptedEmergencyContacts(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        classType = in.readString();
-        name = in.readString();
-        relationShip = in.readString();
-        phoneNumberOne = in.readString();
-        phoneNumberTwo = in.readString();
-        emailAddress = in.readString();
-        streetAddressOne = in.readString();
-        streetAddressTwo = in.readString();
-        city = in.readString();
-        state = in.readString();
-        zipCode = in.readString();
-        country = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        createdUser = in.readString();
-    }
-
     public DecryptedEmergencyContacts(String selectionType, String classType, String name, String relationShip, String phoneNumberOne, String phoneNumberTwo, String emailAddress, String streetAddressOne, String streetAddressTwo, String city, String state, String zipCode, String country, String created, String modified, Boolean isPrivate, String notes, String attachmentNames, String createdUser) {
         this.selectionType = selectionType;
         this.classType = classType;
@@ -153,36 +117,6 @@ public class DecryptedEmergencyContacts implements Parcelable {
     }
 
     public DecryptedEmergencyContacts() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(classType);
-        dest.writeString(name);
-        dest.writeString(relationShip);
-        dest.writeString(phoneNumberOne);
-        dest.writeString(phoneNumberTwo);
-        dest.writeString(emailAddress);
-        dest.writeString(streetAddressOne);
-        dest.writeString(streetAddressTwo);
-        dest.writeString(city);
-        dest.writeString(state);
-        dest.writeString(zipCode);
-        dest.writeString(country);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -368,4 +302,76 @@ public class DecryptedEmergencyContacts implements Parcelable {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.classType);
+        dest.writeString(this.name);
+        dest.writeString(this.relationShip);
+        dest.writeString(this.phoneNumberOne);
+        dest.writeString(this.phoneNumberTwo);
+        dest.writeString(this.emailAddress);
+        dest.writeString(this.streetAddressOne);
+        dest.writeString(this.streetAddressTwo);
+        dest.writeString(this.city);
+        dest.writeString(this.state);
+        dest.writeString(this.zipCode);
+        dest.writeString(this.country);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedEmergencyContacts(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.classType = in.readString();
+        this.name = in.readString();
+        this.relationShip = in.readString();
+        this.phoneNumberOne = in.readString();
+        this.phoneNumberTwo = in.readString();
+        this.emailAddress = in.readString();
+        this.streetAddressOne = in.readString();
+        this.streetAddressTwo = in.readString();
+        this.city = in.readString();
+        this.state = in.readString();
+        this.zipCode = in.readString();
+        this.country = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedEmergencyContacts> CREATOR = new Creator<DecryptedEmergencyContacts>() {
+        @Override
+        public DecryptedEmergencyContacts createFromParcel(Parcel source) {
+            return new DecryptedEmergencyContacts(source);
+        }
+
+        @Override
+        public DecryptedEmergencyContacts[] newArray(int size) {
+            return new DecryptedEmergencyContacts[size];
+        }
+    };
 }

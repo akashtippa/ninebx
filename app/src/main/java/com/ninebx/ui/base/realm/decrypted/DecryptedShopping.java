@@ -419,4 +419,19 @@ public class DecryptedShopping implements Parcelable {
             return new DecryptedShopping[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedShopping that = (DecryptedShopping) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }
