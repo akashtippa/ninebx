@@ -47,7 +47,8 @@ class AccountPasswordFragment : BaseAuthFragment() {
         }
 
         ivBackPass.setOnClickListener {
-            activity!!.onBackPressed()
+            //activity!!.onBackPressed()
+            fragmentManager!!.popBackStackImmediate()
         }
     }
 

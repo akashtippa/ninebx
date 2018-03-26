@@ -137,7 +137,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( selectedDocument != null ) {
             AppLogger.d("Level2Category", "Selected Document : " + selectedDocument)
             when( selectedDocument ) {
-                //Home&Banking
+            //Home&Banking
                 is DecryptedFinancial -> {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
@@ -208,7 +208,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
 
-                 //Personal
+            //Personal
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
@@ -496,11 +496,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
-<<<<<<< HEAD
-                //work and education
-                is DecryptedMainEducation -> {
-
-=======
             //EducationAndWork
                 is DecryptedEducation -> {
                     val decryptedEducationItems = selectedDocument as DecryptedEducation
@@ -520,7 +515,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setText(decryptedMainMemores.modified)
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
->>>>>>> d2a4c77d0f1c9990dd6c3a3c46c0a9bf838f5afe
                 }
             }
             if( modifiedValue.text.equals(createdValue.text) ) {
@@ -638,8 +632,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         ivDelete.setOnClickListener {
             if( isEditMode ) {
-               /* arguments!!.putString("action", "delete")
-                (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
+                /* arguments!!.putString("action", "delete")
+                 (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("NineBx")
                 builder.setCancelable(false)
@@ -655,8 +649,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         if( isEditMode ) tvSave.show()
 
-       /* ivHome.setOnClickListener {
-            NineBxApplication.instance.activityInstance!!.callHomeFragment() }*/
+        /* ivHome.setOnClickListener {
+             NineBxApplication.instance.activityInstance!!.callHomeFragment() }*/
     }
 
     private fun validate(): Boolean {
@@ -670,7 +664,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun setTitle() {
 
         val bundleValue = arguments!!.getString("categoryName")
-       // toolbarTitle.text = "Add " + bundleValue
+        // toolbarTitle.text = "Add " + bundleValue
 
         when (bundleValue) {
 
@@ -954,7 +948,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
                 if( selectedDocument == null ) toolbarTitle.text = "Add ID"
             }
-            //work and education
+        //work and education
             "Add Person" -> {
                 etTitle.hint = "Institution name"
                 etTitleValue.hint = "Qualification/degree"
