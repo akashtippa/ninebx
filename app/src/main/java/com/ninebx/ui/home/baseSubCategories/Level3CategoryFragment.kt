@@ -583,9 +583,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"
         if( action == "add" ) {
-            ivEdit.hide()
-            ivDelete.hide()
+            ivEdit.setImageResource(R.drawable.ic_icon_save)
             ivHome.hide()
+            etTitle.isEnabled = false
+            tvTitleValue.isEnabled = false
+
         }
         else if( action == "edit" ) {
             ivEdit.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_icon_edit_blue))
