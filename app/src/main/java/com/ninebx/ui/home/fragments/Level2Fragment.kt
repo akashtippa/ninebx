@@ -378,6 +378,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                     mShoppingItemsAdapter!!.notifyDataSetChanged()
                 }
             /*R.string.home_amp_money -> {}*/
+
             }
         } else {
             searchHelper = SearchHelper()

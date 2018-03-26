@@ -636,6 +636,7 @@ class WellnessHelper(
             if (decryptedIdentification!!.id.toInt() == 0) {
                 decryptedIdentification!!.id = getUniqueId()
             }
+            AppLogger.d("identification ", "selectionType " + decryptedIdentification!!.selectionType)
             var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
@@ -768,6 +769,7 @@ class WellnessHelper(
             if (decryptedHealthcareProviders!!.id.toInt() == 0) {
                 decryptedHealthcareProviders!!.id = getUniqueId()
             }
+            AppLogger.d("healthcareProvider ", "selectionType " + decryptedHealthcareProviders!!.selectionType)
 
             var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {

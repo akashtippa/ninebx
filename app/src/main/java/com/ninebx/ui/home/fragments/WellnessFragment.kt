@@ -1,38 +1,18 @@
 package com.ninebx.ui.home.fragments
 
-import android.Manifest
-import android.annotation.TargetApi
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import android.provider.ContactsContract
-import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
-import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseCategories.SubCategory
-import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
-import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
-import com.onegravity.contactpicker.ContactElement
-import com.onegravity.contactpicker.contact.Contact
-import com.onegravity.contactpicker.contact.ContactDescription
-import com.onegravity.contactpicker.contact.ContactSortOrder
-import com.onegravity.contactpicker.core.ContactPickerActivity
-import com.onegravity.contactpicker.group.Group
-import com.onegravity.contactpicker.picture.ContactPictureType
 import kotlinx.android.synthetic.main.fragment_wellness.*
-import java.util.concurrent.atomic.AtomicBoolean
 
 /***
  * Created by TechnoBlogger on 28/01/18.
@@ -62,6 +42,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
 
         val bundle = arguments
         val subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+
         val combineItems : DecryptedCombineWellness = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
 
         layoutPersonalHealthRecord.setOnClickListener {
@@ -73,6 +54,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+
             bundle.putParcelable(Constants.COMBINE_ITEMS, arguments!!.getParcelable(Constants.COMBINE_ITEMS))
 
             val categoryFragment = Level2Fragment()
@@ -200,7 +182,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
 
-        tvHealthCareCount.text = combineItems.healthcareProvidersItems.size.toString()
+        tvHealthCareCount.text = combineItems.getHealthcareSize(subCategory.personName).toString()
         tvEmergencyContactsCount.text = combineItems.emergencyContactsItems.size.toString()
         tvMedicationCount.text = combineItems.medicationsItems.size.toString()
         tvMedicalAllergiesCount.text = combineItems.medicalConditionsItems.size.toString()
@@ -213,16 +195,7 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         return super.onBackPressed()
     }
-
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-       /* if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK && data != null &&
-                (data.hasExtra(ContactPickerActivity.RESULT_GROUP_DATA) || data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA))) {
 
-            // we got a result from the contact picker --> show the picked contacts
-            mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
-            mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
-//            setContactsList()
-            AppLogger.d("WellnessFragment ", "emergencyContactsGroups " + mGroups)
-            AppLogger.d("WellnessFragment ", "emergencyContactsContacts " + mContacts)*/
         }
     }

@@ -477,6 +477,7 @@ class Level3CategoryHelper(
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format( Date())
 
+
         if( homeHelper != null ) {
             homeHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
