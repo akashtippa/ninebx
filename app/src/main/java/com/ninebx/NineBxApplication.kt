@@ -67,7 +67,7 @@ class NineBxApplication : MultiDexApplication() {
         fun getPreferences(): NineBxPreferences {
             if( SyncUser.currentUser() != null )
             currentUserId = SyncUser.currentUser().identity
-            AppLogger.d("Application", "Preferences for : " + currentUserId)
+            //AppLogger.d("Application", "Preferences for : " + currentUserId)
             nineBxPreferences = NineBxPreferences(currentUserId)
             return nineBxPreferences!!
         }

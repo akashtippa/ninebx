@@ -316,6 +316,11 @@ class MyProfileFragment : FragmentBackHelper(), AWSFileTransferHelper.FileOperat
             return false
         }
 
+        if( strCountry.isEmpty() ) {
+            Toast.makeText(context, "Please select a 'Country'", Toast.LENGTH_LONG).show()
+            txtCountry.requestFocus()
+            return false
+        }
         return true
 //        updateTheUserInfo() // Updating the User Info to Realm
 
