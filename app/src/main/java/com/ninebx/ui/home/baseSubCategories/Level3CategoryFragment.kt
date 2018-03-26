@@ -669,8 +669,20 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun setTitle() {
 
         val bundleValue = arguments!!.getString("categoryName")
+        val bundleValue1= arguments!!.getString("categoryId")
         // toolbarTitle.text = "Add " + bundleValue
-
+        when (bundleValue1){
+            "edu_1001" ->{
+                etTitle.hint = "Institution name"
+                etTitleValue.hint = "Qualification/degree"
+                if( selectedDocument == null ) toolbarTitle.text = "Add Institution"
+            }
+            "edu_2001" ->{
+                etTitle.hint = "Company name"
+                etTitleValue.hint = "Position"
+                if( selectedDocument == null ) toolbarTitle.text = "Add Company"
+            }
+        }
         when (bundleValue) {
 
         // Common Items in Every

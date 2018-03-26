@@ -54,7 +54,8 @@ class SignUpFragment : BaseAuthFragment() {
         }
 
         ivBackSignUp.setOnClickListener {
-            activity!!.onBackPressed()
+            //activity!!.onBackPressed()
+            fragmentManager!!.popBackStackImmediate()
         }
 
 
