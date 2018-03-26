@@ -28,6 +28,7 @@ import com.ninebx.ui.base.realm.home.contacts.MainContacts
 import com.ninebx.ui.base.realm.home.education.Education
 import com.ninebx.ui.base.realm.home.interests.Interests
 import com.ninebx.ui.base.realm.home.memories.MainMemories
+import com.ninebx.ui.base.realm.home.personal.Personal
 import com.ninebx.ui.base.realm.home.shopping.Shopping
 import com.ninebx.ui.base.realm.home.travel.Travel
 import com.ninebx.ui.base.realm.home.wellness.Wellness
@@ -100,6 +101,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             R.string.travel -> { DecryptedTravel::class.java.simpleName }
             R.string.contacts -> { DecryptedMainContacts::class.java.simpleName }
             R.string.education_work -> { DecryptedEducation::class.java.simpleName }
+            R.string.personal-> { DecryptedPersonal::class.java.simpleName }
             R.string.interests -> { DecryptedInterests::class.java.simpleName }
             R.string.wellness -> { DecryptedWellness::class.java.simpleName }
             R.string.memories -> { DecryptedMainMemories::class.java.simpleName }
@@ -142,6 +144,11 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                     contact as DecryptedEducation
                     contactsRealm!!.where(Education::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
                     mEducationItemsAdapter!!.deleteContact(contact)
+                }
+                R.string.personal -> {
+                    contact as DecryptedPersonal
+                    contactsRealm!!.where(Personal::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mPersonalItemsAdapter!!.deleteContact(contact)
                 }
                 R.string.interests -> {
                     contact as DecryptedInterests

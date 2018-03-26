@@ -307,4 +307,19 @@ public class Travel extends RealmObject {
 
     public Travel() {
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Travel travel = (Travel) o;
+
+        return id == travel.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }

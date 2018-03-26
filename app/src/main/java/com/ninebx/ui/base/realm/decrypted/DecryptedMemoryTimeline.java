@@ -280,4 +280,19 @@ public class DecryptedMemoryTimeline implements Parcelable {
             return new DecryptedMemoryTimeline[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedMemoryTimeline that = (DecryptedMemoryTimeline) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }
