@@ -584,6 +584,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"
+        setTitle()
         if( action == "add" ) {
             ivEdit.hide()
             ivDelete.hide()
@@ -611,7 +612,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             startActivity(homeIntent)
             activity!!.finishAffinity()
         }
-        setTitle()
 
         //setCamera(boxValue)
         tvSave.hide()

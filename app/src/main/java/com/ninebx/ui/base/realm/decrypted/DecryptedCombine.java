@@ -321,5 +321,20 @@ public class DecryptedCombine implements Parcelable {
             return new DecryptedCombine[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DecryptedCombine that = (DecryptedCombine) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }
 

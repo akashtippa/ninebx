@@ -137,7 +137,7 @@ class LoginSignupTask(private var userName: String,
                 val privateKey = decryptAESKEYPassword(responseList[0].secureKey.toByteArray(), encryptedPasswordByteArray)
                 //AppLogger.d(TAG, "Save user secure key : " + privateKey)
                 NineBxApplication.getPreferences().privateKey = privateKey.trim()
-                NineBxApplication.getPreferences().adminId = responseList[0].adminId
+                NineBxApplication.getPreferences().adminId = (responseList[0].adminId)
                 authView.onSuccess(mCurrentUser)
             }
 

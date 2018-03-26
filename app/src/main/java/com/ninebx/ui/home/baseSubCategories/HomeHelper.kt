@@ -1347,91 +1347,93 @@ class HomeHelper( var category_name : String,
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format(Date())
 
-        if (decryptedFinancial != null) {
-            decryptedFinancial!!.selectionType = categoryID
-            decryptedFinancial!!.institutionName = title
-            decryptedFinancial!!.accountName = subTitle
-            AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
-            if (decryptedFinancial!!.created.isEmpty())
-                decryptedFinancial!!.created = currentUsers + " " + currentDateandTime
-            decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
+        if(categoryID != "home_8001") {
+            if (decryptedFinancial != null) {
+                decryptedFinancial!!.selectionType = categoryID
+                decryptedFinancial!!.institutionName = title
+                decryptedFinancial!!.accountName = subTitle
+                AppLogger.d("SelectionType ", "DecryptedFinancial" + decryptedFinancial!!.selectionType)
+                if (decryptedFinancial!!.created.isEmpty())
+                    decryptedFinancial!!.created = currentUsers + " " + currentDateandTime
+                decryptedFinancial!!.modified = currentUsers + " " + currentDateandTime
 
-            var isSaveComplete = false
-            if (decryptedFinancial!!.id.toInt() == 0) {
-                decryptedFinancial!!.id = getUniqueId()
-                AppLogger.d("saveDocument", "id" + decryptedFinancial!!.id)
-            }
-
-            AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
-            AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg p0: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            val financial = encryptFinancial(decryptedFinancial!!)
-                            realm.insertOrUpdate(financial)
-                            AppLogger.d("CombineLevel2 ", "Inserted ")
-                            realm!!.commitTransaction()
-                        }
-                    })
+                var isSaveComplete = false
+                if (decryptedFinancial!!.id.toInt() == 0) {
+                    decryptedFinancial!!.id = getUniqueId()
+                    AppLogger.d("saveDocument", "id" + decryptedFinancial!!.id)
                 }
 
-                override fun onPostExecute(result: Unit?) {
-                    super.onPostExecute(result)
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm(mCombine!!)
+                AppLogger.d("saveDocument", "Document Id " + decryptedFinancial!!.id)
+                AppLogger.d("saveDocument", "Document : " + decryptedFinancial!!)
+                object : AsyncTask<Void, Void, Unit>() {
+                    override fun doInBackground(vararg p0: Void?) {
+                        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                            override fun onSuccess(realm: Realm?) {
+                                realm!!.beginTransaction()
+                                val financial = encryptFinancial(decryptedFinancial!!)
+                                realm.insertOrUpdate(financial)
+                                AppLogger.d("CombineLevel2 ", "Inserted ")
+                                realm!!.commitTransaction()
+                            }
+                        })
                     }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-            object : AsyncTask<Void, Void, Unit>() {
+                    override fun onPostExecute(result: Unit?) {
+                        super.onPostExecute(result)
+                        if (isSaveComplete) {
+                            isSaveComplete = true
+                        } else {
+                            categoryView.savedToRealm(mCombine!!)
+                        }
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-                override fun doInBackground(vararg p0: Void?) {
+                object : AsyncTask<Void, Void, Unit>() {
 
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combine: DecryptedCombine = mCombine as DecryptedCombine
-                            val index = combine.financialItems.indexOf(decryptedFinancial)
-                            if( index != -1 ) {
-                                combine.financialItems[index] = decryptedFinancial
-                            }
-                            else combine.financialItems.add(decryptedFinancial)
-                            mCombine = combine
-                            AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
-                            var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
-                            realm.beginTransaction()
-                            if (combineRealm == null) {
-                                combineRealm = realm.createObject(Combine::class.java, getUniqueId())
-                            }
-                            val encryptedObject = encryptFinancial(decryptedFinancial!!)
-                            if (combineRealm!!.financialItems.contains(encryptedObject)) {
-                                val index = combineRealm!!.financialItems.indexOf(encryptedObject)
-                                if (index != -1) {
-                                    combineRealm!!.financialItems[index] = (encryptedObject)
+                    override fun doInBackground(vararg p0: Void?) {
+
+                        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE, object : Realm.Callback() {
+                            override fun onSuccess(realm: Realm?) {
+                                val combine: DecryptedCombine = mCombine as DecryptedCombine
+                                val index = combine.financialItems.indexOf(decryptedFinancial)
+                                if( index != -1 ) {
+                                    combine.financialItems[index] = decryptedFinancial
                                 }
-                            } else {
-                                combineRealm!!.financialItems.add(encryptedObject)
+                                else combine.financialItems.add(decryptedFinancial)
+                                mCombine = combine
+                                AppLogger.d("saveDocument", "Combine Id " + combine!!.id)
+                                var combineRealm = realm!!.where(Combine::class.java).equalTo("id", combine.id).findFirst()
+                                realm.beginTransaction()
+                                if (combineRealm == null) {
+                                    combineRealm = realm.createObject(Combine::class.java, getUniqueId())
+                                }
+                                val encryptedObject = encryptFinancial(decryptedFinancial!!)
+                                if (combineRealm!!.financialItems.contains(encryptedObject)) {
+                                    val index = combineRealm!!.financialItems.indexOf(encryptedObject)
+                                    if (index != -1) {
+                                        combineRealm!!.financialItems[index] = (encryptedObject)
+                                    }
+                                } else {
+                                    combineRealm!!.financialItems.add(encryptedObject)
+                                }
+                                /*combine.financialItems.add( decryptedFinancial )
+                                val encryptedCombine = encryptCombine(combine)*/
+                                realm.insertOrUpdate(combineRealm)
+                                realm.commitTransaction()
                             }
-                            /*combine.financialItems.add( decryptedFinancial )
-                            val encryptedCombine = encryptCombine(combine)*/
-                            realm.insertOrUpdate(combineRealm)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    super.onPostExecute(result)
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm(mCombine!!)
+                        })
                     }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+                    override fun onPostExecute(result: Unit?) {
+                        super.onPostExecute(result)
+                        if (isSaveComplete) {
+                            isSaveComplete = true
+                        } else {
+                            categoryView.savedToRealm(mCombine!!)
+                        }
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            }
         }
 
         if (decryptedPayment != null) {

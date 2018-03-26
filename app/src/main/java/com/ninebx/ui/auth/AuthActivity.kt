@@ -306,11 +306,18 @@ class AuthActivity : AppCompatActivity(), AuthView {
     }
 
     override fun onBackPressed() {
-        /*if (supportFragmentManager.backStackEntryCount > 1 && mCurrentTag != "OTP") {
-            supportFragmentManager.popBackStack()
+        if (supportFragmentManager.backStackEntryCount > 1 ) {
+            when( mCurrentTag ) {
+                "SignUp", "AccountPassword" ->{
+                    supportFragmentManager.popBackStack()
+                }
+                else -> {
+                    finish()
+                }
+            }
+
         } else {
             finish()
-        }*/
-        finish()
+        }
     }
 }
