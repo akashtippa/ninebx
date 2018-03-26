@@ -74,6 +74,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             Constants.LEVEL2_TIMEPICKER -> {
                 return LEVEL2_TIMEPICKERViewHolder(inflater.inflate(R.layout.level2_time_picker, parent, false))
             }
+            Constants.LEVEL2_YEARPICKER -> {
+                return LEVEL2_YEARPICKERViewHolder(inflater.inflate(R.layout.level2_time_picker, parent, false))
+            }
             else -> {
                 return LEVEL_NORMAL_SPINNERViewHolder(inflater.inflate(R.layout.level2_item_spinner_value, parent, false))
             }
@@ -195,6 +198,30 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 locationViewHolder.txtHeader.isEnabled = isEditMode && level2SubCategory.isEnabled
                 locationViewHolder.etSubHeader.isEnabled = isEditMode && level2SubCategory.isEnabled
 
+            }
+            Constants.LEVEL2_YEARPICKER -> {
+                val locationViewHolder : LEVEL2_YEARPICKERViewHolder = holder as LEVEL2_YEARPICKERViewHolder
+
+                locationViewHolder.txtHeader.text = headerTitle
+                locationViewHolder.etSubHeader.hint = headerTitle
+                locationViewHolder.etSubHeader.setText(titleValue)
+                locationViewHolder.etSubHeader.addTextChangedListener(CustomTextWatcher(level2SubCategory))
+                locationViewHolder.etSubHeader.setOnClickListener{
+                    if( level2SubCategory.title == "Tax year" ) {
+                        getYearFromPicker(_context, 2003, Calendar.getInstance().get(Calendar.YEAR), object : YearSelectionListener {
+                            override fun onYearSelected(selectedYear: String) {
+                                locationViewHolder.etSubHeader.setText(selectedYear)
+                            }
+                        })
+                    }
+                    else {
+                        getYearFromPicker(_context, 1900, Calendar.getInstance().get(Calendar.YEAR) + 2, object : YearSelectionListener {
+                            override fun onYearSelected(selectedYear: String) {
+                                locationViewHolder.etSubHeader.setText(selectedYear)
+                            }
+                        })
+                    }
+                }
             }
             Constants.LEVEL2_TIMEPICKER -> {
                 val locationViewHolder : LEVEL2_TIMEPICKERViewHolder = holder as LEVEL2_TIMEPICKERViewHolder
@@ -380,7 +407,9 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 val keyBoardType = item.inputType
                 if (keyBoardType == Constants.CONTACT_SPINNER) {
                     openContactList()
-                } else {
+                }
+
+                else {
                     showMemberPopup( spinnerUsers, membersList )
                 }
             }
@@ -554,13 +583,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                         }
                     })
                 }
-                else if( keyBoardType == Constants.KEYBOARD_YEAR_PICKER ) {
-                    getYearFromPicker(_context, Calendar.getInstance(), object : YearSelectionListener {
-                        override fun onYearSelected(selectedYear: String) {
-                            (etSubHeader).setText(selectedYear)
-                        }
-                    })
-                }
+
             }
         }
 
@@ -572,6 +595,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
             txtHeader.isEnabled = isEditMode
             etSubHeader.isEnabled = isEditMode
+
             spinnerAccountType.isEnabled = isEditMode
             spinnerAccountType.setOnClickListener(this)
             // childView = level2NormalView
@@ -598,6 +622,18 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
         }
     } // 19
     inner class LEVEL2_TIMEPICKERViewHolder( itemView: View ) : RecyclerView.ViewHolder( itemView ){
+        val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
+        val etSubHeader = itemView.findViewById<TextView>(R.id.etSubHeader)
+
+        init {
+
+            txtHeader.isEnabled = isEditMode
+            etSubHeader.isEnabled = isEditMode
+            // childView = level2PickerView
+        }
+    }
+
+    inner class LEVEL2_YEARPICKERViewHolder( itemView: View ) : RecyclerView.ViewHolder( itemView ){
         val txtHeader = itemView.findViewById<TextView>(R.id.txtHeader)
         val etSubHeader = itemView.findViewById<TextView>(R.id.etSubHeader)
 

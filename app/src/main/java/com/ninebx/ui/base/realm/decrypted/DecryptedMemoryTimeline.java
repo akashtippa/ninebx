@@ -19,17 +19,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedMemoryTimeline implements Parcelable {
 
-    public static final Creator<DecryptedMemoryTimeline> CREATOR = new Creator<DecryptedMemoryTimeline>() {
-        @Override
-        public DecryptedMemoryTimeline createFromParcel(Parcel in) {
-            return new DecryptedMemoryTimeline(in);
-        }
-
-        @Override
-        public DecryptedMemoryTimeline[] newArray(int size) {
-            return new DecryptedMemoryTimeline[size];
-        }
-    };
     @Ignore public String searchField = "";
     @PrimaryKey //@Required
             long id = 0;
@@ -63,23 +52,6 @@ public class DecryptedMemoryTimeline implements Parcelable {
     @Required
     private String createdUser = "";
 
-    protected DecryptedMemoryTimeline(Parcel in) {
-        id = in.readInt();
-        photosId = in.createStringArrayList();
-        selectionType = in.readString();
-        title = in.readString();
-        date = in.readString();
-        place = in.readString();
-        contacts = in.readString();
-        notes = in.readString();
-        attachmentNames = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        createdUser = in.readString();
-    }
-
     public DecryptedMemoryTimeline(long id, ArrayList<RealmString> backingImages, List<String> photosId, String selectionType, String title, String date, String place, String contacts, String notes, String attachmentNames, Date selectedDate, String created, String modified, Boolean isPrivate, String createdUser) {
         this.id = id;
         this.backingImages = backingImages;
@@ -99,28 +71,6 @@ public class DecryptedMemoryTimeline implements Parcelable {
     }
 
     public DecryptedMemoryTimeline() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeStringList(photosId);
-        dest.writeString(selectionType);
-        dest.writeString(title);
-        dest.writeString(date);
-        dest.writeString(place);
-        dest.writeString(contacts);
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(createdUser);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public long getId() {
@@ -271,4 +221,63 @@ public class DecryptedMemoryTimeline implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeList(this.backingImages);
+        dest.writeStringList(this.photosId);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.title);
+        dest.writeString(this.date);
+        dest.writeString(this.place);
+        dest.writeString(this.contacts);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeLong(this.selectedDate != null ? this.selectedDate.getTime() : -1);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedMemoryTimeline(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.backingImages = new ArrayList<RealmString>();
+        in.readList(this.backingImages, RealmString.class.getClassLoader());
+        this.photosId = in.createStringArrayList();
+        this.selectionType = in.readString();
+        this.title = in.readString();
+        this.date = in.readString();
+        this.place = in.readString();
+        this.contacts = in.readString();
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        long tmpSelectedDate = in.readLong();
+        this.selectedDate = tmpSelectedDate == -1 ? null : new Date(tmpSelectedDate);
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedMemoryTimeline> CREATOR = new Creator<DecryptedMemoryTimeline>() {
+        @Override
+        public DecryptedMemoryTimeline createFromParcel(Parcel source) {
+            return new DecryptedMemoryTimeline(source);
+        }
+
+        @Override
+        public DecryptedMemoryTimeline[] newArray(int size) {
+            return new DecryptedMemoryTimeline[size];
+        }
+    };
 }

@@ -38,9 +38,7 @@ import com.ninebx.ui.home.account.interfaces.EducationItemsAdded
 import com.ninebx.ui.home.account.interfaces.MainContactsAdded
 import com.ninebx.ui.home.account.interfaces.PersonalItemsAdded
 import com.ninebx.ui.home.account.interfaces.TravelItemsAdded
-import com.ninebx.ui.home.adapter.EducationItemsAdapter
-import com.ninebx.ui.home.adapter.MainContactsAdapter
-import com.ninebx.ui.home.adapter.TravelItemsAdapter
+import com.ninebx.ui.home.adapter.*
 import com.ninebx.ui.home.baseCategories.OptionItem
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
@@ -67,7 +65,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Created by TechnoBlogger on 24/01/18.
  */
 class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelper.OnDocumentSelection,
-        MainContactsAdded, TravelItemsAdded, EducationItemsAdded, PersonalItemsAdded {
+        MainContactsAdded {
 
     override fun contactsDeleted(contacts: Parcelable) {
         showDialogToDelete(contacts )
@@ -102,7 +100,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             R.string.home_amp_money -> { "" }
             R.string.travel -> { DecryptedTravel::class.java.simpleName }
             R.string.contacts -> { DecryptedMainContacts::class.java.simpleName }
-            R.string.education -> { DecryptedEducation::class.java.simpleName }
+            R.string.education_work -> { DecryptedEducation::class.java.simpleName }
             R.string.interests -> { DecryptedInterests::class.java.simpleName }
             R.string.wellness -> { DecryptedWellness::class.java.simpleName }
             R.string.memories -> { DecryptedMainMemories::class.java.simpleName }
@@ -149,18 +147,22 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                 R.string.interests -> {
                     contact as DecryptedInterests
                     contactsRealm!!.where(Interests::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mInterestItemsAdapter!!.deleteContact(contact)
                 }
                 R.string.wellness -> {
                     contact as DecryptedWellness
                     contactsRealm!!.where(Wellness::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mWellnessItemsAdapter!!.deleteContact(contact)
                 }
                 R.string.memories -> {
                     contact as DecryptedMainMemories
                     contactsRealm!!.where(MainMemories::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mMainMemoriesAdapter!!.deleteContact(contact)
                 }
                 R.string.shopping -> {
                     contact as DecryptedShopping
                     contactsRealm!!.where(Shopping::class.java).equalTo("id", contact.id).findAll().deleteAllFromRealm()
+                    mShoppingItemsAdapter!!.deleteContact(contact)
                 }
             }
             contactsRealm!!.commitTransaction()
@@ -310,6 +312,11 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private var mContactsAdapter: MainContactsAdapter ?= null
     private var mTravelItemsAdapter: TravelItemsAdapter ?= null
     private var mEducationItemsAdapter: EducationItemsAdapter ?= null
+    private var mPersonalItemsAdapter: PersonalItemsAdapter ?= null
+    private var mInterestItemsAdapter: InterestItemsAdapter ?= null
+    private var mWellnessItemsAdapter: WellnessItemsAdapter ?= null
+    private var mMainMemoriesAdapter: MainMemoriesAdapter ?= null
+    private var mShoppingItemsAdapter: ShoppingItemsAdapter ?= null
     private fun loadItems() {
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         if (categoryName == "Services/Other Accounts") {
@@ -332,37 +339,37 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
                     rvCommonList!!.adapter = mEducationItemsAdapter
                     mEducationItemsAdapter!!.notifyDataSetChanged()
                 }
-                /*R.string.personal -> {
+                R.string.personal -> {
                     var list = combinedItems as DecryptedCombinePersonal
-                    mContactsAdapter = MainContactsAdapter(list.personalItems, this)
-                    rvCommonList!!.adapter = mContactsAdapter
-                    mContactsAdapter!!.notifyDataSetChanged()
+                    mPersonalItemsAdapter = PersonalItemsAdapter(list.personalItems, this)
+                    rvCommonList!!.adapter = mPersonalItemsAdapter
+                    mPersonalItemsAdapter!!.notifyDataSetChanged()
                 }
                 R.string.interests -> {
                     var list = combinedItems as DecryptedCombineInterests
-                    mContactsAdapter = MainContactsAdapter(list.interestItems, this)
-                    rvCommonList!!.adapter = mContactsAdapter
-                    mContactsAdapter!!.notifyDataSetChanged()
+                    mInterestItemsAdapter = InterestItemsAdapter(list.interestItems, this)
+                    rvCommonList!!.adapter = mInterestItemsAdapter
+                    mInterestItemsAdapter!!.notifyDataSetChanged()
                 }
                 R.string.wellness -> {
                     var list = combinedItems as DecryptedCombineWellness
-                    mContactsAdapter = MainContactsAdapter(list.wellnessItems, this)
-                    rvCommonList!!.adapter = mContactsAdapter
-                    mContactsAdapter!!.notifyDataSetChanged()
+                    mWellnessItemsAdapter = WellnessItemsAdapter(list.wellnessItems, this)
+                    rvCommonList!!.adapter = mWellnessItemsAdapter
+                    mWellnessItemsAdapter!!.notifyDataSetChanged()
                 }
                 R.string.memories -> {
                     var list = combinedItems as DecryptedCombineMemories
-                    mContactsAdapter = MainContactsAdapter(list.mainMemoriesItems, this)
-                    rvCommonList!!.adapter = mContactsAdapter
-                    mContactsAdapter!!.notifyDataSetChanged()
+                    mMainMemoriesAdapter = MainMemoriesAdapter(list.mainMemoriesItems, this)
+                    rvCommonList!!.adapter = mMainMemoriesAdapter
+                    mMainMemoriesAdapter!!.notifyDataSetChanged()
                 }
                 R.string.shopping -> {
                     var list = combinedItems as DecryptedCombineShopping
-                    mContactsAdapter = MainContactsAdapter(list.shoppingItems, this)
-                    rvCommonList!!.adapter = mContactsAdapter
-                    mContactsAdapter!!.notifyDataSetChanged()
+                    mShoppingItemsAdapter = ShoppingItemsAdapter(list.shoppingItems, this)
+                    rvCommonList!!.adapter = mShoppingItemsAdapter
+                    mShoppingItemsAdapter!!.notifyDataSetChanged()
                 }
-                R.string.home_amp_money -> {}*/
+            /*R.string.home_amp_money -> {}*/
             }
         } else {
             searchHelper = SearchHelper()

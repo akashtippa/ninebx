@@ -363,6 +363,7 @@ public class DecryptedVitalNumbers implements Parcelable {
                 '}';
     }
 
+
     @Override
     public int describeContents() {
         return 0;

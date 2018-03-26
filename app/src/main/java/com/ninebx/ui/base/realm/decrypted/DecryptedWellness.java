@@ -339,7 +339,6 @@ public class DecryptedWellness implements Parcelable {
                 '}';
     }
 
-
     @Override
     public int describeContents() {
         return 0;

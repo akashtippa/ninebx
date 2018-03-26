@@ -520,6 +520,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     && arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS ) != null ) {
                 tvTitleValue.show()
                 etTitleValue.hide()
+                tvTitleValue.hint = etTitleValue.hint
                 tvTitleValue.setOnClickListener {
                     showDropDownForOptions( arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS))
                 }
@@ -1052,6 +1053,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) && arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS ) != null ) {
             tvTitleValue.show()
             etTitleValue.hide()
+            tvTitleValue.hint = etTitleValue.hint
             tvTitleValue.setOnClickListener {
                 showDropDownForOptions( arguments!!.getParcelableArrayList<OptionItem>(Constants.SUB_OPTIONS))
             }

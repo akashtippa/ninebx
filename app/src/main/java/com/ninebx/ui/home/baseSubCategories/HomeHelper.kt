@@ -388,7 +388,7 @@ class HomeHelper( var category_name : String,
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Tax year", decryptedTaxes!!.taxYear, "", Constants.LEVEL2_SPINNER))
+        category.subCategories.add(Level2SubCategory("Tax year", decryptedTaxes!!.taxYear, Constants.KEYBOARD_YEAR_PICKER, Constants.LEVEL2_YEARPICKER))
         category.subCategories.add(Level2SubCategory("Taxpayer(s)", decryptedTaxes!!.taxPayer, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedTaxes!!.contacts, "", Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -581,7 +581,7 @@ class HomeHelper( var category_name : String,
         category.subCategories.add(Level2SubCategory("Vehicle identification number (VIN)", decryptedVehicle!!.vehicle, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Make", decryptedVehicle!!.make, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Model", decryptedVehicle!!.model, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Model year", decryptedVehicle!!.modelYear, Constants.KEYBOARD_YEAR_PICKER, Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Model year", decryptedVehicle!!.modelYear, Constants.KEYBOARD_YEAR_PICKER, Constants.LEVEL2_YEARPICKER))
         category.subCategories.add(Level2SubCategory("Color", decryptedVehicle!!.color, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Name on title", decryptedVehicle!!.titleName, "", Constants.LEVEL2_SPINNER))
         category.subCategories.add(Level2SubCategory("Estimated market value", decryptedVehicle!!.estimatedMarketValue, "", Constants.LEVEL2_USD))
@@ -983,7 +983,7 @@ class HomeHelper( var category_name : String,
         var category_id = "home_" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Service Details"
-        category.subCategories.add(Level2SubCategory("Name of service provider", decryptedVehicle!!.maintenanceEvent, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Name of service provider", decryptedVehicle!!.serviceProviderName, "", Constants.LEVEL2_NORMAL))
         category.subCategories.add(Level2SubCategory("Date of service", decryptedVehicle!!.dateOfService, "", Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Contacts", decryptedVehicle!!.contacts, Constants.CONTACT_SPINNER, Constants.LEVEL2_SPINNER))
         categoryList.add(category)
@@ -1023,7 +1023,7 @@ class HomeHelper( var category_name : String,
 
     private fun setMaintenance(level2Category: Level2SubCategory) {
         when (level2Category.title) {
-            "Name of service provider" -> decryptedVehicle!!.maintenanceEvent = level2Category.titleValue
+            "Name of service provider" -> decryptedVehicle!!.serviceProviderName = level2Category.titleValue
             "Date of service" -> decryptedVehicle!!.dateOfService = level2Category.titleValue
             "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
             else -> {
@@ -1051,6 +1051,8 @@ class HomeHelper( var category_name : String,
                 decryptedVehicle!!.leaseStartDate = level2Category.leaseStartDate//stants.LEVEL2_PICKER))
                 decryptedVehicle!!.leaseEndDate = level2Category.leaseEndDate//stants.LEVEL2_PICKER))
             }//stants.LEVEL2_RADIO))
+            "Name of service provider" -> decryptedVehicle!!.serviceProviderName = level2Category.titleValue//, "", Constants.LEVEL2_NORMAL))
+            "Date of service" -> decryptedVehicle!!.dateOfService = level2Category.titleValue//, "", Constants.LEVEL2_PICKER))
 
             "Financed through loan" -> decryptedVehicle!!.financedThroughLoan = level2Category.titleValue//stants.LEVEL2_SWITCH))
             "Contacts" -> decryptedVehicle!!.contacts = level2Category.titleValue//stants.LEVEL2_SPINNER))
@@ -1594,7 +1596,12 @@ class HomeHelper( var category_name : String,
         }
 
         if (decryptedVehicle != null) {
+
             decryptedVehicle!!.vehicleName = title
+            if( category_name == "Maintenance") {
+                decryptedVehicle!!.maintenanceEvent = title
+                decryptedVehicle!!.vehicle = subTitle
+            }
             var isSaveComplete = false
             decryptedVehicle!!.selectionType = categoryID
             if (decryptedVehicle!!.created.isEmpty())

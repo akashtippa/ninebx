@@ -43,6 +43,22 @@ public class DecryptedWellnessList implements Parcelable {
     @Required
     private String createdUser = "";
 
+    public DecryptedWellnessList(long id, String selectionType, String classType, String listName, String dueDate, Integer detailsId, Boolean isSelected, Date selectedDate, Date createdDate, String created, String modified, Boolean isPrivate, String createdUser) {
+        this.id = id;
+        this.selectionType = selectionType;
+        this.classType = classType;
+        this.listName = listName;
+        this.dueDate = dueDate;
+        this.detailsId = detailsId;
+        this.isSelected = isSelected;
+        this.selectedDate = selectedDate;
+        this.createdDate = createdDate;
+        this.created = created;
+        this.modified = modified;
+        this.isPrivate = isPrivate;
+        this.createdUser = createdUser;
+    }
+
     public DecryptedWellnessList() {
     }
 
@@ -168,6 +184,7 @@ public class DecryptedWellnessList implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
 
     @Override
     public int describeContents() {

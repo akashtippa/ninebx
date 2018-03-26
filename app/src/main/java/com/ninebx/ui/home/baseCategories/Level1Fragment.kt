@@ -2,7 +2,6 @@ package com.ninebx.ui.home.baseCategories
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
@@ -34,6 +33,7 @@ import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.ContainerActivity
+import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.fragments.*
 import com.ninebx.ui.home.lists.ListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
@@ -42,6 +42,7 @@ import com.ninebx.utility.*
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.layout_category_view.view.*
 
 /**
  * Created by Alok on 12/01/18.
@@ -263,20 +264,20 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                     categoryID = subCategory.subCategoryId
                     val bundle = Bundle()
                     if( subCategory.formsCount == 0 )
-                        if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
-                            if( !checkForAsset("Vehicles", categories) ) {
-                                context!!.showToast(R.string.error_empty_vehicle_list)
-                                return
-                            }
+                    if( categoryName == "Maintenance" || categoryName == "Auto insurance" ) {
+                        if( (combinedItems as DecryptedCombine).getAutoList("home_4001").size == 0 ) {
+                            context!!.showToast(R.string.error_empty_vehicle_list)
+                            return
                         }
+                    }
 
                     when( categoryName ) {
                         "Maintenance", "Auto insurance" -> {
-                            val listItems = (combinedItems as DecryptedCombine).autoList
+                            val listItems = (combinedItems as DecryptedCombine).getAutoList("home_4001")
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
                         "Insurance" -> {
-                            val listItems = (combinedItems as DecryptedCombine).propertyList
+                            val listItems = (combinedItems as DecryptedCombine).getPropertyList("home_3003")
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
                         "Life insurance", "Health insurance" -> {
@@ -313,17 +314,17 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                         when {
                             subCategory.title == "Add Persons." -> {
 
-                                val usersList = ArrayList<String>()
-                                val currentUsersList = ArrayList<String>()
-                                for( subSection in category.subCategories ) {
-                                    if( subSection.type == Constants.SUB_CATEGORY_DISPLAY_PERSON ) {
-                                        currentUsersList.add(subSection.personName)
+                                    val usersList = ArrayList<String>()
+                                    val currentUsersList = ArrayList<String>()
+                                    for( subSection in category.subCategories ) {
+                                        if( subSection.type == Constants.SUB_CATEGORY_DISPLAY_PERSON ) {
+                                            currentUsersList.add(subSection.personName)
+                                        }
                                     }
-                                }
-                                for( member in memberList ) {
-                                    usersList.add(member.firstName + " " + member.lastName)
-                                }
-                                usersList.removeAll(currentUsersList)
+                                    for( member in memberList ) {
+                                        usersList.add(member.firstName + " " + member.lastName)
+                                    }
+                                    usersList.removeAll(currentUsersList)
 
                                 if(usersList.isNotEmpty()) {
 
@@ -361,10 +362,10 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 }
             })
             rvSubCategory.adapter = subCategoryAdapter
-            /* if(category.title == "Personal Health Record" || category.title == "Education"
-                     || category.title == "Work" || category.title == "Clothing sizes") {
-                 peopleSubCategoryAdapter = subCategoryAdapter
-             }*/
+           /* if(category.title == "Personal Health Record" || category.title == "Education"
+                    || category.title == "Work" || category.title == "Clothing sizes") {
+                peopleSubCategoryAdapter = subCategoryAdapter
+            }*/
             layoutCategory.addView(categoryView)
         }
 
@@ -411,6 +412,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 memberListAdapter!!.notifyDataSetChanged()
                 levelDialog?.dismiss()
             }
+
         })
         membersRecyclerView.adapter = memberListAdapter
         cancelTextView.setOnClickListener{
@@ -435,6 +437,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 //mListsAdapter!!.notifyDataSetChanged()
                 //saveUserObject()
             }
+
         })
     }
 
@@ -454,11 +457,12 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
 
     }
 
+
+
     private fun init() {
         showProgress(R.string.loading)
         mSearchPresenter = SearchPresenter(this, categoryInt)
         toolbarTitle.text = getString(fromWhichBox!!)
-        toolbarTitle.typeface = Typeface.DEFAULT_BOLD
         ivBack.setOnClickListener { NineBxApplication.instance.activityInstance!!.onBackPressed() }
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         KeyboardUtil.hideSoftKeyboard(NineBxApplication.instance.activityInstance!!)
@@ -612,4 +616,6 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
             activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         }
     }
+
+
 }

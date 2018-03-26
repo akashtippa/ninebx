@@ -12,17 +12,6 @@ import io.realm.annotations.Required;
  */
 public class DecryptedMainMemories implements Parcelable {
 
-    public static final Creator<DecryptedMainMemories> CREATOR = new Creator<DecryptedMainMemories>() {
-        @Override
-        public DecryptedMainMemories createFromParcel(Parcel in) {
-            return new DecryptedMainMemories(in);
-        }
-
-        @Override
-        public DecryptedMainMemories[] newArray(int size) {
-            return new DecryptedMainMemories[size];
-        }
-    };
     @Ignore
     public String searchField = "";
     @PrimaryKey //@Required
@@ -98,61 +87,7 @@ public class DecryptedMainMemories implements Parcelable {
         this.createdUser = createdUser;
     }
 
-    protected DecryptedMainMemories(Parcel in) {
-        id = in.readInt();
-        selectionType = in.readString();
-        institutionName = in.readString();
-        accountName = in.readString();
-        accountType = in.readString();
-        nameOnAccount = in.readString();
-        accountNumber = in.readString();
-        location = in.readString();
-        swiftCode = in.readString();
-        abaRoutingNumber = in.readString();
-        contacts = in.readString();
-        website = in.readString();
-        userName = in.readString();
-        password = in.readString();
-        pin = in.readString();
-        paymentMethodOnFile = in.readString();
-        created = in.readString();
-        modified = in.readString();
-        byte tmpIsPrivate = in.readByte();
-        isPrivate = tmpIsPrivate == 0 ? null : tmpIsPrivate == 1;
-        notes = in.readString();
-        attachmentNames = in.readString();
-        title = in.readString();
-        createdUser = in.readString();
-    }
-
     public DecryptedMainMemories() {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(selectionType);
-        dest.writeString(institutionName);
-        dest.writeString(accountName);
-        dest.writeString(accountType);
-        dest.writeString(nameOnAccount);
-        dest.writeString(accountNumber);
-        dest.writeString(location);
-        dest.writeString(swiftCode);
-        dest.writeString(abaRoutingNumber);
-        dest.writeString(contacts);
-        dest.writeString(website);
-        dest.writeString(userName);
-        dest.writeString(password);
-        dest.writeString(pin);
-        dest.writeString(paymentMethodOnFile);
-        dest.writeString(created);
-        dest.writeString(modified);
-        dest.writeByte((byte) (isPrivate == null ? 0 : isPrivate ? 1 : 2));
-        dest.writeString(notes);
-        dest.writeString(attachmentNames);
-        dest.writeString(title);
-        dest.writeString(createdUser);
     }
 
     public long getId() {
@@ -161,11 +96,6 @@ public class DecryptedMainMemories implements Parcelable {
 
     public void setId( long id ) {
         this.id = id;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public String getSelectionType() {
@@ -372,4 +302,77 @@ public class DecryptedMainMemories implements Parcelable {
                 ", createdUser='" + createdUser + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.searchField);
+        dest.writeLong(this.id);
+        dest.writeString(this.selectionType);
+        dest.writeString(this.institutionName);
+        dest.writeString(this.accountName);
+        dest.writeString(this.accountType);
+        dest.writeString(this.nameOnAccount);
+        dest.writeString(this.accountNumber);
+        dest.writeString(this.location);
+        dest.writeString(this.swiftCode);
+        dest.writeString(this.abaRoutingNumber);
+        dest.writeString(this.contacts);
+        dest.writeString(this.website);
+        dest.writeString(this.userName);
+        dest.writeString(this.password);
+        dest.writeString(this.pin);
+        dest.writeString(this.paymentMethodOnFile);
+        dest.writeString(this.created);
+        dest.writeString(this.modified);
+        dest.writeValue(this.isPrivate);
+        dest.writeString(this.notes);
+        dest.writeString(this.attachmentNames);
+        dest.writeString(this.title);
+        dest.writeString(this.createdUser);
+    }
+
+    protected DecryptedMainMemories(Parcel in) {
+        this.searchField = in.readString();
+        this.id = in.readLong();
+        this.selectionType = in.readString();
+        this.institutionName = in.readString();
+        this.accountName = in.readString();
+        this.accountType = in.readString();
+        this.nameOnAccount = in.readString();
+        this.accountNumber = in.readString();
+        this.location = in.readString();
+        this.swiftCode = in.readString();
+        this.abaRoutingNumber = in.readString();
+        this.contacts = in.readString();
+        this.website = in.readString();
+        this.userName = in.readString();
+        this.password = in.readString();
+        this.pin = in.readString();
+        this.paymentMethodOnFile = in.readString();
+        this.created = in.readString();
+        this.modified = in.readString();
+        this.isPrivate = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.notes = in.readString();
+        this.attachmentNames = in.readString();
+        this.title = in.readString();
+        this.createdUser = in.readString();
+    }
+
+    public static final Creator<DecryptedMainMemories> CREATOR = new Creator<DecryptedMainMemories>() {
+        @Override
+        public DecryptedMainMemories createFromParcel(Parcel source) {
+            return new DecryptedMainMemories(source);
+        }
+
+        @Override
+        public DecryptedMainMemories[] newArray(int size) {
+            return new DecryptedMainMemories[size];
+        }
+    };
 }
