@@ -22,6 +22,7 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseCategories.OptionItem
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level3_category.*
 
@@ -47,7 +48,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun saveDocument(context: Context?) {
         val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-        mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle )
+        mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle)
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
@@ -669,6 +670,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun setTitle() {
 
         val bundleValue = arguments!!.getString("categoryName")
+        val subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
        // toolbarTitle.text = "Add " + bundleValue
 
         when (bundleValue) {
@@ -1008,7 +1010,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             }
 
             "Identification" -> {
-                etTitle.hint = "User name"
+                /*etTitle.setText(subCategory.personName)*/
+                etTitle.hint = "Name"
                 etTitleValue.hint = ""
                 etTitleValue.isEnabled = false
                 if( selectedDocument == null ) toolbarTitle.text = "Add Identification"
