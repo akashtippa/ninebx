@@ -14,7 +14,8 @@ class Level3SearchItem(
         var itemIndex : Int = 0,
         var itemId : Long = 0,
         var subHeader : String = "",
-        var listItemId: Long = 0
+        var listItemId: Long = 0,
+        var sizeType : String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
@@ -23,7 +24,10 @@ class Level3SearchItem(
             source.readString(),
             source.readInt(),
             source.readLong(),
+            source.readString(),
+            source.readLong(),
             source.readString()
+
     )
 
     override fun describeContents() = 0
@@ -36,6 +40,8 @@ class Level3SearchItem(
         writeInt(itemIndex)
         writeLong(itemId)
         writeString(subHeader)
+        writeLong(listItemId)
+        writeString(sizeType)
     }
 
     override fun equals(other: Any?): Boolean {
