@@ -495,7 +495,7 @@ class Level3CategoryHelper(
         }
 
         if(wellnessHelper!=null){
-            wellnessHelper!!.saveDocument(context,combineItem, title, subTitle)
+            wellnessHelper!!.saveDocument(context,combineItem, title, subTitle, subCategory)
         }
         if(shoppingHelper!=null){
             shoppingHelper!!.saveDocument(context,combineItem, title, subTitle)

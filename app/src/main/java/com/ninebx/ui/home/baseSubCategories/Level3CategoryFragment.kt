@@ -50,7 +50,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory)
     }
 
-    private lateinit var mCategoryPresenter: Level2CategoryPresenter
+    private lateinit var mCategoryPresenter: Level3CategoryPresenter
 
     private var strTitle = ""
     private var strSubTitle = ""
@@ -620,7 +620,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
-        mCategoryPresenter = Level2CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
+        mCategoryPresenter = Level3CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
 
         boxValue = prefrences.currentBox!!
 
