@@ -473,7 +473,7 @@ class Level3CategoryHelper(
 
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?, categoryName: String) {
         mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
@@ -498,7 +498,7 @@ class Level3CategoryHelper(
             wellnessHelper!!.saveDocument(context,combineItem, title, subTitle, subCategory)
         }
         if(shoppingHelper!=null){
-            shoppingHelper!!.saveDocument(context,combineItem, title, subTitle)
+            shoppingHelper!!.saveDocument(context,combineItem, title, subTitle, subCategory, categoryName)
         }
         if(commonItemHelper != null) {
             commonItemHelper!!.saveDocument(context, combineItem, title, subTitle)

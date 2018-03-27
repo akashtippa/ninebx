@@ -122,6 +122,9 @@ class SearchHelper() {
                             }
                             if( item.categoryName == compareWithName && item.categoryId == subCategory.personName  ) level3SearchItems.add(item)
                         }
+                        "shopping_1000" -> {
+                            if( item.categoryName == "clothingSizes" && item.categoryId == subCategory.personName  ) level3SearchItems.add(item)
+                        }
 
                     }
                 }

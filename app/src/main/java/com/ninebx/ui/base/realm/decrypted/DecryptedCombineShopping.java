@@ -136,14 +136,46 @@ public class DecryptedCombineShopping implements Parcelable {
         }
         return count;
     }
-    public int getClothingSizesItems(String name ) {
-        Log.d("Name ",name);
+    public int getClothingSizesItems( String name, String sizeType ) {
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
-        for (DecryptedClothingSizes decryptedLicense : clothingSizesItems) {
-            if(!ids.contains(decryptedLicense.getId())){
-                count += decryptedLicense.getPersonName().equals(name) ? 1 : 0;
-                ids.add(decryptedLicense.getId());
+        for (DecryptedClothingSizes clothingSizes : clothingSizesItems) {
+            if(!ids.contains(clothingSizes.getId())){
+                switch ( sizeType ) {
+                    case "Women's Size" :
+                        if( clothingSizes.getWomen() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                    case "Mens Size" :
+                        if( clothingSizes.getMen() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+
+                        break;
+                    case "Babys Size" :
+                        if( clothingSizes.getBaby() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                    case "Boys Size" :
+                        if( clothingSizes.getBoy() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                    case "Girls Size" :
+                        if( clothingSizes.getGirl() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                }
+
+
             }
         }
         return count;

@@ -83,7 +83,6 @@
             android:drawablePadding="@dimen/_5sdp"
             android:drawableRight="@drawable/ic_arrow_right"
             android:gravity="center_vertical"
-
             android:id="@+id/tvWomensSizesCount"/>
 
 
@@ -117,7 +116,9 @@
             android:drawablePadding="@dimen/_5sdp"
             android:drawableRight="@drawable/ic_arrow_right"
             android:gravity="center_vertical"
-            android:text="0" />
+            android:id="@+id/tvMensSizesCount"
+            android:text="0"
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>
@@ -144,6 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:id="@+id/tvGirlsSizesCount"
             android:layout_centerVertical="true"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="@dimen/_5sdp"
@@ -176,6 +178,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:id="@+id/tvBoysSizesCount"
             android:layout_centerVertical="true"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="@dimen/_5sdp"
@@ -209,11 +212,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:id="@+id/tvBabysSizesCount"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawablePadding="@dimen/_5sdp"
             android:drawableRight="@drawable/ic_arrow_right"
             android:gravity="center_vertical"
-            android:text="0" />
+            android:text="0"
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>

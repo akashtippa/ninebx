@@ -148,7 +148,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "Level1Fragment" -> {
                 loadOtherFragments()
             }
-            "WellnessFragment" ->{
+            "WellnessFragment", "ClothesFragment" ->{
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
                 val categoryFragment = Level2Fragment()

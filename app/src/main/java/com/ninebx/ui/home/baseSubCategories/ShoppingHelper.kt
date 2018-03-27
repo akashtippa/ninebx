@@ -8,6 +8,7 @@ import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
 import io.realm.Realm
 import java.text.SimpleDateFormat
@@ -658,7 +659,7 @@ class ShoppingHelper(
     }
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-     fun saveDocument(context: Context,combineItem: Parcelable?,title:String,subTitle:String){
+     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?, categoryName: String){
         Log.d("Combine Item", combineItem.toString())
         mCombine = combineItem
 
@@ -792,7 +793,7 @@ class ShoppingHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if(decryptedClothingSizes != null){
-            decryptedClothingSizes!!.selectionType = categoryID
+            decryptedClothingSizes!!.selectionType = subCategory!!.personName
             decryptedClothingSizes!!.personName = title
             decryptedClothingSizes!!.sizeName = subTitle
             if( decryptedClothingSizes!!.created.isEmpty() )
@@ -802,6 +803,14 @@ class ShoppingHelper(
             if (decryptedClothingSizes!!.id.toInt() == 0) {
                 decryptedClothingSizes!!.id = getUniqueId()
             }
+
+            decryptedClothingSizes!!.men = categoryName == "Mens sizes"
+            decryptedClothingSizes!!.women = categoryName == "Womens sizes"
+            decryptedClothingSizes!!.baby = categoryName == "Baby's sizes"
+            decryptedClothingSizes!!.boy = categoryName == "Boy's sizes"
+            decryptedClothingSizes!!.girl = categoryName == "Girls sizes"
+
+
             var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {
