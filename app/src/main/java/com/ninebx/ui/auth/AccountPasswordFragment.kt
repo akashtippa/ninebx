@@ -2,11 +2,14 @@ package com.ninebx.ui.auth
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.showToast
@@ -30,6 +33,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
 
     private lateinit var mCurrentUser: Users
 
+    @SuppressLint("StringFormatInvalid")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,6 +54,28 @@ class AccountPasswordFragment : BaseAuthFragment() {
             //activity!!.onBackPressed()
             fragmentManager!!.popBackStackImmediate()
         }
+
+        etConfirmPassword.setOnFocusChangeListener { _, isFocused ->
+            if( isFocused ) {
+                if( etCreatePassword.text.toString().isEmpty() || !isValidPassword(etCreatePassword.text.toString().trim()) ) {
+                    context!!.showToast(R.string.password_rules)
+                    etCreatePassword.requestFocus()
+                }
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvStrongPassword.text = Html.fromHtml(getString(R.string.choose_a_strong_password, Html.FROM_HTML_MODE_LEGACY))
+            txtSharePassword.text = Html.fromHtml(getString(R.string.account_master_password_share, Html.FROM_HTML_MODE_LEGACY))
+            txtRememberIt.text = Html.fromHtml(getString(R.string.account_master_password_remember, Html.FROM_HTML_MODE_LEGACY))
+        }
+        else {
+            tvStrongPassword.text = Html.fromHtml(getString(R.string.choose_a_strong_password))
+            txtSharePassword.text = Html.fromHtml(getString(R.string.account_master_password_share))
+            txtRememberIt.text = Html.fromHtml(getString(R.string.account_master_password_remember))
+        }
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -143,7 +169,7 @@ class AccountPasswordFragment : BaseAuthFragment() {
                 etCreatePassword.requestFocus()
                 isValid = false
             }
-            
+
             if (etConfirmPassword.text.toString().isNotEmpty() && etConfirmPassword.text.toString().trim().length < 8) {
                 context!!.showToast(R.string.password_length_8)
                 etConfirmPassword.requestFocus()
