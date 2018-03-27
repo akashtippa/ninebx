@@ -1,5 +1,6 @@
 package com.ninebx.ui.home.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +9,10 @@ import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseCategories.SubCategory
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
 import kotlinx.android.synthetic.main.fragment_wellness.*
@@ -29,6 +32,10 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         return inflater.inflate(R.layout.fragment_wellness, container, false)
     }
 
+    private lateinit var combineItems: DecryptedCombineWellness
+
+    private lateinit var subCategory: SubCategory
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ivHome.setOnClickListener {
@@ -41,25 +48,32 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val bundle = arguments
-        val subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+        subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
 
-        val combineItems : DecryptedCombineWellness = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
+        combineItems = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
 
         layoutPersonalHealthRecord.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
 
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Identification")
+            bundle!!.putString("categoryName", "Identification")
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
 
-            bundle.putParcelable(Constants.COMBINE_ITEMS, arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            /* bundle.putParcelable(Constants.COMBINE_ITEMS, arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.identificationItems.size){
+                combineWellness.identificationItems.add(combineItems.identificationItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutMedicalHistory.setOnClickListener {
@@ -70,11 +84,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.medicalHistoryItems.size){
+                combineWellness.medicalHistoryItems.add(combineItems.medicalHistoryItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutHealthCare.setOnClickListener {
@@ -85,11 +107,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.healthcareProvidersItems.size){
+                combineWellness.healthcareProvidersItems.add(combineItems.healthcareProvidersItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutMedications.setOnClickListener {
@@ -100,11 +130,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.medicationsItems.size){
+                combineWellness.medicationsItems.add(combineItems.medicationsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutMedicalConditions.setOnClickListener {
@@ -115,11 +153,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.medicalConditionsItems.size){
+                combineWellness.medicalConditionsItems.add(combineItems.medicalConditionsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutEye.setOnClickListener {
@@ -130,11 +176,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.eyeglassPrescriptionsItems.size){
+                combineWellness.eyeglassPrescriptionsItems.add(combineItems.eyeglassPrescriptionsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutVitalNumber.setOnClickListener {
@@ -145,11 +199,18 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*  bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+            /*val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.vitalNumbersItems.size){
+                combineWellness.vitalNumbersItems.add(combineItems.vitalNumbersItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutCheckUps.setOnClickListener {
@@ -160,31 +221,46 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /* bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level2Fragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.checkupsItems.size){
+                combineWellness.checkupsItems.add(combineItems.checkupsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutEmergency.setOnClickListener{
-            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
 
-           /* bundle!!.putString("categoryName", "Emergency Contacts")
+            bundle!!.putString("categoryName", "Emergency Contacts")
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
+            bundle.putString(Constants.FROM_CLASS, "EmergencyContact")
 
-            val categoryFragment = EmergencyContactsFragment()
-            /*categoryFragment.arguments = bundle*/
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness = DecryptedCombineWellness()
+            combineWellness.emergencyContactsItems.addAll(combineItems.emergencyContactsItems)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
+        setCountForDocuments()
+    }
+
+    private fun setCountForDocuments() {
         tvHealthCareCount.text = combineItems.getHealthcareSize(subCategory.personName).toString()
-        tvEmergencyContactsCount.text = combineItems.emergencyContactsItems.size.toString()
-        tvMedicationCount.text = combineItems.medicationsItems.size.toString()
+        tvEmergencyContactsCount.text = combineItems.getEmergencyContactsSize(subCategory.personName).toString()
+        tvMedicationCount.text = combineItems.getMedicationsSize(subCategory.personName).toString()
         tvMedicalAllergiesCount.text = combineItems.medicalConditionsItems.size.toString()
         tvEyeGlassPrescriptionCount.text = combineItems.eyeglassPrescriptionsItems.size.toString()
         tvVitalNumbersCount.text = combineItems.vitalNumbersItems.size.toString()
@@ -195,7 +271,13 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
         return super.onBackPressed()
     }
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
+            AppLogger.d("ActivityResult", "onActivityResult : Wellness" )
+            combineItems = data!!.getParcelableExtra(Constants.COMBINE_ITEMS)
+            setCountForDocuments()
         }
     }
+}

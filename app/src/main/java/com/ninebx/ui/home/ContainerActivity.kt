@@ -148,6 +148,20 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "Level1Fragment" -> {
                 loadOtherFragments()
             }
+            "WellnessFragment" ->{
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.addToBackStack(null)
+                val categoryFragment = Level2Fragment()
+                categoryFragment.arguments = intent.extras
+                fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+            }
+            "EmergencyContact" -> {
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.addToBackStack(null)
+                val categoryFragment = EmergencyContactsFragment()
+                categoryFragment.arguments = intent.extras
+                fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
+            }
         }
     }
 

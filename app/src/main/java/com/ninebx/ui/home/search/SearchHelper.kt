@@ -87,7 +87,7 @@ class SearchHelper() {
         }
     }
 
-    fun getLevel3SearchItemsForCategory(categoryId: String, allItems: ArrayList<Level3SearchItem>, subCategory: SubCategory?) : ArrayList<Level3SearchItem> {
+    fun getLevel3SearchItemsForCategory(categoryId: String, allItems: ArrayList<Level3SearchItem>, subCategory: SubCategory?, categoryName: String) : ArrayList<Level3SearchItem> {
         AppLogger.d("LevelList", "getLevel3SearchItemsForCategory : " + categoryId)
         var level3SearchItems = ArrayList<Level3SearchItem>()
         for( item in allItems ) {
@@ -106,6 +106,23 @@ class SearchHelper() {
                             //Work
                             if( item.categoryName == "work" && item.categoryId == subCategory.personName  ) level3SearchItems.add(item)
                         }
+                        "wellness_1007" -> {
+                            //Wellness
+                            val compareWithName = when( categoryName ) {
+                                "Identification" -> "identification"
+                                "Medical history" -> "medicalHistory"
+                                "Healthcare providers" -> "healthcareProvider"
+                                "Medications" -> "medicationItems"
+                                "Medical conditions/Allergies" -> "medicalConditions"
+                                "Eyeglass prescriptions" -> "eyeglassPrescription"
+                                "Vital numbers" -> "vitalNumbers"
+                                "Checkups and visits" -> "checkups"
+                                "Emergency Contacts" -> "emergencyContacts"
+                                else -> categoryName
+                            }
+                            if( item.categoryName == compareWithName && item.categoryId == subCategory.personName  ) level3SearchItems.add(item)
+                        }
+
                     }
                 }
             }

@@ -50,7 +50,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory)
     }
 
-    private lateinit var mCategoryPresenter: Level2CategoryPresenter
+    private lateinit var mCategoryPresenter: Level3CategoryPresenter
 
     private var strTitle = ""
     private var strSubTitle = ""
@@ -138,7 +138,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( selectedDocument != null ) {
             AppLogger.d("Level2Category", "Selected Document : " + selectedDocument)
             when( selectedDocument ) {
-                //Home&Banking
+            //Home&Banking
                 is DecryptedFinancial -> {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
@@ -209,7 +209,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
 
-                 //Personal
+            //Personal
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
@@ -621,7 +621,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
-        mCategoryPresenter = Level2CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
+        mCategoryPresenter = Level3CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
 
         boxValue = prefrences.currentBox!!
 
@@ -655,8 +655,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         ivDelete.setOnClickListener {
             if( isEditMode ) {
-               /* arguments!!.putString("action", "delete")
-                (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
+                /* arguments!!.putString("action", "delete")
+                 (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("NineBx")
                 builder.setCancelable(false)

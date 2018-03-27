@@ -62,12 +62,68 @@ class CategoryHelper(
         category.drawableString = "ic_icon_health_records"
 
         val categoryMapCount = HashMap<String, Int>()
-        for( wellness in decryptedCombine.wellnessItems ) {
-            if( categoryMapCount.containsKey(wellness.selectionType) ) {
-                val count = categoryMapCount[wellness.selectionType]!! + 1
-                categoryMapCount.put(wellness.selectionType, count )
+        for( item in decryptedCombine.checkupsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
             }
-            else categoryMapCount.put(wellness.selectionType, 1 )
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.emergencyContactsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.eyeglassPrescriptionsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.healthcareProvidersItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.identificationItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.medicalConditionsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.medicalHistoryItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.medicationsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.vitalNumbersItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
         }
         for(key in categoryMapCount.keys) {
             category.subCategories.add(SubCategory(category.title, "", categoryMapCount[key]!!, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, key))
