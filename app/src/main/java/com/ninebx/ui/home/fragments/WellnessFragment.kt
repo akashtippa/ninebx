@@ -87,11 +87,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.medicalHistoryItems.size){
                 combineWellness.medicalHistoryItems.add(combineItems.medicalHistoryItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
@@ -110,11 +110,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.healthcareProvidersItems.size){
                 combineWellness.healthcareProvidersItems.add(combineItems.healthcareProvidersItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
@@ -133,11 +133,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.medicationsItems.size){
                 combineWellness.medicationsItems.add(combineItems.medicationsItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
@@ -156,11 +156,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.medicalConditionsItems.size){
                 combineWellness.medicalConditionsItems.add(combineItems.medicalConditionsItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
@@ -179,11 +179,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.eyeglassPrescriptionsItems.size){
                 combineWellness.eyeglassPrescriptionsItems.add(combineItems.eyeglassPrescriptionsItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
@@ -202,11 +202,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /*  bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            /*val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.vitalNumbersItems.size){
                 combineWellness.vitalNumbersItems.add(combineItems.vitalNumbersItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
             startActivityForResult(
@@ -224,11 +224,11 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
             /* bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
             for (i in 0 until combineItems.checkupsItems.size){
                 combineWellness.checkupsItems.add(combineItems.checkupsItems[i])
             }
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
@@ -244,9 +244,9 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
             bundle.putString(Constants.FROM_CLASS, "EmergencyContact")
 
-            val combineWellness = DecryptedCombineWellness()
+           /* val combineWellness = DecryptedCombineWellness()
             combineWellness.emergencyContactsItems.addAll(combineItems.emergencyContactsItems)
-            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
 
             val intent = Intent( context, ContainerActivity::class.java)
             intent.putExtras(bundle)
