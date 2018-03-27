@@ -7,6 +7,7 @@ import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
 import io.realm.Realm
 import java.text.SimpleDateFormat
@@ -618,14 +619,14 @@ class WellnessHelper(
     }
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?) {
         mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName + " " + NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format(Date())
 
         if (decryptedIdentification != null) {
-            decryptedIdentification!!.selectionType = categoryID
+            decryptedIdentification!!.selectionType = subCategory!!.personName
             decryptedIdentification!!.name = title
             if( decryptedIdentification!!.created.isEmpty() )
                 decryptedIdentification!!.created = currentUsers + " " + currentDateandTime
@@ -690,7 +691,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedMedicalHistory != null) {
-            decryptedMedicalHistory!!.selectionType = categoryID
+            decryptedMedicalHistory!!.selectionType = subCategory!!.personName
             decryptedMedicalHistory!!.attachmentNames = title
             if( decryptedMedicalHistory!!.created.isEmpty() )
                 decryptedMedicalHistory!!.created = currentUsers + " " + currentDateandTime
@@ -758,7 +759,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedHealthcareProviders != null) {
-            decryptedHealthcareProviders!!.selectionType = categoryID
+            decryptedHealthcareProviders!!.selectionType = subCategory!!.personName
             decryptedHealthcareProviders!!.name = title
             if( decryptedHealthcareProviders!!.created.isEmpty() )
                 decryptedHealthcareProviders!!.created = currentUsers + " " + currentDateandTime
@@ -829,7 +830,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedEmergencyContacts != null) {
-            decryptedEmergencyContacts!!.selectionType = categoryID
+            decryptedEmergencyContacts!!.selectionType = subCategory!!.personName
             decryptedEmergencyContacts!!.name = title
             if( decryptedEmergencyContacts!!.created.isEmpty() )
                 decryptedEmergencyContacts!!.created = currentUsers + " " + currentDateandTime
@@ -897,7 +898,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedMedications != null) {
-            decryptedMedications!!.selectionType = categoryID
+            decryptedMedications!!.selectionType = subCategory!!.personName
             decryptedMedications!!.name = title
             if( decryptedMedications!!.created.isEmpty() )
                 decryptedMedications!!.created = currentUsers + " " + currentDateandTime
@@ -965,7 +966,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedMedicalConditions != null) {
-            decryptedMedicalConditions!!.selectionType = categoryID
+            decryptedMedicalConditions!!.selectionType = subCategory!!.personName
             decryptedMedicalConditions!!.attachmentNames = title
             if( decryptedMedicalConditions!!.created.isEmpty() )
                 decryptedMedicalConditions!!.created = currentUsers + " " + currentDateandTime
@@ -1033,7 +1034,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedEyeglassPrescriptions != null) {
-            decryptedEyeglassPrescriptions!!.selectionType = categoryID
+            decryptedEyeglassPrescriptions!!.selectionType = subCategory!!.personName
             decryptedEyeglassPrescriptions!!.attachmentNames = title
             decryptedEyeglassPrescriptions!!.modified = currentUsers + " " + currentDateandTime
             if( decryptedEyeglassPrescriptions!!.created.isEmpty() )
@@ -1100,7 +1101,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedVitalNumbers != null) {
-            decryptedVitalNumbers!!.selectionType = categoryID
+            decryptedVitalNumbers!!.selectionType = subCategory!!.personName
             decryptedVitalNumbers!!.attachmentNames = title
             if( decryptedVitalNumbers!!.created.isEmpty() )
                 decryptedVitalNumbers!!.created = currentUsers + " " + currentDateandTime
@@ -1168,7 +1169,7 @@ class WellnessHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedCheckups != null) {
-            decryptedCheckups!!.selectionType = categoryID
+            decryptedCheckups!!.selectionType = subCategory!!.personName
             decryptedCheckups!!.attachmentNames = title
             if( decryptedCheckups!!.created.isEmpty() )
                 decryptedCheckups!!.created = currentUsers + " " + currentDateandTime

@@ -8,7 +8,7 @@ import com.ninebx.ui.home.baseCategories.SubCategory
 /**
  * Created by Alok on 12/01/18.
  */
-class Level2CategoryPresenter(private val categoryInt : Int, private val categoryName: String, private val categoryID: String, private val selectedDocument : Parcelable?, private val classType : String?, private val categoryView: Level2CategoryView) {
+class Level3CategoryPresenter(private val categoryInt : Int, private val categoryName: String, private val categoryID: String, private val selectedDocument : Parcelable?, private val classType : String?, private val categoryView: Level2CategoryView) {
 
     private var level3CategoryHelper: Level3CategoryHelper
 
