@@ -17,8 +17,8 @@ class Level3CategoryPresenter(private val categoryInt : Int, private val categor
         level3CategoryHelper = Level3CategoryHelper(categoryInt, categoryName, categoryID, categoryView, selectedDocument, classType )
     }
 
-    fun setValueToDocument( level2Category: Level2SubCategory ) {
-        level3CategoryHelper.setValue( level2Category )
+    fun setValueToDocument(level2Category: Level2SubCategory, parentCategory: Level2Category) {
+        level3CategoryHelper.setValue( level2Category, parentCategory )
     }
 
     fun saveDocument(context: Context?, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?, categoryName: String) {

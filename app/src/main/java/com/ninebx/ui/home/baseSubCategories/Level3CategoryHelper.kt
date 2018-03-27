@@ -14,7 +14,6 @@ import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
-import java.text.SimpleDateFormat
 
 import java.util.*
 
@@ -423,7 +422,7 @@ class Level3CategoryHelper(
 
 
 
-    fun setValue(level2Category: Level2SubCategory) {
+    fun setValue(level2Category: Level2SubCategory, parentCategory: Level2Category) {
         if( homeHelper != null ) {
             homeHelper!!.setValue(level2Category)
         }
@@ -432,7 +431,7 @@ class Level3CategoryHelper(
         }
 
         if( shoppingHelper != null){
-            shoppingHelper!!.setValue(level2Category)
+            shoppingHelper!!.setValue(level2Category, parentCategory)
         }
 
         if(travelHelper != null) {

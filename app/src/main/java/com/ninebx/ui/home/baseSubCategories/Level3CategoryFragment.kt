@@ -41,8 +41,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
     }
 
-    override fun setValueToDocument(level2Category: Level2SubCategory) {
-        mCategoryPresenter.setValueToDocument(level2Category)
+    override fun setValueToDocument( level2Category: Level2SubCategory, parentCategory: Level2Category ) {
+        mCategoryPresenter.setValueToDocument(level2Category, parentCategory)
     }
 
     override fun saveDocument(context: Context?) {
@@ -108,6 +108,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
             lblListHeader.text = category.title
             rvLevel3.adapter = ExpandableRecyclerViewAdapter(
                     context!!,
+                    category,
                     category.subCategories,
                     this,
                     categoryName,

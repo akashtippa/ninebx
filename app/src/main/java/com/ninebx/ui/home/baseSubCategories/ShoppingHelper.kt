@@ -76,31 +76,31 @@ class ShoppingHelper(
             }
         }
     }
-    fun setValue(level2Category: Level2SubCategory){
+    fun setValue(level2Category: Level2SubCategory, parentCategory: Level2Category){
         when(category_name){
         // Shopping
             "Loyalty Programs" -> {
-                setLoyaltyPrograms(level2Category)
+                setLoyaltyPrograms(level2Category, parentCategory)
             }
 
             "Recent Purchases" -> {
-                setRecentPurchases(level2Category)
+                setRecentPurchases(level2Category, parentCategory)
             }
         // Clothing Sizes
             "Womens sizes" -> {
-                setClothingSizes(level2Category)
+                setClothingSizes(level2Category, parentCategory)
             }
             "Mens sizes" -> {
-                setClothingSizes(level2Category)
+                setClothingSizes(level2Category, parentCategory)
             }
             "Girls sizes" -> {
-                setClothingSizes(level2Category)
+                setClothingSizes(level2Category, parentCategory)
             }
             "Boy's sizes" -> {
-                setClothingSizes(level2Category)
+                setClothingSizes(level2Category, parentCategory)
             }
             "Baby's sizes" -> {
-                setClothingSizes(level2Category)
+                setClothingSizes(level2Category, parentCategory)
             }
         }
     }
@@ -562,7 +562,7 @@ class ShoppingHelper(
 
         categoryView.onSuccess(categoryList)
     }
-    private fun setClothingSizes(level2Category: Level2SubCategory) {
+    private fun setClothingSizes(level2Category: Level2SubCategory, parentCategory: Level2Category) {
         when (level2Category.title) {
             "Name of person" -> decryptedClothingSizes!!.personName = level2Category.titleValue
             "Size name" -> decryptedClothingSizes!!.sizeName = level2Category.titleValue
@@ -622,7 +622,7 @@ class ShoppingHelper(
             }
         }
     }
-    private fun setLoyaltyPrograms(level2Category: Level2SubCategory) {
+    private fun setLoyaltyPrograms(level2Category: Level2SubCategory, parentCategory: Level2Category) {
         when (level2Category.title) {
             "Brand/Retailer" -> decryptedLoyaltyPrograms!!.brandName = level2Category.titleValue
             "Account name" -> decryptedLoyaltyPrograms!!.accountName = level2Category.titleValue
@@ -642,7 +642,7 @@ class ShoppingHelper(
             }
         }
     }
-    private fun setRecentPurchases(level2Category: Level2SubCategory) {
+    private fun setRecentPurchases(level2Category: Level2SubCategory, parentCategory: Level2Category) {
         when (level2Category.title) {
             "Item" -> decryptedRecentPurchase!!.itemName = level2Category.titleValue
             "Brand/Retailer" -> decryptedRecentPurchase!!.brandName = level2Category.titleValue
