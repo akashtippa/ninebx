@@ -60,8 +60,11 @@ class ClothesFragment : FragmentBackHelper() {
             val bundle = Bundle()
             bundle.putString("categoryName", "Mens sizes")
             bundle.putString("categoryId", "1")
-
-            val categoryFragment = Level3CategoryFragment()
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            Log.d("Combine Items",Constants.COMBINE_ITEMS)
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            val categoryFragment = Level2Fragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
@@ -72,8 +75,11 @@ class ClothesFragment : FragmentBackHelper() {
             val bundle = Bundle()
             bundle.putString("categoryName", "Girls sizes")
             bundle.putString("categoryId", "1")
-
-            val categoryFragment = Level3CategoryFragment()
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            Log.d("Combine Items",Constants.COMBINE_ITEMS)
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            val categoryFragment = Level2Fragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
@@ -84,8 +90,11 @@ class ClothesFragment : FragmentBackHelper() {
             val bundle = Bundle()
             bundle.putString("categoryName", "Boy's sizes")
             bundle.putString("categoryId", "1")
-
-            val categoryFragment = Level3CategoryFragment()
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            Log.d("Combine Items",Constants.COMBINE_ITEMS)
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            val categoryFragment = Level2Fragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
@@ -96,8 +105,11 @@ class ClothesFragment : FragmentBackHelper() {
             val bundle = Bundle()
             bundle.putString("categoryName", "Baby's sizes")
             bundle.putString("categoryId", "1")
-
-            val categoryFragment = Level3CategoryFragment()
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            Log.d("Combine Items",Constants.COMBINE_ITEMS)
+            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            val categoryFragment = Level2Fragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }

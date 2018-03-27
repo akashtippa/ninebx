@@ -259,7 +259,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
         categoryID = arguments!!.getString("categoryId")
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
         if( arguments!!.containsKey(Constants.SUB_OPTIONS) ) optionsList = arguments!!.getParcelableArrayList(Constants.SUB_OPTIONS)
-        Log.d("Sub options",optionsList.toString())
+
         toolbarTitle.text = categoryName
 
         ivHome.setOnClickListener {
