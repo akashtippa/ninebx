@@ -62,8 +62,10 @@ class EmergencyContactsFragment : Fragment() {
     private lateinit var subCategory: SubCategory
 
     private var firstName = ""
-    private var lastName = ""
+
     private var strMobileNumber = ""
+
+    private var combineContactsRealm: CombineWellness ?= null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -228,7 +230,7 @@ class EmergencyContactsFragment : Fragment() {
                 else
                     realmContacts.phoneNumberOne = ""
 
-                firstName = contact.firstName
+                firstName = contact.firstName + contact.lastName
                 if(!contact.getPhone(0).isNullOrEmpty())
                     strMobileNumber = contact.getPhone(0)
                 else
@@ -240,27 +242,28 @@ class EmergencyContactsFragment : Fragment() {
                 newContact.phoneNumberOne = realmContacts.phoneNumberOne
 
                 finalList!!.add(newContact)
-                sortMyList(finalList!!)
+               /* sortMyList(finalList!!)*/
 
-                var contacts = Contacts()
+                contactsRealm!!.beginTransaction()
+
+                var contacts = EmergencyContacts()
                 contacts.id = realmContacts.id
-                contacts.firstName = firstName.encryptString()
-                contacts.lastName = lastName.encryptString()
-                contacts.mobileOne = strMobileNumber.encryptString()
-                contacts.selectionType = "Contacts".encryptString()
+                contacts.name = firstName .encryptString()
+                contacts.phoneNumberOne = strMobileNumber.encryptString()
+                contacts.selectionType = subCategory.personName.encryptString()
                 contactsRealm!!.insertOrUpdate(contacts)
 
 
                 if(combineContactsRealm == null) {
-                    combineContactsRealm = contactsRealm!!.createObject(CombineContacts::class.java, getUniqueId())
+                    combineContactsRealm = contactsRealm!!.createObject(CombineWellness::class.java, getUniqueId())
                 }
-                if(combineContactsRealm?.contactsItems!!.contains(contacts)) {
-                    val index = combineContactsRealm!!.contactsItems.indexOf(contacts)
+                if(combineContactsRealm!!.emergencyContactsItems!!.contains(contacts)) {
+                    val index = combineContactsRealm!!.emergencyContactsItems.indexOf(contacts)
                     if(index != -1) {
-                        combineContactsRealm!!.contactsItems[index] = (contacts)
+                        combineContactsRealm!!.emergencyContactsItems[index] = (contacts)
                     }
                 } else {
-                    combineContactsRealm!!.contactsItems.add(contacts)
+                    combineContactsRealm!!.emergencyContactsItems.add(contacts)
                 }
                 contactsRealm!!.insertOrUpdate(combineContactsRealm)
 
@@ -273,5 +276,5 @@ class EmergencyContactsFragment : Fragment() {
         }
     }
 
-    private fun sortMyList(finalList: ArrayList<DecryptedEmergencyContacts>) {}
+   /* private fun sortMyList(finalList: ArrayList<DecryptedEmergencyContacts>) {}*/
 }
