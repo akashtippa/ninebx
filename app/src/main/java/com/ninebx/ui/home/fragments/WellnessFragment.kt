@@ -1,37 +1,21 @@
 package com.ninebx.ui.home.fragments
 
-import android.Manifest
-import android.annotation.TargetApi
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import android.provider.ContactsContract
-import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
-import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseCategories.SubCategory
-import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
+import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
-import com.onegravity.contactpicker.ContactElement
-import com.onegravity.contactpicker.contact.Contact
-import com.onegravity.contactpicker.contact.ContactDescription
-import com.onegravity.contactpicker.contact.ContactSortOrder
-import com.onegravity.contactpicker.core.ContactPickerActivity
-import com.onegravity.contactpicker.group.Group
-import com.onegravity.contactpicker.picture.ContactPictureType
 import kotlinx.android.synthetic.main.fragment_wellness.*
-import java.util.concurrent.atomic.AtomicBoolean
 
 /***
  * Created by TechnoBlogger on 28/01/18.
@@ -48,6 +32,10 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         return inflater.inflate(R.layout.fragment_wellness, container, false)
     }
 
+    private lateinit var combineItems: DecryptedCombineWellness
+
+    private lateinit var subCategory: SubCategory
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ivHome.setOnClickListener {
@@ -60,22 +48,32 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         NineBxApplication.instance.activityInstance!!.hideBottomView()
 
         val bundle = arguments
-        val subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
-        val combineItems : DecryptedCombineWellness = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
+        subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+
+        combineItems = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
+
         layoutPersonalHealthRecord.setOnClickListener {
             val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
 
-            val bundle = Bundle()
-            bundle.putString("categoryName", "Identification")
+            bundle!!.putString("categoryName", "Identification")
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS, arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+            /* bundle.putParcelable(Constants.COMBINE_ITEMS, arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
+
+            val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.identificationItems.size){
+                combineWellness.identificationItems.add(combineItems.identificationItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutMedicalHistory.setOnClickListener {
@@ -86,11 +84,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.medicalHistoryItems.size){
+                combineWellness.medicalHistoryItems.add(combineItems.medicalHistoryItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutHealthCare.setOnClickListener {
@@ -101,11 +107,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.healthcareProvidersItems.size){
+                combineWellness.healthcareProvidersItems.add(combineItems.healthcareProvidersItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutMedications.setOnClickListener {
@@ -116,11 +130,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.medicationsItems.size){
+                combineWellness.medicationsItems.add(combineItems.medicationsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutMedicalConditions.setOnClickListener {
@@ -131,11 +153,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.medicalConditionsItems.size){
+                combineWellness.medicalConditionsItems.add(combineItems.medicalConditionsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutEye.setOnClickListener {
@@ -146,11 +176,19 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.eyeglassPrescriptionsItems.size){
+                combineWellness.eyeglassPrescriptionsItems.add(combineItems.eyeglassPrescriptionsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutVitalNumber.setOnClickListener {
@@ -161,11 +199,18 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /*  bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+            /*val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.vitalNumbersItems.size){
+                combineWellness.vitalNumbersItems.add(combineItems.vitalNumbersItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutCheckUps.setOnClickListener {
@@ -176,21 +221,46 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
             bundle.putString("categoryId", "1")
             bundle.putString("action","add")
             bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
-            bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))
+            bundle.putString(Constants.FROM_CLASS, "WellnessFragment")
+            /* bundle.putParcelable(Constants.COMBINE_ITEMS,arguments!!.getParcelable(Constants.COMBINE_ITEMS))*/
 
-            val categoryFragment = Level3CategoryFragment()
-            categoryFragment.arguments = bundle
-            fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
+           /* val combineWellness : DecryptedCombineWellness = DecryptedCombineWellness()
+            for (i in 0 until combineItems.checkupsItems.size){
+                combineWellness.checkupsItems.add(combineItems.checkupsItems[i])
+            }
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
         layoutEmergency.setOnClickListener{
-            checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
-            callForContact()
+
+            bundle!!.putString("categoryName", "Emergency Contacts")
+            bundle.putString("categoryId", "1")
+            bundle.putString("action","add")
+            bundle.putInt(Constants.CURRENT_BOX,arguments!!.getInt(Constants.CURRENT_BOX))
+            bundle.putString(Constants.FROM_CLASS, "EmergencyContact")
+
+           /* val combineWellness = DecryptedCombineWellness()
+            combineWellness.emergencyContactsItems.addAll(combineItems.emergencyContactsItems)
+            bundle.putParcelable(Constants.COMBINE_ITEMS, combineWellness)*/
+
+            val intent = Intent( context, ContainerActivity::class.java)
+            intent.putExtras(bundle)
+            startActivityForResult(
+                    intent, 22313)
         }
 
-        tvHealthCareCount.text = combineItems.healthcareProvidersItems.size.toString()
-        tvEmergencyContactsCount.text = combineItems.emergencyContactsItems.size.toString()
-        tvMedicationCount.text = combineItems.medicationsItems.size.toString()
+        setCountForDocuments()
+    }
+
+    private fun setCountForDocuments() {
+        tvHealthCareCount.text = combineItems.getHealthcareSize(subCategory.personName).toString()
+        tvEmergencyContactsCount.text = combineItems.getEmergencyContactsSize(subCategory.personName).toString()
+        tvMedicationCount.text = combineItems.getMedicationsSize(subCategory.personName).toString()
         tvMedicalAllergiesCount.text = combineItems.medicalConditionsItems.size.toString()
         tvEyeGlassPrescriptionCount.text = combineItems.eyeglassPrescriptionsItems.size.toString()
         tvVitalNumbersCount.text = combineItems.vitalNumbersItems.size.toString()
@@ -202,98 +272,12 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         return super.onBackPressed()
     }
 
-    private fun checkPermissions(permissions: Array<String>) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPermissionInternal(permissions)
-        }
-    }
-
-    private val mRequestPermissionsInProcess = AtomicBoolean()
-    private val REQUEST_PERMISSION = 3
-    private val PREFERENCE_PERMISSION_DENIED = "PREFERENCE_PERMISSION_DENIED"
-    private val REQUEST_CONTACT = 0
-    private var mContacts: ArrayList<Contact>? = ArrayList()
-    private var mGroups: List<Group>? = null
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private fun checkPermissionInternal(permissions: Array<String>): Boolean {
-        val requestPerms = ArrayList<String>()
-        for (permission in permissions) {
-            if (context!!.checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED && !userDeniedPermissionAfterRationale(permission)) {
-                requestPerms.add(permission)
-            }
-        }
-        if (requestPerms.size > 0 && !mRequestPermissionsInProcess.getAndSet(true)) {
-            //  We do not have this essential permission, ask for it
-            requestPermissions(requestPerms.toTypedArray(), REQUEST_PERMISSION)
-            return true
-        }
-        return false
-    }
-    private fun userDeniedPermissionAfterRationale(permission: String): Boolean {
-        val sharedPrefs = context!!.getSharedPreferences(javaClass.simpleName, Context.MODE_PRIVATE)
-        return sharedPrefs.getBoolean(PREFERENCE_PERMISSION_DENIED + permission, false)
-    }
-
-    private fun callForContact() {
-        callContactPicker()
-        populateContactList(mGroups, mContacts)
-    }
-    private fun populateContactList(groups: List<Group>?, contacts: List<Contact>?) {
-        // we got a result from the contact picker --> show the picked contacts
-        val result = SpannableStringBuilder()
-
-        try {
-            if (groups != null && !groups.isEmpty()) {
-                result.append("GROUPS\n")
-                for (group in groups) {
-                    populateContact(result, group, "")
-                    for (contact in group.contacts) {
-                        populateContact(result, contact, "    ")
-                    }
-                }
-            }
-            if (contacts != null && !contacts.isEmpty()) {
-                result.append("\n")
-                for (contact in contacts) {
-                    populateContact(result, contact, "")
-                }
-            }
-        } catch (e: Exception) {
-            result.append(e.message)
-        }
-    }
-    private fun callContactPicker() {
-        val intent = Intent(context, ContactPickerActivity::class.java)
-
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE,
-                        ContactPictureType.ROUND.name)
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
-                        ContactDescription.ADDRESS.name)
-                .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, true)
-                .putExtra(ContactPickerActivity.EXTRA_SELECT_CONTACTS_LIMIT, 0)
-                .putExtra(ContactPickerActivity.EXTRA_ONLY_CONTACTS_WITH_PHONE, false)
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE,
-                        ContactsContract.CommonDataKinds.Email.TYPE_WORK)
-                .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER,
-                        ContactSortOrder.AUTOMATIC.name)
-        startActivityForResult(intent, REQUEST_CONTACT)
-    }
-    private fun populateContact(result: SpannableStringBuilder, element: ContactElement, prefix: String) {
-        //int start = result.length();
-        val displayName = element.displayName
-        result.append(prefix)
-        result.append(displayName + "\n")
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK && data != null &&
-                (data.hasExtra(ContactPickerActivity.RESULT_GROUP_DATA) || data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA))) {
-
-            // we got a result from the contact picker --> show the picked contacts
-            mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
-            mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
-//            setContactsList()
+        super.onActivityResult(requestCode, resultCode, data)
+        if( requestCode == 12313 && resultCode == Activity.RESULT_OK ) {
+            AppLogger.d("ActivityResult", "onActivityResult : Wellness" )
+            combineItems = data!!.getParcelableExtra(Constants.COMBINE_ITEMS)
+            setCountForDocuments()
         }
     }
 }

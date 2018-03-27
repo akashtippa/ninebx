@@ -15,6 +15,7 @@ import android.provider.ContactsContract
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -329,6 +330,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
     private var mMainMemoriesAdapter: MainMemoriesAdapter ?= null
     private var mShoppingItemsAdapter: ShoppingItemsAdapter ?= null
     private var mHomeServiceAccountsAdapter: HomeServiceAccountsAdapter ?= null
+
     private fun loadItems() {
         rvCommonList!!.layoutManager = LinearLayoutManager(context)
         if (categoryName == "Services/Other Accounts") {
@@ -398,7 +400,7 @@ class Level2Fragment : FragmentBackHelper(), SearchItemClickListener, SearchHelp
             searchHelper = SearchHelper()
             searchHelper.setOnDocumentSelection(this)
             val subCategory : SubCategory ?= arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
-            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!), subCategory)
+            val searchItems = searchHelper.getLevel3SearchItemsForCategory(categoryID, searchHelper.getSearchItems(combinedItems!!), subCategory, categoryName)
             AppLogger.d("SearchItems", " " + searchItems)
             rvCommonList!!.adapter = SearchAdapter(searchItems, SEARCH_EDIT, this)
         }

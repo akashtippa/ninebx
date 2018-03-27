@@ -47,10 +47,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun saveDocument(context: Context?) {
         val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory)
+        val categoryName = if( arguments!!.containsKey("categoryName") ) arguments!!.getString("categoryName") else ""
+        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory, categoryName)
     }
 
-    private lateinit var mCategoryPresenter: Level2CategoryPresenter
+    private lateinit var mCategoryPresenter: Level3CategoryPresenter
 
     private var strTitle = ""
     private var strSubTitle = ""
@@ -138,7 +139,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         if( selectedDocument != null ) {
             AppLogger.d("Level2Category", "Selected Document : " + selectedDocument)
             when( selectedDocument ) {
-                //Home&Banking
+            //Home&Banking
                 is DecryptedFinancial -> {
                     val decryptedFinancial : DecryptedFinancial = selectedDocument as DecryptedFinancial
                     etTitle.setText(decryptedFinancial.institutionName)
@@ -209,7 +210,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
 
-                 //Personal
+            //Personal
                 is DecryptedCertificate -> {
                     val decryptedCertificate : DecryptedCertificate = selectedDocument as DecryptedCertificate
                     etTitle.setText(decryptedCertificate.nameOnCertificate)
@@ -616,11 +617,12 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
+
             classType = arguments!!.getString("classType")
             AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
 
-        mCategoryPresenter = Level2CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
+        mCategoryPresenter = Level3CategoryPresenter(categoryInt, categoryName, categoryID, selectedDocument, classType, this)
 
         boxValue = prefrences.currentBox!!
 
@@ -640,7 +642,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
                 val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory )
+                val categoryName = if( arguments!!.containsKey("categoryName") ) arguments!!.getString("categoryName") else ""
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory, categoryName)
             }
         }
         ivEdit.setOnClickListener {
@@ -654,8 +657,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         ivDelete.setOnClickListener {
             if( isEditMode ) {
-               /* arguments!!.putString("action", "delete")
-                (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
+                /* arguments!!.putString("action", "delete")
+                 (activity!! as ContainerActivity).onLevel3Action(arguments!!)*/
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("NineBx")
                 builder.setCancelable(false)

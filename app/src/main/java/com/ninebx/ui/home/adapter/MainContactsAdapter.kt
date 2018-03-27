@@ -92,6 +92,4 @@ internal class MainContactsAdapter(private var myList: ArrayList<DecryptedMainCo
     fun add(location: Int, iName: String) {
         notifyItemInserted(location)
     }
-
-
 }

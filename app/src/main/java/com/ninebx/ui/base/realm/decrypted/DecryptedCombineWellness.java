@@ -190,7 +190,86 @@ public class DecryptedCombineWellness implements Parcelable {
         return count;
     }
 
+    public int getHealthcareSize(String name){
+        int count = 0;
+        ArrayList<Long> ids = new ArrayList<Long>();
+        for (DecryptedHealthcareProviders selectedItem : healthcareProvidersItems ){
+            if( selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)) {
+                count++;
+                ids.add(selectedItem.id);
+            }
+        }
+        return count;
+    }
 
+    public int getEmergencyContactsSize(String name){
+        int count = 0;
+        ArrayList<Long> ids = new ArrayList<Long>();
+        for(DecryptedEmergencyContacts selectedItem : emergencyContactsItems){
+            if (selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)){
+                count++;
+                ids.add(selectedItem.id);
+            }
+        }
+        return count;
+    }
+
+    public int getMedicationsSize(String name){
+        int count = 0 ;
+        ArrayList<Long> ids = new ArrayList<Long>();
+        for(DecryptedMedications selectedItem : medicationsItems){
+            if(selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)){
+                count++;
+                ids.add(selectedItem.id);
+            }
+        }
+        return count;
+    }
+
+   /* public int getMedicalConditionSize(String name){
+        int count = 0;
+        ArrayList<Long> ids = new ArrayList<Long>();
+        for(DecryptedMedicalConditions selectedItem : medicalConditionsItems){
+            if(selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)){
+                count++;
+                ids.add(selectedItem.id);
+            }
+        }
+        return count;
+    }*/
+  /* public int getEyeglassPrescriptionSize(String name){
+       int count = 0 ;
+       ArrayList<Long> ids = new ArrayList<Long>();
+       for(DecryptedEyeglassPrescriptions selectedItem : eyeglassPrescriptionsItems){
+           if(selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)){
+               count++;
+               ids.add(selectedItem.id);
+           }
+       }
+       return count;
+   }*/
+ /*  public int getVitalNumbersSize(String name){
+       int count = 0 ;
+       ArrayList<Long> ids = new ArrayList<Long>();
+       for(DecryptedVitalNumbers selectedItem : vitalNumbersItems){
+           if(selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)){
+               count++;
+               ids.add(selectedItem.id);
+           }
+       }
+       return count;
+   }*/
+  /* public int getCheckupsSize(String name){
+       int count = 0 ;
+       ArrayList<Long> ids = new ArrayList<Long>();
+       for(DecryptedCheckups selectedItem : checkupsItems){
+           if(selectedItem.getName().equals(name) && !ids.contains(selectedItem.id)){
+               count++;
+               ids.add(selectedItem.id);
+           }
+       }
+       return count;
+   }*/
     @Override
     public int describeContents() {
         return 0;

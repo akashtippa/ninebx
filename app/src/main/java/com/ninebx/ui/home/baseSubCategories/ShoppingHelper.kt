@@ -8,6 +8,7 @@ import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
 import io.realm.Realm
 import java.text.SimpleDateFormat
@@ -402,15 +403,15 @@ class ShoppingHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Size category(US)", "Size category(US)", Constants.PICKER_WOMENS_DETAILS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size Category(US)", decryptedClothingSizes!!.sizeCategory, Constants.PICKER_WOMENS_DETAILS_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Tops"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", decryptedClothingSizes!!.topsSize, Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", decryptedClothingSizes!!.topsNumericSize, Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
 
         categoryList.add(category)
 
@@ -418,63 +419,63 @@ class ShoppingHelper(
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Bottoms"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", decryptedClothingSizes!!.bottomsSize, Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", decryptedClothingSizes!!.bottomsNumericSize, Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Dresses"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", decryptedClothingSizes!!.dressesSize, Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", decryptedClothingSizes!!.dressesNumericSize, Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Outwear"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", decryptedClothingSizes!!.outWearSize, Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", decryptedClothingSizes!!.outWearNumericSize, Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Swimwear"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Numeric (US)", "Numeric (US)", Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Bra band/cup size (US)", "Bra band/cup size (US)", "", Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", decryptedClothingSizes!!.swimWearSize, Constants.PICKER_WOMEN_SIZE_US, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Numeric (US)", decryptedClothingSizes!!.swimWearNumericSize, Constants.PICKER_WOMEN_NUMERIC_SIZE, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Bra band/cup size (US)", decryptedClothingSizes!!.swimWearBraBandCupSize, "", Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Shoes"
-        category.subCategories.add(Level2SubCategory("Size (US)", "Size (US)", Constants.PICKER_WOMEN_SHOES, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Width", "Width", Constants.PICKER_WOMEN_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Size (US)", decryptedClothingSizes!!.shoeSize, Constants.PICKER_WOMEN_SHOES, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Width", decryptedClothingSizes!!.shoeWidth, Constants.PICKER_WOMEN_SHOES_WIDTH, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Accessories"
-        category.subCategories.add(Level2SubCategory("Belts", "Belts", Constants.PICKER_WOMEN_ACCESSORIES_BELTS, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Hats", "Hats", Constants.PICKER_WOMEN_ACCESSORIES_HATS, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Gloves", "Gloves", Constants.PICKER_WOMEN_ACCESSORIES_GLOVES, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Tights", "Tights", Constants.PICKER_WOMEN_ACCESSORIES_TIGHTS, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Belts", decryptedClothingSizes!!.beltSize, Constants.PICKER_WOMEN_ACCESSORIES_BELTS, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Hats", decryptedClothingSizes!!.hats, Constants.PICKER_WOMEN_ACCESSORIES_HATS, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Gloves", decryptedClothingSizes!!.gloves, Constants.PICKER_WOMEN_ACCESSORIES_GLOVES, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Tights", decryptedClothingSizes!!.tights, Constants.PICKER_WOMEN_ACCESSORIES_TIGHTS, Constants.LEVEL_NORMAL_SPINNER))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Measurements"
-        category.subCategories.add(Level2SubCategory("Bust(in)", "Bust(in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Waist(in)", "Waist(in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Hips(in)", "Hips(in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Arm length(in)", "Arm length(in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Inseam(in)", "Inseam(in)", "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Torso(in)", "Torso(in)", "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Bust(in)", decryptedClothingSizes!!.bust, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Waist(in)", decryptedClothingSizes!!.waist, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Hips(in)", decryptedClothingSizes!!.hips, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Arm length(in)", decryptedClothingSizes!!.armLength, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Inseam(in)", decryptedClothingSizes!!.inseam, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Torso(in)", decryptedClothingSizes!!.torso, "", Constants.LEVEL2_NUMBER))
         categoryList.add(category)
 
         categoryIndex += 2050
@@ -565,10 +566,10 @@ class ShoppingHelper(
         when (level2Category.title) {
             "Name of person" -> decryptedClothingSizes!!.personName = level2Category.titleValue
             "Size name" -> decryptedClothingSizes!!.sizeName = level2Category.titleValue
-            "detailsSizeCategory" -> decryptedClothingSizes!!.sizeCategory = level2Category.titleValue
-            "topsSize" -> decryptedClothingSizes!!.topsSize = level2Category.titleValue
+            "Size Category(US)" -> decryptedClothingSizes!!.sizeCategory = level2Category.titleValue
+            /*topsSizes*/"Size (US)" -> decryptedClothingSizes!!.topsSize = level2Category.titleValue
             "topsNumericSize" -> decryptedClothingSizes!!.topsNumericSize = level2Category.titleValue
-            "bottomsSize" -> decryptedClothingSizes!!.bottomsSize = level2Category.titleValue
+            /*"bottomsSize"*/"Size (US)" -> decryptedClothingSizes!!.bottomsSize = level2Category.titleValue
             "bottomsNumericSize" -> decryptedClothingSizes!!.bottomsNumericSize = level2Category.titleValue
             "dressesSize" -> decryptedClothingSizes!!.dressesSize = level2Category.titleValue
             "dressesNumericSize" -> decryptedClothingSizes!!.dressesNumericSize = level2Category.titleValue
@@ -658,7 +659,7 @@ class ShoppingHelper(
     }
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-     fun saveDocument(context: Context,combineItem: Parcelable?,title:String,subTitle:String){
+     fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?, categoryName: String){
         Log.d("Combine Item", combineItem.toString())
         mCombine = combineItem
 
@@ -792,8 +793,9 @@ class ShoppingHelper(
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if(decryptedClothingSizes != null){
-            decryptedClothingSizes!!.selectionType = categoryID
+            decryptedClothingSizes!!.selectionType = subCategory!!.personName
             decryptedClothingSizes!!.personName = title
+            decryptedClothingSizes!!.sizeName = subTitle
             if( decryptedClothingSizes!!.created.isEmpty() )
                 decryptedClothingSizes!!.created = currentUsers + " " + currentDateandTime
 
@@ -801,6 +803,14 @@ class ShoppingHelper(
             if (decryptedClothingSizes!!.id.toInt() == 0) {
                 decryptedClothingSizes!!.id = getUniqueId()
             }
+
+            decryptedClothingSizes!!.men = categoryName == "Mens sizes"
+            decryptedClothingSizes!!.women = categoryName == "Womens sizes"
+            decryptedClothingSizes!!.baby = categoryName == "Baby's sizes"
+            decryptedClothingSizes!!.boy = categoryName == "Boy's sizes"
+            decryptedClothingSizes!!.girl = categoryName == "Girls sizes"
+
+
             var isSaveComplete = false
             object : AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg params: Void?) {

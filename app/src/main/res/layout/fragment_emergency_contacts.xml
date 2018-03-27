@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:clickable="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarContactsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarContacts"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey_100"
+            android:visibility="visible"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/ivBackContactView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start"
+                    android:padding="@dimen/default_micro_padding"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_icon_arrow_left" />
+
+                <TextView
+                    android:id="@+id/toolbarProfileTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="Emergency Contacts"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_16"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:id="@+id/ivHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_mini_margin"
+                    android:layout_marginRight="@dimen/default_mini_margin"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:contentDescription="@string/app_name"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/search_bx"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvContactList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarContactsList"
+        android:layout_marginBottom="@dimen/_41sdp"
+        android:layout_marginTop="@dimen/default_mini_margin"
+        android:nestedScrollingEnabled="false" />
+
+
+    <RelativeLayout
+        android:id="@+id/layoutAddList"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey_100">
+
+        <TextView
+            android:id="@+id/txtAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/default_margin"
+            android:singleLine="true"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:background="@null"
+            android:drawableEnd="@drawable/ic_icon_add_list"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableRight="@drawable/ic_icon_add_list"
+            android:gravity="center_vertical"
+            android:text="Add Emergency COntact"
+            android:textAllCaps="true" />
+
+    </RelativeLayout>
+</RelativeLayout>
