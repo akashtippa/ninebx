@@ -8,6 +8,7 @@ import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.realm.decrypted.*
+import com.ninebx.ui.home.baseCategories.SubCategory
 
 import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
@@ -472,7 +473,7 @@ class Level3CategoryHelper(
 
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?) {
         mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
@@ -490,7 +491,7 @@ class Level3CategoryHelper(
             travelHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
         if(educationAndWorkHelper != null) {
-            educationAndWorkHelper!!.saveDocument(context,combineItem,title, subTitle)
+            educationAndWorkHelper!!.saveDocument(context,combineItem,title, subTitle, subCategory)
         }
 
         if(wellnessHelper!=null){

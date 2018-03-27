@@ -7,9 +7,8 @@ import android.os.Parcelable
 import com.ninebx.NineBxApplication
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.education.CombineEducation
-import com.ninebx.ui.base.realm.home.homeBanking.Combine
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
-import io.realm.CombineEducationRealmProxy
 import io.realm.Realm
 import java.text.SimpleDateFormat
 import java.util.*
@@ -231,15 +230,16 @@ class EducationAndWorkHelper(var category_name : String,
     }*/
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String){
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?){
         mCombine = combineItem
         val currentUsers = NineBxApplication.getPreferences().userFirstName + " " + NineBxApplication.getPreferences().userLastName
         val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
         val currentDateandTime = sdf.format(Date())
         if (decryptedMainEducation != null) {
-            decryptedMainEducation !!.selectionType = categoryID
+            decryptedMainEducation !!.selectionType = subCategory!!.personName
             decryptedMainEducation !!.institutionName = title
             decryptedMainEducation !!.name = subTitle
+
             AppLogger.d("SelectionType ", "decryptedEducation" + decryptedMainEducation!!.selectionType)
             if (decryptedMainEducation!!.created.isEmpty())
                 decryptedMainEducation!!.created = currentUsers + " " + currentDateandTime
@@ -322,7 +322,7 @@ class EducationAndWorkHelper(var category_name : String,
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
         if (decryptedWork != null) {
-            decryptedWork!!.selectionType = categoryID
+            decryptedWork!!.selectionType = subCategory!!.personName
             decryptedWork!!.companyName = title
             decryptedWork!!.name = subTitle
             AppLogger.d("SelectionType ", "decryptedEducation" + decryptedWork!!.selectionType)
