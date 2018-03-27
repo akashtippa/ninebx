@@ -3,6 +3,7 @@ package com.ninebx.ui.home.fragments
 
 import android.Manifest
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.ninebx.R
+import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts
+import com.ninebx.ui.home.HomeActivity
+import com.ninebx.utility.AppLogger
+import com.ninebx.utility.Constants
+import com.ninebx.utility.prepareRealmConnections
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -23,6 +30,8 @@ import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
+import io.realm.Realm
+import kotlinx.android.synthetic.main.fragment_emergency_contacts.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -31,6 +40,15 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class EmergencyContactsFragment : Fragment() {
 
+    private val mRequestPermissionsInProcess = AtomicBoolean()
+    private val REQUEST_PERMISSION = 3
+    private val PREFERENCE_PERMISSION_DENIED = "PREFERENCE_PERMISSION_DENIED"
+    private val REQUEST_CONTACT = 0
+    private var mContacts: ArrayList<Contact>? = ArrayList()
+    private var mGroups: List<Group>? = null
+    private var contactsRealm: Realm? = null
+
+    private val emergencyContacts : EmergencyContacts = EmergencyContacts()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,8 +58,27 @@ class EmergencyContactsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
-        callForContact()
+        ivHome.setOnClickListener {
+            val homeIntent = Intent(context, HomeActivity::class.java)
+            startActivity(homeIntent)
+            activity!!.finishAffinity()
+        }
+
+        ivBackContactView.setOnClickListener{
+            activity!!.finish()
+        }
+
+        layoutAddList.setOnClickListener{
+            checkPermissions(arrayOf(Manifest.permission.READ_CONTACTS))
+            callForContact()
+        }
+
+        prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_WELLNESS, object : Realm.Callback(){
+            override fun onSuccess(realm: Realm?) {
+                contactsRealm = realm
+                context!!.hideProgressDialog()
+            }
+        })
     }
 
     private fun checkPermissions(permissions: Array<String>) {
@@ -49,13 +86,6 @@ class EmergencyContactsFragment : Fragment() {
             checkPermissionInternal(permissions)
         }
     }
-
-    private val mRequestPermissionsInProcess = AtomicBoolean()
-    private val REQUEST_PERMISSION = 3
-    private val PREFERENCE_PERMISSION_DENIED = "PREFERENCE_PERMISSION_DENIED"
-    private val REQUEST_CONTACT = 0
-    private var mContacts: ArrayList<Contact>? = ArrayList()
-    private var mGroups: List<Group>? = null
 
     @TargetApi(Build.VERSION_CODES.M)
     private fun checkPermissionInternal(permissions: Array<String>): Boolean {
@@ -125,5 +155,17 @@ class EmergencyContactsFragment : Fragment() {
         val displayName = element.displayName
         result.append(prefix)
         result.append(displayName + "\n")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK && data != null &&
+                (data.hasExtra(ContactPickerActivity.RESULT_GROUP_DATA) || data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA))) {
+
+            mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
+            mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
+
+            AppLogger.d("EmergencyContacts", " extracted " + mContacts)
+
+        }
     }
 }

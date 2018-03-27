@@ -216,6 +216,7 @@ class ContactsListContainerFragment() : FragmentBackHelper(), IContactsAdded {
                 (data.hasExtra(ContactPickerActivity.RESULT_GROUP_DATA) || data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA))) {
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
+            AppLogger.d("Contacts", " extracted " + mContacts)
             contactsRealm!!.beginTransaction()
             for (contact in mContacts!!) {
                 val realmContacts = Contacts()

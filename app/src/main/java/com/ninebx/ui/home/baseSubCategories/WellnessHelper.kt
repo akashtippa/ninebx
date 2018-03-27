@@ -429,9 +429,6 @@ class WellnessHelper(
             "Checkups and visits" -> {
                 setCheckUps(level2Category)
             }
-            "Emergency contacts" -> {
-                setEmergencyContacts(level2Category)
-            }
         }
     }
     private fun setIdentification(level2Category: Level2SubCategory) {
