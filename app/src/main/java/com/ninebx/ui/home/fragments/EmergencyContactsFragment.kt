@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +19,12 @@ import android.view.ViewGroup
 
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
 import com.ninebx.ui.base.realm.decrypted.DecryptedEmergencyContacts
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.adapter.ContactsAdapter
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.encryptEmergencyContacts
@@ -52,6 +55,9 @@ class EmergencyContactsFragment : Fragment() {
     private var mGroups: List<Group>? = null
     private var contactsRealm: Realm? = null
     var finalList: ArrayList<DecryptedEmergencyContacts> ?= ArrayList()
+    private lateinit var combineItems: DecryptedCombineWellness
+    private var mListsAdapter: ContactsAdapter? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -60,6 +66,14 @@ class EmergencyContactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        combineItems = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
+
+        /*mListsAdapter = ContactsAdapter(combineItems!!.emergencyContactsItems, this)
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rvContactList!!.layoutManager = layoutManager
+        rvContactList!!.adapter = mListsAdapter*/
 
         ivHome.setOnClickListener {
             val homeIntent = Intent(context, HomeActivity::class.java)
