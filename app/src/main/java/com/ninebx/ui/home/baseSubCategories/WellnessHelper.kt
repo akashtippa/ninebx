@@ -171,6 +171,11 @@ class WellnessHelper(
 
         categoryView.onSuccess(categoryList)
     }
+/*
+    "History" -> decryptedMedicalHistory!!.history = level2Category.titleValue
+    "pastConditions" -> decryptedMedicalHistory!!.treatmentDiscription = level2Category.titleValue
+    "immunications" -> decryptedMedicalHistory!!.immunizationDiscription = level2Category.titleValue
+    "family" -> decryptedMedicalHistory!!.familyDiscription = level2Category.titleValue*/
 
     private fun getMedicalHistory() {
         val categoryList = ArrayList<Level2Category>()
@@ -179,21 +184,21 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Past Conditions And Treatment"
-        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalHistory!!.treatmentDiscription, "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("History", decryptedMedicalHistory!!.treatmentDiscription, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Immunization History"
-        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalHistory!!.immunizationDiscription, "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("immunications", decryptedMedicalHistory!!.immunizationDiscription, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Family History"
-        category.subCategories.add(Level2SubCategory("Description", decryptedMedicalHistory!!.history, "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("family", decryptedMedicalHistory!!.history, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
         categoryIndex += 2050
