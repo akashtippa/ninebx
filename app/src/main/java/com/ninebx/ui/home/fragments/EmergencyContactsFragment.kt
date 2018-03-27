@@ -20,14 +20,16 @@ import android.view.ViewGroup
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
+import com.ninebx.ui.base.realm.decrypted.DecryptedContacts
 import com.ninebx.ui.base.realm.decrypted.DecryptedEmergencyContacts
+import com.ninebx.ui.base.realm.home.contacts.CombineContacts
+import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
+import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.adapter.EmergencyContactAdapter
-import com.ninebx.utility.AppLogger
-import com.ninebx.utility.Constants
-import com.ninebx.utility.encryptEmergencyContacts
-import com.ninebx.utility.prepareRealmConnections
+import com.ninebx.ui.home.baseCategories.SubCategory
+import com.ninebx.utility.*
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
 import com.onegravity.contactpicker.contact.ContactDescription
@@ -57,6 +59,11 @@ class EmergencyContactsFragment : Fragment() {
     private lateinit var combineItems: DecryptedCombineWellness
     private var mListsAdapter: EmergencyContactAdapter? = null
 
+    private lateinit var subCategory: SubCategory
+
+    private var firstName = ""
+    private var lastName = ""
+    private var strMobileNumber = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -67,6 +74,7 @@ class EmergencyContactsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         combineItems = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
+        subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
 
         mListsAdapter = EmergencyContactAdapter(combineItems!!.emergencyContactsItems)
         val layoutManager = LinearLayoutManager(context)
@@ -189,8 +197,9 @@ class EmergencyContactsFragment : Fragment() {
 
             val emergencyContacts  = DecryptedEmergencyContacts()
 
-            for(contact in mContacts!!){
+            /*for(contact in mContacts!!){
 
+                emergencyContacts.selectionType = subCategory.personName
                 emergencyContacts.id = UUID.randomUUID().hashCode().toLong()
                 emergencyContacts.name = contact.firstName + contact.lastName
 
@@ -207,9 +216,62 @@ class EmergencyContactsFragment : Fragment() {
 
             contactsRealm!!.beginTransaction()
             contactsRealm!!.insertOrUpdate(combineWellness)
+            contactsRealm!!.commitTransaction()*/
+
+            for (contact in mContacts!!) {
+                val realmContacts = EmergencyContacts()
+                realmContacts.id = UUID.randomUUID().hashCode().toLong()
+                realmContacts.name = contact.firstName + contact.lastName
+                
+                if(!contact.getPhone(0).isNullOrEmpty())
+                    realmContacts.phoneNumberOne = contact.getPhone(0)
+                else
+                    realmContacts.phoneNumberOne = ""
+
+                firstName = contact.firstName
+                if(!contact.getPhone(0).isNullOrEmpty())
+                    strMobileNumber = contact.getPhone(0)
+                else
+                    strMobileNumber = ""
+
+                val newContact = DecryptedEmergencyContacts()
+                newContact.id = realmContacts.id
+                newContact.name = realmContacts.name
+                newContact.phoneNumberOne = realmContacts.phoneNumberOne
+
+                finalList!!.add(newContact)
+                sortMyList(finalList!!)
+
+                var contacts = Contacts()
+                contacts.id = realmContacts.id
+                contacts.firstName = firstName.encryptString()
+                contacts.lastName = lastName.encryptString()
+                contacts.mobileOne = strMobileNumber.encryptString()
+                contacts.selectionType = "Contacts".encryptString()
+                contactsRealm!!.insertOrUpdate(contacts)
+
+
+                if(combineContactsRealm == null) {
+                    combineContactsRealm = contactsRealm!!.createObject(CombineContacts::class.java, getUniqueId())
+                }
+                if(combineContactsRealm?.contactsItems!!.contains(contacts)) {
+                    val index = combineContactsRealm!!.contactsItems.indexOf(contacts)
+                    if(index != -1) {
+                        combineContactsRealm!!.contactsItems[index] = (contacts)
+                    }
+                } else {
+                    combineContactsRealm!!.contactsItems.add(contacts)
+                }
+                contactsRealm!!.insertOrUpdate(combineContactsRealm)
+
+
+            }
             contactsRealm!!.commitTransaction()
+            contactsRealm!!.refresh()
 
             AppLogger.d("Successfully " , " Updated emergency contacts")
         }
     }
+
+    private fun sortMyList(finalList: ArrayList<DecryptedEmergencyContacts>) {}
 }
