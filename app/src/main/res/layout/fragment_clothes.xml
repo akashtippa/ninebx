@@ -83,7 +83,8 @@
             android:drawablePadding="@dimen/_5sdp"
             android:drawableRight="@drawable/ic_arrow_right"
             android:gravity="center_vertical"
-            android:text="0" />
+
+            android:id="@+id/tvWomensSizesCount"/>
 
 
     </RelativeLayout>

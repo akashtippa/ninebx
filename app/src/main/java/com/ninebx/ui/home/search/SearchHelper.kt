@@ -3,6 +3,7 @@ package com.ninebx.ui.home.search
 import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Parcelable
+import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
@@ -431,6 +432,7 @@ class SearchHelper() {
     }
 
     private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
+        Log.d("Category Name",searchItem.categoryName)
         when(searchItem.categoryName){
             "loyaltyPrograms" -> {
 
@@ -468,7 +470,7 @@ class SearchHelper() {
                 }
 
             }
-            "clothingSize" -> {
+            "clothingSizes" -> {
 
                 if( mAction == "delete" ) {
                     val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems.removeAt( position )

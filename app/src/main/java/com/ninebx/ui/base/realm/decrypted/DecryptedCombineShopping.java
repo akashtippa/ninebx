@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm.decrypted;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -136,11 +137,12 @@ public class DecryptedCombineShopping implements Parcelable {
         return count;
     }
     public int getClothingSizesItems(String name ) {
+        Log.d("Name ",name);
         int count = 0;
         ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedClothingSizes decryptedLicense : clothingSizesItems) {
             if(!ids.contains(decryptedLicense.getId())){
-                count += decryptedLicense.getSelectionType().equals(name) ? 1 : 0;
+                count += decryptedLicense.getPersonName().equals(name) ? 1 : 0;
                 ids.add(decryptedLicense.getId());
             }
         }

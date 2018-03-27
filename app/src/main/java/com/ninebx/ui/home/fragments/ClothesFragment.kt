@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ninebx.NineBxApplication
 import com.ninebx.R
+import com.ninebx.ui.base.realm.decrypted.DecryptedCombineShopping
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.utility.Constants
 import com.ninebx.utility.FragmentBackHelper
@@ -30,7 +32,11 @@ class ClothesFragment : FragmentBackHelper() {
             val homeIntent = Intent(context, HomeActivity::class.java)
             startActivity(homeIntent)
             activity!!.finishAffinity()
+
         }
+        val combineItems : DecryptedCombineShopping = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
+        val subCategory  = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
+        tvWomensSizesCount.text = combineItems.getClothingSizesItems(subCategory.personName).toString()
 
         //NineBxApplication.instance.activityInstance!!.changeToolbarTitle("Select Category")
         layoutWomens.setOnClickListener {
@@ -95,6 +101,7 @@ class ClothesFragment : FragmentBackHelper() {
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.fragmentContainer, categoryFragment).commit()
         }
+
     }
 
     override fun onBackPressed(): Boolean {
