@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.TextView
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hide
@@ -15,6 +16,7 @@ import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.utility.Constants.SEARCH_EDIT
 import com.ninebx.utility.Constants.SEARCH_NORMAL
+import com.ninebx.utility.Constants.SEARCH_RADIO
 
 
 /**
@@ -31,6 +33,10 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                 val v = LayoutInflater.from(parent!!.context).inflate(R.layout.row_search_edit, parent, false)
                 return ViewHolder(v)
             }
+            SEARCH_RADIO -> {
+                val v = LayoutInflater.from(parent!!.context).inflate(R.layout.row_search_radio, parent, false)
+                return ViewHolder(v)
+            }
             else -> {
                 val v = LayoutInflater.from(parent!!.context).inflate(R.layout.row_search, parent, false)
                 return ViewHolder(v)
@@ -44,7 +50,7 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
     }
 
     override fun onBindViewHolder(holder: SearchAdapter.ViewHolder, position: Int) {
-        holder.textView.text = searchItems[position].itemName
+        holder.textView?.text = searchItems[position].itemName
         if( mode == SEARCH_EDIT )
         if(  searchItems[position].subHeader.isEmpty() ) {
             holder.txtSubHeader!!.hide()
@@ -57,21 +63,28 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
 
 
     fun restoreAt(position: Int, iItem: Level3SearchItem) {
-        searchItems!!.add(position, iItem)
+        searchItems.add(position, iItem)
         notifyItemRemoved(position)
 }
 
 
     fun removeAt(position: Int) {
-        searchItems!!.removeAt(position)
+        searchItems.removeAt(position)
         notifyItemRemoved(position)
     }
 
     fun add(position: Int , item: Level3SearchItem) {
-        searchItems!!.add(position,item)
+        searchItems.add(position,item)
         notifyItemInserted(position)
     }
 
+    fun getListItemId(position: Int): Long {
+        return searchItems[position].listItemId
+    }
+
+    fun getItemsId(position: Int): Long {
+        return searchItems[position].itemId
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         override fun onClick(view: View?) {
@@ -81,7 +94,7 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                     R.id.txtListSearch, R.id.txtSubHeader -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "view")
                     R.id.ivEdit -> adapterClickListener.onItemClick(position, searchItems[position].itemIndex, searchItems[position], "edit")
                     R.id.ivDelete -> {
-                        val builder = AlertDialog.Builder(view!!.context)
+                        val builder = AlertDialog.Builder(view.context)
                         builder.setTitle("NineBx")
                         builder.setCancelable(false)
                         builder.setMessage("Are you sure you want to delete?")
@@ -93,16 +106,20 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                         builder.setNegativeButton("Cancel") { dialog, which -> dialog?.cancel() }
                         builder.show()
                     }
+                    R.id.txtListSearchRadio -> {}
                 }
             }
         }
 
-        val textView: TextView = view.findViewById<View>(R.id.txtListSearch) as TextView
+        var textView: TextView ?= null
         var ivEdit : ImageView?= null
         var ivDelete : ImageView ?= null
         var txtSubHeader : TextView ?= null
 
         init {
+            if( mode != SEARCH_RADIO) {
+                textView = view.findViewById<View>(R.id.txtListSearch) as TextView
+            }
             if( mode == SEARCH_EDIT ) {
                 ivDelete = view.findViewById(R.id.ivDelete)
                 ivEdit = view.findViewById(R.id.ivEdit)
@@ -111,7 +128,11 @@ class SearchAdapter(private val searchItems: ArrayList<Level3SearchItem>, privat
                 ivEdit!!.setOnClickListener(this)
                 txtSubHeader!!.setOnClickListener(this)
             }
-            textView.setOnClickListener(this)
+            textView?.setOnClickListener(this)
+            if(mode == SEARCH_RADIO) {
+                val radioText: RadioButton = view.findViewById<View>(R.id.txtListSearchRadio) as RadioButton
+                radioText.setOnClickListener(this)
+            }
 
         }
     }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/default_mini_margin"
+    android:layout_marginStart="@dimen/default_mini_margin"
+    android:orientation="vertical">
+
+    <RadioButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtListSearchRadio"
+        android:gravity="center_vertical"
+        android:padding="@dimen/default_mini_margin"
+        android:text="@string/app_name"
+        android:layout_marginLeft="@dimen/margin_30" />
+
+    <!--<TextView
+        android:id="@+id/txtListSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/default_mini_margin"
+        android:text="@string/app_name"
+        android:layout_marginLeft="@dimen/margin_30"/>-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_below="@+id/txtListSearchRadio"
+        android:background="@color/divider_color" />
+
+</RelativeLayout>

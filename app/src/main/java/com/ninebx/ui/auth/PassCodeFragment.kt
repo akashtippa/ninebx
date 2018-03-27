@@ -5,6 +5,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -190,6 +191,7 @@ class PassCodeFragment : BaseAuthFragment() {
         if( isCreatePassCode != PASSCODE_RESET && etPassCode != null ) {
 
             passCode = NineBxApplication.getPreferences().passCode!!
+            Log.d("Passcode",passCode)
             etPassCode.setText("")
 
             ivOtp1.isSelected = false

@@ -47,7 +47,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun saveDocument(context: Context?) {
         val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory)
+        val categoryName = if( arguments!!.containsKey("categoryName") ) arguments!!.getString("categoryName") else ""
+        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory, categoryName)
     }
 
     private lateinit var mCategoryPresenter: Level3CategoryPresenter
@@ -616,6 +617,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         }
         if( arguments!!.containsKey("selectedDocument")) {
             selectedDocument = arguments!!.getParcelable("selectedDocument")
+
             classType = arguments!!.getString("classType")
             AppLogger.d("Level2", "Selected Document : " + selectedDocument)
         }
@@ -640,7 +642,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
                 val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory )
+                val categoryName = if( arguments!!.containsKey("categoryName") ) arguments!!.getString("categoryName") else ""
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory, categoryName)
             }
         }
         ivEdit.setOnClickListener {

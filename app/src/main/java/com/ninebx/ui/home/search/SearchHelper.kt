@@ -3,6 +3,7 @@ package com.ninebx.ui.home.search
 import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Parcelable
+import android.util.Log
 import com.ninebx.NineBxApplication
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
@@ -120,6 +121,14 @@ class SearchHelper() {
                                 else -> categoryName
                             }
                             if( item.categoryName == compareWithName && item.categoryId == subCategory.personName  ) level3SearchItems.add(item)
+                        }
+                        else -> {
+                            if( subCategoryId.startsWith("shopping") ) {
+                                if( item.categoryName == "clothingSizes" && item.categoryId == subCategory.personName  ) {
+                                    if( categoryName == item.sizeType )
+                                     level3SearchItems.add(item)
+                                }
+                            }
                         }
 
                     }
@@ -285,7 +294,22 @@ class SearchHelper() {
         }
         itemIndex = 0
         for(clothingSizes in searchDecryptedCombineShopping.clothingSizesItems){
-            mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName))
+            if( clothingSizes.men ) {
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName, 0, "Mens sizes"))
+            }
+            if( clothingSizes.women ) {
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName, 0, "Womens sizes"))
+            }
+            if( clothingSizes.baby ) {
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName, 0, "Baby's sizes"))
+            }
+            if( clothingSizes.boy ) {
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName, 0, "Boy's sizes"))
+            }
+            if( clothingSizes.girl ) {
+                mSearchShoppingItems.add(Level3SearchItem(R.string.shopping, clothingSizes.personName, "clothingSizes", clothingSizes.selectionType, itemIndex++, clothingSizes.id, clothingSizes.sizeName, 0, "Girls sizes"))
+            }
+
         }
         itemIndex = 0
         for(shoppingList in searchDecryptedCombineShopping.listItems){
@@ -458,6 +482,7 @@ class SearchHelper() {
     }
 
     private fun switchShoppingItems(position: Int, searchItem: Level3SearchItem) {
+        Log.d("Category Name",searchItem.categoryName)
         when(searchItem.categoryName){
             "loyaltyPrograms" -> {
 
@@ -495,7 +520,7 @@ class SearchHelper() {
                 }
 
             }
-            "clothingSize" -> {
+            "clothingSizes" -> {
 
                 if( mAction == "delete" ) {
                     val selectedDocument = searchDecryptedCombineShopping.clothingSizesItems.removeAt( position )

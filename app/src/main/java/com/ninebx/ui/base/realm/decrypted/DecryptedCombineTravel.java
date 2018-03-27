@@ -178,11 +178,11 @@ public class DecryptedCombineTravel implements Parcelable {
         for (DecryptedTravelList selectedItem : listItems) {
             count += (selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detailsId )? 1 : 0;
             if (!ids.contains(selectedItem.getId())) {
-                count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
+                //count += selectedItem.getSelectionType().equals(selectionType) ? 1 : 0;
                 ids.add(selectedItem.getId());
             }
         }
-        return count;
+        return ids.size();
     }
 
 

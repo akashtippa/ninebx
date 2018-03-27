@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
@@ -147,7 +148,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
             "Level1Fragment" -> {
                 loadOtherFragments()
             }
-            "WellnessFragment" ->{
+            "WellnessFragment", "ClothesFragment" ->{
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
                 val categoryFragment = Level2Fragment()
@@ -169,6 +170,7 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
         fragmentTransaction.addToBackStack(null)
         var subCategory: SubCategory ?= null
         val bundle = intent.extras
+        Log.d("Category ID ",bundle.getString("categoryId"))
         /*if(intent.hasExtra(Constants.SUB_CATEGORY)) {
             subCategory = intent.getParcelableExtra<SubCategory>(Constants.SUB_CATEGORY)
         } else {
