@@ -3,6 +3,7 @@ package com.ninebx.ui.home.baseSubCategories
 import android.content.Context
 import android.os.Parcelable
 import com.ninebx.R
+import com.ninebx.ui.home.baseCategories.SubCategory
 
 /**
  * Created by Alok on 12/01/18.
@@ -20,7 +21,7 @@ class Level2CategoryPresenter(private val categoryInt : Int, private val categor
         level3CategoryHelper.setValue( level2Category )
     }
 
-    fun saveDocument(context: Context?, combineItem: Parcelable?, title: String, subTitle: String) {
-        level3CategoryHelper.saveDocument( context!!, combineItem, title, subTitle )
+    fun saveDocument(context: Context?, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?) {
+        level3CategoryHelper.saveDocument( context!!, combineItem, title, subTitle, subCategory )
     }
 }

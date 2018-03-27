@@ -1,6 +1,9 @@
 package com.ninebx.ui.home.account.changePassword
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +59,7 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
     }
 
     private lateinit var mMasterPasswordPresenter : MasterPasswordPresenter
+    @SuppressLint("StringFormatInvalid")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NineBxApplication.instance.activityInstance!!.hideBottomView()
@@ -71,6 +75,16 @@ class MasterPasswordFragment : FragmentBackHelper(), MasterPasswordView {
         mCurrentUsers = arguments!!.getParcelableArrayList(Constants.CURRENT_USER)
         mMasterPasswordPresenter = MasterPasswordPresenter(this)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvStrongPassword.text = Html.fromHtml(getString(R.string.choose_a_strong_password, Html.FROM_HTML_MODE_LEGACY))
+            txtSharePassword.text = Html.fromHtml(getString(R.string.account_master_password_share, Html.FROM_HTML_MODE_LEGACY))
+            txtRememberIt.text = Html.fromHtml(getString(R.string.account_master_password_remember, Html.FROM_HTML_MODE_LEGACY))
+        }
+        else {
+            tvStrongPassword.text = Html.fromHtml(getString(R.string.choose_a_strong_password))
+            txtSharePassword.text = Html.fromHtml(getString(R.string.account_master_password_share))
+            txtRememberIt.text = Html.fromHtml(getString(R.string.account_master_password_remember))
+        }
     }
 
     private fun updatePassword() {
