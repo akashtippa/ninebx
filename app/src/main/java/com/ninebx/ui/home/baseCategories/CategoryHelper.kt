@@ -203,7 +203,7 @@ class CategoryHelper(
     }
 
     private fun getContacts() {
-        val decryptedCombinePersonal: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
+        val decryptedCombineContacts: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
         //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
 
         val categoryList = ArrayList<Category>()
@@ -214,7 +214,7 @@ class CategoryHelper(
         category.title = "Shared Contacts"
         category.drawableString = "ic_icon_lists_contacts"
         category.category_id = "cont_1001"
-        category.formsCount = decryptedCombinePersonal.getAllContacts("Contacts")
+        category.formsCount = decryptedCombineContacts.getAllContacts("Contacts")
 
         categoryList.add(category)
 
@@ -224,7 +224,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.category_id = "cont_2001"
-        category.formsCount = decryptedCombinePersonal.getAllContactsTest("cont_2001")
+        category.formsCount = decryptedCombineContacts.getAllContactsTest("cont_2001")
 
         categoryList.add(category)
 
@@ -235,7 +235,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_attachments"
         category.category_id = "cont_3001"
 //        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_3001")
-        category.formsCount = decryptedCombinePersonal.getAllContactsTest("Contacts")
+        category.formsCount = decryptedCombineContacts.getAllContactsTest("Contacts")
 
         categoryList.add(category)
 
@@ -245,7 +245,7 @@ class CategoryHelper(
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
         category.category_id = "cont_4001"
-        category.formsCount = decryptedCombinePersonal.getListsCount("Contacts", 0)
+        category.formsCount = decryptedCombineContacts.getListsCount("Contacts", 0)
 
         categoryList.add(category)
 
