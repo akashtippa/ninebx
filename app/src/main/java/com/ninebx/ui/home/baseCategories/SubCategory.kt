@@ -12,7 +12,7 @@ class SubCategory(
         var formsCount: Int = 0,
         var type: Int = 0,
         var subCategoryId: String = "",
-        var personName : String = ""
+        var personName: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
@@ -40,7 +40,6 @@ class SubCategory(
 
         other as SubCategory
 
-        if (title != other.title) return false
         if (subCategoryId != other.subCategoryId) return false
         if (personName != other.personName) return false
 
@@ -48,12 +47,10 @@ class SubCategory(
     }
 
     override fun hashCode(): Int {
-        var result = title.hashCode()
-        result = 31 * result + subCategoryId.hashCode()
+        var result = subCategoryId.hashCode()
         result = 31 * result + personName.hashCode()
         return result
     }
-
 
     companion object {
         @JvmField
