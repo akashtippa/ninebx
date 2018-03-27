@@ -2,7 +2,6 @@ package com.ninebx.ui.home.baseSubCategories
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -22,6 +21,7 @@ import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.baseCategories.OptionItem
+import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
 import kotlinx.android.synthetic.main.fragment_level3_category.*
 
@@ -47,7 +47,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
     override fun saveDocument(context: Context?) {
         val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-        mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle )
+        mCategoryPresenter.saveDocument(context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory)
     }
 
     private lateinit var mCategoryPresenter: Level2CategoryPresenter
@@ -66,6 +66,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private var combineItem : Parcelable ?= null
     private var action : String = ""
     private var isEditMode = false
+    private var subCategory : SubCategory ?= null
 
     override fun showProgress(message: Int) {
 
@@ -509,6 +510,24 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
                     createdValue.setTypeface(null, Typeface.ITALIC)
                 }
+                is DecryptedMainEducation-> {
+                    val decryptedEducationItems = selectedDocument as DecryptedMainEducation
+                    createdValue.setText(decryptedEducationItems.created)
+                    etTitle.setText(decryptedEducationItems.institutionName)
+                    etTitleValue.setText(decryptedEducationItems.name)
+                    modifiedValue.setText(decryptedEducationItems.modified)
+                    modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
+                }
+                is DecryptedWork -> {
+                    val decryptedEducationItems = selectedDocument as DecryptedWork
+                    createdValue.setText(decryptedEducationItems.created)
+                    etTitle.setText(decryptedEducationItems.companyName)
+                    etTitleValue.setText(decryptedEducationItems.position)
+                    modifiedValue.setText(decryptedEducationItems.modified)
+                    modifiedValue.setTypeface(null,Typeface.ITALIC)
+                    createdValue.setTypeface(null, Typeface.ITALIC)
+                }
             //Memories
                 is DecryptedMainMemories -> {
                     val decryptedMainMemores = selectedDocument as DecryptedMainMemories
@@ -583,6 +602,10 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
         categoryInt = arguments!!.getInt(Constants.CURRENT_BOX)
         combineItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
 
+
+
+        subCategory = arguments!!.getParcelable(Constants.SUB_CATEGORY)
+
         action = arguments!!.getString("action")
         isEditMode = action == "add" || action == "edit"
         setTitle()
@@ -622,7 +645,7 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 context!!.showProgressDialog(getString(R.string.saving_data))
                 //On clicking save
                 val subTitle = if( etTitleValue.isVisible() ) etTitleValue.text.toString().trim() else tvTitleValue.text.toString()
-                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle )
+                mCategoryPresenter.saveDocument( context, combineItem, etTitle.text.toString().trim(), subTitle, subCategory )
             }
         }
         ivEdit.setOnClickListener {
@@ -671,7 +694,6 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
     private fun setTitle() {
 
         val bundleValue = arguments!!.getString("categoryName")
-       // toolbarTitle.text = "Add " + bundleValue
 
         when (bundleValue) {
 
@@ -1057,6 +1079,22 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 etTitle.hint = "Description"
                 etTitleValue.hint = "Physician name"
                 if( selectedDocument == null ) toolbarTitle.text = "Add Visit"
+            }
+            else -> {
+                val subCategoryId = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY).subCategoryId
+                // toolbarTitle.text = "Add " + bundleValue
+                when (subCategoryId){
+                    "edu_1001" ->{
+                        etTitle.hint = "Institution name"
+                        etTitleValue.hint = "Qualification/degree"
+                        if( selectedDocument == null ) toolbarTitle.text = "Add Institution"
+                    }
+                    "edu_2001" ->{
+                        etTitle.hint = "Company name"
+                        etTitleValue.hint = "Position"
+                        if( selectedDocument == null ) toolbarTitle.text = "Add Company"
+                    }
+                }
             }
         }
 

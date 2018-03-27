@@ -61,8 +61,16 @@ class CategoryHelper(
         category.title = "Personal Health Record"
         category.drawableString = "ic_icon_health_records"
 
-        for(wellness in decryptedCombine.wellnessItems) {
-            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, wellness.userName))
+        val categoryMapCount = HashMap<String, Int>()
+        for( wellness in decryptedCombine.wellnessItems ) {
+            if( categoryMapCount.containsKey(wellness.selectionType) ) {
+                val count = categoryMapCount[wellness.selectionType]!! + 1
+                categoryMapCount.put(wellness.selectionType, count )
+            }
+            else categoryMapCount.put(wellness.selectionType, 1 )
+        }
+        for(key in categoryMapCount.keys) {
+            category.subCategories.add(SubCategory(category.title, "", categoryMapCount[key]!!, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, key))
         }
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
 
@@ -493,8 +501,16 @@ class CategoryHelper(
 
         category.drawableString = "ic_icon_clothing_sizes"
 
-        for(shoppingItem in decryptedCombine.clothingSizesItems) {
-            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, shoppingItem.personName))
+        val categoryMapCount = HashMap<String, Int>()
+        for( item in decryptedCombine.clothingSizesItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for(key in categoryMapCount.keys) {
+            category.subCategories.add(SubCategory(category.title, "", categoryMapCount[key]!!, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, key))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
@@ -635,9 +651,16 @@ class CategoryHelper(
         category.title = "Education"
         category.drawableString = "ic_icon_education"
         category.category_id = "edu_1001"
-
-        for(educationItem in decryptedCombine.mainEducationItems) {
-            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, "edu_1001", educationItem.name))
+        var categoryMapCount = HashMap<String, Int>()
+        for( item in decryptedCombine.mainEducationItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for(key in categoryMapCount.keys) {
+            category.subCategories.add(SubCategory(category.title, "", categoryMapCount[key]!!, Constants.SUB_CATEGORY_DISPLAY_PERSON, category.category_id, key))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))
@@ -651,8 +674,16 @@ class CategoryHelper(
         category.drawableString = "ic_icon_work"
         category.category_id = "edu_2001"
 
-        for(workItem in decryptedCombine.workItems) {
-            category.subCategories.add(SubCategory(category.title, "", 0, Constants.SUB_CATEGORY_DISPLAY_PERSON, "edu_2001", workItem.name))
+        categoryMapCount = HashMap<String, Int>()
+        for( item in decryptedCombine.workItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for(key in categoryMapCount.keys) {
+            category.subCategories.add(SubCategory(category.title, "", categoryMapCount[key]!!, Constants.SUB_CATEGORY_DISPLAY_PERSON, category.category_id, key))
         }
 
         category.subCategories.add(SubCategory("Add Persons.", "", 0, Constants.SUB_CATEGORY_ADD_PERSON))

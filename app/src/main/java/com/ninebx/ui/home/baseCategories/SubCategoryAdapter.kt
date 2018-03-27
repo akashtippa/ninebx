@@ -31,8 +31,12 @@ class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<Su
     private fun initDisplayValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
         val viewHolder: DisplayViewHolder = holder as DisplayViewHolder
         viewHolder.tvSubTitle.text = subCategory.title
-        if( subCategory.personName.isNotEmpty() )
+        if( subCategory.personName.isNotEmpty() ) {
             viewHolder.tvSubTitle.text = subCategory.personName
+        }
+        if( subCategory.formsCount > 0 )
+            viewHolder.tvCount.text = subCategory.formsCount.toString()
+
     }
 
     private fun initCategoryValues(subCategory: SubCategory, holder: RecyclerView.ViewHolder?) {
@@ -134,6 +138,7 @@ class SubCategoryAdapter(var category: Category, var subCategories: ArrayList<Su
     inner class DisplayViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val tvSubTitle = itemView!!.findViewById<TextView>(R.id.tvSubTitle)
+        val tvCount = itemView!!.findViewById<TextView>(R.id.tvCount)
 
         override fun onClick(view: View?) {
             val position = adapterPosition

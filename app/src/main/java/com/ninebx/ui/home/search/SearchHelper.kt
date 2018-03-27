@@ -92,15 +92,25 @@ class SearchHelper() {
         var level3SearchItems = ArrayList<Level3SearchItem>()
         for( item in allItems ) {
             if( item.categoryId.equals(categoryId, true) ) {
+                level3SearchItems.add(item)
+            }
+            else {
                 if( subCategory != null ) {
-                    //TODO
-                }
-                else {
-                    level3SearchItems.add(item)
+                    val subCategoryId = subCategory.subCategoryId
+                    when (subCategoryId){
+                        "edu_1001" ->{
+                            //Main Education
+                            if( item.categoryName == "mainEducation" && item.categoryId == subCategory.personName ) level3SearchItems.add(item)
+                        }
+                        "edu_2001" ->{
+                            //Work
+                            if( item.categoryName == "work" && item.categoryId == subCategory.personName  ) level3SearchItems.add(item)
+                        }
+                    }
                 }
             }
         }
-        allItems.filterTo(level3SearchItems) { it.categoryId.equals(categoryId, true) }
+        //allItems.filterTo(level3SearchItems) { it.categoryId.equals(categoryId, true) }
         level3SearchItems = filterDuplicates(level3SearchItems)
         return level3SearchItems
     }
