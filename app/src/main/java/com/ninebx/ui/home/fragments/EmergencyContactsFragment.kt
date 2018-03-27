@@ -18,10 +18,13 @@ import android.view.ViewGroup
 
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
+import com.ninebx.ui.base.realm.decrypted.DecryptedEmergencyContacts
+import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
+import com.ninebx.utility.encryptEmergencyContacts
 import com.ninebx.utility.prepareRealmConnections
 import com.onegravity.contactpicker.ContactElement
 import com.onegravity.contactpicker.contact.Contact
@@ -32,6 +35,7 @@ import com.onegravity.contactpicker.group.Group
 import com.onegravity.contactpicker.picture.ContactPictureType
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_emergency_contacts.*
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -47,8 +51,7 @@ class EmergencyContactsFragment : Fragment() {
     private var mContacts: ArrayList<Contact>? = ArrayList()
     private var mGroups: List<Group>? = null
     private var contactsRealm: Realm? = null
-
-    private val emergencyContacts : EmergencyContacts = EmergencyContacts()
+    var finalList: ArrayList<DecryptedEmergencyContacts> ?= ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -163,9 +166,31 @@ class EmergencyContactsFragment : Fragment() {
 
             mGroups = data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA) as List<Group>
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
-
             AppLogger.d("EmergencyContacts", " extracted " + mContacts)
 
+            val emergencyContacts  = DecryptedEmergencyContacts()
+
+            for(contact in mContacts!!){
+
+                emergencyContacts.id = UUID.randomUUID().hashCode().toLong()
+                emergencyContacts.name = contact.firstName + contact.lastName
+
+                if(!contact.getPhone(0).isNullOrEmpty())
+                    emergencyContacts.phoneNumberOne = contact.getPhone(0)
+                else
+                    emergencyContacts.phoneNumberOne = ""
+            }
+            finalList!!.add(emergencyContacts)
+
+            val encryptContacts = encryptEmergencyContacts(emergencyContacts)
+            val combineWellness = CombineWellness()
+            combineWellness.emergencyContactsItems.add(encryptContacts)
+
+            contactsRealm!!.beginTransaction()
+            contactsRealm!!.insertOrUpdate(combineWellness)
+            contactsRealm!!.commitTransaction()
+
+            AppLogger.d("Successfully " , " Updated emergency contacts")
         }
     }
 }

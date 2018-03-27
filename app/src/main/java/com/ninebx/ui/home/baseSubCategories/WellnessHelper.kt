@@ -142,7 +142,7 @@ class WellnessHelper(
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Gender", "Gender", Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
+        category.subCategories.add(Level2SubCategory("Gender", decryptedIdentification!!.gender, Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
         category.subCategories.add(Level2SubCategory("Date of birth", decryptedIdentification!!.dateofBirth, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
         category.subCategories.add(Level2SubCategory("Age",  decryptedIdentification!!.age, "", Constants.LEVEL2_NUMBER))
         category.subCategories.add(Level2SubCategory("Height(ft, in)", decryptedIdentification!!.height, "", Constants.LEVEL2_NUMBER))
