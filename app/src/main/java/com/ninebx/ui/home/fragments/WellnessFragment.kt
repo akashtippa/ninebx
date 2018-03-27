@@ -261,10 +261,10 @@ class WellnessFragment : FragmentBackHelper(), View.OnClickListener {
         tvHealthCareCount.text = combineItems.getHealthcareSize(subCategory.personName).toString()
         tvEmergencyContactsCount.text = combineItems.getEmergencyContactsSize(subCategory.personName).toString()
         tvMedicationCount.text = combineItems.getMedicationsSize(subCategory.personName).toString()
-        tvMedicalAllergiesCount.text = combineItems.medicalConditionsItems.size.toString()
-        tvEyeGlassPrescriptionCount.text = combineItems.eyeglassPrescriptionsItems.size.toString()
-        tvVitalNumbersCount.text = combineItems.vitalNumbersItems.size.toString()
-        tvCheckupAndVisitsCount.text = combineItems.checkupsItems.size.toString()
+        tvMedicalAllergiesCount.text = combineItems.getMedicalConditionSize(subCategory.personName).toString()
+        tvEyeGlassPrescriptionCount.text = combineItems.getEyeglassPrescriptionSize(subCategory.personName).toString()
+        tvVitalNumbersCount.text = combineItems.getVitalNumbersSize(subCategory.personName).toString()
+        tvCheckupAndVisitsCount.text = combineItems.getCheckupsSize(subCategory.personName).toString()
     }
 
     override fun onBackPressed(): Boolean {

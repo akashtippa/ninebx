@@ -22,9 +22,8 @@ import com.ninebx.ui.base.kotlin.hideProgressDialog
 import com.ninebx.ui.base.realm.decrypted.DecryptedCombineWellness
 import com.ninebx.ui.base.realm.decrypted.DecryptedEmergencyContacts
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
-import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts
 import com.ninebx.ui.home.HomeActivity
-import com.ninebx.ui.home.adapter.ContactsAdapter
+import com.ninebx.ui.home.adapter.EmergencyContactAdapter
 import com.ninebx.utility.AppLogger
 import com.ninebx.utility.Constants
 import com.ninebx.utility.encryptEmergencyContacts
@@ -56,7 +55,7 @@ class EmergencyContactsFragment : Fragment() {
     private var contactsRealm: Realm? = null
     var finalList: ArrayList<DecryptedEmergencyContacts> ?= ArrayList()
     private lateinit var combineItems: DecryptedCombineWellness
-    private var mListsAdapter: ContactsAdapter? = null
+    private var mListsAdapter: EmergencyContactAdapter? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +67,12 @@ class EmergencyContactsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         combineItems = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
+
+        mListsAdapter = EmergencyContactAdapter(combineItems!!.emergencyContactsItems)
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rvContactList!!.layoutManager = layoutManager
+        rvContactList!!.adapter = mListsAdapter
 
         /*mListsAdapter = ContactsAdapter(combineItems!!.emergencyContactsItems, this)
         val layoutManager = LinearLayoutManager(context)
