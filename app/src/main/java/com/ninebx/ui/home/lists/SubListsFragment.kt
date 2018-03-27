@@ -1,31 +1,24 @@
 package com.ninebx.ui.home.lists
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ninebx.NineBxApplication
 import com.ninebx.R
-import com.ninebx.R.string.contacts
-import com.ninebx.R.string.created
 import com.ninebx.ui.base.kotlin.hide
 import com.ninebx.ui.base.kotlin.show
 import com.ninebx.ui.base.realm.SearchItemClickListener
 import com.ninebx.ui.base.realm.decrypted.DecryptedHomeList
-import com.ninebx.ui.base.realm.home.contacts.Contacts
 
 import com.ninebx.ui.base.realm.lists.*
-import com.ninebx.ui.home.adapter.Date
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.education.CombineEducation
@@ -36,9 +29,7 @@ import com.ninebx.ui.base.realm.home.personal.CombinePersonal
 import com.ninebx.ui.base.realm.home.shopping.CombineShopping
 import com.ninebx.ui.base.realm.home.travel.CombineTravel
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
-import com.ninebx.ui.home.lists.adapter.SubListsAdapter
 import com.ninebx.ui.home.lists.helper.SwipeToDeleteCallback
-import com.ninebx.ui.home.lists.model.AddedItem
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchAdapter
 import com.ninebx.utility.*
@@ -119,6 +110,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rvAddedLists.adapter as SearchAdapter
+                val id = adapter.getListItemId(viewHolder.adapterPosition)
                 adapter.removeAt(viewHolder.adapterPosition)
                 /*val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
                 snackBar.setAction("UNDO", View.OnClickListener {
@@ -132,6 +124,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                 snackBar.setActionTextColor(Color.YELLOW)
                 snackBar.show()*/
                 //delete from realm as well
+                deleteItemFromRealm(categoryName,id)
             }
         }
 
@@ -148,10 +141,11 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
             } else {
                 val mLog = Level3SearchItem()
                 mLog.itemName = strAddItem
-                mListsAdapter!!.add(mListsAdapter.itemCount,mLog)
-                mListsAdapter!!.notifyDataSetChanged()
+                mLog.listItemId = getUniqueId()
+                mListsAdapter.add(mListsAdapter.itemCount,mLog)
+                mListsAdapter.notifyDataSetChanged()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
-                aadToParticularRealmList(categoryName)
+                aadToParticularRealmList(categoryName, mLog.listItemId)
                 edtAddList.text.clear()
             }
         }
@@ -177,6 +171,72 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
     }
 
+    private fun getRealmEndPoint(categoryName: Int): String {
+        when(categoryName) {
+            R.string.home_amp_money -> { return Constants.REALM_END_POINT_COMBINE}
+            R.string.travel -> { return Constants.REALM_END_POINT_COMBINE_TRAVEL }
+            R.string.contacts -> { return Constants.REALM_END_POINT_COMBINE_CONTACTS }
+            R.string.education_work -> { return Constants.REALM_END_POINT_COMBINE_EDUCATION }
+            R.string.personal -> { return Constants.REALM_END_POINT_COMBINE_PERSONAL }
+            R.string.interests -> { return Constants.REALM_END_POINT_COMBINE_INTERESTS}
+            R.string.wellness -> { return Constants.REALM_END_POINT_COMBINE_WELLNESS}
+            R.string.memories -> { return Constants.REALM_END_POINT_COMBINE_MEMORIES}
+            R.string.shopping -> { return Constants.REALM_END_POINT_COMBINE_SHOPPING }
+            else -> {return ""}
+        }
+    }
+
+    private fun deleteItemFromRealm(categoryName: Int, itemId: Long) {
+        val endPoint = getRealmEndPoint(categoryName)
+        if(endPoint != "") {
+            prepareRealmConnections(context, false, endPoint, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    when(categoryName) {
+                        R.string.home_amp_money -> {
+                            realm.where(HomeList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(HomeList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.travel -> {
+                            realm.where(TravelList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(TravelList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.contacts -> {
+                            realm.where(ContactsList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(ContactsList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.education_work -> {
+                            realm.where(EducationList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(EducationList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.personal -> {
+                            realm.where(PersonalList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(PersonalList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.interests -> {
+                            realm.where(InterestsList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(InterestsList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.wellness -> {
+                            realm.where(WellnessList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(WellnessList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.memories -> {
+                            realm.where(MemoriesList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(MemoriesList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.shopping -> {
+                            realm.where(ShoppingList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                            realm.where(ShoppingList::class.java).equalTo("detailsId", itemId).findAll().deleteAllFromRealm()
+                        }
+                    }
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+    }
+
     private fun savingTheCreatedTime() {
         val firstName = preferences.userFirstName
         val lastName = preferences.userLastName
@@ -194,7 +254,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
     }
 
     val preferences = NineBxApplication.getPreferences()
-    private fun aadToParticularRealmList(categoryName: Int) {
+    private fun aadToParticularRealmList(categoryName: Int, uniqueId: Long) {
         when (categoryName) {
             R.string.home_amp_money -> {
                 savingTheCreatedTime()
@@ -203,7 +263,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = HomeList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "HomeBanking".encryptString()
@@ -219,9 +279,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedHomeList = DecryptedHomeList()
                         decryptedHomeList.listName = strAddItem
-                        decryptedHomeList.id = getUniqueId()
+                        decryptedHomeList.id = listItems.id
                         decryptedHomeList.detailsId = 0
-                        decryptedHomeList.selectionType ="HomeBanking".encryptString()
+                        decryptedHomeList.selectionType ="HomeBanking"
                         decryptedHomeList.created = createdDate
                         decryptedHomeList.createdUser = preferences.userID
                         combineFetched?.add(decryptedHomeList)
@@ -237,7 +297,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = TravelList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Travel".encryptString()
@@ -253,9 +313,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedTravelList = DecryptedTravelList()
                         decryptedTravelList.listName = strAddItem
-                        decryptedTravelList.id = getUniqueId()
+                        decryptedTravelList.id = listItems.id
                         decryptedTravelList.detailsId = 0
-                        decryptedTravelList.selectionType = "Travel".encryptString()
+                        decryptedTravelList.selectionType = "Travel"
                         decryptedTravelList.created = createdDate
                         decryptedTravelList.createdUser = preferences.userID
                         combineTravelFetched?.add(decryptedTravelList)
@@ -271,7 +331,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                         //add to contactslist
                         contactsRealm = realm
                         var listItems = ContactsList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Contacts".encryptString()
@@ -288,9 +348,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedContactsList = DecryptedContactsList()
                         decryptedContactsList.listName = strAddItem
-                        decryptedContactsList.id = getUniqueId()
+                        decryptedContactsList.id = listItems.id
                         decryptedContactsList.detailsId = 0
-                        decryptedContactsList.selectionType = "Contacts".encryptString()
+                        decryptedContactsList.selectionType = "Contacts"
                         decryptedContactsList.created = createdDate
                         decryptedContactsList.createdUser = preferences.userID
                         combineContactsFetched?.add(decryptedContactsList)
@@ -304,7 +364,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = EducationList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Education".encryptString()
@@ -319,9 +379,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedEducation = DecryptedEducationList()
                         decryptedEducation.listName = strAddItem
-                        decryptedEducation.id = getUniqueId()
+                        decryptedEducation.id = listItems.id
                         decryptedEducation.detailsId = 0
-                        decryptedEducation.selectionType = "Education".encryptString()
+                        decryptedEducation.selectionType = "Education"
                         decryptedEducation.created = createdDate
                         decryptedEducation.createdUser = preferences.userID
                         combineEducationFetched?.add(decryptedEducation)
@@ -338,7 +398,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = PersonalList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Personal".encryptString()
@@ -353,9 +413,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedPersonalList = DecryptedPersonalList()
                         decryptedPersonalList.listName = strAddItem
-                        decryptedPersonalList.id = getUniqueId()
+                        decryptedPersonalList.id = listItems.id
                         decryptedPersonalList.detailsId = 0
-                        decryptedPersonalList.selectionType = "Personal".encryptString()
+                        decryptedPersonalList.selectionType = "Personal"
                         decryptedPersonalList.created = createdDate
                         decryptedPersonalList.createdUser = preferences.userID
                         combinePersonalFetched?.add(decryptedPersonalList)
@@ -371,7 +431,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = InterestsList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Interests".encryptString()
@@ -386,9 +446,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedInterestsList = DecryptedInterestsList()
                         decryptedInterestsList.listName = strAddItem
-                        decryptedInterestsList.id = getUniqueId()
+                        decryptedInterestsList.id = listItems.id
                         decryptedInterestsList.detailsId = 0
-                        decryptedInterestsList.selectionType = "Interests".encryptString()
+                        decryptedInterestsList.selectionType = "Interests"
                         decryptedInterestsList.created = createdDate
                         decryptedInterestsList.createdUser = preferences.userID
                         combineInterestsFetched?.add(decryptedInterestsList)
@@ -405,7 +465,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = WellnessList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Wellness".encryptString()
@@ -420,9 +480,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedWellnessList = DecryptedWellnessList()
                         decryptedWellnessList.listName = strAddItem
-                        decryptedWellnessList.id = getUniqueId()
+                        decryptedWellnessList.id = listItems.id
                         decryptedWellnessList.detailsId = 0
-                        decryptedWellnessList.selectionType = "Wellness".encryptString()
+                        decryptedWellnessList.selectionType = "Wellness"
                         decryptedWellnessList.created = createdDate
                         decryptedWellnessList.createdUser = preferences.userID
                         combineWellnessFetched?.add(decryptedWellnessList)
@@ -439,7 +499,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = MemoriesList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Memories".encryptString()
@@ -454,9 +514,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedMemoriesList = DecryptedMemoriesList()
                         decryptedMemoriesList.listName = strAddItem
-                        decryptedMemoriesList.id = getUniqueId()
+                        decryptedMemoriesList.id = listItems.id
                         decryptedMemoriesList.detailsId = 0
-                        decryptedMemoriesList.selectionType = "Memories".encryptString()
+                        decryptedMemoriesList.selectionType = "Memories"
                         decryptedMemoriesList.created = createdDate
                         decryptedMemoriesList.createdUser = preferences.userID
                         combineMemoriesFetched?.add(decryptedMemoriesList)
@@ -473,7 +533,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var listItems = ShoppingList()
-                        listItems.id = getUniqueId()
+                        listItems.id = uniqueId
                         listItems.listName = strAddItem.encryptString()
                         listItems.detailsId = 0
                         listItems.selectionType = "Shopping".encryptString()
@@ -488,9 +548,9 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
 
                         var decryptedShoppingList = DecryptedShoppingList()
                         decryptedShoppingList.listName = strAddItem
-                        decryptedShoppingList.id = getUniqueId()
+                        decryptedShoppingList.id = listItems.id
                         decryptedShoppingList.detailsId = 0
-                        decryptedShoppingList.selectionType = "Shopping".encryptString()
+                        decryptedShoppingList.selectionType = "Shopping"
                         decryptedShoppingList.created = createdDate
                         decryptedShoppingList.createdUser = preferences.userID
                         combineShoppingFetched?.add(decryptedShoppingList)
@@ -539,7 +599,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineFetched = combineFetched
         searchItems.clear()
         for (item in combineFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
     }
 
@@ -549,7 +609,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineTravelFetched = combineTravelFetched
         searchItems.clear()
         for (item in combineTravelFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
     }
 
@@ -558,7 +618,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineContactsFetched = combineContactsFetched
         searchItems.clear()
         for(item in combineContactsFetched) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
     }
 
@@ -568,7 +628,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineEducationFetched = combineEducationFetched
         searchItems.clear()
         for (item in combineEducationFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
 
     }
@@ -579,7 +639,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combinePersonalFetched = combinePersonalFetched
         searchItems.clear()
         for (item in combinePersonalFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
 
     }
@@ -591,7 +651,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         searchItems.clear()
         for (item in combineInterestsFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
     }
 
@@ -601,7 +661,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineWellnessFetched = combineWellnessFetched
         searchItems.clear()
         for (item in combineWellnessFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
 
     }
@@ -613,7 +673,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         searchItems.clear()
         for (item in combineMemoriesFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
 
     }
@@ -624,7 +684,7 @@ class SubListsFragment : FragmentBackHelper(), SearchItemClickListener {
         this.combineShoppingFetched = combineShoppingFetched
         searchItems.clear()
         for (item in combineShoppingFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName))
+            searchItems.add(Level3SearchItem(categoryName, item.listName,"","",0,0,"",item.id))
         }
     }
 

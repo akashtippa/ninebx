@@ -13,7 +13,8 @@ class Level3SearchItem(
         var categoryId:String = "",
         var itemIndex : Int = 0,
         var itemId : Long = 0,
-        var subHeader : String = ""
+        var subHeader : String = "",
+        var listItemId: Long = 0
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),

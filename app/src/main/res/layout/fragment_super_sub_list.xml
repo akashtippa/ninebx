@@ -182,7 +182,7 @@
                 android:layout_margin="@dimen/default_mini_margin"
                 android:nestedScrollingEnabled="false" />
 
-            <RelativeLayout
+            <!--<RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -246,7 +246,7 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
 
         </LinearLayout>
