@@ -304,6 +304,8 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
                 }
                 is DecryptedEmergencyContacts -> {
                     val decryptedEmergencyContacts : DecryptedEmergencyContacts = selectedDocument as DecryptedEmergencyContacts
+                    etTitle.setText(decryptedEmergencyContacts.name)
+                    etTitleValue.setText(decryptedEmergencyContacts.relationShip)
                     modifiedValue.setText(decryptedEmergencyContacts.modified)
                     createdValue.text = decryptedEmergencyContacts.created
                     modifiedValue.setTypeface(null,Typeface.ITALIC)
@@ -696,6 +698,11 @@ class Level3CategoryFragment : FragmentBackHelper(), Level2CategoryView {
 
         when (bundleValue) {
 
+            "Emergency contacts" -> {
+                etTitle.hint = "Name"
+                etTitleValue.hint = "Relationship"
+                if( selectedDocument == null ) toolbarTitle.text = "Add contact"
+            }
         // Common Items in Every
             "Loans/Mortgages"-> {
                 etTitle.hint = "Institution name"
