@@ -55,11 +55,15 @@ class EmergencyContactsFragment() : FragmentBackHelper() , IEmergencyContacts {
     }
 
     var selectedContact : DecryptedEmergencyContacts ?= null
+    private val LEVEL_3: Int = 3232
+
     override fun emergencyContactsClicked(contacts: DecryptedEmergencyContacts, isEditable: Boolean) {
         mListsAdapter!!.notifyDataSetChanged()
         selectedContact = contacts
-
-        Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+        val intent = Intent( context, ContainerActivity::class.java)
+        intent.putExtras(intent.extras)
+        intent.putExtra("selectedDocument", selectedContact )
+        startActivityForResult(intent, LEVEL_3)
     }
 
     override fun emergencyContactsDeleted(contacts: DecryptedEmergencyContacts) {
@@ -266,6 +270,9 @@ class EmergencyContactsFragment() : FragmentBackHelper() , IEmergencyContacts {
 
             AppLogger.d("Successfully " , " Updated emergency contacts")
         }
+        else if( requestCode == LEVEL_3 ) {
+            //TODO
+        }
     }
 
     private fun sortMyList(decryptedEmergencyContacts: ArrayList<DecryptedEmergencyContacts>) {
@@ -274,4 +281,5 @@ class EmergencyContactsFragment() : FragmentBackHelper() , IEmergencyContacts {
         if(mListsAdapter != null)
             mListsAdapter!!.notifyData(finalList!!)
     }
+
 }

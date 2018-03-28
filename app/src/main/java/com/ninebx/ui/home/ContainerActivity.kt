@@ -23,6 +23,7 @@ import com.ninebx.ui.home.account.confirmPassword.ConfirmPasswordFragment
 import com.ninebx.ui.home.account.contactsView.ContactsView
 import com.ninebx.ui.home.account.memoryView.MemoryView
 import com.ninebx.ui.home.baseCategories.Category
+import com.ninebx.ui.home.baseCategories.OptionItem
 import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.ui.home.baseSubCategories.Level3CategoryFragment
 import com.ninebx.ui.home.fragments.*
@@ -159,7 +160,24 @@ class ContainerActivity : AppCompatActivity(), MemberView, MemoryView, ContactsV
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.addToBackStack(null)
                 val categoryFragment = EmergencyContactsFragment()
-                categoryFragment.arguments = intent.extras
+                val bundle = intent.extras
+                val optionsList = ArrayList<OptionItem>()
+                var id : Long = 0
+                optionsList.add(OptionItem(id++, "Mother", "Mother"))
+                optionsList.add(OptionItem(id++, "Father", "Father"))
+                optionsList.add(OptionItem(id++, "Brother", "Brother"))
+                optionsList.add(OptionItem(id++, "Sister", "Sister"))
+                optionsList.add(OptionItem(id++, "Child", "Child"))
+                optionsList.add(OptionItem(id++, "Spouse", "Spouse"))
+                optionsList.add(OptionItem(id++, "Partner", "Partner"))
+                optionsList.add(OptionItem(id++, "Uncle", "Uncle"))
+                optionsList.add(OptionItem(id++, "Aunt", "Aunt"))
+                optionsList.add(OptionItem(id++, "Friend", "Friend"))
+                optionsList.add(OptionItem(id++, "Other relative", "Other relative"))
+                optionsList.add(OptionItem(id, "Other", "Other"))
+
+                bundle.putParcelableArrayList(Constants.SUB_OPTIONS, optionsList)
+                categoryFragment.arguments = bundle
                 fragmentTransaction.replace(R.id.fragmentContainer, categoryFragment).commit()
             }
         }
