@@ -101,39 +101,38 @@ class WellnessHelper(
     }
 
     private fun getEmergencyContacts() {
-        /*val categoryList = ArrayList<Level2Category>()
+        val categoryList = ArrayList<Level2Category>()
         if (decryptedEmergencyContacts == null) decryptedEmergencyContacts = DecryptedEmergencyContacts()
-        var categoryIndex = 2050
+        var categoryIndex = 100
         var category_id = "account_details" + categoryIndex
         var category = Level2Category(category_id)
         category.title = "Details"
-        category.subCategories.add(Level2SubCategory("Gender", "Gender", Constants.KEYBOARD_SPINNER, Constants.LEVEL_NORMAL_SPINNER))
-        category.subCategories.add(Level2SubCategory("Date of birth", decryptedIdentification!!.dateofBirth, Constants.KEYBOARD_PICKER, Constants.LEVEL2_PICKER))
-        category.subCategories.add(Level2SubCategory("Age",  decryptedIdentification!!.age, "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Height(ft, in)", decryptedIdentification!!.height, "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Weight", decryptedIdentification!!.weight, "", Constants.LEVEL2_NUMBER))
-        category.subCategories.add(Level2SubCategory("Hair color", decryptedIdentification!!.hairColor, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Eye color", decryptedIdentification!!.eyeColor, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Visible marks", decryptedIdentification!!.visibleMarks, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Blood type", decryptedIdentification!!.bloodType, "", Constants.LEVEL2_NORMAL))
-        category.subCategories.add(Level2SubCategory("Organ donor", decryptedIdentification!!.orgonDonor, "", Constants.LEVEL2_SWITCH))
+        category.subCategories.add(Level2SubCategory("Phone number 1", decryptedEmergencyContacts!!.phoneNumberOne, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Phone number 2", decryptedEmergencyContacts!!.phoneNumberTwo, "", Constants.LEVEL2_NUMBER))
+        category.subCategories.add(Level2SubCategory("Email address", decryptedEmergencyContacts!!.emailAddress, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Street address 1", decryptedEmergencyContacts!!.streetAddressOne, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Street address 2", decryptedEmergencyContacts!!.streetAddressTwo, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("City", decryptedEmergencyContacts!!.city, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("State", decryptedEmergencyContacts!!.state, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Zip code", decryptedEmergencyContacts!!.zipCode, "", Constants.LEVEL2_NORMAL))
+        category.subCategories.add(Level2SubCategory("Country", decryptedEmergencyContacts!!.country, "", Constants.LEVEL2_LOCATION))
         categoryList.add(category)
 
-        categoryIndex += 2050
+        categoryIndex += 100
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Notes"
-        category.subCategories.add(Level2SubCategory("Notes", decryptedIdentification!!.notes, "", Constants.LEVEL2_NOTES))
+        category.subCategories.add(Level2SubCategory("Notes", decryptedEmergencyContacts!!.notes, "", Constants.LEVEL2_NOTES))
         categoryList.add(category)
 
-        categoryIndex += 2001
+        categoryIndex += 100
         category_id = "account_details" + categoryIndex
         category = Level2Category(category_id)
         category.title = "Attachments"
-        category.subCategories.add(Level2SubCategory("", "", "", Constants.LEVEL2_ATTACHMENTS))
+        category.subCategories.add(Level2SubCategory("", decryptedEmergencyContacts!!.attachmentNames, "", Constants.LEVEL2_ATTACHMENTS))
         categoryList.add(category)
 
-        categoryView.onSuccess(categoryList)*/
+        categoryView.onSuccess(categoryList)
     }
 
     private fun getIdentification() {
