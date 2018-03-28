@@ -58,12 +58,7 @@ class EmergencyContactsFragment() : FragmentBackHelper() , IEmergencyContacts {
     override fun emergencyContactsClicked(contacts: DecryptedEmergencyContacts, isEditable: Boolean) {
         mListsAdapter!!.notifyDataSetChanged()
         selectedContact = contacts
-        /*val bundle = Bundle()
-        bundle.putBoolean("isEditable", isEditable)
-        bundle.putParcelable(Constants.CONTACTS_VIEW, contacts)
-        bundle.putString(Constants.FROM_CLASS, "Contacts")
-        bundle.putLong("ID", contacts!!.id)
-        startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)*/
+
         Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
     }
 
