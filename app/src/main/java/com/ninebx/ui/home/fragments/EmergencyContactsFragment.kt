@@ -16,6 +16,7 @@ import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.ninebx.R
 import com.ninebx.ui.base.kotlin.hideProgressDialog
@@ -26,7 +27,9 @@ import com.ninebx.ui.base.realm.home.contacts.CombineContacts
 import com.ninebx.ui.base.realm.home.contacts.Contacts
 import com.ninebx.ui.base.realm.home.wellness.CombineWellness
 import com.ninebx.ui.base.realm.home.wellness.EmergencyContacts
+import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
+import com.ninebx.ui.home.account.interfaces.IEmergencyContacts
 import com.ninebx.ui.home.adapter.EmergencyContactAdapter
 import com.ninebx.ui.home.baseCategories.SubCategory
 import com.ninebx.utility.*
@@ -46,7 +49,27 @@ import java.util.concurrent.atomic.AtomicBoolean
 /**
  * A simple [Fragment] subclass.
  */
-class EmergencyContactsFragment : Fragment() {
+class EmergencyContactsFragment() : FragmentBackHelper() , IEmergencyContacts {
+    override fun emergencyContactsEdited(contacts: DecryptedEmergencyContacts) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    var selectedContact : DecryptedEmergencyContacts ?= null
+    override fun emergencyContactsClicked(contacts: DecryptedEmergencyContacts, isEditable: Boolean) {
+        mListsAdapter!!.notifyDataSetChanged()
+        selectedContact = contacts
+        /*val bundle = Bundle()
+        bundle.putBoolean("isEditable", isEditable)
+        bundle.putParcelable(Constants.CONTACTS_VIEW, contacts)
+        bundle.putString(Constants.FROM_CLASS, "Contacts")
+        bundle.putLong("ID", contacts!!.id)
+        startActivityForResult(Intent(context, ContainerActivity::class.java).putExtras(bundle), ADD_CONTACTS)*/
+        Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun emergencyContactsDeleted(contacts: DecryptedEmergencyContacts) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private val mRequestPermissionsInProcess = AtomicBoolean()
     private val REQUEST_PERMISSION = 3
@@ -60,6 +83,8 @@ class EmergencyContactsFragment : Fragment() {
     private var mListsAdapter: EmergencyContactAdapter? = null
 
     private lateinit var subCategory: SubCategory
+
+    private val ADD_CONTACTS = 3000
 
     private var firstName = ""
 
@@ -78,17 +103,12 @@ class EmergencyContactsFragment : Fragment() {
         combineItems = arguments!!.getParcelable<DecryptedCombineWellness>(Constants.COMBINE_ITEMS)
         subCategory = arguments!!.getParcelable<SubCategory>(Constants.SUB_CATEGORY)
 
-        mListsAdapter = EmergencyContactAdapter(combineItems!!.emergencyContactsItems)
+        mListsAdapter = EmergencyContactAdapter(combineItems!!.emergencyContactsItems, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvContactList!!.layoutManager = layoutManager
         rvContactList!!.adapter = mListsAdapter
-
-        /*mListsAdapter = ContactsAdapter(combineItems!!.emergencyContactsItems, this)
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rvContactList!!.layoutManager = layoutManager
-        rvContactList!!.adapter = mListsAdapter*/
+        rvContactList!!.adapter.notifyDataSetChanged()
 
         ivHome.setOnClickListener {
             val homeIntent = Intent(context, HomeActivity::class.java)
@@ -197,29 +217,6 @@ class EmergencyContactsFragment : Fragment() {
             mContacts = data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as ArrayList<Contact>
             AppLogger.d("EmergencyContacts", " extracted " + mContacts)
 
-            val emergencyContacts  = DecryptedEmergencyContacts()
-
-            /*for(contact in mContacts!!){
-
-                emergencyContacts.selectionType = subCategory.personName
-                emergencyContacts.id = UUID.randomUUID().hashCode().toLong()
-                emergencyContacts.name = contact.firstName + contact.lastName
-
-                if(!contact.getPhone(0).isNullOrEmpty())
-                    emergencyContacts.phoneNumberOne = contact.getPhone(0)
-                else
-                    emergencyContacts.phoneNumberOne = ""
-            }
-            finalList!!.add(emergencyContacts)
-
-            val encryptContacts = encryptEmergencyContacts(emergencyContacts)
-            val combineWellness = CombineWellness()
-            combineWellness.emergencyContactsItems.add(encryptContacts)
-
-            contactsRealm!!.beginTransaction()
-            contactsRealm!!.insertOrUpdate(combineWellness)
-            contactsRealm!!.commitTransaction()*/
-
             for (contact in mContacts!!) {
                 val realmContacts = EmergencyContacts()
                 realmContacts.id = UUID.randomUUID().hashCode().toLong()
@@ -242,7 +239,7 @@ class EmergencyContactsFragment : Fragment() {
                 newContact.phoneNumberOne = realmContacts.phoneNumberOne
 
                 finalList!!.add(newContact)
-               /* sortMyList(finalList!!)*/
+                sortMyList(finalList!!)
 
                 contactsRealm!!.beginTransaction()
 
@@ -276,5 +273,10 @@ class EmergencyContactsFragment : Fragment() {
         }
     }
 
-   /* private fun sortMyList(finalList: ArrayList<DecryptedEmergencyContacts>) {}*/
+    private fun sortMyList(decryptedEmergencyContacts: ArrayList<DecryptedEmergencyContacts>) {
+        val list = decryptedEmergencyContacts.sortedWith( compareBy( { it.name }))
+        finalList = ArrayList(list)
+        if(mListsAdapter != null)
+            mListsAdapter!!.notifyData(finalList!!)
+    }
 }
