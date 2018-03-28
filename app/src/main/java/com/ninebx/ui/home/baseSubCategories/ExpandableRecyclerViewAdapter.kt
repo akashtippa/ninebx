@@ -26,6 +26,7 @@ import java.util.*
  */
 @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
 class ExpandableRecyclerViewAdapter( private val _context: Context,
+                                     private val parentCategory: Level2Category,
                                      private val categories: ArrayList<Level2SubCategory>,
                                      private val level2CategoryPresenter: Level2CategoryView,
                                      val categoryName: String,
@@ -334,7 +335,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                                 item.purchaseDate = textView.text.toString()
                             }
                         }
-                        level2CategoryPresenter.setValueToDocument(item)
+                        level2CategoryPresenter.setValueToDocument(item, parentCategory)
                     }
                 })
             }
@@ -351,7 +352,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
                 else
                     chkRight.toString()
 
-                level2CategoryPresenter.setValueToDocument(item)
+                level2CategoryPresenter.setValueToDocument(item, parentCategory)
 
                 if( chkLeft.isChecked ) {
                     etPurchaseDate.show()
@@ -483,7 +484,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
                 if( subCategory.title == "Currently rented" ) {
                     subCategory.isValueSet = isChecked
-                    level2CategoryPresenter.setValueToDocument(subCategory)
+                    level2CategoryPresenter.setValueToDocument(subCategory, parentCategory)
                     val tenantNameSubCategory = getItemAtPosition(position + 1)
                     val leaseStartDateSubCategory= getItemAtPosition(position + 2)
                     val leaseEndDateSubCategory = getItemAtPosition(position + 3)
@@ -821,10 +822,10 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
             val valueString = p0.toString()
             level2SubCategory.titleValue = valueString
             if( level2SubCategory.isVisible )
-                level2CategoryPresenter.setValueToDocument(level2SubCategory)
+                level2CategoryPresenter.setValueToDocument(level2SubCategory, parentCategory)
             else {
                 level2SubCategory.titleValue = ""
-                level2CategoryPresenter.setValueToDocument(level2SubCategory)
+                level2CategoryPresenter.setValueToDocument(level2SubCategory, parentCategory)
             }
         }
 
@@ -844,7 +845,7 @@ class ExpandableRecyclerViewAdapter( private val _context: Context,
 
         override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
             level2SubCategory.titleValue = selectionArray[p2]
-            level2CategoryPresenter.setValueToDocument(level2SubCategory)
+            level2CategoryPresenter.setValueToDocument(level2SubCategory, parentCategory)
             optionEditText!!.setText(level2SubCategory.titleValue)
             popupWindow.dismiss()
         }

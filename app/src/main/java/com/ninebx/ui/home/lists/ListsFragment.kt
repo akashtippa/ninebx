@@ -1,6 +1,7 @@
 package com.ninebx.ui.home.lists
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.ninebx.ui.base.kotlin.showToast
 import com.ninebx.ui.base.realm.decrypted.*
 
 import com.ninebx.ui.home.BaseHomeFragment
+import com.ninebx.utility.Constants
 
 import kotlinx.android.synthetic.main.fragment_lists.*
 
@@ -106,6 +108,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
 
     var fragmentValue = ""
     var categoryName = 0
+    var combinedItem: Parcelable ?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -113,18 +116,29 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         ivHome.setOnClickListener { NineBxApplication.instance.activityInstance!!.callHomeFragment() }
         ListsPresenter(this, 0, -1).fetchDataInBackground()
 
-        val listOp = arguments!!.getString("listOption")
+        //val listOp = arguments!!.getString("listOption")
         fragmentValue = arguments!!.getString("homeScreen")
         categoryName = arguments!!.getInt("categoryName")
+        combinedItem = arguments!!.getParcelable(Constants.COMBINE_ITEMS)
+        val fromWhichBox = arguments!!.getInt("category")
 
-        when (listOp) {
-            "HomeScreen" -> {
-                switchToDirectSubList(categoryName)
+        if(fromWhichBox != null)
+        switchToDirectSubList(fromWhichBox, combinedItem!!)
+
+        /*when (listOp) {
+            "Home" -> {
+                switchToDirectSubList(fromWhichBox, combinedItem!!)
+            }
+            "Travel" -> {
+                switchToDirectSubList(categoryName, combinedItem!!)
             }
             "Contacts" -> {
-                switchToDirectSubList(R.string.contacts)
+                switchToDirectSubList(R.string.contacts, combinedItem!!)
             }
-        }
+            "Education" -> {
+                switchToDirectSubList(R.string.contacts, combinedItem!!)
+            }
+        }*/
 
         val categoryFragment = SubListsFragment()
 
@@ -175,7 +189,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
             bundle.putInt("categoryName", (R.string.contacts))
             bundle.putString("homeScreen", "bottom")
             bundle.putString("listOption", "Contacts")
-            categoryFragment.setCombineContacts(combineContactsFetched)
+            categoryFragment.setCombineContacts(combineContactsFetched!!)
             //val categoryFragment = ContactsListFragment()
             categoryFragment.arguments = bundle
             fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -294,7 +308,7 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
         }
     }
 
-    private fun switchToDirectSubList(whichBox: Int) {
+    private fun switchToDirectSubList(whichBox: Int, combineItem: Parcelable) {
         val categoryFragment = SubListsFragment()
 
         when (whichBox) {
@@ -304,12 +318,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
-
+                val combineHome = combineItem as DecryptedCombine
                 val bundle = Bundle()
                 bundle.putInt("categoryName", (R.string.home_amp_money))
                 bundle.putString("listOption", "Home")
                 bundle.putString("homeScreen", "HomeScreen")
-                categoryFragment.setCombine(combineFetched)
+                categoryFragment.setCombine(combineHome.listItems)
 
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -321,12 +335,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
-
+                val combineTravel = combineItem as DecryptedCombineTravel
                 val bundle = Bundle()
                 bundle.putInt("categoryName", (R.string.travel))
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Travel")
-                categoryFragment.setCombineFetched(combineTravelFetched)
+                categoryFragment.setCombineFetched(combineTravel.listItems)
                 //val categoryFragment = TravelListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -338,12 +352,14 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
-
+                val combineContacts = combineItem as DecryptedCombineContacts
+                /*combineContactsFetched!!.clear()
+                combineContactsFetched.addAll(combineContacts.listItems)*/
                 val bundle = Bundle()
                 bundle.putInt("categoryName", (R.string.contacts))
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Contacts")
-                categoryFragment.setCombineContacts(combineContactsFetched)
+                categoryFragment.setCombineContacts(combineContacts.listItems)
                 //val categoryFragment = ContactsListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -355,12 +371,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 fragmentTransaction.addToBackStack(null)
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
-
+                val combineEducation = combineItem as DecryptedCombineEducation
                 val bundle = Bundle()
                 bundle.putInt("categoryName", (R.string.education_work))
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Education")
-                categoryFragment.setCombineEduction(combineEducationFetched)
+                categoryFragment.setCombineEduction(combineEducation.listItems)
                 //val categoryFragment = EducationListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -373,11 +389,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
+                val combinePersonal = combineItem as DecryptedCombinePersonal
                 val bundle = Bundle()
                 bundle.putInt("categoryName", (R.string.personal))
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Personal")
-                categoryFragment.setCombinePersonal(combinePersonalFetched)
+                categoryFragment.setCombinePersonal(combinePersonal.listItems)
                 //val categoryFragment = PersonalListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -390,11 +407,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
+                val combineInterests = combineItem as DecryptedCombineInterests
                 val bundle = Bundle()
                 bundle.putInt("categoryName", (R.string.interests))
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Interests")
-                categoryFragment.setCombineInterests(combineInterestsFetched)
+                categoryFragment.setCombineInterests(combineInterests.listItems)
                 //val categoryFragment = InterestListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -408,11 +426,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
+                val combineWellness = combineItem as DecryptedCombineWellness
                 val bundle = Bundle()
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Wellness")
                 bundle.putInt("categoryName", (R.string.wellness))
-                categoryFragment.setCombineWellness(combineWellnessFetched)
+                categoryFragment.setCombineWellness(combineWellness.listItems)
                 //val categoryFragment = WellnessListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -425,11 +444,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
+                val combineMemories = combineItem as DecryptedCombineMemories
                 val bundle = Bundle()
                 bundle.putString("homeScreen", "HomeScreen")
                 bundle.putString("listOption", "Memories")
                 bundle.putInt("categoryName", (R.string.memories))
-                categoryFragment.setCombineMemories(combineMemoriesFetched)
+                categoryFragment.setCombineMemories(combineMemories.listItems)
                 //val categoryFragment = MemoriesListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()
@@ -442,11 +462,12 @@ class ListsFragment : BaseHomeFragment(), ListsCommunicationView {
                 NineBxApplication.instance.activityInstance!!.hideQuickAdd()
                 NineBxApplication.instance.activityInstance!!.hideBottomView()
 
+                val combineShopping = combineItem as DecryptedCombineShopping
                 val bundle = Bundle()
                 bundle.putString("listOption", "Shopping")
                 bundle.putInt("categoryName", (R.string.shopping))
                 bundle.putString("homeScreen", "HomeScreen")
-                categoryFragment.setCombineShopping(combineShoppingFetched)
+                categoryFragment.setCombineShopping(combineShopping.listItems)
                 //val categoryFragment = ShoppingListFragment()
                 categoryFragment.arguments = bundle
                 fragmentTransaction.add(R.id.frameLayout, categoryFragment).commit()

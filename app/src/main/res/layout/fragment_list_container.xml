@@ -60,13 +60,14 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/toolbarLayout"
         android:id="@+id/rvCommonList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/layoutAddList"
-        android:paddingTop="@dimen/default_mini_margin"
-        android:nestedScrollingEnabled="false" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbarLayout"
+        android:nestedScrollingEnabled="false"
+        android:paddingTop="@dimen/default_mini_margin" />
 
 
     <RelativeLayout

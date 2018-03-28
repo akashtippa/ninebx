@@ -2,6 +2,7 @@ package com.ninebx.ui.base.realm.decrypted;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -132,6 +133,50 @@ public class DecryptedCombineShopping implements Parcelable {
         int count = 0;
         for (DecryptedShoppingList decryptedLicense : listItems) {
             count += ( decryptedLicense.getSelectionType().equals(selectionType) && decryptedLicense.getDetailsId() == detailsId )  ? 1 : 0;
+        }
+        return count;
+    }
+    public int getClothingSizesItems( String name, String sizeType ) {
+        int count = 0;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (DecryptedClothingSizes clothingSizes : clothingSizesItems) {
+            if(!ids.contains(clothingSizes.getId())){
+                switch ( sizeType ) {
+                    case "Women's Size" :
+                        if( clothingSizes.getWomen() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                    case "Mens Size" :
+                        if( clothingSizes.getMen() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+
+                        break;
+                    case "Babys Size" :
+                        if( clothingSizes.getBaby() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                    case "Boys Size" :
+                        if( clothingSizes.getBoy() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                    case "Girls Size" :
+                        if( clothingSizes.getGirl() ) {
+                            count += clothingSizes.getSelectionType().equals(name) ? 1 : 0;
+                            ids.add(clothingSizes.getId());
+                        }
+                        break;
+                }
+
+
+            }
         }
         return count;
     }

@@ -37,6 +37,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import com.ninebx.ui.base.realm.decrypted.*
 import com.ninebx.utility.Constants.SEARCH_NORMAL
+import com.ninebx.utility.Constants.SEARCH_RADIO
 
 
 /***
@@ -70,8 +71,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         this.combineFetched = combineFetched
         searchItems.clear()
         for (item in combineFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
+        reloadAdapter()
     }
 
     private var combineTravelFetched: ArrayList<DecryptedTravelList>? = null
@@ -81,9 +83,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         this.combineTravelFetched = combineFetched
         //searchItems.clear()
         for (item in combineFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combineContactsFetched: ArrayList<DecryptedContactsList>? = null
@@ -92,9 +94,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         this.combineContactsFetched = combineContactsFetched
         searchItems.clear()
         for (item in combineContactsFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combineEducationFetched: ArrayList<DecryptedEducationList>? = null
@@ -104,9 +106,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         searchItems.clear()
         for (item in combineEducationFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combinePersonalFetched: ArrayList<DecryptedPersonalList>? = null
@@ -115,9 +117,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         this.combinePersonalFetched = combinePersonalFetched
         searchItems.clear()
         for (item in combinePersonalFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combineInterestsFetched: ArrayList<DecryptedInterestsList>? = null
@@ -127,9 +129,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         searchItems.clear()
         for (item in combineInterestsFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combineWellnessFetched: ArrayList<DecryptedWellnessList>? = null
@@ -139,9 +141,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         searchItems.clear()
         for (item in combineWellnessFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combineMemoriesFetched: ArrayList<DecryptedMemoriesList>? = null
@@ -151,9 +153,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         searchItems.clear()
         for (item in combineMemoriesFetched!!) {
 
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     private var combineShoppingFetched: ArrayList<DecryptedShoppingList>? = null
@@ -162,9 +164,9 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         this.combineShoppingFetched = combineShoppingFetched
         searchItems.clear()
         for (item in combineShoppingFetched!!) {
-            searchItems.add(Level3SearchItem(categoryName, item.listName.decryptString()))
+            searchItems.add(Level3SearchItem(categoryName, item.listName, "", "", 0, item.id, "", listId))
         }
-
+        reloadAdapter()
     }
 
     override fun homeListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedHomeList>?) {
@@ -175,50 +177,68 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     override fun travelListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedTravelList>) {
         combineTravelFetched = ArrayList()
-        combineTravelFetched!!.addAll(decryptCombine!!.toList())
+        combineTravelFetched!!.addAll(decryptCombine.toList())
         setCombineFetched(combineTravelFetched)
     }
 
     override fun contactListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedContactsList>) {
         combineContactsFetched = ArrayList()
-        combineContactsFetched!!.addAll(decryptCombine!!.toList())
+        combineContactsFetched!!.addAll(decryptCombine.toList())
         setCombineContacts(combineContactsFetched)
     }
 
     override fun educationListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedEducationList>) {
         combineEducationFetched = ArrayList()
-        combineEducationFetched!!.addAll(decryptCombine!!.toList())
+        combineEducationFetched!!.addAll(decryptCombine.toList())
         setCombineEduction(combineEducationFetched)
     }
 
     override fun interestListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedInterestsList>) {
         combineInterestsFetched = ArrayList()
-        combineInterestsFetched!!.addAll(decryptCombine!!.toList())
+        combineInterestsFetched!!.addAll(decryptCombine.toList())
         setCombineInterests(combineInterestsFetched)
     }
 
     override fun countPersonalList(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedPersonalList>) {
         combinePersonalFetched = ArrayList()
-        combinePersonalFetched!!.addAll(decryptCombine!!.toList())
+        combinePersonalFetched!!.addAll(decryptCombine.toList())
         setCombinePersonal(combinePersonalFetched)
     }
 
     override fun wellnessListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedWellnessList>) {
         combineWellnessFetched = ArrayList()
-        combineWellnessFetched!!.addAll(decryptCombine!!.toList())
+        combineWellnessFetched!!.addAll(decryptCombine.toList())
         setCombineWellness(combineWellnessFetched)
     }
 
     override fun memoryListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedMemoriesList>) {
         combineMemoriesFetched = ArrayList()
-        combineMemoriesFetched!!.addAll(decryptCombine!!.toList())
+        combineMemoriesFetched!!.addAll(decryptCombine.toList())
         setCombineMemories(combineMemoriesFetched)
     }
 
     override fun shoppingListCount(contactsUpdating: Int, decryptCombine: ArrayList<DecryptedShoppingList>) {
         combineShoppingFetched = ArrayList()
-        combineShoppingFetched!!.addAll(decryptCombine!!.toList())
+        combineShoppingFetched!!.addAll(decryptCombine.toList())
         setCombineShopping(combineShoppingFetched)
+    }
+
+    private fun reloadAdapter() {
+        if(mListsAdapter != null) {
+            mListsAdapter = SearchAdapter(searchItems, SEARCH_RADIO, this)
+            val layoutManager = LinearLayoutManager(context)
+            layoutManager.orientation = LinearLayoutManager.VERTICAL
+            rvAddedSubLists!!.layoutManager = layoutManager
+            rvAddedSubLists!!.adapter = mListsAdapter
+        }
+    }
+
+    private fun loadAdapter() {
+        mListsAdapter = SearchAdapter(searchItems, SEARCH_RADIO, this)
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rvAddedSubLists!!.layoutManager = layoutManager
+        rvAddedSubLists!!.adapter = mListsAdapter
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -242,19 +262,19 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
         decryptedTravelList = arguments!!.getParcelable<DecryptedTravelList>(Constants.SELECTED_ITEM)
 
-        mListsAdapter = SearchAdapter(searchItems, SEARCH_NORMAL, this)
+        /*mListsAdapter = SearchAdapter(searchItems, SEARCH_NORMAL, this)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rvAddedSubLists!!.layoutManager = layoutManager
-        rvAddedSubLists!!.adapter = mListsAdapter
-
+        rvAddedSubLists!!.adapter = mListsAdapter*/
+        loadAdapter()
         txtSubListName.setText(listTitleName)
         categoryName = arguments!!.getInt("categoryName")
 
-        for (items in searchItems!!) {
+        for (items in searchItems) {
             val dates = AddedSubItem()
             dates.strAddedItem
-            myList!!.add(dates)
+            myList.add(dates)
         }
 
         //AppLogger.e("List Id ", " is " + listId)
@@ -284,7 +304,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         // Swipe to delete.
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rvAddedSubLists.adapter as SubListsAdapter
+                /*val adapter = rvAddedSubLists.adapter as SubListsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
 
                 val snackBar = Snackbar.make(view, "Item Deleted", Snackbar.LENGTH_LONG)
@@ -296,7 +316,11 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     mSubListAdapter!!.notifyData(myList)
                 })
                 snackBar.setActionTextColor(Color.YELLOW)
-                snackBar.show()
+                snackBar.show()*/
+                val adapter = rvAddedSubLists.adapter as SearchAdapter
+                val id = adapter.getItemsId(viewHolder.adapterPosition)
+                adapter.removeAt(viewHolder.adapterPosition)
+                deleteItemFromRealm(categoryName,id)
 
 
             }
@@ -313,12 +337,18 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                 edtAddSubList.clearFocus()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             } else {
-                val mLog = AddedSubItem()
-                mLog.strAddedItem = strAddItem
+                //val mLog = AddedSubItem()
+                var itemLog = Level3SearchItem()
+                itemLog.itemName = strAddItem
+                itemLog.itemId = getUniqueId()
+                itemLog.listItemId = listId
+                //mLog.strAddedItem = strAddItem
 //                myList.add(mLog)
 //                mSubListAdapter!!.notifyData(myList)
-                aadToParticularRealmList(categoryName)
-
+                aadToParticularRealmList(categoryName, itemLog.itemId)
+                //update adapter
+                mListsAdapter.add(mListsAdapter.itemCount,itemLog)
+                mListsAdapter.notifyDataSetChanged()
                 edtAddSubList.text.clear()
                 KeyboardUtil.hideSoftKeyboard(activity!!)
             }
@@ -373,6 +403,63 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
 
     }
 
+    private fun getRealmEndPoint(categoryName: Int): String {
+        when(categoryName) {
+            R.string.home_amp_money -> { return Constants.REALM_END_POINT_COMBINE}
+            R.string.travel -> { return Constants.REALM_END_POINT_COMBINE_TRAVEL }
+            R.string.contacts -> { return Constants.REALM_END_POINT_COMBINE_CONTACTS }
+            R.string.education_work -> { return Constants.REALM_END_POINT_COMBINE_EDUCATION }
+            R.string.personal -> { return Constants.REALM_END_POINT_COMBINE_PERSONAL }
+            R.string.interests -> { return Constants.REALM_END_POINT_COMBINE_INTERESTS}
+            R.string.wellness -> { return Constants.REALM_END_POINT_COMBINE_WELLNESS}
+            R.string.memories -> { return Constants.REALM_END_POINT_COMBINE_MEMORIES}
+            R.string.shopping -> { return Constants.REALM_END_POINT_COMBINE_SHOPPING }
+            else -> {return ""}
+        }
+    }
+
+    private fun deleteItemFromRealm(categoryName: Int, itemId: Long) {
+        val endPoint = getRealmEndPoint(categoryName)
+        if(endPoint != "") {
+            prepareRealmConnections(context, false, endPoint, object : Realm.Callback() {
+                override fun onSuccess(realm: Realm?) {
+                    realm!!.beginTransaction()
+                    when(categoryName) {
+                        R.string.home_amp_money -> {
+                            realm.where(HomeList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.travel -> {
+                            realm.where(TravelList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.contacts -> {
+                            realm.where(ContactsList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.education_work -> {
+                            realm.where(EducationList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.personal -> {
+                            realm.where(PersonalList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.interests -> {
+                            realm.where(InterestsList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.wellness -> {
+                            realm.where(WellnessList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.memories -> {
+                            realm.where(MemoriesList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                        R.string.shopping -> {
+                            realm.where(ShoppingList::class.java).equalTo("id", itemId).findAll().deleteAllFromRealm()
+                        }
+                    }
+                    realm.commitTransaction()
+                }
+
+            })
+        }
+    }
+
     private fun savingTheCreatedTime() {
         val firstName = preferences.userFirstName
         val lastName = preferences.userLastName
@@ -389,7 +476,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
         createdDate = created
     }
 
-    private fun aadToParticularRealmList(categoryName: Int) {
+    private fun aadToParticularRealmList(categoryName: Int, uniqueId: Long) {
         savingTheCreatedTime()
         when (categoryName) {
             R.string.home_amp_money -> {
@@ -399,7 +486,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = HomeList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "HomeBanking".encryptString()
@@ -451,7 +538,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = TravelList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Travel".encryptString()
@@ -469,7 +556,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = ContactsList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Contacts".encryptString()
@@ -487,7 +574,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = EducationList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Education".encryptString()
@@ -505,7 +592,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = PersonalList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Personal".encryptString()
@@ -523,7 +610,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = InterestsList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Interests".encryptString()
@@ -541,7 +628,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = WellnessList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Wellness".encryptString()
@@ -559,7 +646,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = MemoriesList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.selectionType = "Memories".encryptString()
@@ -577,7 +664,7 @@ class SuperSubListFragment : FragmentBackHelper(), ListsCommunicationView, Searc
                     override fun onSuccess(realm: Realm?) {
                         contactsRealm = realm
                         var homeList = ShoppingList()
-                        homeList.id = getUniqueId()
+                        homeList.id = uniqueId
                         homeList.listName = edtAddSubList.text.toString().encryptString()
                         homeList.detailsId = listId
                         homeList.modified = createdDate

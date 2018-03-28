@@ -14,7 +14,6 @@ import com.ninebx.ui.home.fragments.MemoryTimeLineFragment
 import com.ninebx.ui.home.fragments.SingleContactViewFragment
 import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.utility.*
-import java.text.SimpleDateFormat
 
 import java.util.*
 
@@ -423,7 +422,7 @@ class Level3CategoryHelper(
 
 
 
-    fun setValue(level2Category: Level2SubCategory) {
+    fun setValue(level2Category: Level2SubCategory, parentCategory: Level2Category) {
         if( homeHelper != null ) {
             homeHelper!!.setValue(level2Category)
         }
@@ -432,7 +431,7 @@ class Level3CategoryHelper(
         }
 
         if( shoppingHelper != null){
-            shoppingHelper!!.setValue(level2Category)
+            shoppingHelper!!.setValue(level2Category, parentCategory)
         }
 
         if(travelHelper != null) {
@@ -473,11 +472,8 @@ class Level3CategoryHelper(
 
     private var mCombine : Parcelable ?= null
     @SuppressLint("StaticFieldLeak")
-    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?) {
+    fun saveDocument(context: Context, combineItem: Parcelable?, title: String, subTitle: String, subCategory: SubCategory?, categoryName: String) {
         mCombine = combineItem
-        val currentUsers = NineBxApplication.getPreferences().userFirstName +" " +  NineBxApplication.getPreferences().userLastName
-        val sdf = SimpleDateFormat(" E,MMM dd,yyyy, HH:mm")
-        val currentDateandTime = sdf.format( Date())
 
         if( homeHelper != null ) {
             homeHelper!!.saveDocument(context, combineItem, title, subTitle)
@@ -494,336 +490,14 @@ class Level3CategoryHelper(
         }
 
         if(wellnessHelper!=null){
-            wellnessHelper!!.saveDocument(context,combineItem, title, subTitle)
+            wellnessHelper!!.saveDocument(context,combineItem, title, subTitle, subCategory)
         }
         if(shoppingHelper!=null){
-            shoppingHelper!!.saveDocument(context,combineItem, title, subTitle)
+            shoppingHelper!!.saveDocument(context,combineItem, title, subTitle, subCategory, categoryName)
         }
         if(commonItemHelper != null) {
             commonItemHelper!!.saveDocument(context, combineItem, title, subTitle)
         }
-
-   /*     if (decryptedLoyalty != null) {
-            decryptedLoyalty!!.selectionType = categoryID
-            if (decryptedLoyalty!!.selectionType.equals("travel_1001"))
-                decryptedLoyalty!!.airLine = title
-            if (decryptedLoyalty!!.selectionType.equals("travel_1002"))
-                decryptedLoyalty!!.hotel = title
-            if (decryptedLoyalty!!.selectionType.equals("travel_1003"))
-                decryptedLoyalty!!.carRentalCompany = title
-            if (decryptedLoyalty!!.selectionType.equals("travel_1004"))
-                decryptedLoyalty!!.cruiseline = title
-            if (decryptedLoyalty!!.selectionType.equals("travel_1005"))
-                decryptedLoyalty!!.railway = title
-            if (decryptedLoyalty!!.selectionType.equals("travel_1006"))
-                decryptedLoyalty!!.other = title
-            if( decryptedLoyalty!!.created.isEmpty() )
-                decryptedLoyalty!!.created = currentUsers + " " + currentDateandTime
-
-            decryptedLoyalty!!.modified = currentUsers + " " + currentDateandTime
-            decryptedLoyalty!!.accountName = subTitle
-
-            AppLogger.d("LoyaltySelectionType", " " + decryptedLoyalty!!.selectionType)
-            AppLogger.d("Level2Category", "decryptedLoyalty " + decryptedLoyalty)
-
-            if (decryptedLoyalty!!.id.toInt() == 0) {
-                decryptedLoyalty!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            AppLogger.d("saveDocument", "decryptedLoyalty" + decryptedLoyalty!!)
-                            var getDecryptedLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
-                            AppLogger.d("getDecryptedLoyalty", "DecryptedCombineTravel" + getDecryptedLoyalty)
-
-                            if(getDecryptedLoyalty!!.loyaltyItems != null && getDecryptedLoyalty!!.loyaltyItems.size > 0){
-                                for(loyaltyItems in getDecryptedLoyalty!!.loyaltyItems){
-                                    var deleteLoyalty = realm!!.where(CombineTravel::class.java).equalTo("id", loyaltyItems.id).findAll()
-                                    realm.beginTransaction()
-                                    if( deleteLoyalty != null )
-                                        deleteLoyalty.deleteAllFromRealm()
-                                    realm.commitTransaction()
-                                }
-                            }
-
-                            realm!!.beginTransaction()
-                            val loyalty = encryptLoyalty(decryptedLoyalty!!)
-                            realm.insertOrUpdate(loyalty)
-                            realm.copyToRealmOrUpdate(loyalty)
-                            realm.commitTransaction()
-                            //  fragmentListContainer!!.setRecyclerView()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-
-                            var realmLoyalty = realm!!.where(CombineTravel::class.java).findFirst()
-
-                            if (realmLoyalty == null) {
-                                realm.beginTransaction()
-                                realmLoyalty = realm.createObject(CombineTravel::class.java, getUniqueId())
-                                realm.commitTransaction()
-                            }
-                            for(loyaltyItems in realmLoyalty!!.loyaltyItems){
-                                if (loyaltyItems!!.id.toInt() == decryptedLoyalty!!.id.toInt() ){
-                                    var deleteLoyalty : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
-                                            .equalTo("id", loyaltyItems.id)
-                                            .findAll()
-                                    realm.beginTransaction()
-                                    if( deleteLoyalty != null )
-                                        deleteLoyalty.deleteAllFromRealm()
-                                    realm.commitTransaction()
-                                }
-                            }
-                            realm.beginTransaction()
-                            realmLoyalty!!.loyaltyItems.add(encryptLoyality(decryptedLoyalty!!))
-                            realm.copyToRealmOrUpdate(realmLoyalty)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-
-        if (decryptedTravel != null) {
-            decryptedTravel!!.selectionType = categoryID
-            decryptedTravel!!.nameOnAccount = title
-            decryptedTravel!!.accountName = subTitle
-            if( decryptedTravel!!.created.isEmpty() )
-                decryptedTravel!!.created = currentUsers + " " + currentDateandTime
-            decryptedTravel!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedTravel!!.id.toInt() == 0) {
-                decryptedTravel!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            var travel = encryptTravel(decryptedTravel!!)
-                            realm!!.insertOrUpdate(travel)
-                            realm!!.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
-                            var realmTravel = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmTravel == null) {
-                                realmTravel = realm.createObject(CombineTravel::class.java, getUniqueId())
-                            }
-                            for(travelItems in realmTravel!!.travelItems){
-                                if (travelItems!!.id.toInt() == decryptedTravel!!.id.toInt() ){
-                                    var deleteTravel : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
-                                            .equalTo("id", decryptedTravel!!.id).findAll()
-                                    deleteTravel.deleteAllFromRealm()
-                                    realm.commitTransaction()
-                                }
-                            }
-                            realmTravel!!.travelItems.add(encryptTravel(decryptedTravel!!))
-                            realm.copyToRealmOrUpdate(realmTravel)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-
-        if (decryptedDocuments != null) {
-            decryptedDocuments!!.selectionType = categoryID
-            decryptedDocuments!!.nameOnTravelDocument = subTitle
-            if (decryptedDocuments!!.selectionType.equals("travel_2001"))
-                decryptedDocuments!!.passportName = title
-            if (decryptedDocuments!!.selectionType.equals("travel_2002"))
-                decryptedDocuments!!.visaName = title
-            if (decryptedDocuments!!.selectionType.equals("travel_2003"))
-                decryptedDocuments!!.travelDocumentTitle = title
-
-            AppLogger.d("SelectionType", " " + decryptedDocuments!!.selectionType)
-            AppLogger.d("SelectionType", " Visa Name " + decryptedDocuments!!.visaName)
-            AppLogger.d("SelectionType", " Passport Name " + decryptedDocuments!!.passportName)
-            AppLogger.d("SelectionType", " Travel Document " + decryptedDocuments!!.selectionType)
-            if( decryptedDocuments!!.created.isEmpty() )
-                decryptedDocuments!!.created = currentUsers + " " + currentDateandTime
-            decryptedDocuments!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedDocuments!!.id.toInt() == 0) {
-                decryptedDocuments!!.id = getUniqueId()
-            }
-
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            var documents = encryptDocuments(decryptedDocuments!!)
-                            realm!!.insertOrUpdate(documents)
-                            realm!!.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
-                            var realmDocument = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmDocument == null) {
-                                realmDocument = realm.createObject(CombineTravel::class.java, getUniqueId())
-                            }
-                            for(documentItems in realmDocument!!.documentsItems){
-                                if (documentItems!!.id.toInt() == decryptedDocuments!!.id.toInt() ){
-                                    var deleteDocuments : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
-                                            .equalTo("id", decryptedDocuments!!.id).findAll()
-                                    deleteDocuments.deleteAllFromRealm()
-                                    realm.commitTransaction()
-                                }
-                            }
-                            realmDocument!!.documentsItems.add(encryptDocuments(decryptedDocuments!!))
-                            realm.copyToRealmOrUpdate(realmDocument)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-
-      *//*  if (decryptedVacations != null) {
-            decryptedVacations!!.selectionType = categoryID
-            decryptedVacations!!.vac_description = title
-            AppLogger.d("SelectionType", "decryptedVacations" + decryptedVacations!!.selectionType)
-            if( decryptedVacations!!.created.isEmpty() )
-                decryptedVacations!!.created = currentUsers + " " + currentDateandTime
-            decryptedVacations!!.modified = currentUsers + " " + currentDateandTime
-            if (decryptedVacations!!.id.toInt() == 0) {
-                decryptedVacations!!.id = getUniqueId()
-            }
-            var isSaveComplete = false
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            realm!!.beginTransaction()
-                            val vacations = encryptVacations(decryptedVacations!!)
-                            realm!!.insertOrUpdate(vacations)
-                            realm!!.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
-            object : AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    prepareRealmConnections(context, false, Constants.REALM_END_POINT_COMBINE_TRAVEL, object : Realm.Callback() {
-                        override fun onSuccess(realm: Realm?) {
-                            val combineTravel: DecryptedCombineTravel = mCombine as DecryptedCombineTravel
-                            var realmVacations = realm!!.where(CombineTravel::class.java).equalTo("id", combineTravel.id).findFirst()
-                            realm.beginTransaction()
-                            if (realmVacations == null) {
-                                realmVacations = realm.createObject(CombineTravel::class.java, getUniqueId())
-                            }
-                            for(vacationItems in realmVacations!!.vacationsItems){
-                                if (vacationItems!!.id.toInt() == decryptedVacations!!.id.toInt() ){
-                                    var deleteVacations : RealmResults<CombineTravel> = realm!!.where(CombineTravel::class.java)
-                                            .equalTo("id", decryptedVacations!!.id).findAll()
-                                    deleteVacations.deleteAllFromRealm()
-                                    realm.commitTransaction()
-                                }
-                            }
-                            realmVacations!!.vacationsItems.add(encryptVacations(decryptedVacations!!))
-                            realm.copyToRealmOrUpdate(realmVacations)
-                            realm.commitTransaction()
-                        }
-                    })
-                }
-
-                override fun onPostExecute(result: Unit?) {
-                    if (isSaveComplete) {
-                        isSaveComplete = true
-                    } else {
-                        categoryView.savedToRealm( mCombine!! )
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-*//*
-
-*/
-
-
 
     }
 }

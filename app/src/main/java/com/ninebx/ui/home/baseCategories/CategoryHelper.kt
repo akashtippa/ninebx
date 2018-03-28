@@ -62,12 +62,68 @@ class CategoryHelper(
         category.drawableString = "ic_icon_health_records"
 
         val categoryMapCount = HashMap<String, Int>()
-        for( wellness in decryptedCombine.wellnessItems ) {
-            if( categoryMapCount.containsKey(wellness.selectionType) ) {
-                val count = categoryMapCount[wellness.selectionType]!! + 1
-                categoryMapCount.put(wellness.selectionType, count )
+        for( item in decryptedCombine.checkupsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
             }
-            else categoryMapCount.put(wellness.selectionType, 1 )
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.emergencyContactsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.eyeglassPrescriptionsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.healthcareProvidersItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.identificationItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.medicalConditionsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.medicalHistoryItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.medicationsItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
+        }
+        for( item in decryptedCombine.vitalNumbersItems ) {
+            if( categoryMapCount.containsKey(item.selectionType) ) {
+                val count = categoryMapCount[item.selectionType]!! + 1
+                categoryMapCount.put(item.selectionType, count )
+            }
+            else categoryMapCount.put(item.selectionType, 1 )
         }
         for(key in categoryMapCount.keys) {
             category.subCategories.add(SubCategory(category.title, "", categoryMapCount[key]!!, Constants.SUB_CATEGORY_DISPLAY_PERSON, category_id, key))
@@ -211,7 +267,7 @@ class CategoryHelper(
     }
 
     private fun getContacts() {
-        val decryptedCombinePersonal: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
+        val decryptedCombineContacts: DecryptedCombineContacts = combineItems as DecryptedCombineContacts
         //AppLogger.d("CategoryHelper", " DecryptedCombineTravel : " + decryptedCombinePersonal)
 
         val categoryList = ArrayList<Category>()
@@ -222,7 +278,7 @@ class CategoryHelper(
         category.title = "Shared Contacts"
         category.drawableString = "ic_icon_lists_contacts"
         category.category_id = "cont_1001"
-        category.formsCount = decryptedCombinePersonal.getAllContacts("Contacts")
+        category.formsCount = decryptedCombineContacts.getAllContacts("Contacts")
 
         categoryList.add(category)
 
@@ -232,7 +288,7 @@ class CategoryHelper(
         category.title = "Services/Other Accounts"
         category.drawableString = "ic_icon_services_accounts"
         category.category_id = "cont_2001"
-        category.formsCount = decryptedCombinePersonal.getAllContactsTest("cont_2001")
+        category.formsCount = decryptedCombineContacts.getAllContactsTest("cont_2001")
 
         categoryList.add(category)
 
@@ -243,7 +299,7 @@ class CategoryHelper(
         category.drawableString = "ic_icon_attachments"
         category.category_id = "cont_3001"
 //        category.formsCount = decryptedCombinePersonal.getAllContacts("cont_3001")
-        category.formsCount = decryptedCombinePersonal.getAllContactsTest("Contacts")
+        category.formsCount = decryptedCombineContacts.getAllContactsTest("Contacts")
 
         categoryList.add(category)
 
@@ -253,7 +309,7 @@ class CategoryHelper(
         category.title = "Lists"
         category.drawableString = "ic_icon_lists"
         category.category_id = "cont_4001"
-        category.formsCount = decryptedCombinePersonal.getListsCount("Contacts", 0)
+        category.formsCount = decryptedCombineContacts.getListsCount("Contacts", 0)
 
         categoryList.add(category)
 
@@ -498,6 +554,7 @@ class CategoryHelper(
         category_id = "shopping_" + categoryIndex
         category = Category(category_id)
         category.title = "Clothing sizes"
+
         category.drawableString = "ic_icon_clothing_sizes"
 
         val categoryMapCount = HashMap<String, Int>()

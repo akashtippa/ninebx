@@ -270,11 +270,11 @@ public class DecryptedCombine implements Parcelable {
         ArrayList<Long> ids = new ArrayList<>();
         for (DecryptedHomeList selectedItem : listItems) {
             if (!ids.contains(selectedItem.getId())) {
-                count += (selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detilsId)? 1 : 0;
+                //count += (selectedItem.getSelectionType().equals(selectionType) && selectedItem.getDetailsId() == detilsId)? 1 : 0;
                 ids.add(selectedItem.getId());
             }
         }
-        return count;
+        return ids.size();
     }
 
 

@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,10 @@ import com.ninebx.ui.base.realm.lists.*
 import com.ninebx.ui.home.ContainerActivity
 import com.ninebx.ui.home.HomeActivity
 import com.ninebx.ui.home.fragments.*
+import com.ninebx.ui.home.lists.ListsCommunicationView
 import com.ninebx.ui.home.lists.ListsFragment
+import com.ninebx.ui.home.lists.ListsPresenter
+import com.ninebx.ui.home.lists.SubListsFragment
 import com.ninebx.ui.home.search.Level3SearchItem
 import com.ninebx.ui.home.search.SearchPresenter
 import com.ninebx.utility.*
@@ -292,8 +296,7 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                             }
                             bundle.putParcelableArrayList(Constants.SUB_OPTIONS, listItems )
                         }
-
-                    }
+    }
 
 
                     if( action == "add_item" ) {
@@ -487,13 +490,15 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
     }
 
     private fun getLists() {
+
         val fragmentTransaction = NineBxApplication.instance.activityInstance!!.supportFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
-        val listsFragment = ListsFragment()
+        val subListsFragment = ListsFragment()
 
         val bundle = Bundle()
         bundle.putString("homeScreen", "HomeScreen")
         bundle.putInt("category", fromWhichBox!!)
+        bundle.putParcelable(Constants.COMBINE_ITEMS, combinedItems)
 
         when (fromWhichBox) {
             R.string.home_amp_money -> {
@@ -528,10 +533,14 @@ class Level1Fragment : FragmentBackHelper(), CategoryView {
                 bundle.putString("listOption", "Contacts")
                 bundle.putInt("categoryName", (R.string.contacts))
             }
+            R.string.memories -> {
+                bundle.putString("listOption", "Memories")
+                bundle.putInt("categoryName",(R.string.memories))
+            }
         }
 
-        listsFragment.arguments = bundle
-        fragmentTransaction.add(R.id.frameLayout, listsFragment).commit()
+        subListsFragment.arguments = bundle
+        fragmentTransaction.add(R.id.frameLayout, subListsFragment).commit()
     }
 
     private fun gettingMemoryTimeLineView() {
